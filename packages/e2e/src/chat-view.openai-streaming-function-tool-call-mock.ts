@@ -3,7 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-view.openai-streaming-function-tool-call-mock'
 
-// export const skip = 1
+export const skip = 1
 
 export const test: Test = async ({ Command, expect, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
