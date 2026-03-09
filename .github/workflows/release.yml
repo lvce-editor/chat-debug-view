@@ -84,23 +84,8 @@ jobs:
       - uses: actions/upload-artifact@v6
         if: matrix.os == 'ubuntu-24.04'
         with:
-          name: dist
-          path: ./.tmp/dist
-      - uses: actions/upload-artifact@v6
-        if: matrix.os == 'ubuntu-24.04'
-        with:
           name: dist-chat-debug-view
           path: ./.tmp/dist-chat-debug-view
-      - uses: actions/upload-artifact@v6
-        if: matrix.os == 'ubuntu-24.04'
-        with:
-          name: dist-chat-network-worker
-          path: ./.tmp/dist-chat-network-worker
-      - uses: actions/upload-artifact@v6
-        if: matrix.os == 'ubuntu-24.04'
-        with:
-          name: dist-chat-tool-worker
-          path: ./.tmp/dist-chat-tool-worker
 
   publish-release:
     name: publish-release
@@ -110,39 +95,14 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v7
         with:
-          name: dist
-          path: ./.tmp/dist
-      - uses: actions/download-artifact@v7
-        with:
           name: dist-chat-debug-view
           path: ./.tmp/dist-chat-debug-view
-      - uses: actions/download-artifact@v7
-        with:
-          name: dist-chat-network-worker
-          path: ./.tmp/dist-chat-network-worker
-      - uses: actions/download-artifact@v7
-        with:
-          name: dist-chat-tool-worker
-          path: ./.tmp/dist-chat-tool-worker
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
-
-      - run: npm publish --access public
-        working-directory: ./.tmp/dist
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - run: npm publish --access public
         working-directory: ./.tmp/dist-chat-debug-view
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npm publish --access public
-        working-directory: ./.tmp/dist-chat-network-worker
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npm publish --access public
-        working-directory: ./.tmp/dist-chat-tool-worker
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Publish GitHub release
