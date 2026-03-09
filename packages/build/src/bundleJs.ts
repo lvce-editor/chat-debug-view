@@ -40,37 +40,11 @@ const bundle = async (options: RollupOptions) => {
   await input.write(options.output)
 }
 
-export const bundleJs = async () => {
-  const options = getOptions(join(root, 'packages/chat-view/src/chatViewWorkerMain.ts'), join(root, '.tmp/dist/dist/chatViewWorkerMain.js'), [
-    'ws',
-    'electron',
-  ])
-  await bundle(options)
-}
-
 export const bundleDebugViewJs = async () => {
   const options = getOptions(
     join(root, 'packages/chat-debug-view/src/chatDebugViewWorkerMain.ts'),
     join(root, '.tmp/dist-chat-debug-view/dist/chatDebugViewWorkerMain.js'),
     ['ws', 'electron'],
-  )
-  await bundle(options)
-}
-
-export const bundleNetworkWorkerJs = async () => {
-  const options = getOptions(
-    join(root, 'packages/chat-network-worker/src/chatNetworkWorkerMain.ts'),
-    join(root, '.tmp/dist-chat-network-worker/dist/chatNetworkWorkerMain.js'),
-    ['@lvce-editor/rpc', 'ws', 'electron'],
-  )
-  await bundle(options)
-}
-
-export const bundleToolWorkerJs = async () => {
-  const options = getOptions(
-    join(root, 'packages/chat-tool-worker/src/chatToolWorkerMain.ts'),
-    join(root, '.tmp/dist-chat-tool-worker/dist/chatToolWorkerMain.js'),
-    ['@lvce-editor/rpc'],
   )
   await bundle(options)
 }
