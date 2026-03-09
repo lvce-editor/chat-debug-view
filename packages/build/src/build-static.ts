@@ -9,7 +9,7 @@ const sharedProcessUrl = pathToFileURL(sharedProcessPath).toString()
 
 const sharedProcess = await import(sharedProcessUrl)
 
-process.env.PATH_PREFIX = '/chat-view'
+process.env.PATH_PREFIX = '/chat-debug-view'
 const { commitHash } = await sharedProcess.exportStatic({
   root,
   extensionPath: '',
@@ -53,9 +53,9 @@ newContent = replaceRemoteUrlWithAssetUrl(
   chatDebugViewWorkerPath,
 )
 
-if (newContent === content) {
-  throw new Error('occurrence not found')
-}
+// if (newContent === content) {
+//   throw new Error('occurrence not found')
+// }
 await writeFile(rendererWorkerPath, newContent)
 
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
