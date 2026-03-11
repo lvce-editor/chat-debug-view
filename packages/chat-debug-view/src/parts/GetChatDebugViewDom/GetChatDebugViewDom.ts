@@ -64,9 +64,14 @@ export const getChatDebugViewDom = (
       value: filterValue,
     },
     {
-      childCount: 6,
+      childCount: 3,
       className: 'ChatDebugViewToggle',
       type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewToggleLabel',
+      type: VirtualDomElements.Label,
     },
     {
       checked: showEventStreamFinishedEvents,
@@ -78,6 +83,11 @@ export const getChatDebugViewDom = (
     },
     text('Show event stream finished events'),
     {
+      childCount: 2,
+      className: 'ChatDebugViewToggleLabel',
+      type: VirtualDomElements.Label,
+    },
+    {
       checked: showInputEvents,
       childCount: 0,
       inputType: 'checkbox',
@@ -86,6 +96,11 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Input,
     },
     text('Show input events'),
+    {
+      childCount: 2,
+      className: 'ChatDebugViewToggleLabel',
+      type: VirtualDomElements.Label,
+    },
     {
       checked: showResponsePartEvents,
       childCount: 0,
