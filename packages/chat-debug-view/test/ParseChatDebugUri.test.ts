@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import * as ParseChatDebugUri from '../src/parts/ParseChatDebugUri/ParseChatDebugUri.ts'
+import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 
 test('parseChatDebugUri should return success for valid uri', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('chat-debug://session-1')
@@ -20,7 +21,7 @@ test('parseChatDebugUri should decode encoded session id', () => {
 test('parseChatDebugUri should return missing-uri error for empty uri', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('')
   expect(result).toEqual({
-    code: ParseChatDebugUri.ParseChatDebugUriErrorCode.MissingUri,
+    code: ParseChatDebugUriErrorCode.MissingUri,
     message: 'Missing URI',
     type: 'error',
   })
@@ -29,7 +30,7 @@ test('parseChatDebugUri should return missing-uri error for empty uri', () => {
 test('parseChatDebugUri should return invalid-uri-format error', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('https://example.com')
   expect(result).toEqual({
-    code: ParseChatDebugUri.ParseChatDebugUriErrorCode.InvalidUriFormat,
+    code: ParseChatDebugUriErrorCode.InvalidUriFormat,
     message: 'Invalid URI format',
     type: 'error',
   })
@@ -38,7 +39,7 @@ test('parseChatDebugUri should return invalid-uri-format error', () => {
 test('parseChatDebugUri should return invalid-uri-encoding error', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('chat-debug://%E0%A4%A')
   expect(result).toEqual({
-    code: ParseChatDebugUri.ParseChatDebugUriErrorCode.InvalidUriEncoding,
+    code: ParseChatDebugUriErrorCode.InvalidUriEncoding,
     message: 'Invalid URI encoding',
     type: 'error',
   })
@@ -47,7 +48,7 @@ test('parseChatDebugUri should return invalid-uri-encoding error', () => {
 test('parseChatDebugUri should return invalid-session-id error for encoded slash', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('chat-debug://session%2Fid')
   expect(result).toEqual({
-    code: ParseChatDebugUri.ParseChatDebugUriErrorCode.InvalidSessionId,
+    code: ParseChatDebugUriErrorCode.InvalidSessionId,
     message: 'Invalid session id',
     type: 'error',
   })
