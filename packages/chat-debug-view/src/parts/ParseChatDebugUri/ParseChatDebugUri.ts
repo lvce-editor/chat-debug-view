@@ -3,6 +3,7 @@ import type { ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseCh
 
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
 const invalidSessionIdPattern = /[/?#]/
+
 export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
   if (!uri) {
     return {
@@ -10,8 +11,9 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
       message: 'Missing URI',
       type: 'error',
     }
+  }
 
-    export { ParseChatDebugUriErrorCode }
+  const match = uri.match(chatDebugUriPattern)
   if (!match) {
     return {
       code: ParseChatDebugUriErrorCode.InvalidUriFormat,
@@ -19,6 +21,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
       type: 'error',
     }
   }
+
   const encodedSessionId = match[1]
   let sessionId: string
   try {
@@ -30,6 +33,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
       type: 'error',
     }
   }
+
   if (!sessionId || invalidSessionIdPattern.test(sessionId)) {
     return {
       code: ParseChatDebugUriErrorCode.InvalidSessionId,
@@ -37,6 +41,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
       type: 'error',
     }
   }
+
   return {
     sessionId,
     type: 'success',
