@@ -57,6 +57,7 @@ export const getChatDebugViewDom = (
     {
       childCount: 0,
       className: 'InputBox',
+      inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,
       placeholder: 'Filter events',
