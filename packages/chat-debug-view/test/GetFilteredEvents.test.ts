@@ -10,6 +10,12 @@ const events: readonly ChatViewEvent[] = [
     type: 'handle-input',
   },
   {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:00:30.000Z',
+    type: 'handle-submit',
+    value: 'hello',
+  },
+  {
     path: '/chat',
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:00.000Z',
@@ -34,11 +40,12 @@ test('getFilteredEvents should hide input events when showInputEvents is false',
   const result = GetFilteredEvents.getFilteredEvents(events, '', false, true, false)
   expect(result).toHaveLength(2)
   expect(result[0].type).toBe('request')
+  expect(result.some((event) => event.type === 'handle-submit')).toBe(false)
 })
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', true, false, false)
-  expect(result).toHaveLength(2)
+  expect(result).toHaveLength(3)
   expect(result.some((event) => event.type === 'request')).toBe(true)
   expect(result.some((event) => event.type === 'sse-response-part')).toBe(false)
 })
@@ -61,5 +68,5 @@ test('getFilteredEvents should filter by normalized search text', () => {
 
 test('getFilteredEvents should return all visible events when filter is empty', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '   ', true, true, true)
-  expect(result).toHaveLength(4)
+  expect(result).toHaveLength(5)
 })
