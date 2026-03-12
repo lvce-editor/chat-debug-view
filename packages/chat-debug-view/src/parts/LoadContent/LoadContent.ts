@@ -1,6 +1,6 @@
+import type { ParseChatDebugUriErrorCode as ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { listChatViewEvents } from '../IndexedDb/ListChatViewEvents.ts'
-import type { ParseChatDebugUriErrorCode as ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
