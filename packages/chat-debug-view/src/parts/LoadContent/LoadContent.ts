@@ -1,7 +1,7 @@
+import type { ParseChatDebugUriErrorCode as ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
 import { parseChatDebugUri, ParseChatDebugUriErrorCode } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
-import type { ParseChatDebugUriErrorCode as ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
 const getInvalidUriMessage = (uri: string, code: ParseChatDebugUriErrorCodeType): string => {
   if (code === ParseChatDebugUriErrorCode.MissingUri) {
