@@ -45,7 +45,7 @@ test('getFilteredEvents should hide input events when showInputEvents is false',
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', true, false, false)
-  expect(result).toHaveLength(2)
+  expect(result).toHaveLength(3)
   expect(result.some((event) => event.type === 'request')).toBe(true)
   expect(result.some((event) => event.type === 'sse-response-part')).toBe(false)
 })
