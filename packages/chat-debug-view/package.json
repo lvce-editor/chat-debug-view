@@ -4,7 +4,7 @@
   "description": "Chat Debug View Worker",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvce-editor/chat-view.git"
+    "url": "git+https://github.com/lvce-editor/chat-debug-view.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",
