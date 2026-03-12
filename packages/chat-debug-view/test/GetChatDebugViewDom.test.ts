@@ -3,12 +3,8 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
-<<<<<<< HEAD
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', false, false, false, []) as readonly {
-=======
   const dom = GetChatDebugViewDom.getChatDebugViewDom('session-1', '', '', false, false, false, []) as readonly {
     readonly autocomplete?: string
->>>>>>> origin/main
     readonly inputType?: string
     readonly name?: string
     readonly onInput?: number
