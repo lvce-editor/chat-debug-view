@@ -32,11 +32,6 @@ export const getCss = (): string => {
   gap: 4px;
 }
 
-.ChatDebugViewSession {
-  font-size: 12px;
-  opacity: 0.8;
-}
-
 .ChatDebugViewEventCount {
   font-size: 12px;
   opacity: 0.8;
