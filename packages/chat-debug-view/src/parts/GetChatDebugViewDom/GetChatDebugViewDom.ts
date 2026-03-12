@@ -59,6 +59,7 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Div,
     },
     {
+      autocomplete: 'off',
       childCount: 0,
       className: 'InputBox',
       inputType: 'search',
