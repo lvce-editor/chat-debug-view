@@ -23,7 +23,6 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.showEventStreamFinishedEvents,
   )
   const dom = getChatDebugViewDom(
-    newState.sessionId,
     newState.errorMessage,
     newState.filterValue,
     newState.showEventStreamFinishedEvents,
