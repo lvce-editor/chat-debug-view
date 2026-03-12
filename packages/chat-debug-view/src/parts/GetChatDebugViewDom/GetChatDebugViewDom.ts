@@ -5,7 +5,6 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 export const getChatDebugViewDom = (
-  sessionId: string,
   errorMessage: string,
   filterValue: string,
   showEventStreamFinishedEvents: boolean,
@@ -37,7 +36,7 @@ export const getChatDebugViewDom = (
   const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
   return [
     {
-      childCount: 4,
+      childCount: 3,
       className: 'ChatDebugView',
       type: VirtualDomElements.Div,
     },
@@ -110,12 +109,6 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Div,
     },
     text(eventCountText),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewSession',
-      type: VirtualDomElements.Div,
-    },
-    text(`sessionId: ${sessionId || '(none)'}`),
     {
       childCount: eventNodes.length === 0 ? 1 : eventNodes.length,
       className: 'ChatDebugViewEvents',
