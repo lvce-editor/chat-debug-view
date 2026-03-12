@@ -62,6 +62,29 @@ test('renderItems should show plural count when multiple events are visible', ()
   expect(eventCountText).toBeDefined()
 })
 
+test('renderItems should show filter-specific message when no events match', () => {
+  const oldState: ChatDebugViewState = createDefaultState()
+  const newState: ChatDebugViewState = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+    ],
+    filterValue: 'response',
+    sessionId: 'session-1',
+    uid: 3,
+  }
+
+  const result = RenderItems.renderItems(oldState, newState)
+
+  const dom = result[2] as readonly { readonly text?: string }[]
+  const noMatchText = dom.find((node) => node.text === 'no events found matching response')
+  expect(noMatchText).toBeDefined()
+})
+
 test('renderItems should use numeric eventId starting at 1 per session', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
@@ -81,7 +104,7 @@ test('renderItems should use numeric eventId starting at 1 per session', () => {
       },
     ],
     sessionId: 'session-1',
-    uid: 3,
+    uid: 4,
   }
 
   const result = RenderItems.renderItems(oldState, newState)

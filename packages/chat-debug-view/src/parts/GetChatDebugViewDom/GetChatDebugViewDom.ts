@@ -42,7 +42,11 @@ export const getChatDebugViewDom = (
   }
 
   const eventNodes = events.flatMap(getEventNode)
-  const eventCountText = `${events.length} event${events.length === 1 ? '' : 's'}`
+  const trimmedFilterValue = filterValue.trim()
+  const hasFilterValue = trimmedFilterValue.length > 0
+  const noFilteredEventsMessage = `no events found matching ${trimmedFilterValue}`
+  const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
+  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
   return [
     {
       childCount: 4,
@@ -134,7 +138,7 @@ export const getChatDebugViewDom = (
             className: errorMessage ? 'ChatDebugViewError' : 'ChatDebugViewEmpty',
             type: VirtualDomElements.Div,
           },
-          text(errorMessage || 'No events'),
+          text(errorMessage || emptyMessage),
         ]
       : eventNodes),
   ]
