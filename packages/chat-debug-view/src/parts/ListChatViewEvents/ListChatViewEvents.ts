@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
 import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
