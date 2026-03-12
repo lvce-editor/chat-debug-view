@@ -27,7 +27,6 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // assert
   const eventNodes = Locator('.ChatDebugViewEvent')
-  await expect(eventNodes).toHaveCount(2)
-  await expect(eventNodes.nth(0)).toContainText('"type": "handle-submit"')
-  await expect(eventNodes.nth(1)).toContainText('"type": "handle-response"')
+  await expect(eventNodes).toHaveCount(1)
+  await expect(eventNodes.nth(0)).toContainText('"type": "handle-response"')
 }

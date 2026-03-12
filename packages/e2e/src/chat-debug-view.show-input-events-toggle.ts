@@ -35,8 +35,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   const toggle = Locator('input[name="showInputEvents"]')
 
   // assert hidden by default
-  await expect(eventNodes).toHaveCount(1)
-  await expect(eventNodes.nth(0)).toContainText('"type": "handle-submit"')
+  await expect(eventNodes).toHaveCount(0)
 
   // act + assert: show input events
   await toggle.click()

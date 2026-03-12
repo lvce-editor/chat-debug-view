@@ -1,9 +1,11 @@
+import type { ParseChatDebugUriErrorCode as ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { listChatViewEvents } from '../IndexedDb/ListChatViewEvents.ts'
+import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
-const getInvalidUriMessage = (uri: string): string => {
-  if (!uri) {
+const getInvalidUriMessage = (uri: string, code: ParseChatDebugUriErrorCodeType): string => {
+  if (code === ParseChatDebugUriErrorCode.MissingUri) {
     return 'Unable to load debug session: missing URI. Expected format: chat-debug://<sessionId>.'
   }
   return `Unable to load debug session: invalid URI "${uri}". Expected format: chat-debug://<sessionId>.`
@@ -19,18 +21,17 @@ const getFailedToLoadMessage = (sessionId: string): string => {
 
 export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName, uri } = state
-  let sessionId = ''
-  try {
-    sessionId = parseChatDebugUri(uri)
-  } catch {
+  const parsed = parseChatDebugUri(uri)
+  if (parsed.type === 'error') {
     return {
       ...state,
-      errorMessage: getInvalidUriMessage(uri),
+      errorMessage: getInvalidUriMessage(uri, parsed.code),
       events: [],
       initial: false,
-      sessionId,
+      sessionId: '',
     }
   }
+  const { sessionId } = parsed
 
   try {
     const events = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
