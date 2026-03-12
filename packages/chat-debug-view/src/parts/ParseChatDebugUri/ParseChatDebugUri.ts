@@ -1,5 +1,5 @@
-import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import type { ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
+import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
 const invalidSessionIdPattern = /[/?#]/
