@@ -1,7 +1,7 @@
-import type { ChatViewEvent } from '../../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { filterEventsBySessionId } from '../FilterEventsBySessionId/FilterEventsBySessionId.ts'
 import { getAllEvents } from '../GetAllEvents/GetAllEvents.ts'
-import { requestToPromise } from '../RequestToPromise.ts'
+import { requestToPromise } from '../IndexedDb/RequestToPromise.ts'
 
 export const getEventsBySessionId = async (
   store: Readonly<IDBObjectStore>,

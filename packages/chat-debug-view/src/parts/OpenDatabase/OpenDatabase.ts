@@ -1,4 +1,4 @@
-import { requestToPromise } from '../RequestToPromise.ts'
+import { requestToPromise } from '../IndexedDb/RequestToPromise.ts'
 
 export const openDatabase = async (databaseName: string, dataBaseVersion: number): Promise<IDBDatabase> => {
   const request = indexedDB.open(databaseName, dataBaseVersion)
