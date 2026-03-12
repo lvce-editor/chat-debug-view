@@ -2,17 +2,17 @@ export const requestToPromise = async <T>(createRequest: () => IDBRequest<T>): P
   const request = createRequest()
   const { promise, reject, resolve } = Promise.withResolvers<T>()
 
-  const onSuccess = () => {
+  const onSuccess = (): void => {
     cleanup()
     resolve(request.result)
   }
 
-  const onError = () => {
+  const onError = (): void => {
     cleanup()
     reject(request.error || new Error('IndexedDB request failed'))
   }
 
-  const cleanup = () => {
+  const cleanup = (): void => {
     request.removeEventListener('success', onSuccess)
     request.removeEventListener('error', onError)
   }
