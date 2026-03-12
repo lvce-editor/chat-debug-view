@@ -1,5 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { listChatViewEvents } from '../IndexedDb/ListChatViewEvents.ts'
+import { listChatViewEvents } from '../IndexedDb/ListChatViewEvents/ListChatViewEvents.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
 const getInvalidUriMessage = (uri: string): string => {
