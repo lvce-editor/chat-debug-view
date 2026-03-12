@@ -1,3 +1,4 @@
+// cspell:ignore IDBP
 import type { IDBPObjectStore } from 'idb'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 

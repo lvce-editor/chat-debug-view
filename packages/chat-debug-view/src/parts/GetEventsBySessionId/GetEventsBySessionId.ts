@@ -1,7 +1,8 @@
+// cspell:ignore IDBP
+import type { IDBPObjectStore } from 'idb'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { filterEventsBySessionId } from '../FilterEventsBySessionId/FilterEventsBySessionId.ts'
 import { getAllEvents } from '../GetAllEvents/GetAllEvents.ts'
-import type { IDBPObjectStore } from 'idb'
 
 export const getEventsBySessionId = async (
   store: Pick<IDBPObjectStore, 'getAll' | 'indexNames' | 'index'>, // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
