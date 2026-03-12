@@ -4,6 +4,7 @@ import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDe
 
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom('session-1', '', '', false, false, false, []) as readonly {
+    readonly inputType?: string
     readonly name?: string
     readonly onInput?: number
   }[]
@@ -12,4 +13,6 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
   expect(filterInput).toBeDefined()
   // @ts-ignore
   expect(filterInput.onInput).toBe(DomEventListenerFunctions.HandleFilterInput)
+  // @ts-ignore
+  expect(filterInput.inputType).toBe('search')
 })
