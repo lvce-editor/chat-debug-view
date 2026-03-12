@@ -1,4 +1,5 @@
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
+const invalidSessionIdPattern = /[/?#]/
 
 export const parseChatDebugUri = (uri: string): string => {
   if (!uri) {
@@ -15,7 +16,7 @@ export const parseChatDebugUri = (uri: string): string => {
   } catch {
     throw new Error('Invalid URI encoding')
   }
-  if (!sessionId || /[/?#]/.test(sessionId)) {
+  if (!sessionId || invalidSessionIdPattern.test(sessionId)) {
     throw new Error('Invalid session id')
   }
   return sessionId

@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 
 const numberRegex = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/
+const whitespaceRegex = /\s/u
 
 interface TokenSegment {
   readonly className: string
@@ -44,7 +45,7 @@ const getTokenSegments = (json: string): readonly TokenSegment[] => {
       }
       const tokenValue = json.slice(start, i)
       let lookAheadIndex = i
-      while (lookAheadIndex < json.length && /\s/u.test(json[lookAheadIndex])) {
+      while (lookAheadIndex < json.length && whitespaceRegex.test(json[lookAheadIndex])) {
         lookAheadIndex++
       }
       const className = json[lookAheadIndex] === ':' ? 'TokenKey' : 'TokenString'
