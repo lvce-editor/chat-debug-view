@@ -1,24 +1,8 @@
-import type { ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import type { ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
 const invalidSessionIdPattern = /[/?#]/
-
-
-
-export type ParseChatDebugUriSuccess = {
-  readonly type: 'success'
-  readonly sessionId: string
-}
-
-export type ParseChatDebugUriError = {
-  readonly type: 'error'
-  readonly code: ParseChatDebugUriErrorCodeType
-  readonly message: string
-}
-
-export type ParseChatDebugUriResult = ParseChatDebugUriSuccess | ParseChatDebugUriError
-
 export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
   if (!uri) {
     return {
@@ -26,8 +10,8 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
       message: 'Missing URI',
       type: 'error',
     }
-  }
-  const match = uri.match(chatDebugUriPattern)
+
+    export { ParseChatDebugUriErrorCode }
   if (!match) {
     return {
       code: ParseChatDebugUriErrorCode.InvalidUriFormat,
@@ -58,5 +42,3 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
     type: 'success',
   }
 }
-
-export {ParseChatDebugUriErrorCode} from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
