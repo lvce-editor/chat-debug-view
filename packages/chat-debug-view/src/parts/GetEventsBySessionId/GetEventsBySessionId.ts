@@ -4,7 +4,7 @@ import { getAllEvents } from '../GetAllEvents/GetAllEvents.ts'
 import { requestToPromise } from '../IndexedDb/RequestToPromise.ts'
 
 export const getEventsBySessionId = async (
-  store: Readonly<IDBObjectStore>,
+  store: Pick<IDBObjectStore, 'getAll' | 'indexNames' | 'index'>, // eslint-disable-line @typescript-eslint/prefer-readonly-parameter-types
   sessionId: string,
   sessionIdIndexName: string,
 ): Promise<readonly ChatViewEvent[]> => {
