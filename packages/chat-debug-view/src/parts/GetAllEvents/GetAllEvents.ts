@@ -1,8 +1,9 @@
+// cspell:ignore IDBP
+import type { IDBPObjectStore } from 'idb'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { requestToPromise } from '../IndexedDb/RequestToPromise.ts'
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-export const getAllEvents = async (store: Pick<IDBObjectStore, 'getAll'>): Promise<readonly ChatViewEvent[]> => {
-  const all = await requestToPromise(() => store.getAll())
+export const getAllEvents = async (store: Pick<IDBPObjectStore, 'getAll'>): Promise<readonly ChatViewEvent[]> => {
+  const all = await store.getAll()
   return all as readonly ChatViewEvent[]
 }
