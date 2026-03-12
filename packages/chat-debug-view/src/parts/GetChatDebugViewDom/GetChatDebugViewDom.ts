@@ -1,20 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { getJsonTokenNodes } from '../GetJsonTokenNodes/GetJsonTokenNodes.ts'
+import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import * as InputName from '../InputName/InputName.ts'
-
-const getEventNode = (event: ChatViewEvent): readonly VirtualDomNode[] => {
-  const tokenNodes = getJsonTokenNodes(event)
-  return [
-    {
-      childCount: tokenNodes.length / 2,
-      className: 'ChatDebugViewEvent',
-      type: VirtualDomElements.Pre,
-    },
-    ...tokenNodes,
-  ]
-}
 
 export const getChatDebugViewDom = (
   errorMessage: string,
@@ -58,6 +46,7 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Div,
     },
     {
+      autocomplete: 'off',
       childCount: 0,
       className: 'InputBox',
       inputType: 'search',
