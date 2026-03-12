@@ -1,23 +1,56 @@
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
 const invalidSessionIdPattern = /[/?#]/
 
-export const parseChatDebugUri = (uri: string): string => {
+export const ParseChatDebugUriErrorCode = {
+  InvalidSessionId: 'invalid-session-id',
+  InvalidUriEncoding: 'invalid-uri-encoding',
+  InvalidUriFormat: 'invalid-uri-format',
+  MissingUri: 'missing-uri',
+} as const
+
+export type ParseChatDebugUriErrorCode = (typeof ParseChatDebugUriErrorCode)[keyof typeof ParseChatDebugUriErrorCode]
+
+export type ParseChatDebugUriSuccess = {
+  readonly type: 'success'
+  readonly sessionId: string
+}
+
+export type ParseChatDebugUriError = {
+  readonly type: 'error'
+  readonly code: ParseChatDebugUriErrorCode
+  readonly message: string
+}
+
+export type ParseChatDebugUriResult = ParseChatDebugUriSuccess | ParseChatDebugUriError
+
+const createErrorResult = (code: ParseChatDebugUriErrorCode, message: string): ParseChatDebugUriError => {
+  return {
+    code,
+    message,
+    type: 'error',
+  }
+}
+
+export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
   if (!uri) {
-    throw new Error('Missing URI')
+    return createErrorResult(ParseChatDebugUriErrorCode.MissingUri, 'Missing URI')
   }
   const match = uri.match(chatDebugUriPattern)
   if (!match) {
-    throw new Error('Invalid URI format')
+    return createErrorResult(ParseChatDebugUriErrorCode.InvalidUriFormat, 'Invalid URI format')
   }
   const encodedSessionId = match[1]
   let sessionId: string
   try {
     sessionId = decodeURIComponent(encodedSessionId)
   } catch {
-    throw new Error('Invalid URI encoding')
+    return createErrorResult(ParseChatDebugUriErrorCode.InvalidUriEncoding, 'Invalid URI encoding')
   }
   if (!sessionId || invalidSessionIdPattern.test(sessionId)) {
-    throw new Error('Invalid session id')
+    return createErrorResult(ParseChatDebugUriErrorCode.InvalidSessionId, 'Invalid session id')
   }
-  return sessionId
+  return {
+    sessionId,
+    type: 'success',
+  }
 }
