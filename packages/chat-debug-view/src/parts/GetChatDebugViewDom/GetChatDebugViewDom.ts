@@ -8,6 +8,7 @@ export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
   showEventStreamFinishedEvents: boolean,
+  showFullOutput: boolean,
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
   events: readonly ChatViewEvent[],
@@ -28,7 +29,7 @@ export const getChatDebugViewDom = (
     ]
   }
 
-  const eventNodes = events.flatMap(getEventNode)
+  const eventNodes = events.flatMap((event) => getEventNode(event, showFullOutput))
   const trimmedFilterValue = filterValue.trim()
   const hasFilterValue = trimmedFilterValue.length > 0
   const noFilteredEventsMessage = `no events found matching ${trimmedFilterValue}`
@@ -57,7 +58,7 @@ export const getChatDebugViewDom = (
       value: filterValue,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'ChatDebugViewToggle',
       type: VirtualDomElements.Div,
     },
@@ -75,6 +76,20 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Input,
     },
     text('Show event stream finished events'),
+    {
+      childCount: 2,
+      className: 'ChatDebugViewToggleLabel',
+      type: VirtualDomElements.Label,
+    },
+    {
+      checked: showFullOutput,
+      childCount: 0,
+      inputType: 'checkbox',
+      name: InputName.ShowFullOutput,
+      onChange: DomEventListenerFunctions.HandleInput,
+      type: VirtualDomElements.Input,
+    },
+    text('Show full output'),
     {
       childCount: 2,
       className: 'ChatDebugViewToggleLabel',
@@ -116,13 +131,13 @@ export const getChatDebugViewDom = (
     },
     ...(eventNodes.length === 0
       ? [
-          {
-            childCount: 1,
-            className: errorMessage ? 'ChatDebugViewError' : 'ChatDebugViewEmpty',
-            type: VirtualDomElements.Div,
-          },
-          text(errorMessage || emptyMessage),
-        ]
+        {
+          childCount: 1,
+          className: errorMessage ? 'ChatDebugViewError' : 'ChatDebugViewEmpty',
+          type: VirtualDomElements.Div,
+        },
+        text(errorMessage || emptyMessage),
+      ]
       : eventNodes),
   ]
 }

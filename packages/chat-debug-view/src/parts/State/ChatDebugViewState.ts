@@ -14,6 +14,7 @@ export interface ChatDebugViewState {
   readonly sessionId: string
   readonly sessionIdIndexName: string
   readonly showEventStreamFinishedEvents: boolean
+  readonly showFullOutput: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
   readonly uid: number

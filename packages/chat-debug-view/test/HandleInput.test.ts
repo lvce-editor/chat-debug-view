@@ -39,6 +39,18 @@ test('handleInput should set showResponsePartEvents to true for on value', () =>
   expect(result.showResponsePartEvents).toBe(true)
 })
 
+test('handleInput should set showFullOutput to true for on value', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.ShowFullOutput, '', 'on')
+  expect(result.showFullOutput).toBe(true)
+})
+
+test('handleInput should set showFullOutput to false for unchecked value', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.ShowFullOutput, '', false)
+  expect(result.showFullOutput).toBe(false)
+})
+
 test('handleInput should set showResponsePartEvents to false for unchecked value', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.ShowResponsePartEvents, '', false)
