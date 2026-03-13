@@ -131,13 +131,13 @@ export const getChatDebugViewDom = (
     },
     ...(eventNodes.length === 0
       ? [
-          {
-            childCount: 1,
-            className: errorMessage ? 'ChatDebugViewError' : 'ChatDebugViewEmpty',
-            type: VirtualDomElements.Div,
-          },
-          text(errorMessage || emptyMessage),
-        ]
+        {
+          childCount: 1,
+          className: errorMessage ? 'ChatDebugViewError' : 'ChatDebugViewEmpty',
+          type: VirtualDomElements.Div,
+        },
+        text(errorMessage || emptyMessage),
+      ]
       : eventNodes),
   ]
 }
