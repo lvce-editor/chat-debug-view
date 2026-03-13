@@ -3,6 +3,7 @@ export interface SavedState {
   readonly height: number
   readonly sessionId: string
   readonly showEventStreamFinishedEvents: boolean
+  readonly showFullOutput: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
   readonly width: number

@@ -117,3 +117,75 @@ test('renderItems should use numeric eventId starting at 1 per session', () => {
   expect(dom.some((node) => node.text === '42')).toBe(false)
   expect(dom.some((node) => node.text === '99')).toBe(false)
 })
+
+test('renderItems should compact sse-response-completed output by default', () => {
+  const oldState: ChatDebugViewState = createDefaultState()
+  const newState: ChatDebugViewState = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-13T10:50:32.680Z',
+        type: 'sse-response-completed',
+        value: {
+          response: {
+            id: 'resp_123',
+            model: 'gpt-4.1-mini-2025-04-14',
+            output: [
+              {
+                id: 'fc_123',
+                type: 'function_call',
+              },
+            ],
+            status: 'completed',
+          },
+        },
+      },
+    ],
+    sessionId: 'session-1',
+    uid: 5,
+  }
+
+  const result = RenderItems.renderItems(oldState, newState)
+  const dom = result[2] as readonly { readonly text?: string }[]
+
+  expect(dom.some((node) => node.text === '"id"')).toBe(true)
+  expect(dom.some((node) => node.text === '"model"')).toBe(true)
+  expect(dom.some((node) => node.text === '"output"')).toBe(true)
+  expect(dom.some((node) => node.text === '"status"')).toBe(false)
+})
+
+test('renderItems should keep full sse-response-completed output when enabled', () => {
+  const oldState: ChatDebugViewState = createDefaultState()
+  const newState: ChatDebugViewState = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-13T10:50:32.680Z',
+        type: 'sse-response-completed',
+        value: {
+          response: {
+            id: 'resp_123',
+            model: 'gpt-4.1-mini-2025-04-14',
+            output: [
+              {
+                id: 'fc_123',
+                type: 'function_call',
+              },
+            ],
+            status: 'completed',
+          },
+        },
+      },
+    ],
+    sessionId: 'session-1',
+    showFullOutput: true,
+    uid: 6,
+  }
+
+  const result = RenderItems.renderItems(oldState, newState)
+  const dom = result[2] as readonly { readonly text?: string }[]
+
+  expect(dom.some((node) => node.text === '"status"')).toBe(true)
+})
