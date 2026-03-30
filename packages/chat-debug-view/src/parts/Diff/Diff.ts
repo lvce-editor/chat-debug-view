@@ -15,7 +15,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.showResponsePartEvents !== newState.showResponsePartEvents ||
     oldState.uid !== newState.uid
   ) {
-    return [DiffType.RenderItems]
+    return [DiffType.RenderIncremental]
   }
   return []
 }

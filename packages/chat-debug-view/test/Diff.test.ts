@@ -10,7 +10,7 @@ test('diff should return RenderCss and RenderItems when initial changes', () => 
     initial: false,
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderCss, DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderCss, DiffType.RenderIncremental])
 })
 
 test('diff should return RenderItems when filter changes', () => {
@@ -20,7 +20,7 @@ test('diff should return RenderItems when filter changes', () => {
     filterValue: 'error',
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff should return RenderItems when showResponsePartEvents changes', () => {
@@ -30,7 +30,7 @@ test('diff should return RenderItems when showResponsePartEvents changes', () =>
     showResponsePartEvents: true,
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff should return RenderItems when showEventStreamFinishedEvents changes', () => {
@@ -40,7 +40,7 @@ test('diff should return RenderItems when showEventStreamFinishedEvents changes'
     showEventStreamFinishedEvents: true,
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderItems])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff should return empty array when no observed properties change', () => {
