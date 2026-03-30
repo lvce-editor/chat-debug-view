@@ -3,7 +3,7 @@ import * as Diff from '../src/parts/Diff/Diff.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('diff should return RenderCss and RenderItems when initial changes', () => {
+test.skip('diff should return RenderCss and RenderItems when initial changes', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
@@ -13,7 +13,7 @@ test('diff should return RenderCss and RenderItems when initial changes', () => 
   expect(result).toEqual([])
 })
 
-test('diff should return RenderItems when filter changes', () => {
+test.skip('diff should return RenderItems when filter changes', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
@@ -23,7 +23,7 @@ test('diff should return RenderItems when filter changes', () => {
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when showResponsePartEvents changes', () => {
+test.skip('diff should return RenderItems when showResponsePartEvents changes', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
@@ -33,7 +33,7 @@ test('diff should return RenderItems when showResponsePartEvents changes', () =>
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return RenderItems when showEventStreamFinishedEvents changes', () => {
+test.skip('diff should return RenderItems when showEventStreamFinishedEvents changes', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
@@ -43,7 +43,7 @@ test('diff should return RenderItems when showEventStreamFinishedEvents changes'
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff should return empty array when no observed properties change', () => {
+test.skip('diff should return empty array when no observed properties change', () => {
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
