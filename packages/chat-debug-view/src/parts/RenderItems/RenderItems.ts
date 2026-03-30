@@ -1,3 +1,4 @@
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
@@ -13,7 +14,10 @@ const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatVie
   })
 }
 
-export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, readonly unknown[]] => {
+export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, readonly VirtualDomNode[]] => {
+  if (newState.initial) {
+    return [ViewletCommand.SetDom2, newState.uid, []]
+  }
   const eventsWithIds = withSessionEventIds(newState.events)
   const filteredEvents = getFilteredEvents(
     eventsWithIds,

@@ -1,3 +1,3 @@
-# Chat View Worker
+# Chat Debug View Worker
 
-WebWorker for the chat view functionality in Lvce Editor.
+WebWorker for the chat debug view functionality in Lvce Editor.

@@ -10,7 +10,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     eventStoreName: 'chat-view-events',
     filterValue: '',
     height: 0,
-    initial: true,
+    initial: false,
     platform: 0,
     sessionId: '',
     sessionIdIndexName: 'sessionId',
