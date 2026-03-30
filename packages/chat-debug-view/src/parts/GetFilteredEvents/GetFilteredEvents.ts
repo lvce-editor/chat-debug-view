@@ -1,4 +1,11 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
+
+const toolEventTypePrefix = 'tool-execution-'
+
+const isToolEvent = (event: ChatViewEvent): boolean => {
+  return event.type.startsWith(toolEventTypePrefix)
+}
 
 const getVisibleEvents = (
   events: readonly ChatViewEvent[],
@@ -32,9 +39,10 @@ export const getFilteredEvents = (
   showEventStreamFinishedEvents: boolean,
 ): readonly ChatViewEvent[] => {
   const visibleEvents = getVisibleEvents(events, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
-  const normalizedFilter = filterValue.trim().toLowerCase()
-  if (!normalizedFilter) {
-    return visibleEvents
+  const { filterText, toolsOnly } = parseFilterValue(filterValue)
+  const filteredBySyntax = toolsOnly ? visibleEvents.filter(isToolEvent) : visibleEvents
+  if (!filterText) {
+    return filteredBySyntax
   }
-  return visibleEvents.filter((event) => JSON.stringify(event).toLowerCase().includes(normalizedFilter))
+  return filteredBySyntax.filter((event) => JSON.stringify(event).toLowerCase().includes(filterText))
 }
