@@ -23,6 +23,18 @@ const events: readonly ChatViewEvent[] = [
   },
   {
     sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-started',
+  },
+  {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    toolName: 'apply_patch',
+    type: 'tool-execution-finished',
+  },
+  {
+    sessionId: 'session-1',
     timestamp: '2026-01-01T10:02:00.000Z',
     type: 'sse-response-part',
     value: {
@@ -38,14 +50,14 @@ const events: readonly ChatViewEvent[] = [
 
 test('getFilteredEvents should hide input events when showInputEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', false, true, false)
-  expect(result).toHaveLength(2)
+  expect(result).toHaveLength(4)
   expect(result[0].type).toBe('request')
   expect(result.some((event) => event.type === 'handle-submit')).toBe(false)
 })
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', true, false, false)
-  expect(result).toHaveLength(3)
+  expect(result).toHaveLength(5)
   expect(result.some((event) => event.type === 'request')).toBe(true)
   expect(result.some((event) => event.type === 'sse-response-part')).toBe(false)
 })
@@ -68,5 +80,17 @@ test('getFilteredEvents should filter by normalized search text', () => {
 
 test('getFilteredEvents should return all visible events when filter is empty', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '   ', true, true, true)
-  expect(result).toHaveLength(5)
+  expect(result).toHaveLength(7)
+})
+
+test('getFilteredEvents should show only tool execution events for @tools filter', () => {
+  const result = GetFilteredEvents.getFilteredEvents(events, '@tools', true, true, true)
+  expect(result).toHaveLength(2)
+  expect(result.every((event) => event.type.startsWith('tool-execution-'))).toBe(true)
+})
+
+test('getFilteredEvents should combine @tools filter with text search', () => {
+  const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS apply_patch  ', true, true, true)
+  expect(result).toHaveLength(1)
+  expect(result[0].type).toBe('tool-execution-finished')
 })
