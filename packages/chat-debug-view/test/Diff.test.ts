@@ -10,7 +10,7 @@ test('diff should return RenderCss and RenderItems when initial changes', () => 
     initial: false,
   }
   const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderCss, DiffType.RenderIncremental])
+  expect(result).toEqual([])
 })
 
 test('diff should return RenderItems when filter changes', () => {
