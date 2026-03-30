@@ -3,6 +3,7 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
+import { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
@@ -13,7 +14,10 @@ const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatVie
   })
 }
 
-export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, readonly unknown[]] => {
+export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, readonly VirtualDomNode[]] => {
+  if (newState.initial) {
+    return [ViewletCommand.SetDom2, newState.uid, []]
+  }
   const eventsWithIds = withSessionEventIds(newState.events)
   const filteredEvents = getFilteredEvents(
     eventsWithIds,
