@@ -1,9 +1,9 @@
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
-import { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
