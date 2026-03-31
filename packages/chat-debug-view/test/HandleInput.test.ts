@@ -45,6 +45,78 @@ test('handleInput should set showResponsePartEvents to false for unchecked value
   expect(result.showResponsePartEvents).toBe(false)
 })
 
+test('handleInput should set useDevtoolsLayout to true for on value', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.UseDevtoolsLayout, '', 'on')
+  expect(result.useDevtoolsLayout).toBe(true)
+})
+
+test('handleInput should set useDevtoolsLayout to false for unchecked value', () => {
+  const state = {
+    ...createDefaultState(),
+    useDevtoolsLayout: true,
+  }
+  const result = HandleInput.handleInput(state, InputName.UseDevtoolsLayout, '', false)
+  expect(result.useDevtoolsLayout).toBe(false)
+})
+
+test('handleInput should set selectedEventIndex when selecting row', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.SelectedEventIndex, '2', false)
+  expect(result.selectedEventIndex).toBe(2)
+})
+
+test('handleInput should close details panel', () => {
+  const state = {
+    ...createDefaultState(),
+    selectedEventIndex: 1,
+  }
+  const result = HandleInput.handleInput(state, InputName.CloseDetails, '', false)
+  expect(result.selectedEventIndex).toBeNull()
+})
+
+test('handleInput should preserve selected event when filter still includes it', () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'response',
+      },
+    ],
+    selectedEventIndex: 1,
+  }
+  const result = HandleInput.handleInput(state, InputName.Filter, 'response', false)
+  expect(result.selectedEventIndex).toBe(0)
+})
+
+test('handleInput should clear selected event when filter hides it', () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'response',
+      },
+    ],
+    selectedEventIndex: 1,
+  }
+  const result = HandleInput.handleInput(state, InputName.Filter, 'request', false)
+  expect(result.selectedEventIndex).toBeNull()
+})
+
 test('handleInput should keep state for unknown input name', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, 'unknown', 'value', false)
