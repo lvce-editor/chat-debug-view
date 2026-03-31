@@ -18,6 +18,8 @@ export interface ChatDebugViewState {
   readonly showEventStreamFinishedEvents: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
+  readonly timelineEndSeconds: string
+  readonly timelineStartSeconds: string
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean

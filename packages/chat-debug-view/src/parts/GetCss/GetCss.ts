@@ -84,6 +84,10 @@ export const getCss = (): string => {
   scrollbar-color: var(--vscode-scrollbarSlider-background, rgba(121, 121, 121, 0.4)) transparent;
 }
 
+.ChatDebugViewEvents--timeline {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
 .ChatDebugView--devtools .ChatDebugViewEvents {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
@@ -101,6 +105,119 @@ export const getCss = (): string => {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.ChatDebugViewTimeline {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 82%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.12)) 18%);
+}
+
+.ChatDebugViewTimelineTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ChatDebugViewTimelineTitle {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ChatDebugViewTimelineSummary {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.ChatDebugViewTimelineControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ChatDebugViewTimelineField {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.ChatDebugViewTimelineInput {
+  width: 84px;
+}
+
+.ChatDebugViewTimelineReset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.ChatDebugViewTimelineResetSelected {
+  border-color: var(--vscode-focusBorder, #007fd4);
+  background: var(--vscode-list-activeSelectionBackground, rgba(14, 99, 156, 0.35));
+  color: var(--vscode-list-activeSelectionForeground, inherit);
+}
+
+.ChatDebugViewTimelineBuckets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  align-items: end;
+  gap: 4px;
+  min-height: 60px;
+}
+
+.ChatDebugViewTimelineBucket {
+  display: flex;
+  align-items: stretch;
+  min-height: 60px;
+  cursor: pointer;
+}
+
+.ChatDebugViewTimelinePresetInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ChatDebugViewTimelineBucketBar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 4px 2px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 68%, transparent 32%);
+}
+
+.ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
+.ChatDebugViewTimelineBucketBarSelected {
+  background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
+  border-color: var(--vscode-focusBorder, #007fd4);
+}
+
+.ChatDebugViewTimelineBucketUnit {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--vscode-charts-blue, #75beff);
+}
+
+.ChatDebugViewTimelineBucketUnitEmpty {
+  opacity: 0.35;
+  background: var(--vscode-editorWidget-border, #454545);
 }
 
 .ChatDebugViewTableHeader,

@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import type { SavedState } from '../SavedState/SavedState.ts'
 import * as ChatDebugViewStates from '../State/ChatDebugViewStates.ts'
 import { createDefaultState } from '../State/CreateDefaultState.ts'
 
@@ -16,9 +17,11 @@ export const create = (
   dataBaseVersion = 2,
   eventStoreName = 'chat-view-events',
   sessionIdIndexName = 'sessionId',
+  savedState: Partial<SavedState> = {},
 ): void => {
   const state: ChatDebugViewState = {
     ...createDefaultState(),
+    ...savedState,
     assetDir,
     databaseName,
     dataBaseVersion,

@@ -27,10 +27,7 @@ const events: readonly ChatViewEvent[] = [
 
 test('filterEventsByTimelineRange should filter events between start and end seconds', () => {
   const result = GetTimelineInfo.filterEventsByTimelineRange(events, '5', '7')
-  expect(result).toEqual([
-    events[1],
-    events[2],
-  ])
+  expect(result).toEqual([events[1], events[2]])
 })
 
 test('getTimelineInfo should describe total duration and active window', () => {

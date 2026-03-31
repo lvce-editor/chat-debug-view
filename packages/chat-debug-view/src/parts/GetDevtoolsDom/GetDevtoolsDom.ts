@@ -1,7 +1,9 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { toTimeNumber } from '../GetEventTime/GetEventTime.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
+import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const timestampFormatter = new Intl.DateTimeFormat('en-US', {
@@ -32,19 +34,6 @@ const getTimestampText = (value: unknown): string => {
     return formatTimestamp(new Date(value))
   }
   return '-'
-}
-
-const toTimeNumber = (value: unknown): number | undefined => {
-  if (typeof value === 'number' && Number.isFinite(value)) {
-    return value
-  }
-  if (typeof value === 'string') {
-    const timestamp = Date.parse(value)
-    if (!Number.isNaN(timestamp)) {
-      return timestamp
-    }
-  }
-  return undefined
 }
 
 const getDurationText = (event: ChatViewEvent): string => {
@@ -90,6 +79,158 @@ const hasErrorStatus = (event: ChatViewEvent): boolean => {
 
 const getStatusText = (event: ChatViewEvent): string => {
   return hasErrorStatus(event) ? '400' : '200'
+}
+
+const formatTimelineSeconds = (value: number): string => {
+  if (Number.isInteger(value)) {
+    return `${value}s`
+  }
+  return `${Number(value.toFixed(1))}s`
+}
+
+const formatTimelinePresetValue = (value: number): string => {
+  return value.toFixed(3).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1')
+}
+
+const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
+  const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)
+  if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {
+    return `Window ${formatTimelineSeconds(timelineInfo.startSeconds)}-${formatTimelineSeconds(timelineInfo.endSeconds)} of ${formatTimelineSeconds(timelineInfo.durationSeconds)}`
+  }
+  return `Window 0s-${formatTimelineSeconds(timelineInfo.durationSeconds)} of ${formatTimelineSeconds(timelineInfo.durationSeconds)}`
+}
+
+const getTimelineNodes = (
+  timelineEvents: readonly ChatViewEvent[],
+  timelineStartSeconds: string,
+  timelineEndSeconds: string,
+): readonly VirtualDomNode[] => {
+  const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)
+  if (timelineInfo.buckets.length === 0) {
+    return []
+  }
+  return [
+    {
+      childCount: 3,
+      className: 'ChatDebugViewTimeline',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTimelineTop',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewTimelineTitle',
+      type: VirtualDomElements.Div,
+    },
+    text('Timeline'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewTimelineSummary',
+      type: VirtualDomElements.Div,
+    },
+    text(getTimelineSummary(timelineEvents, timelineStartSeconds, timelineEndSeconds)),
+    {
+      childCount: 3,
+      className: 'ChatDebugViewTimelineControls',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTimelineField',
+      type: VirtualDomElements.Label,
+    },
+    text('From'),
+    {
+      childCount: 0,
+      className: 'InputBox ChatDebugViewTimelineInput',
+      inputType: 'number',
+      name: InputName.TimelineStartSeconds,
+      onInput: DomEventListenerFunctions.HandleFilterInput,
+      placeholder: '0',
+      type: VirtualDomElements.Input,
+      value: timelineStartSeconds,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTimelineField',
+      type: VirtualDomElements.Label,
+    },
+    text('To'),
+    {
+      childCount: 0,
+      className: 'InputBox ChatDebugViewTimelineInput',
+      inputType: 'number',
+      name: InputName.TimelineEndSeconds,
+      onInput: DomEventListenerFunctions.HandleFilterInput,
+      placeholder: formatTimelinePresetValue(timelineInfo.durationSeconds),
+      type: VirtualDomElements.Input,
+      value: timelineEndSeconds,
+    },
+    {
+      childCount: 2,
+      className: `ChatDebugViewTimelineReset${timelineInfo.hasSelection ? '' : ' ChatDebugViewTimelineResetSelected'}`,
+      type: VirtualDomElements.Label,
+    },
+    {
+      checked: !timelineInfo.hasSelection,
+      childCount: 0,
+      className: 'ChatDebugViewTimelinePresetInput',
+      inputType: 'radio',
+      name: InputName.TimelineRangePreset,
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      type: VirtualDomElements.Input,
+      value: '',
+    },
+    text('All'),
+    {
+      childCount: timelineInfo.buckets.length,
+      className: 'ChatDebugViewTimelineBuckets',
+      type: VirtualDomElements.Div,
+    },
+    ...timelineInfo.buckets.flatMap((bucket) => {
+      const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
+      return [
+        {
+          childCount: 2,
+          className: `ChatDebugViewTimelineBucket${bucket.isSelected ? ' ChatDebugViewTimelineBucketSelected' : ''}`,
+          type: VirtualDomElements.Label,
+        },
+        {
+          checked: false,
+          childCount: 0,
+          className: 'ChatDebugViewTimelinePresetInput',
+          inputType: 'radio',
+          name: InputName.TimelineRangePreset,
+          onChange: DomEventListenerFunctions.HandleSimpleInput,
+          type: VirtualDomElements.Input,
+          value: presetValue,
+        },
+        {
+          childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
+          className: `ChatDebugViewTimelineBucketBar${bucket.isSelected ? ' ChatDebugViewTimelineBucketBarSelected' : ''}`,
+          type: VirtualDomElements.Div,
+        },
+        ...(bucket.unitCount === 0
+          ? [
+              {
+                childCount: 0,
+                className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
+                type: VirtualDomElements.Div,
+              },
+            ]
+          : new Array(bucket.unitCount).fill(0).map(() => {
+              return {
+                childCount: 0,
+                className: 'ChatDebugViewTimelineBucketUnit',
+                type: VirtualDomElements.Div,
+              }
+            })),
+      ]
+    }),
+  ]
 }
 
 const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
@@ -163,12 +304,19 @@ const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: n
   return rows
 }
 
-export const getDevtoolsDom = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
+export const getDevtoolsDom = (
+  events: readonly ChatViewEvent[],
+  selectedEventIndex: number | null,
+  timelineEvents: readonly ChatViewEvent[],
+  timelineStartSeconds: string,
+  timelineEndSeconds: string,
+): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
+  const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
-  const eventsClassName = hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'
+  const eventsClassName = `${hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'}${timelineNodes.length > 0 ? ' ChatDebugViewEvents--timeline' : ''}`
   const detailsNodes = hasSelectedEvent
     ? [
         {
@@ -211,10 +359,11 @@ export const getDevtoolsDom = (events: readonly ChatViewEvent[], selectedEventIn
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 2,
+      childCount: timelineNodes.length > 0 ? 3 : 2,
       className: eventsClassName,
       type: VirtualDomElements.Div,
     },
+    ...timelineNodes,
     {
       childCount: 5,
       className: 'ChatDebugViewTableHeader',

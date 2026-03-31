@@ -20,6 +20,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     showEventStreamFinishedEvents: false,
     showInputEvents: false,
     showResponsePartEvents: false,
+    timelineEndSeconds: '',
+    timelineStartSeconds: '',
     uid: 0,
     uri: '',
     useDevtoolsLayout: false,
