@@ -73,6 +73,36 @@ test('handleInput should set selectedEventIndex when selecting row', () => {
   expect(result.selectedEventIndex).toBe(2)
 })
 
+test('handleInput should update timeline start seconds', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.TimelineStartSeconds, '5', false)
+  expect(result.timelineStartSeconds).toBe('5')
+})
+
+test('handleInput should update timeline end seconds', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.TimelineEndSeconds, '7', false)
+  expect(result.timelineEndSeconds).toBe('7')
+})
+
+test('handleInput should clear timeline range', () => {
+  const state = {
+    ...createDefaultState(),
+    timelineEndSeconds: '7',
+    timelineStartSeconds: '5',
+  }
+  const result = HandleInput.handleInput(state, InputName.TimelineRangePreset, '', false)
+  expect(result.timelineStartSeconds).toBe('')
+  expect(result.timelineEndSeconds).toBe('')
+})
+
+test('handleInput should set timeline range from preset', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.TimelineRangePreset, '5:7', false)
+  expect(result.timelineStartSeconds).toBe('5')
+  expect(result.timelineEndSeconds).toBe('7')
+})
+
 test('handleInput should close details panel', () => {
   const state = {
     ...createDefaultState(),

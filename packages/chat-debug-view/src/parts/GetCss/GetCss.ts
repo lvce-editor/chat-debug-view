@@ -9,6 +9,10 @@ export const getCss = (): string => {
   gap: 8px;
 }
 
+.ChatDebugView--devtools {
+  gap: 4px;
+}
+
 .ChatDebugViewTop {
   display: flex;
   align-items: center;
@@ -158,10 +162,6 @@ export const getCss = (): string => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.ChatDebugViewCellType {
-  font-weight: 600;
 }
 
 .ChatDebugViewCellDuration {

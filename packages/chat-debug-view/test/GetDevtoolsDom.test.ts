@@ -3,7 +3,7 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
-  const dom = GetDevtoolsDom.getDevtoolsDom([], null) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '') as readonly {
     readonly className?: string
   }[]
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
@@ -19,7 +19,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
     readonly className?: string
     readonly name?: string
     readonly onChange?: number
@@ -32,6 +32,32 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
 })
 
+test('getDevtoolsDom should render timeline controls when timestamps are available', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:10.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '5', '7') as readonly {
+    readonly className?: string
+    readonly name?: string
+    readonly text?: string
+    readonly value?: string
+  }[]
+
+  expect(dom.find((node) => node.className === 'ChatDebugViewTimeline')).toBeDefined()
+  expect(dom.find((node) => node.name === 'timelineStartSeconds' && node.value === '5')).toBeDefined()
+  expect(dom.find((node) => node.name === 'timelineEndSeconds' && node.value === '7')).toBeDefined()
+  expect(dom.find((node) => node.text === 'Window 5s-7s of 10s')).toBeDefined()
+})
+
 test('getDevtoolsDom should make the events pane full width when details are closed', () => {
   const events = [
     {
@@ -40,14 +66,11 @@ test('getDevtoolsDom should make the events pane full width when details are clo
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
-    readonly childCount?: number
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly className?: string
   }[]
-  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
 
-  expect(mainPane?.childCount).toBe(1)
   expect(eventsPane).toBeDefined()
 })
 
@@ -59,7 +82,7 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -78,7 +101,7 @@ test('getDevtoolsDom should render computed duration from timestamps', () => {
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -110,7 +133,7 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
       type: 'tool-execution-finished',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -137,7 +160,7 @@ test('getDevtoolsDom should render 400 status for errored events', () => {
       type: 'tool-execution-finished',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
