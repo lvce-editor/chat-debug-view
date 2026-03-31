@@ -85,6 +85,44 @@ const getTimelineNodes = (
   if (timelineInfo.buckets.length === 0) {
     return []
   }
+  const bucketNodes: readonly VirtualDomNode[] = timelineInfo.buckets.flatMap((bucket): readonly VirtualDomNode[] => {
+    const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
+    return [
+      {
+        childCount: 2,
+        className: `ChatDebugViewTimelineBucket${bucket.isSelected ? ' ChatDebugViewTimelineBucketSelected' : ''}`,
+        type: VirtualDomElements.Label,
+      },
+      {
+        checked: false,
+        childCount: 0,
+        className: 'ChatDebugViewTimelinePresetInput',
+        inputType: 'radio',
+        name: InputName.TimelineRangePreset,
+        onChange: DomEventListenerFunctions.HandleSimpleInput,
+        type: VirtualDomElements.Input,
+        value: presetValue,
+      },
+      {
+        childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
+        className: `ChatDebugViewTimelineBucketBar${bucket.isSelected ? ' ChatDebugViewTimelineBucketBarSelected' : ''}`,
+        type: VirtualDomElements.Div,
+      },
+      ...(bucket.unitCount === 0
+        ? [
+            {
+              childCount: 0,
+              className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
+              type: VirtualDomElements.Div,
+            },
+          ]
+        : Array.from({ length: bucket.unitCount }).fill({
+            childCount: 0,
+            className: 'ChatDebugViewTimelineBucketUnit',
+            type: VirtualDomElements.Div,
+          })),
+    ]
+  })
   return [
     {
       childCount: 3,
@@ -166,7 +204,7 @@ const getTimelineNodes = (
       className: 'ChatDebugViewTimelineBuckets',
       type: VirtualDomElements.Div,
     },
-    ...timelineInfo.buckets.flatMap<VirtualDomNode>((bucket) => {
+    ...timelineInfo.buckets.flatMap((bucket): readonly VirtualDomNode[] => {
       const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
       return [
         {
@@ -180,44 +218,7 @@ const getTimelineNodes = (
           className: 'ChatDebugViewTimelinePresetInput',
           inputType: 'radio',
           name: InputName.TimelineRangePreset,
-          onChange: DomEventListenerFunctions.HandleSimpleInput,
-          type: VirtualDomElements.Input,
-          value: presetValue,
-        },
-        {
-          childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
-          className: `ChatDebugViewTimelineBucketBar${bucket.isSelected ? ' ChatDebugViewTimelineBucketBarSelected' : ''}`,
-          type: VirtualDomElements.Div,
-        },
-        ...(bucket.unitCount === 0
-          ? [
-              {
-                childCount: 0,
-                className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
-                type: VirtualDomElements.Div,
-              },
-            ]
-          : Array.from({ length: bucket.unitCount }).fill({
-              childCount: 0,
-              className: 'ChatDebugViewTimelineBucketUnit',
-              type: VirtualDomElements.Div,
-            })),
-      ]
-    }),
-  ]
-}
-
-const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
-  if (events.length === 0) {
-    return [
-      {
-        childCount: 1,
-        className: 'ChatDebugViewEmpty',
-        type: VirtualDomElements.Div,
-      },
-      text('No events'),
-    ]
-  }
+          ...bucketNodes,
   const rows: VirtualDomNode[] = []
   for (let i = 0; i < events.length; i++) {
     const event = events[i]
