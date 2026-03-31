@@ -5,7 +5,7 @@ import { renderItems } from '../RenderItems/RenderItems.ts'
 
 export const renderIncremental = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, readonly unknown[]] => {
   const oldDom = renderItems(oldState, oldState)[2]
-  const newDom = renderItems(oldState, newState)[2]
+  const newDom = renderItems(newState, newState)[2]
   const patches = diffTree(oldDom, newDom)
   return [ViewletCommand.SetPatches, newState.uid, patches]
 }
