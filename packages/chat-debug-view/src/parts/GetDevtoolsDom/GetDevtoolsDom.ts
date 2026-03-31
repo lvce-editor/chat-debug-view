@@ -169,9 +169,44 @@ export const getDevtoolsDom = (events: readonly ChatViewEvent[], selectedEventIn
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
   const eventsClassName = hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'
+  const detailsNodes = hasSelectedEvent
+    ? [
+        {
+          childCount: 2,
+          className: 'ChatDebugViewDetails',
+          type: VirtualDomElements.Div,
+        },
+        {
+          childCount: 2,
+          className: 'ChatDebugViewDetailsTop',
+          type: VirtualDomElements.Div,
+        },
+        {
+          childCount: 1,
+          className: 'ChatDebugViewDetailsTitle',
+          type: VirtualDomElements.Div,
+        },
+        text('Details'),
+        {
+          childCount: 0,
+          className: 'ChatDebugViewDetailsClose',
+          inputType: 'checkbox',
+          name: InputName.CloseDetails,
+          onChange: DomEventListenerFunctions.HandleSimpleInput,
+          type: VirtualDomElements.Input,
+          value: 'close',
+        },
+        {
+          childCount: selectedEventNodes.length,
+          className: 'ChatDebugViewDetailsBody',
+          type: VirtualDomElements.Div,
+        },
+        ...selectedEventNodes,
+      ]
+    : []
   return [
     {
-      childCount: 2,
+      childCount: hasSelectedEvent ? 2 : 1,
       className: 'ChatDebugViewDevtoolsMain',
       type: VirtualDomElements.Div,
     },
@@ -221,40 +256,6 @@ export const getDevtoolsDom = (events: readonly ChatViewEvent[], selectedEventIn
       type: VirtualDomElements.Div,
     },
     ...rowNodes,
-    ...(hasSelectedEvent
-      ? [
-          {
-            childCount: 2,
-            className: 'ChatDebugViewDetails',
-            type: VirtualDomElements.Div,
-          },
-          {
-            childCount: 2,
-            className: 'ChatDebugViewDetailsTop',
-            type: VirtualDomElements.Div,
-          },
-          {
-            childCount: 1,
-            className: 'ChatDebugViewDetailsTitle',
-            type: VirtualDomElements.Div,
-          },
-          text('Details'),
-          {
-            childCount: 0,
-            className: 'ChatDebugViewDetailsClose',
-            inputType: 'checkbox',
-            name: InputName.CloseDetails,
-            onChange: DomEventListenerFunctions.HandleSimpleInput,
-            type: VirtualDomElements.Input,
-            value: 'close',
-          },
-          {
-            childCount: selectedEventNodes.length,
-            className: 'ChatDebugViewDetailsBody',
-            type: VirtualDomElements.Div,
-          },
-          ...selectedEventNodes,
-        ]
-      : []),
+    ...detailsNodes,
   ]
 }

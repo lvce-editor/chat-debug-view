@@ -41,11 +41,31 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     },
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+    readonly childCount?: number
     readonly className?: string
   }[]
+  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
 
+  expect(mainPane?.childCount).toBe(1)
   expect(eventsPane).toBeDefined()
+})
+
+test('getDevtoolsDom should keep details as a second split-pane child when selected', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
+
+  expect(mainPane?.childCount).toBe(2)
 })
 
 test('getDevtoolsDom should render computed duration from timestamps', () => {

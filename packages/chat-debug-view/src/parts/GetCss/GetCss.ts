@@ -71,7 +71,11 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewEvents {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   overflow: auto;
+  min-width: 0;
+  min-height: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--vscode-scrollbarSlider-background, rgba(121, 121, 121, 0.4)) transparent;
 }
@@ -88,9 +92,11 @@ export const getCss = (): string => {
 
 .ChatDebugViewDevtoolsMain {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(280px, 45%);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
   gap: 8px;
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
 }
 
 .ChatDebugViewTableHeader,
@@ -119,6 +125,7 @@ export const getCss = (): string => {
 
 .ChatDebugViewTableBody {
   overflow: auto;
+  min-height: 0;
 }
 
 .ChatDebugViewEventRowLabel {
@@ -169,6 +176,7 @@ export const getCss = (): string => {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   overflow: hidden;
+  min-width: 0;
   min-height: 0;
   display: grid;
   grid-template-rows: auto 1fr;

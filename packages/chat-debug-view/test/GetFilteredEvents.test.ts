@@ -98,7 +98,5 @@ test('getFilteredEvents should combine @tools filter with text search', () => {
 
 test('getFilteredEvents should show only network events for network category filter', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', EventCategoryFilter.Network, true, true, true)
-  expect(result).toEqual([
-    events[2],
-  ])
+  expect(result).toEqual([events[2]])
 })
