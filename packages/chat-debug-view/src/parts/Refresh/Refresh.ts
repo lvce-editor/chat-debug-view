@@ -8,5 +8,6 @@ export const refresh = async (state: ChatDebugViewState): Promise<ChatDebugViewS
     errorMessage: '',
     events,
     initial: false,
+    selectedEventIndex: null,
   }
 }

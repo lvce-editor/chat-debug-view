@@ -10,6 +10,8 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.showEventStreamFinishedEvents !== newState.showEventStreamFinishedEvents ||
     oldState.showInputEvents !== newState.showInputEvents ||
     oldState.showResponsePartEvents !== newState.showResponsePartEvents ||
+    oldState.useDevtoolsLayout !== newState.useDevtoolsLayout ||
+    oldState.selectedEventIndex !== newState.selectedEventIndex ||
     oldState.uid !== newState.uid
   ) {
     return [DiffType.RenderIncremental, DiffType.RenderCss]
