@@ -127,12 +127,10 @@ export const getTimelineNodes = (
                 type: VirtualDomElements.Div,
               },
             ]
-          : Array.from({ length: bucket.unitCount }, () => {
-              return {
-                childCount: 0,
-                className: 'ChatDebugViewTimelineBucketUnit',
-                type: VirtualDomElements.Div,
-              }
+          : Array.from({ length: bucket.unitCount }).fill({
+              childCount: 0,
+              className: 'ChatDebugViewTimelineBucketUnit',
+              type: VirtualDomElements.Div,
             })),
       ]
     }),
