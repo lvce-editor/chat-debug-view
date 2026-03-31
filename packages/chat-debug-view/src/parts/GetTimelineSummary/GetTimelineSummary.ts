@@ -8,11 +8,7 @@ const formatTimelineSeconds = (value: number): string => {
   return `${Number(value.toFixed(1))}s`
 }
 
-export const getTimelineSummary = (
-  timelineEvents: readonly ChatViewEvent[],
-  timelineStartSeconds: string,
-  timelineEndSeconds: string,
-): string => {
+export const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
   const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)
   if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {
     return `Window ${formatTimelineSeconds(timelineInfo.startSeconds)}-${formatTimelineSeconds(timelineInfo.endSeconds)} of ${formatTimelineSeconds(timelineInfo.durationSeconds)}`
