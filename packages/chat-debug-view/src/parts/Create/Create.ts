@@ -32,6 +32,7 @@ export const create = (
     width,
     x,
     y,
+    initial: true,
   }
   ChatDebugViewStates.set(uid, state, state)
 }

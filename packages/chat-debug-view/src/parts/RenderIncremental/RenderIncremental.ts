@@ -7,5 +7,6 @@ export const renderIncremental = (oldState: ChatDebugViewState, newState: ChatDe
   const oldDom = renderItems(oldState, oldState)[2]
   const newDom = renderItems(newState, newState)[2]
   const patches = diffTree(oldDom, newDom)
+  console.log({ newDom, oldDom, patches })
   return [ViewletCommand.SetPatches, newState.uid, patches]
 }
