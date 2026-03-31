@@ -61,9 +61,7 @@ export const getChatDebugViewDom = (
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
-  const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(events, safeSelectedEventIndex)
-    : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
+  const contentNodes = useDevtoolsLayout ? getDevtoolsDom(events, safeSelectedEventIndex) : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
 
   return [
     {

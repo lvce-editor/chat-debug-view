@@ -24,6 +24,7 @@ export const create = (
     dataBaseVersion,
     eventStoreName,
     height,
+    initial: true,
     platform,
     sessionId,
     sessionIdIndexName,
@@ -32,7 +33,6 @@ export const create = (
     width,
     x,
     y,
-    initial: true,
   }
   ChatDebugViewStates.set(uid, state, state)
 }
