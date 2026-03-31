@@ -32,6 +32,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.showEventStreamFinishedEvents,
     newState.showInputEvents,
     newState.showResponsePartEvents,
+    newState.useDevtoolsLayout,
+    newState.selectedEventIndex,
     filteredEvents,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
