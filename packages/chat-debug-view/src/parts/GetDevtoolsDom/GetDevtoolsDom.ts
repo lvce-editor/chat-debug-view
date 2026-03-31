@@ -1,8 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { toTimeNumber } from '../GetEventTime/GetEventTime.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
+import { toTimeNumber } from '../GetEventTime/GetEventTime.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 
@@ -64,7 +64,7 @@ const hasErrorStatus = (event: ChatViewEvent): boolean => {
   if (event.success === false || event.ok === false) {
     return true
   }
-  const status = event.status
+  const { status } = event
   if (typeof status === 'number' && status >= 400) {
     return true
   }
@@ -89,7 +89,10 @@ const formatTimelineSeconds = (value: number): string => {
 }
 
 const formatTimelinePresetValue = (value: number): string => {
-  return value.toFixed(3).replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1')
+  return value
+    .toFixed(3)
+    .replace(/\.0+$/, '')
+    .replace(/(\.\d*?)0+$/, '$1')
 }
 
 const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {

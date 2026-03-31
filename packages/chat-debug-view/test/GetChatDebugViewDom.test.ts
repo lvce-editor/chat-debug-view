@@ -4,7 +4,7 @@ import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCate
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
     readonly autocomplete?: string
     readonly inputType?: string
     readonly name?: string
@@ -22,7 +22,7 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
 })
 
 test('getChatDebugViewDom should include devtools layout toggle', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
     readonly checked?: boolean
     readonly name?: string
   }[]
@@ -33,7 +33,7 @@ test('getChatDebugViewDom should include devtools layout toggle', () => {
 })
 
 test('getChatDebugViewDom should render quick filter pills in devtools layout', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
     readonly checked?: boolean
     readonly className?: string
     readonly name?: string
@@ -56,7 +56,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
       type: 'request',
     },
   ]
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, 0, events) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, 0, '', '', events, events) as readonly {
     readonly className?: string
     readonly name?: string
   }[]

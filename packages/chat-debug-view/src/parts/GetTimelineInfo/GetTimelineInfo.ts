@@ -75,11 +75,7 @@ const getNormalizedRange = (
   }
 }
 
-export const filterEventsByTimelineRange = (
-  events: readonly ChatViewEvent[],
-  startValue: string,
-  endValue: string,
-): readonly ChatViewEvent[] => {
+export const filterEventsByTimelineRange = (events: readonly ChatViewEvent[], startValue: string, endValue: string): readonly ChatViewEvent[] => {
   const eventsWithTime = getEventsWithTime(events)
   if (eventsWithTime.length === 0) {
     return events

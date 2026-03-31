@@ -16,8 +16,7 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     width,
     x,
     y,
-  } =
-    state
+  } = state
   return {
     eventCategoryFilter,
     filterValue,
