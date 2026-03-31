@@ -56,7 +56,20 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
       type: 'request',
     },
   ]
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, 0, '', '', events, events) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    true,
+    0,
+    '',
+    '',
+    events,
+    events,
+  ) as readonly {
     readonly className?: string
     readonly name?: string
   }[]

@@ -5,7 +5,7 @@ import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-const getCurrentEvents = (state: ChatDebugViewState) => {
+const getCurrentEvents = (state: ChatDebugViewState): readonly import('../ChatViewEvent/ChatViewEvent.ts').ChatViewEvent[] => {
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,

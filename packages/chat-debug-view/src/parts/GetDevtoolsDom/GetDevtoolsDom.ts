@@ -18,7 +18,10 @@ const timestampFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 })
 
-const formatTimestamp = (date: Date): string => {
+const trailingZeroFractionRegex = /\.0+$/
+const trailingFractionZeroRegex = /(\.\d*?)0+$/
+
+const formatTimestamp = (date: Readonly<Date>): string => {
   return `${timestampFormatter.format(date)} UTC`
 }
 
@@ -91,8 +94,8 @@ const formatTimelineSeconds = (value: number): string => {
 const formatTimelinePresetValue = (value: number): string => {
   return value
     .toFixed(3)
-    .replace(/\.0+$/, '')
-    .replace(/(\.\d*?)0+$/, '$1')
+    .replace(trailingZeroFractionRegex, '')
+    .replace(trailingFractionZeroRegex, '$1')
 }
 
 const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {

@@ -81,7 +81,7 @@ export const filterEventsByTimelineRange = (events: readonly ChatViewEvent[], st
     return events
   }
   const baseTime = eventsWithTime[0].time
-  const lastTime = eventsWithTime[eventsWithTime.length - 1].time
+  const lastTime = eventsWithTime.at(-1)?.time ?? baseTime
   const durationSeconds = roundSeconds(Math.max(0, lastTime - baseTime) / 1000)
   const range = getNormalizedRange(durationSeconds, startValue, endValue)
   if (!range.hasSelection || range.startSeconds === null || range.endSeconds === null) {
@@ -104,13 +104,13 @@ export const getTimelineInfo = (events: readonly ChatViewEvent[], startValue: st
     }
   }
   const baseTime = eventsWithTime[0].time
-  const lastTime = eventsWithTime[eventsWithTime.length - 1].time
+  const lastTime = eventsWithTime.at(-1)?.time ?? baseTime
   const durationMs = Math.max(0, lastTime - baseTime)
   const durationSeconds = roundSeconds(durationMs / 1000)
   const range = getNormalizedRange(durationSeconds, startValue, endValue)
   const bucketCount = durationSeconds === 0 ? 1 : Math.max(12, Math.min(48, Math.ceil(durationSeconds)))
   const bucketDurationMs = durationMs === 0 ? 1000 : durationMs / bucketCount
-  const counts = new Array<number>(bucketCount).fill(0)
+  const counts = Array.from<number>({ length: bucketCount }).fill(0)
   for (const item of eventsWithTime) {
     const offsetMs = item.time - baseTime
     const index = durationMs === 0 ? 0 : Math.min(bucketCount - 1, Math.floor((offsetMs / durationMs) * bucketCount))

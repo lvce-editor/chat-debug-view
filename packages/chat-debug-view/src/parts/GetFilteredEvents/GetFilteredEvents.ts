@@ -23,14 +23,14 @@ const isStreamEvent = (event: ChatViewEvent): boolean => {
 
 const matchesEventCategoryFilter = (event: ChatViewEvent, eventCategoryFilter: string): boolean => {
   switch (eventCategoryFilter) {
-    case EventCategoryFilter.Tools:
-      return isToolEvent(event)
     case EventCategoryFilter.Network:
       return isNetworkEvent(event)
-    case EventCategoryFilter.Ui:
-      return isUiEvent(event)
     case EventCategoryFilter.Stream:
       return isStreamEvent(event)
+    case EventCategoryFilter.Tools:
+      return isToolEvent(event)
+    case EventCategoryFilter.Ui:
+      return isUiEvent(event)
     default:
       return true
   }

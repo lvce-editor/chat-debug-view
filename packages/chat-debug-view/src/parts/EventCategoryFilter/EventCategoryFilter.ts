@@ -29,14 +29,14 @@ export const options = [
 
 export const getEventCategoryFilterLabel = (eventCategoryFilter: string): string => {
   switch (eventCategoryFilter) {
-    case Tools:
-      return 'Tools'
     case Network:
       return 'Network'
-    case Ui:
-      return 'UI'
     case Stream:
       return 'Stream'
+    case Tools:
+      return 'Tools'
+    case Ui:
+      return 'UI'
     default:
       return 'All'
   }
