@@ -204,21 +204,21 @@ const getTimelineNodes = (
       className: 'ChatDebugViewTimelineBuckets',
       type: VirtualDomElements.Div,
     },
-    ...timelineInfo.buckets.flatMap((bucket): readonly VirtualDomNode[] => {
-      const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
-      return [
-        {
-          childCount: 2,
-          className: `ChatDebugViewTimelineBucket${bucket.isSelected ? ' ChatDebugViewTimelineBucketSelected' : ''}`,
-          type: VirtualDomElements.Label,
-        },
-        {
-          checked: false,
-          childCount: 0,
-          className: 'ChatDebugViewTimelinePresetInput',
-          inputType: 'radio',
-          name: InputName.TimelineRangePreset,
-          ...bucketNodes,
+    ...bucketNodes,
+  ]
+}
+
+const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
+  if (events.length === 0) {
+    return [
+      {
+        childCount: 1,
+        className: 'ChatDebugViewEmpty',
+        type: VirtualDomElements.Div,
+      },
+      text('No events'),
+    ]
+  }
   const rows: VirtualDomNode[] = []
   for (let i = 0; i < events.length; i++) {
     const event = events[i]
@@ -327,7 +327,6 @@ export const getDevtoolsDom = (
   timelineEndSeconds: string,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
-  const tableHeaderNodes = getDevtoolsTableHeaderDom()
   const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
@@ -380,7 +379,41 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
-    ...tableHeaderNodes,
+    {
+      childCount: 5,
+      className: 'ChatDebugViewTableHeader',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
+      type: VirtualDomElements.Div,
+    },
+    text('Type'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      type: VirtualDomElements.Div,
+    },
+    text('Started'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      type: VirtualDomElements.Div,
+    },
+    text('Ended'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Div,
+    },
+    text('Duration'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
+      type: VirtualDomElements.Div,
+    },
+    text('Status'),
     {
       childCount: rowNodes.length === 0 ? 1 : rowNodes.length,
       className: 'ChatDebugViewTableBody',
