@@ -1,9 +1,10 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
-import { toTimeNumber } from '../GetEventTime/GetEventTime.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const timestampFormatter = new Intl.DateTimeFormat('en-US', {
@@ -39,19 +40,6 @@ const getTimestampText = (value: unknown): string => {
   return '-'
 }
 
-const getDurationText = (event: ChatViewEvent): string => {
-  const explicitDuration = event.durationMs ?? event.duration
-  if (typeof explicitDuration === 'number' && Number.isFinite(explicitDuration)) {
-    return `${explicitDuration}ms`
-  }
-  const start = toTimeNumber(event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp)
-  const end = toTimeNumber(event.ended ?? event.endTime ?? event.endTimestamp ?? event.timestamp)
-  if (start === undefined || end === undefined || end < start) {
-    return '-'
-  }
-  return `${end - start}ms`
-}
-
 const getStartText = (event: ChatViewEvent): string => {
   return getTimestampText(event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp)
 }
@@ -84,23 +72,8 @@ const getStatusText = (event: ChatViewEvent): string => {
   return hasErrorStatus(event) ? '400' : '200'
 }
 
-const formatTimelineSeconds = (value: number): string => {
-  if (Number.isInteger(value)) {
-    return `${value}s`
-  }
-  return `${Number(value.toFixed(1))}s`
-}
-
 const formatTimelinePresetValue = (value: number): string => {
   return value.toFixed(3).replace(trailingZeroFractionRegex, '').replace(trailingFractionZeroRegex, '$1')
-}
-
-const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
-  const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)
-  if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {
-    return `Window ${formatTimelineSeconds(timelineInfo.startSeconds)}-${formatTimelineSeconds(timelineInfo.endSeconds)} of ${formatTimelineSeconds(timelineInfo.durationSeconds)}`
-  }
-  return `Window 0s-${formatTimelineSeconds(timelineInfo.durationSeconds)} of ${formatTimelineSeconds(timelineInfo.durationSeconds)}`
 }
 
 const getTimelineNodes = (
@@ -193,7 +166,7 @@ const getTimelineNodes = (
       className: 'ChatDebugViewTimelineBuckets',
       type: VirtualDomElements.Div,
     },
-    ...timelineInfo.buckets.flatMap((bucket) => {
+    ...timelineInfo.buckets.flatMap<VirtualDomNode>((bucket) => {
       const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
       return [
         {
@@ -305,6 +278,46 @@ const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: n
   return rows
 }
 
+const getDevtoolsTableHeaderDom = (): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 5,
+      className: 'ChatDebugViewTableHeader',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
+      type: VirtualDomElements.Div,
+    },
+    text('Type'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      type: VirtualDomElements.Div,
+    },
+    text('Started'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      type: VirtualDomElements.Div,
+    },
+    text('Ended'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Div,
+    },
+    text('Duration'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
+      type: VirtualDomElements.Div,
+    },
+    text('Status'),
+  ]
+}
+
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
   selectedEventIndex: number | null,
@@ -313,6 +326,7 @@ export const getDevtoolsDom = (
   timelineEndSeconds: string,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
+  const tableHeaderNodes = getDevtoolsTableHeaderDom()
   const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
@@ -365,41 +379,7 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
-    {
-      childCount: 5,
-      className: 'ChatDebugViewTableHeader',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
-      type: VirtualDomElements.Div,
-    },
-    text('Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
-      type: VirtualDomElements.Div,
-    },
-    text('Duration'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
-      type: VirtualDomElements.Div,
-    },
-    text('Status'),
+    ...tableHeaderNodes,
     {
       childCount: rowNodes.length === 0 ? 1 : rowNodes.length,
       className: 'ChatDebugViewTableBody',
