@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as HandleInput from '../src/parts/HandleInput/HandleInput.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -7,6 +8,12 @@ test('handleInput should update filter value', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.Filter, 'error', false)
   expect(result.filterValue).toBe('error')
+})
+
+test('handleInput should update event category filter', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.EventCategoryFilter, EventCategoryFilter.Tools, 'on')
+  expect(result.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
 })
 
 test('handleInput should set showInputEvents to true for on value', () => {
@@ -93,6 +100,29 @@ test('handleInput should preserve selected event when filter still includes it',
     selectedEventIndex: 1,
   }
   const result = HandleInput.handleInput(state, InputName.Filter, 'response', false)
+  expect(result.selectedEventIndex).toBe(0)
+})
+
+test('handleInput should preserve selected event when category filter still includes it', () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        toolName: 'read_file',
+        type: 'tool-execution-started',
+      },
+      {
+        path: '/chat',
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'request',
+      },
+    ],
+    selectedEventIndex: 0,
+  }
+  const result = HandleInput.handleInput(state, InputName.EventCategoryFilter, EventCategoryFilter.Tools, 'on')
   expect(result.selectedEventIndex).toBe(0)
 })
 

@@ -13,6 +13,7 @@ export const getCss = (): string => {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .ChatDebugViewTop .InputBox {
@@ -37,6 +38,38 @@ export const getCss = (): string => {
   opacity: 0.8;
 }
 
+.ChatDebugViewQuickFilters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ChatDebugViewQuickFilterPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border-radius: 999px;
+  background: var(--vscode-editorWidget-background, transparent);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.ChatDebugViewQuickFilterPillSelected {
+  border-color: var(--vscode-focusBorder, #007fd4);
+  background: var(--vscode-list-activeSelectionBackground, rgba(14, 99, 156, 0.35));
+  color: var(--vscode-list-activeSelectionForeground, inherit);
+}
+
+.ChatDebugViewQuickFilterInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .ChatDebugViewEvents {
   overflow: auto;
   scrollbar-width: thin;
@@ -49,6 +82,10 @@ export const getCss = (): string => {
   margin-bottom: 0;
 }
 
+.ChatDebugViewEventsFullWidth {
+  grid-column: 1 / -1;
+}
+
 .ChatDebugViewDevtoolsMain {
   display: grid;
   grid-template-columns: minmax(320px, 1fr) minmax(280px, 45%);
@@ -59,7 +96,7 @@ export const getCss = (): string => {
 .ChatDebugViewTableHeader,
 .ChatDebugViewEventRow {
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(180px, 1fr) minmax(180px, 1fr) 90px;
+  grid-template-columns: minmax(140px, 1fr) minmax(180px, 1fr) minmax(180px, 1fr) 90px 64px;
   align-items: center;
   gap: 8px;
 }
@@ -121,6 +158,10 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewCellDuration {
+  text-align: right;
+}
+
+.ChatDebugViewCellStatus {
   text-align: right;
 }
 

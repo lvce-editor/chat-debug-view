@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -25,9 +26,41 @@ const getLegacyEventsDom = (errorMessage: string, emptyMessage: string, eventNod
   ]
 }
 
+const getQuickFilterNodes = (eventCategoryFilter: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: EventCategoryFilter.options.length,
+      className: 'ChatDebugViewQuickFilters',
+      type: VirtualDomElements.Div,
+    },
+    ...EventCategoryFilter.options.flatMap((option) => {
+      const isSelected = option.value === eventCategoryFilter
+      return [
+        {
+          childCount: 2,
+          className: `ChatDebugViewQuickFilterPill${isSelected ? ' ChatDebugViewQuickFilterPillSelected' : ''}`,
+          type: VirtualDomElements.Label,
+        },
+        {
+          checked: isSelected,
+          childCount: 0,
+          className: 'ChatDebugViewQuickFilterInput',
+          inputType: 'radio',
+          name: InputName.EventCategoryFilter,
+          onChange: DomEventListenerFunctions.HandleInput,
+          type: VirtualDomElements.Input,
+          value: option.value,
+        },
+        text(option.label),
+      ]
+    }),
+  ]
+}
+
 export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
+  eventCategoryFilter: string,
   showEventStreamFinishedEvents: boolean,
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
@@ -53,8 +86,16 @@ export const getChatDebugViewDom = (
 
   const eventNodes = events.flatMap(getEventNode)
   const trimmedFilterValue = filterValue.trim()
-  const hasFilterValue = trimmedFilterValue.length > 0
-  const noFilteredEventsMessage = `no events found matching ${trimmedFilterValue}`
+  const filterDescriptionParts = []
+  if (eventCategoryFilter !== EventCategoryFilter.All) {
+    filterDescriptionParts.push(EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase())
+  }
+  if (trimmedFilterValue) {
+    filterDescriptionParts.push(trimmedFilterValue)
+  }
+  const hasFilterValue = filterDescriptionParts.length > 0
+  const filterDescription = filterDescriptionParts.join(' ')
+  const noFilteredEventsMessage = `no events found matching ${filterDescription}`
   const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
   const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
 
@@ -62,10 +103,12 @@ export const getChatDebugViewDom = (
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
   const contentNodes = useDevtoolsLayout ? getDevtoolsDom(events, safeSelectedEventIndex) : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
+  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
+  const rootChildCount = useDevtoolsLayout ? 4 : 3
 
   return [
     {
-      childCount: 3,
+      childCount: rootChildCount,
       className: useDevtoolsLayout ? 'ChatDebugView ChatDebugView--devtools' : 'ChatDebugView',
       type: VirtualDomElements.Div,
     },
@@ -146,6 +189,7 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Input,
     },
     text('Use devtools layout'),
+    ...quickFilterNodes,
     {
       childCount: 1,
       className: 'ChatDebugViewEventCount',

@@ -1,4 +1,5 @@
 export interface SavedState {
+  readonly eventCategoryFilter: string
   readonly filterValue: string
   readonly height: number
   readonly sessionId: string

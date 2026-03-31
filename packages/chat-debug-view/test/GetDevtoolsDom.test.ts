@@ -32,6 +32,22 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
 })
 
+test('getDevtoolsDom should make the events pane full width when details are closed', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+    readonly className?: string
+  }[]
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+
+  expect(eventsPane).toBeDefined()
+})
+
 test('getDevtoolsDom should render computed duration from timestamps', () => {
   const events = [
     {
@@ -49,6 +65,65 @@ test('getDevtoolsDom should render computed duration from timestamps', () => {
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '250ms',
+    }),
+  )
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Mar 08, 2026, 00:00:01.000 UTC',
+    }),
+  )
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Mar 08, 2026, 00:00:01.250 UTC',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render 200 status for successful events', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      toolName: 'read_file',
+      type: 'tool-execution-finished',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Status',
+    }),
+  )
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '200',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render 400 status for errored events', () => {
+  const events = [
+    {
+      error: 'tool call failed',
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      toolName: 'apply_patch',
+      type: 'tool-execution-finished',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null) as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '400',
     }),
   )
 })

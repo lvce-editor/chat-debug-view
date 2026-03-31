@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
   return {
@@ -6,6 +7,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
     errorMessage: '',
+    eventCategoryFilter: EventCategoryFilter.All,
     events: [],
     eventStoreName: 'chat-view-events',
     filterValue: '',

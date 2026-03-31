@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -11,6 +12,7 @@ const getSelectedEventIndex = (state: ChatDebugViewState): number | null => {
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,
+    state.eventCategoryFilter,
     state.showInputEvents,
     state.showResponsePartEvents,
     state.showEventStreamFinishedEvents,
@@ -34,6 +36,7 @@ const getPreservedSelectedEventIndex = (oldState: ChatDebugViewState, newState: 
   const oldFilteredEvents = getFilteredEvents(
     oldState.events,
     oldState.filterValue,
+    oldState.eventCategoryFilter,
     oldState.showInputEvents,
     oldState.showResponsePartEvents,
     oldState.showEventStreamFinishedEvents,
@@ -45,6 +48,7 @@ const getPreservedSelectedEventIndex = (oldState: ChatDebugViewState, newState: 
   const newFilteredEvents = getFilteredEvents(
     newState.events,
     newState.filterValue,
+    newState.eventCategoryFilter,
     newState.showInputEvents,
     newState.showResponsePartEvents,
     newState.showEventStreamFinishedEvents,
@@ -69,6 +73,16 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     const nextState = {
       ...state,
       filterValue: value,
+    }
+    return {
+      ...nextState,
+      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
+    }
+  }
+  if (name === InputName.EventCategoryFilter) {
+    const nextState = {
+      ...state,
+      eventCategoryFilter: value || EventCategoryFilter.All,
     }
     return {
       ...nextState,

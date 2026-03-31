@@ -23,6 +23,16 @@ test('diff should return RenderIncremental and RenderCss when filter changes', (
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
 })
 
+test('diff should return RenderIncremental and RenderCss when event category filter changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    eventCategoryFilter: 'tools',
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
 test('diff should return RenderIncremental and RenderCss when showResponsePartEvents changes', () => {
   const oldState = createDefaultState()
   const newState = {
