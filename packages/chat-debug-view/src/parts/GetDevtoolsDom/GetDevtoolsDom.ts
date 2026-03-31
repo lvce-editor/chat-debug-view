@@ -92,10 +92,7 @@ const formatTimelineSeconds = (value: number): string => {
 }
 
 const formatTimelinePresetValue = (value: number): string => {
-  return value
-    .toFixed(3)
-    .replace(trailingZeroFractionRegex, '')
-    .replace(trailingFractionZeroRegex, '$1')
+  return value.toFixed(3).replace(trailingZeroFractionRegex, '').replace(trailingFractionZeroRegex, '$1')
 }
 
 const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
@@ -227,12 +224,10 @@ const getTimelineNodes = (
                 type: VirtualDomElements.Div,
               },
             ]
-          : new Array(bucket.unitCount).fill(0).map(() => {
-              return {
-                childCount: 0,
-                className: 'ChatDebugViewTimelineBucketUnit',
-                type: VirtualDomElements.Div,
-              }
+          : Array.from({ length: bucket.unitCount }).fill({
+              childCount: 0,
+              className: 'ChatDebugViewTimelineBucketUnit',
+              type: VirtualDomElements.Div,
             })),
       ]
     }),

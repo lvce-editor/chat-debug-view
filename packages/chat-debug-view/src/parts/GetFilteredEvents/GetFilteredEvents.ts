@@ -10,7 +10,13 @@ const isToolEvent = (event: ChatViewEvent): boolean => {
 
 const isNetworkEvent = (event: ChatViewEvent): boolean => {
   const normalizedType = event.type.toLowerCase()
-  return normalizedType === 'request' || normalizedType === 'response' || normalizedType === 'handle-response' || normalizedType.includes('fetch') || normalizedType.includes('xhr')
+  return (
+    normalizedType === 'request' ||
+    normalizedType === 'response' ||
+    normalizedType === 'handle-response' ||
+    normalizedType.includes('fetch') ||
+    normalizedType.includes('xhr')
+  )
 }
 
 const isUiEvent = (event: ChatViewEvent): boolean => {
@@ -70,7 +76,8 @@ export const getFilteredEvents = (
 ): readonly ChatViewEvent[] => {
   const visibleEvents = getVisibleEvents(events, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
   const parsedFilter = parseFilterValue(filterValue)
-  const activeEventCategoryFilter = parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilter : parsedFilter.eventCategoryFilter
+  const activeEventCategoryFilter =
+    parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilter : parsedFilter.eventCategoryFilter
   const filteredByCategory = visibleEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilter))
   const { filterText } = parsedFilter
   if (!filterText) {
