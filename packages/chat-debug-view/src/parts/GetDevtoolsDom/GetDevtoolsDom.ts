@@ -1,12 +1,12 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
 const getEmptyStateDom = (emptyMessage: string): readonly VirtualDomNode[] => {
   return [
