@@ -18,6 +18,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     },
     {
       childCount: 3,
+      className: 'ChatDebugViewTableHeaderRow',
       type: VirtualDomElements.Tr,
     },
     {
@@ -104,6 +105,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 3,
+      className: 'ChatDebugViewTableHeaderRow',
       type: VirtualDomElements.Tr,
     },
     {

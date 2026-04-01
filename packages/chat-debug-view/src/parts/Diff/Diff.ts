@@ -15,6 +15,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.timelineEndSeconds !== newState.timelineEndSeconds ||
     oldState.timelineStartSeconds !== newState.timelineStartSeconds ||
     oldState.useDevtoolsLayout !== newState.useDevtoolsLayout ||
+    oldState.selectedEvent !== newState.selectedEvent ||
     oldState.selectedEventIndex !== newState.selectedEventIndex ||
     oldState.width !== newState.width ||
     oldState.uid !== newState.uid
