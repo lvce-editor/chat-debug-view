@@ -159,7 +159,7 @@ export const getChatDebugViewDom = (
     },
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel',
+      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowEventStreamFinishedEvents',
       type: VirtualDomElements.Label,
     },
     {
@@ -174,7 +174,7 @@ export const getChatDebugViewDom = (
     text('Show event stream finished events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel',
+      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowInputEvents',
       type: VirtualDomElements.Label,
     },
     {
@@ -189,7 +189,7 @@ export const getChatDebugViewDom = (
     text('Show input events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel',
+      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowResponsePartEvents',
       type: VirtualDomElements.Label,
     },
     {
@@ -204,7 +204,7 @@ export const getChatDebugViewDom = (
     text('Show response part events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel',
+      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelUseDevtoolsLayout',
       type: VirtualDomElements.Label,
     },
     {

@@ -36,7 +36,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
+  await Locator('.ChatDebugViewToggleLabelUseDevtoolsLayout').click()
   await Locator('.ChatDebugViewFilterInput').type('@tools hello')
 
   // assert
