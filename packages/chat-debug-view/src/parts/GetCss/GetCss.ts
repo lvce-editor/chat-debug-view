@@ -160,10 +160,10 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {
-  flex: 0 0 var(--ChatDebugViewDetailsWidth);
   border-left: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  flex: 1;
 }
 
 .ChatDebugViewSash {
@@ -199,8 +199,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimeline {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 8px ${timelineHorizontalPadding}px 10px;
+  gap: 6px;
+  padding: 6px ${timelineHorizontalPadding}px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 82%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.12)) 18%);
   contain: content;
@@ -208,18 +208,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewTimelineTop {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-  contain: content;
-}
-
-.ChatDebugViewTimelineTitle {
-  display: flex;
   align-items: center;
-  font-size: 12px;
-  font-weight: 600;
   contain: content;
 }
 
@@ -227,6 +216,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   align-items: center;
   font-size: 12px;
+  line-height: 16px;
   opacity: 0.8;
   contain: content;
 }
@@ -244,7 +234,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   align-items: end;
   gap: 3px;
   flex: 1 1 auto;
-  min-height: 60px;
+  min-height: 52px;
   pointer-events: none;
   contain: strict;
 }
@@ -252,7 +242,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineInteractive {
   display: flex;
   position: relative;
-  min-height: 60px;
+  min-height: 52px;
   cursor: crosshair;
   user-select: none;
   contain: strict;
@@ -293,7 +283,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   align-items: stretch;
   flex: 1 1 10px;
   min-width: 10px;
-  min-height: 60px;
+  min-height: 52px;
   contain: strict;
 }
 

@@ -205,3 +205,13 @@ test('getCss should use content containment for auto-sized text containers', () 
   expect(getRule(css, '.ChatDebugViewError')).toContain('contain: content;')
   expect((css.match(contentContainmentRegex) || []).length).toBeGreaterThanOrEqual(12)
 })
+
+test('getCss should keep the timeline compact without a title row', () => {
+  const css = getCss()
+
+  expect(getRule(css, '.ChatDebugViewTimeline')).toContain('gap: 6px;')
+  expect(getRule(css, '.ChatDebugViewTimeline')).toContain('padding: 6px 10px 8px;')
+  expect(getRule(css, '.ChatDebugViewTimelineSummary')).toContain('line-height: 16px;')
+  expect(getRule(css, '.ChatDebugViewTimelineInteractive')).toContain('min-height: 52px;')
+  expect(css).not.toContain('.ChatDebugViewTimelineTitle {')
+})

@@ -79,16 +79,10 @@ export const getTimelineNodes = (
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 2,
+      childCount: 1,
       className: 'ChatDebugViewTimelineTop',
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewTimelineTitle',
-      type: VirtualDomElements.Div,
-    },
-    text('Timeline'),
     {
       childCount: 1,
       className: 'ChatDebugViewTimelineSummary',

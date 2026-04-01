@@ -72,6 +72,16 @@ test('getTimelineNodes should omit selection markers when no range is selected',
   expect(nodes.some((node) => node.className?.includes('ChatDebugViewTimelineSelectionMarker'))).toBe(false)
 })
 
+test('getTimelineNodes should not render a timeline title heading', () => {
+  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(nodes.some((node) => node.className === 'ChatDebugViewTimelineTitle')).toBe(false)
+  expect(nodes.some((node) => node.text === 'Timeline')).toBe(false)
+})
+
 test('getTimelineNodes should render drag preview markers while selecting', () => {
   const nodes = getTimelineNodes(events, '', '', true, '1', '4') as readonly {
     readonly className?: string
