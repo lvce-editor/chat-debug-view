@@ -1,8 +1,8 @@
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clearTimelineSelectionState } from '../ClearTimelineSelectionState/ClearTimelineSelectionState.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
-import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as InputName from '../InputName/InputName.ts'
 
