@@ -97,6 +97,7 @@ export const getCss = (): string => {
 
 .ChatDebugViewDevtoolsMain {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   align-items: stretch;
   gap: 8px;
