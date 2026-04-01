@@ -41,8 +41,8 @@ export const getTableBodyDom = (rowNodes: readonly VirtualDomNode[], eventCount:
     {
       childCount: eventCount === 0 ? 1 : eventCount,
       className: 'ChatDebugViewTableBody',
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       type: VirtualDomElements.TBody,
     },
     ...rowNodes,

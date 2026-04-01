@@ -63,8 +63,8 @@ test('getTableBodyDom should render the table body nodes', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       type: VirtualDomElements.TBody,
     },
     {
@@ -130,8 +130,8 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       type: VirtualDomElements.TBody,
     },
     {
