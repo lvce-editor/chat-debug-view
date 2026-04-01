@@ -82,7 +82,7 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
   expect(filterInput?.className).toBe('InputBox ChatDebugViewFilterInput')
 })
 
-test('getChatDebugViewDom should include devtools layout toggle', () => {
+test('getChatDebugViewDom should not include top checkbox controls', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
@@ -102,10 +102,12 @@ test('getChatDebugViewDom should include devtools layout toggle', () => {
     readonly checked?: boolean
     readonly name?: string
   }[]
-  const layoutToggle = dom.find((node) => node.name === 'useDevtoolsLayout')
+  const names = dom.map((node) => node.name).filter(Boolean)
 
-  expect(layoutToggle).toBeDefined()
-  expect(layoutToggle?.checked).toBe(true)
+  expect(names).not.toContain('showEventStreamFinishedEvents')
+  expect(names).not.toContain('showInputEvents')
+  expect(names).not.toContain('showResponsePartEvents')
+  expect(names).not.toContain('useDevtoolsLayout')
 })
 
 test('getChatDebugViewDom should render quick filter pills in devtools layout', () => {
@@ -139,7 +141,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   expect(toolsFilter?.checked).toBe(false)
 })
 
-test('getChatDebugViewDom should place toggles above the filter row in devtools layout', () => {
+test('getChatDebugViewDom should place the filter row before the main pane in devtools layout', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
@@ -163,15 +165,13 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
     readonly type?: number
   }[]
 
-  const toggleRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewToggle')
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
   const mainPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
-  expect(toggleRowIndex).toBeGreaterThan(-1)
-  expect(filterRowIndex).toBeGreaterThan(toggleRowIndex)
+  expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
   expect(mainPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
@@ -182,32 +182,7 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
       name: 'filter',
     }),
   )
-  expect(root?.childCount).toBe(3)
-})
-
-test('getChatDebugViewDom should render the legacy filter row as a search wrapper', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom(
-    '',
-    '',
-    EventCategoryFilter.All,
-    eventCategoryFilterOptions,
-    false,
-    false,
-    false,
-    false,
-    null,
-    null,
-    '',
-    '',
-    [],
-    [],
-  ) as readonly {
-    readonly className?: string
-    readonly type?: number
-  }[]
-  const filterRow = dom.find((node) => node.className === 'ChatDebugViewTop')
-
-  expect(filterRow?.type).toBe(VirtualDomElements.Search)
+  expect(root?.childCount).toBe(2)
 })
 
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {

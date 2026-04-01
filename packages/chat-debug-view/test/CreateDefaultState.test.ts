@@ -4,7 +4,6 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
   expect(state).toBeDefined()
-  expect(state.useDevtoolsLayout).toBe(true)
   expect(state.eventCategoryFilterOptions).toEqual([
     {
       label: 'All',

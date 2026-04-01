@@ -22,6 +22,7 @@ export const getDetailsDom = (selectedEventNodes: readonly VirtualDomNode[]): re
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
       name: InputName.CloseDetails,
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
       onClick: DomEventListenerFunctions.HandleSimpleInput,
       type: VirtualDomElements.Button,
       value: 'close',

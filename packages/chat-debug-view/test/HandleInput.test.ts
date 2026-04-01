@@ -16,57 +16,6 @@ test('handleInput should update event category filter', () => {
   expect(result.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
 })
 
-test('handleInput should set showInputEvents to true for on value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowInputEvents, '', 'on')
-  expect(result.showInputEvents).toBe(true)
-})
-
-test('handleInput should set showEventStreamFinishedEvents to true for on value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowEventStreamFinishedEvents, '', 'on')
-  expect(result.showEventStreamFinishedEvents).toBe(true)
-})
-
-test('handleInput should set showEventStreamFinishedEvents to false for unchecked value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowEventStreamFinishedEvents, '', false)
-  expect(result.showEventStreamFinishedEvents).toBe(false)
-})
-
-test('handleInput should set showInputEvents to false for unchecked value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowInputEvents, '', false)
-  expect(result.showInputEvents).toBe(false)
-})
-
-test('handleInput should set showResponsePartEvents to true for on value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowResponsePartEvents, '', 'on')
-  expect(result.showResponsePartEvents).toBe(true)
-})
-
-test('handleInput should set showResponsePartEvents to false for unchecked value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.ShowResponsePartEvents, '', false)
-  expect(result.showResponsePartEvents).toBe(false)
-})
-
-test('handleInput should set useDevtoolsLayout to true for on value', () => {
-  const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.UseDevtoolsLayout, '', 'on')
-  expect(result.useDevtoolsLayout).toBe(true)
-})
-
-test('handleInput should set useDevtoolsLayout to false for unchecked value', () => {
-  const state = {
-    ...createDefaultState(),
-    useDevtoolsLayout: true,
-  }
-  const result = HandleInput.handleInput(state, InputName.UseDevtoolsLayout, '', false)
-  expect(result.useDevtoolsLayout).toBe(false)
-})
-
 test('handleInput should set selectedEventIndex when selecting row', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.SelectedEventIndex, '2', false)
