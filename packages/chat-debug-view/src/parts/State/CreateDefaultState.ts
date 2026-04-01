@@ -24,7 +24,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     timelineStartSeconds: '',
     uid: 0,
     uri: '',
-    useDevtoolsLayout: false,
+    useDevtoolsLayout: true,
     width: 0,
     x: 0,
     y: 0,

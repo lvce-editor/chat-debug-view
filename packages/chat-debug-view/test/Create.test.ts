@@ -17,7 +17,9 @@ test('create should store state with the given uid', () => {
   expect(newState.height).toBe(400)
   expect(newState.assetDir).toBe('/assets')
   expect(newState.sessionId).toBe('')
+  expect(newState.useDevtoolsLayout).toBe(true)
   expect(oldState.uid).toBe(uid)
+  expect(oldState.useDevtoolsLayout).toBe(true)
 })
 
 test('create should restore useDevtoolsLayout from saved state', () => {
