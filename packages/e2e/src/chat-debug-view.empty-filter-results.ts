@@ -18,8 +18,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('.ChatDebugViewToggleLabelUseDevtoolsLayout').click()
-  await Locator('.ChatDebugViewFilterInput').type('missing')
+  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await Command.execute('ChatDebug.handleInput', 'filter', 'missing', false)
 
   // assert
   await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()

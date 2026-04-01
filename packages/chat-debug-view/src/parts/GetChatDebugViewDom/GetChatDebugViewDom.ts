@@ -144,7 +144,7 @@ export const getChatDebugViewDom = (
     {
       autocomplete: 'off',
       childCount: 0,
-      className: 'InputBox ChatDebugViewFilterInput',
+      className: 'InputBox',
       inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,
@@ -159,13 +159,12 @@ export const getChatDebugViewDom = (
     },
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowEventStreamFinishedEvents',
+      className: 'ChatDebugViewToggleLabel',
       type: VirtualDomElements.Label,
     },
     {
       checked: showEventStreamFinishedEvents,
       childCount: 0,
-      className: 'ChatDebugViewToggleShowEventStreamFinishedEvents',
       inputType: 'checkbox',
       name: InputName.ShowEventStreamFinishedEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -174,13 +173,12 @@ export const getChatDebugViewDom = (
     text('Show event stream finished events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowInputEvents',
+      className: 'ChatDebugViewToggleLabel',
       type: VirtualDomElements.Label,
     },
     {
       checked: showInputEvents,
       childCount: 0,
-      className: 'ChatDebugViewToggleShowInputEvents',
       inputType: 'checkbox',
       name: InputName.ShowInputEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -189,13 +187,12 @@ export const getChatDebugViewDom = (
     text('Show input events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelShowResponsePartEvents',
+      className: 'ChatDebugViewToggleLabel',
       type: VirtualDomElements.Label,
     },
     {
       checked: showResponsePartEvents,
       childCount: 0,
-      className: 'ChatDebugViewToggleShowResponsePartEvents',
       inputType: 'checkbox',
       name: InputName.ShowResponsePartEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -204,13 +201,12 @@ export const getChatDebugViewDom = (
     text('Show response part events'),
     {
       childCount: 2,
-      className: 'ChatDebugViewToggleLabel ChatDebugViewToggleLabelUseDevtoolsLayout',
+      className: 'ChatDebugViewToggleLabel',
       type: VirtualDomElements.Label,
     },
     {
       checked: useDevtoolsLayout,
       childCount: 0,
-      className: 'ChatDebugViewToggleUseDevtoolsLayout',
       inputType: 'checkbox',
       name: InputName.UseDevtoolsLayout,
       onChange: DomEventListenerFunctions.HandleInput,

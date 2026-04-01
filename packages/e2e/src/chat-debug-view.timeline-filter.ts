@@ -22,7 +22,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('.ChatDebugViewToggleLabelUseDevtoolsLayout').click()
+  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
 
   // assert timeline visible before filtering
   const rows = Locator('.ChatDebugViewEventRow')
@@ -30,7 +30,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await expect(rows).toHaveCount(2)
 
   // act + assert narrowed timeline range
-  await Locator('.ChatDebugViewTimelineBucket').nth(0).click()
+  await Command.execute('ChatDebug.handleInput', 'timelineRangePreset', '0:0.833', false)
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('request')

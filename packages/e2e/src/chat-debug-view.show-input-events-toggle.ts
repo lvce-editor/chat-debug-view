@@ -28,19 +28,18 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('.ChatDebugViewToggleLabelUseDevtoolsLayout').click()
+  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
 
   const eventRows = Locator('.ChatDebugViewEventRow')
-  const toggle = Locator('.ChatDebugViewToggleLabelShowInputEvents')
 
   // assert hidden by default
   await expect(eventRows).toHaveCount(1)
 
   // act + assert: show input events
-  await toggle.click()
+  await Command.execute('ChatDebug.handleInput', 'showInputEvents', '', true)
   await expect(eventRows).toHaveCount(3)
 
   // act + assert: hide input events again
-  await toggle.click()
+  await Command.execute('ChatDebug.handleInput', 'showInputEvents', '', false)
   await expect(eventRows).toHaveCount(1)
 }
