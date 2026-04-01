@@ -151,7 +151,7 @@ test('getCss should use a visible foreground color for the details close button'
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugViewDetailsClose {\n  width: 18px;\n  height: 18px;\n  appearance: none;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 4px;\n  cursor: pointer;\n  position: relative;\n  color: var(--vscode-foreground, #cccccc);\n  background: transparent;\n  contain: strict;\n}',
+    '.ChatDebugViewDetailsClose {\n  width: 18px;\n  height: 18px;\n  appearance: none;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer;\n  position: relative;\n  color: var(--vscode-foreground, #cccccc);\n  background: transparent;\n  contain: strict;\n}',
   )
   expect(css).toContain('.ChatDebugViewDetailsClose:hover {\n  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));\n}')
 })
