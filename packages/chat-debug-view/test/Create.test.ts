@@ -19,3 +19,14 @@ test('create should store state with the given uid', () => {
   expect(newState.sessionId).toBe('')
   expect(oldState.uid).toBe(uid)
 })
+
+test('create should restore useDevtoolsLayout from saved state', () => {
+  const uid = 124
+  Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
+    useDevtoolsLayout: true,
+  })
+  const result = ChatDebugViewStates.get(uid)
+
+  expect(result.newState.useDevtoolsLayout).toBe(true)
+  expect(result.oldState.useDevtoolsLayout).toBe(true)
+})

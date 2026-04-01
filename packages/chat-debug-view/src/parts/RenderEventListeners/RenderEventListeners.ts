@@ -12,5 +12,9 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenerFunctions.HandleInput,
       params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue, EventExpression.TargetChecked],
     },
+    {
+      name: DomEventListenerFunctions.HandleSimpleInput,
+      params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
+    },
   ]
 }

@@ -14,6 +14,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
       errorMessage: getInvalidUriMessage(uri, parsed.code),
       events: [],
       initial: false,
+      selectedEventIndex: null,
       sessionId: '',
     }
   }
@@ -27,6 +28,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
         errorMessage: getSessionNotFoundMessage(sessionId),
         events: [],
         initial: false,
+        selectedEventIndex: null,
         sessionId,
       }
     }
@@ -35,6 +37,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
       errorMessage: '',
       events,
       initial: false,
+      selectedEventIndex: null,
       sessionId,
     }
   } catch {
@@ -43,6 +46,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
       errorMessage: getFailedToLoadMessage(sessionId),
       events: [],
       initial: false,
+      selectedEventIndex: null,
       sessionId,
     }
   }

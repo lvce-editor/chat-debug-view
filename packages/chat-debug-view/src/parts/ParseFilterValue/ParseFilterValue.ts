@@ -1,18 +1,27 @@
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+
 const RE_SPACE = /\s+/
 
-export const parseFilterValue = (filterValue: string): { readonly filterText: string; readonly toolsOnly: boolean } => {
+const tokenToEventCategoryFilter = new Map<string, string>([
+  ['@tools', EventCategoryFilter.Tools],
+  ['@network', EventCategoryFilter.Network],
+  ['@ui', EventCategoryFilter.Ui],
+  ['@stream', EventCategoryFilter.Stream],
+])
+
+export const parseFilterValue = (filterValue: string): { readonly eventCategoryFilter: string; readonly filterText: string } => {
   const normalizedFilter = filterValue.trim().toLowerCase()
   if (!normalizedFilter) {
     return {
+      eventCategoryFilter: EventCategoryFilter.All,
       filterText: '',
-      toolsOnly: false,
     }
   }
   const parts = normalizedFilter.split(RE_SPACE)
-  const toolsOnly = parts.includes('@tools')
-  const filterText = parts.filter((part) => part !== '@tools').join(' ')
+  const eventCategoryFilter = parts.map((part) => tokenToEventCategoryFilter.get(part)).find(Boolean) || EventCategoryFilter.All
+  const filterText = parts.filter((part) => !tokenToEventCategoryFilter.has(part)).join(' ')
   return {
+    eventCategoryFilter,
     filterText,
-    toolsOnly,
   }
 }
