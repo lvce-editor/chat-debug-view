@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import * as Create from '../src/parts/Create/Create.ts'
+import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as ChatDebugViewStates from '../src/parts/State/ChatDebugViewStates.ts'
 
 test('create should store state with the given uid', () => {
@@ -24,13 +25,29 @@ test('create should store state with the given uid', () => {
 test('create should restore serializable state from saved state', () => {
   const uid = 124
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
+    eventCategoryFilter: EventCategoryFilter.Tools,
     selectedEventId: 7,
     tableWidth: 222,
   })
   const result = ChatDebugViewStates.get(uid)
 
+  expect(result.newState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
+  expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
   expect(result.newState.tableWidth).toBe(222)
   expect(result.oldState.tableWidth).toBe(222)
+})
+
+test('create should restore event category filter from filter tokens when the explicit field is missing', () => {
+  const uid = 125
+  Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
+    filterValue: '@network error',
+  })
+  const result = ChatDebugViewStates.get(uid)
+
+  expect(result.newState.eventCategoryFilter).toBe(EventCategoryFilter.Network)
+  expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Network)
+  expect(result.newState.filterValue).toBe('@network error')
+  expect(result.oldState.filterValue).toBe('@network error')
 })

@@ -105,6 +105,7 @@ test('renderItems should preserve existing eventId values', () => {
     ],
     sessionId: 'session-1',
     uid: 4,
+    useDevtoolsLayout: false,
   }
 
   const result = RenderItems.renderItems(oldState, newState)
@@ -134,6 +135,7 @@ test('renderItems should assign numeric eventId values when they are missing', (
     ],
     sessionId: 'session-1',
     uid: 5,
+    useDevtoolsLayout: false,
   }
 
   const result = RenderItems.renderItems(oldState, newState)

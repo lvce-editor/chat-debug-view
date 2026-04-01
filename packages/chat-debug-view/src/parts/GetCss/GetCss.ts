@@ -47,21 +47,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   max-width: 80px;
 }
 
-.ChatDebugViewToggle {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  contain: content;
-}
-
-.ChatDebugViewToggleLabel {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  contain: content;
-}
-
 .ChatDebugViewQuickFilterPill {
   display: inline-flex;
   align-items: center;
@@ -72,7 +57,19 @@ export const getCss = (state: ChatDebugViewState): string => {
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
+  transition:
+    background 120ms ease-out,
+    border-color 120ms ease-out,
+    color 120ms ease-out,
+    transform 120ms ease-out;
   contain: content;
+}
+
+.ChatDebugViewQuickFilterPill:not(.ChatDebugViewQuickFilterPillSelected):hover {
+  border-color: var(--vscode-focusBorder, #007fd4);
+  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.16)) 82%, transparent 18%);
+  color: var(--vscode-list-hoverForeground, inherit);
+  transform: translateY(-1px);
 }
 
 

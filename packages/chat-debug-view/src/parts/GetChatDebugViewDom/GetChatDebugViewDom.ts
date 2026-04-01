@@ -15,9 +15,9 @@ export const getChatDebugViewDom = (
   filterValue: string,
   eventCategoryFilter: string,
   eventCategoryFilterOptions: readonly EventCategoryFilterOption[],
-  showEventStreamFinishedEvents: boolean,
-  showInputEvents: boolean,
-  showResponsePartEvents: boolean,
+  _showEventStreamFinishedEvents: boolean,
+  _showInputEvents: boolean,
+  _showResponsePartEvents: boolean,
   useDevtoolsLayout: boolean,
   selectedEvent: ChatViewEvent | null,
   selectedEventIndex: number | null,
@@ -68,15 +68,8 @@ export const getChatDebugViewDom = (
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, eventCategoryFilterOptions) : []
-  const debugViewTopDom = getDebugViewTopDom(
-    filterValue,
-    showEventStreamFinishedEvents,
-    showInputEvents,
-    showResponsePartEvents,
-    useDevtoolsLayout,
-    quickFilterNodes,
-  )
-  const rootChildCount = useDevtoolsLayout ? 3 : 2
+  const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, quickFilterNodes)
+  const rootChildCount = 2
 
   return [
     {
