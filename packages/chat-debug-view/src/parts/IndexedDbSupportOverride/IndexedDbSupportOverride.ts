@@ -1,9 +1,12 @@
-let indexedDbSupportOverride: boolean | undefined
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
-export const getIndexedDbSupportOverride = (): boolean | undefined => {
-  return indexedDbSupportOverride
+export const getIndexedDbSupportOverride = (state: ChatDebugViewState): boolean | undefined => {
+  return state.indexedDbSupportOverride
 }
 
-export const setIndexedDbSupportOverride = (supported?: boolean): void => {
-  indexedDbSupportOverride = supported
+export const setIndexedDbSupportOverride = (state: ChatDebugViewState, supported?: boolean): ChatDebugViewState => {
+  return {
+    ...state,
+    indexedDbSupportOverride: supported,
+  }
 }
