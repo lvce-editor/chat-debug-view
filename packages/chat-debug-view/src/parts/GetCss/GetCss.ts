@@ -166,21 +166,19 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: 0 0 var(--ChatDebugViewSashWidth);
   position: relative;
   cursor: col-resize;
+  display: flex;
+  justify-content: center;
   min-height: 0;
 }
 
-.ChatDebugViewSash::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+.ChatDebugViewSashLine {
   width: 1px;
-  transform: translateX(-50%);
+  height: 100%;
   background: var(--vscode-editorWidget-border, #454545);
+  pointer-events: none;
 }
 
-.ChatDebugViewSash:hover::before {
+.ChatDebugViewSash:hover .ChatDebugViewSashLine {
   background: var(--vscode-focusBorder, #007fd4);
 }
 

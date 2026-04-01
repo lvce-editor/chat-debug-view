@@ -132,7 +132,9 @@ test('getCss should style the split sash between table and details', () => {
   const css = getCss()
 
   expect(css).toContain('.ChatDebugViewSash {\n  flex: 0 0 var(--ChatDebugViewSashWidth);')
-  expect(css).toContain(".ChatDebugViewSash::before {\n  content: '';")
-  expect(css).toContain('.ChatDebugViewSash:hover::before {\n  background: var(--vscode-focusBorder, #007fd4);\n}')
-  expect(css).not.toContain('.ChatDebugViewSashLine')
+  expect(css).toContain(
+    '.ChatDebugViewSashLine {\n  width: 1px;\n  height: 100%;\n  background: var(--vscode-editorWidget-border, #454545);\n  pointer-events: none;\n}',
+  )
+  expect(css).toContain('.ChatDebugViewSash:hover .ChatDebugViewSashLine {\n  background: var(--vscode-focusBorder, #007fd4);\n}')
+  expect(css).not.toContain('.ChatDebugViewSash::before')
 })

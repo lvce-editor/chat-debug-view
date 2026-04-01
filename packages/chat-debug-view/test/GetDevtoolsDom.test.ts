@@ -38,13 +38,14 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const closeButton = dom.find((node) => node.name === 'closeDetails')
   const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sashLine = dom.find((node) => node.className === 'ChatDebugViewSashLine')
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
-  expect(sash?.childCount).toBe(0)
+  expect(sash?.childCount).toBe(1)
   expect(sash?.onPointerDown).toBe(DomEventListenerFunctions.HandleSashPointerDown)
-  expect(dom.find((node) => node.className === 'ChatDebugViewSashLine')).toBeUndefined()
+  expect(sashLine).toBeDefined()
 })
 
 test('getDevtoolsDom should wrap header and body in a table container', () => {
