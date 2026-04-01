@@ -31,7 +31,7 @@ test('listChatViewEvents should return not-supported when IndexedDB is unavailab
   expect(result).toEqual({
     type: 'not-supported',
   })
-  expect(mockOpenDatabase).not.toHaveBeenCalled()
+  expect(openDatabaseSpy).not.toHaveBeenCalled()
 })
 
 test('listChatViewEvents should return success result with events', async () => {
