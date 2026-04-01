@@ -5,6 +5,10 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
+      name: DomEventListenerFunctions.HandleEventRowClick,
+      params: ['handleEventRowClick', 'event.target.dataset.index'],
+    },
+    {
       name: DomEventListenerFunctions.HandleFilterInput,
       params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
     },

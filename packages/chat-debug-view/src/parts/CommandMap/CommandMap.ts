@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import * as HandleEventRowClick from '../HandleEventRowClick/HandleEventRowClick.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
@@ -17,6 +18,7 @@ export const commandMap = {
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,
+  'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
