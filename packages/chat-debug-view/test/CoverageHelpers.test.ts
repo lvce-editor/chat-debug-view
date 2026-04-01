@@ -78,11 +78,13 @@ test('getAllEvents should return all items from the store', async () => {
 test('getEventsBySessionId should use the index when it exists', async () => {
   const result = await getEventsBySessionId(
     {
-      getAll: async () => {
+      getAll: async (): Promise<never> => {
         throw new Error('should not call getAll when index exists')
       },
-      index: () => ({
-        getAll: async (sessionId: string) => {
+      index: (): {
+        readonly getAll: (sessionId: string) => Promise<readonly { readonly sessionId: string; readonly timestamp: string; readonly type: string }[]>
+      } => ({
+        getAll: async (sessionId: string): Promise<readonly { readonly sessionId: string; readonly timestamp: string; readonly type: string }[]> => {
           return [
             {
               sessionId,
@@ -98,7 +100,7 @@ test('getEventsBySessionId should use the index when it exists', async () => {
         },
       }),
       indexNames: {
-        contains: (name: string) => name === 'sessionId',
+        contains: (name: string): boolean => name === 'sessionId',
       },
     } as any,
     'session-1',
@@ -117,7 +119,7 @@ test('getEventsBySessionId should use the index when it exists', async () => {
 test('getEventsBySessionId should fall back to getAll when the index is missing', async () => {
   const result = await getEventsBySessionId(
     {
-      getAll: async () => {
+      getAll: async (): Promise<readonly { readonly sessionId: string; readonly timestamp: string; readonly type: string }[]> => {
         return [
           {
             sessionId: 'other',
@@ -131,11 +133,11 @@ test('getEventsBySessionId should fall back to getAll when the index is missing'
           },
         ]
       },
-      index: () => {
+      index: (): never => {
         throw new Error('should not call index when it is missing')
       },
       indexNames: {
-        contains: () => false,
+        contains: (): boolean => false,
       },
     } as any,
     'session-1',

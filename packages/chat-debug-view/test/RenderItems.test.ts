@@ -103,9 +103,9 @@ test('renderItems should use numeric eventId starting at 1 per session', () => {
         type: 'response',
       },
     ],
-    selectedEventIndex: 0,
     sessionId: 'session-1',
     uid: 4,
+    useDevtoolsLayout: false,
   }
 
   const result = RenderItems.renderItems(oldState, newState)
