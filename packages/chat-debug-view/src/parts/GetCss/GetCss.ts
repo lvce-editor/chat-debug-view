@@ -98,12 +98,11 @@ export const getCss = (): string => {
 .ChatDebugViewDevtoolsMain {
   display: flex;
   flex: 1;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: stretch;
   gap: 8px;
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewEvents {
@@ -112,7 +111,9 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
-  flex: 0 0 clamp(320px, 32vw, 420px);
+  flex: 0 1 clamp(320px, 32vw, 420px);
+  min-width: 0;
+  max-width: 420px;
 }
 
 .ChatDebugViewTable {

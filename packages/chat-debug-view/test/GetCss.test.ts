@@ -26,7 +26,8 @@ test('getCss should keep the details preview in the right devtools column', () =
   const css = GetCss.getCss()
 
   expect(css).toContain('.ChatDebugViewDevtoolsMain {\n  display: flex;')
-  expect(css).toContain('.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {\n  flex: 0 0 clamp(320px, 32vw, 420px);\n}')
+  expect(css).toContain('.ChatDebugViewDevtoolsMain {\n  display: flex;\n  flex: 1;\n  flex-wrap: nowrap;')
+  expect(css).toContain('.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {\n  flex: 0 1 clamp(320px, 32vw, 420px);\n  min-width: 0;\n  max-width: 420px;\n}')
 })
 
 test('getCss should use flex layout for timeline buckets and table rows', () => {
