@@ -4,6 +4,32 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
+test('getChatDebugViewDom should return debug error dom when error message is set', () => {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('Failed to load chat debug session', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 1,
+      className: 'ChatDebugView',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewError',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 0,
+      text: 'Failed to load chat debug session',
+      type: 12,
+    },
+  ])
+})
+
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
     readonly autocomplete?: string

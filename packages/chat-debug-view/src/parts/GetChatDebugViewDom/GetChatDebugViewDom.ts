@@ -1,28 +1,13 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
+import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
 import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
-
-const getDebugErrorDom = (errorMessage: string): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 1,
-      className: 'ChatDebugView',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewError',
-      type: VirtualDomElements.Div,
-    },
-    text(errorMessage),
-  ]
-}
 
 export const getChatDebugViewDom = (
   errorMessage: string,
