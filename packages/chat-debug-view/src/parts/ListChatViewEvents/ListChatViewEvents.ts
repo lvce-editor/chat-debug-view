@@ -8,7 +8,7 @@ const isIndexedDbSupported = (): boolean => {
   if (typeof indexedDbSupportOverride === 'boolean') {
     return indexedDbSupportOverride
   }
-  return typeof globalThis.indexedDB !== 'undefined'
+  return globalThis.indexedDB !== undefined
 }
 
 export const setIndexedDbSupportForTest = (supported?: boolean): void => {

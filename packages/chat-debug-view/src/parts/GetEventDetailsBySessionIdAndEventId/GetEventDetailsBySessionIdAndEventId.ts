@@ -22,7 +22,7 @@ const getRawEventBySessionIdAndEventId = async (
     if (keys.length < eventId) {
       return undefined
     }
-    const key = keys[keys.length - 1]
+    const key = keys.at(-1)
     const event = await store.get(key)
     return event as ChatViewEvent | undefined
   }
