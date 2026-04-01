@@ -70,6 +70,9 @@ test('getCss should use compact devtools table row padding', () => {
 
   expect(css).toContain('.ChatDebugViewTableHeader {\n  padding: 3px 8px;\n')
   expect(css).toContain('.ChatDebugViewEventRow {\n  padding: 2px 8px;\n')
+  expect(css).toContain(
+    '.ChatDebugViewEventRow:hover {\n  background: var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.31));\n  color: var(--vscode-list-hoverForeground, inherit);\n}',
+  )
 })
 
 test('getCss should size devtools columns with dedicated flex classes', () => {

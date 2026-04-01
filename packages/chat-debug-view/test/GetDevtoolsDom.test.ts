@@ -121,7 +121,7 @@ test('getDevtoolsDom should render timeline filters when timestamps are availabl
   expect(dom.find((node) => node.className === 'ChatDebugViewTimeline')).toBeDefined()
   expect(dom.find((node) => node.name === 'timelineStartSeconds')).toBeUndefined()
   expect(dom.find((node) => node.name === 'timelineEndSeconds')).toBeUndefined()
-  expect(dom.find((node) => node.name === 'timelineRangePreset' && node.value === '')).toBeDefined()
+  expect(dom.find((node) => node.name === 'timelineRangePreset' && node.value === '')).toBeUndefined()
   expect(dom.find((node) => node.text === 'Window 5s-7s of 10s')).toBeDefined()
 })
 
@@ -142,6 +142,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
 
   expect(mainPane?.childCount).toBe(2)
+  expect(timeline?.childCount).toBe(2)
   expect(timeline).toBeDefined()
   expect(splitPane?.childCount).toBe(3)
 })

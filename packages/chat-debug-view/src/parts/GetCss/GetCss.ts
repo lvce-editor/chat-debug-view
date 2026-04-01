@@ -229,24 +229,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-wrap: wrap;
 }
 
-.ChatDebugViewTimelineReset {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 28px;
-  padding: 0 12px;
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.ChatDebugViewTimelineResetSelected {
-  border-color: var(--vscode-focusBorder, #007fd4);
-  background: var(--vscode-list-activeSelectionBackground, rgba(14, 99, 156, 0.35));
-  color: var(--vscode-list-activeSelectionForeground, inherit);
-}
-
 .ChatDebugViewTimelineBuckets {
   display: flex;
   align-items: end;
@@ -361,6 +343,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewEventRow:hover {
   background: var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.31));
+  color: var(--vscode-list-hoverForeground, inherit);
 }
 
 .ChatDebugViewCell {

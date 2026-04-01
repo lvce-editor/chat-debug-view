@@ -1,10 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
-import * as InputName from '../InputName/InputName.ts'
 
 export const getTimelineNodes = (
   timelineEvents: readonly ChatViewEvent[],
@@ -17,7 +15,7 @@ export const getTimelineNodes = (
   }
   return [
     {
-      childCount: 3,
+      childCount: 2,
       className: 'ChatDebugViewTimeline',
       type: VirtualDomElements.Div,
     },
@@ -38,27 +36,6 @@ export const getTimelineNodes = (
       type: VirtualDomElements.Div,
     },
     text(getTimelineSummary(timelineEvents, timelineStartSeconds, timelineEndSeconds)),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewTimelineControls',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 2,
-      className: `ChatDebugViewTimelineReset${timelineInfo.hasSelection ? '' : ' ChatDebugViewTimelineResetSelected'}`,
-      type: VirtualDomElements.Label,
-    },
-    {
-      checked: !timelineInfo.hasSelection,
-      childCount: 0,
-      className: 'ChatDebugViewTimelinePresetInput',
-      inputType: 'radio',
-      name: InputName.TimelineRangePreset,
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
-      type: VirtualDomElements.Input,
-      value: '',
-    },
-    text('All'),
     {
       childCount: timelineInfo.buckets.length,
       className: 'ChatDebugViewTimelineBuckets',
