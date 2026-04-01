@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 
@@ -18,6 +19,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     initial: false,
     platform: 0,
     selectedEvent: null,
+    selectedDetailTab: DetailTab.Response,
     selectedEventId: null,
     selectedEventIndex: null,
     sessionId: '',

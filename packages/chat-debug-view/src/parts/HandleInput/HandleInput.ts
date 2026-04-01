@@ -1,6 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getStableEventId } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
@@ -174,6 +175,15 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
       selectedEvent: null,
       selectedEventId: null,
       selectedEventIndex: null,
+    }
+  }
+  if (name === InputName.DetailTab) {
+    if (!DetailTab.isDetailTab(value)) {
+      return state
+    }
+    return {
+      ...state,
+      selectedDetailTab: value,
     }
   }
   return state

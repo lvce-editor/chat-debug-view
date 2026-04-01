@@ -496,6 +496,52 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewDetailsBody {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+  contain: strict;
+}
+
+.ChatDebugViewDetailsTabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  overflow-x: auto;
+  contain: content;
+}
+
+.ChatDebugViewDetailsTab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 10px;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--vscode-descriptionForeground, var(--vscode-foreground, #cccccc));
+  cursor: pointer;
+  white-space: nowrap;
+  contain: strict;
+}
+
+.ChatDebugViewDetailsTab:hover {
+  color: var(--vscode-foreground, #cccccc);
+}
+
+.ChatDebugViewDetailsTabSelected {
+  border-bottom-color: var(--vscode-focusBorder, #007fd4);
+  color: var(--vscode-foreground, #cccccc);
+}
+
+.ChatDebugViewDetailsPanel {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   padding: 8px;
   flex: 1 1 auto;
@@ -570,10 +616,45 @@ export const getCss = (state: ChatDebugViewState): string => {
   contain: content;
 }
 
-.ChatDebugViewDetailsBody > .ChatDebugViewEvent {
+.ChatDebugViewDetailsPanel > .ChatDebugViewEvent {
   border: 0;
   border-radius: 0;
   margin-bottom: 0;
+}
+
+.ChatDebugViewTiming {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border-radius: 6px;
+  overflow: hidden;
+  contain: strict;
+}
+
+.ChatDebugViewTimingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  contain: content;
+}
+
+.ChatDebugViewTimingRow:last-child {
+  border-bottom: 0;
+}
+
+.ChatDebugViewTimingLabel {
+  opacity: 0.8;
+  contain: content;
+}
+
+.ChatDebugViewTimingValue {
+  text-align: right;
+  font-family: var(--vscode-editor-font-family, monospace);
+  contain: content;
 }
 
 .ChatDebugViewEmpty {

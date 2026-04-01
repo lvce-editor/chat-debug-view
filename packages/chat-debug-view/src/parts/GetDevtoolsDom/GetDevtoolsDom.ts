@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEmptyStateDom } from '../GetEmptyStateDom/GetEmptyStateDom.ts'
@@ -20,6 +21,7 @@ export const getDevtoolsDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
+  selectedDetailTab = DetailTab.Response,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
   const timelineNodes = getTimelineNodes(
@@ -34,7 +36,11 @@ export const getDevtoolsDom = (
   const hasSelectedEvent = selectedEventNodes.length > 0
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
-  const detailsNodes = getDetailsDom(selectedEventNodes)
+  const detailsNodes = getDetailsDom(
+    selectedEventNodes,
+    selectedEvent,
+    DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : DetailTab.Response,
+  )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)
