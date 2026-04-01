@@ -84,8 +84,8 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
   })
 })
 
-test('handleEventRowClick should fall back to the selected list event when loading details returns undefined', async () => {
-  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue(undefined)
+test('handleEventRowClick should fall back to the selected list event when loading details returns null', async () => {
+  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue(null)
   const state = {
     ...createDefaultState(),
     events: [

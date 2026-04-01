@@ -15,8 +15,8 @@ export interface ChatDebugViewState {
   readonly indexedDbSupportOverride: boolean | undefined
   readonly initial: boolean
   readonly platform: number
-  readonly selectedEvent: ChatViewEvent | null
   readonly selectedDetailTab: string
+  readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
   readonly selectedEventIndex: number | null
   readonly sessionId: string

@@ -630,6 +630,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   border-radius: 6px;
   overflow: hidden;
   contain: strict;
+  flex: 1;
 }
 
 .ChatDebugViewTimingRow {

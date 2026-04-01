@@ -8,11 +8,8 @@ export const isDetailTab = (value: string): boolean => {
 }
 
 export const getDetailTabLabel = (value: string): string => {
-  switch (value) {
-    case Timing:
-      return 'Timing'
-    case Response:
-    default:
-      return 'Response'
+  if (value === Timing) {
+    return 'Timing'
   }
+  return 'Response'
 }
