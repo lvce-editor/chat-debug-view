@@ -22,14 +22,14 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('input[name="useDevtoolsLayout"]').click()
+  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
 
   // assert default hidden
   const rows = Locator('.ChatDebugViewEventRow')
   await expect(rows).toHaveCount(1)
 
   // act + assert visible when enabled
-  await Locator('input[name="showEventStreamFinishedEvents"]').click()
+  await Locator('.ChatDebugViewToggleShowEventStreamFinishedEvents').click()
   await expect(rows).toHaveCount(2)
   await expect(rows.nth(1)).toContainText('event-stream-finished')
 }

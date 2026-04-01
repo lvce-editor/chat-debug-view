@@ -144,7 +144,7 @@ export const getChatDebugViewDom = (
     {
       autocomplete: 'off',
       childCount: 0,
-      className: 'InputBox',
+      className: 'InputBox ChatDebugViewFilterInput',
       inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,
@@ -165,6 +165,7 @@ export const getChatDebugViewDom = (
     {
       checked: showEventStreamFinishedEvents,
       childCount: 0,
+      className: 'ChatDebugViewToggleShowEventStreamFinishedEvents',
       inputType: 'checkbox',
       name: InputName.ShowEventStreamFinishedEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -179,6 +180,7 @@ export const getChatDebugViewDom = (
     {
       checked: showInputEvents,
       childCount: 0,
+      className: 'ChatDebugViewToggleShowInputEvents',
       inputType: 'checkbox',
       name: InputName.ShowInputEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -193,6 +195,7 @@ export const getChatDebugViewDom = (
     {
       checked: showResponsePartEvents,
       childCount: 0,
+      className: 'ChatDebugViewToggleShowResponsePartEvents',
       inputType: 'checkbox',
       name: InputName.ShowResponsePartEvents,
       onChange: DomEventListenerFunctions.HandleInput,
@@ -207,6 +210,7 @@ export const getChatDebugViewDom = (
     {
       checked: useDevtoolsLayout,
       childCount: 0,
+      className: 'ChatDebugViewToggleUseDevtoolsLayout',
       inputType: 'checkbox',
       name: InputName.UseDevtoolsLayout,
       onChange: DomEventListenerFunctions.HandleInput,

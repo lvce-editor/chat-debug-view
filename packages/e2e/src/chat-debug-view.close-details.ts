@@ -18,9 +18,9 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('input[name="useDevtoolsLayout"]').click()
+  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
   await Locator('.ChatDebugViewEventRow').nth(0).click()
-  await Locator('input[name="closeDetails"]').click()
+  await Locator('.ChatDebugViewDetailsClose').click()
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)

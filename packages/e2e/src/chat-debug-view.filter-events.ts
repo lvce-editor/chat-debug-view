@@ -28,8 +28,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('input[name="useDevtoolsLayout"]').click()
-  const filterInput = Locator('.InputBox[name="filter"]')
+  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
+  const filterInput = Locator('.ChatDebugViewFilterInput')
 
   // act
   await filterInput.type('beta')

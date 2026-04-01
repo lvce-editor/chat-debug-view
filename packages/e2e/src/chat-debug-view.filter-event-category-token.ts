@@ -36,8 +36,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('input[name="useDevtoolsLayout"]').click()
-  await Locator('.InputBox[name="filter"]').type('@tools hello')
+  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
+  await Locator('.ChatDebugViewFilterInput').type('@tools hello')
 
   // assert
   const rows = Locator('.ChatDebugViewEventRow')

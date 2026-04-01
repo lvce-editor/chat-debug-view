@@ -22,7 +22,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
-  await Locator('input[name="useDevtoolsLayout"]').click()
+  await Locator('.ChatDebugViewToggleUseDevtoolsLayout').click()
 
   // assert timeline visible before filtering
   const rows = Locator('.ChatDebugViewEventRow')
