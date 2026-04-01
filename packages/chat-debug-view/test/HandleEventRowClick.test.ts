@@ -1,20 +1,15 @@
-import { expect, jest, test } from '@jest/globals'
+import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import type { loadSelectedEvent } from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
+import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as HandleEventRowClick from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 
-const mockLoadSelectedEvent = jest.fn<typeof loadSelectedEvent>()
-
-jest.unstable_mockModule('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts', () => {
-  return {
-    loadSelectedEvent: mockLoadSelectedEvent,
-  }
+afterEach(() => {
+  jest.restoreAllMocks()
 })
 
-const HandleEventRowClick = await import('../src/parts/HandleEventRowClick/HandleEventRowClick.ts')
-
 test('handleEventRowClick should select the clicked event row and load details', async () => {
-  mockLoadSelectedEvent.mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
     detail: 'value',
     eventId: 3,
     type: 'request',
@@ -54,7 +49,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     eventId: 3,
     type: 'request',
   })
-  expect(mockLoadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
 })
 
 test('handleEventRowClick should ignore clicks without a row index', async () => {

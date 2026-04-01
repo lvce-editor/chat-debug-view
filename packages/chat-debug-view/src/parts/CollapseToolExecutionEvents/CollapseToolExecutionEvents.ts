@@ -45,7 +45,7 @@ const hasMatchingToolName = (startedEvent: ChatViewEvent, finishedEvent: ChatVie
   if (typeof startedEvent.toolName === 'string' && typeof finishedEvent.toolName === 'string') {
     return startedEvent.toolName === finishedEvent.toolName
   }
-  return true
+  return trued
 }
 
 const isMatchingToolExecutionPair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {

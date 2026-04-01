@@ -1,22 +1,17 @@
-import { expect, jest, test } from '@jest/globals'
+import { afterEach, expect, jest, test } from '@jest/globals'
+import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
-import type { listChatViewEvents } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
 
-const mockListChatViewEvents = jest.fn<typeof listChatViewEvents>()
-
-jest.unstable_mockModule('../src/parts/ListChatViewEvents/ListChatViewEvents.ts', () => {
-  return {
-    listChatViewEvents: mockListChatViewEvents,
-  }
+afterEach(() => {
+  jest.restoreAllMocks()
 })
-
-const LoadContent = await import('../src/parts/LoadContent/LoadContent.ts')
 
 test('loadContent should return failed-to-load state when listing events returns an error', async () => {
   const error = new Error('failed to load events')
-  mockListChatViewEvents.mockResolvedValue({
+  const listChatViewEventsSpy = jest.spyOn(ListChatViewEvents, 'listChatViewEvents').mockResolvedValue({
     error,
     type: 'error',
   })
@@ -37,10 +32,11 @@ test('loadContent should return failed-to-load state when listing events returns
     selectedEventIndex: null,
     sessionId: 'session-1',
   })
+  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })
 
 test('loadContent should return indexeddb-not-supported state when IndexedDB is unavailable', async () => {
-  mockListChatViewEvents.mockResolvedValue({
+  const listChatViewEventsSpy = jest.spyOn(ListChatViewEvents, 'listChatViewEvents').mockResolvedValue({
     type: 'not-supported',
   })
   const state = {
@@ -60,4 +56,5 @@ test('loadContent should return indexeddb-not-supported state when IndexedDB is 
     selectedEventIndex: null,
     sessionId: 'session-1',
   })
+  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })

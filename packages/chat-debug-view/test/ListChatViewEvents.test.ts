@@ -1,24 +1,11 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
-import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
+import * as GetEventsBySessionId from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
+import * as OpenDatabase from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
+import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 
-const mockOpenDatabase = jest.fn<typeof openDatabase>()
-const mockGetEventsBySessionId = jest.fn<typeof getEventsBySessionId>()
-
-jest.unstable_mockModule('../src/parts/OpenDatabase/OpenDatabase.ts', () => {
-  return {
-    openDatabase: mockOpenDatabase,
-  }
-})
-
-jest.unstable_mockModule('../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts', () => {
-  return {
-    getEventsBySessionId: mockGetEventsBySessionId,
-  }
-})
-
-const ListChatViewEvents = await import('../src/parts/ListChatViewEvents/ListChatViewEvents.ts')
+const openDatabaseSpy = jest.spyOn(OpenDatabase, 'openDatabase')
+const getEventsBySessionIdSpy = jest.spyOn(GetEventsBySessionId, 'getEventsBySessionId')
 
 const createDomStringList = (values: readonly string[]): DOMStringList => {
   return {
@@ -32,7 +19,8 @@ const createDomStringList = (values: readonly string[]): DOMStringList => {
 }
 
 afterEach(() => {
-  jest.clearAllMocks()
+  openDatabaseSpy.mockReset()
+  getEventsBySessionIdSpy.mockReset()
   setIndexedDbSupportForTest(undefined)
 })
 
@@ -52,7 +40,7 @@ test('listChatViewEvents should return success result with events', async () => 
     getAll: jest.fn(),
     index: jest.fn(),
     indexNames: createDomStringList([]),
-  } as unknown as Parameters<typeof getEventsBySessionId>[0]
+  } as unknown as Parameters<typeof GetEventsBySessionId.getEventsBySessionId>[0]
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
@@ -60,7 +48,7 @@ test('listChatViewEvents should return success result with events', async () => 
     close: jest.fn(),
     objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
-  } as unknown as Awaited<ReturnType<typeof openDatabase>>
+  } as unknown as Awaited<ReturnType<typeof OpenDatabase.openDatabase>>
   const events = [
     {
       duration: 0,
@@ -71,8 +59,8 @@ test('listChatViewEvents should return success result with events', async () => 
     },
   ]
 
-  mockOpenDatabase.mockResolvedValue(database)
-  mockGetEventsBySessionId.mockResolvedValue(events)
+  openDatabaseSpy.mockResolvedValue(database)
+  getEventsBySessionIdSpy.mockResolvedValue(events)
 
   const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
@@ -80,17 +68,17 @@ test('listChatViewEvents should return success result with events', async () => 
     events,
     type: 'success',
   })
-  expect(mockOpenDatabase).toHaveBeenCalledWith('chat-db', 2)
+  expect(openDatabaseSpy).toHaveBeenCalledWith('chat-db', 2)
   expect(database.transaction).toHaveBeenCalledWith('chat-view-events', 'readonly')
   expect(transaction.objectStore).toHaveBeenCalledWith('chat-view-events')
-  expect(mockGetEventsBySessionId).toHaveBeenCalledWith(store, 'session-1', 'sessionId')
+  expect(getEventsBySessionIdSpy).toHaveBeenCalledWith(store, 'session-1', 'sessionId')
   expect(database.close).toHaveBeenCalledTimes(1)
 })
 
 test('listChatViewEvents should return error result when opening the database fails', async () => {
   setIndexedDbSupportForTest(true)
   const error = new Error('failed to open database')
-  mockOpenDatabase.mockRejectedValue(error)
+  openDatabaseSpy.mockRejectedValue(error)
 
   const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
