@@ -2,8 +2,8 @@ export const getCss = (): string => {
   return `
 .ChatDebugView {
   padding: 8px;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   box-sizing: border-box;
   gap: 8px;
@@ -75,8 +75,8 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewEvents {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   min-width: 0;
   min-height: 0;
@@ -85,7 +85,7 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewEvents--timeline {
-  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 0;
 }
 
 .ChatDebugView--devtools .ChatDebugViewEvents {
@@ -96,13 +96,13 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewEventsFullWidth {
-  grid-column: 1 / -1;
+  flex: 1 1 100%;
 }
 
 .ChatDebugViewDevtoolsMain {
-  display: grid;
-  grid-template-areas: 'table details';
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: 8px;
   min-width: 0;
   min-height: 0;
@@ -110,15 +110,17 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewEvents {
-  grid-area: table;
+  flex: 1 1 480px;
+  min-width: 0;
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
-  grid-area: details;
+  flex: 0 0 clamp(320px, 32vw, 420px);
 }
 
 .ChatDebugViewTimeline {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   padding: 10px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
@@ -169,8 +171,7 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewTimelineBuckets {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+  display: flex;
   align-items: end;
   gap: 4px;
   min-height: 60px;
@@ -179,6 +180,8 @@ export const getCss = (): string => {
 .ChatDebugViewTimelineBucket {
   display: flex;
   align-items: stretch;
+  flex: 1 1 10px;
+  min-width: 10px;
   min-height: 60px;
   cursor: pointer;
 }
@@ -221,8 +224,7 @@ export const getCss = (): string => {
 
 .ChatDebugViewTableHeader,
 .ChatDebugViewEventRow {
-  display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(180px, 1fr) minmax(180px, 1fr) 90px 64px;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
@@ -246,6 +248,8 @@ export const getCss = (): string => {
 .ChatDebugViewTableBody {
   overflow: auto;
   min-height: 0;
+  flex: 1 1 auto;
+  contain: strict;
 }
 
 .ChatDebugViewEventRowLabel {
@@ -278,13 +282,16 @@ export const getCss = (): string => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
 }
 
 .ChatDebugViewCellDuration {
+  flex: 0 0 90px;
   text-align: right;
 }
 
 .ChatDebugViewCellStatus {
+  flex: 0 0 64px;
   text-align: right;
 }
 
@@ -294,8 +301,9 @@ export const getCss = (): string => {
   overflow: hidden;
   min-width: 0;
   min-height: 0;
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
+  contain: strict;
 }
 
 .ChatDebugViewDetailsTop {
@@ -343,6 +351,23 @@ export const getCss = (): string => {
 .ChatDebugViewDetailsBody {
   overflow: auto;
   padding: 8px;
+  flex: 1 1 auto;
+  min-height: 0;
+  contain: strict;
+}
+
+.ChatDebugViewTableHeader > :nth-child(1),
+.ChatDebugViewEventRow > :nth-child(1) {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+
+.ChatDebugViewTableHeader > :nth-child(2),
+.ChatDebugViewEventRow > :nth-child(2),
+.ChatDebugViewTableHeader > :nth-child(3),
+.ChatDebugViewEventRow > :nth-child(3) {
+  flex: 1 1 180px;
+  min-width: 0;
 }
 
 .ChatDebugViewEvents::-webkit-scrollbar {

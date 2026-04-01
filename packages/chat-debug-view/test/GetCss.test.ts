@@ -24,6 +24,21 @@ test('getCss should avoid nested scrolling in devtools events table', () => {
 test('getCss should keep the details preview in the right devtools column', () => {
   const css = GetCss.getCss()
 
-  expect(css).toContain(".ChatDebugViewDevtoolsMain {\n  display: grid;\n  grid-template-areas: 'table details';")
-  expect(css).toContain('.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {\n  grid-area: details;\n}')
+  expect(css).toContain('.ChatDebugViewDevtoolsMain {\n  display: flex;')
+  expect(css).toContain('.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {\n  flex: 0 0 clamp(320px, 32vw, 420px);\n}')
+})
+
+test('getCss should use flex layout for timeline buckets and table rows', () => {
+  const css = GetCss.getCss()
+
+  expect(css).toContain('.ChatDebugViewTimelineBuckets {\n  display: flex;')
+  expect(css).toContain('.ChatDebugViewTableHeader,\n.ChatDebugViewEventRow {\n  display: flex;')
+  expect(css).not.toContain('display: grid;')
+})
+
+test('getCss should use strict containment for scrollable detail sections', () => {
+  const css = GetCss.getCss()
+
+  expect(css).toContain('.ChatDebugViewTableBody {\n  overflow: auto;\n  min-height: 0;\n  flex: 1 1 auto;\n  contain: strict;\n}')
+  expect(css).toContain('.ChatDebugViewDetailsBody {\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}')
 })
