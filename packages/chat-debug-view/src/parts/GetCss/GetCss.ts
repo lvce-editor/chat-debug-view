@@ -131,7 +131,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   gap: 0;
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewTimeline {
