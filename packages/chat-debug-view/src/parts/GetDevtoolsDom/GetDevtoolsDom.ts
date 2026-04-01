@@ -104,6 +104,7 @@ export const getDevtoolsDom = (
     {
       childCount: rowNodes.length === 0 ? 1 : rowNodes.length,
       className: 'ChatDebugViewTableBody',
+      onClick: DomEventListenerFunctions.HandleEventRowClick,
       type: VirtualDomElements.Div,
     },
     ...rowNodes,

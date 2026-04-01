@@ -32,6 +32,30 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
 })
 
+test('getDevtoolsDom should delegate row clicks from table body using data-index', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+    readonly ['data-index']?: string
+    readonly className?: string
+    readonly inputType?: string
+    readonly onClick?: number
+    readonly type?: number
+  }[]
+  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const eventRow = dom.find((node) => node.className === 'ChatDebugViewEventRow ChatDebugViewEventRowSelected')
+  const radioInput = dom.find((node) => node.inputType === 'radio')
+
+  expect(tableBody?.onClick).toBe(DomEventListenerFunctions.HandleEventRowClick)
+  expect(eventRow?.['data-index']).toBe('0')
+  expect(radioInput).toBeUndefined()
+})
+
 test('getDevtoolsDom should render timeline filters when timestamps are available', () => {
   const events = [
     {

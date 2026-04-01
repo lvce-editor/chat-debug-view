@@ -35,22 +35,11 @@ export const getCss = (): string => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
 
-.ChatDebugViewEventCount {
-  font-size: 12px;
-  opacity: 0.8;
-}
 
 .ChatDebugViewQuickFilters {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
-}
-
-.ChatDebugViewQuickFilterPill {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
   min-height: 28px;
   padding: 0 12px;

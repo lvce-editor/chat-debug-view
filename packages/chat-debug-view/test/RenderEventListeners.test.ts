@@ -3,6 +3,14 @@ import { EventExpression } from '@lvce-editor/constants'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as RenderEventListeners from '../src/parts/RenderEventListeners/RenderEventListeners.ts'
 
+test('renderEventListeners should register delegated row click with dataset index', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const clickListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleEventRowClick)
+
+  expect(clickListener).toBeDefined()
+  expect(clickListener?.params).toEqual(['handleEventRowClick', 'event.target.dataset.index'])
+})
+
 test('renderEventListeners should register filter input with name and value params', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const filterListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleFilterInput)
