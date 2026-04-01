@@ -3,7 +3,7 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDetailsDom from '../src/parts/GetDetailsDom/GetDetailsDom.ts'
 
-test('getDetailsDom should render details panel nodes and close input', () => {
+test('getDetailsDom should render details panel nodes, close control, and tabs', () => {
   const selectedEventNodes = [
     {
       childCount: 1,
@@ -13,10 +13,18 @@ test('getDetailsDom should render details panel nodes and close input', () => {
   ]
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes) as readonly {
+    readonly ['aria-label']?: string
+    readonly ['aria-controls']?: string
+    readonly ['aria-labelledby']?: string
+    readonly ['aria-selected']?: boolean
     readonly childCount?: number
     readonly className?: string
+    readonly id?: string
     readonly name?: string
     readonly onChange?: number
+    readonly onClick?: number
+    readonly role?: string
+    readonly tabIndex?: number
     readonly value?: string
   }[]
 
@@ -32,23 +40,63 @@ test('getDetailsDom should render details panel nodes and close input', () => {
       type: VirtualDomElements.Div,
     },
     {
+      'aria-label': 'Detail sections',
+      childCount: 2,
+      className: 'ChatDebugViewDetailsTabs',
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-response',
+      'aria-selected': true,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      id: 'ChatDebugViewDetailsTab-response',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      role: 'tab',
+      tabIndex: 0,
+      type: VirtualDomElements.Button,
+      value: 'response',
+    },
+    text('Response'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-timing',
+      'aria-selected': false,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab',
+      id: 'ChatDebugViewDetailsTab-timing',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+      value: 'timing',
+    },
+    text('Timing'),
+    {
+      'aria-label': 'Close details',
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
-      inputType: 'checkbox',
       name: 'closeDetails',
       onChange: DomEventListenerFunctions.HandleSimpleInput,
-      type: VirtualDomElements.Input,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      type: VirtualDomElements.Button,
       value: 'close',
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewDetailsTitle',
+      className: 'ChatDebugViewDetailsBody',
       type: VirtualDomElements.Div,
     },
-    text('Details'),
     {
+      'aria-labelledby': 'ChatDebugViewDetailsTab-response',
       childCount: 1,
-      className: 'ChatDebugViewDetailsBody',
+      className: 'ChatDebugViewDetailsPanel',
+      id: 'ChatDebugViewDetailsPanel-response',
+      role: 'tabpanel',
       type: VirtualDomElements.Div,
     },
     {
@@ -63,4 +111,51 @@ test('getDetailsDom should return an empty array when there is no selected event
   const dom = GetDetailsDom.getDetailsDom([])
 
   expect(dom).toEqual([])
+})
+
+test('getDetailsDom should render timing panel content when timing tab is selected', () => {
+  const dom = GetDetailsDom.getDetailsDom(
+    [
+      {
+        childCount: 1,
+        className: 'SelectedEventNode',
+        type: VirtualDomElements.Div,
+      },
+    ],
+    {
+      ended: '2026-03-08T00:00:01.250Z',
+      started: '2026-03-08T00:00:01.000Z',
+      type: 'request',
+    },
+    'timing',
+  ) as readonly {
+    readonly ['aria-selected']?: boolean
+    readonly className?: string
+    readonly role?: string
+    readonly text?: string
+    readonly value?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      role: 'tab',
+      value: 'timing',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewTiming',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Duration',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '250ms',
+    }),
+  )
 })

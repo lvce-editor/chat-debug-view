@@ -12,6 +12,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
       events: [],
       initial: false,
       selectedEvent: null,
+      selectedEventId: null,
       sessionId,
     }
   }
@@ -22,6 +23,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
       events: [],
       initial: false,
       selectedEvent: null,
+      selectedEventId: null,
       sessionId,
     }
   }
@@ -32,6 +34,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
     events,
     initial: false,
     selectedEvent: null,
+    selectedEventId: null,
     sessionId,
   }
 }

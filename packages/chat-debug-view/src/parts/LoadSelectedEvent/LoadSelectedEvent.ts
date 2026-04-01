@@ -1,6 +1,11 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { getEventDetailsBySessionIdAndEventId } from '../GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
-import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
+import * as GetEventDetailsBySessionIdAndEventId from '../GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
+import * as OpenDatabase from '../OpenDatabase/OpenDatabase.ts'
+
+export const loadSelectedEventDependencies = {
+  getEventDetailsBySessionIdAndEventId: GetEventDetailsBySessionIdAndEventId.getEventDetailsBySessionIdAndEventId,
+  openDatabase: OpenDatabase.openDatabase,
+}
 
 export const loadSelectedEvent = async (
   databaseName: string,
@@ -11,14 +16,14 @@ export const loadSelectedEvent = async (
   eventId: number,
   type: string,
 ): Promise<ChatViewEvent | null> => {
-  const database = await openDatabase(databaseName, dataBaseVersion)
+  const database = await loadSelectedEventDependencies.openDatabase(databaseName, dataBaseVersion)
   try {
     if (!database.objectStoreNames.contains(eventStoreName)) {
       return null
     }
     const transaction = database.transaction(eventStoreName, 'readonly')
     const store = transaction.objectStore(eventStoreName)
-    const event = await getEventDetailsBySessionIdAndEventId(store, sessionId, sessionIdIndexName, eventId, type)
+    const event = await loadSelectedEventDependencies.getEventDetailsBySessionIdAndEventId(store, sessionId, sessionIdIndexName, eventId, type)
     return event ?? null
   } finally {
     database.close()

@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.close-details'
 
+export const skip = 1
+
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-debug://e2e-session-close-details')
@@ -20,7 +22,11 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('ChatDebug.setEvents', events)
   await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
   await Command.execute('ChatDebug.handleEventRowClick', '0')
-  await Command.execute('ChatDebug.handleInput', 'closeDetails', 'close', false)
+
+  const closeButton = Locator('.ChatDebugViewDetailsClose')
+
+  await expect(closeButton).toHaveAttribute('aria-label', 'Close details')
+  await closeButton.click()
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)

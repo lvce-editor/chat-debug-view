@@ -16,6 +16,8 @@ export interface TimelineInfo {
   readonly durationSeconds: number
   readonly endSeconds: number | null
   readonly hasSelection: boolean
+  readonly selectionEndPercent: number | null
+  readonly selectionStartPercent: number | null
   readonly startSeconds: number | null
 }
 
@@ -48,6 +50,23 @@ const getEventsWithTime = (events: readonly ChatViewEvent[]): readonly EventWith
     }
     return [{ event, time }]
   })
+}
+
+export const getTimelineDurationSeconds = (events: readonly ChatViewEvent[]): number => {
+  const eventsWithTime = getEventsWithTime(events)
+  if (eventsWithTime.length === 0) {
+    return 0
+  }
+  const baseTime = eventsWithTime[0].time
+  const lastTime = eventsWithTime.at(-1)?.time ?? baseTime
+  return roundSeconds(Math.max(0, lastTime - baseTime) / 1000)
+}
+
+const getSelectionPercent = (value: number, durationSeconds: number): number => {
+  if (durationSeconds <= 0) {
+    return 0
+  }
+  return Number(((value / durationSeconds) * 100).toFixed(3))
 }
 
 const getNormalizedRange = (
@@ -100,6 +119,8 @@ export const getTimelineInfo = (events: readonly ChatViewEvent[], startValue: st
       durationSeconds: 0,
       endSeconds: null,
       hasSelection: false,
+      selectionEndPercent: null,
+      selectionStartPercent: null,
       startSeconds: null,
     }
   }
@@ -117,6 +138,8 @@ export const getTimelineInfo = (events: readonly ChatViewEvent[], startValue: st
     counts[index] += 1
   }
   const maxCount = Math.max(...counts)
+  const selectionStartPercent = range.hasSelection && range.startSeconds !== null ? getSelectionPercent(range.startSeconds, durationSeconds) : null
+  const selectionEndPercent = range.hasSelection && range.endSeconds !== null ? getSelectionPercent(range.endSeconds, durationSeconds) : null
   const buckets = counts.map((count, index) => {
     const bucketStartMs = index * bucketDurationMs
     const bucketEndMs = index === bucketCount - 1 ? durationMs : (index + 1) * bucketDurationMs
@@ -136,6 +159,8 @@ export const getTimelineInfo = (events: readonly ChatViewEvent[], startValue: st
     durationSeconds,
     endSeconds: range.endSeconds,
     hasSelection: range.hasSelection,
+    selectionEndPercent,
+    selectionStartPercent,
     startSeconds: range.startSeconds,
   }
 }

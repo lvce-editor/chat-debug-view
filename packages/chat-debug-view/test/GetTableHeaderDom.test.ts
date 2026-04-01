@@ -2,9 +2,10 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetTableDom from '../src/parts/GetTableDom/GetTableDom.ts'
+import * as GetTableHeaderDom from '../src/parts/GetTableHeaderDom/GetTableHeaderDom.ts'
 
 test('getTableHeaderDom should render the table header nodes', () => {
-  const dom = GetTableDom.getTableHeaderDom() as readonly {
+  const dom = GetTableHeaderDom.getTableHeaderDom() as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly scope?: string
@@ -42,37 +43,6 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.Th,
     },
     text('Status'),
-  ])
-})
-
-test('getTableBodyDom should render the table body nodes', () => {
-  const rowNodes = [
-    {
-      childCount: 0,
-      className: 'ChatDebugViewEventRow',
-      type: VirtualDomElements.Tr,
-    },
-  ]
-  const dom = GetTableDom.getTableBodyDom(rowNodes as readonly any[], 1) as readonly {
-    readonly childCount?: number
-    readonly className?: string
-    readonly onPointerDown?: number
-    readonly onContextMenu?: number
-  }[]
-
-  expect(dom).toEqual([
-    {
-      childCount: 1,
-      className: 'ChatDebugViewTableBody',
-      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
-      type: VirtualDomElements.TBody,
-    },
-    {
-      childCount: 0,
-      className: 'ChatDebugViewEventRow',
-      type: VirtualDomElements.Tr,
-    },
   ])
 })
 
@@ -142,19 +112,4 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Tr,
     },
   ])
-})
-
-test('getTableDom should render an empty table body when there are no rows', () => {
-  const dom = GetTableDom.getTableDom([], 0) as readonly {
-    readonly childCount?: number
-    readonly className?: string
-  }[]
-  const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
-
-  expect(body).toEqual(
-    expect.objectContaining({
-      childCount: 1,
-      className: 'ChatDebugViewTableBody',
-    }),
-  )
 })

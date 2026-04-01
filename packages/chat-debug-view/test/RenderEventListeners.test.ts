@@ -64,3 +64,28 @@ test('renderEventListeners should register sash pointer tracking with client coo
   expect(pointerMoveListener?.params).toEqual(['handleSashPointerMove', EventExpression.ClientX, EventExpression.ClientY])
   expect(pointerUpListener?.params).toEqual(['handleSashPointerUp', EventExpression.ClientX, EventExpression.ClientY])
 })
+
+test('renderEventListeners should register timeline pointer tracking with clientX only', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const pointerDownListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerDown)
+  const pointerMoveListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerMove)
+  const pointerUpListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerUp)
+
+  expect(pointerDownListener).toBeDefined()
+  expect(pointerDownListener?.params).toEqual(['handleTimelinePointerDown', EventExpression.ClientX])
+  expect(pointerDownListener).toEqual(
+    expect.objectContaining({
+      trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],
+    }),
+  )
+  expect(pointerMoveListener?.params).toEqual(['handleTimelinePointerMove', EventExpression.ClientX])
+  expect(pointerUpListener?.params).toEqual(['handleTimelinePointerUp', EventExpression.ClientX])
+})
+
+test('renderEventListeners should register timeline double click reset', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const doubleClickListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelineDoubleClick)
+
+  expect(doubleClickListener).toBeDefined()
+  expect(doubleClickListener?.params).toEqual(['handleTimelineDoubleClick'])
+})

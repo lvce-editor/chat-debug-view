@@ -1,4 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 
 export interface ChatDebugViewState {
   readonly assetDir: string
@@ -6,6 +7,7 @@ export interface ChatDebugViewState {
   readonly dataBaseVersion: number
   readonly errorMessage: string
   readonly eventCategoryFilter: string
+  readonly eventCategoryFilterOptions: readonly EventCategoryFilterOption[]
   readonly events: readonly ChatViewEvent[]
   readonly eventStoreName: string
   readonly filterValue: string
@@ -13,7 +15,9 @@ export interface ChatDebugViewState {
   readonly indexedDbSupportOverride: boolean | undefined
   readonly initial: boolean
   readonly platform: number
+  readonly selectedDetailTab: string
   readonly selectedEvent: ChatViewEvent | null
+  readonly selectedEventId: number | null
   readonly selectedEventIndex: number | null
   readonly sessionId: string
   readonly sessionIdIndexName: string
@@ -22,6 +26,9 @@ export interface ChatDebugViewState {
   readonly showResponsePartEvents: boolean
   readonly tableWidth: number
   readonly timelineEndSeconds: string
+  readonly timelineSelectionActive: boolean
+  readonly timelineSelectionAnchorSeconds: string
+  readonly timelineSelectionFocusSeconds: string
   readonly timelineStartSeconds: string
   readonly uid: number
   readonly uri: string
