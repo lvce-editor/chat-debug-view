@@ -3,7 +3,7 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDetailsDom from '../src/parts/GetDetailsDom/GetDetailsDom.ts'
 
-test('getDetailsDom should render details panel nodes and close input', () => {
+test('getDetailsDom should render details panel nodes and close button', () => {
   const selectedEventNodes = [
     {
       childCount: 1,
@@ -13,10 +13,11 @@ test('getDetailsDom should render details panel nodes and close input', () => {
   ]
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes) as readonly {
+    readonly ['aria-label']?: string
     readonly childCount?: number
     readonly className?: string
     readonly name?: string
-    readonly onChange?: number
+    readonly onClick?: number
     readonly value?: string
   }[]
 
@@ -32,12 +33,12 @@ test('getDetailsDom should render details panel nodes and close input', () => {
       type: VirtualDomElements.Div,
     },
     {
+      'aria-label': 'Close details',
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
-      inputType: 'checkbox',
       name: 'closeDetails',
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
-      type: VirtualDomElements.Input,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      type: VirtualDomElements.Button,
       value: 'close',
     },
     {

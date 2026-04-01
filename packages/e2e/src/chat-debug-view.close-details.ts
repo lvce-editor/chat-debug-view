@@ -20,7 +20,11 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('ChatDebug.setEvents', events)
   await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
   await Command.execute('ChatDebug.handleEventRowClick', '0')
-  await Command.execute('ChatDebug.handleInput', 'closeDetails', 'close', false)
+
+  const closeButton = Locator('.ChatDebugViewDetailsClose')
+
+  await expect(closeButton).toHaveAttribute('aria-label', 'Close details')
+  await closeButton.click()
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)

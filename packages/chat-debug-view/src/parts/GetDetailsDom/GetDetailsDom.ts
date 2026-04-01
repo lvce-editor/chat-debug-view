@@ -18,12 +18,12 @@ export const getDetailsDom = (selectedEventNodes: readonly VirtualDomNode[]): re
       type: VirtualDomElements.Div,
     },
     {
+      'aria-label': 'Close details',
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
-      inputType: 'checkbox',
       name: InputName.CloseDetails,
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
-      type: VirtualDomElements.Input,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      type: VirtualDomElements.Button,
       value: 'close',
     },
     {
