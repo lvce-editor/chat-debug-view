@@ -1,8 +1,9 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { collapseToolExecutionEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
 
-const toolEventTypePrefix = 'tool-execution-'
+const toolEventTypePrefix = 'tool-execution'
 
 const isToolEvent = (event: ChatViewEvent): boolean => {
   return event.type.startsWith(toolEventTypePrefix)
@@ -75,10 +76,11 @@ export const getFilteredEvents = (
   showEventStreamFinishedEvents: boolean,
 ): readonly ChatViewEvent[] => {
   const visibleEvents = getVisibleEvents(events, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
+  const collapsedEvents = collapseToolExecutionEvents(visibleEvents)
   const parsedFilter = parseFilterValue(filterValue)
   const activeEventCategoryFilter =
     parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilter : parsedFilter.eventCategoryFilter
-  const filteredByCategory = visibleEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilter))
+  const filteredByCategory = collapsedEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilter))
   const { filterText } = parsedFilter
   if (!filterText) {
     return filteredByCategory

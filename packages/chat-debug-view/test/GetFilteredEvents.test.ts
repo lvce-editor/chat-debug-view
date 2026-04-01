@@ -23,15 +23,21 @@ const events: readonly ChatViewEvent[] = [
     type: 'request',
   },
   {
+    arguments: {
+      path: '/tmp/file.txt',
+    },
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
   },
   {
+    output: {
+      contents: 'hello',
+    },
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:45.000Z',
-    toolName: 'apply_patch',
+    toolName: 'read_file',
     type: 'tool-execution-finished',
   },
   {
@@ -51,14 +57,14 @@ const events: readonly ChatViewEvent[] = [
 
 test('getFilteredEvents should hide input events when showInputEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', EventCategoryFilter.All, false, true, false)
-  expect(result).toHaveLength(4)
+  expect(result).toHaveLength(3)
   expect(result[0].type).toBe('request')
   expect(result.some((event) => event.type === 'handle-submit')).toBe(false)
 })
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', EventCategoryFilter.All, true, false, false)
-  expect(result).toHaveLength(5)
+  expect(result).toHaveLength(4)
   expect(result.some((event) => event.type === 'request')).toBe(true)
   expect(result.some((event) => event.type === 'sse-response-part')).toBe(false)
 })
@@ -81,19 +87,45 @@ test('getFilteredEvents should filter by normalized search text', () => {
 
 test('getFilteredEvents should return all visible events when filter is empty', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '   ', EventCategoryFilter.All, true, true, true)
-  expect(result).toHaveLength(7)
+  expect(result).toHaveLength(6)
 })
 
 test('getFilteredEvents should show only tool execution events for @tools filter', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '@tools', EventCategoryFilter.All, true, true, true)
-  expect(result).toHaveLength(2)
-  expect(result.every((event) => event.type.startsWith('tool-execution-'))).toBe(true)
+  expect(result).toHaveLength(1)
+  expect(result).toEqual([
+    expect.objectContaining({
+      arguments: {
+        path: '/tmp/file.txt',
+      },
+      ended: '2026-01-01T10:01:45.000Z',
+      output: {
+        contents: 'hello',
+      },
+      started: '2026-01-01T10:01:30.000Z',
+      toolName: 'read_file',
+      type: 'tool-execution',
+    }),
+  ])
 })
 
 test('getFilteredEvents should combine @tools filter with text search', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS apply_patch  ', EventCategoryFilter.All, true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS hello  ', EventCategoryFilter.All, true, true, true)
   expect(result).toHaveLength(1)
-  expect(result[0].type).toBe('tool-execution-finished')
+  expect(result[0].type).toBe('tool-execution')
+})
+
+test('getFilteredEvents should prefer finished event payload for merged tool previews', () => {
+  const result = GetFilteredEvents.getFilteredEvents(events, '@tools', EventCategoryFilter.All, true, true, true)
+
+  expect(result).toEqual([
+    expect.objectContaining({
+      output: {
+        contents: 'hello',
+      },
+    }),
+  ])
+  expect(result[0]).not.toHaveProperty('timestamp', '2026-01-01T10:01:30.000Z')
 })
 
 test('getFilteredEvents should show only network events for network category filter', () => {

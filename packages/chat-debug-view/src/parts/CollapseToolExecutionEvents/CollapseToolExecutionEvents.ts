@@ -1,0 +1,83 @@
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+
+const startedEventType = 'tool-execution-started'
+const finishedEventType = 'tool-execution-finished'
+const mergedEventType = 'tool-execution'
+
+const eventStableIds = new WeakMap<ChatViewEvent, string>()
+let nextStableEventId = 1
+
+const getOrCreateStableEventId = (event: ChatViewEvent): string => {
+  const existingStableEventId = eventStableIds.get(event)
+  if (existingStableEventId) {
+    return existingStableEventId
+  }
+  const stableEventId = `event-${nextStableEventId++}`
+  eventStableIds.set(event, stableEventId)
+  return stableEventId
+}
+
+const setStableEventId = (event: ChatViewEvent, stableEventId: string): void => {
+  eventStableIds.set(event, stableEventId)
+}
+
+const getStartedTimestamp = (event: ChatViewEvent): unknown => {
+  return event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp
+}
+
+const getEndedTimestamp = (event: ChatViewEvent): unknown => {
+  return event.ended ?? event.endTime ?? event.endTimestamp ?? event.timestamp
+}
+
+const isToolExecutionStartedEvent = (event: ChatViewEvent): boolean => {
+  return event.type === startedEventType
+}
+
+const isToolExecutionFinishedEvent = (event: ChatViewEvent): boolean => {
+  return event.type === finishedEventType
+}
+
+const hasMatchingToolName = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
+  if (typeof startedEvent.toolName === 'string' && typeof finishedEvent.toolName === 'string') {
+    return startedEvent.toolName === finishedEvent.toolName
+  }
+  return true
+}
+
+const isMatchingToolExecutionPair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
+  return startedEvent.sessionId === finishedEvent.sessionId && hasMatchingToolName(startedEvent, finishedEvent)
+}
+
+const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
+  const mergedEvent: ChatViewEvent = {
+    ...startedEvent,
+    ...finishedEvent,
+    ended: getEndedTimestamp(finishedEvent),
+    started: getStartedTimestamp(startedEvent),
+    type: mergedEventType,
+  }
+  const stableEventId = `${getOrCreateStableEventId(startedEvent)}:${getOrCreateStableEventId(finishedEvent)}`
+  setStableEventId(mergedEvent, stableEventId)
+  return mergedEvent
+}
+
+export const getStableEventId = (event: ChatViewEvent): string => {
+  return getOrCreateStableEventId(event)
+}
+
+export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
+  const collapsedEvents: ChatViewEvent[] = []
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    if (isToolExecutionStartedEvent(event)) {
+      const nextEvent = events[i + 1]
+      if (nextEvent && isToolExecutionFinishedEvent(nextEvent) && isMatchingToolExecutionPair(event, nextEvent)) {
+        collapsedEvents.push(mergeToolExecutionEvents(event, nextEvent))
+        i++
+        continue
+      }
+    }
+    collapsedEvents.push(event)
+  }
+  return collapsedEvents
+}

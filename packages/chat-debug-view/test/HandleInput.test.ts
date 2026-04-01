@@ -133,6 +133,38 @@ test('handleInput should preserve selected event when filter still includes it',
   expect(result.selectedEventIndex).toBe(0)
 })
 
+test('handleInput should preserve selected merged tool event when filter still includes it', () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        toolName: 'read_file',
+        type: 'tool-execution-started',
+      },
+      {
+        output: {
+          contents: 'hello',
+        },
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        toolName: 'read_file',
+        type: 'tool-execution-finished',
+      },
+      {
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:02.000Z',
+        type: 'response',
+      },
+    ],
+    selectedEventIndex: 0,
+  }
+
+  const result = HandleInput.handleInput(state, InputName.Filter, 'hello', false)
+  expect(result.selectedEventIndex).toBe(0)
+})
+
 test('handleInput should preserve selected event when category filter still includes it', () => {
   const state = {
     ...createDefaultState(),
