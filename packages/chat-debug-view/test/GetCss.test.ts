@@ -2,12 +2,23 @@ import { expect, test } from '@jest/globals'
 import * as GetCss from '../src/parts/GetCss/GetCss.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
+const selectorEscapeRegex = /[.*+?^${}()|[\]\\]/g
+const strictContainmentRegex = /contain: strict;/g
+const contentContainmentRegex = /contain: content;/g
+
 const getCss = (): string => {
   return GetCss.getCss({
     ...createDefaultState(),
     tableWidth: 480,
     width: 900,
   })
+}
+
+const getRule = (css: string, selector: string): string => {
+  const escapedSelector = selector.replaceAll(selectorEscapeRegex, '\\$&')
+  const match = css.match(new RegExp(`(?:^|\\n)${escapedSelector} \\{[\\s\\S]*?\\n\\}`, 'm'))
+  expect(match).not.toBeNull()
+  return match?.[0] || ''
 }
 
 test('getCss should not make devtools type cells bold', () => {
@@ -25,7 +36,7 @@ test('getCss should tighten vertical spacing in devtools layout', () => {
 test('getCss should keep the devtools filter input compact', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewFilterInput {\n  flex: 1;\n  min-width: 0;\n}')
+  expect(css).toContain('.ChatDebugViewFilterInput {\n  flex: 1;\n  min-width: 0;\n  contain: content;\n}')
   expect(css).toContain('.ChatDebugViewFilterInput--devtools {\n  flex: 0 1 320px;\n  width: 320px;\n  max-width: 100%;\n}')
 })
 
@@ -33,7 +44,9 @@ test('getCss should avoid nested scrolling in devtools events table', () => {
   const css = getCss()
 
   expect(css).toContain('.ChatDebugView--devtools .ChatDebugViewEvents {\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: hidden;\n}')
-  expect(css).toContain('.ChatDebugViewTable {\n  display: flex;\n  flex-direction: column;\n  min-height: 0;\n  flex: 1 1 auto;\n}')
+  expect(css).toContain(
+    '.ChatDebugViewTable {\n  display: flex;\n  flex-direction: column;\n  min-height: 0;\n  flex: 1 1 auto;\n  contain: strict;\n}',
+  )
 })
 
 test('getCss should keep the details preview in the right devtools column', () => {
@@ -97,20 +110,22 @@ test('getCss should keep table cells and messages on flex layouts', () => {
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugViewCell {\n  display: flex;\n  align-items: center;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  min-width: 0;\n}',
+    '.ChatDebugViewCell {\n  display: flex;\n  align-items: center;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  min-width: 0;\n  contain: content;\n}',
   )
   expect(css).toContain('.ChatDebugViewCellDuration {\n  flex: 0 0 90px;\n  justify-content: flex-end;\n  text-align: right;\n}')
   expect(css).toContain('.ChatDebugViewCellStatus {\n  flex: 0 0 64px;\n  justify-content: flex-end;\n  text-align: right;\n}')
   expect(css).toContain('.ChatDebugViewDetailsTitle {\n  display: flex;\n  align-items: center;\n  font-size: 12px;')
-  expect(css).toContain('.ChatDebugViewEmpty {\n  display: flex;\n  align-items: center;\n  opacity: 0.8;\n}')
-  expect(css).toContain('.ChatDebugViewError {\n  display: flex;\n  color: var(--vscode-errorForeground, #f14c4c);\n  white-space: normal;\n}')
+  expect(css).toContain('.ChatDebugViewEmpty {\n  display: flex;\n  align-items: center;\n  opacity: 0.8;\n  contain: content;\n}')
+  expect(css).toContain(
+    '.ChatDebugViewError {\n  display: flex;\n  color: var(--vscode-errorForeground, #f14c4c);\n  white-space: normal;\n  contain: content;\n}',
+  )
 })
 
 test('getCss should use a visible foreground color for the details close button', () => {
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugViewDetailsClose {\n  width: 18px;\n  height: 18px;\n  appearance: none;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 4px;\n  cursor: pointer;\n  position: relative;\n  color: var(--vscode-foreground, #cccccc);\n  background: transparent;\n}',
+    '.ChatDebugViewDetailsClose {\n  width: 18px;\n  height: 18px;\n  appearance: none;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 4px;\n  cursor: pointer;\n  position: relative;\n  color: var(--vscode-foreground, #cccccc);\n  background: transparent;\n  contain: strict;\n}',
   )
   expect(css).toContain('.ChatDebugViewDetailsClose:hover {\n  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));\n}')
 })
@@ -119,7 +134,7 @@ test('getCss should render quick filter pills as rounded segmented controls', ()
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugViewQuickFilterPill {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 22px;\n  padding: 0 10px;\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  white-space: nowrap;\n}',
+    '.ChatDebugViewQuickFilterPill {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 22px;\n  padding: 0 10px;\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  white-space: nowrap;\n  contain: content;\n}',
   )
   expect(css).toContain(
     '.ChatDebugViewQuickFilterPillSelected {\n  border-color: var(--vscode-focusBorder, #007fd4);\n  background: var(--vscode-list-activeSelectionBackground, rgba(14, 99, 156, 0.35));\n  color: var(--vscode-list-activeSelectionForeground, inherit);\n}',
@@ -131,8 +146,47 @@ test('getCss should style the split sash between table and details', () => {
 
   expect(css).toContain('.ChatDebugViewSash {\n  flex: 0 0 var(--ChatDebugViewSashWidth);')
   expect(css).toContain(
-    '.ChatDebugViewSashLine {\n  width: 1px;\n  height: 100%;\n  background: var(--vscode-editorWidget-border, #454545);\n  pointer-events: none;\n}',
+    '.ChatDebugViewSashLine {\n  width: 1px;\n  height: 100%;\n  background: var(--vscode-editorWidget-border, #454545);\n  pointer-events: none;\n  contain: strict;\n}',
   )
   expect(css).toContain('.ChatDebugViewSash:hover .ChatDebugViewSashLine {\n  background: var(--vscode-focusBorder, #007fd4);\n}')
   expect(css).not.toContain('.ChatDebugViewSash::before')
+})
+
+test('getCss should use strict containment for externally sized containers', () => {
+  const css = getCss()
+
+  expect(getRule(css, '.ChatDebugView')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewEvents')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewDevtoolsMain')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewDevtoolsSplit')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewSash')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTable')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTimelineBuckets')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTimelineInteractive')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTimelineBucket')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTimelineBucketBar')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewTimelineBucketUnit')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewDetails')).toContain('contain: strict;')
+  expect(getRule(css, '.ChatDebugViewDetailsClose')).toContain('contain: strict;')
+  expect((css.match(strictContainmentRegex) || []).length).toBeGreaterThanOrEqual(12)
+})
+
+test('getCss should use content containment for auto-sized text containers', () => {
+  const css = getCss()
+
+  expect(getRule(css, '.ChatDebugViewTop')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewToggle')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewQuickFilterPill')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewTimeline')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewTimelineTop')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewTableHeader')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewHeaderCell')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewEventRow')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewCell')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewDetailsTop')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewDetailsTitle')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewEvent')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewEmpty')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewError')).toContain('contain: content;')
+  expect((css.match(contentContainmentRegex) || []).length).toBeGreaterThanOrEqual(12)
 })

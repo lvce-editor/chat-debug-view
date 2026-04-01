@@ -1,16 +1,19 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-export const getQuickFilterNodes = (eventCategoryFilter: string): readonly VirtualDomNode[] => {
+export const getQuickFilterNodes = (
+  eventCategoryFilter: string,
+  eventCategoryFilterOptions: readonly EventCategoryFilterOption[],
+): readonly VirtualDomNode[] => {
   return [
     {
-      childCount: EventCategoryFilter.options.length,
+      childCount: eventCategoryFilterOptions.length,
       className: 'ChatDebugViewQuickFilters',
       type: VirtualDomElements.Div,
     },
-    ...EventCategoryFilter.options.flatMap((option) => {
+    ...eventCategoryFilterOptions.flatMap((option) => {
       const isSelected = option.value === eventCategoryFilter
       return [
         {

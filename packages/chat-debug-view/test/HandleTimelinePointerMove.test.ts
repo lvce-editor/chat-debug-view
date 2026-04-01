@@ -20,8 +20,8 @@ test('handleTimelinePointerMove should update the drag preview range', () => {
     timelineSelectionActive: true,
     timelineSelectionAnchorSeconds: '2.5',
     timelineSelectionFocusSeconds: '2.5',
-    timelineSelectionLeft: 100,
-    timelineSelectionWidth: 400,
+    width: 436,
+    x: 82,
   }
 
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 420)

@@ -17,13 +17,13 @@ test('handleTimelinePointerDown should start a drag selection from the pointer p
         type: 'response',
       },
     ],
+    width: 436,
+    x: 82,
   }
 
-  const result = HandleTimelinePointerDown.handleTimelinePointerDown(state, 250, 100, 400)
+  const result = HandleTimelinePointerDown.handleTimelinePointerDown(state, 250)
 
   expect(result.timelineSelectionActive).toBe(true)
   expect(result.timelineSelectionAnchorSeconds).toBe('3.75')
   expect(result.timelineSelectionFocusSeconds).toBe('3.75')
-  expect(result.timelineSelectionLeft).toBe(100)
-  expect(result.timelineSelectionWidth).toBe(400)
 })

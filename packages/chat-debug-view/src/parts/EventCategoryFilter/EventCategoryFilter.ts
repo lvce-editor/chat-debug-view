@@ -4,28 +4,35 @@ export const Network = 'network'
 export const Ui = 'ui'
 export const Stream = 'stream'
 
-export const options = [
-  {
-    label: 'All',
-    value: All,
-  },
-  {
-    label: 'Tools',
-    value: Tools,
-  },
-  {
-    label: 'Network',
-    value: Network,
-  },
-  {
-    label: 'UI',
-    value: Ui,
-  },
-  {
-    label: 'Stream',
-    value: Stream,
-  },
-] as const
+export interface EventCategoryFilterOption {
+  readonly label: string
+  readonly value: string
+}
+
+export const createEventCategoryFilterOptions = (): readonly EventCategoryFilterOption[] => {
+  return [
+    {
+      label: 'All',
+      value: All,
+    },
+    {
+      label: 'Tools',
+      value: Tools,
+    },
+    {
+      label: 'Network',
+      value: Network,
+    },
+    {
+      label: 'UI',
+      value: Ui,
+    },
+    {
+      label: 'Stream',
+      value: Stream,
+    },
+  ]
+}
 
 export const getEventCategoryFilterLabel = (eventCategoryFilter: string): string => {
   switch (eventCategoryFilter) {

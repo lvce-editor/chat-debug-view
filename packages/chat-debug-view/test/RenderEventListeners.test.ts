@@ -65,19 +65,14 @@ test('renderEventListeners should register sash pointer tracking with client coo
   expect(pointerUpListener?.params).toEqual(['handleSashPointerUp', EventExpression.ClientX, EventExpression.ClientY])
 })
 
-test('renderEventListeners should register timeline pointer tracking with element bounds', () => {
+test('renderEventListeners should register timeline pointer tracking with clientX only', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const pointerDownListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerDown)
   const pointerMoveListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerMove)
   const pointerUpListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelinePointerUp)
 
   expect(pointerDownListener).toBeDefined()
-  expect(pointerDownListener?.params).toEqual([
-    'handleTimelinePointerDown',
-    EventExpression.ClientX,
-    'event.currentTarget.getBoundingClientRect().left',
-    'event.currentTarget.clientWidth',
-  ])
+  expect(pointerDownListener?.params).toEqual(['handleTimelinePointerDown', EventExpression.ClientX])
   expect(pointerDownListener).toEqual(
     expect.objectContaining({
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],

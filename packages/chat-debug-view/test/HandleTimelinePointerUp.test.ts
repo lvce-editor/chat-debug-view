@@ -20,8 +20,8 @@ test('handleTimelinePointerUp should commit the normalized drag range', () => {
     timelineSelectionActive: true,
     timelineSelectionAnchorSeconds: '8',
     timelineSelectionFocusSeconds: '8',
-    timelineSelectionLeft: 100,
-    timelineSelectionWidth: 400,
+    width: 436,
+    x: 82,
   }
 
   const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 180)

@@ -25,6 +25,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.errorMessage,
     newState.filterValue,
     newState.eventCategoryFilter,
+    newState.eventCategoryFilterOptions,
     newState.showEventStreamFinishedEvents,
     newState.showInputEvents,
     newState.showResponsePartEvents,

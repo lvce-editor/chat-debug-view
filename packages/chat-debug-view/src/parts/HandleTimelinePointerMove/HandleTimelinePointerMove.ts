@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
+import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
 
 export const handleTimelinePointerMove = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
@@ -7,7 +8,9 @@ export const handleTimelinePointerMove = (state: ChatDebugViewState, eventX: num
     return state
   }
   const timelineEvents = getTimelineEvents(state)
-  const seconds = getTimelineSecondsFromClientX(timelineEvents, eventX, state.timelineSelectionLeft, state.timelineSelectionWidth)
+  const timelineLeft = getTimelineLeft(state)
+  const timelineWidth = getTimelineWidth(state)
+  const seconds = getTimelineSecondsFromClientX(timelineEvents, eventX, timelineLeft, timelineWidth)
   if (seconds === undefined) {
     return state
   }

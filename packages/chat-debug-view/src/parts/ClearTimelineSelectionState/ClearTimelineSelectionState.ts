@@ -6,7 +6,5 @@ export const clearTimelineSelectionState = (state: ChatDebugViewState): ChatDebu
     timelineSelectionActive: false,
     timelineSelectionAnchorSeconds: '',
     timelineSelectionFocusSeconds: '',
-    timelineSelectionLeft: 0,
-    timelineSelectionWidth: 0,
   }
 }
