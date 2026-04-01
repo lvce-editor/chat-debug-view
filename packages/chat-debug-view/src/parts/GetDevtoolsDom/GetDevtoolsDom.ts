@@ -1,10 +1,11 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
+import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
+import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
-import * as InputName from '../InputName/InputName.ts'
 
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
@@ -18,43 +19,10 @@ export const getDevtoolsDom = (
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
-  const eventsClassName = `${hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'}${timelineNodes.length > 0 ? ' ChatDebugViewEvents--timeline' : ''}`
+  const tableNodes = getTableDom(rowNodes, events.length)
+  const eventsClassName = getEventsClassName(hasSelectedEvent, timelineNodes.length > 0)
   const eventsChildCount = timelineNodes.length > 0 ? 2 : 1
-  const detailsNodes = hasSelectedEvent
-    ? [
-        {
-          childCount: 2,
-          className: 'ChatDebugViewDetails',
-          type: VirtualDomElements.Div,
-        },
-        {
-          childCount: 2,
-          className: 'ChatDebugViewDetailsTop',
-          type: VirtualDomElements.Div,
-        },
-        {
-          childCount: 1,
-          className: 'ChatDebugViewDetailsTitle',
-          type: VirtualDomElements.Div,
-        },
-        text('Details'),
-        {
-          childCount: 0,
-          className: 'ChatDebugViewDetailsClose',
-          inputType: 'checkbox',
-          name: InputName.CloseDetails,
-          onChange: DomEventListenerFunctions.HandleSimpleInput,
-          type: VirtualDomElements.Input,
-          value: 'close',
-        },
-        {
-          childCount: selectedEventNodes.length,
-          className: 'ChatDebugViewDetailsBody',
-          type: VirtualDomElements.Div,
-        },
-        ...selectedEventNodes,
-      ]
-    : []
+  const detailsNodes = getDetailsDom(selectedEventNodes)
   return [
     {
       childCount: hasSelectedEvent ? 2 : 1,
@@ -67,53 +35,7 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
-    {
-      childCount: 2,
-      className: 'ChatDebugViewTable',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 5,
-      className: 'ChatDebugViewTableHeader',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
-      type: VirtualDomElements.Div,
-    },
-    text('Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
-      type: VirtualDomElements.Div,
-    },
-    text('Duration'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
-      type: VirtualDomElements.Div,
-    },
-    text('Status'),
-    {
-      childCount: rowNodes.length === 0 ? 1 : rowNodes.length,
-      className: 'ChatDebugViewTableBody',
-      onClick: DomEventListenerFunctions.HandleEventRowClick,
-      type: VirtualDomElements.Div,
-    },
-    ...rowNodes,
+    ...tableNodes,
     ...detailsNodes,
   ]
 }
