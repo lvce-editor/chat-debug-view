@@ -1,19 +1,7 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
+import { isIndexedDbSupported } from '../IsIndexedDbSupported/IsIndexedDbSupported.ts'
 import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
-
-let indexedDbSupportOverride: boolean | undefined
-
-const isIndexedDbSupported = (): boolean => {
-  if (typeof indexedDbSupportOverride === 'boolean') {
-    return indexedDbSupportOverride
-  }
-  return globalThis.indexedDB !== undefined
-}
-
-export const setIndexedDbSupportForTest = (supported?: boolean): void => {
-  indexedDbSupportOverride = supported
-}
 
 export const listChatViewEvents = async (
   sessionId: string,

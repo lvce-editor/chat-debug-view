@@ -16,6 +16,7 @@ jest.unstable_mockModule('../src/parts/GetEventsBySessionId/GetEventsBySessionId
 })
 
 const ListChatViewEvents = await import('../src/parts/ListChatViewEvents/ListChatViewEvents.ts')
+const SetIndexedDbSupportForTest = await import('../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts')
 
 const restoreIndexedDb = (): void => {
   if (originalIndexedDb === undefined) {
@@ -33,12 +34,12 @@ const originalIndexedDb = globalThis.indexedDB
 
 afterEach(() => {
   jest.clearAllMocks()
-  ListChatViewEvents.setIndexedDbSupportForTest()
+  SetIndexedDbSupportForTest.setIndexedDbSupportForTest()
   restoreIndexedDb()
 })
 
 test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
-  ListChatViewEvents.setIndexedDbSupportForTest(false)
+  SetIndexedDbSupportForTest.setIndexedDbSupportForTest(false)
 
   const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 

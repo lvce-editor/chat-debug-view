@@ -1,5 +1,5 @@
-import { setIndexedDbSupportForTest as setSupport } from '../ListChatViewEvents/ListChatViewEvents.ts'
+import { setIndexedDbSupportOverride } from '../IndexedDbSupportOverride/IndexedDbSupportOverride.ts'
 
 export const setIndexedDbSupportForTest = (supported?: boolean): void => {
-  setSupport(supported)
+  setIndexedDbSupportOverride(supported)
 }
