@@ -1,32 +1,38 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-debug-view.set-events'
+export const name = 'chat-debug-view.devtools-layout'
 
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-render')
+  await Command.execute('Main.openUri', 'chat-debug://e2e-session-devtools-layout')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
     {
-      sessionId: 'e2e-session-render',
+      ended: '2026-03-08T00:00:01.000Z',
+      sessionId: 'e2e-session-devtools-layout',
+      started: '2026-03-08T00:00:00.000Z',
       timestamp: '2026-03-08T00:00:00.000Z',
-      type: 'handle-submit',
-      value: 'Hello',
-    },
-    {
-      sessionId: 'e2e-session-render',
-      timestamp: '2026-03-08T00:00:01.000Z',
-      type: 'handle-response',
-      value: 'Hi there',
+      type: 'request',
     },
   ]
 
   // act
   await Command.execute('ChatDebug.setEvents', events)
+  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
 
   // assert
-  const eventNodes = Locator('.ChatDebugViewEvent')
-  await expect(eventNodes).toHaveCount(1)
-  await expect(eventNodes.nth(0)).toContainText('"type": "handle-response"')
+  const root = Locator('.ChatDebugView--devtools')
+  const table = Locator('.ChatDebugViewTable')
+  const header = Locator('.ChatDebugViewTableHeader')
+  const body = Locator('.ChatDebugViewTableBody')
+  await expect(root).toBeVisible()
+  await expect(table).toBeVisible()
+  await expect(header).toBeVisible()
+  await expect(header).toContainText('Type')
+  await expect(header).toContainText('Started')
+  await expect(header).toContainText('Ended')
+  await expect(header).toContainText('Duration')
+  await expect(header).toContainText('Status')
+  await expect(body).toBeVisible()
 }

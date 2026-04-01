@@ -50,7 +50,7 @@ const getVisibleEvents = (
   showEventStreamFinishedEvents: boolean,
 ): readonly ChatViewEvent[] => {
   return events.filter((event) => {
-    if (!showInputEvents && (event.type === 'handle-input' || event.type === 'handle-submit')) {
+    if (!showInputEvents && event.type === 'handle-input') {
       return false
     }
     if (!showResponsePartEvents && event.type === 'sse-response-part') {

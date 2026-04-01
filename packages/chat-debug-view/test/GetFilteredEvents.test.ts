@@ -57,9 +57,10 @@ const events: readonly ChatViewEvent[] = [
 
 test('getFilteredEvents should hide input events when showInputEvents is false', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', EventCategoryFilter.All, false, true, false)
-  expect(result).toHaveLength(3)
-  expect(result[0].type).toBe('request')
-  expect(result.some((event) => event.type === 'handle-submit')).toBe(false)
+  expect(result).toHaveLength(4)
+  expect(result[0].type).toBe('handle-submit')
+  expect(result.some((event) => event.type === 'handle-input')).toBe(false)
+  expect(result.some((event) => event.type === 'handle-submit')).toBe(true)
 })
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
