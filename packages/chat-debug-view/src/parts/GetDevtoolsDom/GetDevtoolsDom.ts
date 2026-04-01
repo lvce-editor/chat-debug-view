@@ -26,9 +26,19 @@ export const getDevtoolsDom = (
   timelineStartSeconds: string,
   timelineEndSeconds: string,
   emptyMessage = 'No events have been found',
+  timelineSelectionActive = false,
+  timelineSelectionAnchorSeconds = '',
+  timelineSelectionFocusSeconds = '',
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
-  const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
+  const timelineNodes = getTimelineNodes(
+    timelineEvents,
+    timelineStartSeconds,
+    timelineEndSeconds,
+    timelineSelectionActive,
+    timelineSelectionAnchorSeconds,
+    timelineSelectionFocusSeconds,
+  )
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0

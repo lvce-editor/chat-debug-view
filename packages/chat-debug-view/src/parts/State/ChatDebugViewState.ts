@@ -20,6 +20,11 @@ export interface ChatDebugViewState {
   readonly showResponsePartEvents: boolean
   readonly tableWidth: number
   readonly timelineEndSeconds: string
+  readonly timelineSelectionActive: boolean
+  readonly timelineSelectionAnchorSeconds: string
+  readonly timelineSelectionFocusSeconds: string
+  readonly timelineSelectionLeft: number
+  readonly timelineSelectionWidth: number
   readonly timelineStartSeconds: string
   readonly uid: number
   readonly uri: string

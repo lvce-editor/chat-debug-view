@@ -22,6 +22,9 @@ export const getChatDebugViewDom = (
   timelineEndSeconds: string,
   timelineEvents: readonly ChatViewEvent[],
   events: readonly ChatViewEvent[],
+  timelineSelectionActive = false,
+  timelineSelectionAnchorSeconds = '',
+  timelineSelectionFocusSeconds = '',
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -48,7 +51,17 @@ export const getChatDebugViewDom = (
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
   const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds, emptyMessage)
+    ? getDevtoolsDom(
+        events,
+        safeSelectedEventIndex,
+        timelineEvents,
+        timelineStartSeconds,
+        timelineEndSeconds,
+        emptyMessage,
+        timelineSelectionActive,
+        timelineSelectionAnchorSeconds,
+        timelineSelectionFocusSeconds,
+      )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
   const debugViewTopDom = getDebugViewTopDom(

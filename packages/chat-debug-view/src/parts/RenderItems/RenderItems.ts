@@ -1,9 +1,9 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
-import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
@@ -19,14 +19,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   if (newState.initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
-  const timelineEvents = getFilteredEvents(
-    newState.events,
-    newState.filterValue,
-    newState.eventCategoryFilter,
-    newState.showInputEvents,
-    newState.showResponsePartEvents,
-    newState.showEventStreamFinishedEvents,
-  )
+  const timelineEvents = getTimelineEvents(newState)
   const filteredEvents = filterEventsByTimelineRange(timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
   const dom = getChatDebugViewDom(
     newState.errorMessage,
@@ -41,6 +34,9 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.timelineEndSeconds,
     withSessionEventIds(timelineEvents),
     withSessionEventIds(filteredEvents),
+    newState.timelineSelectionActive,
+    newState.timelineSelectionAnchorSeconds,
+    newState.timelineSelectionFocusSeconds,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

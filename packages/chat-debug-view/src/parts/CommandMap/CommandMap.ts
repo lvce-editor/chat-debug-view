@@ -7,6 +7,10 @@ import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPoint
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
+import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
+import * as HandleTimelinePointerDown from '../HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
+import * as HandleTimelinePointerMove from '../HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
+import * as HandleTimelinePointerUp from '../HandleTimelinePointerUp/HandleTimelinePointerUp.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import { render2 } from '../Render2/Render2.ts'
@@ -28,6 +32,10 @@ export const commandMap = {
   'ChatDebug.handleSashPointerMove': wrapCommand(HandleSashPointerMove.handleSashPointerMove),
   'ChatDebug.handleSashPointerUp': wrapCommand(HandleSashPointerUp.handleSashPointerUp),
   'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
+  'ChatDebug.handleTimelineDoubleClick': wrapCommand(HandleTimelineDoubleClick.handleTimelineDoubleClick),
+  'ChatDebug.handleTimelinePointerDown': wrapCommand(HandleTimelinePointerDown.handleTimelinePointerDown),
+  'ChatDebug.handleTimelinePointerMove': wrapCommand(HandleTimelinePointerMove.handleTimelinePointerMove),
+  'ChatDebug.handleTimelinePointerUp': wrapCommand(HandleTimelinePointerUp.handleTimelinePointerUp),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
   'ChatDebug.refresh': wrapCommand(Refresh.refresh),

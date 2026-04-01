@@ -193,7 +193,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 10px;
+  padding: 8px 10px 10px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 82%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.12)) 18%);
 }
@@ -230,8 +230,46 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineBuckets {
   display: flex;
   align-items: end;
-  gap: 4px;
+  gap: 3px;
   min-height: 60px;
+}
+
+.ChatDebugViewTimelineInteractive {
+  display: flex;
+  position: relative;
+  min-height: 60px;
+  cursor: crosshair;
+  user-select: none;
+}
+
+.ChatDebugViewTimelineInteractive > .ChatDebugViewTimelineBuckets {
+  flex: 1 1 auto;
+  pointer-events: none;
+}
+
+.ChatDebugViewTimelineSelectionOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ChatDebugViewTimelineSelectionRange {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 20%, transparent 80%);
+  border-left: 1px solid color-mix(in srgb, var(--vscode-charts-blue, #75beff) 65%, transparent 35%);
+  border-right: 1px solid color-mix(in srgb, var(--vscode-charts-blue, #75beff) 65%, transparent 35%);
+}
+
+.ChatDebugViewTimelineSelectionMarker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  background: var(--vscode-focusBorder, #007fd4);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-focusBorder, #007fd4) 24%, transparent 76%);
 }
 
 .ChatDebugViewTimelineBucket {
@@ -240,7 +278,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: 1 1 10px;
   min-width: 10px;
   min-height: 60px;
-  cursor: pointer;
 }
 
 .ChatDebugViewTimelinePresetInput {
@@ -254,11 +291,11 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-direction: column;
   justify-content: flex-end;
   gap: 2px;
-  padding: 4px 2px;
+  padding: 6px 1px 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 2px;
   width: 100%;
-  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 68%, transparent 32%);
+  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.16)) 74%, transparent 26%);
 }
 
 .ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
