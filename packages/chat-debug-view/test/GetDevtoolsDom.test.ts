@@ -44,16 +44,17 @@ test('getDevtoolsDom should delegate row clicks from table body using data-index
     readonly ['data-index']?: string
     readonly className?: string
     readonly inputType?: string
+    readonly name?: string
     readonly onClick?: number
     readonly type?: number
   }[]
   const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
   const eventRow = dom.find((node) => node.className === 'ChatDebugViewEventRow ChatDebugViewEventRowSelected')
-  const radioInput = dom.find((node) => node.inputType === 'radio')
+  const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
   expect(tableBody?.onClick).toBe(DomEventListenerFunctions.HandleEventRowClick)
   expect(eventRow?.['data-index']).toBe('0')
-  expect(radioInput).toBeUndefined()
+  expect(selectedEventInput).toBeUndefined()
 })
 
 test('getDevtoolsDom should render timeline filters when timestamps are available', () => {
