@@ -23,12 +23,19 @@ const getRawEventBySessionIdAndEventId = async (
       return undefined
     }
     const key = keys.at(-1)
+    if (key === undefined) {
+      return undefined
+    }
     const event = await store.get(key)
     return event as ChatViewEvent | undefined
   }
   const all = (await store.getAll()) as readonly ChatViewEvent[]
   const events = all.filter((event) => event.sessionId === sessionId)
   return events[eventId - 1]
+}
+
+const getTimestamp = (value: unknown): string | number | undefined => {
+  return typeof value === 'string' || typeof value === 'number' ? value : undefined
 }
 
 const hasMatchingToolName = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
@@ -42,9 +49,9 @@ const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: Ch
   return {
     ...startedEvent,
     ...finishedEvent,
-    ended: finishedEvent.ended ?? finishedEvent.endTime ?? finishedEvent.timestamp,
+    ended: getTimestamp(finishedEvent.ended) ?? getTimestamp(finishedEvent.endTime) ?? getTimestamp(finishedEvent.timestamp),
     eventId,
-    started: startedEvent.started ?? startedEvent.startTime ?? startedEvent.timestamp,
+    started: getTimestamp(startedEvent.started) ?? getTimestamp(startedEvent.startTime) ?? getTimestamp(startedEvent.timestamp),
     type: 'tool-execution',
   }
 }

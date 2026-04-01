@@ -1,9 +1,8 @@
-import { getIndexedDbSupportOverride } from '../IndexedDbSupportOverride/IndexedDbSupportOverride.ts'
-
-export const isIndexedDbSupported = (): boolean => {
-  const override = getIndexedDbSupportOverride()
+export const isIndexedDbSupported = (override?: boolean): boolean => {
   if (typeof override === 'boolean') {
-    return override
+export const isIndexedDbSupported = (indexedDbSupportOverride?: boolean): boolean => {
+  if (typeof indexedDbSupportOverride === 'boolean') {
+    return indexedDbSupportOverride
   }
   return globalThis.indexedDB !== undefined
 }

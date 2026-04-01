@@ -9,6 +9,10 @@ const getEndTime = (event: ChatViewEvent): number | string | undefined => {
   return event.ended ?? event.endTime ?? event.timestamp
 }
 
+const isTimeValue = (value: number | string | undefined): value is number | string => {
+  return typeof value === 'number' || typeof value === 'string'
+}
+
 const getDuration = (event: ChatViewEvent): number => {
   const explicitDuration = event.durationMs ?? event.duration
   if (typeof explicitDuration === 'number' && Number.isFinite(explicitDuration)) {
@@ -16,18 +20,20 @@ const getDuration = (event: ChatViewEvent): number => {
   }
   const start = toTimeNumber(getStartTime(event))
   const end = toTimeNumber(getEndTime(event))
-  if (!Number.isFinite(start) || !Number.isFinite(end)) {
+  if (start === undefined || end === undefined || !Number.isFinite(start) || !Number.isFinite(end)) {
     return 0
   }
   return Math.max(0, end - start)
 }
 
 export const getLightweightEvent = (event: ChatViewEvent, fallbackEventId: number): ChatViewEvent => {
+  const startTime = getStartTime(event)
+  const endTime = getEndTime(event)
   return {
     duration: getDuration(event),
-    endTime: getEndTime(event),
+    ...(isTimeValue(endTime) ? { endTime } : {}),
     eventId: typeof event.eventId === 'number' ? event.eventId : fallbackEventId,
-    startTime: getStartTime(event),
+    ...(isTimeValue(startTime) ? { startTime } : {}),
     type: event.type,
   }
 }

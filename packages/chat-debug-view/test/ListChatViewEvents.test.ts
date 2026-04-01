@@ -1,7 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 
-const mockOpenDatabase = jest.fn()
-const mockGetEventsBySessionId = jest.fn()
+const mockOpenDatabase = jest.fn<() => Promise<any>>()
+const mockGetEventsBySessionId = jest.fn<() => Promise<any>>()
 
 jest.unstable_mockModule('../src/parts/OpenDatabase/OpenDatabase.ts', () => {
   return {
@@ -17,27 +18,14 @@ jest.unstable_mockModule('../src/parts/GetEventsBySessionId/GetEventsBySessionId
 
 const ListChatViewEvents = await import('../src/parts/ListChatViewEvents/ListChatViewEvents.ts')
 
-const restoreIndexedDb = (): void => {
-  if (originalIndexedDb === undefined) {
-    Reflect.deleteProperty(globalThis, 'indexedDB')
-    return
-  }
-  Object.defineProperty(globalThis, 'indexedDB', {
-    configurable: true,
-    value: originalIndexedDb,
-    writable: true,
-  })
-}
-
-const originalIndexedDb = globalThis.indexedDB
-
 afterEach(() => {
   jest.clearAllMocks()
-  restoreIndexedDb()
+  setIndexedDbSupportForTest(undefined)
 })
 
 test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
-  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId', false)
+  setIndexedDbSupportForTest(false)
+  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
   expect(result).toEqual({
     type: 'not-supported',
@@ -46,11 +34,7 @@ test('listChatViewEvents should return not-supported when IndexedDB is unavailab
 })
 
 test('listChatViewEvents should return success result with events', async () => {
-  Object.defineProperty(globalThis, 'indexedDB', {
-    configurable: true,
-    value: {},
-    writable: true,
-  })
+  setIndexedDbSupportForTest(true)
   const store = {
     index: jest.fn(),
     indexNames: {
@@ -94,11 +78,7 @@ test('listChatViewEvents should return success result with events', async () => 
 })
 
 test('listChatViewEvents should return error result when opening the database fails', async () => {
-  Object.defineProperty(globalThis, 'indexedDB', {
-    configurable: true,
-    value: {},
-    writable: true,
-  })
+  setIndexedDbSupportForTest(true)
   const error = new Error('failed to open database')
   mockOpenDatabase.mockRejectedValue(error)
 

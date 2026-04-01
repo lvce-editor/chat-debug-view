@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsBySessionId } from '../src/parts/FilterEventsBySessionId/FilterEventsBySessionId.ts'
 import { getAllEvents } from '../src/parts/GetAllEvents/GetAllEvents.ts'

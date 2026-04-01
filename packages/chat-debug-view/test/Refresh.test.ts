@@ -3,7 +3,7 @@ import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetF
 import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const mockListChatViewEvents = jest.fn()
+const mockListChatViewEvents = jest.fn<() => Promise<any>>()
 
 jest.unstable_mockModule('../src/parts/ListChatViewEvents/ListChatViewEvents.ts', () => {
   return {

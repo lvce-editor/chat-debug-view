@@ -21,12 +21,16 @@ const setStableEventId = (event: ChatViewEvent, stableEventId: string): void => 
   eventStableIds.set(event, stableEventId)
 }
 
-const getStartedTimestamp = (event: ChatViewEvent): unknown => {
-  return event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp
+const getTimestamp = (value: unknown): string | number | undefined => {
+  return typeof value === 'string' || typeof value === 'number' ? value : undefined
 }
 
-const getEndedTimestamp = (event: ChatViewEvent): unknown => {
-  return event.ended ?? event.endTime ?? event.endTimestamp ?? event.timestamp
+const getStartedTimestamp = (event: ChatViewEvent): string | number | undefined => {
+  return getTimestamp(event.started) ?? getTimestamp(event.startTime) ?? getTimestamp(event.startTimestamp) ?? getTimestamp(event.timestamp)
+}
+
+const getEndedTimestamp = (event: ChatViewEvent): string | number | undefined => {
+  return getTimestamp(event.ended) ?? getTimestamp(event.endTime) ?? getTimestamp(event.endTimestamp) ?? getTimestamp(event.timestamp)
 }
 
 const isToolExecutionStartedEvent = (event: ChatViewEvent): boolean => {

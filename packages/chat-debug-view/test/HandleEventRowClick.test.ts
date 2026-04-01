@@ -1,7 +1,8 @@
 import { expect, jest, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const mockLoadSelectedEvent = jest.fn()
+const mockLoadSelectedEvent = jest.fn<() => Promise<ChatViewEvent | null>>()
 
 jest.unstable_mockModule('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts', () => {
   return {
