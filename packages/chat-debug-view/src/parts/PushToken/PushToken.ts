@@ -3,9 +3,9 @@ interface TokenSegment {
   readonly value: string
 }
 
-export const pushToken = (segments: TokenSegment[], className: string, value: string): void => {
+export const pushToken = (segments: readonly TokenSegment[], className: string, value: string): readonly TokenSegment[] => {
   if (!value) {
-    return
+    return segments
   }
   const lastSegment = segments.at(-1)
   if (lastSegment && lastSegment.className === className) {
@@ -13,8 +13,7 @@ export const pushToken = (segments: TokenSegment[], className: string, value: st
       className,
       value: lastSegment.value + value,
     }
-    segments[segments.length - 1] = merged
-    return
+    return [...segments.slice(0, -1), merged]
   }
-  segments.push({ className, value })
+  return [...segments, { className, value }]
 }
