@@ -24,10 +24,5 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   const timeline = Locator('.ChatDebugViewTimeline')
   await expect(timeline).toBeVisible()
-
-  const height = await timeline.evaluate((node) => {
-    return Math.round(node.getBoundingClientRect().height)
-  })
-
-  expect(height).toBe(89)
+  await expect(timeline).toHaveJSProperty('offsetHeight', 89)
 }

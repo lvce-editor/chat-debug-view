@@ -37,6 +37,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewFilterInput {
   flex: 1;
   min-width: 0;
+  max-width: 500px;
   contain: content;
 }
 
@@ -67,7 +68,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   justify-content: center;
   min-height: 22px;
   padding: 0 10px;
-  border: 1px solid transparent;
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
@@ -81,10 +82,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   gap: 8px;
   justify-content: center;
   min-height: 28px;
-  padding: 2px;
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
-  border-radius: 999px;
-  background: var(--vscode-editorWidget-background, transparent);
   font-size: 12px;
   line-height: 1;
   contain: content;
@@ -467,7 +464,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: 18px;
   height: 18px;
   appearance: none;
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border: none;
   border-radius: 4px;
   cursor: pointer;
   position: relative;

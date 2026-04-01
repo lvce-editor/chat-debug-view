@@ -22,9 +22,5 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   const filterInput = Locator('.ChatDebugViewFilterInput--devtools')
   await expect(filterInput).toBeVisible()
   await expect(filterInput).toHaveCSS('max-width', '80px')
-
-  const width = await filterInput.evaluate((node) => {
-    return Math.round(node.getBoundingClientRect().width)
-  })
-  expect(width).toBeLessThanOrEqual(80)
+  await expect(filterInput).toHaveJSProperty('offsetWidth', 80)
 }

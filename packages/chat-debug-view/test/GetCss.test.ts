@@ -36,7 +36,7 @@ test('getCss should tighten vertical spacing in devtools layout', () => {
 test('getCss should keep the devtools filter input compact', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewFilterInput {\n  flex: 1;\n  min-width: 0;\n  contain: content;\n}')
+  expect(css).toContain('.ChatDebugViewFilterInput {\n  flex: 1;\n  min-width: 0;\n  max-width: 500px;\n  contain: content;\n}')
   expect(css).toContain('.ChatDebugViewFilterInput--devtools {\n  flex: 0 1 80px;\n  width: 100%;\n  max-width: 80px;\n}')
 })
 
@@ -112,9 +112,26 @@ test('getCss should use strict containment for scrollable detail sections', () =
     '.ChatDebugViewTableBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  min-height: 0;\n  flex: 1 1 auto;\n  contain: strict;\n}',
   )
   expect(css).toContain(
-    '.ChatDebugViewDetailsBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}',
+    '.ChatDebugViewDetailsBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  align-items: flex-start;\n  contain: strict;\n}',
   )
   expect(css).toContain('.ChatDebugViewDetailsBody > .ChatDebugViewEvent {\n  border: 0;\n  border-radius: 0;\n  margin-bottom: 0;\n}')
+})
+
+test('getCss should keep details preview rows on a single line with horizontal scrolling', () => {
+  const css = getCss()
+
+  expect(css).toContain(
+    '.ChatDebugViewEvent {\n  display: flex;\n  flex-direction: column;\n  width: max-content;\n  min-width: 100%;\n  margin: 0;\n  padding: 8px;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 6px;\n  margin-bottom: 8px;\n  white-space: nowrap;\n  font-family: var(--vscode-editor-font-family, monospace);\n  font-size: 12px;\n  user-select: text;\n  contain: content;\n}',
+  )
+  expect(css).toContain(
+    '.row {\n  display: flex;\n  align-items: baseline;\n  min-width: 100%;\n  width: max-content;\n  white-space: nowrap;\n  contain: content;\n}',
+  )
+  expect(css).toContain(
+    '.ChatDebugViewEventLineNumber {\n  display: inline-flex;\n  justify-content: flex-end;\n  flex: 0 0 3ch;\n  margin-right: 12px;\n  opacity: 0.6;\n  user-select: none;\n  contain: content;\n}',
+  )
+  expect(css).toContain(
+    '.ChatDebugViewEventLineContent {\n  display: inline-flex;\n  white-space: pre;\n  contain: content;\n}',
+  )
 })
 
 test('getCss should keep table cells and messages on flex layouts', () => {
@@ -145,10 +162,10 @@ test('getCss should render quick filter pills as rounded segmented controls', ()
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugViewQuickFilters {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  justify-content: center;\n  min-height: 28px;\n  padding: 2px;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 999px;\n  background: var(--vscode-editorWidget-background, transparent);\n  font-size: 12px;\n  line-height: 1;\n  contain: content;\n}',
+    '.ChatDebugViewQuickFilters {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  justify-content: center;\n  min-height: 28px;\n  font-size: 12px;\n  line-height: 1;\n  contain: content;\n}',
   )
   expect(css).toContain(
-    '.ChatDebugViewQuickFilterPill {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 22px;\n  padding: 0 10px;\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  white-space: nowrap;\n  contain: content;\n}',
+    '.ChatDebugViewQuickFilterPill {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 22px;\n  padding: 0 10px;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 999px;\n  cursor: pointer;\n  white-space: nowrap;\n  contain: content;\n}',
   )
   expect(css).toContain(
     '.ChatDebugViewQuickFilterPillSelected {\n  border-color: var(--vscode-focusBorder, #007fd4);\n  background: var(--vscode-list-activeSelectionBackground, rgba(14, 99, 156, 0.35));\n  color: var(--vscode-list-activeSelectionForeground, inherit);\n}',
