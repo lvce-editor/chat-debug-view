@@ -1,11 +1,11 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import * as GetEventsBySessionId from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
-import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
-import * as OpenDatabase from '../src/parts/OpenDatabase/OpenDatabase.ts'
+import { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
+import { listChatViewEvents, listChatViewEventsDependencies } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
+import { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 
-const openDatabaseSpy = jest.spyOn(OpenDatabase, 'openDatabase')
-const getEventsBySessionIdSpy = jest.spyOn(GetEventsBySessionId, 'getEventsBySessionId')
+const openDatabaseSpy = jest.spyOn(listChatViewEventsDependencies, 'openDatabase')
+const getEventsBySessionIdSpy = jest.spyOn(listChatViewEventsDependencies, 'getEventsBySessionId')
 
 const createDomStringList = (values: readonly string[]): DOMStringList => {
   return {
@@ -26,7 +26,7 @@ afterEach(() => {
 
 test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
   setIndexedDbSupportForTest(false)
-  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
   expect(result).toEqual({
     type: 'not-supported',
@@ -40,7 +40,7 @@ test('listChatViewEvents should return success result with events', async () => 
     getAll: jest.fn(),
     index: jest.fn(),
     indexNames: createDomStringList([]),
-  } as unknown as Parameters<typeof GetEventsBySessionId.getEventsBySessionId>[0]
+  } as unknown as Parameters<typeof getEventsBySessionId>[0]
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
@@ -48,7 +48,7 @@ test('listChatViewEvents should return success result with events', async () => 
     close: jest.fn(),
     objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
-  } as unknown as Awaited<ReturnType<typeof OpenDatabase.openDatabase>>
+  } as unknown as Awaited<ReturnType<typeof openDatabase>>
   const events = [
     {
       duration: 0,
@@ -62,7 +62,7 @@ test('listChatViewEvents should return success result with events', async () => 
   openDatabaseSpy.mockResolvedValue(database)
   getEventsBySessionIdSpy.mockResolvedValue(events)
 
-  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
   expect(result).toEqual({
     events,
@@ -80,10 +80,58 @@ test('listChatViewEvents should return error result when opening the database fa
   const error = new Error('failed to open database')
   openDatabaseSpy.mockRejectedValue(error)
 
-  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
   expect(result).toEqual({
     error,
     type: 'error',
   })
+})
+
+test('listChatViewEvents should return success with empty events when store is missing', async () => {
+  setIndexedDbSupportForTest(true)
+  const database = {
+    close: jest.fn(),
+    objectStoreNames: createDomStringList([]),
+    transaction: jest.fn(),
+  } as unknown as Awaited<ReturnType<typeof openDatabase>>
+  openDatabaseSpy.mockResolvedValue(database)
+
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    events: [],
+    type: 'success',
+  })
+  expect(database.transaction).not.toHaveBeenCalled()
+  expect(getEventsBySessionIdSpy).not.toHaveBeenCalled()
+  expect(database.close).toHaveBeenCalledTimes(1)
+})
+
+test('listChatViewEvents should return success with empty events when session id is empty', async () => {
+  setIndexedDbSupportForTest(true)
+  const store = {
+    getAll: jest.fn(),
+    index: jest.fn(),
+    indexNames: createDomStringList([]),
+  } as unknown as Parameters<typeof getEventsBySessionId>[0]
+  const transaction = {
+    objectStore: jest.fn().mockReturnValue(store),
+  }
+  const database = {
+    close: jest.fn(),
+    objectStoreNames: createDomStringList(['chat-view-events']),
+    transaction: jest.fn().mockReturnValue(transaction),
+  } as unknown as Awaited<ReturnType<typeof openDatabase>>
+  openDatabaseSpy.mockResolvedValue(database)
+
+  const result = await listChatViewEvents('', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    events: [],
+    type: 'success',
+  })
+  expect(transaction.objectStore).toHaveBeenCalledWith('chat-view-events')
+  expect(getEventsBySessionIdSpy).not.toHaveBeenCalled()
+  expect(database.close).toHaveBeenCalledTimes(1)
 })
