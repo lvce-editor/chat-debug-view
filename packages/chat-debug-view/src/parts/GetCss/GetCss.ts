@@ -282,7 +282,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
- .ChatDebugViewTimelineBucketBarSelected {
+.ChatDebugViewTimelineBucketBarSelected {
   background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
   border-color: var(--vscode-focusBorder, #007fd4);
 }
