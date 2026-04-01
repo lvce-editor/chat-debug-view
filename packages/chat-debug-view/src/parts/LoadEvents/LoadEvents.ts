@@ -1,3 +1,4 @@
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
@@ -5,7 +6,6 @@ import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMess
 import { getInvalidUriMessage } from '../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
