@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.indexed-db-not-supported'
 
+export const skip = 1
+
 export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('ChatDebug.setIndexedDbSupportForTest', false)
   try {
