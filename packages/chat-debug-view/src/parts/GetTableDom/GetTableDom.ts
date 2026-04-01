@@ -1,13 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
-export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: number): readonly VirtualDomNode[] => {
+export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 2,
-      className: 'ChatDebugViewTable',
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 5,
       className: 'ChatDebugViewTableHeader',
@@ -43,6 +38,11 @@ export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: num
       type: VirtualDomElements.Div,
     },
     text('Status'),
+  ]
+}
+
+export const getTableBodydOm = (rowNodes: readonly VirtualDomNode[], eventCount: number): readonly VirtualDomNode[] => {
+  return [
     {
       childCount: eventCount === 0 ? 1 : eventCount,
       className: 'ChatDebugViewTableBody',
@@ -50,5 +50,17 @@ export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: num
       type: VirtualDomElements.Div,
     },
     ...rowNodes,
+  ]
+}
+
+export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: number): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTable',
+      type: VirtualDomElements.Div,
+    },
+    ...getTableHeaderDom(),
+    ...getTableBodydOm(rowNodes, eventCount),
   ]
 }

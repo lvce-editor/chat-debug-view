@@ -1,7 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] => {
