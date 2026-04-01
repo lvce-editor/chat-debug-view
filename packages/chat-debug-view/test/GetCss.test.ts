@@ -52,8 +52,8 @@ test('getCss should use flex layout for timeline buckets and table rows', () => 
 test('getCss should use compact devtools table row padding', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewTableHeader {\n  padding: 4px 8px;\n')
-  expect(css).toContain('.ChatDebugViewEventRow {\n  padding: 4px 8px;\n')
+  expect(css).toContain('.ChatDebugViewTableHeader {\n  padding: 3px 8px;\n')
+  expect(css).toContain('.ChatDebugViewEventRow {\n  padding: 3px 8px;\n')
 })
 
 test('getCss should size devtools columns with dedicated flex classes', () => {
@@ -96,7 +96,7 @@ test('getCss should style the split sash between table and details', () => {
   const css = getCss()
 
   expect(css).toContain('.ChatDebugViewSash {\n  flex: 0 0 var(--ChatDebugViewSashWidth);')
-  expect(css).toContain('.ChatDebugViewSashLine {\n  width: 1px;')
-  expect(css).toContain('.ChatDebugViewSash:hover .ChatDebugViewSashLine {\n  background: var(--vscode-focusBorder, #007fd4);\n}')
-  expect(css).not.toContain('.ChatDebugViewSash::before')
+  expect(css).toContain(".ChatDebugViewSash::before {\n  content: '';")
+  expect(css).toContain('.ChatDebugViewSash:hover::before {\n  background: var(--vscode-focusBorder, #007fd4);\n}')
+  expect(css).not.toContain('.ChatDebugViewSashLine')
 })

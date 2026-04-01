@@ -146,20 +146,23 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewSash {
   flex: 0 0 var(--ChatDebugViewSashWidth);
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+  position: relative;
   cursor: col-resize;
   min-height: 0;
 }
 
-.ChatDebugViewSashLine {
+.ChatDebugViewSash::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   width: 1px;
-  min-height: 100%;
+  transform: translateX(-50%);
   background: var(--vscode-editorWidget-border, #454545);
 }
 
-.ChatDebugViewSash:hover .ChatDebugViewSashLine {
+.ChatDebugViewSash:hover::before {
   background: var(--vscode-focusBorder, #007fd4);
 }
 
@@ -282,7 +285,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTableHeader {
-  padding: 4px 8px;
+  padding: 3px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   background: var(--vscode-editorWidget-background, transparent);
   position: sticky;
@@ -321,7 +324,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEventRow {
-  padding: 4px 8px;
+  padding: 3px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   cursor: pointer;
 }

@@ -50,14 +50,9 @@ export const getDevtoolsDom = (
     ...timelineNodes,
     ...tableNodes,
     {
-      childCount: 1,
+      childCount: 0,
       className: 'ChatDebugViewSash',
       onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 0,
-      className: 'ChatDebugViewSashLine',
       type: VirtualDomElements.Div,
     },
     ...detailsNodes,

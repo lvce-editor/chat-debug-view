@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
@@ -54,10 +55,12 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
     readonly className?: string
     readonly inputType?: string
     readonly name?: string
+    readonly type?: number
   }[]
 
   const toggleRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewToggle')
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
+  const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
   const mainPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
@@ -66,6 +69,7 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
   expect(filterRowIndex).toBeGreaterThan(toggleRowIndex)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
   expect(mainPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
       inputType: 'search',
@@ -73,6 +77,16 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
     }),
   )
   expect(root?.childCount).toBe(3)
+})
+
+test('getChatDebugViewDom should render the legacy filter row as a search wrapper', () => {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
+    readonly className?: string
+    readonly type?: number
+  }[]
+  const filterRow = dom.find((node) => node.className === 'ChatDebugViewTop')
+
+  expect(filterRow?.type).toBe(VirtualDomElements.Search)
 })
 
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {

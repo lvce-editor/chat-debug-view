@@ -88,7 +88,7 @@ export const getDebugViewTopDom = (
       {
         childCount: 1 + (quickFilterNodes.length > 0 ? 1 : 0),
         className: 'ChatDebugViewTop ChatDebugViewTop--devtools',
-        type: VirtualDomElements.Div,
+        type: VirtualDomElements.Search,
       },
       {
         autocomplete: 'off',
@@ -109,7 +109,7 @@ export const getDebugViewTopDom = (
     {
       childCount: 2,
       className: 'ChatDebugViewTop',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Search,
     },
     {
       autocomplete: 'off',
