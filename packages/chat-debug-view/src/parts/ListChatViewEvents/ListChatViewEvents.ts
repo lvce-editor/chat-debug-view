@@ -1,7 +1,7 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
-import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
+import * as GetEventsBySessionId from '../GetEventsBySessionId/GetEventsBySessionId.ts'
 import { isIndexedDbSupported } from '../IsIndexedDbSupported/IsIndexedDbSupported.ts'
-import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
+import * as OpenDatabase from '../OpenDatabase/OpenDatabase.ts'
 
 export const listChatViewEvents = async (
   sessionId: string,
@@ -18,7 +18,7 @@ export const listChatViewEvents = async (
   }
 
   try {
-    const database = await openDatabase(databaseName, dataBaseVersion)
+    const database = await OpenDatabase.openDatabase(databaseName, dataBaseVersion)
     try {
       if (!database.objectStoreNames.contains(eventStoreName)) {
         return {
@@ -34,7 +34,7 @@ export const listChatViewEvents = async (
           type: 'success',
         }
       }
-      const events = await getEventsBySessionId(store, sessionId, sessionIdIndexName)
+      const events = await GetEventsBySessionId.getEventsBySessionId(store, sessionId, sessionIdIndexName)
       return {
         events,
         type: 'success',

@@ -3,7 +3,7 @@ import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoa
 import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { getInvalidUriMessage } from '../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
-import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
+import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
 export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
@@ -22,7 +22,14 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
   }
   const { sessionId } = parsed
 
-  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName, indexedDbSupportOverride)
+  const result = await ListChatViewEvents.listChatViewEvents(
+    sessionId,
+    databaseName,
+    dataBaseVersion,
+    eventStoreName,
+    sessionIdIndexName,
+    indexedDbSupportOverride,
+  )
   if (result.type === 'not-supported') {
     return {
       ...state,

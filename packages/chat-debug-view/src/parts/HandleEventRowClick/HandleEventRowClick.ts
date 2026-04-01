@@ -2,7 +2,7 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import { loadSelectedEvent } from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 
 const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   const filteredEvents = getFilteredEvents(
@@ -38,7 +38,7 @@ export const handleEventRowClick = async (state: ChatDebugViewState, value: stri
       selectedEventIndex,
     }
   }
-  const selectedEventDetails = await loadSelectedEvent(
+  const selectedEventDetails = await LoadSelectedEvent.loadSelectedEvent(
     state.databaseName,
     state.dataBaseVersion,
     state.eventStoreName,
