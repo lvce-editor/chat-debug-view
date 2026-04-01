@@ -6,6 +6,10 @@ import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessi
 import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
+export const loadContentDependencies = {
+  listChatViewEvents: ListChatViewEvents.listChatViewEvents,
+}
+
 export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, eventStoreName, indexedDbSupportOverride, sessionIdIndexName, uri } = state
   const parsed = parseChatDebugUri(uri)
@@ -22,7 +26,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
   }
   const { sessionId } = parsed
 
-  const result = await ListChatViewEvents.listChatViewEvents(
+  const result = await loadContentDependencies.listChatViewEvents(
     sessionId,
     databaseName,
     dataBaseVersion,
