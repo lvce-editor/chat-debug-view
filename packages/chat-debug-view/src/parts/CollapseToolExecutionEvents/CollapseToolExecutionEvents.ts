@@ -4,8 +4,6 @@ import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/Is
 import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
 import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
 
-
-
 export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   const collapsedEvents: ChatViewEvent[] = []
   for (let i = 0; i < events.length; i++) {
@@ -23,4 +21,4 @@ export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): r
   return collapsedEvents
 }
 
-export {getStableEventId} from '../GetStableEventId/GetStableEventId.ts'
+export { getStableEventId } from '../GetStableEventId/GetStableEventId.ts'

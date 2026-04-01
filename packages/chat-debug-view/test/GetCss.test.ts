@@ -37,7 +37,15 @@ test('getCss should keep the devtools filter input compact', () => {
   const css = getCss()
 
   expect(css).toContain('.ChatDebugViewFilterInput {\n  flex: 1;\n  min-width: 0;\n  contain: content;\n}')
-  expect(css).toContain('.ChatDebugViewFilterInput--devtools {\n  flex: 0 1 320px;\n  width: 320px;\n  max-width: 100%;\n}')
+  expect(css).toContain('.ChatDebugViewFilterInput--devtools {\n  flex: 0 1 80px;\n  width: 100%;\n  max-width: 80px;\n}')
+})
+
+test('getCss should keep devtools quick filter pills next to the filter input', () => {
+  const css = getCss()
+
+  expect(css).toContain('.ChatDebugViewTop--devtools {\n  align-items: stretch;\n}')
+  expect(css).not.toContain('.ChatDebugViewTop--devtools {\n  justify-content: space-between;\n}')
+  expect(css).not.toContain('.ChatDebugViewTop--devtools .ChatDebugViewQuickFilters {\n  margin-left: auto;\n}')
 })
 
 test('getCss should avoid nested scrolling in devtools events table', () => {
@@ -104,6 +112,7 @@ test('getCss should use strict containment for scrollable detail sections', () =
   expect(css).toContain(
     '.ChatDebugViewDetailsBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}',
   )
+  expect(css).toContain('.ChatDebugViewDetailsBody > .ChatDebugViewEvent {\n  border: 0;\n  border-radius: 0;\n  margin-bottom: 0;\n}')
 })
 
 test('getCss should keep table cells and messages on flex layouts', () => {
@@ -133,6 +142,9 @@ test('getCss should use a visible foreground color for the details close button'
 test('getCss should render quick filter pills as rounded segmented controls', () => {
   const css = getCss()
 
+  expect(css).toContain(
+    '.ChatDebugViewQuickFilters {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  justify-content: center;\n  min-height: 28px;\n  padding: 2px;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 999px;\n  background: var(--vscode-editorWidget-background, transparent);\n  font-size: 12px;\n  line-height: 1;\n  contain: content;\n}',
+  )
   expect(css).toContain(
     '.ChatDebugViewQuickFilterPill {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 22px;\n  padding: 0 10px;\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  white-space: nowrap;\n  contain: content;\n}',
   )
@@ -176,6 +188,7 @@ test('getCss should use content containment for auto-sized text containers', () 
 
   expect(getRule(css, '.ChatDebugViewTop')).toContain('contain: content;')
   expect(getRule(css, '.ChatDebugViewToggle')).toContain('contain: content;')
+  expect(getRule(css, '.ChatDebugViewQuickFilters')).toContain('contain: content;')
   expect(getRule(css, '.ChatDebugViewQuickFilterPill')).toContain('contain: content;')
   expect(getRule(css, '.ChatDebugViewTimeline')).toContain('contain: content;')
   expect(getRule(css, '.ChatDebugViewTimelineTop')).toContain('contain: content;')

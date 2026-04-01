@@ -31,10 +31,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTop--devtools {
-  justify-content: space-between;
-}
-
-.ChatDebugViewTop--devtools {
   align-items: stretch;
 }
 
@@ -45,13 +41,9 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewFilterInput--devtools {
-  flex: 0 1 320px;
-  width: 320px;
-  max-width: 100%;
-}
-
-.ChatDebugViewTop--devtools .ChatDebugViewQuickFilters {
-  margin-left: auto;
+  flex: 0 1 80px;
+  width: 100%;
+  max-width: 80px;
 }
 
 .ChatDebugViewToggle {
@@ -95,7 +87,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   background: var(--vscode-editorWidget-background, transparent);
   font-size: 12px;
   line-height: 1;
-  contain: strict;
+  contain: content;
 }
 
 .ChatDebugViewQuickFilterPillSelected {
@@ -560,6 +552,12 @@ export const getCss = (state: ChatDebugViewState): string => {
   font-size: 12px;
   user-select: text;
   contain: content;
+}
+
+.ChatDebugViewDetailsBody > .ChatDebugViewEvent {
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 .ChatDebugViewEmpty {
