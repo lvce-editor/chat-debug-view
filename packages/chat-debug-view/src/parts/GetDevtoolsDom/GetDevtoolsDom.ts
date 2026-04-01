@@ -21,6 +21,7 @@ const getEmptyStateDom = (emptyMessage: string): readonly VirtualDomNode[] => {
 
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
+  selectedEvent: ChatViewEvent | null,
   selectedEventIndex: number | null,
   timelineEvents: readonly ChatViewEvent[],
   timelineStartSeconds: string,
@@ -31,6 +32,7 @@ export const getDevtoolsDom = (
   timelineSelectionFocusSeconds = '',
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
+<<<<<<< HEAD
   const timelineNodes = getTimelineNodes(
     timelineEvents,
     timelineStartSeconds,
@@ -40,6 +42,9 @@ export const getDevtoolsDom = (
     timelineSelectionFocusSeconds,
   )
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
+=======
+  const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
+>>>>>>> origin/main
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)

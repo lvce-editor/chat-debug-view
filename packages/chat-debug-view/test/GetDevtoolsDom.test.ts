@@ -4,7 +4,7 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
-  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '', 'No events have been found') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom([], null, null, [], '', '', 'No events have been found') as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -28,7 +28,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly className?: string
     readonly name?: string
     readonly onChange?: number
@@ -56,7 +56,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly type?: number
@@ -80,7 +80,7 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly ['data-index']?: string
     readonly className?: string
     readonly inputType?: string
@@ -112,7 +112,7 @@ test('getDevtoolsDom should render timeline filters when timestamps are availabl
       type: 'response',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '5', '7') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '5', '7') as readonly {
     readonly className?: string
     readonly name?: string
     readonly text?: string
@@ -134,7 +134,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -156,7 +156,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
@@ -174,7 +174,7 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -204,7 +204,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
       type: 'response',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -223,7 +223,7 @@ test('getDevtoolsDom should apply explicit duration and status column classes to
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
 
@@ -249,7 +249,7 @@ test('getDevtoolsDom should render computed duration without start and end times
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -281,7 +281,7 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
       type: 'tool-execution-finished',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -307,7 +307,7 @@ test('getDevtoolsDom should render tool execution row labels with tool name', ()
       type: 'tool-execution',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -328,7 +328,7 @@ test('getDevtoolsDom should render 400 status for errored events', () => {
       type: 'tool-execution-finished',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -353,7 +353,7 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
       type: 'tool-execution',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly text?: string
   }[]
 

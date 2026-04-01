@@ -10,7 +10,7 @@ const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatVie
   return events.map((event, index) => {
     return {
       ...event,
-      eventId: index + 1,
+      eventId: typeof event.eventId === 'number' ? event.eventId : index + 1,
     }
   })
 }
@@ -29,6 +29,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.showInputEvents,
     newState.showResponsePartEvents,
     newState.useDevtoolsLayout,
+    newState.selectedEvent,
     newState.selectedEventIndex,
     newState.timelineStartSeconds,
     newState.timelineEndSeconds,

@@ -14,6 +14,7 @@ test('getChatDebugViewDom should return debug error dom when error message is se
     false,
     true,
     null,
+    null,
     '',
     '',
     [],
@@ -44,7 +45,21 @@ test('getChatDebugViewDom should return debug error dom when error message is se
 })
 
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    false,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly autocomplete?: string
     readonly className?: string
     readonly inputType?: string
@@ -64,7 +79,21 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
 })
 
 test('getChatDebugViewDom should include devtools layout toggle', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly checked?: boolean
     readonly name?: string
   }[]
@@ -75,7 +104,21 @@ test('getChatDebugViewDom should include devtools layout toggle', () => {
 })
 
 test('getChatDebugViewDom should render quick filter pills in devtools layout', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly checked?: boolean
     readonly className?: string
     readonly name?: string
@@ -91,7 +134,21 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
 })
 
 test('getChatDebugViewDom should place toggles above the filter row in devtools layout', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly inputType?: string
@@ -122,7 +179,21 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
 })
 
 test('getChatDebugViewDom should render the legacy filter row as a search wrapper', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    false,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly className?: string
     readonly type?: number
   }[]
@@ -147,6 +218,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
     false,
     false,
     true,
+    events[0],
     0,
     '',
     '',
@@ -186,6 +258,7 @@ test('getChatDebugViewDom should not stringify unselected events in devtools lay
       false,
       true,
       null,
+      null,
       '',
       '',
       [circularEvent],
@@ -215,6 +288,7 @@ test('getChatDebugViewDom should not render event count message', () => {
     false,
     false,
     false,
+    null,
     null,
     '',
     '',
@@ -249,6 +323,7 @@ test('getChatDebugViewDom should render tool execution type with tool name in le
     false,
     false,
     false,
+    null,
     null,
     '',
     '',
