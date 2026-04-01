@@ -54,12 +54,13 @@ const isMatchingToolExecutionPair = (startedEvent: ChatViewEvent, finishedEvent:
 
 const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
   const ended = getEndedTimestamp(finishedEvent)
+  const eventId = startedEvent.eventId
   const started = getStartedTimestamp(startedEvent)
   const mergedEvent: ChatViewEvent = {
     ...startedEvent,
     ...finishedEvent,
     ...(ended === undefined ? {} : { ended }),
-    eventId: startedEvent.eventId,
+    ...(eventId === undefined ? {} : { eventId }),
     ...(started === undefined ? {} : { started }),
     type: mergedEventType,
   }

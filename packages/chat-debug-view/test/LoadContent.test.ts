@@ -1,9 +1,10 @@
 import { expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
+import type { listChatViewEvents } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const mockListChatViewEvents = jest.fn<() => Promise<any>>()
+const mockListChatViewEvents = jest.fn<typeof listChatViewEvents>()
 
 jest.unstable_mockModule('../src/parts/ListChatViewEvents/ListChatViewEvents.ts', () => {
   return {

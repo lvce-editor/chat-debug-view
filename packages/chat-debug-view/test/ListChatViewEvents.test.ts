@@ -1,8 +1,10 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import type { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
+import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 
-const mockOpenDatabase = jest.fn<() => Promise<any>>()
-const mockGetEventsBySessionId = jest.fn<() => Promise<any>>()
+const mockOpenDatabase = jest.fn<typeof openDatabaseFn>()
+const mockGetEventsBySessionId = jest.fn<typeof getEventsBySessionIdFn>()
 
 jest.unstable_mockModule('../src/parts/OpenDatabase/OpenDatabase.ts', () => {
   return {
