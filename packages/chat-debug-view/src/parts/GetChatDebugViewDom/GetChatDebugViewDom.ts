@@ -169,6 +169,22 @@ const getTimelineFilterDescription = (timelineStartSeconds: string, timelineEndS
   return ''
 }
 
+const getDebugErrorDom = (errorMessage: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: 'ChatDebugView',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewError',
+      type: VirtualDomElements.Div,
+    },
+    text(errorMessage),
+  ]
+}
+
 export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
@@ -184,19 +200,7 @@ export const getChatDebugViewDom = (
   events: readonly ChatViewEvent[],
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
-    return [
-      {
-        childCount: 1,
-        className: 'ChatDebugView',
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: 'ChatDebugViewError',
-        type: VirtualDomElements.Div,
-      },
-      text(errorMessage),
-    ]
+    return getDebugErrorDom(errorMessage)
   }
 
   const eventNodes = events.flatMap(getEventNode)
@@ -216,13 +220,13 @@ export const getChatDebugViewDom = (
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = `no events found matching ${filterDescription}`
   const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
-  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
+  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events have been found'
 
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
   const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds)
+    ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds, emptyMessage)
     : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
   const debugViewTopDom = getDebugViewTopDom(

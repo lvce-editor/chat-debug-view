@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -7,19 +7,31 @@ import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
 
+const getEmptyStateDom = (emptyMessage: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEmpty',
+      type: VirtualDomElements.Div,
+    },
+    text(emptyMessage),
+  ]
+}
+
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
   selectedEventIndex: number | null,
   timelineEvents: readonly ChatViewEvent[],
   timelineStartSeconds: string,
   timelineEndSeconds: string,
+  emptyMessage = 'No events have been found',
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
   const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
   const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
-  const tableNodes = getTableDom(rowNodes, events.length)
+  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)
   const eventsClassName = getEventsClassName(hasSelectedEvent, timelineNodes.length > 0)
   const eventsChildCount = timelineNodes.length > 0 ? 2 : 1
   const detailsNodes = getDetailsDom(selectedEventNodes)

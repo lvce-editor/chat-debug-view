@@ -6,16 +6,6 @@ import { getStartText } from '../GetStartText/GetStartText.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
-  if (events.length === 0) {
-    return [
-      {
-        childCount: 1,
-        className: 'ChatDebugViewEmpty',
-        type: VirtualDomElements.Div,
-      },
-      text('No events'),
-    ]
-  }
   const rows: VirtualDomNode[] = []
   for (let i = 0; i < events.length; i++) {
     const event = events[i]

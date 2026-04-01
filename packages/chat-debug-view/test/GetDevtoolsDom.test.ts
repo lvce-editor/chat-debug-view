@@ -3,12 +3,20 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
-  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '', 'No events have been found') as readonly {
     readonly className?: string
+    readonly text?: string
   }[]
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
+  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
 
   expect(emptyState).toBeDefined()
+  expect(table).toBeUndefined()
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'No events have been found',
+    }),
+  )
 })
 
 test('getDevtoolsDom should render selected details panel and close input', () => {
