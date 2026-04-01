@@ -57,7 +57,7 @@ test('diff should return RenderIncremental and RenderCss when useDevtoolsLayout 
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
-    useDevtoolsLayout: true,
+    useDevtoolsLayout: false,
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])

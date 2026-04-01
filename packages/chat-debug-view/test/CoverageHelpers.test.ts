@@ -55,7 +55,7 @@ test('filterEventsBySessionId should return only matching events', () => {
 
 test('getAllEvents should return all items from the store', async () => {
   const result = await getAllEvents({
-    getAll: async () => {
+    getAll: async (): Promise<readonly { readonly sessionId: string; readonly timestamp: string; readonly type: string }[]> => {
       return [
         {
           sessionId: 'session-1',
