@@ -3,8 +3,8 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
-import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
+import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
