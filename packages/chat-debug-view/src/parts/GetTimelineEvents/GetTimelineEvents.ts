@@ -1,6 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 
 export const getTimelineEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   return getFilteredEvents(

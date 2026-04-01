@@ -2,9 +2,9 @@ import { clearTimelineSelectionState } from '../ClearTimelineSelectionState/Clea
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as InputName from '../InputName/InputName.ts'
-import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
   if (!state.timelineSelectionActive) {

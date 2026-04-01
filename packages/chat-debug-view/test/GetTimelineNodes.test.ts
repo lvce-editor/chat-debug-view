@@ -37,8 +37,10 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
 
 test('getTimelineNodes should render selection markers only when a range exists', () => {
   const nodes = getTimelineNodes(events, '2', '8', false, '', '') as readonly {
+    readonly childCount?: number
     readonly className?: string
     readonly style?: string
+    readonly type?: number
   }[]
 
   const range = nodes.find((node) => node.className === 'ChatDebugViewTimelineSelectionRange')
@@ -47,12 +49,16 @@ test('getTimelineNodes should render selection markers only when a range exists'
   expect(range?.style).toBe('left:20%;width:60%;')
   expect(markers).toEqual([
     {
+      childCount: 0,
       className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
       style: 'left:20%;',
+      type: VirtualDomElements.Div,
     },
     {
+      childCount: 0,
       className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
       style: 'left:80%;',
+      type: VirtualDomElements.Div,
     },
   ])
 })

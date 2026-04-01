@@ -1,6 +1,6 @@
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
-import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const handleTimelinePointerDown = (
   state: ChatDebugViewState,

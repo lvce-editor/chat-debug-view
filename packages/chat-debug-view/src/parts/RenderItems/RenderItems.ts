@@ -1,8 +1,8 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
