@@ -127,10 +127,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   flex-direction: column;
   flex: 1;
-<<<<<<< HEAD
-  flex-wrap: nowrap;
-=======
->>>>>>> origin/main
   align-items: stretch;
   gap: 0;
   min-width: 0;
@@ -156,12 +152,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-width: 0;
 }
 
-<<<<<<< HEAD
-.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
-  flex: 0 1 clamp(320px, 32vw, 420px);
-  min-width: 0;
-  max-width: 420px;
-=======
 .ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
   flex: 1 1 100%;
 }
@@ -188,7 +178,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewSash:hover .ChatDebugViewSashLine {
   background: var(--vscode-focusBorder, #007fd4);
->>>>>>> origin/main
 }
 
 .ChatDebugViewTable {
