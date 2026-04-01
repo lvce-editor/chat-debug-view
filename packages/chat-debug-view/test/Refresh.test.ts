@@ -58,7 +58,7 @@ test('refresh should return session-not-found state when latest events are empty
 })
 
 test('refresh should update events with latest data from indexeddb', async () => {
-  const events = [{ eventId: 1, type: 'request', time: 1 }]
+  const events = [{ eventId: 1, time: 1, type: 'request' }]
   const listChatViewEventsSpy = jest.spyOn(refreshDependencies, 'listChatViewEvents').mockResolvedValue({
     events,
     type: 'success',
