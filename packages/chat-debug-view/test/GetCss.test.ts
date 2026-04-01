@@ -33,7 +33,7 @@ test('getCss should avoid nested scrolling in devtools events table', () => {
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugView--devtools .ChatDebugViewEvents {\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: hidden;\n}',
+    '.ChatDebugView--devtools .ChatDebugViewEvents {\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: hidden;\n}',
   )
   expect(css).toContain('.ChatDebugViewTable {\n  display: flex;\n  flex-direction: column;\n  min-height: 0;\n  flex: 1 1 auto;\n}')
 })

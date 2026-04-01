@@ -114,7 +114,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugView--devtools .ChatDebugViewEvents {
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   margin-bottom: 0;
   overflow: hidden;

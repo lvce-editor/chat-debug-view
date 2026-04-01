@@ -1,8 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import * as HandleEventRowClick from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
-import * as HandleEventRowClick from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 
 afterEach(() => {
   jest.restoreAllMocks()

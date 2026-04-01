@@ -1,9 +1,9 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
-import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import * as LoadContent from '../src/parts/LoadContent/LoadContent.ts'
+import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 afterEach(() => {
   jest.restoreAllMocks()

@@ -1,8 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import * as GetEventsBySessionId from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
+import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import * as OpenDatabase from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
-import * as ListChatViewEvents from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 
 const openDatabaseSpy = jest.spyOn(OpenDatabase, 'openDatabase')
 const getEventsBySessionIdSpy = jest.spyOn(GetEventsBySessionId, 'getEventsBySessionId')
