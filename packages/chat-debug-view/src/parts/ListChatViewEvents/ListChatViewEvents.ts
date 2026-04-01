@@ -1,6 +1,12 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
-import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
+import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
+import * as GetEventsBySessionId from '../GetEventsBySessionId/GetEventsBySessionId.ts'
+import { isIndexedDbSupported } from '../IsIndexedDbSupported/IsIndexedDbSupported.ts'
+import * as OpenDatabase from '../OpenDatabase/OpenDatabase.ts'
+
+export const listChatViewEventsDependencies = {
+  getEventsBySessionId: GetEventsBySessionId.getEventsBySessionId,
+  openDatabase: OpenDatabase.openDatabase,
+}
 
 export const listChatViewEvents = async (
   sessionId: string,
@@ -8,22 +14,43 @@ export const listChatViewEvents = async (
   dataBaseVersion: number,
   eventStoreName: string,
   sessionIdIndexName: string,
-): Promise<readonly ChatViewEvent[]> => {
-  if (typeof indexedDB === 'undefined') {
-    return []
+  indexedDbSupportOverride?: boolean,
+): Promise<ListChatViewEventsResult> => {
+  if (!isIndexedDbSupported(indexedDbSupportOverride)) {
+    return {
+      type: 'not-supported',
+    }
   }
-  const database = await openDatabase(databaseName, dataBaseVersion)
+
   try {
-    if (!database.objectStoreNames.contains(eventStoreName)) {
-      return []
+    const database = await listChatViewEventsDependencies.openDatabase(databaseName, dataBaseVersion)
+    try {
+      if (!database.objectStoreNames.contains(eventStoreName)) {
+        return {
+          events: [],
+          type: 'success',
+        }
+      }
+      const transaction = database.transaction(eventStoreName, 'readonly')
+      const store = transaction.objectStore(eventStoreName)
+      if (!sessionId) {
+        return {
+          events: [],
+          type: 'success',
+        }
+      }
+      const events = await listChatViewEventsDependencies.getEventsBySessionId(store, sessionId, sessionIdIndexName)
+      return {
+        events,
+        type: 'success',
+      }
+    } finally {
+      database.close()
     }
-    const transaction = database.transaction(eventStoreName, 'readonly')
-    const store = transaction.objectStore(eventStoreName)
-    if (!sessionId) {
-      return []
+  } catch (error) {
+    return {
+      error,
+      type: 'error',
     }
-    return getEventsBySessionId(store, sessionId, sessionIdIndexName)
-  } finally {
-    database.close()
   }
 }

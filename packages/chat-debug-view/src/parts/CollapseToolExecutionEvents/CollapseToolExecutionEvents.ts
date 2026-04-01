@@ -21,12 +21,16 @@ const setStableEventId = (event: ChatViewEvent, stableEventId: string): void => 
   eventStableIds.set(event, stableEventId)
 }
 
-const getStartedTimestamp = (event: ChatViewEvent): unknown => {
-  return event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp
+const getTimestamp = (value: unknown): string | number | undefined => {
+  return typeof value === 'string' || typeof value === 'number' ? value : undefined
 }
 
-const getEndedTimestamp = (event: ChatViewEvent): unknown => {
-  return event.ended ?? event.endTime ?? event.endTimestamp ?? event.timestamp
+const getStartedTimestamp = (event: ChatViewEvent): string | number | undefined => {
+  return getTimestamp(event.started) ?? getTimestamp(event.startTime) ?? getTimestamp(event.startTimestamp) ?? getTimestamp(event.timestamp)
+}
+
+const getEndedTimestamp = (event: ChatViewEvent): string | number | undefined => {
+  return getTimestamp(event.ended) ?? getTimestamp(event.endTime) ?? getTimestamp(event.endTimestamp) ?? getTimestamp(event.timestamp)
 }
 
 const isToolExecutionStartedEvent = (event: ChatViewEvent): boolean => {
@@ -49,11 +53,15 @@ const isMatchingToolExecutionPair = (startedEvent: ChatViewEvent, finishedEvent:
 }
 
 const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
+  const ended = getEndedTimestamp(finishedEvent)
+  const { eventId } = startedEvent
+  const started = getStartedTimestamp(startedEvent)
   const mergedEvent: ChatViewEvent = {
     ...startedEvent,
     ...finishedEvent,
-    ended: getEndedTimestamp(finishedEvent),
-    started: getStartedTimestamp(startedEvent),
+    ...(ended === undefined ? {} : { ended }),
+    ...(eventId === undefined ? {} : { eventId }),
+    ...(started === undefined ? {} : { started }),
     type: mergedEventType,
   }
   const stableEventId = `${getOrCreateStableEventId(startedEvent)}:${getOrCreateStableEventId(finishedEvent)}`

@@ -10,6 +10,7 @@ export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
     },
     {
       childCount: 3,
+      className: 'ChatDebugViewTableHeaderRow',
       type: VirtualDomElements.Tr,
     },
     {
