@@ -31,7 +31,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly className?: string
     readonly name?: string
-    readonly onChange?: number
+    readonly onClick?: number
     readonly onPointerDown?: number
     readonly childCount?: number
   }[]
@@ -42,7 +42,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
-  expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
+  expect(closeButton?.onClick).toBe(DomEventListenerFunctions.HandleSimpleInput)
   expect(sash?.childCount).toBe(1)
   expect(sash?.onPointerDown).toBe(DomEventListenerFunctions.HandleSashPointerDown)
   expect(sashLine).toBeDefined()
