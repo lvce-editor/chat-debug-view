@@ -4,13 +4,7 @@ import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMess
 import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
 
 export const setSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const result = await listChatViewEvents(
-    sessionId,
-    state.databaseName,
-    state.dataBaseVersion,
-    state.eventStoreName,
-    state.sessionIdIndexName,
-  )
+  const result = await listChatViewEvents(sessionId, state.databaseName, state.dataBaseVersion, state.eventStoreName, state.sessionIdIndexName)
   if (result.type === 'not-supported') {
     return {
       ...state,

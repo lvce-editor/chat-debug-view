@@ -9,7 +9,7 @@ export const listChatViewEvents = async (
   dataBaseVersion: number,
   eventStoreName: string,
   sessionIdIndexName: string,
-  indexedDbSupportOverride?: boolean, // Adjusted to ensure correct handling
+  indexedDbSupportOverride?: boolean,
 ): Promise<ListChatViewEventsResult> => {
   if (!isIndexedDbSupported(indexedDbSupportOverride)) {
     return {
