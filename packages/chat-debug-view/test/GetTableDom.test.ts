@@ -47,7 +47,7 @@ test('getTableBodyDom should render the table body nodes', () => {
   const dom = GetTableDom.getTableBodyDom(rowNodes as readonly any[], 1) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly onClick?: number
+    readonly onPointerDown?: number
     readonly onContextMenu?: number
   }[]
 
@@ -55,7 +55,7 @@ test('getTableBodyDom should render the table body nodes', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
-      onClick: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
       type: VirtualDomElements.Div,
     },
@@ -78,7 +78,7 @@ test('getTableDom should render header and body nodes for the table', () => {
   const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly onClick?: number
+    readonly onPointerDown?: number
     readonly onContextMenu?: number
   }[]
 
@@ -114,7 +114,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
-      onClick: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
       type: VirtualDomElements.Div,
     },

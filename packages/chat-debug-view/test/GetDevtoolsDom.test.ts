@@ -68,7 +68,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(body).toBeDefined()
 })
 
-test('getDevtoolsDom should delegate row clicks from table body using data-index', () => {
+test('getDevtoolsDom should delegate row pointerdown from table body using data-index', () => {
   const events = [
     {
       sessionId: 'session-1',
@@ -81,7 +81,7 @@ test('getDevtoolsDom should delegate row clicks from table body using data-index
     readonly className?: string
     readonly inputType?: string
     readonly name?: string
-    readonly onClick?: number
+    readonly onPointerDown?: number
     readonly onContextMenu?: number
     readonly type?: number
   }[]
@@ -89,7 +89,7 @@ test('getDevtoolsDom should delegate row clicks from table body using data-index
   const eventRow = dom.find((node) => node.className === 'ChatDebugViewEventRow ChatDebugViewEventRowSelected')
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
-  expect(tableBody?.onClick).toBe(DomEventListenerFunctions.HandleEventRowClick)
+  expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClick)
   expect(tableBody?.onContextMenu).toBe(DomEventListenerFunctions.HandleTableBodyContextMenu)
   expect(eventRow?.['data-index']).toBe('0')
   expect(selectedEventInput).toBeUndefined()
