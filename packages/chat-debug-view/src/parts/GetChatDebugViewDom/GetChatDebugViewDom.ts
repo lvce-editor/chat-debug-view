@@ -52,9 +52,9 @@ export const getChatDebugViewDom = (
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
   const contentNodes = useDevtoolsLayout
-<<<<<<< HEAD
     ? getDevtoolsDom(
         events,
+        selectedEvent,
         safeSelectedEventIndex,
         timelineEvents,
         timelineStartSeconds,
@@ -64,9 +64,6 @@ export const getChatDebugViewDom = (
         timelineSelectionAnchorSeconds,
         timelineSelectionFocusSeconds,
       )
-=======
-    ? getDevtoolsDom(events, selectedEvent, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds, emptyMessage)
->>>>>>> origin/main
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
   const debugViewTopDom = getDebugViewTopDom(
