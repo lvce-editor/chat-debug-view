@@ -41,7 +41,7 @@ export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
   ]
 }
 
-export const getTableBodydOm = (rowNodes: readonly VirtualDomNode[], eventCount: number): readonly VirtualDomNode[] => {
+export const getTableBodyDom = (rowNodes: readonly VirtualDomNode[], eventCount: number): readonly VirtualDomNode[] => {
   return [
     {
       childCount: eventCount === 0 ? 1 : eventCount,
@@ -61,6 +61,6 @@ export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: num
       type: VirtualDomElements.Div,
     },
     ...getTableHeaderDom(),
-    ...getTableBodydOm(rowNodes, eventCount),
+    ...getTableBodyDom(rowNodes, eventCount),
   ]
 }

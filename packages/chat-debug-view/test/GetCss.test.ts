@@ -52,3 +52,12 @@ test('getCss should use strict containment for scrollable detail sections', () =
   expect(css).toContain('.ChatDebugViewTableBody {\n  overflow: auto;\n  min-height: 0;\n  flex: 1 1 auto;\n  contain: strict;\n}')
   expect(css).toContain('.ChatDebugViewDetailsBody {\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}')
 })
+
+test('getCss should use a visible foreground color for the details close button', () => {
+  const css = GetCss.getCss()
+
+  expect(css).toContain(
+    '.ChatDebugViewDetailsClose {\n  width: 18px;\n  height: 18px;\n  appearance: none;\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 4px;\n  cursor: pointer;\n  position: relative;\n  color: var(--vscode-foreground, #cccccc);\n  background: transparent;\n}',
+  )
+  expect(css).toContain('.ChatDebugViewDetailsClose:hover {\n  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));\n}')
+})

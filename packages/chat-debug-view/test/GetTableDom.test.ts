@@ -48,7 +48,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
   ])
 })
 
-test('getTableBodydOm should render the table body nodes', () => {
+test('getTableBodyDom should render the table body nodes', () => {
   const rowNodes = [
     {
       childCount: 0,
@@ -56,7 +56,7 @@ test('getTableBodydOm should render the table body nodes', () => {
       type: VirtualDomElements.Div,
     },
   ]
-  const dom = GetTableDom.getTableBodydOm(rowNodes as readonly any[], 1) as readonly {
+  const dom = GetTableDom.getTableBodyDom(rowNodes as readonly any[], 1) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onClick?: number
