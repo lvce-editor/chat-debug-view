@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
-import * as Resize from '../src/parts/Resize/Resize.ts'
+import * as HandleResize from '../src/parts/HandleResize/HandleResize.ts'
 import { getDetailsWidth } from '../src/parts/SplitLayout/SplitLayout.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('resize should merge provided dimensions into state', () => {
+test('handleResize should merge dimensions into state', () => {
   const state = createDefaultState()
-  const result = Resize.resize(state, {
+  const result = HandleResize.handleResize(state, {
     height: 400,
     width: 300,
     x: 10,
@@ -19,14 +19,15 @@ test('resize should merge provided dimensions into state', () => {
   expect(result.uid).toBe(state.uid)
 })
 
-test('resize should clamp tableWidth when the next width is smaller', () => {
+test('handleResize should clamp tableWidth for the next viewport width', () => {
   const state = {
     ...createDefaultState(),
+    height: 700,
     tableWidth: 596,
     width: 900,
   }
 
-  const result = Resize.resize(state, {
+  const result = HandleResize.handleResize(state, {
     height: 500,
     width: 600,
     x: 0,
