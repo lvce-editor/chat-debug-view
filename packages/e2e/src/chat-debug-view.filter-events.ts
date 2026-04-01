@@ -37,5 +37,4 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   const rows = Locator('.ChatDebugViewEventRow')
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('handle-response')
-  await expect(Locator('.ChatDebugViewEventCount')).toContainText('1 event')
 }

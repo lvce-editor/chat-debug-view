@@ -4,7 +4,7 @@ import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.t
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('renderItems should show count for visible events', () => {
+test('renderItems should not show count for visible events', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
@@ -32,10 +32,10 @@ test('renderItems should show count for visible events', () => {
   expect(Array.isArray(result[2])).toBe(true)
   const dom = result[2] as readonly { readonly text?: string }[]
   const eventCountText = dom.find((node) => node.text === '1 event')
-  expect(eventCountText).toBeDefined()
+  expect(eventCountText).toBeUndefined()
 })
 
-test('renderItems should show plural count when multiple events are visible', () => {
+test('renderItems should not show plural count when multiple events are visible', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
@@ -59,7 +59,7 @@ test('renderItems should show plural count when multiple events are visible', ()
 
   const dom = result[2] as readonly { readonly text?: string }[]
   const eventCountText = dom.find((node) => node.text === '2 events')
-  expect(eventCountText).toBeDefined()
+  expect(eventCountText).toBeUndefined()
 })
 
 test('renderItems should show filter-specific message when no events match', () => {
@@ -85,7 +85,7 @@ test('renderItems should show filter-specific message when no events match', () 
   expect(noMatchText).toBeDefined()
 })
 
-test('renderItems should use numeric eventId starting at 1 per session', () => {
+test('renderItems should preserve existing eventId values', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
@@ -105,6 +105,37 @@ test('renderItems should use numeric eventId starting at 1 per session', () => {
     ],
     sessionId: 'session-1',
     uid: 4,
+    useDevtoolsLayout: false,
+  }
+
+  const result = RenderItems.renderItems(oldState, newState)
+
+  const dom = result[2] as readonly { readonly text?: string }[]
+  const eventIdKeys = dom.filter((node) => node.text === '"eventId"')
+  expect(eventIdKeys).toHaveLength(2)
+  expect(dom.some((node) => node.text === '42')).toBe(true)
+  expect(dom.some((node) => node.text === '99')).toBe(true)
+})
+
+test('renderItems should assign numeric eventId values when they are missing', () => {
+  const oldState: ChatDebugViewState = createDefaultState()
+  const newState: ChatDebugViewState = {
+    ...createDefaultState(),
+    events: [
+      {
+        sessionId: 'session-1',
+        timestamp: 'a',
+        type: 'request',
+      },
+      {
+        sessionId: 'session-1',
+        timestamp: 'b',
+        type: 'response',
+      },
+    ],
+    sessionId: 'session-1',
+    uid: 5,
+    useDevtoolsLayout: false,
   }
 
   const result = RenderItems.renderItems(oldState, newState)
@@ -114,6 +145,4 @@ test('renderItems should use numeric eventId starting at 1 per session', () => {
   expect(eventIdKeys).toHaveLength(2)
   expect(dom.some((node) => node.text === '1')).toBe(true)
   expect(dom.some((node) => node.text === '2')).toBe(true)
-  expect(dom.some((node) => node.text === '42')).toBe(false)
-  expect(dom.some((node) => node.text === '99')).toBe(false)
 })

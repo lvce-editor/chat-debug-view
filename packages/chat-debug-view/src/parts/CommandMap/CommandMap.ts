@@ -3,6 +3,10 @@ import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import * as HandleEventRowClick from '../HandleEventRowClick/HandleEventRowClick.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
+import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
+import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
+import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
+import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import * as Refresh from '../Refresh/Refresh.ts'
 import { render2 } from '../Render2/Render2.ts'
@@ -11,6 +15,7 @@ import * as Rerender from '../Rerender/Rerender.ts'
 import * as Resize from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import * as SetEvents from '../SetEvents/SetEvents.ts'
+import * as SetIndexedDbSupportForTest from '../SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 
@@ -20,6 +25,10 @@ export const commandMap = {
   'ChatDebug.getCommandIds': getCommandIds,
   'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
+  'ChatDebug.handleSashPointerDown': wrapCommand(HandleSashPointerDown.handleSashPointerDown),
+  'ChatDebug.handleSashPointerMove': wrapCommand(HandleSashPointerMove.handleSashPointerMove),
+  'ChatDebug.handleSashPointerUp': wrapCommand(HandleSashPointerUp.handleSashPointerUp),
+  'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
   'ChatDebug.refresh': wrapCommand(Refresh.refresh),
@@ -29,6 +38,7 @@ export const commandMap = {
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
+  'ChatDebug.setIndexedDbSupportForTest': SetIndexedDbSupportForTest.setIndexedDbSupportForTest,
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,
 }

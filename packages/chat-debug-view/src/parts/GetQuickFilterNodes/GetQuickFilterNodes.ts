@@ -1,0 +1,35 @@
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as InputName from '../InputName/InputName.ts'
+
+export const getQuickFilterNodes = (eventCategoryFilter: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: EventCategoryFilter.options.length,
+      className: 'ChatDebugViewQuickFilters',
+      type: VirtualDomElements.Div,
+    },
+    ...EventCategoryFilter.options.flatMap((option) => {
+      const isSelected = option.value === eventCategoryFilter
+      return [
+        {
+          childCount: 2,
+          className: `ChatDebugViewQuickFilterPill${isSelected ? ' ChatDebugViewQuickFilterPillSelected' : ''}`,
+          type: VirtualDomElements.Label,
+        },
+        {
+          checked: isSelected,
+          childCount: 0,
+          className: 'ChatDebugViewQuickFilterInput',
+          inputType: 'radio',
+          name: InputName.EventCategoryFilter,
+          onChange: DomEventListenerFunctions.HandleInput,
+          type: VirtualDomElements.Input,
+          value: option.value,
+        },
+        text(option.label),
+      ]
+    }),
+  ]
+}

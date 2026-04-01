@@ -1,12 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-
-const formatTimelineSeconds = (value: number): string => {
-  if (Number.isInteger(value)) {
-    return `${value}s`
-  }
-  return `${Number(value.toFixed(1))}s`
-}
 
 export const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
   const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)

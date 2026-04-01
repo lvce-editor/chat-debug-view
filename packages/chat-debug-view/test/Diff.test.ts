@@ -57,7 +57,7 @@ test('diff should return RenderIncremental and RenderCss when useDevtoolsLayout 
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
-    useDevtoolsLayout: true,
+    useDevtoolsLayout: false,
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
@@ -68,6 +68,39 @@ test('diff should return RenderIncremental and RenderCss when selectedEventIndex
   const newState = {
     ...oldState,
     selectedEventIndex: 1,
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
+test('diff should return RenderIncremental and RenderCss when selectedEvent changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    selectedEvent: {
+      eventId: 1,
+      type: 'request',
+    },
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
+test('diff should return RenderIncremental and RenderCss when tableWidth changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    tableWidth: 520,
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
+test('diff should return RenderIncremental and RenderCss when width changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    width: 640,
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])

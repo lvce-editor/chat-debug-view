@@ -1,119 +1,76 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
+import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
+import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
-import * as InputName from '../InputName/InputName.ts'
+
+const getEmptyStateDom = (emptyMessage: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEmpty',
+      type: VirtualDomElements.Div,
+    },
+    text(emptyMessage),
+  ]
+}
 
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
+  selectedEvent: ChatViewEvent | null,
   selectedEventIndex: number | null,
   timelineEvents: readonly ChatViewEvent[],
   timelineStartSeconds: string,
   timelineEndSeconds: string,
+  emptyMessage = 'No events have been found',
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex)
   const timelineNodes = getTimelineNodes(timelineEvents, timelineStartSeconds, timelineEndSeconds)
-  const selectedEvent = selectedEventIndex === null ? undefined : events[selectedEventIndex]
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
-  const eventsClassName = `${hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'}${timelineNodes.length > 0 ? ' ChatDebugViewEvents--timeline' : ''}`
-  const eventsChildCount = timelineNodes.length > 0 ? 2 : 1
-  const detailsNodes = hasSelectedEvent
+  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)
+  const eventsClassName = getEventsClassName(hasSelectedEvent)
+  const detailsNodes = getDetailsDom(selectedEventNodes)
+  const sashNodes = hasSelectedEvent
     ? [
         {
-          childCount: 2,
-          className: 'ChatDebugViewDetails',
-          type: VirtualDomElements.Div,
-        },
-        {
-          childCount: 2,
-          className: 'ChatDebugViewDetailsTop',
-          type: VirtualDomElements.Div,
-        },
-        {
           childCount: 1,
-          className: 'ChatDebugViewDetailsTitle',
+          className: 'ChatDebugViewSash',
+          onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
           type: VirtualDomElements.Div,
         },
-        text('Details'),
         {
           childCount: 0,
-          className: 'ChatDebugViewDetailsClose',
-          inputType: 'checkbox',
-          name: InputName.CloseDetails,
-          onChange: DomEventListenerFunctions.HandleSimpleInput,
-          type: VirtualDomElements.Input,
-          value: 'close',
-        },
-        {
-          childCount: selectedEventNodes.length,
-          className: 'ChatDebugViewDetailsBody',
+          className: 'ChatDebugViewSashLine',
           type: VirtualDomElements.Div,
         },
-        ...selectedEventNodes,
       ]
     : []
+  const splitChildCount = hasSelectedEvent ? 3 : 1
+  const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)
   return [
     {
-      childCount: hasSelectedEvent ? 2 : 1,
+      childCount: mainChildCount,
       className: 'ChatDebugViewDevtoolsMain',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: eventsChildCount,
-      className: eventsClassName,
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
     {
-      childCount: 2,
-      className: 'ChatDebugViewTable',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 5,
-      className: 'ChatDebugViewTableHeader',
+      childCount: splitChildCount,
+      className: 'ChatDebugViewDevtoolsSplit',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
+      className: eventsClassName,
       type: VirtualDomElements.Div,
     },
-    text('Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
-      type: VirtualDomElements.Div,
-    },
-    text('Duration'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
-      type: VirtualDomElements.Div,
-    },
-    text('Status'),
-    {
-      childCount: rowNodes.length === 0 ? 1 : rowNodes.length,
-      className: 'ChatDebugViewTableBody',
-      onClick: DomEventListenerFunctions.HandleEventRowClick,
-      type: VirtualDomElements.Div,
-    },
-    ...rowNodes,
+    ...tableNodes,
+    ...sashNodes,
     ...detailsNodes,
   ]
 }
