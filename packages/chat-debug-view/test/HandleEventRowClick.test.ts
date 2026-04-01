@@ -1,8 +1,9 @@
 import { expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import type { loadSelectedEvent } from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const mockLoadSelectedEvent = jest.fn<() => Promise<ChatViewEvent | null>>()
+const mockLoadSelectedEvent = jest.fn<typeof loadSelectedEvent>()
 
 jest.unstable_mockModule('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts', () => {
   return {
@@ -17,7 +18,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     detail: 'value',
     eventId: 3,
     type: 'request',
-  })
+  } as ChatViewEvent)
   const state = {
     ...createDefaultState(),
     events: [

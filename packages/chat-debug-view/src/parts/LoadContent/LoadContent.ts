@@ -7,7 +7,7 @@ import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
 
 export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
-  const { databaseName, dataBaseVersion, eventStoreName, indexedDbSupportOverride, sessionIdIndexName, uri } = state
+  const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName, uri } = state
   const parsed = parseChatDebugUri(uri)
   if (parsed.type === 'error') {
     return {
@@ -22,7 +22,7 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
   }
   const { sessionId } = parsed
 
-  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName, indexedDbSupportOverride)
+  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
   if (result.type === 'not-supported') {
     return {
       ...state,

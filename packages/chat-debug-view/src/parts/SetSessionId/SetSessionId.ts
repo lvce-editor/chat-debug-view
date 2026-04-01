@@ -10,7 +10,6 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
     state.dataBaseVersion,
     state.eventStoreName,
     state.sessionIdIndexName,
-    state.indexedDbSupportOverride,
   )
   if (result.type === 'not-supported') {
     return {
