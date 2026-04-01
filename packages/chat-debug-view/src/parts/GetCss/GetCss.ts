@@ -341,6 +341,12 @@ export const getCss = (): string => {
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  color: var(--vscode-foreground, #cccccc);
+  background: transparent;
+}
+
+.ChatDebugViewDetailsClose:hover {
+  background: var(--vscode-toolbar-hoverBackground, rgba(90, 93, 94, 0.31));
 }
 
 .ChatDebugViewDetailsClose::before,

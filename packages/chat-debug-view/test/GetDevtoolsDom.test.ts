@@ -3,12 +3,20 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
-  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom([], null, [], '', '', 'No events have been found') as readonly {
     readonly className?: string
+    readonly text?: string
   }[]
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
+  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
 
   expect(emptyState).toBeDefined()
+  expect(table).toBeUndefined()
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'No events have been found',
+    }),
+  )
 })
 
 test('getDevtoolsDom should render selected details panel and close input', () => {
@@ -141,6 +149,28 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
   expect(mainPane?.childCount).toBe(2)
   expect(table).toBeDefined()
   expect(details).toBeDefined()
+})
+
+test('getDevtoolsDom should count direct table body children per event', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+
+  expect(tableBody?.childCount).toBe(2)
 })
 
 test('getDevtoolsDom should apply explicit flex column classes to headers and rows', () => {
