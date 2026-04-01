@@ -49,7 +49,7 @@ test('applyRender should return commands for each diff item', () => {
 test('diff2 should diff the stored old and new state', () => {
   const uid = 201
   Create.create(uid, 'file:///debug', 0, 0, 300, 200, 0, '/assets')
-  const { oldState, newState } = ChatDebugViewStates.get(uid)
+  const { newState, oldState } = ChatDebugViewStates.get(uid)
 
   ChatDebugViewStates.set(uid, oldState, {
     ...newState,
@@ -62,7 +62,7 @@ test('diff2 should diff the stored old and new state', () => {
 test('render2 should apply renderers and advance the stored old state', () => {
   const uid = 202
   Create.create(uid, 'file:///debug', 0, 0, 300, 200, 0, '/assets')
-  const { oldState, newState } = ChatDebugViewStates.get(uid)
+  const { newState, oldState } = ChatDebugViewStates.get(uid)
   const updatedState = {
     ...newState,
     filterValue: 'warning',
