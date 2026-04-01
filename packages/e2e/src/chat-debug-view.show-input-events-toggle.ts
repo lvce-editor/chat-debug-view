@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.show-input-events-toggle'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-debug://e2e-session-toggle')
@@ -30,18 +28,19 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
   await Command.execute('ChatDebug.setEvents', events)
+  await Locator('input[name="useDevtoolsLayout"]').click()
 
-  const eventNodes = Locator('.ChatDebugViewEvent')
+  const eventRows = Locator('.ChatDebugViewEventRow')
   const toggle = Locator('input[name="showInputEvents"]')
 
   // assert hidden by default
-  await expect(eventNodes).toHaveCount(0)
+  await expect(eventRows).toHaveCount(1)
 
   // act + assert: show input events
   await toggle.click()
-  await expect(eventNodes).toHaveCount(3)
+  await expect(eventRows).toHaveCount(3)
 
   // act + assert: hide input events again
   await toggle.click()
-  await expect(eventNodes).toHaveCount(1)
+  await expect(eventRows).toHaveCount(1)
 }

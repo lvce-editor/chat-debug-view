@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.filter-events'
 
-export const skip = 1
-
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-debug://e2e-session-filter')
@@ -13,8 +11,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     {
       sessionId: 'e2e-session-filter',
       timestamp: '2026-03-08T00:00:00.000Z',
-      type: 'handle-submit',
-      value: 'Alpha message',
+      type: 'request',
+      url: 'https://example.com/alpha',
     },
     {
       sessionId: 'e2e-session-filter',
@@ -30,13 +28,15 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
   await Command.execute('ChatDebug.setEvents', events)
+  await Locator('input[name="useDevtoolsLayout"]').click()
   const filterInput = Locator('.InputBox[name="filter"]')
 
   // act
   await filterInput.type('beta')
 
   // assert
-  const eventNodes = Locator('.ChatDebugViewEvent')
-  await expect(eventNodes).toHaveCount(1)
-  await expect(eventNodes.nth(0)).toContainText('"value": "Beta response"')
+  const rows = Locator('.ChatDebugViewEventRow')
+  await expect(rows).toHaveCount(1)
+  await expect(rows.nth(0)).toContainText('handle-response')
+  await expect(Locator('.ChatDebugViewEventCount')).toContainText('1 event')
 }
