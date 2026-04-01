@@ -48,6 +48,33 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   expect(toolsFilter?.checked).toBe(false)
 })
 
+test('getChatDebugViewDom should place toggles above the filter row in devtools layout', () => {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly inputType?: string
+    readonly name?: string
+  }[]
+
+  const toggleRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewToggle')
+  const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
+  const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
+  const mainPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
+
+  expect(toggleRowIndex).toBeGreaterThan(-1)
+  expect(filterRowIndex).toBeGreaterThan(toggleRowIndex)
+  expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
+  expect(mainPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(dom[filterRowIndex + 1]).toEqual(
+    expect.objectContaining({
+      inputType: 'search',
+      name: 'filter',
+    }),
+  )
+  expect(root?.childCount).toBe(3)
+})
+
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {
   const events = [
     {
@@ -78,4 +105,75 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
+})
+
+test('getChatDebugViewDom should not render event count message', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    false,
+    null,
+    '',
+    '',
+    events,
+    events,
+  ) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  const eventCount = dom.find((node) => node.className === 'ChatDebugViewEventCount')
+  const eventCountText = dom.find((node) => node.text === '2 events')
+
+  expect(eventCount).toBeUndefined()
+  expect(eventCountText).toBeUndefined()
+})
+
+test('getChatDebugViewDom should render tool execution type with tool name in legacy layout', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      toolName: 'getWorkspaceUri',
+      type: 'tool-execution',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    false,
+    null,
+    '',
+    '',
+    events,
+    events,
+  ) as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"tool-execution, getWorkspaceUri"',
+    }),
+  )
 })

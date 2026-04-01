@@ -58,7 +58,6 @@ export const getChatDebugViewDom = (
   const hasFilterValue = filterDescriptionParts.length > 0
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = `no events found matching ${filterDescription}`
-  const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
   const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events have been found'
 
   const safeSelectedEventIndex =
@@ -75,9 +74,8 @@ export const getChatDebugViewDom = (
     showResponsePartEvents,
     useDevtoolsLayout,
     quickFilterNodes,
-    eventCountText,
   )
-  const rootChildCount = useDevtoolsLayout ? 4 : 3
+  const rootChildCount = useDevtoolsLayout ? 3 : 2
 
   return [
     {

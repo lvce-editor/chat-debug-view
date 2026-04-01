@@ -11,7 +11,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
 
   expect(dom).toEqual([
     {
-      childCount: 5,
+      childCount: 3,
       className: 'ChatDebugViewTableHeader',
       type: VirtualDomElements.Div,
     },
@@ -21,18 +21,6 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.Div,
     },
     text('Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
@@ -60,6 +48,7 @@ test('getTableBodyDom should render the table body nodes', () => {
     readonly childCount?: number
     readonly className?: string
     readonly onClick?: number
+    readonly onContextMenu?: number
   }[]
 
   expect(dom).toEqual([
@@ -67,6 +56,7 @@ test('getTableBodyDom should render the table body nodes', () => {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
       onClick: DomEventListenerFunctions.HandleEventRowClick,
+      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
       type: VirtualDomElements.Div,
     },
     {
@@ -89,6 +79,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     readonly childCount?: number
     readonly className?: string
     readonly onClick?: number
+    readonly onContextMenu?: number
   }[]
 
   expect(dom).toEqual([
@@ -98,7 +89,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 5,
+      childCount: 3,
       className: 'ChatDebugViewTableHeader',
       type: VirtualDomElements.Div,
     },
@@ -108,18 +99,6 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Div,
     },
     text('Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
@@ -136,6 +115,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       childCount: 1,
       className: 'ChatDebugViewTableBody',
       onClick: DomEventListenerFunctions.HandleEventRowClick,
+      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
       type: VirtualDomElements.Div,
     },
     {

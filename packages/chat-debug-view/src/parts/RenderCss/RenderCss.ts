@@ -3,6 +3,6 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getCss } from '../GetCss/GetCss.ts'
 
 export const renderCss = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly [string, number, string] => {
-  const css = getCss()
+  const css = getCss(newState)
   return [ViewletCommand.SetCss, newState.uid, css]
 }

@@ -4,7 +4,7 @@ import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.t
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('renderItems should show count for visible events', () => {
+test('renderItems should not show count for visible events', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
@@ -32,10 +32,10 @@ test('renderItems should show count for visible events', () => {
   expect(Array.isArray(result[2])).toBe(true)
   const dom = result[2] as readonly { readonly text?: string }[]
   const eventCountText = dom.find((node) => node.text === '1 event')
-  expect(eventCountText).toBeDefined()
+  expect(eventCountText).toBeUndefined()
 })
 
-test('renderItems should show plural count when multiple events are visible', () => {
+test('renderItems should not show plural count when multiple events are visible', () => {
   const oldState: ChatDebugViewState = createDefaultState()
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
@@ -59,7 +59,7 @@ test('renderItems should show plural count when multiple events are visible', ()
 
   const dom = result[2] as readonly { readonly text?: string }[]
   const eventCountText = dom.find((node) => node.text === '2 events')
-  expect(eventCountText).toBeDefined()
+  expect(eventCountText).toBeUndefined()
 })
 
 test('renderItems should show filter-specific message when no events match', () => {

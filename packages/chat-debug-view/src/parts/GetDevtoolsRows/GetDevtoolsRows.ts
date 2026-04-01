@@ -1,8 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
-import { getEndText } from '../GetEndText/GetEndText.ts'
-import { getStartText } from '../GetStartText/GetStartText.ts'
+import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
@@ -13,7 +12,7 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
     const rowIndex = String(i)
     rows.push(
       {
-        childCount: 5,
+        childCount: 3,
         className: `ChatDebugViewEventRow${isSelected ? ' ChatDebugViewEventRowSelected' : ''}`,
         'data-index': rowIndex,
         type: VirtualDomElements.Div,
@@ -24,21 +23,7 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
         'data-index': rowIndex,
         type: VirtualDomElements.Div,
       },
-      text(event.type),
-      {
-        childCount: 1,
-        className: 'ChatDebugViewCell ChatDebugViewCellTime',
-        'data-index': rowIndex,
-        type: VirtualDomElements.Div,
-      },
-      text(getStartText(event)),
-      {
-        childCount: 1,
-        className: 'ChatDebugViewCell ChatDebugViewCellTime',
-        'data-index': rowIndex,
-        type: VirtualDomElements.Div,
-      },
-      text(getEndText(event)),
+      text(getEventTypeLabel(event)),
       {
         childCount: 1,
         className: 'ChatDebugViewCell ChatDebugViewCellDuration',

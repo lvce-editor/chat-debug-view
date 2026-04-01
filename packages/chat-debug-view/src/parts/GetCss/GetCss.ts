@@ -1,6 +1,14 @@
-export const getCss = (): string => {
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { clampTableWidth, getDetailsWidth, sashWidth } from '../SplitLayout/SplitLayout.ts'
+
+export const getCss = (state: ChatDebugViewState): string => {
+  const tableWidth = clampTableWidth(state.width, state.tableWidth)
+  const detailsWidth = getDetailsWidth(state.width, state.tableWidth)
   return `
 .ChatDebugView {
+  --ChatDebugViewDetailsWidth: ${detailsWidth}px;
+  --ChatDebugViewSashWidth: ${sashWidth}px;
+  --ChatDebugViewTableWidth: ${tableWidth}px;
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -20,8 +28,20 @@ export const getCss = (): string => {
   flex-wrap: wrap;
 }
 
+.ChatDebugViewTop--devtools {
+  justify-content: space-between;
+}
+
+.ChatDebugViewTop--devtools {
+  align-items: stretch;
+}
+
 .ChatDebugViewTop .InputBox {
   flex: 1;
+}
+
+.ChatDebugViewTop--devtools .ChatDebugViewQuickFilters {
+  margin-left: auto;
 }
 
 .ChatDebugViewToggle {
@@ -41,19 +61,25 @@ export const getCss = (): string => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 22px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 
 .ChatDebugViewQuickFilters {
   display: flex;
+  align-items: center;
   gap: 8px;
   justify-content: center;
   min-height: 28px;
-  padding: 0 12px;
+  padding: 2px;
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 999px;
   background: var(--vscode-editorWidget-background, transparent);
-  cursor: pointer;
   font-size: 12px;
   line-height: 1;
 }
@@ -98,21 +124,46 @@ export const getCss = (): string => {
 .ChatDebugViewDevtoolsMain {
   display: flex;
   flex: 1;
-  flex-wrap: wrap;
   align-items: stretch;
-  gap: 8px;
+  gap: 0;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
 }
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewEvents {
-  flex: 1 1 480px;
+  flex: 0 1 var(--ChatDebugViewTableWidth);
   min-width: 0;
 }
 
+.ChatDebugViewDevtoolsMain > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
+  flex: 1 1 100%;
+}
+
 .ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
-  flex: 0 0 clamp(320px, 32vw, 420px);
+  flex: 0 0 var(--ChatDebugViewDetailsWidth);
+}
+
+.ChatDebugViewSash {
+  flex: 0 0 var(--ChatDebugViewSashWidth);
+  position: relative;
+  cursor: col-resize;
+  min-height: 0;
+}
+
+.ChatDebugViewSash::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--vscode-editorWidget-border, #454545);
+}
+
+.ChatDebugViewSash:hover::before {
+  background: var(--vscode-focusBorder, #007fd4);
 }
 
 .ChatDebugViewTable {
@@ -234,7 +285,7 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewTableHeader {
-  padding: 8px;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   background: var(--vscode-editorWidget-background, transparent);
   position: sticky;
@@ -273,7 +324,7 @@ export const getCss = (): string => {
 }
 
 .ChatDebugViewEventRow {
-  padding: 8px;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   cursor: pointer;
 }

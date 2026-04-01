@@ -11,6 +11,19 @@ test('renderEventListeners should register delegated row click with dataset inde
   expect(clickListener?.params).toEqual(['handleEventRowClick', 'event.target.dataset.index'])
 })
 
+test('renderEventListeners should register table body context menu with preventDefault', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const contextMenuListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTableBodyContextMenu)
+
+  expect(contextMenuListener).toBeDefined()
+  expect(contextMenuListener).toEqual(
+    expect.objectContaining({
+      params: ['handleTableBodyContextMenu'],
+      preventDefault: true,
+    }),
+  )
+})
+
 test('renderEventListeners should register filter input with name and value params', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const filterListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleFilterInput)
@@ -33,4 +46,21 @@ test('renderEventListeners should register simple input with name and value para
 
   expect(simpleInputListener).toBeDefined()
   expect(simpleInputListener?.params).toEqual(['handleInput', EventExpression.TargetName, EventExpression.TargetValue])
+})
+
+test('renderEventListeners should register sash pointer tracking with client coordinates', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const pointerDownListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleSashPointerDown)
+  const pointerMoveListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleSashPointerMove)
+  const pointerUpListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleSashPointerUp)
+
+  expect(pointerDownListener).toBeDefined()
+  expect(pointerDownListener?.params).toEqual(['handleSashPointerDown', EventExpression.ClientX, EventExpression.ClientY])
+  expect(pointerDownListener).toEqual(
+    expect.objectContaining({
+      trackPointerEvents: [DomEventListenerFunctions.HandleSashPointerMove, DomEventListenerFunctions.HandleSashPointerUp],
+    }),
+  )
+  expect(pointerMoveListener?.params).toEqual(['handleSashPointerMove', EventExpression.ClientX, EventExpression.ClientY])
+  expect(pointerUpListener?.params).toEqual(['handleSashPointerUp', EventExpression.ClientX, EventExpression.ClientY])
 })

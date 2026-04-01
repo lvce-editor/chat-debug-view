@@ -2,32 +2,13 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-export const getDebugViewTopDom = (
-  filterValue: string,
+const getToggleNodes = (
   showEventStreamFinishedEvents: boolean,
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
   useDevtoolsLayout: boolean,
-  quickFilterNodes: readonly VirtualDomNode[],
-  eventCountText: string,
 ): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 2,
-      className: 'ChatDebugViewTop',
-      type: VirtualDomElements.Div,
-    },
-    {
-      autocomplete: 'off',
-      childCount: 0,
-      className: 'InputBox',
-      inputType: 'search',
-      name: InputName.Filter,
-      onInput: DomEventListenerFunctions.HandleFilterInput,
-      placeholder: 'Filter events',
-      type: VirtualDomElements.Input,
-      value: filterValue,
-    },
     {
       childCount: 4,
       className: 'ChatDebugViewToggle',
@@ -89,12 +70,58 @@ export const getDebugViewTopDom = (
       type: VirtualDomElements.Input,
     },
     text('Use devtools layout'),
-    ...quickFilterNodes,
+  ]
+}
+
+export const getDebugViewTopDom = (
+  filterValue: string,
+  showEventStreamFinishedEvents: boolean,
+  showInputEvents: boolean,
+  showResponsePartEvents: boolean,
+  useDevtoolsLayout: boolean,
+  quickFilterNodes: readonly VirtualDomNode[],
+): readonly VirtualDomNode[] => {
+  const toggleNodes = getToggleNodes(showEventStreamFinishedEvents, showInputEvents, showResponsePartEvents, useDevtoolsLayout)
+  if (useDevtoolsLayout) {
+    return [
+      ...toggleNodes,
+      {
+        childCount: 1 + (quickFilterNodes.length > 0 ? 1 : 0),
+        className: 'ChatDebugViewTop ChatDebugViewTop--devtools',
+        type: VirtualDomElements.Div,
+      },
+      {
+        autocomplete: 'off',
+        childCount: 0,
+        className: 'InputBox',
+        inputType: 'search',
+        name: InputName.Filter,
+        onInput: DomEventListenerFunctions.HandleFilterInput,
+        placeholder: 'Filter events',
+        type: VirtualDomElements.Input,
+        value: filterValue,
+      },
+      ...quickFilterNodes,
+    ]
+  }
+
+  return [
     {
-      childCount: 1,
-      className: 'ChatDebugViewEventCount',
+      childCount: 2,
+      className: 'ChatDebugViewTop',
       type: VirtualDomElements.Div,
     },
-    text(eventCountText),
+    {
+      autocomplete: 'off',
+      childCount: 0,
+      className: 'InputBox',
+      inputType: 'search',
+      name: InputName.Filter,
+      onInput: DomEventListenerFunctions.HandleFilterInput,
+      placeholder: 'Filter events',
+      type: VirtualDomElements.Input,
+      value: filterValue,
+    },
+    ...toggleNodes,
   ]
 }

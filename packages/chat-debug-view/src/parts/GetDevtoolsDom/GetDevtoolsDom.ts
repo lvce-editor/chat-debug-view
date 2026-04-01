@@ -6,6 +6,7 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
 const getEmptyStateDom = (emptyMessage: string): readonly VirtualDomNode[] => {
   return [
@@ -37,7 +38,7 @@ export const getDevtoolsDom = (
   const detailsNodes = getDetailsDom(selectedEventNodes)
   return [
     {
-      childCount: hasSelectedEvent ? 2 : 1,
+      childCount: hasSelectedEvent ? 3 : 1,
       className: 'ChatDebugViewDevtoolsMain',
       type: VirtualDomElements.Div,
     },
@@ -48,6 +49,12 @@ export const getDevtoolsDom = (
     },
     ...timelineNodes,
     ...tableNodes,
+    {
+      childCount: 0,
+      className: 'ChatDebugViewSash',
+      onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
+      type: VirtualDomElements.Div,
+    },
     ...detailsNodes,
   ]
 }

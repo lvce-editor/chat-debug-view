@@ -31,13 +31,16 @@ test('getDevtoolsDom should render selected details panel and close input', () =
     readonly className?: string
     readonly name?: string
     readonly onChange?: number
+    readonly onPointerDown?: number
   }[]
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const closeButton = dom.find((node) => node.name === 'closeDetails')
+  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
+  expect(sash?.onPointerDown).toBe(DomEventListenerFunctions.HandleSashPointerDown)
 })
 
 test('getDevtoolsDom should wrap header and body in a table container', () => {
@@ -76,6 +79,7 @@ test('getDevtoolsDom should delegate row clicks from table body using data-index
     readonly inputType?: string
     readonly name?: string
     readonly onClick?: number
+    readonly onContextMenu?: number
     readonly type?: number
   }[]
   const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
@@ -83,6 +87,7 @@ test('getDevtoolsDom should delegate row clicks from table body using data-index
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
   expect(tableBody?.onClick).toBe(DomEventListenerFunctions.HandleEventRowClick)
+  expect(tableBody?.onContextMenu).toBe(DomEventListenerFunctions.HandleTableBodyContextMenu)
   expect(eventRow?.['data-index']).toBe('0')
   expect(selectedEventInput).toBeUndefined()
 })
@@ -143,10 +148,12 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly className?: string
   }[]
   const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
-  expect(mainPane?.childCount).toBe(2)
+  expect(mainPane?.childCount).toBe(3)
+  expect(sash).toBeDefined()
   expect(table).toBeDefined()
   expect(details).toBeDefined()
 })
@@ -173,7 +180,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
   expect(tableBody?.childCount).toBe(2)
 })
 
-test('getDevtoolsDom should apply explicit flex column classes to headers and rows', () => {
+test('getDevtoolsDom should apply explicit duration and status column classes to headers and rows', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
@@ -189,17 +196,17 @@ test('getDevtoolsDom should apply explicit flex column classes to headers and ro
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellTime',
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
     }),
   )
 })
 
-test('getDevtoolsDom should render computed duration from timestamps', () => {
+test('getDevtoolsDom should render computed duration without start and end timestamps in rows', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
@@ -219,13 +226,13 @@ test('getDevtoolsDom should render computed duration from timestamps', () => {
     }),
   )
 
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: 'Mar 08, 2026, 00:00:01.000 UTC',
     }),
   )
 
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: 'Mar 08, 2026, 00:00:01.250 UTC',
     }),
@@ -254,6 +261,26 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '200',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render tool execution row labels with tool name', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      toolName: 'getWorkspaceUri',
+      type: 'tool-execution',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'tool-execution, getWorkspaceUri',
     }),
   )
 })

@@ -6,6 +6,7 @@ export interface SavedState {
   readonly showEventStreamFinishedEvents: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
+  readonly tableWidth: number
   readonly timelineEndSeconds: string
   readonly timelineStartSeconds: string
   readonly useDevtoolsLayout: boolean
