@@ -48,7 +48,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewQuickFilterPill {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   min-height: 22px;
@@ -509,7 +509,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewDetailsTab {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   min-height: 32px;
@@ -595,7 +595,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEventLineNumber {
-  display: inline-flex;
+  display: flex;
   justify-content: flex-end;
   flex: 0 0 3ch;
   margin-right: 12px;
@@ -605,7 +605,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEventLineContent {
-  display: inline-flex;
+  display: flex;
   white-space: pre;
   contain: content;
 }
