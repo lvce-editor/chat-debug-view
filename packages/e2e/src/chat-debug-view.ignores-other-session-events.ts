@@ -16,9 +16,9 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
     {
       sessionId: 'e2e-session-other',
+      target: 'Should not appear',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'handle-click',
-      target: 'Should not appear',
     },
   ]
 
