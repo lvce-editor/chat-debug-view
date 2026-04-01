@@ -20,6 +20,17 @@ jest.unstable_mockModule('../src/parts/GetEventsBySessionId/GetEventsBySessionId
 
 const ListChatViewEvents = await import('../src/parts/ListChatViewEvents/ListChatViewEvents.ts')
 
+const createDomStringList = (values: readonly string[]): DOMStringList => {
+  return {
+    contains: (value: string): boolean => values.includes(value),
+    item: (index: number): string | null => values[index] ?? null,
+    length: values.length,
+    *[Symbol.iterator](): IterableIterator<string> {
+      yield* values
+    },
+  } as unknown as DOMStringList
+}
+
 afterEach(() => {
   jest.clearAllMocks()
   setIndexedDbSupportForTest(undefined)
@@ -40,20 +51,16 @@ test('listChatViewEvents should return success result with events', async () => 
   const store = {
     getAll: jest.fn(),
     index: jest.fn(),
-    indexNames: {
-      contains: jest.fn(),
-    },
-  } as Parameters<typeof getEventsBySessionId>[0]
+    indexNames: createDomStringList([]),
+  } as unknown as Parameters<typeof getEventsBySessionId>[0]
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
   const database = {
     close: jest.fn(),
-    objectStoreNames: {
-      contains: jest.fn().mockReturnValue(true),
-    },
+    objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
-  } as Awaited<ReturnType<typeof openDatabase>>
+  } as unknown as Awaited<ReturnType<typeof openDatabase>>
   const events = [
     {
       duration: 0,

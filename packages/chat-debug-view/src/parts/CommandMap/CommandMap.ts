@@ -38,7 +38,7 @@ export const commandMap = {
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
-  'ChatDebug.setIndexedDbSupportForTest': wrapCommand(SetIndexedDbSupportForTest.setIndexedDbSupportForTest),
+  'ChatDebug.setIndexedDbSupportForTest': SetIndexedDbSupportForTest.setIndexedDbSupportForTest,
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,
 }
