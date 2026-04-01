@@ -3,8 +3,8 @@ import type { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/Get
 import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 
-const mockOpenDatabase = jest.fn<typeof openDatabaseFn>()
-const mockGetEventsBySessionId = jest.fn<typeof getEventsBySessionIdFn>()
+const mockOpenDatabase = jest.fn<typeof openDatabase>()
+const mockGetEventsBySessionId = jest.fn<typeof getEventsBySessionId>()
 
 jest.unstable_mockModule('../src/parts/OpenDatabase/OpenDatabase.ts', () => {
   return {
@@ -38,11 +38,12 @@ test('listChatViewEvents should return not-supported when IndexedDB is unavailab
 test('listChatViewEvents should return success result with events', async () => {
   setIndexedDbSupportForTest(true)
   const store = {
+    getAll: jest.fn(),
     index: jest.fn(),
     indexNames: {
       contains: jest.fn(),
     },
-  }
+  } as Parameters<typeof getEventsBySessionId>[0]
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
@@ -52,7 +53,7 @@ test('listChatViewEvents should return success result with events', async () => 
       contains: jest.fn().mockReturnValue(true),
     },
     transaction: jest.fn().mockReturnValue(transaction),
-  }
+  } as Awaited<ReturnType<typeof openDatabase>>
   const events = [
     {
       duration: 0,
