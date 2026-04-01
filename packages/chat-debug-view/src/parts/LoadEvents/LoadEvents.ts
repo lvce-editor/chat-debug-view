@@ -1,10 +1,11 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
+import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { getInvalidUriMessage } from '../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { parseChatDebugUri } from '../ParseChatDebugUri/ParseChatDebugUri.ts'
@@ -14,7 +15,7 @@ export const loadEventsDependencies = {
   loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
 }
 
-const getCurrentEvents = (state: ChatDebugViewState) => {
+const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,

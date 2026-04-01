@@ -10,7 +10,8 @@ export const handleTimelinePointerMove = (state: ChatDebugViewState, eventX: num
   const timelineEvents = getTimelineEvents(state)
   const timelineLeft = getTimelineLeft(state)
   const timelineWidth = getTimelineWidth(state)
-  const seconds = getTimelineSecondsFromClientX(timelineEvents, eventX, timelineLeft, timelineWidth)
+  const clientX = state.x + eventX
+  const seconds = getTimelineSecondsFromClientX(timelineEvents, clientX, timelineLeft, timelineWidth)
   if (seconds === undefined) {
     return state
   }

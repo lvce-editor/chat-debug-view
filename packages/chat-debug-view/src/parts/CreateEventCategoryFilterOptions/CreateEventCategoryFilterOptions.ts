@@ -1,4 +1,5 @@
-import { All, EventCategoryFilterOption, Network, Stream, Tools, Ui } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { All, Network, Stream, Tools, Ui } from '../EventCategoryFilter/EventCategoryFilter.ts'
 
 export const createEventCategoryFilterOptions = (): readonly EventCategoryFilterOption[] => {
   return [

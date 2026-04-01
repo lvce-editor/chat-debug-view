@@ -14,7 +14,8 @@ export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: numbe
   const timelineEvents = getTimelineEvents(state)
   const timelineLeft = getTimelineLeft(state)
   const timelineWidth = getTimelineWidth(state)
-  const focusSeconds = getTimelineSecondsFromClientX(timelineEvents, eventX, timelineLeft, timelineWidth)
+  const clientX = state.x + eventX
+  const focusSeconds = getTimelineSecondsFromClientX(timelineEvents, clientX, timelineLeft, timelineWidth)
   if (focusSeconds === undefined) {
     return clearTimelineSelectionState(state)
   }
