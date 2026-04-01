@@ -279,7 +279,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   background: var(--vscode-editorWidget-border, #454545);
 }
 
-.ChatDebugViewTableHeader,
+.ChatDebugViewTableHeaderRow,
 .ChatDebugViewEventRow {
   display: flex;
   align-items: center;

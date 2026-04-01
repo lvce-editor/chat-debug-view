@@ -1,4 +1,20 @@
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
+import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import { loadSelectedEvent } from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+
+const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
+  const filteredEvents = getFilteredEvents(
+    state.events,
+    state.filterValue,
+    state.eventCategoryFilter,
+    state.showInputEvents,
+    state.showResponsePartEvents,
+    state.showEventStreamFinishedEvents,
+  )
+  return filterEventsByTimelineRange(filteredEvents, state.timelineStartSeconds, state.timelineEndSeconds)
+}
 
 const parseSelectedEventIndex = (value: string): number | null => {
   const parsed = Number.parseInt(value, 10)
@@ -8,13 +24,32 @@ const parseSelectedEventIndex = (value: string): number | null => {
   return parsed
 }
 
-export const handleEventRowClick = (state: ChatDebugViewState, value: string): ChatDebugViewState => {
+export const handleEventRowClick = async (state: ChatDebugViewState, value: string): Promise<ChatDebugViewState> => {
   const selectedEventIndex = parseSelectedEventIndex(value)
   if (selectedEventIndex === null) {
     return state
   }
+  const currentEvents = getCurrentEvents(state)
+  const selectedEvent = currentEvents[selectedEventIndex]
+  if (!selectedEvent || typeof selectedEvent.eventId !== 'number') {
+    return {
+      ...state,
+      selectedEvent: null,
+      selectedEventIndex,
+    }
+  }
+  const selectedEventDetails = await loadSelectedEvent(
+    state.databaseName,
+    state.dataBaseVersion,
+    state.eventStoreName,
+    state.sessionId,
+    state.sessionIdIndexName,
+    selectedEvent.eventId,
+    selectedEvent.type,
+  )
   return {
     ...state,
+    selectedEvent: selectedEventDetails,
     selectedEventIndex,
   }
 }

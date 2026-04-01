@@ -14,40 +14,46 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
       errorMessage: getInvalidUriMessage(uri, parsed.code),
       events: [],
       initial: false,
+      selectedEvent: null,
       selectedEventIndex: null,
       sessionId: '',
     }
   }
   const { sessionId } = parsed
 
-  try {
-    const events = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
-    if (events.length === 0) {
-      return {
-        ...state,
-        errorMessage: getSessionNotFoundMessage(sessionId),
-        events: [],
-        initial: false,
-        selectedEventIndex: null,
-        sessionId,
-      }
-    }
-    return {
-      ...state,
-      errorMessage: '',
-      events,
-      initial: false,
-      selectedEventIndex: null,
-      sessionId,
-    }
-  } catch {
+  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
+  if (result.type === 'error') {
     return {
       ...state,
       errorMessage: getFailedToLoadMessage(sessionId),
       events: [],
       initial: false,
+      selectedEvent: null,
       selectedEventIndex: null,
       sessionId,
     }
+  }
+
+  const { events } = result
+  if (events.length === 0) {
+    return {
+      ...state,
+      errorMessage: getSessionNotFoundMessage(sessionId),
+      events: [],
+      initial: false,
+      selectedEvent: null,
+      selectedEventIndex: null,
+      sessionId,
+    }
+  }
+
+  return {
+    ...state,
+    errorMessage: '',
+    events,
+    initial: false,
+    selectedEvent: null,
+    selectedEventIndex: null,
+    sessionId,
   }
 }

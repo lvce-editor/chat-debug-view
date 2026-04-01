@@ -60,7 +60,7 @@ test('getCss should use flex layout for timeline buckets and table rows', () => 
   const css = getCss()
 
   expect(css).toContain('.ChatDebugViewTimelineBuckets {\n  display: flex;')
-  expect(css).toContain('.ChatDebugViewTableHeader,\n.ChatDebugViewEventRow {\n  display: flex;')
+  expect(css).toContain('.ChatDebugViewTableHeaderRow,\n.ChatDebugViewEventRow {\n  display: flex;')
   expect(css).toContain('.ChatDebugViewHeaderCell {\n  display: flex;\n  align-items: center;\n  overflow: hidden;')
   expect(css).not.toContain('display: grid;')
 })

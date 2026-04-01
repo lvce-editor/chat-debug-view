@@ -1,4 +1,4 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
 import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
 
@@ -8,22 +8,43 @@ export const listChatViewEvents = async (
   dataBaseVersion: number,
   eventStoreName: string,
   sessionIdIndexName: string,
-): Promise<readonly ChatViewEvent[]> => {
+): Promise<ListChatViewEventsResult> => {
   if (typeof indexedDB === 'undefined') {
-    return []
+    return {
+      events: [],
+      type: 'success',
+    }
   }
-  const database = await openDatabase(databaseName, dataBaseVersion)
+
   try {
-    if (!database.objectStoreNames.contains(eventStoreName)) {
-      return []
+    const database = await openDatabase(databaseName, dataBaseVersion)
+    try {
+      if (!database.objectStoreNames.contains(eventStoreName)) {
+        return {
+          events: [],
+          type: 'success',
+        }
+      }
+      const transaction = database.transaction(eventStoreName, 'readonly')
+      const store = transaction.objectStore(eventStoreName)
+      if (!sessionId) {
+        return {
+          events: [],
+          type: 'success',
+        }
+      }
+      const events = await getEventsBySessionId(store, sessionId, sessionIdIndexName)
+      return {
+        events,
+        type: 'success',
+      }
+    } finally {
+      database.close()
     }
-    const transaction = database.transaction(eventStoreName, 'readonly')
-    const store = transaction.objectStore(eventStoreName)
-    if (!sessionId) {
-      return []
+  } catch (error) {
+    return {
+      error,
+      type: 'error',
     }
-    return getEventsBySessionId(store, sessionId, sessionIdIndexName)
-  } finally {
-    database.close()
   }
 }

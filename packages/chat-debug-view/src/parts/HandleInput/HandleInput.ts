@@ -136,6 +136,7 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     const useDevtoolsLayout = GetBoolean.getBoolean(checked)
     return {
       ...state,
+      selectedEvent: useDevtoolsLayout ? state.selectedEvent : null,
       selectedEventIndex: useDevtoolsLayout ? getSelectedEventIndex(state) : null,
       useDevtoolsLayout,
     }
@@ -143,6 +144,7 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
   if (name === InputName.SelectedEventIndex) {
     return {
       ...state,
+      selectedEvent: parseSelectedEventIndex(value) === null ? null : state.selectedEvent,
       selectedEventIndex: parseSelectedEventIndex(value),
     }
   }
@@ -179,6 +181,7 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
   if (name === InputName.CloseDetails) {
     return {
       ...state,
+      selectedEvent: null,
       selectedEventIndex: null,
     }
   }
