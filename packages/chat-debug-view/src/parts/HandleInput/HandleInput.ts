@@ -81,63 +81,58 @@ const parseSelectedEventIndex = (value: string): number | null => {
   return parsed
 }
 
+const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugViewState): ChatDebugViewState => {
+  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextState)
+  return {
+    ...nextState,
+    selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
+    selectedEventIndex,
+  }
+}
+
 export const handleInput = (state: ChatDebugViewState, name: string, value: string, checked: string | boolean): ChatDebugViewState => {
   if (name === InputName.Filter) {
     const nextState = {
       ...state,
       filterValue: value,
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.EventCategoryFilter) {
     const nextState = {
       ...state,
       eventCategoryFilter: value || EventCategoryFilter.All,
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.ShowEventStreamFinishedEvents) {
     const nextState = {
       ...state,
       showEventStreamFinishedEvents: GetBoolean.getBoolean(checked),
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.ShowInputEvents) {
     const nextState = {
       ...state,
       showInputEvents: GetBoolean.getBoolean(checked),
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.ShowResponsePartEvents) {
     const nextState = {
       ...state,
       showResponsePartEvents: GetBoolean.getBoolean(checked),
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.UseDevtoolsLayout) {
     const useDevtoolsLayout = GetBoolean.getBoolean(checked)
+    const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
     return {
       ...state,
-      selectedEvent: useDevtoolsLayout ? state.selectedEvent : null,
-      selectedEventIndex: useDevtoolsLayout ? getSelectedEventIndex(state) : null,
+      selectedEvent: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEvent : null,
+      selectedEventIndex,
       useDevtoolsLayout,
     }
   }
@@ -153,30 +148,21 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
       ...state,
       timelineStartSeconds: value,
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.TimelineEndSeconds) {
     const nextState = {
       ...state,
       timelineEndSeconds: value,
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.TimelineRangePreset) {
     const nextState = {
       ...state,
       ...parseTimelineRangePreset(value),
     }
-    return {
-      ...nextState,
-      selectedEventIndex: getPreservedSelectedEventIndex(state, nextState),
-    }
+    return withPreservedSelection(state, nextState)
   }
   if (name === InputName.CloseDetails) {
     return {
