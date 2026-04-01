@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
+import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { getInvalidUriMessage } from '../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
@@ -22,6 +23,18 @@ export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugV
   const { sessionId } = parsed
 
   const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
+  if (result.type === 'not-supported') {
+    return {
+      ...state,
+      errorMessage: getIndexedDbNotSupportedMessage(),
+      events: [],
+      initial: false,
+      selectedEvent: null,
+      selectedEventIndex: null,
+      sessionId,
+    }
+  }
+
   if (result.type === 'error') {
     return {
       ...state,

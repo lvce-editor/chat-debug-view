@@ -22,11 +22,11 @@ const getDuration = (event: ChatViewEvent): number => {
   return Math.max(0, end - start)
 }
 
-export const getLightweightEvent = (event: ChatViewEvent, eventId: number): ChatViewEvent => {
+export const getLightweightEvent = (event: ChatViewEvent, fallbackEventId: number): ChatViewEvent => {
   return {
     duration: getDuration(event),
     endTime: getEndTime(event),
-    eventId,
+    eventId: typeof event.eventId === 'number' ? event.eventId : fallbackEventId,
     startTime: getStartTime(event),
     type: event.type,
   }

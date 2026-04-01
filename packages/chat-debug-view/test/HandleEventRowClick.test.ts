@@ -52,15 +52,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     eventId: 3,
     type: 'request',
   })
-  expect(mockLoadSelectedEvent).toHaveBeenCalledWith(
-    'lvce-chat-view-sessions',
-    2,
-    'chat-view-events',
-    'session-1',
-    'sessionId',
-    3,
-    'request',
-  )
+  expect(mockLoadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
 })
 
 test('handleEventRowClick should ignore clicks without a row index', async () => {

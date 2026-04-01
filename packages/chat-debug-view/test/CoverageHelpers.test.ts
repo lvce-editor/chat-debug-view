@@ -159,6 +159,63 @@ test('getEventsBySessionId should fall back to getAll when the index is missing'
   ])
 })
 
+test('getEventsBySessionId should preserve raw event ids after collapsing tool execution events', async () => {
+  const result = await getEventsBySessionId(
+    {
+      getAll: async (): Promise<never> => {
+        throw new Error('should not call getAll when index exists')
+      },
+      index: (): {
+        readonly getAll: (sessionId: string) => Promise<readonly ChatViewEvent[]>
+      } => ({
+        getAll: async (sessionId: string): Promise<readonly ChatViewEvent[]> => {
+          return [
+            {
+              sessionId,
+              timestamp: '2026-01-01T00:00:00.000Z',
+              toolName: 'read_file',
+              type: 'tool-execution-started',
+            },
+            {
+              sessionId,
+              timestamp: '2026-01-01T00:00:01.000Z',
+              toolName: 'read_file',
+              type: 'tool-execution-finished',
+            },
+            {
+              sessionId,
+              timestamp: '2026-01-01T00:00:02.000Z',
+              type: 'response',
+            },
+          ]
+        },
+      }),
+      indexNames: {
+        contains: (name: string): boolean => name === 'sessionId',
+      },
+    } as any,
+    'session-1',
+    'sessionId',
+  )
+
+  expect(result).toEqual([
+    {
+      duration: 1000,
+      endTime: '2026-01-01T00:00:01.000Z',
+      eventId: 1,
+      startTime: '2026-01-01T00:00:00.000Z',
+      type: 'tool-execution',
+    },
+    {
+      duration: 0,
+      endTime: '2026-01-01T00:00:02.000Z',
+      eventId: 3,
+      startTime: '2026-01-01T00:00:02.000Z',
+      type: 'response',
+    },
+  ])
+})
+
 test('getLightweightEvent should keep only summary fields', () => {
   const result = getLightweightEvent(
     {
@@ -183,7 +240,9 @@ test('getLightweightEvent should keep only summary fields', () => {
 test('getEventDetailsBySessionIdAndEventId should load a single event by key from the session index', async () => {
   const result = await getEventDetailsBySessionIdAndEventId(
     {
-      get: async (key: string): Promise<readonly [string, string] | { readonly payload: string; readonly sessionId: string; readonly type: string }> => {
+      get: async (
+        key: string,
+      ): Promise<readonly [string, string] | { readonly payload: string; readonly sessionId: string; readonly type: string }> => {
         if (key === 'key-2') {
           return {
             payload: 'match',

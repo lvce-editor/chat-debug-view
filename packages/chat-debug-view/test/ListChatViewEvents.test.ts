@@ -33,7 +33,19 @@ const originalIndexedDb = globalThis.indexedDB
 
 afterEach(() => {
   jest.clearAllMocks()
+  ListChatViewEvents.setIndexedDbSupportForTest()
   restoreIndexedDb()
+})
+
+test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
+  ListChatViewEvents.setIndexedDbSupportForTest(false)
+
+  const result = await ListChatViewEvents.listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    type: 'not-supported',
+  })
+  expect(mockOpenDatabase).not.toHaveBeenCalled()
 })
 
 test('listChatViewEvents should return success result with events', async () => {

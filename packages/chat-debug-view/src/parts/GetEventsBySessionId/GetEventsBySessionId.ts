@@ -7,7 +7,13 @@ import { getAllEvents } from '../GetAllEvents/GetAllEvents.ts'
 import { getLightweightEvent } from '../GetLightweightEvent/GetLightweightEvent.ts'
 
 const toLightweightEvents = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
-  return collapseToolExecutionEvents(events).map((event, index) => getLightweightEvent(event, index + 1))
+  const eventsWithIds = events.map((event, index) => {
+    return {
+      ...event,
+      eventId: index + 1,
+    }
+  })
+  return collapseToolExecutionEvents(eventsWithIds).map((event, index) => getLightweightEvent(event, index + 1))
 }
 
 export const getEventsBySessionId = async (

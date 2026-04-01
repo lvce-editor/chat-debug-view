@@ -53,6 +53,7 @@ const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: Ch
     ...startedEvent,
     ...finishedEvent,
     ended: getEndedTimestamp(finishedEvent),
+    eventId: startedEvent.eventId,
     started: getStartedTimestamp(startedEvent),
     type: mergedEventType,
   }

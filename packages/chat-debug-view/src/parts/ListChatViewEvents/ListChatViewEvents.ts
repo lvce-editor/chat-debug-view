@@ -2,6 +2,19 @@ import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListC
 import { getEventsBySessionId } from '../GetEventsBySessionId/GetEventsBySessionId.ts'
 import { openDatabase } from '../OpenDatabase/OpenDatabase.ts'
 
+let indexedDbSupportOverride: boolean | undefined
+
+const isIndexedDbSupported = (): boolean => {
+  if (typeof indexedDbSupportOverride === 'boolean') {
+    return indexedDbSupportOverride
+  }
+  return typeof globalThis.indexedDB !== 'undefined'
+}
+
+export const setIndexedDbSupportForTest = (supported?: boolean): void => {
+  indexedDbSupportOverride = supported
+}
+
 export const listChatViewEvents = async (
   sessionId: string,
   databaseName: string,
@@ -9,10 +22,9 @@ export const listChatViewEvents = async (
   eventStoreName: string,
   sessionIdIndexName: string,
 ): Promise<ListChatViewEventsResult> => {
-  if (typeof indexedDB === 'undefined') {
+  if (!isIndexedDbSupported()) {
     return {
-      events: [],
-      type: 'success',
+      type: 'not-supported',
     }
   }
 
