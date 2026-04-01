@@ -1,28 +1,13 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
 import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
 import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
-
-const getDebugErrorDom = (errorMessage: string): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 1,
-      className: 'ChatDebugView',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewError',
-      type: VirtualDomElements.Div,
-    },
-    text(errorMessage),
-  ]
-}
 
 export const getChatDebugViewDom = (
   errorMessage: string,
@@ -42,7 +27,6 @@ export const getChatDebugViewDom = (
     return getDebugErrorDom(errorMessage)
   }
 
-  const eventNodes = events.flatMap(getEventNode)
   const trimmedFilterValue = filterValue.trim()
   const filterDescriptionParts = []
   if (eventCategoryFilter !== EventCategoryFilter.All) {
@@ -58,7 +42,6 @@ export const getChatDebugViewDom = (
   const hasFilterValue = filterDescriptionParts.length > 0
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = `no events found matching ${filterDescription}`
-  const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
   const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events have been found'
 
   const safeSelectedEventIndex =
@@ -66,7 +49,7 @@ export const getChatDebugViewDom = (
 
   const contentNodes = useDevtoolsLayout
     ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds, emptyMessage)
-    : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
+    : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
   const debugViewTopDom = getDebugViewTopDom(
     filterValue,
@@ -75,9 +58,8 @@ export const getChatDebugViewDom = (
     showResponsePartEvents,
     useDevtoolsLayout,
     quickFilterNodes,
-    eventCountText,
   )
-  const rootChildCount = useDevtoolsLayout ? 4 : 3
+  const rootChildCount = useDevtoolsLayout ? 3 : 2
 
   return [
     {

@@ -34,6 +34,6 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await expect(rows.nth(0)).toContainText('request')
   await expect(rows.nth(0)).toContainText('250ms')
   await expect(rows.nth(0)).toContainText('200')
-  await expect(rows.nth(1)).toContainText('tool-execution-finished')
+  await expect(rows.nth(1)).toContainText('tool-execution-finished, apply_patch')
   await expect(rows.nth(1)).toContainText('400')
 }

@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
   return {
@@ -20,11 +21,12 @@ export const createDefaultState = (): ChatDebugViewState => {
     showEventStreamFinishedEvents: false,
     showInputEvents: false,
     showResponsePartEvents: false,
+    tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
     timelineStartSeconds: '',
     uid: 0,
     uri: '',
-    useDevtoolsLayout: false,
+    useDevtoolsLayout: true,
     width: 0,
     x: 0,
     y: 0,

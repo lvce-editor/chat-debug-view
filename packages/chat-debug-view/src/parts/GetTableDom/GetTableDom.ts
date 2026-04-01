@@ -4,38 +4,33 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
   return [
     {
-      childCount: 5,
+      childCount: 1,
       className: 'ChatDebugViewTableHeader',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.THead,
+    },
+    {
+      childCount: 3,
+      type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewCellType',
-      type: VirtualDomElements.Div,
+      scope: 'col',
+      type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Started'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
-      type: VirtualDomElements.Div,
-    },
-    text('Ended'),
-    {
-      childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
-      type: VirtualDomElements.Div,
+      scope: 'col',
+      type: VirtualDomElements.Th,
     },
     text('Duration'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewCellStatus',
-      type: VirtualDomElements.Div,
+      scope: 'col',
+      type: VirtualDomElements.Th,
     },
     text('Status'),
   ]
@@ -46,8 +41,9 @@ export const getTableBodyDom = (rowNodes: readonly VirtualDomNode[], eventCount:
     {
       childCount: eventCount === 0 ? 1 : eventCount,
       className: 'ChatDebugViewTableBody',
-      onClick: DomEventListenerFunctions.HandleEventRowClick,
-      type: VirtualDomElements.Div,
+      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      type: VirtualDomElements.TBody,
     },
     ...rowNodes,
   ]
@@ -58,7 +54,7 @@ export const getTableDom = (rowNodes: readonly VirtualDomNode[], eventCount: num
     {
       childCount: 2,
       className: 'ChatDebugViewTable',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Table,
     },
     ...getTableHeaderDom(),
     ...getTableBodyDom(rowNodes, eventCount),
