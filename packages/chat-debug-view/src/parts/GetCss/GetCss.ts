@@ -117,7 +117,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   margin-bottom: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .ChatDebugViewEventsFullWidth {
@@ -185,29 +185,24 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTable {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex: 1 1 auto;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
-.ChatDebugViewTimeline {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
-  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 82%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.12)) 18%);
 }
-
-.ChatDebugViewTimelineTop {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
   flex-wrap: wrap;
 }
 
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: var(--vscode-editorWidget-background, transparent);
+  text-align: left;
+  font-weight: 600;
 .ChatDebugViewTimelineTitle {
   font-size: 12px;
   font-weight: 600;
@@ -215,9 +210,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewTimelineSummary {
   font-size: 12px;
-  opacity: 0.8;
-}
-
 .ChatDebugViewTimelineControls {
   display: flex;
   align-items: center;
@@ -251,7 +243,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelineBucket {
-  display: flex;
   align-items: stretch;
   flex: 1 1 10px;
   min-width: 10px;
@@ -260,7 +251,9 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelinePresetInput {
+.ChatDebugViewHeaderCell,
   position: absolute;
+  padding: 2px 8px;
   opacity: 0;
   pointer-events: none;
 }
@@ -268,22 +261,20 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineBucketBar {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  width: auto;
   gap: 2px;
   padding: 4px 2px;
   border: 1px solid transparent;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 68%, transparent 32%);
+  width: 180px;
 }
 
 .ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
-.ChatDebugViewTimelineBucketBarSelected {
+  width: 90px;
   background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
   border-color: var(--vscode-focusBorder, #007fd4);
 }
 
-.ChatDebugViewTimelineBucketUnit {
+  width: 64px;
   width: 100%;
   height: 4px;
   border-radius: 999px;
@@ -319,6 +310,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTableBody {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   min-height: 0;
   flex: 1 1 auto;
@@ -352,6 +345,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewCell {
+  display: flex;
+  align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -370,11 +365,13 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewCellDuration {
   flex: 0 0 90px;
+  justify-content: flex-end;
   text-align: right;
 }
 
 .ChatDebugViewCellStatus {
   flex: 0 0 64px;
+  justify-content: flex-end;
   text-align: right;
 }
 
@@ -399,6 +396,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewDetailsTitle {
+  display: flex;
+  align-items: center;
   font-size: 12px;
   font-weight: 600;
   flex: 1 1 auto;
@@ -440,6 +439,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewDetailsBody {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   padding: 8px;
   flex: 1 1 auto;
@@ -485,10 +486,13 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEmpty {
+  display: flex;
+  align-items: center;
   opacity: 0.8;
 }
 
 .ChatDebugViewError {
+  display: flex;
   color: var(--vscode-errorForeground, #f14c4c);
   white-space: normal;
 }

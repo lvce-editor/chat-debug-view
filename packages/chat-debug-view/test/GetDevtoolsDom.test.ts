@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 
@@ -65,7 +66,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
 
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(2)
-  expect(table?.type).toBe(14)
+  expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
 })

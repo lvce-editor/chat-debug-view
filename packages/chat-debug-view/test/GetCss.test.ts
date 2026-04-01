@@ -83,8 +83,25 @@ test('getCss should size devtools columns with dedicated flex classes', () => {
 test('getCss should use strict containment for scrollable detail sections', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewTableBody {\n  contain: strict;\n}')
-  expect(css).toContain('.ChatDebugViewDetailsBody {\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}')
+  expect(css).toContain(
+    '.ChatDebugViewTableBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  min-height: 0;\n  flex: 1 1 auto;\n  contain: strict;\n}',
+  )
+  expect(css).toContain(
+    '.ChatDebugViewDetailsBody {\n  display: flex;\n  flex-direction: column;\n  overflow: auto;\n  padding: 8px;\n  flex: 1 1 auto;\n  min-height: 0;\n  contain: strict;\n}',
+  )
+})
+
+test('getCss should keep table cells and messages on flex layouts', () => {
+  const css = getCss()
+
+  expect(css).toContain(
+    '.ChatDebugViewCell {\n  display: flex;\n  align-items: center;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  min-width: 0;\n}',
+  )
+  expect(css).toContain('.ChatDebugViewCellDuration {\n  flex: 0 0 90px;\n  justify-content: flex-end;\n  text-align: right;\n}')
+  expect(css).toContain('.ChatDebugViewCellStatus {\n  flex: 0 0 64px;\n  justify-content: flex-end;\n  text-align: right;\n}')
+  expect(css).toContain('.ChatDebugViewDetailsTitle {\n  display: flex;\n  align-items: center;\n  font-size: 12px;')
+  expect(css).toContain('.ChatDebugViewEmpty {\n  display: flex;\n  align-items: center;\n  opacity: 0.8;\n}')
+  expect(css).toContain('.ChatDebugViewError {\n  display: flex;\n  color: var(--vscode-errorForeground, #f14c4c);\n  white-space: normal;\n}')
 })
 
 test('getCss should use a visible foreground color for the details close button', () => {
