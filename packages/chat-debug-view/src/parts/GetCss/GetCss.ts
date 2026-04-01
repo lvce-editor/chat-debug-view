@@ -92,6 +92,7 @@ export const getCss = (): string => {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   margin-bottom: 0;
+  overflow: hidden;
 }
 
 .ChatDebugViewEventsFullWidth {
@@ -100,11 +101,20 @@ export const getCss = (): string => {
 
 .ChatDebugViewDevtoolsMain {
   display: grid;
+  grid-template-areas: 'table details';
   grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
   gap: 8px;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.ChatDebugViewDevtoolsMain > .ChatDebugViewEvents {
+  grid-area: table;
+}
+
+.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
+  grid-area: details;
 }
 
 .ChatDebugViewTimeline {
@@ -138,17 +148,6 @@ export const getCss = (): string => {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.ChatDebugViewTimelineField {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-}
-
-.ChatDebugViewTimelineInput {
-  width: 84px;
 }
 
 .ChatDebugViewTimelineReset {

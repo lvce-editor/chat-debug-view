@@ -1,5 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getStableEventId } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
@@ -32,6 +33,11 @@ const parseTimelineRangePreset = (value: string): { readonly timelineEndSeconds:
   }
 }
 
+const getEventIndexByStableId = (events: readonly ChatViewEvent[], event: ChatViewEvent): number => {
+  const stableEventId = getStableEventId(event)
+  return events.findIndex((candidate) => getStableEventId(candidate) === stableEventId)
+}
+
 const getSelectedEventIndex = (state: ChatDebugViewState): number | null => {
   const { selectedEventIndex } = state
   if (selectedEventIndex === null) {
@@ -42,7 +48,7 @@ const getSelectedEventIndex = (state: ChatDebugViewState): number | null => {
   if (!selectedEvent) {
     return null
   }
-  const newIndex = filteredEvents.indexOf(selectedEvent)
+  const newIndex = getEventIndexByStableId(filteredEvents, selectedEvent)
   if (newIndex === -1) {
     return null
   }
@@ -60,7 +66,7 @@ const getPreservedSelectedEventIndex = (oldState: ChatDebugViewState, newState: 
     return null
   }
   const newFilteredEvents = getCurrentEvents(newState)
-  const newIndex = newFilteredEvents.indexOf(selectedEvent)
+  const newIndex = getEventIndexByStableId(newFilteredEvents, selectedEvent)
   if (newIndex === -1) {
     return null
   }

@@ -19,9 +19,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   if (newState.initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
-  const eventsWithIds = withSessionEventIds(newState.events)
   const timelineEvents = getFilteredEvents(
-    eventsWithIds,
+    newState.events,
     newState.filterValue,
     newState.eventCategoryFilter,
     newState.showInputEvents,
@@ -40,8 +39,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.selectedEventIndex,
     newState.timelineStartSeconds,
     newState.timelineEndSeconds,
-    timelineEvents,
-    filteredEvents,
+    withSessionEventIds(timelineEvents),
+    withSessionEventIds(filteredEvents),
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

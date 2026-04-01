@@ -32,7 +32,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
 })
 
-test('getDevtoolsDom should render timeline controls when timestamps are available', () => {
+test('getDevtoolsDom should render timeline filters when timestamps are available', () => {
   const events = [
     {
       sessionId: 'session-1',
@@ -53,8 +53,9 @@ test('getDevtoolsDom should render timeline controls when timestamps are availab
   }[]
 
   expect(dom.find((node) => node.className === 'ChatDebugViewTimeline')).toBeDefined()
-  expect(dom.find((node) => node.name === 'timelineStartSeconds' && node.value === '5')).toBeDefined()
-  expect(dom.find((node) => node.name === 'timelineEndSeconds' && node.value === '7')).toBeDefined()
+  expect(dom.find((node) => node.name === 'timelineStartSeconds')).toBeUndefined()
+  expect(dom.find((node) => node.name === 'timelineEndSeconds')).toBeUndefined()
+  expect(dom.find((node) => node.name === 'timelineRangePreset' && node.value === '')).toBeDefined()
   expect(dom.find((node) => node.text === 'Window 5s-7s of 10s')).toBeDefined()
 })
 
@@ -167,6 +168,37 @@ test('getDevtoolsDom should render 400 status for errored events', () => {
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '400',
+    }),
+  )
+})
+
+test('getDevtoolsDom should show merged tool output in the selected event preview', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:01.000Z',
+      output: {
+        contents: 'hello',
+      },
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:00.000Z',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      toolName: 'read_file',
+      type: 'tool-execution',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"output"',
+    }),
+  )
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"hello"',
     }),
   )
 })
