@@ -1,4 +1,4 @@
-import type { ChatViewEvent } from '../../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { mergedEventType } from '../EventTypes/EventTypes.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
 import { getOrCreateStableEventId } from '../GetOrCreateStableEventId/GetOrCreateStableEventId.ts'

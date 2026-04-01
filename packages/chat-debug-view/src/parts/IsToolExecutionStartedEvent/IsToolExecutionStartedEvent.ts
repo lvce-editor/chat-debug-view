@@ -1,4 +1,4 @@
-import type { ChatViewEvent } from '../../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { startedEventType } from '../EventTypes/EventTypes.ts'
 
 export const isToolExecutionStartedEvent = (event: ChatViewEvent): boolean => {

@@ -1,4 +1,4 @@
-import type { ChatViewEvent } from '../../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { eventStableIds, eventStableIdState } from '../EventStableIdsState/EventStableIdsState.ts'
 
 export const getOrCreateStableEventId = (event: ChatViewEvent): string => {

@@ -1,4 +1,4 @@
-import type { ChatViewEvent } from '../../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { finishedEventType } from '../EventTypes/EventTypes.ts'
 
 export const isToolExecutionFinishedEvent = (event: ChatViewEvent): boolean => {

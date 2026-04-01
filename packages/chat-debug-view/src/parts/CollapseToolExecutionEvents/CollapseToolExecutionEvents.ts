@@ -1,9 +1,9 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { getStableEventId } from './GetStableEventId/GetStableEventId.ts'
-import { isMatchingToolExecutionPair } from './IsMatchingToolExecutionPair/IsMatchingToolExecutionPair.ts'
-import { isToolExecutionFinishedEvent } from './IsToolExecutionFinishedEvent/IsToolExecutionFinishedEvent.ts'
-import { isToolExecutionStartedEvent } from './IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
-import { mergeToolExecutionEvents } from './MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
+import { getStableEventId } from '../GetStableEventId/GetStableEventId.ts'
+import { isMatchingToolExecutionPair } from '../IsMatchingToolExecutionPair/IsMatchingToolExecutionPair.ts'
+import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/IsToolExecutionFinishedEvent.ts'
+import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
+import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
 
 export { getStableEventId }
 
