@@ -1,6 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getStableEventId } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
@@ -86,6 +87,7 @@ const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugV
   return {
     ...nextState,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
+    selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,
   }
 }
@@ -132,15 +134,18 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     return {
       ...state,
       selectedEvent: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEvent : null,
+      selectedEventId: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEventId : null,
       selectedEventIndex,
       useDevtoolsLayout,
     }
   }
   if (name === InputName.SelectedEventIndex) {
+    const selectedEventIndex = parseSelectedEventIndex(value)
     return {
       ...state,
-      selectedEvent: parseSelectedEventIndex(value) === null ? null : state.selectedEvent,
-      selectedEventIndex: parseSelectedEventIndex(value),
+      selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
+      selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
+      selectedEventIndex,
     }
   }
   if (name === InputName.TimelineStartSeconds) {
@@ -168,7 +173,17 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     return {
       ...state,
       selectedEvent: null,
+      selectedEventId: null,
       selectedEventIndex: null,
+    }
+  }
+  if (name === InputName.DetailTab) {
+    if (!DetailTab.isDetailTab(value)) {
+      return state
+    }
+    return {
+      ...state,
+      selectedDetailTab: value,
     }
   }
   return state

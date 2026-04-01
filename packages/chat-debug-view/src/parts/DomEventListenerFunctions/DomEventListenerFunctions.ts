@@ -6,3 +6,7 @@ export const HandleSashPointerDown = 8
 export const HandleSashPointerMove = 9
 export const HandleSashPointerUp = 10
 export const HandleTableBodyContextMenu = 11
+export const HandleTimelinePointerDown = 12
+export const HandleTimelinePointerMove = 13
+export const HandleTimelinePointerUp = 14
+export const HandleTimelineDoubleClick = 15

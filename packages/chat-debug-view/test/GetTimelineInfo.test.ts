@@ -36,5 +36,15 @@ test('getTimelineInfo should describe total duration and active window', () => {
   expect(result.startSeconds).toBe(5)
   expect(result.endSeconds).toBe(7)
   expect(result.hasSelection).toBe(true)
+  expect(result.selectionStartPercent).toBe(50)
+  expect(result.selectionEndPercent).toBe(70)
   expect(result.buckets.some((bucket) => bucket.count > 0)).toBe(true)
+})
+
+test('getTimelineInfo should expose null marker positions when no selection exists', () => {
+  const result = GetTimelineInfo.getTimelineInfo(events, '', '')
+
+  expect(result.hasSelection).toBe(false)
+  expect(result.selectionStartPercent).toBeNull()
+  expect(result.selectionEndPercent).toBeNull()
 })

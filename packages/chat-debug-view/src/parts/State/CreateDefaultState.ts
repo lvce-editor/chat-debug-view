@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 
@@ -9,6 +10,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     dataBaseVersion: 2,
     errorMessage: '',
     eventCategoryFilter: EventCategoryFilter.All,
+    eventCategoryFilterOptions: EventCategoryFilter.createEventCategoryFilterOptions(),
     events: [],
     eventStoreName: 'chat-view-events',
     filterValue: '',
@@ -16,7 +18,9 @@ export const createDefaultState = (): ChatDebugViewState => {
     indexedDbSupportOverride: undefined,
     initial: false,
     platform: 0,
+    selectedDetailTab: DetailTab.Response,
     selectedEvent: null,
+    selectedEventId: null,
     selectedEventIndex: null,
     sessionId: '',
     sessionIdIndexName: 'sessionId',
@@ -25,6 +29,9 @@ export const createDefaultState = (): ChatDebugViewState => {
     showResponsePartEvents: false,
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
+    timelineSelectionActive: false,
+    timelineSelectionAnchorSeconds: '',
+    timelineSelectionFocusSeconds: '',
     timelineStartSeconds: '',
     uid: 0,
     uri: '',

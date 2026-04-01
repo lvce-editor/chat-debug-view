@@ -5,12 +5,10 @@ import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
-  const rows: VirtualDomNode[] = []
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i]
+  return events.flatMap((event, i) => {
     const isSelected = selectedEventIndex === i
     const rowIndex = String(i)
-    rows.push(
+    return [
       {
         childCount: 3,
         className: `ChatDebugViewEventRow${isSelected ? ' ChatDebugViewEventRowSelected' : ''}`,
@@ -38,7 +36,6 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
         type: VirtualDomElements.Td,
       },
       text(getStatusText(event)),
-    )
-  }
-  return rows
+    ]
+  })
 }

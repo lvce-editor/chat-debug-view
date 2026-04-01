@@ -1,0 +1,97 @@
+import { expect, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import { collapseToolExecutionEvents, getStableEventId } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
+
+const collapsedEventIdPattern = /^event-\d+:event-\d+$/
+
+test('collapseToolExecutionEvents should merge matching started and finished events', () => {
+  const startedEvent: ChatViewEvent = {
+    arguments: {
+      path: '/tmp/file.txt',
+    },
+    eventId: 7,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-started',
+  }
+  const finishedEvent: ChatViewEvent = {
+    output: {
+      contents: 'hello',
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-finished',
+  }
+
+  const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
+
+  expect(result).toEqual([
+    {
+      arguments: {
+        path: '/tmp/file.txt',
+      },
+      ended: '2026-01-01T10:01:45.000Z',
+      eventId: 7,
+      output: {
+        contents: 'hello',
+      },
+      sessionId: 'session-1',
+      started: '2026-01-01T10:01:30.000Z',
+      timestamp: '2026-01-01T10:01:45.000Z',
+      toolName: 'read_file',
+      type: 'tool-execution',
+    },
+  ])
+})
+
+test('collapseToolExecutionEvents should keep non-matching events separate', () => {
+  const startedEvent: ChatViewEvent = {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-started',
+  }
+  const finishedEvent: ChatViewEvent = {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    toolName: 'write_file',
+    type: 'tool-execution-finished',
+  }
+
+  const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
+
+  expect(result).toEqual([startedEvent, finishedEvent])
+})
+
+test('getStableEventId should stay stable for the same event instance', () => {
+  const event: ChatViewEvent = {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    type: 'request',
+  }
+
+  const stableEventId = getStableEventId(event)
+
+  expect(getStableEventId(event)).toBe(stableEventId)
+})
+
+test('collapseToolExecutionEvents should assign a merged stable id to collapsed events', () => {
+  const startedEvent: ChatViewEvent = {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-started',
+  }
+  const finishedEvent: ChatViewEvent = {
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-finished',
+  }
+
+  const [result] = collapseToolExecutionEvents([startedEvent, finishedEvent])
+
+  expect(getStableEventId(result)).toMatch(collapsedEventIdPattern)
+})

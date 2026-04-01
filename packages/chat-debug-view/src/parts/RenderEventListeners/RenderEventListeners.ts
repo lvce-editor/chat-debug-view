@@ -38,5 +38,22 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenerFunctions.HandleSashPointerUp,
       params: ['handleSashPointerUp', EventExpression.ClientX, EventExpression.ClientY],
     },
+    {
+      name: DomEventListenerFunctions.HandleTimelinePointerDown,
+      params: ['handleTimelinePointerDown', EventExpression.ClientX],
+      trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelinePointerMove,
+      params: ['handleTimelinePointerMove', EventExpression.ClientX],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelinePointerUp,
+      params: ['handleTimelinePointerUp', EventExpression.ClientX],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelineDoubleClick,
+      params: ['handleTimelineDoubleClick'],
+    },
   ]
 }

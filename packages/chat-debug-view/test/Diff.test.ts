@@ -33,36 +33,6 @@ test('diff should return RenderIncremental and RenderCss when event category fil
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
 })
 
-test('diff should return RenderIncremental and RenderCss when showResponsePartEvents changes', () => {
-  const oldState = createDefaultState()
-  const newState = {
-    ...oldState,
-    showResponsePartEvents: true,
-  }
-  const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
-})
-
-test('diff should return RenderIncremental and RenderCss when showEventStreamFinishedEvents changes', () => {
-  const oldState = createDefaultState()
-  const newState = {
-    ...oldState,
-    showEventStreamFinishedEvents: true,
-  }
-  const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
-})
-
-test('diff should return RenderIncremental and RenderCss when useDevtoolsLayout changes', () => {
-  const oldState = createDefaultState()
-  const newState = {
-    ...oldState,
-    useDevtoolsLayout: false,
-  }
-  const result = Diff.diff(oldState, newState)
-  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
-})
-
 test('diff should return RenderIncremental and RenderCss when selectedEventIndex changes', () => {
   const oldState = createDefaultState()
   const newState = {

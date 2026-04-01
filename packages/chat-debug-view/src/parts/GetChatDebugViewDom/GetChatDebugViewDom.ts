@@ -1,5 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
 import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
@@ -13,9 +15,10 @@ export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
   eventCategoryFilter: string,
-  showEventStreamFinishedEvents: boolean,
-  showInputEvents: boolean,
-  showResponsePartEvents: boolean,
+  eventCategoryFilterOptions: readonly EventCategoryFilterOption[],
+  _showEventStreamFinishedEvents: boolean,
+  _showInputEvents: boolean,
+  _showResponsePartEvents: boolean,
   useDevtoolsLayout: boolean,
   selectedEvent: ChatViewEvent | null,
   selectedEventIndex: number | null,
@@ -23,6 +26,10 @@ export const getChatDebugViewDom = (
   timelineEndSeconds: string,
   timelineEvents: readonly ChatViewEvent[],
   events: readonly ChatViewEvent[],
+  timelineSelectionActive = false,
+  timelineSelectionAnchorSeconds = '',
+  timelineSelectionFocusSeconds = '',
+  selectedDetailTab = DetailTab.Response,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -49,18 +56,23 @@ export const getChatDebugViewDom = (
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
   const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(events, selectedEvent, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds, emptyMessage)
+    ? getDevtoolsDom(
+        events,
+        selectedEvent,
+        safeSelectedEventIndex,
+        timelineEvents,
+        timelineStartSeconds,
+        timelineEndSeconds,
+        emptyMessage,
+        timelineSelectionActive,
+        timelineSelectionAnchorSeconds,
+        timelineSelectionFocusSeconds,
+        DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : DetailTab.Response,
+      )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
-  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
-  const debugViewTopDom = getDebugViewTopDom(
-    filterValue,
-    showEventStreamFinishedEvents,
-    showInputEvents,
-    showResponsePartEvents,
-    useDevtoolsLayout,
-    quickFilterNodes,
-  )
-  const rootChildCount = useDevtoolsLayout ? 3 : 2
+  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, eventCategoryFilterOptions) : []
+  const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, quickFilterNodes)
+  const rootChildCount = 2
 
   return [
     {

@@ -90,3 +90,51 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     text('200'),
   ])
 })
+
+test('getDevtoolsRows should render tool execution labels with tool name from top-level name field', () => {
+  const events = [
+    {
+      arguments: {
+        baseUri: '/test/chat-debug-view',
+        pattern: '**/*',
+      },
+      error: 'Invalid argument: baseUri must be an absolute URI.',
+      name: 'getWorkspaceUri',
+      sessionId: 'session-1',
+      timestamp: '2026-04-01T20:56:07.857Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'ChatDebugViewEventRow',
+      'data-index': '0',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      'data-index': '0',
+      type: VirtualDomElements.Td,
+    },
+    text('tool-execution, getWorkspaceUri'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      'data-index': '0',
+      type: VirtualDomElements.Td,
+    },
+    text('0ms'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      'data-index': '0',
+      type: VirtualDomElements.Td,
+    },
+    text('400'),
+  ])
+})

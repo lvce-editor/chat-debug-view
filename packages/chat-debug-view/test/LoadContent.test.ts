@@ -57,3 +57,43 @@ test('loadContent should return indexeddb-not-supported state when IndexedDB is 
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })
+
+test('loadContent should restore the selected event preview from selectedEventId', async () => {
+  const events = [
+    { eventId: 1, type: 'request' },
+    { eventId: 2, type: 'response' },
+  ]
+  const selectedEvent = {
+    detail: 'restored',
+    eventId: 2,
+    type: 'response',
+  }
+  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
+    events,
+    type: 'success',
+  })
+  const loadSelectedEventSpy = jest.spyOn(loadContentDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEvent)
+  const state = {
+    ...createDefaultState(),
+    initial: true,
+    selectedEventId: 2,
+    uri: 'chat-debug://session-1',
+    useDevtoolsLayout: true,
+  }
+
+  const result = await loadContent(state)
+
+  expect(result).toEqual({
+    ...state,
+    errorMessage: '',
+    events,
+    initial: false,
+    selectedEvent,
+    selectedEventId: 2,
+    selectedEventIndex: 1,
+    sessionId: 'session-1',
+  })
+  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
+})

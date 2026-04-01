@@ -35,10 +35,19 @@ export const handleEventRowClick = async (state: ChatDebugViewState, value: stri
   }
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
-  if (!selectedEvent || typeof selectedEvent.eventId !== 'number') {
+  if (!selectedEvent) {
     return {
       ...state,
       selectedEvent: null,
+      selectedEventId: null,
+      selectedEventIndex,
+    }
+  }
+  if (typeof selectedEvent.eventId !== 'number') {
+    return {
+      ...state,
+      selectedEvent,
+      selectedEventId: null,
       selectedEventIndex,
     }
   }
@@ -53,7 +62,8 @@ export const handleEventRowClick = async (state: ChatDebugViewState, value: stri
   )
   return {
     ...state,
-    selectedEvent: selectedEventDetails,
+    selectedEvent: selectedEventDetails ?? selectedEvent,
+    selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
   }
 }
