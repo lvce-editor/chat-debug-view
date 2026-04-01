@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import * as HandleTimelinePointerUp from '../src/parts/HandleTimelinePointerUp/HandleTimelinePointerUp.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('handleTimelinePointerUp should commit the normalized drag range', () => {
+test('handleTimelinePointerUp should commit the normalized drag range relative to the widget', () => {
   const state = {
     ...createDefaultState(),
     events: [
@@ -24,7 +24,7 @@ test('handleTimelinePointerUp should commit the normalized drag range', () => {
     x: 82,
   }
 
-  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 180)
+  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 98)
 
   expect(result.timelineStartSeconds).toBe('2')
   expect(result.timelineEndSeconds).toBe('8')
