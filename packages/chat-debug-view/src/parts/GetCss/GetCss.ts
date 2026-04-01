@@ -117,7 +117,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   margin-bottom: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .ChatDebugViewEventsFullWidth {
@@ -185,31 +185,43 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTable {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
 }
 
-}
+.ChatDebugViewTimeline {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 82%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.12)) 18%);
+}
+
+.ChatDebugViewTimelineTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  padding: 3px 8px;
-  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
-  background: var(--vscode-editorWidget-background, transparent);
-  text-align: left;
-  font-weight: 600;
 .ChatDebugViewTimelineTitle {
+  display: flex;
+  align-items: center;
   font-size: 12px;
   font-weight: 600;
 }
 
 .ChatDebugViewTimelineSummary {
+  display: flex;
+  align-items: center;
   font-size: 12px;
+  opacity: 0.8;
+}
+
 .ChatDebugViewTimelineControls {
   display: flex;
   align-items: center;
@@ -243,6 +255,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelineBucket {
+  display: flex;
   align-items: stretch;
   flex: 1 1 10px;
   min-width: 10px;
@@ -251,30 +264,30 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelinePresetInput {
-.ChatDebugViewHeaderCell,
   position: absolute;
-  padding: 2px 8px;
   opacity: 0;
   pointer-events: none;
 }
 
 .ChatDebugViewTimelineBucketBar {
-  width: 100%;
   display: flex;
-  width: auto;
+  flex-direction: column;
+  justify-content: flex-end;
   gap: 2px;
   padding: 4px 2px;
   border: 1px solid transparent;
-  width: 180px;
+  border-radius: 4px;
+  width: 100%;
+  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 68%, transparent 32%);
 }
 
 .ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
-  width: 90px;
+ .ChatDebugViewTimelineBucketBarSelected {
   background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
   border-color: var(--vscode-focusBorder, #007fd4);
 }
 
-  width: 64px;
+.ChatDebugViewTimelineBucketUnit {
   width: 100%;
   height: 4px;
   border-radius: 999px;
@@ -303,6 +316,12 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewHeaderCell {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -518,17 +537,22 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatOrderedList{
+  display:flex;
+  flex-direction:column;
   margin:0;
   padding:0;
   padding-left:10px;
 }
 
 .ChatOrderedListItem{
+  display:flex;
   margin:0;
   padding:0;
 }
 
 .ChatToolCalls{
+  display:flex;
+  flex-direction:column;
   margin:0;
   padding:0;
 }

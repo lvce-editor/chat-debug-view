@@ -33,9 +33,9 @@ test('getCss should avoid nested scrolling in devtools events table', () => {
   const css = getCss()
 
   expect(css).toContain(
-    '.ChatDebugView--devtools .ChatDebugViewEvents {\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: auto;\n}',
+    '.ChatDebugView--devtools .ChatDebugViewEvents {\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: hidden;\n}',
   )
-  expect(css).toContain('.ChatDebugViewTable {\n  width: 100%;\n  border-collapse: collapse;\n  table-layout: fixed;\n}')
+  expect(css).toContain('.ChatDebugViewTable {\n  display: flex;\n  flex-direction: column;\n  min-height: 0;\n  flex: 1 1 auto;\n}')
 })
 
 test('getCss should keep the details preview in the right devtools column', () => {
@@ -60,22 +60,23 @@ test('getCss should use flex layout for timeline buckets and table rows', () => 
   const css = getCss()
 
   expect(css).toContain('.ChatDebugViewTimelineBuckets {\n  display: flex;')
-  expect(css).toContain('.ChatDebugViewHeaderCell,\n.ChatDebugViewCell {\n  overflow: hidden;')
+  expect(css).toContain('.ChatDebugViewTableHeader,\n.ChatDebugViewEventRow {\n  display: flex;')
+  expect(css).toContain('.ChatDebugViewHeaderCell {\n  display: flex;\n  align-items: center;\n  overflow: hidden;')
   expect(css).not.toContain('display: grid;')
 })
 
 test('getCss should use compact devtools table row padding', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewHeaderCell {\n  padding: 3px 8px;\n')
-  expect(css).toContain('.ChatDebugViewCell {\n  padding: 2px 8px;\n')
+  expect(css).toContain('.ChatDebugViewTableHeader {\n  padding: 3px 8px;\n')
+  expect(css).toContain('.ChatDebugViewEventRow {\n  padding: 2px 8px;\n')
 })
 
 test('getCss should size devtools columns with dedicated flex classes', () => {
   const css = getCss()
 
-  expect(css).toContain('.ChatDebugViewCellType {\n  width: auto;\n')
-  expect(css).toContain('.ChatDebugViewCellTime {\n  width: 180px;\n')
+  expect(css).toContain('.ChatDebugViewCellType {\n  flex: 1 1 140px;\n  min-width: 0;\n}')
+  expect(css).toContain('.ChatDebugViewCellTime {\n  flex: 1 1 180px;\n  min-width: 0;\n}')
   expect(css).not.toContain('.ChatDebugViewTableHeader > :nth-child(1),')
   expect(css).not.toContain('.ChatDebugViewTableHeader > :nth-child(2),')
 })
