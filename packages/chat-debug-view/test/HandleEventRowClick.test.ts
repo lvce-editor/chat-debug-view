@@ -60,3 +60,55 @@ test('handleEventRowClick should ignore clicks without a row index', async () =>
 
   expect(result).toBe(state)
 })
+
+test('handleEventRowClick should fall back to the in-memory event when it has no eventId', async () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        path: '/chat',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+    ],
+  }
+
+  const result = await handleEventRowClick(state, '0')
+
+  expect(result.selectedEventIndex).toBe(0)
+  expect(result.selectedEventId).toBeNull()
+  expect(result.selectedEvent).toEqual({
+    path: '/chat',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  })
+})
+
+test('handleEventRowClick should fall back to the selected list event when loading details returns undefined', async () => {
+  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue(undefined)
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        eventId: 1,
+        path: '/chat',
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+    ],
+    sessionId: 'session-1',
+  }
+
+  const result = await handleEventRowClick(state, '0')
+
+  expect(result.selectedEventIndex).toBe(0)
+  expect(result.selectedEventId).toBe(1)
+  expect(result.selectedEvent).toEqual({
+    eventId: 1,
+    path: '/chat',
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  })
+})

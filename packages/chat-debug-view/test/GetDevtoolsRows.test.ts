@@ -95,7 +95,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
   const events = [
     {
       arguments: {
-        baseUri: '/home/simon/Documents/levivilet/chat-debug-view',
+        baseUri: '/test/chat-debug-view',
         pattern: '**/*',
       },
       error: 'Invalid argument: baseUri must be an absolute URI.',

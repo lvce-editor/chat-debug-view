@@ -61,6 +61,18 @@ test('handleInput should close details panel', () => {
   expect(result.selectedEventIndex).toBeNull()
 })
 
+test('handleInput should update selected detail tab', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.DetailTab, 'timing', false)
+  expect(result.selectedDetailTab).toBe('timing')
+})
+
+test('handleInput should ignore invalid selected detail tab values', () => {
+  const state = createDefaultState()
+  const result = HandleInput.handleInput(state, InputName.DetailTab, 'headers', false)
+  expect(result).toBe(state)
+})
+
 test('handleInput should preserve selected event when filter still includes it', () => {
   const state = {
     ...createDefaultState(),

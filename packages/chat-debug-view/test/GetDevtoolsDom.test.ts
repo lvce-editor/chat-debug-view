@@ -50,6 +50,46 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(sashLine).toBeDefined()
 })
 
+test('getDevtoolsDom should render accessible response and timing tabs in the details panel', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:01.250Z',
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:01.000Z',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+    readonly ['aria-selected']?: boolean
+    readonly className?: string
+    readonly role?: string
+    readonly text?: string
+    readonly value?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTabs',
+      role: 'tablist',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      role: 'tab',
+      value: 'response',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab',
+      role: 'tab',
+      value: 'timing',
+    }),
+  )
+})
+
 test('getDevtoolsDom should wrap header and body in a table container', () => {
   const events = [
     {
