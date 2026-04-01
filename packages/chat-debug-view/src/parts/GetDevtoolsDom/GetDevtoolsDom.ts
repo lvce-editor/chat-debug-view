@@ -19,6 +19,7 @@ export const getDevtoolsDom = (
   const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = selectedEventNodes.length > 0
   const eventsClassName = `${hasSelectedEvent ? 'ChatDebugViewEvents' : 'ChatDebugViewEvents ChatDebugViewEventsFullWidth'}${timelineNodes.length > 0 ? ' ChatDebugViewEvents--timeline' : ''}`
+  const eventsChildCount = timelineNodes.length > 0 ? 2 : 1
   const detailsNodes = hasSelectedEvent
     ? [
         {
@@ -61,11 +62,16 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     {
-      childCount: timelineNodes.length > 0 ? 3 : 2,
+      childCount: eventsChildCount,
       className: eventsClassName,
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTable',
+      type: VirtualDomElements.Div,
+    },
     {
       childCount: 5,
       className: 'ChatDebugViewTableHeader',
@@ -79,13 +85,13 @@ export const getDevtoolsDom = (
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
       type: VirtualDomElements.Div,
     },
     text('Started'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
       type: VirtualDomElements.Div,
     },
     text('Ended'),

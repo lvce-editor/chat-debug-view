@@ -35,6 +35,13 @@ export const getCss = (): string => {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+.ChatDebugViewQuickFilterPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 .ChatDebugViewQuickFilters {
@@ -105,6 +112,13 @@ export const getCss = (): string => {
 
 .ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
   flex: 0 0 clamp(320px, 32vw, 420px);
+}
+
+.ChatDebugViewTable {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
 }
 
 .ChatDebugViewTimeline {
@@ -274,6 +288,16 @@ export const getCss = (): string => {
   min-width: 0;
 }
 
+.ChatDebugViewCellType {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+
+.ChatDebugViewCellTime {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
 .ChatDebugViewCellDuration {
   flex: 0 0 90px;
   text-align: right;
@@ -343,20 +367,6 @@ export const getCss = (): string => {
   flex: 1 1 auto;
   min-height: 0;
   contain: strict;
-}
-
-.ChatDebugViewTableHeader > :nth-child(1),
-.ChatDebugViewEventRow > :nth-child(1) {
-  flex: 1 1 140px;
-  min-width: 0;
-}
-
-.ChatDebugViewTableHeader > :nth-child(2),
-.ChatDebugViewEventRow > :nth-child(2),
-.ChatDebugViewTableHeader > :nth-child(3),
-.ChatDebugViewEventRow > :nth-child(3) {
-  flex: 1 1 180px;
-  min-width: 0;
 }
 
 .ChatDebugViewEvents::-webkit-scrollbar {

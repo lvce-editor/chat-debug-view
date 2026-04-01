@@ -37,14 +37,14 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
       text(event.type),
       {
         childCount: 1,
-        className: 'ChatDebugViewCell',
+        className: 'ChatDebugViewCell ChatDebugViewCellTime',
         'data-index': rowIndex,
         type: VirtualDomElements.Div,
       },
       text(getStartText(event)),
       {
         childCount: 1,
-        className: 'ChatDebugViewCell',
+        className: 'ChatDebugViewCell ChatDebugViewCellTime',
         'data-index': rowIndex,
         type: VirtualDomElements.Div,
       },
