@@ -1,15 +1,19 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { getEventDetailsBySessionIdAndEventId } from '../src/parts/GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
-import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
-import * as GetEventDetailsBySessionIdAndEventId from '../src/parts/GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
-import { loadSelectedEvent } from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
-import * as OpenDatabase from '../src/parts/OpenDatabase/OpenDatabase.ts'
 
-const openDatabaseSpy = jest.spyOn(OpenDatabase, 'openDatabase')
-const getEventDetailsBySessionIdAndEventIdSpy = jest.spyOn(
-  GetEventDetailsBySessionIdAndEventId,
-  'getEventDetailsBySessionIdAndEventId',
-)
+const mockOpenDatabase = jest.fn()
+const mockGetEventDetailsBySessionIdAndEventId = jest.fn()
+
+jest.unstable_mockModule('../src/parts/OpenDatabase/OpenDatabase.ts', () => {
+  return {
+    openDatabase: mockOpenDatabase,
+  }
+})
+
+jest.unstable_mockModule('../src/parts/GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts', () => {
+  return {
+    getEventDetailsBySessionIdAndEventId: mockGetEventDetailsBySessionIdAndEventId,
+  }
+})
 
 const createDomStringList = (values: readonly string[]): DOMStringList => {
   return {
@@ -23,8 +27,9 @@ const createDomStringList = (values: readonly string[]): DOMStringList => {
 }
 
 afterEach(() => {
-  openDatabaseSpy.mockReset()
-  getEventDetailsBySessionIdAndEventIdSpy.mockReset()
+  mockOpenDatabase.mockReset()
+  mockGetEventDetailsBySessionIdAndEventId.mockReset()
+  jest.resetModules()
 })
 
 test('loadSelectedEvent should return null when the event store does not exist', async () => {
@@ -32,21 +37,23 @@ test('loadSelectedEvent should return null when the event store does not exist',
     close: jest.fn(),
     objectStoreNames: createDomStringList([]),
     transaction: jest.fn(),
-  } as unknown as Awaited<ReturnType<typeof openDatabase>>
-  openDatabaseSpy.mockResolvedValue(database)
+  }
+  mockOpenDatabase.mockResolvedValue(database)
+  const { loadSelectedEvent } = await import('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts')
 
   const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 
   expect(result).toBeNull()
+  expect(mockOpenDatabase).toHaveBeenCalledWith('chat-db', 2)
   expect(database.transaction).not.toHaveBeenCalled()
-  expect(getEventDetailsBySessionIdAndEventIdSpy).not.toHaveBeenCalled()
+  expect(mockGetEventDetailsBySessionIdAndEventId).not.toHaveBeenCalled()
   expect(database.close).toHaveBeenCalledTimes(1)
 })
 
 test('loadSelectedEvent should return the selected event details', async () => {
   const store = {
     index: jest.fn(),
-  } as unknown as Parameters<typeof getEventDetailsBySessionIdAndEventId>[0]
+  }
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
@@ -54,28 +61,29 @@ test('loadSelectedEvent should return the selected event details', async () => {
     close: jest.fn(),
     objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
-  } as unknown as Awaited<ReturnType<typeof openDatabase>>
+  }
   const event = {
     eventId: 1,
     sessionId: 'session-1',
     type: 'request',
   }
-  openDatabaseSpy.mockResolvedValue(database)
-  getEventDetailsBySessionIdAndEventIdSpy.mockResolvedValue(event)
+  mockOpenDatabase.mockResolvedValue(database)
+  mockGetEventDetailsBySessionIdAndEventId.mockResolvedValue(event)
+  const { loadSelectedEvent } = await import('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts')
 
   const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 
   expect(result).toEqual(event)
   expect(database.transaction).toHaveBeenCalledWith('chat-view-events', 'readonly')
   expect(transaction.objectStore).toHaveBeenCalledWith('chat-view-events')
-  expect(getEventDetailsBySessionIdAndEventIdSpy).toHaveBeenCalledWith(store, 'session-1', 'sessionId', 1, 'request')
+  expect(mockGetEventDetailsBySessionIdAndEventId).toHaveBeenCalledWith(store, 'session-1', 'sessionId', 1, 'request')
   expect(database.close).toHaveBeenCalledTimes(1)
 })
 
 test('loadSelectedEvent should return null when event details are missing', async () => {
   const store = {
     index: jest.fn(),
-  } as unknown as Parameters<typeof getEventDetailsBySessionIdAndEventId>[0]
+  }
   const transaction = {
     objectStore: jest.fn().mockReturnValue(store),
   }
@@ -83,13 +91,14 @@ test('loadSelectedEvent should return null when event details are missing', asyn
     close: jest.fn(),
     objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
-  } as unknown as Awaited<ReturnType<typeof openDatabase>>
-  openDatabaseSpy.mockResolvedValue(database)
-  getEventDetailsBySessionIdAndEventIdSpy.mockResolvedValue(undefined)
+  }
+  mockOpenDatabase.mockResolvedValue(database)
+  mockGetEventDetailsBySessionIdAndEventId.mockResolvedValue(undefined)
+  const { loadSelectedEvent } = await import('../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts')
 
   const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 
   expect(result).toBeNull()
-  expect(getEventDetailsBySessionIdAndEventIdSpy).toHaveBeenCalledWith(store, 'session-1', 'sessionId', 1, 'request')
+  expect(mockGetEventDetailsBySessionIdAndEventId).toHaveBeenCalledWith(store, 'session-1', 'sessionId', 1, 'request')
   expect(database.close).toHaveBeenCalledTimes(1)
 })

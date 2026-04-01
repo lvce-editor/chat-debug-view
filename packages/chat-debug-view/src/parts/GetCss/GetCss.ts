@@ -248,7 +248,9 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   align-items: end;
   gap: 3px;
+  flex: 1 1 auto;
   min-height: 60px;
+  pointer-events: none;
   contain: strict;
 }
 
@@ -259,11 +261,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   cursor: crosshair;
   user-select: none;
   contain: strict;
-}
-
-.ChatDebugViewTimelineInteractive > .ChatDebugViewTimelineBuckets {
-  flex: 1 1 auto;
-  pointer-events: none;
 }
 
 .ChatDebugViewTimelineSelectionOverlay {
@@ -295,12 +292,19 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewTimelineBucket {
+  --ChatDebugViewTimelineBucketBarBackground: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.16)) 74%, transparent 26%);
+  --ChatDebugViewTimelineBucketBarBorderColor: transparent;
   display: flex;
   align-items: stretch;
   flex: 1 1 10px;
   min-width: 10px;
   min-height: 60px;
   contain: strict;
+}
+
+.ChatDebugViewTimelineBucketSelected {
+  --ChatDebugViewTimelineBucketBarBackground: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
+  --ChatDebugViewTimelineBucketBarBorderColor: var(--vscode-focusBorder, #007fd4);
 }
 
 .ChatDebugViewTimelinePresetInput {
@@ -319,11 +323,11 @@ export const getCss = (state: ChatDebugViewState): string => {
   border: 1px solid transparent;
   border-radius: 2px;
   width: 100%;
-  background: color-mix(in srgb, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.16)) 74%, transparent 26%);
+  background: var(--ChatDebugViewTimelineBucketBarBackground);
+  border-color: var(--ChatDebugViewTimelineBucketBarBorderColor);
   contain: strict;
 }
 
-.ChatDebugViewTimelineBucketSelected .ChatDebugViewTimelineBucketBar,
 .ChatDebugViewTimelineBucketBarSelected {
   background: color-mix(in srgb, var(--vscode-charts-blue, #75beff) 72%, transparent 28%);
   border-color: var(--vscode-focusBorder, #007fd4);
