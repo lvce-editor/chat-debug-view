@@ -1,27 +1,20 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import { openDatabase, openDatabaseDependencies } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 
-const mockOpenDb = jest.fn()
-
-jest.unstable_mockModule('idb', () => {
-  return {
-    openDB: mockOpenDb,
-  }
-})
+const openDbSpy = jest.spyOn(openDatabaseDependencies, 'openDB')
 
 afterEach(() => {
-  mockOpenDb.mockReset()
-  jest.resetModules()
+  openDbSpy.mockReset()
 })
 
 test('openDatabase should delegate to idb openDB', async () => {
   const database = {
     close: jest.fn(),
   }
-  mockOpenDb.mockResolvedValue(database)
-  const OpenDatabase = await import('../src/parts/OpenDatabase/OpenDatabase.ts')
+  openDbSpy.mockResolvedValue(database as never)
 
-  const result = await OpenDatabase.openDatabase('chat-db', 2)
+  const result = await openDatabase('chat-db', 2)
 
   expect(result).toBe(database)
-  expect(mockOpenDb).toHaveBeenCalledWith('chat-db', 2)
+  expect(openDbSpy).toHaveBeenCalledWith('chat-db', 2)
 })

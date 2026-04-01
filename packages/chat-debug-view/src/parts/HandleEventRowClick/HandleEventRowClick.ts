@@ -39,6 +39,7 @@ export const handleEventRowClick = async (state: ChatDebugViewState, value: stri
     return {
       ...state,
       selectedEvent: null,
+      selectedEventId: null,
       selectedEventIndex,
     }
   }
@@ -54,6 +55,7 @@ export const handleEventRowClick = async (state: ChatDebugViewState, value: stri
   return {
     ...state,
     selectedEvent: selectedEventDetails,
+    selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
   }
 }

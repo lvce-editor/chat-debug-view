@@ -2,6 +2,8 @@ import { expect, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { collapseToolExecutionEvents, getStableEventId } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 
+const collapsedEventIdPattern = /^event-\d+:event-\d+$/
+
 test('collapseToolExecutionEvents should merge matching started and finished events', () => {
   const startedEvent: ChatViewEvent = {
     arguments: {
@@ -91,5 +93,5 @@ test('collapseToolExecutionEvents should assign a merged stable id to collapsed 
 
   const [result] = collapseToolExecutionEvents([startedEvent, finishedEvent])
 
-  expect(getStableEventId(result)).toMatch(/^event-\d+:event-\d+$/)
+  expect(getStableEventId(result)).toMatch(collapsedEventIdPattern)
 })
