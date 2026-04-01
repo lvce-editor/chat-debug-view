@@ -65,7 +65,9 @@ test('getCss should keep the details preview in the right devtools column', () =
   expect(css).toContain('--ChatDebugViewTableWidth: 480px;')
   expect(css).toContain('--ChatDebugViewDetailsWidth: 396px;')
   expect(css).toContain('.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents {\n  flex: 0 1 var(--ChatDebugViewTableWidth);\n  min-width: 0;\n}')
-  expect(css).toContain('.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {\n  flex: 0 0 var(--ChatDebugViewDetailsWidth);\n}')
+  expect(css).toContain(
+    '.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {\n  flex: 0 0 var(--ChatDebugViewDetailsWidth);\n  border-left: 0;\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n}',
+  )
   expect(css).toContain('.ChatDebugViewDevtoolsMain > .ChatDebugViewTimeline {\n  flex: 0 0 auto;\n}')
 })
 

@@ -161,6 +161,9 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {
   flex: 0 0 var(--ChatDebugViewDetailsWidth);
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .ChatDebugViewSash {
