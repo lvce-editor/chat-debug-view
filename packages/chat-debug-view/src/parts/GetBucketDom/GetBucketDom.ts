@@ -1,7 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
+import { getBucketUnitDom } from '../GetBucketUnitDom/GetBucketUnitDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] => {
@@ -27,18 +28,6 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
       className: `ChatDebugViewTimelineBucketBar${bucket.isSelected ? ' ChatDebugViewTimelineBucketBarSelected' : ''}`,
       type: VirtualDomElements.Div,
     },
-    ...(bucket.unitCount === 0
-      ? [
-          {
-            childCount: 0,
-            className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
-            type: VirtualDomElements.Div,
-          },
-        ]
-      : (Array.from({ length: bucket.unitCount }).fill({
-          childCount: 0,
-          className: 'ChatDebugViewTimelineBucketUnit',
-          type: VirtualDomElements.Div,
-        }) as VirtualDomNode[])),
+    ...getBucketUnitDom(bucket.unitCount),
   ]
 }

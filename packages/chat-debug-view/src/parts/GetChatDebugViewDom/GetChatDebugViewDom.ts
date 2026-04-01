@@ -57,85 +57,16 @@ const getQuickFilterNodes = (eventCategoryFilter: string): readonly VirtualDomNo
   ]
 }
 
-const getTimelineFilterDescription = (timelineStartSeconds: string, timelineEndSeconds: string): string => {
-  const trimmedStart = timelineStartSeconds.trim()
-  const trimmedEnd = timelineEndSeconds.trim()
-  if (trimmedStart && trimmedEnd) {
-    return `${trimmedStart}s-${trimmedEnd}s`
-  }
-  if (trimmedStart) {
-    return `from ${trimmedStart}s`
-  }
-  if (trimmedEnd) {
-    return `to ${trimmedEnd}s`
-  }
-  return ''
-}
-
-export const getChatDebugViewDom = (
-  errorMessage: string,
+const getDebugViewTopDom = (
   filterValue: string,
-  eventCategoryFilter: string,
   showEventStreamFinishedEvents: boolean,
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
   useDevtoolsLayout: boolean,
-  selectedEventIndex: number | null,
-  timelineStartSeconds: string,
-  timelineEndSeconds: string,
-  timelineEvents: readonly ChatViewEvent[],
-  events: readonly ChatViewEvent[],
+  quickFilterNodes: readonly VirtualDomNode[],
+  eventCountText: string,
 ): readonly VirtualDomNode[] => {
-  if (errorMessage) {
-    return [
-      {
-        childCount: 1,
-        className: 'ChatDebugView',
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: 'ChatDebugViewError',
-        type: VirtualDomElements.Div,
-      },
-      text(errorMessage),
-    ]
-  }
-
-  const eventNodes = events.flatMap(getEventNode)
-  const trimmedFilterValue = filterValue.trim()
-  const filterDescriptionParts = []
-  if (eventCategoryFilter !== EventCategoryFilter.All) {
-    filterDescriptionParts.push(EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase())
-  }
-  if (trimmedFilterValue) {
-    filterDescriptionParts.push(trimmedFilterValue)
-  }
-  const timelineFilterDescription = getTimelineFilterDescription(timelineStartSeconds, timelineEndSeconds)
-  if (timelineFilterDescription) {
-    filterDescriptionParts.push(timelineFilterDescription)
-  }
-  const hasFilterValue = filterDescriptionParts.length > 0
-  const filterDescription = filterDescriptionParts.join(' ')
-  const noFilteredEventsMessage = `no events found matching ${filterDescription}`
-  const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
-  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
-
-  const safeSelectedEventIndex =
-    selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
-
-  const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds)
-    : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
-  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
-  const rootChildCount = useDevtoolsLayout ? 4 : 3
-
   return [
-    {
-      childCount: rootChildCount,
-      className: useDevtoolsLayout ? 'ChatDebugView ChatDebugView--devtools' : 'ChatDebugView',
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 2,
       className: 'ChatDebugViewTop',
@@ -220,6 +151,98 @@ export const getChatDebugViewDom = (
       type: VirtualDomElements.Div,
     },
     text(eventCountText),
+  ]
+}
+
+const getTimelineFilterDescription = (timelineStartSeconds: string, timelineEndSeconds: string): string => {
+  const trimmedStart = timelineStartSeconds.trim()
+  const trimmedEnd = timelineEndSeconds.trim()
+  if (trimmedStart && trimmedEnd) {
+    return `${trimmedStart}s-${trimmedEnd}s`
+  }
+  if (trimmedStart) {
+    return `from ${trimmedStart}s`
+  }
+  if (trimmedEnd) {
+    return `to ${trimmedEnd}s`
+  }
+  return ''
+}
+
+export const getChatDebugViewDom = (
+  errorMessage: string,
+  filterValue: string,
+  eventCategoryFilter: string,
+  showEventStreamFinishedEvents: boolean,
+  showInputEvents: boolean,
+  showResponsePartEvents: boolean,
+  useDevtoolsLayout: boolean,
+  selectedEventIndex: number | null,
+  timelineStartSeconds: string,
+  timelineEndSeconds: string,
+  timelineEvents: readonly ChatViewEvent[],
+  events: readonly ChatViewEvent[],
+): readonly VirtualDomNode[] => {
+  if (errorMessage) {
+    return [
+      {
+        childCount: 1,
+        className: 'ChatDebugView',
+        type: VirtualDomElements.Div,
+      },
+      {
+        childCount: 1,
+        className: 'ChatDebugViewError',
+        type: VirtualDomElements.Div,
+      },
+      text(errorMessage),
+    ]
+  }
+
+  const eventNodes = events.flatMap(getEventNode)
+  const trimmedFilterValue = filterValue.trim()
+  const filterDescriptionParts = []
+  if (eventCategoryFilter !== EventCategoryFilter.All) {
+    filterDescriptionParts.push(EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase())
+  }
+  if (trimmedFilterValue) {
+    filterDescriptionParts.push(trimmedFilterValue)
+  }
+  const timelineFilterDescription = getTimelineFilterDescription(timelineStartSeconds, timelineEndSeconds)
+  if (timelineFilterDescription) {
+    filterDescriptionParts.push(timelineFilterDescription)
+  }
+  const hasFilterValue = filterDescriptionParts.length > 0
+  const filterDescription = filterDescriptionParts.join(' ')
+  const noFilteredEventsMessage = `no events found matching ${filterDescription}`
+  const eventCountText = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : `${events.length} event${events.length === 1 ? '' : 's'}`
+  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events'
+
+  const safeSelectedEventIndex =
+    selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
+
+  const contentNodes = useDevtoolsLayout
+    ? getDevtoolsDom(events, safeSelectedEventIndex, timelineEvents, timelineStartSeconds, timelineEndSeconds)
+    : getLegacyEventsDom(errorMessage, emptyMessage, eventNodes)
+  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter) : []
+  const debugViewTopDom = getDebugViewTopDom(
+    filterValue,
+    showEventStreamFinishedEvents,
+    showInputEvents,
+    showResponsePartEvents,
+    useDevtoolsLayout,
+    quickFilterNodes,
+    eventCountText,
+  )
+  const rootChildCount = useDevtoolsLayout ? 4 : 3
+
+  return [
+    {
+      childCount: rootChildCount,
+      className: useDevtoolsLayout ? 'ChatDebugView ChatDebugView--devtools' : 'ChatDebugView',
+      type: VirtualDomElements.Div,
+    },
+    ...debugViewTopDom,
     ...contentNodes,
   ]
 }
