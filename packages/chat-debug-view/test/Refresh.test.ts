@@ -18,7 +18,7 @@ test('refresh should return failed-to-load state when listing events returns an 
   mockListChatViewEvents.mockResolvedValue({
     error,
     type: 'error',
-  })
+  } as any)
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -40,7 +40,7 @@ test('refresh should return failed-to-load state when listing events returns an 
 test('refresh should return indexeddb-not-supported state when IndexedDB is unavailable', async () => {
   mockListChatViewEvents.mockResolvedValue({
     type: 'not-supported',
-  })
+  } as any)
   const state = {
     ...createDefaultState(),
     initial: true,

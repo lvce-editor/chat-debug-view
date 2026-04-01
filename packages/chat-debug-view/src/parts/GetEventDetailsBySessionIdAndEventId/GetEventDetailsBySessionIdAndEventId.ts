@@ -46,12 +46,14 @@ const hasMatchingToolName = (startedEvent: ChatViewEvent, finishedEvent: ChatVie
 }
 
 const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent, eventId: number): ChatViewEvent => {
+  const ended = getTimestamp(finishedEvent.ended) ?? getTimestamp(finishedEvent.endTime) ?? getTimestamp(finishedEvent.timestamp)
+  const started = getTimestamp(startedEvent.started) ?? getTimestamp(startedEvent.startTime) ?? getTimestamp(startedEvent.timestamp)
   return {
     ...startedEvent,
     ...finishedEvent,
-    ended: getTimestamp(finishedEvent.ended) ?? getTimestamp(finishedEvent.endTime) ?? getTimestamp(finishedEvent.timestamp),
+    ...(ended === undefined ? {} : { ended }),
     eventId,
-    started: getTimestamp(startedEvent.started) ?? getTimestamp(startedEvent.startTime) ?? getTimestamp(startedEvent.timestamp),
+    ...(started === undefined ? {} : { started }),
     type: 'tool-execution',
   }
 }
