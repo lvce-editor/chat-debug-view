@@ -5,7 +5,20 @@ import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCate
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
 test('getChatDebugViewDom should return debug error dom when error message is set', () => {
-  const dom = GetChatDebugViewDom.getChatDebugViewDom('Failed to load chat debug session', '', EventCategoryFilter.All, false, false, false, true, null, '', '', [], []) as readonly {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    'Failed to load chat debug session',
+    '',
+    EventCategoryFilter.All,
+    false,
+    false,
+    false,
+    true,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly text?: string
@@ -145,6 +158,37 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
+})
+
+test('getChatDebugViewDom should not stringify unselected events in devtools layout', () => {
+  const circularEvent: {
+    readonly sessionId: string
+    readonly timestamp: string
+    readonly type: string
+    self?: unknown
+  } = {
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  }
+  circularEvent.self = circularEvent
+
+  expect(() =>
+    GetChatDebugViewDom.getChatDebugViewDom(
+      '',
+      '',
+      EventCategoryFilter.All,
+      false,
+      false,
+      false,
+      true,
+      null,
+      '',
+      '',
+      [circularEvent],
+      [circularEvent],
+    ),
+  ).not.toThrow()
 })
 
 test('getChatDebugViewDom should not render event count message', () => {
