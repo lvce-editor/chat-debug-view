@@ -10,6 +10,7 @@ export interface ChatDebugViewState {
   readonly eventStoreName: string
   readonly filterValue: string
   readonly height: number
+  readonly indexedDbSupportOverride: boolean | undefined
   readonly initial: boolean
   readonly platform: number
   readonly selectedEvent: ChatViewEvent | null
