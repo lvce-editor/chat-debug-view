@@ -3,6 +3,11 @@ import * as GetEventsBySessionId from '../GetEventsBySessionId/GetEventsBySessio
 import { isIndexedDbSupported } from '../IsIndexedDbSupported/IsIndexedDbSupported.ts'
 import * as OpenDatabase from '../OpenDatabase/OpenDatabase.ts'
 
+export const listChatViewEventsDependencies = {
+  getEventsBySessionId: GetEventsBySessionId.getEventsBySessionId,
+  openDatabase: OpenDatabase.openDatabase,
+}
+
 export const listChatViewEvents = async (
   sessionId: string,
   databaseName: string,
@@ -18,7 +23,7 @@ export const listChatViewEvents = async (
   }
 
   try {
-    const database = await OpenDatabase.openDatabase(databaseName, dataBaseVersion)
+    const database = await listChatViewEventsDependencies.openDatabase(databaseName, dataBaseVersion)
     try {
       if (!database.objectStoreNames.contains(eventStoreName)) {
         return {
@@ -34,7 +39,7 @@ export const listChatViewEvents = async (
           type: 'success',
         }
       }
-      const events = await GetEventsBySessionId.getEventsBySessionId(store, sessionId, sessionIdIndexName)
+      const events = await listChatViewEventsDependencies.getEventsBySessionId(store, sessionId, sessionIdIndexName)
       return {
         events,
         type: 'success',

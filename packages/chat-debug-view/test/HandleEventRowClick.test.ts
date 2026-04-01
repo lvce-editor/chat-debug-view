@@ -1,7 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import * as HandleEventRowClick from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
-import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
+import { handleEventRowClick, handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 afterEach(() => {
@@ -9,7 +8,7 @@ afterEach(() => {
 })
 
 test('handleEventRowClick should select the clicked event row and load details', async () => {
-  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue({
     detail: 'value',
     eventId: 3,
     type: 'request',
@@ -41,7 +40,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   }
-  const result = await HandleEventRowClick.handleEventRowClick(state, '2')
+  const result = await handleEventRowClick(state, '2')
 
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
@@ -57,7 +56,7 @@ test('handleEventRowClick should ignore clicks without a row index', async () =>
     ...createDefaultState(),
     selectedEventIndex: 1,
   }
-  const result = await HandleEventRowClick.handleEventRowClick(state, '')
+  const result = await handleEventRowClick(state, '')
 
   expect(result).toBe(state)
 })
