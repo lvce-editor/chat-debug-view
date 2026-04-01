@@ -93,7 +93,7 @@ export const getDebugViewTopDom = (
       {
         autocomplete: 'off',
         childCount: 0,
-        className: 'InputBox',
+        className: 'InputBox ChatDebugViewFilterInput ChatDebugViewFilterInput--devtools',
         inputType: 'search',
         name: InputName.Filter,
         onInput: DomEventListenerFunctions.HandleFilterInput,
@@ -114,7 +114,7 @@ export const getDebugViewTopDom = (
     {
       autocomplete: 'off',
       childCount: 0,
-      className: 'InputBox',
+      className: 'InputBox ChatDebugViewFilterInput',
       inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,

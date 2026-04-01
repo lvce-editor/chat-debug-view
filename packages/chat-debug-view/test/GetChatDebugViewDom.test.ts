@@ -46,6 +46,7 @@ test('getChatDebugViewDom should return debug error dom when error message is se
 test('getChatDebugViewDom should wire filter input to filter input listener', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom('', '', EventCategoryFilter.All, false, false, false, false, null, '', '', [], []) as readonly {
     readonly autocomplete?: string
+    readonly className?: string
     readonly inputType?: string
     readonly name?: string
     readonly onInput?: number
@@ -59,6 +60,7 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
   expect(filterInput.inputType).toBe('search')
   // @ts-ignore
   expect(filterInput.autocomplete).toBe('off')
+  expect(filterInput?.className).toBe('InputBox ChatDebugViewFilterInput')
 })
 
 test('getChatDebugViewDom should include devtools layout toggle', () => {
@@ -111,6 +113,7 @@ test('getChatDebugViewDom should place toggles above the filter row in devtools 
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
+      className: 'InputBox ChatDebugViewFilterInput ChatDebugViewFilterInput--devtools',
       inputType: 'search',
       name: 'filter',
     }),

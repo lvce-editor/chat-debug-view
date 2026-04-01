@@ -32,12 +32,6 @@ test('getDetailsDom should render details panel nodes and close input', () => {
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 1,
-      className: 'ChatDebugViewDetailsTitle',
-      type: VirtualDomElements.Div,
-    },
-    text('Details'),
-    {
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
       inputType: 'checkbox',
@@ -46,6 +40,12 @@ test('getDetailsDom should render details panel nodes and close input', () => {
       type: VirtualDomElements.Input,
       value: 'close',
     },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTitle',
+      type: VirtualDomElements.Div,
+    },
+    text('Details'),
     {
       childCount: 1,
       className: 'ChatDebugViewDetailsBody',

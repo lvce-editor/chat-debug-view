@@ -36,8 +36,15 @@ export const getCss = (state: ChatDebugViewState): string => {
   align-items: stretch;
 }
 
-.ChatDebugViewTop .InputBox {
+.ChatDebugViewFilterInput {
   flex: 1;
+  min-width: 0;
+}
+
+.ChatDebugViewFilterInput--devtools {
+  flex: 0 1 320px;
+  width: 320px;
+  max-width: 100%;
 }
 
 .ChatDebugViewTop--devtools .ChatDebugViewQuickFilters {
@@ -106,10 +113,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   scrollbar-color: var(--vscode-scrollbarSlider-background, rgba(121, 121, 121, 0.4)) transparent;
 }
 
-.ChatDebugViewEvents--timeline {
-  gap: 0;
-}
-
 .ChatDebugView--devtools .ChatDebugViewEvents {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
@@ -123,6 +126,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewDevtoolsMain {
   display: flex;
+  flex-direction: column;
   flex: 1;
   align-items: stretch;
   gap: 0;
@@ -131,16 +135,30 @@ export const getCss = (state: ChatDebugViewState): string => {
   overflow: hidden;
 }
 
-.ChatDebugViewDevtoolsMain > .ChatDebugViewEvents {
+.ChatDebugViewDevtoolsMain > .ChatDebugViewTimeline {
+  flex: 0 0 auto;
+}
+
+.ChatDebugViewDevtoolsSplit {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents {
   flex: 0 1 var(--ChatDebugViewTableWidth);
   min-width: 0;
 }
 
-.ChatDebugViewDevtoolsMain > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
   flex: 1 1 100%;
 }
 
-.ChatDebugViewDevtoolsMain > .ChatDebugViewDetails {
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {
   flex: 0 0 var(--ChatDebugViewDetailsWidth);
 }
 
@@ -324,7 +342,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEventRow {
-  padding: 3px 8px;
+  padding: 2px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
   cursor: pointer;
 }
@@ -374,7 +392,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewDetailsTop {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   padding: 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
 }
@@ -382,6 +401,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewDetailsTitle {
   font-size: 12px;
   font-weight: 600;
+  flex: 1 1 auto;
 }
 
 .ChatDebugViewDetailsClose {

@@ -122,6 +122,27 @@ test('getDevtoolsDom should render timeline filters when timestamps are availabl
   expect(dom.find((node) => node.text === 'Window 5s-7s of 10s')).toBeDefined()
 })
 
+test('getDevtoolsDom should keep the timeline outside the table-details split', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, 0, events, '', '') as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const timeline = dom.find((node) => node.className === 'ChatDebugViewTimeline')
+  const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+
+  expect(mainPane?.childCount).toBe(2)
+  expect(timeline).toBeDefined()
+  expect(splitPane?.childCount).toBe(3)
+})
+
 test('getDevtoolsDom should make the events pane full width when details are closed', () => {
   const events = [
     {
@@ -133,7 +154,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly className?: string
   }[]
-  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth ChatDebugViewEvents--timeline')
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
 
   expect(eventsPane).toBeDefined()
@@ -153,11 +174,13 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly className?: string
   }[]
   const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
-  expect(mainPane?.childCount).toBe(3)
+  expect(mainPane?.childCount).toBe(2)
+  expect(splitPane?.childCount).toBe(3)
   expect(sash).toBeDefined()
   expect(table).toBeDefined()
   expect(details).toBeDefined()
