@@ -40,7 +40,12 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
-      params: ['handleTimelinePointerDown', EventExpression.ClientX, 'event.currentTarget.getBoundingClientRect().left', 'event.currentTarget.clientWidth'],
+      params: [
+        'handleTimelinePointerDown',
+        EventExpression.ClientX,
+        'event.currentTarget.getBoundingClientRect().left',
+        'event.currentTarget.clientWidth',
+      ],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],
     },
     {
