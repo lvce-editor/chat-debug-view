@@ -440,20 +440,11 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewDetailsTop {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   gap: 8px;
-  padding: 8px;
+  padding: 0 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
-  contain: content;
-}
-
-.ChatDebugViewDetailsTitle {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 600;
-  flex: 1 1 auto;
   contain: content;
 }
 
@@ -467,6 +458,8 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: relative;
   color: var(--vscode-foreground, #cccccc);
   background: transparent;
+  align-self: center;
+  flex: 0 0 auto;
   contain: strict;
 }
 
@@ -507,9 +500,10 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewDetailsTabs {
   display: flex;
   align-items: center;
+  flex: 1 1 auto;
   gap: 2px;
-  padding: 0 8px;
-  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  min-width: 0;
+  padding: 0;
   overflow-x: auto;
   contain: content;
 }

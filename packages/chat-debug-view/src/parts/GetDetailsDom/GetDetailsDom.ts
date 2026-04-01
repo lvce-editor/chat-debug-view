@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -47,7 +47,7 @@ export const getDetailsDom = (
   const contentNodes = selectedDetailTab === DetailTab.Timing && selectedEvent ? getTimingDetailsDom(selectedEvent) : selectedEventNodes
   return [
     {
-      childCount: 3,
+      childCount: 2,
       className: 'ChatDebugViewDetails',
       type: VirtualDomElements.Div,
     },
@@ -56,6 +56,14 @@ export const getDetailsDom = (
       className: 'ChatDebugViewDetailsTop',
       type: VirtualDomElements.Div,
     },
+    {
+      'aria-label': 'Detail sections',
+      childCount: DetailTab.detailTabs.length,
+      className: 'ChatDebugViewDetailsTabs',
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
+    ...getTabNodes(selectedDetailTab),
     {
       'aria-label': 'Close details',
       childCount: 0,
@@ -66,20 +74,6 @@ export const getDetailsDom = (
       type: VirtualDomElements.Button,
       value: 'close',
     },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewDetailsTitle',
-      type: VirtualDomElements.Div,
-    },
-    text('Details'),
-    {
-      'aria-label': 'Detail sections',
-      childCount: DetailTab.detailTabs.length,
-      className: 'ChatDebugViewDetailsTabs',
-      role: 'tablist',
-      type: VirtualDomElements.Div,
-    },
-    ...getTabNodes(selectedDetailTab),
     {
       childCount: 1,
       className: 'ChatDebugViewDetailsBody',
