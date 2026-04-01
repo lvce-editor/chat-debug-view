@@ -503,6 +503,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   padding: 8px;
   flex: 1 1 auto;
   min-height: 0;
+  align-items: flex-start;
   contain: strict;
 }
 
@@ -531,16 +532,44 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEvent {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  min-width: 100%;
   margin: 0;
   padding: 8px;
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   margin-bottom: 8px;
-  white-space: pre-wrap;
-  word-break: break-word;
+  white-space: nowrap;
   font-family: var(--vscode-editor-font-family, monospace);
   font-size: 12px;
   user-select: text;
+  contain: content;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  min-width: 100%;
+  width: max-content;
+  white-space: nowrap;
+  contain: content;
+}
+
+.ChatDebugViewEventLineNumber {
+  display: inline-flex;
+  justify-content: flex-end;
+  flex: 0 0 3ch;
+  margin-right: 12px;
+  opacity: 0.6;
+  user-select: none;
+  contain: content;
+}
+
+.ChatDebugViewEventLineContent {
+  display: inline-flex;
+  white-space: pre;
   contain: content;
 }
 

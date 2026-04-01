@@ -129,9 +129,7 @@ test('getCss should keep details preview rows on a single line with horizontal s
   expect(css).toContain(
     '.ChatDebugViewEventLineNumber {\n  display: inline-flex;\n  justify-content: flex-end;\n  flex: 0 0 3ch;\n  margin-right: 12px;\n  opacity: 0.6;\n  user-select: none;\n  contain: content;\n}',
   )
-  expect(css).toContain(
-    '.ChatDebugViewEventLineContent {\n  display: inline-flex;\n  white-space: pre;\n  contain: content;\n}',
-  )
+  expect(css).toContain('.ChatDebugViewEventLineContent {\n  display: inline-flex;\n  white-space: pre;\n  contain: content;\n}')
 })
 
 test('getCss should keep table cells and messages on flex layouts', () => {
