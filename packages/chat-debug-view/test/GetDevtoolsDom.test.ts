@@ -32,6 +32,28 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
 })
 
+test('getDevtoolsDom should wrap header and body in a table container', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
+  const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+
+  expect(table).toBeDefined()
+  expect(table?.childCount).toBe(2)
+  expect(header).toBeDefined()
+  expect(body).toBeDefined()
+})
+
 test('getDevtoolsDom should delegate row clicks from table body using data-index', () => {
   const events = [
     {
@@ -113,8 +135,38 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly className?: string
   }[]
   const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
   expect(mainPane?.childCount).toBe(2)
+  expect(table).toBeDefined()
+  expect(details).toBeDefined()
+})
+
+test('getDevtoolsDom should apply explicit flex column classes to headers and rows', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:01.000Z',
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:00.000Z',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
+    readonly className?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellTime',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewCell ChatDebugViewCellTime',
+    }),
+  )
 })
 
 test('getDevtoolsDom should render computed duration from timestamps', () => {

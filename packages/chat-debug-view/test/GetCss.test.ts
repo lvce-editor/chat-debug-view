@@ -19,6 +19,7 @@ test('getCss should avoid nested scrolling in devtools events table', () => {
   expect(css).toContain(
     '.ChatDebugView--devtools .ChatDebugViewEvents {\n  border: 1px solid var(--vscode-editorWidget-border, #454545);\n  border-radius: 6px;\n  margin-bottom: 0;\n  overflow: hidden;\n}',
   )
+  expect(css).toContain('.ChatDebugViewTable {\n  display: flex;\n  flex-direction: column;\n  min-height: 0;\n  flex: 1 1 auto;\n}')
 })
 
 test('getCss should keep the details preview in the right devtools column', () => {
@@ -34,6 +35,15 @@ test('getCss should use flex layout for timeline buckets and table rows', () => 
   expect(css).toContain('.ChatDebugViewTimelineBuckets {\n  display: flex;')
   expect(css).toContain('.ChatDebugViewTableHeader,\n.ChatDebugViewEventRow {\n  display: flex;')
   expect(css).not.toContain('display: grid;')
+})
+
+test('getCss should size devtools columns with dedicated flex classes', () => {
+  const css = GetCss.getCss()
+
+  expect(css).toContain('.ChatDebugViewCellType {\n  flex: 1 1 140px;\n  min-width: 0;\n}')
+  expect(css).toContain('.ChatDebugViewCellTime {\n  flex: 1 1 180px;\n  min-width: 0;\n}')
+  expect(css).not.toContain('.ChatDebugViewTableHeader > :nth-child(1),')
+  expect(css).not.toContain('.ChatDebugViewTableHeader > :nth-child(2),')
 })
 
 test('getCss should use strict containment for scrollable detail sections', () => {
