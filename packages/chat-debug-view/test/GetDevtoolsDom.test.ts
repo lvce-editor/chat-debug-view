@@ -57,6 +57,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
   const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
@@ -64,6 +65,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
 
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(2)
+  expect(table?.type).toBe(14)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
 })
