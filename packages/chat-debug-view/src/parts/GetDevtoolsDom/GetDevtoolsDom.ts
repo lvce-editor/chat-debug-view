@@ -36,6 +36,16 @@ export const getDevtoolsDom = (
   const eventsClassName = getEventsClassName(hasSelectedEvent, timelineNodes.length > 0)
   const eventsChildCount = timelineNodes.length > 0 ? 2 : 1
   const detailsNodes = getDetailsDom(selectedEventNodes)
+  const sashNodes = hasSelectedEvent
+    ? [
+        {
+          childCount: 0,
+          className: 'ChatDebugViewSash',
+          onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
+          type: VirtualDomElements.Div,
+        },
+      ]
+    : []
   return [
     {
       childCount: hasSelectedEvent ? 3 : 1,
@@ -49,12 +59,7 @@ export const getDevtoolsDom = (
     },
     ...timelineNodes,
     ...tableNodes,
-    {
-      childCount: 0,
-      className: 'ChatDebugViewSash',
-      onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
-      type: VirtualDomElements.Div,
-    },
+    ...sashNodes,
     ...detailsNodes,
   ]
 }

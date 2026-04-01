@@ -134,8 +134,10 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     readonly className?: string
   }[]
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth ChatDebugViewEvents--timeline')
+  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
 
   expect(eventsPane).toBeDefined()
+  expect(sash).toBeUndefined()
 })
 
 test('getDevtoolsDom should keep details as a second split-pane child when selected', () => {
