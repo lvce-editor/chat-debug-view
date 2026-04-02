@@ -597,6 +597,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: max-content;
   white-space: nowrap;
   contain: strict;
+  height: 20px;
 }
 
 .ChatDebugViewEventLineNumber {
