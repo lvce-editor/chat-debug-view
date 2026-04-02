@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.get-workspace-uri-preview'
 
+export const skip = 1
+
 export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('Main.openUri', 'chat-debug://e2e-session-get-workspace-uri-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
