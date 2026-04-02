@@ -2,8 +2,8 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
-import { hasErrorStatus } from '../HasErrorStatus/HasErrorStatus.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
+import { hasErrorStatus } from '../HasErrorStatus/HasErrorStatus.ts'
 
 export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
   return events.flatMap((event, i) => {
