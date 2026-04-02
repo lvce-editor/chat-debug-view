@@ -525,7 +525,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   color: var(--vscode-descriptionForeground, var(--vscode-foreground, #cccccc));
   cursor: pointer;
   white-space: nowrap;
-  contain: strict;
+  contain: content;
 }
 
 .ChatDebugViewDetailsTab:hover {
