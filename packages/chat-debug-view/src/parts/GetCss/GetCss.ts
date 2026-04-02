@@ -356,6 +356,21 @@ export const getCss = (state: ChatDebugViewState): string => {
   contain: content;
 }
 
+.ChatDebugViewTableHeaderRow > .ChatDebugViewHeaderCell:nth-child(1) {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+
+.ChatDebugViewTableHeaderRow > .ChatDebugViewHeaderCell:nth-child(2) {
+  flex: 0 0 90px;
+  justify-content: flex-end;
+}
+
+.ChatDebugViewTableHeaderRow > .ChatDebugViewHeaderCell:nth-child(3) {
+  flex: 0 0 96px;
+  justify-content: flex-end;
+}
+
 .ChatDebugViewTableBody {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,12 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import {
+  ChatDebugViewTimelineBucket,
+  ChatDebugViewTimelineBucketBar,
+  ChatDebugViewTimelineBucketBarSelected,
+  ChatDebugViewTimelineBucketSelected,
+  ChatDebugViewTimelinePresetInput,
+  joinClassNames,
+} from '../ClassNames/ClassNames.ts'
 import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
@@ -10,13 +18,13 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
   return [
     {
       childCount: 2,
-      className: `ChatDebugViewTimelineBucket${bucket.isSelected ? ' ChatDebugViewTimelineBucketSelected' : ''}`,
+      className: joinClassNames(ChatDebugViewTimelineBucket, bucket.isSelected && ChatDebugViewTimelineBucketSelected),
       type: VirtualDomElements.Label,
     },
     {
       checked: false,
       childCount: 0,
-      className: 'ChatDebugViewTimelinePresetInput',
+      className: ChatDebugViewTimelinePresetInput,
       inputType: 'radio',
       name: InputName.TimelineRangePreset,
       onChange: DomEventListenerFunctions.HandleSimpleInput,
@@ -25,7 +33,7 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
     },
     {
       childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
-      className: `ChatDebugViewTimelineBucketBar${bucket.isSelected ? ' ChatDebugViewTimelineBucketBarSelected' : ''}`,
+      className: joinClassNames(ChatDebugViewTimelineBucketBar, bucket.isSelected && ChatDebugViewTimelineBucketBarSelected),
       type: VirtualDomElements.Div,
     },
     ...getBucketUnitDom(bucket.unitCount),

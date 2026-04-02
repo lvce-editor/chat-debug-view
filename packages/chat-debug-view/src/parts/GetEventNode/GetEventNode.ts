@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { ChatDebugViewEvent, ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Row, TokenText } from '../ClassNames/ClassNames.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getTokenSegments } from '../GetTokenSegments/GetTokenSegments.ts'
 
@@ -11,7 +12,7 @@ interface TokenSegment {
 const getJsonLines = (value: unknown): readonly (readonly TokenSegment[])[] => {
   const json = JSON.stringify(value, null, 2)
   if (!json) {
-    return [[{ className: 'TokenText', value: String(json) }]]
+    return [[{ className: TokenText, value: String(json) }]]
   }
   const segments = getTokenSegments(json)
   const lines: TokenSegment[][] = []
@@ -55,18 +56,18 @@ const getLineNodes = (lines: readonly (readonly TokenSegment[])[]): readonly Vir
     return [
       {
         childCount: 2,
-        className: 'row',
+        className: Row,
         type: VirtualDomElements.Div,
       },
       {
         childCount: 1,
-        className: 'ChatDebugViewEventLineNumber',
+        className: ChatDebugViewEventLineNumber,
         type: VirtualDomElements.Span,
       },
       text(String(index + 1)),
       {
         childCount: lineContentNodes.length / 2,
-        className: 'ChatDebugViewEventLineContent',
+        className: ChatDebugViewEventLineContent,
         type: VirtualDomElements.Span,
       },
       ...lineContentNodes,
@@ -84,7 +85,7 @@ export const getEventNode = (event: ChatViewEvent): readonly VirtualDomNode[] =>
   return [
     {
       childCount: lines.length,
-      className: 'ChatDebugViewEvent',
+      className: ChatDebugViewEvent,
       type: VirtualDomElements.Div,
     },
     ...lineNodes,

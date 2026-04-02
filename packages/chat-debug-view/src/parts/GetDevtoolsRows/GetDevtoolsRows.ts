@@ -1,5 +1,15 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import {
+  ChatDebugViewCell,
+  ChatDebugViewCellDuration,
+  ChatDebugViewCellStatus,
+  ChatDebugViewCellStatusError,
+  ChatDebugViewCellType,
+  ChatDebugViewEventRow,
+  ChatDebugViewEventRowSelected,
+  joinClassNames,
+} from '../ClassNames/ClassNames.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
@@ -13,25 +23,25 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
     return [
       {
         childCount: 3,
-        className: `ChatDebugViewEventRow${isSelected ? ' ChatDebugViewEventRowSelected' : ''}`,
+        className: joinClassNames(ChatDebugViewEventRow, isSelected && ChatDebugViewEventRowSelected),
         'data-index': rowIndex,
         type: VirtualDomElements.Tr,
       },
       {
         childCount: 1,
-        className: 'ChatDebugViewCell ChatDebugViewCellType',
+        className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellType),
         type: VirtualDomElements.Td,
       },
       text(getEventTypeLabel(event)),
       {
         childCount: 1,
-        className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+        className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellDuration),
         type: VirtualDomElements.Td,
       },
       text(getDurationText(event)),
       {
         childCount: 1,
-        className: `ChatDebugViewCell ChatDebugViewCellStatus${isErrorStatus ? ' ChatDebugViewCellStatusError' : ''}`,
+        className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellStatus, isErrorStatus && ChatDebugViewCellStatusError),
         type: VirtualDomElements.Td,
       },
       text(getStatusText(event)),

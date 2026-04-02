@@ -285,7 +285,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
   expect(tableBody?.childCount).toBe(2)
 })
 
-test('getDevtoolsDom should apply explicit duration and status column classes to headers and rows', () => {
+test('getDevtoolsDom should apply duration and status column classes to rows only', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
@@ -302,6 +302,11 @@ test('getDevtoolsDom should apply explicit duration and status column classes to
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewHeaderCell',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
     }),
   )
   expect(dom).toContainEqual(

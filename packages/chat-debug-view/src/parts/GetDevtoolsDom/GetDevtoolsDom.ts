@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -47,13 +48,13 @@ export const getDevtoolsDom = (
   return [
     {
       childCount: mainChildCount,
-      className: 'ChatDebugViewDevtoolsMain',
+      className: ChatDebugViewDevtoolsMain,
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
     {
       childCount: splitChildCount,
-      className: 'ChatDebugViewDevtoolsSplit',
+      className: ChatDebugViewDevtoolsSplit,
       type: VirtualDomElements.Div,
     },
     {

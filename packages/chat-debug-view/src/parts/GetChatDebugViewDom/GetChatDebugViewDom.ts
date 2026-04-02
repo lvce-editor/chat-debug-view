@@ -10,6 +10,7 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
+import { ChatDebugView, ChatDebugViewDevtools, joinClassNames } from '../ClassNames/ClassNames.ts'
 
 export const getChatDebugViewDom = (
   errorMessage: string,
@@ -77,7 +78,7 @@ export const getChatDebugViewDom = (
   return [
     {
       childCount: rootChildCount,
-      className: useDevtoolsLayout ? 'ChatDebugView ChatDebugView--devtools' : 'ChatDebugView',
+      className: joinClassNames(ChatDebugView, useDevtoolsLayout && ChatDebugViewDevtools),
       type: VirtualDomElements.Div,
     },
     ...debugViewTopDom,

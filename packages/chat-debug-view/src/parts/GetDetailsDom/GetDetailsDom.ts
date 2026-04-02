@@ -1,5 +1,16 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import {
+  ChatDebugViewDetails,
+  ChatDebugViewDetailsBody,
+  ChatDebugViewDetailsClose,
+  ChatDebugViewDetailsPanel,
+  ChatDebugViewDetailsTab,
+  ChatDebugViewDetailsTabSelected,
+  ChatDebugViewDetailsTabs,
+  ChatDebugViewDetailsTop,
+  joinClassNames,
+} from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
@@ -21,7 +32,7 @@ const getTabNodes = (selectedDetailTab: string): readonly VirtualDomNode[] => {
         'aria-controls': getPanelId(detailTab),
         'aria-selected': isSelected,
         childCount: 1,
-        className: isSelected ? 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected' : 'ChatDebugViewDetailsTab',
+        className: joinClassNames(ChatDebugViewDetailsTab, isSelected && ChatDebugViewDetailsTabSelected),
         id: getTabId(detailTab),
         name: InputName.DetailTab,
         onChange: DomEventListenerFunctions.HandleSimpleInput,
@@ -48,18 +59,18 @@ export const getDetailsDom = (
   return [
     {
       childCount: 2,
-      className: 'ChatDebugViewDetails',
+      className: ChatDebugViewDetails,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 2,
-      className: 'ChatDebugViewDetailsTop',
+      className: ChatDebugViewDetailsTop,
       type: VirtualDomElements.Div,
     },
     {
       'aria-label': 'Close details',
       childCount: 0,
-      className: 'ChatDebugViewDetailsClose',
+      className: ChatDebugViewDetailsClose,
       name: InputName.CloseDetails,
       onChange: DomEventListenerFunctions.HandleSimpleInput,
       onClick: DomEventListenerFunctions.HandleSimpleInput,
@@ -69,21 +80,21 @@ export const getDetailsDom = (
     {
       'aria-label': 'Detail sections',
       childCount: DetailTab.detailTabs.length,
-      className: 'ChatDebugViewDetailsTabs',
+      className: ChatDebugViewDetailsTabs,
       role: 'tablist',
       type: VirtualDomElements.Div,
     },
     ...getTabNodes(selectedDetailTab),
     {
       childCount: 1,
-      className: 'ChatDebugViewDetailsBody',
+      className: ChatDebugViewDetailsBody,
       role: 'document',
       type: VirtualDomElements.Div,
     },
     {
       'aria-labelledby': getTabId(selectedDetailTab),
       childCount: 1,
-      className: 'ChatDebugViewDetailsPanel',
+      className: ChatDebugViewDetailsPanel,
       id: getPanelId(selectedDetailTab),
       role: 'tabpanel',
       type: VirtualDomElements.Div,
