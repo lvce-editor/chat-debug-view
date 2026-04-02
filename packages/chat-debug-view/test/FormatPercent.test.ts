@@ -6,7 +6,7 @@ test('formatPercent should keep whole percentages without decimals', () => {
 })
 
 test('formatPercent should round percentages to three decimal places', () => {
-  expect(formatPercent(12.34567)).toBe('12.346%')
+  expect(formatPercent(12.345_67)).toBe('12.346%')
 })
 
 test('formatPercent should omit trailing zeroes after rounding', () => {

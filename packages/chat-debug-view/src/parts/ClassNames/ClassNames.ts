@@ -69,5 +69,5 @@ export const TokenString = 'TokenString'
 export const TokenText = 'TokenText'
 
 export const joinClassNames = (...classNames: readonly (string | false | null | undefined)[]): string => {
-  return classNames.filter((className): className is string => Boolean(className)).join(' ')
+  return classNames.filter(Boolean).join(' ')
 }

@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import {
   ChatDebugViewTimelineBucket,
   ChatDebugViewTimelineBucketBar,
@@ -7,7 +8,6 @@ import {
   ChatDebugViewTimelinePresetInput,
   joinClassNames,
 } from '../ClassNames/ClassNames.ts'
-import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getBucketUnitDom } from '../GetBucketUnitDom/GetBucketUnitDom.ts'

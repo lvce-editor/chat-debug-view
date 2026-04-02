@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { ChatDebugView, ChatDebugViewDevtools, joinClassNames } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
@@ -10,7 +11,6 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
-import { ChatDebugView, ChatDebugViewDevtools, joinClassNames } from '../ClassNames/ClassNames.ts'
 
 export const getChatDebugViewDom = (
   errorMessage: string,

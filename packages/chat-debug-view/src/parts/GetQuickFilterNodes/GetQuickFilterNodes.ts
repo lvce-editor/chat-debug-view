@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import {
   ChatDebugViewQuickFilterInput,
   ChatDebugViewQuickFilterPill,
@@ -6,7 +7,6 @@ import {
   ChatDebugViewQuickFilters,
   joinClassNames,
 } from '../ClassNames/ClassNames.ts'
-import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
