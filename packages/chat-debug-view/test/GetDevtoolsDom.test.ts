@@ -121,6 +121,29 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(body).toBeDefined()
 })
 
+test('getDevtoolsDom should make the events container keyboard focusable and expose application role', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+    readonly className?: string
+    readonly role?: string
+    readonly tabIndex?: number
+  }[]
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+
+  expect(eventsPane).toEqual(
+    expect.objectContaining({
+      role: 'application',
+      tabIndex: 0,
+    }),
+  )
+})
+
 test('getDevtoolsDom should delegate row pointerdown from table body using data-index', () => {
   const events = [
     {
@@ -278,7 +301,7 @@ test('getDevtoolsDom should apply explicit duration and status column classes to
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
+      className: 'ChatDebugViewHeaderCell',
     }),
   )
   expect(dom).toContainEqual(

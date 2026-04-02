@@ -59,6 +59,8 @@ export const getDevtoolsDom = (
     {
       childCount: 1,
       className: eventsClassName,
+      role: 'application',
+      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     ...tableNodes,

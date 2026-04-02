@@ -20,21 +20,18 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
       {
         childCount: 1,
         className: 'ChatDebugViewCell ChatDebugViewCellType',
-        'data-index': rowIndex,
         type: VirtualDomElements.Td,
       },
       text(getEventTypeLabel(event)),
       {
         childCount: 1,
         className: 'ChatDebugViewCell ChatDebugViewCellDuration',
-        'data-index': rowIndex,
         type: VirtualDomElements.Td,
       },
       text(getDurationText(event)),
       {
         childCount: 1,
         className: `ChatDebugViewCell ChatDebugViewCellStatus${isErrorStatus ? ' ChatDebugViewCellStatusError' : ''}`,
-        'data-index': rowIndex,
         type: VirtualDomElements.Td,
       },
       text(getStatusText(event)),
