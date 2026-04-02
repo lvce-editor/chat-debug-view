@@ -209,14 +209,27 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
     events,
     events,
   ) as readonly {
+    readonly ['aria-label']?: string
     readonly className?: string
     readonly name?: string
   }[]
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
-  const closeButton = dom.find((node) => node.name === 'closeDetails')
+  const detailsTopIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDetailsTop')
 
   expect(detailsPanel).toBeDefined()
-  expect(closeButton).toBeDefined()
+  expect(detailsTopIndex).toBeGreaterThan(-1)
+  expect(dom[detailsTopIndex + 1]).toEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsClose',
+      name: 'closeDetails',
+    }),
+  )
+  expect(dom[detailsTopIndex + 2]).toEqual(
+    expect.objectContaining({
+      'aria-label': 'Detail sections',
+      className: 'ChatDebugViewDetailsTabs',
+    }),
+  )
 })
 
 test('getChatDebugViewDom should not stringify unselected events in devtools layout', () => {

@@ -50,7 +50,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   expect(sashLine).toBeDefined()
 })
 
-test('getDevtoolsDom should render accessible response and timing tabs in the details panel', () => {
+test('getDevtoolsDom should render accessible response, preview and timing tabs in the details panel', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
@@ -79,6 +79,13 @@ test('getDevtoolsDom should render accessible response and timing tabs in the de
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       role: 'tab',
       value: 'response',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab',
+      role: 'tab',
+      value: 'preview',
     }),
   )
   expect(dom).toContainEqual(

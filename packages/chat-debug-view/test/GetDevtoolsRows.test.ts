@@ -131,7 +131,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('0ms'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
       'data-index': '0',
       type: VirtualDomElements.Td,
     },

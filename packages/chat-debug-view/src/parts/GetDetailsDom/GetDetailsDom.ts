@@ -57,14 +57,6 @@ export const getDetailsDom = (
       type: VirtualDomElements.Div,
     },
     {
-      'aria-label': 'Detail sections',
-      childCount: DetailTab.detailTabs.length,
-      className: 'ChatDebugViewDetailsTabs',
-      role: 'tablist',
-      type: VirtualDomElements.Div,
-    },
-    ...getTabNodes(selectedDetailTab),
-    {
       'aria-label': 'Close details',
       childCount: 0,
       className: 'ChatDebugViewDetailsClose',
@@ -75,8 +67,17 @@ export const getDetailsDom = (
       value: 'close',
     },
     {
+      'aria-label': 'Detail sections',
+      childCount: DetailTab.detailTabs.length,
+      className: 'ChatDebugViewDetailsTabs',
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
+    ...getTabNodes(selectedDetailTab),
+    {
       childCount: 1,
       className: 'ChatDebugViewDetailsBody',
+      role: 'document',
       type: VirtualDomElements.Div,
     },
     {

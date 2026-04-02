@@ -351,7 +351,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   white-space: nowrap;
   min-width: 0;
   font-size: 11px;
-  text-transform: uppercase;
   letter-spacing: 0.04em;
   opacity: 0.8;
   contain: content;
@@ -427,6 +426,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   text-align: right;
 }
 
+.ChatDebugViewCellStatusError {
+  color: var(--vscode-errorForeground, #f14c4c);
+}
+
 .ChatDebugViewDetails {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
@@ -445,6 +448,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   gap: 8px;
   padding: 0 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 72%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 28%);
   contain: content;
 }
 
@@ -521,7 +525,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   color: var(--vscode-descriptionForeground, var(--vscode-foreground, #cccccc));
   cursor: pointer;
   white-space: nowrap;
-  contain: strict;
+  contain: content;
 }
 
 .ChatDebugViewDetailsTab:hover {
@@ -530,7 +534,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewDetailsTabSelected {
   border-bottom-color: var(--vscode-focusBorder, #007fd4);
-  color: var(--vscode-foreground, #cccccc);
+  color: var(--vscode-focusBorder, #007fd4);
 }
 
 .ChatDebugViewDetailsPanel {
@@ -588,17 +592,18 @@ export const getCss = (state: ChatDebugViewState): string => {
 .row {
   display: flex;
   align-items: baseline;
+  gap: 12px;
   min-width: 100%;
   width: max-content;
   white-space: nowrap;
-  contain: content;
+  contain: strict;
+  height: 20px;
 }
 
 .ChatDebugViewEventLineNumber {
   display: flex;
   justify-content: flex-end;
   flex: 0 0 3ch;
-  margin-right: 12px;
   opacity: 0.6;
   user-select: none;
   contain: content;
@@ -620,9 +625,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
-  border-radius: 6px;
-  overflow: hidden;
   contain: strict;
   flex: 1;
 }
