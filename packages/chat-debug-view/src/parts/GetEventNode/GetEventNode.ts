@@ -75,12 +75,18 @@ const getLineNodes = (lines: readonly (readonly TokenSegment[])[]): readonly Vir
   })
 }
 
-export const getEventNode = (event: ChatViewEvent): readonly VirtualDomNode[] => {
-  const renderedEvent = {
-    ...event,
-    type: getEventTypeLabel(event),
-  }
-  const lines = getJsonLines(renderedEvent)
+const isChatViewEvent = (value: unknown): value is ChatViewEvent => {
+  return typeof value === 'object' && value !== null && typeof (value as ChatViewEvent).type === 'string'
+}
+
+export const getEventNode = (value: unknown): readonly VirtualDomNode[] => {
+  const renderedValue = isChatViewEvent(value)
+    ? {
+        ...value,
+        type: getEventTypeLabel(value),
+      }
+    : value
+  const lines = getJsonLines(renderedValue)
   const lineNodes = getLineNodes(lines)
   return [
     {

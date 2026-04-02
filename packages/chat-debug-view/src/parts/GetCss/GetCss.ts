@@ -401,7 +401,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewEventRow {
   padding: 2px 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
-  cursor: pointer;
+  cursor: default;
 }
 
 .ChatDebugViewEventRow:hover {

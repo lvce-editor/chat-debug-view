@@ -446,3 +446,57 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
     }),
   )
 })
+
+test('getDevtoolsDom should simplify preview json to name, arguments and result when available', () => {
+  const events = [
+    {
+      arguments: {
+        uri: 'file:///workspace/README.md',
+      },
+      id: 'call-1',
+      name: 'read_file',
+      result: {
+        content: 'hello',
+      },
+      sessionId: 'session-1',
+      time: '2026-04-02T07:26:35.168Z',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"name"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"arguments"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"result"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"read_file"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"sessionId"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"id"',
+    }),
+  )
+})

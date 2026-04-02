@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenerFunctions.HandleEventRowClick,
-      params: ['handleEventRowClick', 'event.target.dataset.index'],
+      params: ['handleEventRowClick', 'event.target.dataset.index', 'event.button'],
     },
     {
       name: DomEventListenerFunctions.HandleTableBodyContextMenu,

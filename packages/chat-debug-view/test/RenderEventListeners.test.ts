@@ -8,7 +8,7 @@ test('renderEventListeners should register delegated row click with dataset inde
   const clickListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleEventRowClick)
 
   expect(clickListener).toBeDefined()
-  expect(clickListener?.params).toEqual(['handleEventRowClick', 'event.target.dataset.index'])
+  expect(clickListener?.params).toEqual(['handleEventRowClick', 'event.target.dataset.index', 'event.button'])
 })
 
 test('renderEventListeners should register table body context menu with preventDefault', () => {

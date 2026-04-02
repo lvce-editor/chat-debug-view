@@ -40,7 +40,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   }
-  const result = await handleEventRowClick(state, '2')
+  const result = await handleEventRowClick(state, '2', 0)
 
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
@@ -56,7 +56,27 @@ test('handleEventRowClick should ignore clicks without a row index', async () =>
     ...createDefaultState(),
     selectedEventIndex: 1,
   }
-  const result = await handleEventRowClick(state, '')
+  const result = await handleEventRowClick(state, '', 0)
+
+  expect(result).toBe(state)
+})
+
+test('handleEventRowClick should ignore non-primary button clicks', async () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        duration: 1,
+        endTime: '2026-03-08T00:00:00.000Z',
+        eventId: 1,
+        startTime: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+    ],
+    selectedEventIndex: 1,
+  }
+
+  const result = await handleEventRowClick(state, '0', 2)
 
   expect(result).toBe(state)
 })
@@ -73,7 +93,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
     ],
   }
 
-  const result = await handleEventRowClick(state, '0')
+  const result = await handleEventRowClick(state, '0', 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBeNull()
@@ -100,7 +120,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     sessionId: 'session-1',
   }
 
-  const result = await handleEventRowClick(state, '0')
+  const result = await handleEventRowClick(state, '0', 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBe(1)

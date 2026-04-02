@@ -8,6 +8,10 @@ export const handleEventRowClickDependencies = {
   loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
 }
 
+const isPrimaryButton = (button: number): boolean => {
+  return button === 0
+}
+
 const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   const filteredEvents = getFilteredEvents(
     state.events,
@@ -28,7 +32,10 @@ const parseSelectedEventIndex = (value: string): number | null => {
   return parsed
 }
 
-export const handleEventRowClick = async (state: ChatDebugViewState, value: string): Promise<ChatDebugViewState> => {
+export const handleEventRowClick = async (state: ChatDebugViewState, value: string, button: number): Promise<ChatDebugViewState> => {
+  if (!isPrimaryButton(button)) {
+    return state
+  }
   const selectedEventIndex = parseSelectedEventIndex(value)
   if (selectedEventIndex === null) {
     return state
