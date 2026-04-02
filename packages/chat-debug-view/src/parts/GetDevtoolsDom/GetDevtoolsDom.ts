@@ -2,6 +2,7 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEmptyStateDom } from '../GetEmptyStateDom/GetEmptyStateDom.ts'
@@ -63,6 +64,7 @@ export const getDevtoolsDom = (
     {
       childCount: 1,
       className: eventsClassName,
+      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
       type: VirtualDomElements.Div,

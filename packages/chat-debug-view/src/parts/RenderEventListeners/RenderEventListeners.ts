@@ -19,6 +19,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       preventDefault: true,
     },
     {
+      name: DomEventListenerFunctions.HandleTableKeyDown,
+      params: ['handleTableKeyDown', EventExpression.Key],
+    },
+    {
       name: DomEventListenerFunctions.HandleFilterInput,
       params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
     },

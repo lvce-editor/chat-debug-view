@@ -12,3 +12,4 @@ export const HandleTimelinePointerDown = 14
 export const HandleTimelinePointerMove = 15
 export const HandleTimelinePointerUp = 16
 export const HandleTimelineDoubleClick = 17
+export const HandleTableKeyDown = 18
