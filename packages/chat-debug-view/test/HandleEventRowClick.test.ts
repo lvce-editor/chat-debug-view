@@ -132,3 +132,38 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     type: 'request',
   })
 })
+
+test('handleEventRowClick should preserve selected detail tab when switching rows', async () => {
+  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'preview',
+    eventId: 2,
+    type: 'response',
+  } as ChatViewEvent)
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        eventId: 1,
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        eventId: 2,
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'response',
+      },
+    ],
+    selectedDetailTab: 'preview',
+    sessionId: 'session-1',
+  }
+
+  const result = await handleEventRowClick(state, '1', 0)
+
+  expect(result.selectedDetailTab).toBe('preview')
+  expect(result.selectedEventIndex).toBe(1)
+  expect(result.selectedEvent).toEqual({
+    detail: 'preview',
+    eventId: 2,
+    type: 'response',
+  })
+})

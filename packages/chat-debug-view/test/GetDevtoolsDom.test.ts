@@ -131,6 +131,7 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
+    readonly onKeyDown?: number
     readonly role?: string
     readonly tabIndex?: number
   }[]
@@ -138,6 +139,7 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
 
   expect(eventsPane).toEqual(
     expect.objectContaining({
+      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
     }),

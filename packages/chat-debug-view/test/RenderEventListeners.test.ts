@@ -24,6 +24,19 @@ test('renderEventListeners should register table body context menu with preventD
   )
 })
 
+test('renderEventListeners should register details context menu with preventDefault', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const contextMenuListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleDetailsContextMenu)
+
+  expect(contextMenuListener).toBeDefined()
+  expect(contextMenuListener).toEqual(
+    expect.objectContaining({
+      params: ['handleDetailsContextMenu'],
+      preventDefault: true,
+    }),
+  )
+})
+
 test('renderEventListeners should register filter input with name and value params', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const filterListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleFilterInput)
@@ -88,4 +101,17 @@ test('renderEventListeners should register timeline double click reset', () => {
 
   expect(doubleClickListener).toBeDefined()
   expect(doubleClickListener?.params).toEqual(['handleTimelineDoubleClick'])
+})
+
+test('renderEventListeners should register table keyboard navigation with key param', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const keyDownListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTableKeyDown)
+
+  expect(keyDownListener).toBeDefined()
+  expect(keyDownListener).toEqual(
+    expect.objectContaining({
+      params: ['handleTableKeyDown', EventExpression.Key],
+      preventDefault: true,
+    }),
+  )
 })

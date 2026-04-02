@@ -129,3 +129,49 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('400'),
   ])
 })
+
+test('getDevtoolsRows should render 400 status when tool error is nested in result', () => {
+  const events = [
+    {
+      arguments: {
+        uri: '/home/simon/Documents/levivilet/lvce-editor/playground',
+      },
+      name: 'list_files',
+      result: {
+        error: 'Invalid argument: uri must be an absolute URI.',
+      },
+      sessionId: 'session-1',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'ChatDebugViewEventRow',
+      'data-index': '0',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      type: VirtualDomElements.Td,
+    },
+    text('tool-execution, list_files'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0ms'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      type: VirtualDomElements.Td,
+    },
+    text('400'),
+  ])
+})

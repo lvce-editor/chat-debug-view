@@ -1,7 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 
 const hasOwn = (event: ChatViewEvent, key: string): boolean => {
-  return Object.prototype.hasOwnProperty.call(event, key)
+  return Object.hasOwn(event, key)
 }
 
 const getPreviewName = (event: ChatViewEvent): string | undefined => {

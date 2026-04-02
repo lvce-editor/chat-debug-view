@@ -23,6 +23,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onContextMenu?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly value?: string
@@ -112,6 +113,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsPanel',
       id: 'ChatDebugViewDetailsPanel-response',
+      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
       type: VirtualDomElements.Div,
     },

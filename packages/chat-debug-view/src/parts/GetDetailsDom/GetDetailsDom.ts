@@ -102,6 +102,7 @@ export const getDetailsDom = (
       childCount: 1,
       className: ChatDebugViewDetailsPanel,
       id: getPanelId(selectedDetailTab),
+      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
       type: VirtualDomElements.Div,
     },
