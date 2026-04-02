@@ -140,6 +140,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
         type: VirtualDomElements.Div,
       },
     ],
+    undefined,
     {
       ended: '2026-03-08T00:00:01.250Z',
       started: '2026-03-08T00:00:01.000Z',
@@ -193,7 +194,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, null, 'preview') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, null, 'preview') as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string

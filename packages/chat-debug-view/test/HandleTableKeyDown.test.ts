@@ -1,5 +1,9 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import { focusFirstDependencies } from '../src/parts/FocusFirst/FocusFirst.ts'
+import { focusLastDependencies } from '../src/parts/FocusLast/FocusLast.ts'
+import { focusNextDependencies } from '../src/parts/FocusNext/FocusNext.ts'
+import { focusPreviousDependencies } from '../src/parts/FocusPrevious/FocusPrevious.ts'
 import { handleTableKeyDown } from '../src/parts/HandleTableKeyDown/HandleTableKeyDown.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -8,6 +12,11 @@ afterEach(() => {
 })
 
 test('handleTableKeyDown should focus the next row for ArrowDown', async () => {
+  const loadSelectedEventSpy = jest.spyOn(focusNextDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'value',
+    eventId: 2,
+    type: 'response',
+  } as ChatViewEvent)
   const state = {
     ...createDefaultState(),
     events: [
@@ -31,9 +40,15 @@ test('handleTableKeyDown should focus the next row for ArrowDown', async () => {
 
   expect(result.selectedEventIndex).toBe(1)
   expect(result.selectedDetailTab).toBe('preview')
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
 })
 
 test('handleTableKeyDown should focus the previous row for ArrowUp', async () => {
+  const loadSelectedEventSpy = jest.spyOn(focusPreviousDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'value',
+    eventId: 1,
+    type: 'request',
+  } as ChatViewEvent)
   const state = {
     ...createDefaultState(),
     events: [
@@ -55,9 +70,15 @@ test('handleTableKeyDown should focus the previous row for ArrowUp', async () =>
   const result = await handleTableKeyDown(state, 'ArrowUp')
 
   expect(result.selectedEventIndex).toBe(0)
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 })
 
 test('handleTableKeyDown should focus the first row for Home', async () => {
+  const loadSelectedEventSpy = jest.spyOn(focusFirstDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'value',
+    eventId: 1,
+    type: 'request',
+  } as ChatViewEvent)
   const state = {
     ...createDefaultState(),
     events: [
@@ -79,16 +100,15 @@ test('handleTableKeyDown should focus the first row for Home', async () => {
   const result = await handleTableKeyDown(state, 'Home')
 
   expect(result.selectedEventIndex).toBe(0)
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 })
 
 test('handleTableKeyDown should focus the last row for End', async () => {
-  const loadSelectedEvent = jest.fn().mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(focusLastDependencies, 'loadSelectedEvent').mockResolvedValue({
     detail: 'value',
     eventId: 2,
     type: 'response',
   } as ChatViewEvent)
-  const { focusLastDependencies } = await import('../src/parts/FocusLast/FocusLast.ts')
-  jest.spyOn(focusLastDependencies, 'loadSelectedEvent').mockImplementation(loadSelectedEvent)
   const state = {
     ...createDefaultState(),
     events: [
@@ -114,7 +134,7 @@ test('handleTableKeyDown should focus the last row for End', async () => {
     eventId: 2,
     type: 'response',
   })
-  expect(loadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
 })
 
 test('handleTableKeyDown should ignore unrelated keys', async () => {

@@ -69,5 +69,5 @@ test('focusNext should stop at the last row', async () => {
   const result = await focusNext(state)
 
   expect(result.selectedEventIndex).toBe(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
 })
