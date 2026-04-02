@@ -427,6 +427,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   text-align: right;
 }
 
+.ChatDebugViewCellStatusError {
+  color: var(--vscode-errorForeground, #f14c4c);
+}
+
 .ChatDebugViewDetails {
   border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
@@ -530,7 +534,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewDetailsTabSelected {
   border-bottom-color: var(--vscode-focusBorder, #007fd4);
-  color: var(--vscode-foreground, #cccccc);
+  color: var(--vscode-focusBorder, #007fd4);
 }
 
 .ChatDebugViewDetailsPanel {
@@ -588,17 +592,17 @@ export const getCss = (state: ChatDebugViewState): string => {
 .row {
   display: flex;
   align-items: baseline;
+  gap: 12px;
   min-width: 100%;
   width: max-content;
   white-space: nowrap;
-  contain: content;
+  contain: strict;
 }
 
 .ChatDebugViewEventLineNumber {
   display: flex;
   justify-content: flex-end;
   flex: 0 0 3ch;
-  margin-right: 12px;
   opacity: 0.6;
   user-select: none;
   contain: content;

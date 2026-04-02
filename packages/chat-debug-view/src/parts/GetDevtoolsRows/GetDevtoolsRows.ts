@@ -2,11 +2,13 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
+import { hasErrorStatus } from '../HasErrorStatus/HasErrorStatus.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventIndex: number | null): readonly VirtualDomNode[] => {
   return events.flatMap((event, i) => {
     const isSelected = selectedEventIndex === i
+    const isErrorStatus = hasErrorStatus(event)
     const rowIndex = String(i)
     return [
       {
@@ -31,7 +33,7 @@ export const getDevtoolsRows = (events: readonly ChatViewEvent[], selectedEventI
       text(getDurationText(event)),
       {
         childCount: 1,
-        className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+        className: `ChatDebugViewCell ChatDebugViewCellStatus${isErrorStatus ? ' ChatDebugViewCellStatusError' : ''}`,
         'data-index': rowIndex,
         type: VirtualDomElements.Td,
       },

@@ -40,6 +40,16 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       type: VirtualDomElements.Div,
     },
     {
+      'aria-label': 'Close details',
+      childCount: 0,
+      className: 'ChatDebugViewDetailsClose',
+      name: 'closeDetails',
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      type: VirtualDomElements.Button,
+      value: 'close',
+    },
+    {
       'aria-label': 'Detail sections',
       childCount: 2,
       className: 'ChatDebugViewDetailsTabs',
@@ -77,18 +87,9 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     text('Timing'),
     {
-      'aria-label': 'Close details',
-      childCount: 0,
-      className: 'ChatDebugViewDetailsClose',
-      name: 'closeDetails',
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
-      onClick: DomEventListenerFunctions.HandleSimpleInput,
-      type: VirtualDomElements.Button,
-      value: 'close',
-    },
-    {
       childCount: 1,
       className: 'ChatDebugViewDetailsBody',
+      role: 'document',
       type: VirtualDomElements.Div,
     },
     {
@@ -136,6 +137,12 @@ test('getDetailsDom should render timing panel content when timing tab is select
     readonly value?: string
   }[]
 
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsBody',
+      role: 'document',
+    }),
+  )
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
