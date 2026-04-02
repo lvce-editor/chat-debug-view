@@ -351,7 +351,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   white-space: nowrap;
   min-width: 0;
   font-size: 11px;
-  text-transform: uppercase;
   letter-spacing: 0.04em;
   opacity: 0.8;
   contain: content;
@@ -449,6 +448,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   gap: 8px;
   padding: 0 8px;
   border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 72%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.18)) 28%);
   contain: content;
 }
 
@@ -625,9 +625,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
-  border-radius: 6px;
-  overflow: hidden;
   contain: strict;
   flex: 1;
 }

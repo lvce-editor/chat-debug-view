@@ -51,7 +51,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     {
       'aria-label': 'Detail sections',
-      childCount: 2,
+      childCount: 3,
       className: 'ChatDebugViewDetailsTabs',
       role: 'tablist',
       type: VirtualDomElements.Div,
@@ -71,6 +71,21 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       value: 'response',
     },
     text('Response'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-preview',
+      'aria-selected': false,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab',
+      id: 'ChatDebugViewDetailsTab-preview',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+      value: 'preview',
+    },
+    text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
       'aria-selected': false,
@@ -163,6 +178,44 @@ test('getDetailsDom should render timing panel content when timing tab is select
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '250ms',
+    }),
+  )
+})
+
+test('getDetailsDom should render selected event content when preview tab is selected', () => {
+  const selectedEventNodes = [
+    {
+      childCount: 1,
+      className: 'SelectedEventNode',
+      type: VirtualDomElements.Div,
+    },
+  ]
+
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, null, 'preview') as readonly {
+    readonly ['aria-labelledby']?: string
+    readonly ['aria-selected']?: boolean
+    readonly className?: string
+    readonly role?: string
+    readonly value?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      role: 'tab',
+      value: 'preview',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      'aria-labelledby': 'ChatDebugViewDetailsTab-preview',
+      className: 'ChatDebugViewDetailsPanel',
+      role: 'tabpanel',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'SelectedEventNode',
     }),
   )
 })

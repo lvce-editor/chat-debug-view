@@ -63,8 +63,8 @@ test('handleInput should close details panel', () => {
 
 test('handleInput should update selected detail tab', () => {
   const state = createDefaultState()
-  const result = HandleInput.handleInput(state, InputName.DetailTab, 'timing', false)
-  expect(result.selectedDetailTab).toBe('timing')
+  const result = HandleInput.handleInput(state, InputName.DetailTab, 'preview', false)
+  expect(result.selectedDetailTab).toBe('preview')
 })
 
 test('handleInput should ignore invalid selected detail tab values', () => {
