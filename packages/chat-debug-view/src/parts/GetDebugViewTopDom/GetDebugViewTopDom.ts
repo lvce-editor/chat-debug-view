@@ -20,6 +20,7 @@ export const getDebugViewTopDom = (
       {
         childCount: 1 + (quickFilterNodes.length > 0 ? 1 : 0),
         className: joinClassNames(ChatDebugViewTop, ChatDebugViewTopDevtools),
+        onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
         type: VirtualDomElements.Search,
       },
       {
@@ -41,6 +42,7 @@ export const getDebugViewTopDom = (
     {
       childCount: 1,
       className: ChatDebugViewTop,
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
     {

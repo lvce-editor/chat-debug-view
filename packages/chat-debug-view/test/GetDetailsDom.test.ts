@@ -138,13 +138,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
         type: VirtualDomElements.Div,
       },
     ],
-    [
-      {
-        childCount: 1,
-        className: 'SelectedEventNode',
-        type: VirtualDomElements.Div,
-      },
-    ],
     {
       ended: '2026-03-08T00:00:01.250Z',
       started: '2026-03-08T00:00:01.000Z',
@@ -190,22 +183,15 @@ test('getDetailsDom should render timing panel content when timing tab is select
 })
 
 test('getDetailsDom should render selected event content when preview tab is selected', () => {
-  const previewEventNodes = [
+  const selectedEventNodes = [
     {
       childCount: 1,
-      className: 'PreviewEventNode',
-      type: VirtualDomElements.Div,
-    },
-  ]
-  const responseEventNodes = [
-    {
-      childCount: 1,
-      className: 'ResponseEventNode',
+      className: 'SelectedEventNode',
       type: VirtualDomElements.Div,
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(previewEventNodes, responseEventNodes, null, 'preview') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, null, 'preview') as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string
@@ -229,44 +215,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'PreviewEventNode',
-    }),
-  )
-  expect(dom).not.toContainEqual(
-    expect.objectContaining({
-      className: 'ResponseEventNode',
-    }),
-  )
-})
-
-test('getDetailsDom should render response event content when response tab is selected', () => {
-  const previewEventNodes = [
-    {
-      childCount: 1,
-      className: 'PreviewEventNode',
-      type: VirtualDomElements.Div,
-    },
-  ]
-  const responseEventNodes = [
-    {
-      childCount: 1,
-      className: 'ResponseEventNode',
-      type: VirtualDomElements.Div,
-    },
-  ]
-
-  const dom = GetDetailsDom.getDetailsDom(previewEventNodes, responseEventNodes, null, 'response') as readonly {
-    readonly className?: string
-  }[]
-
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      className: 'ResponseEventNode',
-    }),
-  )
-  expect(dom).not.toContainEqual(
-    expect.objectContaining({
-      className: 'PreviewEventNode',
+      className: 'SelectedEventNode',
     }),
   )
 })

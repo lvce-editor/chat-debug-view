@@ -14,11 +14,21 @@ const getPreviewName = (event: ChatViewEvent): string | undefined => {
   return undefined
 }
 
+const shouldIncludeArguments = (event: ChatViewEvent, name: string | undefined): boolean => {
+  if (!hasOwn(event, 'arguments')) {
+    return false
+  }
+  if (name === 'getWorkspaceUri') {
+    return false
+  }
+  return true
+}
+
 export const getPreviewEvent = (event: ChatViewEvent): unknown => {
   const name = getPreviewName(event)
   const previewEvent = {
     ...(name === undefined ? {} : { name }),
-    ...(hasOwn(event, 'arguments') ? { arguments: event.arguments } : {}),
+    ...(shouldIncludeArguments(event, name) ? { arguments: event.arguments } : {}),
     ...(hasOwn(event, 'result') ? { result: event.result } : {}),
   }
   if (Object.keys(previewEvent).length > 0) {

@@ -24,6 +24,19 @@ test('renderEventListeners should register table body context menu with preventD
   )
 })
 
+test('renderEventListeners should register header context menu with preventDefault', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const contextMenuListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleHeaderContextMenu)
+
+  expect(contextMenuListener).toBeDefined()
+  expect(contextMenuListener).toEqual(
+    expect.objectContaining({
+      params: ['handleHeaderContextMenu'],
+      preventDefault: true,
+    }),
+  )
+})
+
 test('renderEventListeners should register filter input with name and value params', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const filterListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleFilterInput)

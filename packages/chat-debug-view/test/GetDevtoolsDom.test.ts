@@ -500,3 +500,52 @@ test('getDevtoolsDom should simplify preview json to name, arguments and result 
     }),
   )
 })
+
+test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab', () => {
+  const events = [
+    {
+      arguments: {
+        baseUri: '/test/chat-debug-view',
+        pattern: '**/*',
+      },
+      error: 'Invalid argument: baseUri must be an absolute URI.',
+      name: 'getWorkspaceUri',
+      result: {
+        uri: 'file:///workspace',
+      },
+      sessionId: 'session-1',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"name"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"getWorkspaceUri"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"result"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"arguments"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"baseUri"',
+    }),
+  )
+})
