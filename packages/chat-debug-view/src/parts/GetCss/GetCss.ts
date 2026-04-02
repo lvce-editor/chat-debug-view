@@ -401,6 +401,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  pointer-events: none;
   contain: content;
 }
 
