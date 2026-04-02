@@ -397,6 +397,29 @@ test('getDevtoolsDom should render tool execution row labels with tool name', ()
   )
 })
 
+test('getDevtoolsDom should render tool execution row labels with top-level name', () => {
+  const events = [
+    {
+      arguments: {
+        uri: 'file:///workspace',
+      },
+      name: 'list_files',
+      sessionId: 'session-1',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'tool-execution, list_files',
+    }),
+  )
+})
+
 test('getDevtoolsDom should render 400 status for errored events', () => {
   const events = [
     {
