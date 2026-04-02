@@ -40,7 +40,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   }
-  const result = await handleEventRowClick(state, '2')
+  const result = await handleEventRowClick(state, '2', 0)
 
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
@@ -56,7 +56,27 @@ test('handleEventRowClick should ignore clicks without a row index', async () =>
     ...createDefaultState(),
     selectedEventIndex: 1,
   }
-  const result = await handleEventRowClick(state, '')
+  const result = await handleEventRowClick(state, '', 0)
+
+  expect(result).toBe(state)
+})
+
+test('handleEventRowClick should ignore non-primary button clicks', async () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        duration: 1,
+        endTime: '2026-03-08T00:00:00.000Z',
+        eventId: 1,
+        startTime: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+    ],
+    selectedEventIndex: 1,
+  }
+
+  const result = await handleEventRowClick(state, '0', 2)
 
   expect(result).toBe(state)
 })
@@ -73,7 +93,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
     ],
   }
 
-  const result = await handleEventRowClick(state, '0')
+  const result = await handleEventRowClick(state, '0', 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBeNull()
@@ -100,7 +120,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     sessionId: 'session-1',
   }
 
-  const result = await handleEventRowClick(state, '0')
+  const result = await handleEventRowClick(state, '0', 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBe(1)
@@ -110,5 +130,40 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
+  })
+})
+
+test('handleEventRowClick should preserve selected detail tab when switching rows', async () => {
+  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'preview',
+    eventId: 2,
+    type: 'response',
+  } as ChatViewEvent)
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        eventId: 1,
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        eventId: 2,
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'response',
+      },
+    ],
+    selectedDetailTab: 'preview',
+    sessionId: 'session-1',
+  }
+
+  const result = await handleEventRowClick(state, '1', 0)
+
+  expect(result.selectedDetailTab).toBe('preview')
+  expect(result.selectedEventIndex).toBe(1)
+  expect(result.selectedEvent).toEqual({
+    detail: 'preview',
+    eventId: 2,
+    type: 'response',
   })
 })

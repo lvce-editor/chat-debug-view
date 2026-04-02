@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getTokenSegments } from '../GetTokenSegments/GetTokenSegments.ts'
 
 export const getJsonTokenNodes = (value: unknown): readonly VirtualDomNode[] => {
@@ -7,7 +8,7 @@ export const getJsonTokenNodes = (value: unknown): readonly VirtualDomNode[] => 
     return [
       {
         childCount: 1,
-        className: 'TokenText',
+        className: TokenText,
         type: VirtualDomElements.Span,
       },
       text(String(json)),

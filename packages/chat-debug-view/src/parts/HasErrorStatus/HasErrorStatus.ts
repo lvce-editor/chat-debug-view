@@ -1,5 +1,20 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 
+const isRecord = (value: unknown): value is Record<string, unknown> => {
+  return typeof value === 'object' && value !== null
+}
+
+const isErrorStatusCode = (value: unknown): boolean => {
+  if (typeof value === 'number') {
+    return value >= 400
+  }
+  if (typeof value === 'string') {
+    const parsedStatus = Number(value)
+    return Number.isFinite(parsedStatus) && parsedStatus >= 400
+  }
+  return false
+}
+
 export const hasErrorStatus = (event: ChatViewEvent): boolean => {
   if (event.type === 'error') {
     return true
@@ -8,12 +23,15 @@ export const hasErrorStatus = (event: ChatViewEvent): boolean => {
     return true
   }
   const { status } = event
-  if (typeof status === 'number' && status >= 400) {
+  if (isErrorStatusCode(status)) {
     return true
   }
-  if (typeof status === 'string') {
-    const parsedStatus = Number(status)
-    if (Number.isFinite(parsedStatus) && parsedStatus >= 400) {
+  const { result } = event
+  if (isRecord(result)) {
+    if (isErrorStatusCode(result.status)) {
+      return true
+    }
+    if (typeof result.error === 'string' || typeof result.errorMessage === 'string' || typeof result.exception === 'string') {
       return true
     }
   }

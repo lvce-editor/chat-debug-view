@@ -1,5 +1,12 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import {
+  ChatDebugViewQuickFilterInput,
+  ChatDebugViewQuickFilterPill,
+  ChatDebugViewQuickFilterPillSelected,
+  ChatDebugViewQuickFilters,
+  joinClassNames,
+} from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
@@ -10,7 +17,7 @@ export const getQuickFilterNodes = (
   return [
     {
       childCount: eventCategoryFilterOptions.length,
-      className: 'ChatDebugViewQuickFilters',
+      className: ChatDebugViewQuickFilters,
       type: VirtualDomElements.Div,
     },
     ...eventCategoryFilterOptions.flatMap((option) => {
@@ -18,13 +25,13 @@ export const getQuickFilterNodes = (
       return [
         {
           childCount: 2,
-          className: `ChatDebugViewQuickFilterPill${isSelected ? ' ChatDebugViewQuickFilterPillSelected' : ''}`,
+          className: joinClassNames(ChatDebugViewQuickFilterPill, isSelected && ChatDebugViewQuickFilterPillSelected),
           type: VirtualDomElements.Label,
         },
         {
           checked: isSelected,
           childCount: 0,
-          className: 'ChatDebugViewQuickFilterInput',
+          className: ChatDebugViewQuickFilterInput,
           inputType: 'radio',
           name: InputName.EventCategoryFilter,
           onChange: DomEventListenerFunctions.HandleInput,

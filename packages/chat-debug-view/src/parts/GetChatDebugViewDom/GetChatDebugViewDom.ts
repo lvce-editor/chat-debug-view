@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { ChatDebugView, ChatDebugViewDevtools, joinClassNames } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
@@ -77,7 +78,7 @@ export const getChatDebugViewDom = (
   return [
     {
       childCount: rootChildCount,
-      className: useDevtoolsLayout ? 'ChatDebugView ChatDebugView--devtools' : 'ChatDebugView',
+      className: joinClassNames(ChatDebugView, useDevtoolsLayout && ChatDebugViewDevtools),
       type: VirtualDomElements.Div,
     },
     ...debugViewTopDom,

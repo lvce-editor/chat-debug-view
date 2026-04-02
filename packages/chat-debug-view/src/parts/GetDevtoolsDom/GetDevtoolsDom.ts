@@ -1,11 +1,14 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEmptyStateDom } from '../GetEmptyStateDom/GetEmptyStateDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
+import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
@@ -32,12 +35,14 @@ export const getDevtoolsDom = (
     timelineSelectionAnchorSeconds,
     timelineSelectionFocusSeconds,
   )
-  const selectedEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
-  const hasSelectedEvent = selectedEventNodes.length > 0
+  const previewEventNodes = selectedEvent ? getEventNode(getPreviewEvent(selectedEvent)) : []
+  const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
+  const hasSelectedEvent = responseEventNodes.length > 0
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(
-    selectedEventNodes,
+    previewEventNodes,
+    responseEventNodes,
     selectedEvent,
     DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : DetailTab.Response,
   )
@@ -47,18 +52,19 @@ export const getDevtoolsDom = (
   return [
     {
       childCount: mainChildCount,
-      className: 'ChatDebugViewDevtoolsMain',
+      className: ChatDebugViewDevtoolsMain,
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
     {
       childCount: splitChildCount,
-      className: 'ChatDebugViewDevtoolsSplit',
+      className: ChatDebugViewDevtoolsSplit,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
       className: eventsClassName,
+      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
       type: VirtualDomElements.Div,

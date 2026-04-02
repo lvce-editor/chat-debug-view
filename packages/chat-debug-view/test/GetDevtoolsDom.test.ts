@@ -131,6 +131,7 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
+    readonly onKeyDown?: number
     readonly role?: string
     readonly tabIndex?: number
   }[]
@@ -138,6 +139,7 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
 
   expect(eventsPane).toEqual(
     expect.objectContaining({
+      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
     }),
@@ -285,7 +287,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
   expect(tableBody?.childCount).toBe(2)
 })
 
-test('getDevtoolsDom should apply explicit duration and status column classes to headers and rows', () => {
+test('getDevtoolsDom should apply duration and status column classes to rows only', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
@@ -302,6 +304,11 @@ test('getDevtoolsDom should apply explicit duration and status column classes to
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewHeaderCell',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
     }),
   )
   expect(dom).toContainEqual(
@@ -390,6 +397,29 @@ test('getDevtoolsDom should render tool execution row labels with tool name', ()
   )
 })
 
+test('getDevtoolsDom should render tool execution row labels with top-level name', () => {
+  const events = [
+    {
+      arguments: {
+        uri: 'file:///workspace',
+      },
+      name: 'list_files',
+      sessionId: 'session-1',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'tool-execution, list_files',
+    }),
+  )
+})
+
 test('getDevtoolsDom should render 400 status for errored events', () => {
   const events = [
     {
@@ -438,6 +468,109 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '"hello"',
+    }),
+  )
+})
+
+test('getDevtoolsDom should simplify preview json to name, arguments and result when available', () => {
+  const events = [
+    {
+      arguments: {
+        uri: 'file:///workspace/README.md',
+      },
+      id: 'call-1',
+      name: 'read_file',
+      result: {
+        content: 'hello',
+      },
+      sessionId: 'session-1',
+      time: '2026-04-02T07:26:35.168Z',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"name"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"arguments"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"result"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"read_file"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"sessionId"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"id"',
+    }),
+  )
+})
+
+test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab', () => {
+  const events = [
+    {
+      arguments: {
+        baseUri: '/test/chat-debug-view',
+        pattern: '**/*',
+      },
+      error: 'Invalid argument: baseUri must be an absolute URI.',
+      name: 'getWorkspaceUri',
+      result: {
+        uri: 'file:///workspace',
+      },
+      sessionId: 'session-1',
+      timestamp: '2026-04-02T07:26:35.172Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"name"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"getWorkspaceUri"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"result"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"arguments"',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: '"baseUri"',
     }),
   )
 })

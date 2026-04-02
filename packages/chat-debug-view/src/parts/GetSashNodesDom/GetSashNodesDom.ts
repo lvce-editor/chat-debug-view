@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { ChatDebugViewSash, ChatDebugViewSashLine } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
 export const getSashNodesDom = (hasSelectedEvent: boolean): readonly VirtualDomNode[] => {
@@ -9,13 +10,13 @@ export const getSashNodesDom = (hasSelectedEvent: boolean): readonly VirtualDomN
   return [
     {
       childCount: 1,
-      className: 'ChatDebugViewSash',
+      className: ChatDebugViewSash,
       onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewSashLine',
+      className: ChatDebugViewSashLine,
       type: VirtualDomElements.Div,
     },
   ]

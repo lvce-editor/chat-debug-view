@@ -23,6 +23,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onContextMenu?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly value?: string
@@ -57,21 +58,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       type: VirtualDomElements.Div,
     },
     {
-      'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': true,
-      childCount: 1,
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
-      onClick: DomEventListenerFunctions.HandleSimpleInput,
-      role: 'tab',
-      tabIndex: 0,
-      type: VirtualDomElements.Button,
-      value: 'response',
-    },
-    text('Response'),
-    {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
       'aria-selected': false,
       childCount: 1,
@@ -86,6 +72,21 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       value: 'preview',
     },
     text('Preview'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-response',
+      'aria-selected': true,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      id: 'ChatDebugViewDetailsTab-response',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onClick: DomEventListenerFunctions.HandleSimpleInput,
+      role: 'tab',
+      tabIndex: 0,
+      type: VirtualDomElements.Button,
+      value: 'response',
+    },
+    text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
       'aria-selected': false,
@@ -112,6 +113,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsPanel',
       id: 'ChatDebugViewDetailsPanel-response',
+      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
       type: VirtualDomElements.Div,
     },
@@ -138,6 +140,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
         type: VirtualDomElements.Div,
       },
     ],
+    undefined,
     {
       ended: '2026-03-08T00:00:01.250Z',
       started: '2026-03-08T00:00:01.000Z',
@@ -191,7 +194,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, null, 'preview') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, null, 'preview') as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string

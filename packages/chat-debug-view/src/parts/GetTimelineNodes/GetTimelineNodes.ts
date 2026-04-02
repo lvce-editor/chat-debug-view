@@ -1,32 +1,24 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import {
+  ChatDebugViewTimeline,
+  ChatDebugViewTimelineBuckets,
+  ChatDebugViewTimelineInteractive,
+  ChatDebugViewTimelineSelectionMarker,
+  ChatDebugViewTimelineSelectionMarkerEnd,
+  ChatDebugViewTimelineSelectionMarkerStart,
+  ChatDebugViewTimelineSelectionOverlay,
+  ChatDebugViewTimelineSelectionRange,
+  ChatDebugViewTimelineSummary,
+  ChatDebugViewTimelineTop,
+  joinClassNames,
+} from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { formatPercent } from '../FormatPercent/FormatPercent.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
+import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
-
-const getEffectiveTimelineRange = (
-  timelineStartSeconds: string,
-  timelineEndSeconds: string,
-  timelineSelectionActive: boolean,
-  timelineSelectionAnchorSeconds: string,
-  timelineSelectionFocusSeconds: string,
-): { readonly endSeconds: string; readonly startSeconds: string } => {
-  if (!timelineSelectionActive) {
-    return {
-      endSeconds: timelineEndSeconds,
-      startSeconds: timelineStartSeconds,
-    }
-  }
-  return {
-    endSeconds: timelineSelectionFocusSeconds,
-    startSeconds: timelineSelectionAnchorSeconds,
-  }
-}
-
-const formatPercent = (value: number): string => {
-  return `${Number(value.toFixed(3))}%`
-}
 
 export const getTimelineNodes = (
   timelineEvents: readonly ChatViewEvent[],
@@ -52,7 +44,7 @@ export const getTimelineNodes = (
       ? [
           {
             childCount: 0,
-            className: 'ChatDebugViewTimelineSelectionRange',
+            className: ChatDebugViewTimelineSelectionRange,
             style: `left:${formatPercent(timelineInfo.selectionStartPercent)};width:${formatPercent(
               timelineInfo.selectionEndPercent - timelineInfo.selectionStartPercent,
             )};`,
@@ -60,13 +52,13 @@ export const getTimelineNodes = (
           },
           {
             childCount: 0,
-            className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
+            className: joinClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerStart),
             style: `left:${formatPercent(timelineInfo.selectionStartPercent)};`,
             type: VirtualDomElements.Div,
           },
           {
             childCount: 0,
-            className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
+            className: joinClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
             style: `left:${formatPercent(timelineInfo.selectionEndPercent)};`,
             type: VirtualDomElements.Div,
           },
@@ -75,36 +67,36 @@ export const getTimelineNodes = (
   return [
     {
       childCount: 2,
-      className: 'ChatDebugViewTimeline',
+      className: ChatDebugViewTimeline,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewTimelineTop',
+      className: ChatDebugViewTimelineTop,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewTimelineSummary',
+      className: ChatDebugViewTimelineSummary,
       type: VirtualDomElements.Div,
     },
     text(getTimelineSummary(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)),
     {
       childCount: 2,
-      className: 'ChatDebugViewTimelineInteractive',
+      className: ChatDebugViewTimelineInteractive,
       onDoubleClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
       type: VirtualDomElements.Div,
     },
     {
       childCount: timelineInfo.buckets.length,
-      className: 'ChatDebugViewTimelineBuckets',
+      className: ChatDebugViewTimelineBuckets,
       type: VirtualDomElements.Div,
     },
     ...timelineInfo.buckets.flatMap(getBucketDom),
     {
       childCount: selectionNodes.length,
-      className: 'ChatDebugViewTimelineSelectionOverlay',
+      className: ChatDebugViewTimelineSelectionOverlay,
       type: VirtualDomElements.Div,
     },
     ...selectionNodes,
