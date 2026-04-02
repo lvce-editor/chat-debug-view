@@ -1,0 +1,61 @@
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
+import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { loadSelectedEvent } from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+
+export interface SelectEventAtIndexDependencies {
+  readonly loadSelectedEvent: typeof loadSelectedEvent
+}
+
+export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
+  const filteredEvents = getFilteredEvents(
+    state.events,
+    state.filterValue,
+    state.eventCategoryFilter,
+    state.showInputEvents,
+    state.showResponsePartEvents,
+    state.showEventStreamFinishedEvents,
+  )
+  return filterEventsByTimelineRange(filteredEvents, state.timelineStartSeconds, state.timelineEndSeconds)
+}
+
+export const selectEventAtIndex = async (
+  state: ChatDebugViewState,
+  selectedEventIndex: number,
+  dependencies: SelectEventAtIndexDependencies,
+): Promise<ChatDebugViewState> => {
+  const currentEvents = getCurrentEvents(state)
+  const selectedEvent = currentEvents[selectedEventIndex]
+  if (!selectedEvent) {
+    return {
+      ...state,
+      selectedEvent: null,
+      selectedEventId: null,
+      selectedEventIndex,
+    }
+  }
+  if (typeof selectedEvent.eventId !== 'number') {
+    return {
+      ...state,
+      selectedEvent,
+      selectedEventId: null,
+      selectedEventIndex,
+    }
+  }
+  const selectedEventDetails = await dependencies.loadSelectedEvent(
+    state.databaseName,
+    state.dataBaseVersion,
+    state.eventStoreName,
+    state.sessionId,
+    state.sessionIdIndexName,
+    selectedEvent.eventId,
+    selectedEvent.type,
+  )
+  return {
+    ...state,
+    selectedEvent: selectedEventDetails ?? selectedEvent,
+    selectedEventId: selectedEvent.eventId,
+    selectedEventIndex,
+  }
+}

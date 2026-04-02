@@ -400,8 +400,12 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewEventRow {
   padding: 2px 8px;
-  border-bottom: 1px solid var(--vscode-editorWidget-border, #454545);
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 92%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.31)) 8%);
   cursor: default;
+}
+
+.ChatDebugViewTableBody > .ChatDebugViewEventRow:nth-child(even) {
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, transparent) 84%, var(--vscode-list-hoverBackground, rgba(90, 93, 94, 0.31)) 16%);
 }
 
 .ChatDebugViewEventRow:hover {
