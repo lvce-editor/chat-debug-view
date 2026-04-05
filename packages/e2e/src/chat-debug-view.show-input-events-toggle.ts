@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.show-input-events-toggle'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-toggle')
+  await ChatDebug.open('e2e-session-toggle')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -27,8 +27,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
       value: 'he',
     },
   ]
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   const eventRows = Locator('.ChatDebugViewEventRow')
 
@@ -36,10 +36,10 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await expect(eventRows).toHaveCount(1)
 
   // act + assert: show input events
-  await Command.execute('ChatDebug.handleInput', 'showInputEvents', '', true)
+  await ChatDebug.setShowInputEvents(true)
   await expect(eventRows).toHaveCount(3)
 
   // act + assert: hide input events again
-  await Command.execute('ChatDebug.handleInput', 'showInputEvents', '', false)
+  await ChatDebug.setShowInputEvents(false)
   await expect(eventRows).toHaveCount(1)
 }

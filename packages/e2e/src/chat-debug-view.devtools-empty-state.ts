@@ -2,14 +2,14 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.devtools-empty-state'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-devtools-empty-state')
+  await ChatDebug.open('e2e-session-devtools-empty-state')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   // act
-  await Command.execute('ChatDebug.setEvents', [])
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents([])
+  await ChatDebug.useDevtoolsLayout()
 
   // assert
   await expect(Locator('.ChatDebugView--devtools')).toBeVisible()

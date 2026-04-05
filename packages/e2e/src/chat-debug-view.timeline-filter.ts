@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.timeline-filter'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-timeline-filter')
+  await ChatDebug.open('e2e-session-timeline-filter')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -21,8 +21,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   // assert timeline visible before filtering
   const rows = Locator('.ChatDebugViewEventRow')
@@ -30,7 +30,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await expect(rows).toHaveCount(2)
 
   // act + assert narrowed timeline range
-  await Command.execute('ChatDebug.handleInput', 'timelineRangePreset', '0:0.833', false)
+  await ChatDebug.setTimelineRangePreset('0:0.833')
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('request')

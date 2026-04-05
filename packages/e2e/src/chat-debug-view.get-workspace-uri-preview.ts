@@ -4,8 +4,8 @@ export const name = 'chat-debug-view.get-workspace-uri-preview'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-get-workspace-uri-preview')
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  await ChatDebug.open('e2e-session-get-workspace-uri-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -25,8 +25,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
 
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   const row = Locator('.ChatDebugViewEventRow').nth(0)
   await row.click()

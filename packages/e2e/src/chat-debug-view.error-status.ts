@@ -2,8 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.error-status'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-error-status')
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  await ChatDebug.open('e2e-session-error-status')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -16,8 +16,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
 
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   const row = Locator('.ChatDebugViewEventRow').nth(0)
   const statusCell = Locator('.ChatDebugViewCellStatusError').nth(0)

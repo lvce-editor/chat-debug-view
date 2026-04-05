@@ -4,9 +4,9 @@ export const name = 'chat-debug-view.tools-empty-state'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-tools-empty-state')
+  await ChatDebug.open('e2e-session-tools-empty-state')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -19,11 +19,11 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
+  await ChatDebug.setEventCategoryFilter('tools')
 
   const toolsPill = Locator('.ChatDebugViewQuickFilterPill').nth(1)
-  await toolsPill.click()
 
   // assert
   await expect(toolsPill).toContainText('Tools')
