@@ -48,10 +48,17 @@ export const getChatDebugViewDom = (
   if (timelineFilterDescription) {
     filterDescriptionParts.push(timelineFilterDescription)
   }
+  const hasTimelineFilter = Boolean(timelineFilterDescription)
   const hasFilterValue = filterDescriptionParts.length > 0
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = `no events found matching ${filterDescription}`
-  const emptyMessage = events.length === 0 && hasFilterValue ? noFilteredEventsMessage : 'No events have been found'
+  const useNoToolCallEventsMessage = eventCategoryFilter === EventCategoryFilter.Tools && !trimmedFilterValue && !hasTimelineFilter
+  const emptyMessage =
+    events.length === 0 && hasFilterValue
+      ? useNoToolCallEventsMessage
+        ? 'No tool call events.'
+        : noFilteredEventsMessage
+      : 'No events have been found'
 
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex

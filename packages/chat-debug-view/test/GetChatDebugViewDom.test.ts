@@ -141,6 +141,34 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   expect(toolsFilter?.checked).toBe(false)
 })
 
+test('getChatDebugViewDom should render dedicated empty message for tools quick filter', () => {
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    EventCategoryFilter.Tools,
+    eventCategoryFilterOptions,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    [],
+    [],
+  ) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
+  const emptyStateText = dom.find((node) => node.text === 'No tool call events.')
+
+  expect(emptyState).toBeDefined()
+  expect(emptyStateText).toBeDefined()
+})
+
 test('getChatDebugViewDom should place the filter row before the main pane in devtools layout', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
