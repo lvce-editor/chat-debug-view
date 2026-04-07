@@ -2,9 +2,11 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import type { getEventDetailsBySessionIdAndEventId } from '../src/parts/GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
 import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { loadSelectedEvent, loadSelectedEventDependencies } from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
+import { storageBackendConfig } from '../src/parts/StorageBackendConfig/StorageBackendConfig.ts'
 
 const openDatabaseSpy = jest.spyOn(loadSelectedEventDependencies, 'openDatabase')
 const getEventDetailsBySessionIdAndEventIdSpy = jest.spyOn(loadSelectedEventDependencies, 'getEventDetailsBySessionIdAndEventId')
+const loadSelectedEventFromWorkerSpy = jest.spyOn(loadSelectedEventDependencies, 'loadSelectedEventFromWorker')
 
 const createDomStringList = (values: readonly string[]): DOMStringList => {
   return {
@@ -20,6 +22,25 @@ const createDomStringList = (values: readonly string[]): DOMStringList => {
 afterEach(() => {
   openDatabaseSpy.mockReset()
   getEventDetailsBySessionIdAndEventIdSpy.mockReset()
+  loadSelectedEventFromWorkerSpy.mockReset()
+  storageBackendConfig.useChatStorageWorker = false
+})
+
+test('loadSelectedEvent should use chat storage worker when configured', async () => {
+  storageBackendConfig.useChatStorageWorker = true
+  const event = {
+    eventId: 1,
+    sessionId: 'session-1',
+    type: 'request',
+  }
+  loadSelectedEventFromWorkerSpy.mockResolvedValue(event)
+
+  const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+
+  expect(result).toEqual(event)
+  expect(loadSelectedEventFromWorkerSpy).toHaveBeenCalledWith('session-1', 1, 'request')
+  expect(openDatabaseSpy).not.toHaveBeenCalled()
+  expect(getEventDetailsBySessionIdAndEventIdSpy).not.toHaveBeenCalled()
 })
 
 test('loadSelectedEvent should return null when the event store does not exist', async () => {

@@ -3,9 +3,11 @@ import type { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/Get
 import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { listChatViewEvents, listChatViewEventsDependencies } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
+import { storageBackendConfig } from '../src/parts/StorageBackendConfig/StorageBackendConfig.ts'
 
 const openDatabaseSpy = jest.spyOn(listChatViewEventsDependencies, 'openDatabase')
 const getEventsBySessionIdSpy = jest.spyOn(listChatViewEventsDependencies, 'getEventsBySessionId')
+const listChatViewEventsFromWorkerSpy = jest.spyOn(listChatViewEventsDependencies, 'listChatViewEventsFromWorker')
 
 const createDomStringList = (values: readonly string[]): DOMStringList => {
   return {
@@ -21,7 +23,51 @@ const createDomStringList = (values: readonly string[]): DOMStringList => {
 afterEach(() => {
   openDatabaseSpy.mockReset()
   getEventsBySessionIdSpy.mockReset()
+  listChatViewEventsFromWorkerSpy.mockReset()
   setIndexedDbSupportForTest(undefined)
+  storageBackendConfig.useChatStorageWorker = false
+})
+
+test('listChatViewEvents should use chat storage worker when configured', async () => {
+  storageBackendConfig.useChatStorageWorker = true
+  const events = [
+    {
+      duration: 0,
+      endTime: '2026-03-08T00:00:00.000Z',
+      eventId: 1,
+      startTime: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  listChatViewEventsFromWorkerSpy.mockResolvedValue({
+    events,
+    type: 'success',
+  })
+
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    events,
+    type: 'success',
+  })
+  expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
+  expect(openDatabaseSpy).not.toHaveBeenCalled()
+  expect(getEventsBySessionIdSpy).not.toHaveBeenCalled()
+})
+
+test('listChatViewEvents should return error when chat storage worker loading fails', async () => {
+  storageBackendConfig.useChatStorageWorker = true
+  const error = new Error('worker failed')
+  listChatViewEventsFromWorkerSpy.mockRejectedValue(error)
+
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    error,
+    type: 'error',
+  })
+  expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
+  expect(openDatabaseSpy).not.toHaveBeenCalled()
 })
 
 test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
