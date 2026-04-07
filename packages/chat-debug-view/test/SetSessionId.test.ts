@@ -58,7 +58,7 @@ test('setSessionId should return failed-to-load state when listing events return
 
   expect(result).toEqual({
     ...state,
-    errorMessage: getFailedToLoadMessage('session-1'),
+    errorMessage: getFailedToLoadMessage('session-1', error),
     events: [],
     initial: false,
     selectedEvent: null,
