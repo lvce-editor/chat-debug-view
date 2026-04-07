@@ -405,21 +405,21 @@ test('getEventDetailsBySessionIdAndEventId should merge matching tool execution 
           {
             metadata: 'started-value',
             sessionId: 'session-1',
-            started: {},
+            started: 123,
             startTime: 123,
             timestamp: '2026-01-01T00:00:00.000Z',
             toolName: 'read_file',
             type: 'tool-execution-started',
-          } as ChatViewEvent,
+          },
           {
-            ended: {},
+            ended: 456,
             endTime: 456,
             result: 'finished-value',
             sessionId: 'session-1',
             timestamp: '2026-01-01T00:00:01.000Z',
             toolName: 'read_file',
             type: 'tool-execution-finished',
-          } as ChatViewEvent,
+          },
         ]
       },
       index: (): never => {
