@@ -6,7 +6,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-headings-case')
   await expect(Locator('.ChatDebugView')).toBeVisible()
-
+  await ChatDebug.useDevtoolsLayout()
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
@@ -19,7 +19,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // act
   await ChatDebug.setEvents(events)
-  await ChatDebug.useDevtoolsLayout()
 
   // assert
   const headerCells = Locator('.ChatDebugViewHeaderCell')
