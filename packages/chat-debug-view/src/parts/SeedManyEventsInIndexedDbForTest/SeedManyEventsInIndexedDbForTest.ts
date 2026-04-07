@@ -15,7 +15,7 @@ export const seedManyEventsInIndexedDbForTestDependencies = {
   openDB: Idb.openDB,
 }
 
-interface UpgradeDatabaseLike {
+export interface UpgradeDatabaseLike {
   createObjectStore: (
     name: string,
     options?: IDBObjectStoreParameters,
@@ -26,14 +26,14 @@ interface UpgradeDatabaseLike {
   readonly objectStoreNames: DOMStringList
 }
 
-interface UpgradeTransactionLike {
+export interface UpgradeTransactionLike {
   objectStore: (name: string) => {
     createIndex: (name: string, keyPath: string | string[], options?: IDBIndexParameters) => unknown
     readonly indexNames: DOMStringList
   }
 }
 
-interface EventStoreLike {
+export interface EventStoreLike {
   add: (value: unknown) => Promise<unknown>
   delete: (query: IDBValidKey | IDBKeyRange) => Promise<void>
   index: (name: string) => {
@@ -42,11 +42,11 @@ interface EventStoreLike {
   readonly indexNames: DOMStringList
 }
 
-interface SummaryStoreLike {
+export interface SummaryStoreLike {
   put: (value: unknown) => Promise<unknown>
 }
 
-interface SeedManyEventsInIndexedDbForTestOptions {
+export interface SeedManyEventsInIndexedDbForTestOptions {
   readonly databaseName?: string
   readonly databaseVersion?: number
   readonly eventStoreName?: string
@@ -73,12 +73,7 @@ const createVisibleEvent = (sessionId: string): ChatViewEvent => {
 const createHiddenEvent = (sessionId: string, index: number): ChatViewEvent => {
   return {
     sessionId,
-    timestamp: toTimestamp(index + 1),
-    type: 'sse-response-part',
-    value: {
-      index,
-      type: 'response.output_text.delta',
-    },
+    type: 'event-stream-finished',
   }
 }
 

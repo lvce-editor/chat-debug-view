@@ -14,7 +14,7 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
       totalEventCount: eventCount,
     })
 
-    await ChatDebug.open(sessionId)
+    await Command.execute('ChatDebug.setSessionId', sessionId)
     await expect(Locator('.ChatDebugView')).toBeVisible()
     await ChatDebug.useDevtoolsLayout()
 

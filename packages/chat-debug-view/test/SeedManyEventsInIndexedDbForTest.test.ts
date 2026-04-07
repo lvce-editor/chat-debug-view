@@ -110,21 +110,11 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
   })
   expect(add).toHaveBeenNthCalledWith(2, {
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.002Z',
-    type: 'sse-response-part',
-    value: {
-      index: 1,
-      type: 'response.output_text.delta',
-    },
+    type: 'event-stream-finished',
   })
   expect(add).toHaveBeenNthCalledWith(3, {
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.003Z',
-    type: 'sse-response-part',
-    value: {
-      index: 2,
-      type: 'response.output_text.delta',
-    },
+    type: 'event-stream-finished',
   })
   expect(database.close).toHaveBeenCalledTimes(1)
 })
