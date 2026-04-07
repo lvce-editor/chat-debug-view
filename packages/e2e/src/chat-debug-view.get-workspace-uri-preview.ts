@@ -31,7 +31,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
 
   const previewTab = Locator('[role="tab"][value="preview"]')
-  await Command.execute('ChatDebug.handleDetailTab', 'preview')
+  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
   await expect(previewTab).toHaveAttribute('aria-selected', 'true')
