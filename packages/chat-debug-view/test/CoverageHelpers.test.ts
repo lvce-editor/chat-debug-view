@@ -545,6 +545,21 @@ test('hasErrorStatus should return true when an error field is present', () => {
   ).toBe(true)
 })
 
+test('hasErrorStatus should return true for tool-execution events with result.error', () => {
+  expect(
+    hasErrorStatus({
+      result: {
+        error: {
+          message: 'Invalid argument: uri must be an absolute URI.',
+        },
+      },
+      sessionId: 'session-1',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      type: 'tool-execution',
+    }),
+  ).toBe(true)
+})
+
 test('hasErrorStatus should return false for non-error events', () => {
   expect(
     hasErrorStatus({

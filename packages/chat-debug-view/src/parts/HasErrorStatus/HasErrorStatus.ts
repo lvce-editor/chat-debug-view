@@ -1,4 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { isToolEvent } from '../IsToolEvent/IsToolEvent.ts'
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null
@@ -29,6 +30,9 @@ export const hasErrorStatus = (event: ChatViewEvent): boolean => {
   const { result } = event
   if (isRecord(result)) {
     if (isErrorStatusCode(result.status)) {
+      return true
+    }
+    if (isToolEvent(event) && 'error' in result && result.error !== undefined) {
       return true
     }
     if (typeof result.error === 'string' || typeof result.errorMessage === 'string' || typeof result.exception === 'string') {
