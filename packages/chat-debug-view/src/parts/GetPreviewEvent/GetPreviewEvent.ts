@@ -4,6 +4,10 @@ const hasOwn = (event: ChatViewEvent, key: string): boolean => {
   return Object.hasOwn(event, key)
 }
 
+const isChatMessageUpdatedEvent = (event: ChatViewEvent): boolean => {
+  return event.type === 'chat-message-updated'
+}
+
 const getPreviewName = (event: ChatViewEvent): string | undefined => {
   if (typeof event.name === 'string' && event.name) {
     return event.name
@@ -25,6 +29,9 @@ const shouldIncludeArguments = (event: ChatViewEvent, name: string | undefined):
 }
 
 export const getPreviewEvent = (event: ChatViewEvent): unknown => {
+  if (isChatMessageUpdatedEvent(event) && typeof event.text === 'string') {
+    return event.text
+  }
   const name = getPreviewName(event)
   const previewEvent = {
     ...(name === undefined ? {} : { name }),
