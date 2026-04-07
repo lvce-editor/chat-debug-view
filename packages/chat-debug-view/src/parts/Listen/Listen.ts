@@ -1,5 +1,6 @@
 import { WebWorkerRpcClient } from '@lvce-editor/rpc'
 import * as CommandMap from '../CommandMap/CommandMap.ts'
+import { initializeChatStorageWorker } from '../InitializeChatStorageWorker/InitializeChatStorageWorker.ts'
 import { registerCommands } from '../State/ChatDebugViewStates.ts'
 import * as WorkerRpc from '../WorkerRpc/WorkerRpc.ts'
 
@@ -9,4 +10,5 @@ export const listen = async (): Promise<void> => {
     commandMap: CommandMap.commandMap,
   })
   WorkerRpc.setWorkerRpc(rpc)
+  await initializeChatStorageWorker()
 }
