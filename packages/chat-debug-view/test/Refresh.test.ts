@@ -100,7 +100,7 @@ test('refresh should return failed-to-load state when listing events returns an 
 
   expect(result).toEqual({
     ...state,
-    errorMessage: getFailedToLoadMessage('session-1'),
+    errorMessage: getFailedToLoadMessage('session-1', error),
     events: [],
     initial: false,
     selectedEvent: null,

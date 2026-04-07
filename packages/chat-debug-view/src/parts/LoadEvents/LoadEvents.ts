@@ -122,7 +122,7 @@ export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionI
   if (result.type === 'error') {
     return {
       ...state,
-      errorMessage: getFailedToLoadMessage(sessionId),
+      errorMessage: getFailedToLoadMessage(sessionId, result.error),
       events: [],
       initial: false,
       selectedEvent: null,

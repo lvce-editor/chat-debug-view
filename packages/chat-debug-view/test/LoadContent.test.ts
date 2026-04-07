@@ -24,7 +24,7 @@ test('loadContent should return failed-to-load state when listing events returns
 
   expect(result).toEqual({
     ...state,
-    errorMessage: getFailedToLoadMessage('session-1'),
+    errorMessage: getFailedToLoadMessage('session-1', error),
     events: [],
     initial: false,
     selectedEvent: null,
