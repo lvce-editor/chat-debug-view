@@ -35,17 +35,21 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
   const done = new Promise<void>((resolve) => {
     resolve()
   })
+  const getAllKeys = jest.fn(async (_sessionId: string) => [41, 42])
+  const add = jest.fn(async (_value: unknown) => undefined)
+  const remove = jest.fn(async (_query: unknown) => undefined)
+  const put = jest.fn(async (_value: unknown) => undefined)
   const index = {
-    getAllKeys: jest.fn().mockResolvedValue([41, 42]),
+    getAllKeys,
   }
   const eventStore = {
-    add: jest.fn().mockResolvedValue(undefined),
-    delete: jest.fn().mockResolvedValue(undefined),
+    add,
+    delete: remove,
     index: jest.fn().mockReturnValue(index),
     indexNames: createDomStringList(['sessionId']),
   }
   const summaryStore = {
-    put: jest.fn().mockResolvedValue(undefined),
+    put,
   }
   const transaction = {
     done,
@@ -73,21 +77,21 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
     }),
   )
   expect(database.transaction).toHaveBeenCalledWith(['chat-sessions', 'chat-view-events'], 'readwrite')
-  expect(index.getAllKeys).toHaveBeenCalledWith('session-1')
-  expect(eventStore.delete).toHaveBeenCalledTimes(2)
-  expect(summaryStore.put).toHaveBeenCalledWith({
+  expect(getAllKeys).toHaveBeenCalledWith('session-1')
+  expect(remove).toHaveBeenCalledTimes(2)
+  expect(put).toHaveBeenCalledWith({
     id: 'session-1',
     title: 'seeded 3 events',
   })
-  expect(eventStore.add).toHaveBeenCalledTimes(3)
-  expect(eventStore.add).toHaveBeenNthCalledWith(1, {
+  expect(add).toHaveBeenCalledTimes(3)
+  expect(add).toHaveBeenNthCalledWith(1, {
     ended: '2026-03-08T00:00:00.100Z',
     sessionId: 'session-1',
     started: '2026-03-08T00:00:00.000Z',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   })
-  expect(eventStore.add).toHaveBeenNthCalledWith(2, {
+  expect(add).toHaveBeenNthCalledWith(2, {
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.002Z',
     type: 'sse-response-part',
@@ -96,7 +100,7 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
       type: 'response.output_text.delta',
     },
   })
-  expect(eventStore.add).toHaveBeenNthCalledWith(3, {
+  expect(add).toHaveBeenNthCalledWith(3, {
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.003Z',
     type: 'sse-response-part',

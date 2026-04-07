@@ -16,12 +16,21 @@ export const seedManyEventsInIndexedDbForTestDependencies = {
 }
 
 interface UpgradeDatabaseLike {
-  createObjectStore: IDBDatabase['createObjectStore']
+  createObjectStore: (
+    name: string,
+    options?: IDBObjectStoreParameters,
+  ) => {
+    createIndex: (name: string, keyPath: string | string[], options?: IDBIndexParameters) => unknown
+    readonly indexNames: DOMStringList
+  }
   readonly objectStoreNames: DOMStringList
 }
 
 interface UpgradeTransactionLike {
-  objectStore: IDBTransaction['objectStore']
+  objectStore: (name: string) => {
+    createIndex: (name: string, keyPath: string | string[], options?: IDBIndexParameters) => unknown
+    readonly indexNames: DOMStringList
+  }
 }
 
 interface EventStoreLike {
