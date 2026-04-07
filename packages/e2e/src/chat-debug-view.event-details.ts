@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.event-details'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-event-details')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -23,9 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
-
-  const row = Locator('.ChatDebugViewEventRow').nth(0)
-  await row.click()
+  await ChatDebug.selectEventRow(0)
 
   const responseTab = Locator('[role="tab"][value="response"]')
   const timingTab = Locator('[role="tab"][value="timing"]')
@@ -40,7 +38,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
 
   // act
-  await timingTab.click()
+  await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
 
   // assert
   await expect(timingTab).toHaveAttribute('aria-selected', 'true')
@@ -51,7 +49,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(Locator('.ChatDebugViewEvent')).toHaveCount(0)
 
   // act
-  await responseTab.click()
+  await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)
 
   // assert
   await expect(responseTab).toHaveAttribute('aria-selected', 'true')
