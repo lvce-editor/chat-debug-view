@@ -18,7 +18,7 @@ const parseSelectedEventIndex = (value: string): number | null => {
   return parsed
 }
 
-export const handleEventRowClick = async (state: ChatDebugViewState, value: string, button: number): Promise<ChatDebugViewState> => {
+export const handleEventRowClick = async (state: ChatDebugViewState, value: string, button: number = 0): Promise<ChatDebugViewState> => {
   if (!isPrimaryButton(button)) {
     return state
   }
