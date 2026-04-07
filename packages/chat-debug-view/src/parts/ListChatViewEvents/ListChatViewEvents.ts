@@ -1,10 +1,13 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
+import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 import * as GetEventsBySessionId from '../GetEventsBySessionId/GetEventsBySessionId.ts'
 import { isIndexedDbSupported } from '../IsIndexedDbSupported/IsIndexedDbSupported.ts'
 import * as OpenDatabase from '../OpenDatabase/OpenDatabase.ts'
+import { storageBackendConfig } from '../StorageBackendConfig/StorageBackendConfig.ts'
 
 export const listChatViewEventsDependencies = {
   getEventsBySessionId: GetEventsBySessionId.getEventsBySessionId,
+  listChatViewEventsFromWorker: ChatStorageWorkerClient.listChatViewEvents,
   openDatabase: OpenDatabase.openDatabase,
 }
 
@@ -16,6 +19,17 @@ export const listChatViewEvents = async (
   sessionIdIndexName: string,
   indexedDbSupportOverride?: boolean,
 ): Promise<ListChatViewEventsResult> => {
+  if (storageBackendConfig.useChatStorageWorker) {
+    try {
+      return await listChatViewEventsDependencies.listChatViewEventsFromWorker(sessionId)
+    } catch (error) {
+      return {
+        error,
+        type: 'error',
+      }
+    }
+  }
+
   if (!isIndexedDbSupported(indexedDbSupportOverride)) {
     return {
       type: 'not-supported',
