@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.chat-message-updated-preview'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+  // arrange
   await Command.execute('Main.openUri', 'chat-debug://e2e-session-chat-message-updated-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -24,10 +25,11 @@ export const test: Test = async ({ Command, expect, Locator }) => {
 
   await Command.execute('ChatDebug.setEvents', events)
   await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
-  await Locator('.ChatDebugViewEventRow').nth(0).click()
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
 
+  // act
+  await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
