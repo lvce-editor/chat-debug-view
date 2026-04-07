@@ -18,12 +18,20 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
     },
     {
-      name: DomEventListenerFunctions.HandleInput,
-      params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue, EventExpression.TargetChecked],
+      name: DomEventListenerFunctions.HandleEventCategoryFilter,
+      params: ['handleEventCategoryFilter', EventExpression.TargetValue],
     },
     {
-      name: DomEventListenerFunctions.HandleSimpleInput,
-      params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
+      name: DomEventListenerFunctions.HandleDetailTab,
+      params: ['handleDetailTab', EventExpression.TargetValue],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelineRangePreset,
+      params: ['handleTimelineRangePreset', EventExpression.TargetValue],
+    },
+    {
+      name: DomEventListenerFunctions.HandleCloseDetails,
+      params: ['handleCloseDetails'],
     },
     {
       name: DomEventListenerFunctions.HandleSashPointerDown,

@@ -27,7 +27,7 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
       className: ChatDebugViewTimelinePresetInput,
       inputType: 'radio',
       name: InputName.TimelineRangePreset,
-      onChange: DomEventListenerFunctions.HandleSimpleInput,
+      onChange: DomEventListenerFunctions.HandleTimelineRangePreset,
       type: VirtualDomElements.Input,
       value: presetValue,
     },

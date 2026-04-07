@@ -283,6 +283,173 @@ test('getEventDetailsBySessionIdAndEventId should load a single event by key fro
   })
 })
 
+test('getEventDetailsBySessionIdAndEventId should return undefined when the requested event does not exist', async () => {
+  const result = await getEventDetailsBySessionIdAndEventId(
+    {
+      get: async (): Promise<never> => {
+        throw new Error('should not load by key when index is missing')
+      },
+      getAll: async (): Promise<readonly ChatViewEvent[]> => {
+        return [
+          {
+            sessionId: 'other-session',
+            timestamp: '2026-01-01T00:00:00.000Z',
+            type: 'request',
+          },
+        ]
+      },
+      index: (): never => {
+        throw new Error('should not read index when it is missing')
+      },
+      indexNames: {
+        contains: (): boolean => false,
+      },
+    } as any,
+    'session-1',
+    'sessionId',
+    1,
+    'request',
+  )
+
+  expect(result).toBeUndefined()
+})
+
+test('getEventDetailsBySessionIdAndEventId should return non-started tool execution events unchanged', async () => {
+  const result = await getEventDetailsBySessionIdAndEventId(
+    {
+      get: async (): Promise<never> => {
+        throw new Error('should not load by key when index is missing')
+      },
+      getAll: async (): Promise<readonly ChatViewEvent[]> => {
+        return [
+          {
+            sessionId: 'session-1',
+            timestamp: '2026-01-01T00:00:00.000Z',
+            type: 'request',
+          },
+        ]
+      },
+      index: (): never => {
+        throw new Error('should not read index when it is missing')
+      },
+      indexNames: {
+        contains: (): boolean => false,
+      },
+    } as any,
+    'session-1',
+    'sessionId',
+    1,
+    'tool-execution',
+  )
+
+  expect(result).toEqual({
+    eventId: 1,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T00:00:00.000Z',
+    type: 'request',
+  })
+})
+
+test('getEventDetailsBySessionIdAndEventId should return the started event when the next event is not a matching finish event', async () => {
+  const result = await getEventDetailsBySessionIdAndEventId(
+    {
+      get: async (): Promise<never> => {
+        throw new Error('should not load by key when index is missing')
+      },
+      getAll: async (): Promise<readonly ChatViewEvent[]> => {
+        return [
+          {
+            sessionId: 'session-1',
+            timestamp: '2026-01-01T00:00:00.000Z',
+            toolName: 'read_file',
+            type: 'tool-execution-started',
+          },
+          {
+            sessionId: 'session-1',
+            timestamp: '2026-01-01T00:00:01.000Z',
+            toolName: 'read_file',
+            type: 'request',
+          },
+        ]
+      },
+      index: (): never => {
+        throw new Error('should not read index when it is missing')
+      },
+      indexNames: {
+        contains: (): boolean => false,
+      },
+    } as any,
+    'session-1',
+    'sessionId',
+    1,
+    'tool-execution',
+  )
+
+  expect(result).toEqual({
+    eventId: 1,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T00:00:00.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution-started',
+  })
+})
+
+test('getEventDetailsBySessionIdAndEventId should merge matching tool execution events using fallback timestamps', async () => {
+  const result = await getEventDetailsBySessionIdAndEventId(
+    {
+      get: async (): Promise<never> => {
+        throw new Error('should not load by key when index is missing')
+      },
+      getAll: async (): Promise<readonly ChatViewEvent[]> => {
+        return [
+          {
+            metadata: 'started-value',
+            sessionId: 'session-1',
+            started: 123,
+            startTime: 123,
+            timestamp: '2026-01-01T00:00:00.000Z',
+            toolName: 'read_file',
+            type: 'tool-execution-started',
+          },
+          {
+            ended: 456,
+            endTime: 456,
+            result: 'finished-value',
+            sessionId: 'session-1',
+            timestamp: '2026-01-01T00:00:01.000Z',
+            toolName: 'read_file',
+            type: 'tool-execution-finished',
+          },
+        ]
+      },
+      index: (): never => {
+        throw new Error('should not read index when it is missing')
+      },
+      indexNames: {
+        contains: (): boolean => false,
+      },
+    } as any,
+    'session-1',
+    'sessionId',
+    1,
+    'tool-execution',
+  )
+
+  expect(result).toEqual({
+    ended: 456,
+    endTime: 456,
+    eventId: 1,
+    metadata: 'started-value',
+    result: 'finished-value',
+    sessionId: 'session-1',
+    started: 123,
+    startTime: 123,
+    timestamp: '2026-01-01T00:00:01.000Z',
+    toolName: 'read_file',
+    type: 'tool-execution',
+  })
+})
+
 test('getTimelineFilterDescription should describe explicit start and end', () => {
   expect(getTimelineFilterDescription(' 5 ', ' 9 ')).toBe('5s-9s')
 })

@@ -1,10 +1,21 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
-import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
+import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
+
+export const setSessionIdDependencies = {
+  listChatViewEvents: ListChatViewEvents.listChatViewEvents,
+}
 
 export const setSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const result = await listChatViewEvents(sessionId, state.databaseName, state.dataBaseVersion, state.eventStoreName, state.sessionIdIndexName)
+  const result = await setSessionIdDependencies.listChatViewEvents(
+    sessionId,
+    state.databaseName,
+    state.dataBaseVersion,
+    state.eventStoreName,
+    state.sessionIdIndexName,
+    state.indexedDbSupportOverride,
+  )
   if (result.type === 'not-supported') {
     return {
       ...state,
@@ -13,6 +24,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
       initial: false,
       selectedEvent: null,
       selectedEventId: null,
+      selectedEventIndex: null,
       sessionId,
     }
   }
@@ -24,6 +36,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
       initial: false,
       selectedEvent: null,
       selectedEventId: null,
+      selectedEventIndex: null,
       sessionId,
     }
   }
@@ -35,6 +48,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
     initial: false,
     selectedEvent: null,
     selectedEventId: null,
+    selectedEventIndex: null,
     sessionId,
   }
 }

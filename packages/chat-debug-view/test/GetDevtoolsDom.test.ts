@@ -43,8 +43,8 @@ test('getDevtoolsDom should render selected details panel and close input', () =
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
-  expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleSimpleInput)
-  expect(closeButton?.onClick).toBe(DomEventListenerFunctions.HandleSimpleInput)
+  expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleCloseDetails)
+  expect(closeButton?.onClick).toBe(DomEventListenerFunctions.HandleCloseDetails)
   expect(sash?.childCount).toBe(1)
   expect(sash?.onPointerDown).toBe(DomEventListenerFunctions.HandleSashPointerDown)
   expect(sashLine).toBeDefined()

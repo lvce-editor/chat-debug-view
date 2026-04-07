@@ -32,20 +32,36 @@ test('renderEventListeners should register filter input with name and value para
   expect(filterListener?.params).toEqual(['handleInput', EventExpression.TargetName, EventExpression.TargetValue])
 })
 
-test('renderEventListeners should register checkbox input with checked param', () => {
+test('renderEventListeners should register event category filter input with value param', () => {
   const listeners = RenderEventListeners.renderEventListeners()
-  const checkboxListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleInput)
+  const categoryFilterListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleEventCategoryFilter)
 
-  expect(checkboxListener).toBeDefined()
-  expect(checkboxListener?.params).toEqual(['handleInput', EventExpression.TargetName, EventExpression.TargetValue, EventExpression.TargetChecked])
+  expect(categoryFilterListener).toBeDefined()
+  expect(categoryFilterListener?.params).toEqual(['handleEventCategoryFilter', EventExpression.TargetValue])
 })
 
-test('renderEventListeners should register simple input with name and value params', () => {
+test('renderEventListeners should register detail tab input with value param', () => {
   const listeners = RenderEventListeners.renderEventListeners()
-  const simpleInputListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleSimpleInput)
+  const detailTabListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleDetailTab)
 
-  expect(simpleInputListener).toBeDefined()
-  expect(simpleInputListener?.params).toEqual(['handleInput', EventExpression.TargetName, EventExpression.TargetValue])
+  expect(detailTabListener).toBeDefined()
+  expect(detailTabListener?.params).toEqual(['handleDetailTab', EventExpression.TargetValue])
+})
+
+test('renderEventListeners should register timeline preset input with value param', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const timelinePresetListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleTimelineRangePreset)
+
+  expect(timelinePresetListener).toBeDefined()
+  expect(timelinePresetListener?.params).toEqual(['handleTimelineRangePreset', EventExpression.TargetValue])
+})
+
+test('renderEventListeners should register close details action without params', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const closeDetailsListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleCloseDetails)
+
+  expect(closeDetailsListener).toBeDefined()
+  expect(closeDetailsListener?.params).toEqual(['handleCloseDetails'])
 })
 
 test('renderEventListeners should register sash pointer tracking with client coordinates', () => {
