@@ -22,12 +22,22 @@ afterEach(() => {
 })
 
 test('seedManyEventsInIndexedDbForTest should reject empty session ids', async () => {
-  await expect(seedManyEventsInIndexedDbForTest('', 1)).rejects.toThrow('sessionId must not be empty')
+  await expect(
+    seedManyEventsInIndexedDbForTest({
+      sessionId: '',
+      totalEventCount: 1,
+    }),
+  ).rejects.toThrow('sessionId must not be empty')
   expect(openDBSpy).not.toHaveBeenCalled()
 })
 
 test('seedManyEventsInIndexedDbForTest should reject invalid event counts', async () => {
-  await expect(seedManyEventsInIndexedDbForTest('session-1', 0)).rejects.toThrow('totalEventCount must be a positive integer')
+  await expect(
+    seedManyEventsInIndexedDbForTest({
+      sessionId: 'session-1',
+      totalEventCount: 0,
+    }),
+  ).rejects.toThrow('totalEventCount must be a positive integer')
   expect(openDBSpy).not.toHaveBeenCalled()
 })
 
@@ -67,7 +77,14 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
 
   openDBSpy.mockResolvedValue(database as never)
 
-  await seedManyEventsInIndexedDbForTest('session-1', 3, 'chat-db', 2, 'chat-view-events', 'chat-sessions')
+  await seedManyEventsInIndexedDbForTest({
+    databaseName: 'chat-db',
+    databaseVersion: 2,
+    eventStoreName: 'chat-view-events',
+    sessionId: 'session-1',
+    sessionStoreName: 'chat-sessions',
+    totalEventCount: 3,
+  })
 
   expect(openDBSpy).toHaveBeenCalledWith(
     'chat-db',
@@ -109,5 +126,35 @@ test('seedManyEventsInIndexedDbForTest should replace events for the session and
       type: 'response.output_text.delta',
     },
   })
+  expect(database.close).toHaveBeenCalledTimes(1)
+})
+
+test('seedManyEventsInIndexedDbForTest should accept a prepended uid before the options object', async () => {
+  const done = new Promise<void>((resolve) => {
+    resolve()
+  })
+  const database = {
+    close: jest.fn(),
+    transaction: jest.fn().mockReturnValue({
+      done,
+      objectStore: jest.fn().mockReturnValue({
+        add: jest.fn(async (_value: unknown) => undefined),
+        delete: jest.fn(async (_query: unknown) => undefined),
+        index: jest.fn().mockReturnValue({
+          getAllKeys: jest.fn(async (_sessionId: string) => []),
+        }),
+        indexNames: createDomStringList(['sessionId']),
+        put: jest.fn(async (_value: unknown) => undefined),
+      }),
+    }),
+  }
+  openDBSpy.mockResolvedValue(database as never)
+
+  await seedManyEventsInIndexedDbForTest(42, {
+    sessionId: 'session-2',
+    totalEventCount: '1',
+  })
+
+  expect(openDBSpy).toHaveBeenCalledTimes(1)
   expect(database.close).toHaveBeenCalledTimes(1)
 })

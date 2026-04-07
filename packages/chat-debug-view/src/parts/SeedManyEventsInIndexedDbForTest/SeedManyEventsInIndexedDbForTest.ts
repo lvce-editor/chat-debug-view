@@ -46,6 +46,16 @@ interface SummaryStoreLike {
   put: (value: unknown) => Promise<unknown>
 }
 
+interface SeedManyEventsInIndexedDbForTestOptions {
+  readonly databaseName?: string
+  readonly databaseVersion?: number
+  readonly eventStoreName?: string
+  readonly sessionId: string
+  readonly sessionIdIndexName?: string
+  readonly sessionStoreName?: string
+  readonly totalEventCount: number | string
+}
+
 const toTimestamp = (offsetMs: number): string => {
   return new Date(BaseTimestamp + offsetMs).toISOString()
 }
@@ -129,21 +139,41 @@ const addSeedEvents = async (eventStore: EventStoreLike, sessionId: string, tota
   }
 }
 
-export const seedManyEventsInIndexedDbForTest = async (...args: readonly unknown[]): Promise<void> => {
-  const offset = typeof args[0] === 'number' && typeof args[1] === 'string' ? 1 : 0
-  const sessionId = typeof args[offset] === 'string' ? args[offset] : ''
-  const totalEventCountArg = args[offset + 1]
-  const databaseNameArg = args[offset + 2]
-  const databaseVersionArg = args[offset + 3]
-  const eventStoreNameArg = args[offset + 4]
-  const sessionStoreNameArg = args[offset + 5]
-  const sessionIdIndexNameArg = args[offset + 6]
-  const parsedEventCount = typeof totalEventCountArg === 'number' || typeof totalEventCountArg === 'string' ? Number(totalEventCountArg) : Number.NaN
-  const databaseName = typeof databaseNameArg === 'string' ? databaseNameArg : DefaultDatabaseName
-  const databaseVersion = typeof databaseVersionArg === 'number' ? databaseVersionArg : DefaultDatabaseVersion
-  const eventStoreName = typeof eventStoreNameArg === 'string' ? eventStoreNameArg : DefaultEventStoreName
-  const sessionStoreName = typeof sessionStoreNameArg === 'string' ? sessionStoreNameArg : DefaultSessionStoreName
-  const sessionIdIndexName = typeof sessionIdIndexNameArg === 'string' ? sessionIdIndexNameArg : DefaultSessionIdIndexName
+const getSeedOptions = (
+  optionsOrUid: number | SeedManyEventsInIndexedDbForTestOptions,
+  maybeOptions?: SeedManyEventsInIndexedDbForTestOptions,
+): SeedManyEventsInIndexedDbForTestOptions => {
+  if (typeof optionsOrUid === 'number') {
+    return (
+      maybeOptions ?? {
+        sessionId: '',
+        totalEventCount: Number.NaN,
+      }
+    )
+  }
+  return optionsOrUid
+}
+
+export const seedManyEventsInIndexedDbForTest = async (
+  optionsOrUid: number | SeedManyEventsInIndexedDbForTestOptions,
+  maybeOptions?: SeedManyEventsInIndexedDbForTestOptions,
+): Promise<void> => {
+  const options = getSeedOptions(optionsOrUid, maybeOptions)
+  const {
+    databaseName: customDatabaseName,
+    databaseVersion: customDatabaseVersion,
+    eventStoreName: customEventStoreName,
+    sessionId,
+    sessionIdIndexName: customSessionIdIndexName,
+    sessionStoreName: customSessionStoreName,
+    totalEventCount,
+  } = options
+  const parsedEventCount = typeof totalEventCount === 'number' || typeof totalEventCount === 'string' ? Number(totalEventCount) : Number.NaN
+  const databaseName = customDatabaseName ?? DefaultDatabaseName
+  const databaseVersion = customDatabaseVersion ?? DefaultDatabaseVersion
+  const eventStoreName = customEventStoreName ?? DefaultEventStoreName
+  const sessionStoreName = customSessionStoreName ?? DefaultSessionStoreName
+  const sessionIdIndexName = customSessionIdIndexName ?? DefaultSessionIdIndexName
   if (!sessionId) {
     throw new Error('sessionId must not be empty')
   }

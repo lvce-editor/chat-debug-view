@@ -9,7 +9,10 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
     await ChatDebug.open(bootstrapSessionId)
     await expect(Locator('.ChatDebugView')).toBeVisible()
 
-    await Command.execute('ChatDebug.seedManyEventsInIndexedDbForTest', sessionId, eventCount)
+    await Command.execute('ChatDebug.seedManyEventsInIndexedDbForTest', {
+      sessionId,
+      totalEventCount: eventCount,
+    })
 
     await ChatDebug.open(sessionId)
     await expect(Locator('.ChatDebugView')).toBeVisible()
