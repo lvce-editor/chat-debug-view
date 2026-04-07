@@ -2,8 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.tool-execution-name-from-name'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-tool-execution-name-from-name')
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  await ChatDebug.open('e2e-session-tool-execution-name-from-name')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -20,8 +20,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
 
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.ChatDebugViewEventRow')
   await expect(rows).toHaveCount(1)

@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.show-event-stream-finished-events-toggle'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-show-event-stream-finished')
+  await ChatDebug.open('e2e-session-show-event-stream-finished')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -21,15 +21,15 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   // assert default hidden
   const rows = Locator('.ChatDebugViewEventRow')
   await expect(rows).toHaveCount(1)
 
   // act + assert visible when enabled
-  await Command.execute('ChatDebug.handleInput', 'showEventStreamFinishedEvents', '', true)
+  await ChatDebug.setShowEventStreamFinishedEvents(true)
   await expect(rows).toHaveCount(2)
   await expect(rows.nth(1)).toContainText('event-stream-finished')
 }

@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.filter-event-category-token'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-filter-token')
+  await ChatDebug.open('e2e-session-filter-token')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -35,9 +35,9 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
-  await Command.execute('ChatDebug.handleInput', 'filter', '@tools hello', false)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
+  await ChatDebug.setFilter('@tools hello')
 
   // assert
   const rows = Locator('.ChatDebugViewEventRow')

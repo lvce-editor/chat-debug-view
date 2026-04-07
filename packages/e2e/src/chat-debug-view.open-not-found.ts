@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.open-not-found'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act
-  await Command.execute('Main.openUri', 'chat-debug://not-found')
+  await ChatDebug.open('not-found')
 
   // assert
   const errorMessage = Locator('.ChatDebugViewError')

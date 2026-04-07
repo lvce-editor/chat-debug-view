@@ -2,9 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.quick-filter-pills'
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-quick-filter-pills')
+  await ChatDebug.open('e2e-session-quick-filter-pills')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -16,8 +16,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   // assert
   const pills = Locator('.ChatDebugViewQuickFilterPill')

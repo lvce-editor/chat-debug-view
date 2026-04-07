@@ -4,8 +4,8 @@ export const name = 'chat-debug-view.timeline-drag-select'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }) => {
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-timeline-drag-select')
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+  await ChatDebug.open('e2e-session-timeline-drag-select')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -26,8 +26,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
     },
   ]
 
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.ChatDebugViewEventRow')
   const interactiveTimeline = Locator('.ChatDebugViewTimelineInteractive')

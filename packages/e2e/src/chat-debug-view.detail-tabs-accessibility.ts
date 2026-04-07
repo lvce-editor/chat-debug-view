@@ -4,9 +4,9 @@ export const name = 'chat-debug-view.detail-tabs-accessibility'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-detail-tabs-accessibility')
+  await ChatDebug.open('e2e-session-detail-tabs-accessibility')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
@@ -21,8 +21,8 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
 
   // act
-  await Command.execute('ChatDebug.setEvents', events)
-  await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
+  await ChatDebug.setEvents(events)
+  await ChatDebug.useDevtoolsLayout()
   await Locator('.ChatDebugViewEventRow').nth(0).click()
 
   const tablist = Locator('[role="tablist"]')
