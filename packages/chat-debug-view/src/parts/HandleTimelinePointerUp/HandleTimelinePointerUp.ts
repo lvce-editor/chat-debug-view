@@ -4,8 +4,7 @@ import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTi
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
-import * as HandleInput from '../HandleInput/HandleInput.ts'
-import * as InputName from '../InputName/InputName.ts'
+import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
 
 export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
   if (!state.timelineSelectionActive) {
@@ -23,6 +22,6 @@ export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: numbe
   const focus = Number.parseFloat(focusSeconds)
   const startSeconds = formatTimelinePresetValue(Math.min(anchor, focus))
   const endSeconds = formatTimelinePresetValue(Math.max(anchor, focus))
-  const nextState = HandleInput.handleInput(state, InputName.TimelineRangePreset, `${startSeconds}:${endSeconds}`, false)
+  const nextState = HandleTimelineInput.handleTimelineRangePreset(state, `${startSeconds}:${endSeconds}`)
   return clearTimelineSelectionState(nextState)
 }

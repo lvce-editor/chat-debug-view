@@ -1,9 +1,8 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clearTimelineSelectionState } from '../ClearTimelineSelectionState/ClearTimelineSelectionState.ts'
-import * as HandleInput from '../HandleInput/HandleInput.ts'
-import * as InputName from '../InputName/InputName.ts'
+import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
 
 export const handleTimelineDoubleClick = (state: ChatDebugViewState): ChatDebugViewState => {
-  const nextState = HandleInput.handleInput(state, InputName.TimelineRangePreset, '', false)
+  const nextState = HandleTimelineInput.handleTimelineRangePreset(state, '')
   return clearTimelineSelectionState(nextState)
 }

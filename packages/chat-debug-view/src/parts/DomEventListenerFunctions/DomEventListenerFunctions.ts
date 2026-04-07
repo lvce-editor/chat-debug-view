@@ -1,6 +1,6 @@
-export const HandleInput = 4
+export const HandleEventCategoryFilter = 4
 export const HandleFilterInput = 5
-export const HandleSimpleInput = 6
+export const HandleDetailTab = 6
 export const HandleEventRowClick = 7
 export const HandleHeaderContextMenu = 8
 export const HandleSashPointerDown = 9
@@ -13,3 +13,5 @@ export const HandleTimelinePointerMove = 15
 export const HandleTimelinePointerUp = 16
 export const HandleTimelineDoubleClick = 17
 export const HandleTableKeyDown = 18
+export const HandleTimelineRangePreset = 19
+export const HandleCloseDetails = 20

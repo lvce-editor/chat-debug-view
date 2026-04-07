@@ -34,7 +34,7 @@ export const getQuickFilterNodes = (
           className: ChatDebugViewQuickFilterInput,
           inputType: 'radio',
           name: InputName.EventCategoryFilter,
-          onChange: DomEventListenerFunctions.HandleInput,
+          onChange: DomEventListenerFunctions.HandleEventCategoryFilter,
           type: VirtualDomElements.Input,
           value: option.value,
         },
