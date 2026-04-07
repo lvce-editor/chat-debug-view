@@ -1,3 +1,3 @@
 export const storageBackendConfig = {
-  useChatStorageWorker: true,
+  useChatStorageWorker: false,
 }
