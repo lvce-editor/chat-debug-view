@@ -25,7 +25,7 @@ const events: readonly ChatViewEvent[] = [
   },
 ]
 
-const untimedEvents: readonly ChatViewEvent[] = [
+const eventsWithoutTime: readonly ChatViewEvent[] = [
   {
     sessionId: 'session-1',
     type: 'request',
@@ -85,7 +85,7 @@ test('getTimelineInfo should ignore invalid timeline range values', () => {
 })
 
 test('getTimelineDurationSeconds should return zero when no events have a valid time', () => {
-  const result = GetTimelineInfo.getTimelineDurationSeconds(untimedEvents)
+  const result = GetTimelineInfo.getTimelineDurationSeconds(eventsWithoutTime)
 
   expect(result).toBe(0)
 })

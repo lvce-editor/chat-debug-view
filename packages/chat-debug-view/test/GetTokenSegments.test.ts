@@ -30,7 +30,7 @@ test('getTokenSegments should classify keys even when whitespace appears before 
 })
 
 test('getTokenSegments should keep escaped quotes inside string tokens', () => {
-  const result = getTokenSegments('{"message":"say \\\"hi\\\""}')
+  const result = getTokenSegments('{"message":"say \\"hi\\""}')
 
   expect(result).toEqual([
     {
@@ -47,7 +47,7 @@ test('getTokenSegments should keep escaped quotes inside string tokens', () => {
     },
     {
       className: TokenString,
-      value: '"say \\\"hi\\\""',
+      value: '"say \\"hi\\""',
     },
     {
       className: TokenText,
