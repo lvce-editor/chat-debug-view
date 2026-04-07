@@ -23,7 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
-  await Locator('.ChatDebugViewEventRow').nth(0).click()
+  await ChatDebug.selectEventRow(0)
 
   const tablist = Locator('[role="tablist"]')
   const tabs = Locator('[role="tab"]')

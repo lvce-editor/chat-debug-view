@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.close-details'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-close-details')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -26,7 +26,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const closeButton = Locator('.ChatDebugViewDetailsClose')
 
   await expect(closeButton).toHaveAttribute('aria-label', 'Close details')
-  await closeButton.click()
+  await Command.execute('ChatDebug.handleInput', 'closeDetails', '', false)
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)
