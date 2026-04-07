@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.chat-message-updated-preview'
 
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
-  await Command.execute('Main.openUri', 'chat-debug://e2e-session-chat-message-updated-preview')
+  await ChatDebug.open('e2e-session-chat-message-updated-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
