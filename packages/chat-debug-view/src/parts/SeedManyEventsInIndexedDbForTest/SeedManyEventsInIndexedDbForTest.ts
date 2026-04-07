@@ -129,19 +129,25 @@ const addSeedEvents = async (eventStore: EventStoreLike, sessionId: string, tota
   }
 }
 
-export const seedManyEventsInIndexedDbForTest = async (
-  sessionId: string,
-  totalEventCount: number,
-  databaseName = DefaultDatabaseName,
-  databaseVersion = DefaultDatabaseVersion,
-  eventStoreName = DefaultEventStoreName,
-  sessionStoreName = DefaultSessionStoreName,
-  sessionIdIndexName = DefaultSessionIdIndexName,
-): Promise<void> => {
+export const seedManyEventsInIndexedDbForTest = async (...args: readonly unknown[]): Promise<void> => {
+  const offset = typeof args[0] === 'number' && typeof args[1] === 'string' ? 1 : 0
+  const sessionId = typeof args[offset] === 'string' ? args[offset] : ''
+  const totalEventCountArg = args[offset + 1]
+  const databaseNameArg = args[offset + 2]
+  const databaseVersionArg = args[offset + 3]
+  const eventStoreNameArg = args[offset + 4]
+  const sessionStoreNameArg = args[offset + 5]
+  const sessionIdIndexNameArg = args[offset + 6]
+  const parsedEventCount = typeof totalEventCountArg === 'number' || typeof totalEventCountArg === 'string' ? Number(totalEventCountArg) : Number.NaN
+  const databaseName = typeof databaseNameArg === 'string' ? databaseNameArg : DefaultDatabaseName
+  const databaseVersion = typeof databaseVersionArg === 'number' ? databaseVersionArg : DefaultDatabaseVersion
+  const eventStoreName = typeof eventStoreNameArg === 'string' ? eventStoreNameArg : DefaultEventStoreName
+  const sessionStoreName = typeof sessionStoreNameArg === 'string' ? sessionStoreNameArg : DefaultSessionStoreName
+  const sessionIdIndexName = typeof sessionIdIndexNameArg === 'string' ? sessionIdIndexNameArg : DefaultSessionIdIndexName
   if (!sessionId) {
     throw new Error('sessionId must not be empty')
   }
-  if (!Number.isInteger(totalEventCount) || totalEventCount < 1) {
+  if (!Number.isInteger(parsedEventCount) || parsedEventCount < 1) {
     throw new Error('totalEventCount must be a positive integer')
   }
 
@@ -158,9 +164,9 @@ export const seedManyEventsInIndexedDbForTest = async (
     await deleteExistingSessionEvents(eventStore, sessionId, sessionIdIndexName)
     await summaryStore.put({
       id: sessionId,
-      title: `seeded ${totalEventCount} events`,
+      title: `seeded ${parsedEventCount} events`,
     })
-    await addSeedEvents(eventStore, sessionId, totalEventCount)
+    await addSeedEvents(eventStore, sessionId, parsedEventCount)
     await transaction.done
   } finally {
     database.close()
