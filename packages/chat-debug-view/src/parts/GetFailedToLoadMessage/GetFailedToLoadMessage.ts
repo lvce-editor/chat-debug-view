@@ -1,3 +1,5 @@
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
+
 const getErrorMessage = (error: unknown): string | undefined => {
   if (error instanceof Error) {
     return error.message
@@ -14,7 +16,7 @@ const getErrorMessage = (error: unknown): string | undefined => {
 export const getFailedToLoadMessage = (sessionId: string, error?: unknown): string => {
   const errorMessage = getErrorMessage(error)
   if (errorMessage) {
-    return `Failed to load chat debug session "${sessionId}": ${errorMessage}`
+    return ChatDebugStrings.failedToLoadChatDebugSessionWithError(sessionId, errorMessage)
   }
-  return `Failed to load chat debug session "${sessionId}". Please try again.`
+  return ChatDebugStrings.failedToLoadChatDebugSession(sessionId)
 }

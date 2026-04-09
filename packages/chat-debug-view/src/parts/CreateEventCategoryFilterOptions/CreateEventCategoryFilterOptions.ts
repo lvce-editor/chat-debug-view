@@ -1,26 +1,27 @@
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { All, Network, Stream, Tools, Ui } from '../EventCategoryFilter/EventCategoryFilter.ts'
 
 export const createEventCategoryFilterOptions = (): readonly EventCategoryFilterOption[] => {
   return [
     {
-      label: 'All',
+      label: ChatDebugStrings.all(),
       value: All,
     },
     {
-      label: 'Tools',
+      label: ChatDebugStrings.tools(),
       value: Tools,
     },
     {
-      label: 'Network',
+      label: ChatDebugStrings.network(),
       value: Network,
     },
     {
-      label: 'UI',
+      label: ChatDebugStrings.ui(),
       value: Ui,
     },
     {
-      label: 'Stream',
+      label: ChatDebugStrings.stream(),
       value: Stream,
     },
   ]

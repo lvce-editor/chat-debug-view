@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewTiming, ChatDebugViewTimingLabel, ChatDebugViewTimingRow, ChatDebugViewTimingValue } from '../ClassNames/ClassNames.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEndText } from '../GetEndText/GetEndText.ts'
@@ -34,8 +35,8 @@ export const getTimingDetailsDom = (event: ChatViewEvent): readonly VirtualDomNo
       className: ChatDebugViewTiming,
       type: VirtualDomElements.Div,
     },
-    ...getTimingRowDom('Started', getStartText(event)),
-    ...getTimingRowDom('Ended', getEndText(event)),
-    ...getTimingRowDom('Duration', getDurationText(event)),
+    ...getTimingRowDom(ChatDebugStrings.started(), getStartText(event)),
+    ...getTimingRowDom(ChatDebugStrings.ended(), getEndText(event)),
+    ...getTimingRowDom(ChatDebugStrings.duration(), getDurationText(event)),
   ]
 }
