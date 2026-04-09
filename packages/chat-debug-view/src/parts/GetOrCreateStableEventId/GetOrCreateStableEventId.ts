@@ -1,12 +1,18 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { eventStableIds, eventStableIdState } from '../EventStableIdsState/EventStableIdsState.ts'
+import { eventStableIdState, stableEventIdSymbol, type ChatViewEventWithStableId } from '../EventStableIdsState/EventStableIdsState.ts'
 
 export const getOrCreateStableEventId = (event: ChatViewEvent): string => {
-  const existingStableEventId = eventStableIds.get(event)
+  const eventWithStableId = event as ChatViewEventWithStableId
+  const existingStableEventId = eventWithStableId[stableEventIdSymbol]
   if (existingStableEventId) {
     return existingStableEventId
   }
   const stableEventId = `event-${eventStableIdState.nextStableEventId++}`
-  eventStableIds.set(event, stableEventId)
+  Object.defineProperty(eventWithStableId, stableEventIdSymbol, {
+    configurable: true,
+    enumerable: false,
+    value: stableEventId,
+    writable: true,
+  })
   return stableEventId
 }
