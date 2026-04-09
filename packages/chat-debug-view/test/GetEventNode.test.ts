@@ -37,7 +37,7 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     {
       childCount: 1,
-      className: 'TokenText',
+      className: 'Token TokenText',
       type: VirtualDomElements.Span,
     },
     text('{'),
@@ -59,25 +59,25 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     {
       childCount: 1,
-      className: 'TokenText',
+      className: 'Token TokenText',
       type: VirtualDomElements.Span,
     },
     text('  '),
     {
       childCount: 1,
-      className: 'TokenKey',
+      className: 'Token TokenKey',
       type: VirtualDomElements.Span,
     },
     text('"type"'),
     {
       childCount: 1,
-      className: 'TokenText',
+      className: 'Token TokenText',
       type: VirtualDomElements.Span,
     },
     text(': '),
     {
       childCount: 1,
-      className: 'TokenString',
+      className: 'Token TokenString',
       type: VirtualDomElements.Span,
     },
     text('"request"'),
@@ -99,7 +99,7 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     {
       childCount: 1,
-      className: 'TokenText',
+      className: 'Token TokenText',
       type: VirtualDomElements.Span,
     },
     text('}'),
