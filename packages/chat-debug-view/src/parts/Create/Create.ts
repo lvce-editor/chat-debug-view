@@ -40,7 +40,7 @@ export const create = (
   savedState: Partial<SavedState> = {},
 ): void => {
   const defaultState = createDefaultState()
-  const { filterValue, selectedEventId, tableWidth, timelineEndSeconds, timelineStartSeconds } = savedState
+  const { filterValue, selectedEventId, timelineEndSeconds, timelineStartSeconds } = savedState
   const restoredEventCategoryFilter = getRestoredEventCategoryFilter(savedState)
   const state: ChatDebugViewState = {
     ...defaultState,
@@ -56,7 +56,6 @@ export const create = (
     selectedEventId: selectedEventId ?? defaultState.selectedEventId,
     sessionId,
     sessionIdIndexName,
-    tableWidth: tableWidth ?? defaultState.tableWidth,
     timelineEndSeconds: timelineEndSeconds ?? defaultState.timelineEndSeconds,
     timelineStartSeconds: timelineStartSeconds ?? defaultState.timelineStartSeconds,
     uid,

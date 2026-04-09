@@ -27,7 +27,6 @@ test('create should restore serializable state from saved state', () => {
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
     eventCategoryFilter: EventCategoryFilter.Tools,
     selectedEventId: 7,
-    tableWidth: 222,
   })
   const result = ChatDebugViewStates.get(uid)
 
@@ -35,8 +34,6 @@ test('create should restore serializable state from saved state', () => {
   expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
-  expect(result.newState.tableWidth).toBe(222)
-  expect(result.oldState.tableWidth).toBe(222)
 })
 
 test('create should restore event category filter from filter tokens when the explicit field is missing', () => {
