@@ -65,7 +65,7 @@ export const getDetailsDom = (
     {
       childCount: 2,
       className: ChatDebugViewDetails,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       childCount: 2,
