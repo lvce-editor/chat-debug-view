@@ -12,5 +12,18 @@ export const getCss = (state: ChatDebugViewState): string => {
   padding: ${viewPadding}px;
 }
 
+
+.ChatDebugViewDetails  {
+  contain: strict;
+}
+
+.ChatDebugViewDetailsTop {
+  height: 33px;
+  contain: strict;
+}
+
+.ChatDebugViewEvent {
+  contain: content
+}
 `
 }
