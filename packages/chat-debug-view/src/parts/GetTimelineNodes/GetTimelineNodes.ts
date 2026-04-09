@@ -68,7 +68,7 @@ export const getTimelineNodes = (
     {
       childCount: 2,
       className: ChatDebugViewTimeline,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       childCount: 1,

@@ -53,12 +53,14 @@ export const getDevtoolsDom = (
     {
       childCount: mainChildCount,
       className: ChatDebugViewDevtoolsMain,
+      role: 'none',
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
     {
       childCount: splitChildCount,
       className: ChatDebugViewDevtoolsSplit,
+      role: 'none',
       type: VirtualDomElements.Div,
     },
     {
