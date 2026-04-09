@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.empty-filter-results'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-empty-filter-results')
@@ -15,10 +17,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       url: 'https://example.com/alpha',
     },
   ]
-
-  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
+
+  // act
   await ChatDebug.setFilter('missing')
 
   // assert

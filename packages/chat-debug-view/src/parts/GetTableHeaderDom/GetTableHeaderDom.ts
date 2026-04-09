@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewHeaderCell, ChatDebugViewTableHeader, ChatDebugViewTableHeaderRow } from '../ClassNames/ClassNames.ts'
 
 export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
@@ -19,20 +20,20 @@ export const getTableHeaderDom = (): readonly VirtualDomNode[] => {
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Type'),
+    text(ChatDebugStrings.type()),
     {
       childCount: 1,
       className: ChatDebugViewHeaderCell,
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Duration'),
+    text(ChatDebugStrings.duration()),
     {
       childCount: 1,
       className: ChatDebugViewHeaderCell,
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Status'),
+    text(ChatDebugStrings.status()),
   ]
 }

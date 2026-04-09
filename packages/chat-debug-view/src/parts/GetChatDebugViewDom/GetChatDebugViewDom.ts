@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools, joinClassNames } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
@@ -51,14 +52,14 @@ export const getChatDebugViewDom = (
   const hasTimelineFilter = Boolean(timelineFilterDescription)
   const hasFilterValue = filterDescriptionParts.length > 0
   const filterDescription = filterDescriptionParts.join(' ')
-  const noFilteredEventsMessage = `no events found matching ${filterDescription}`
+  const noFilteredEventsMessage = ChatDebugStrings.noEventsFoundMatching(filterDescription)
   const useNoToolCallEventsMessage = eventCategoryFilter === EventCategoryFilter.Tools && !trimmedFilterValue && !hasTimelineFilter
   const emptyMessage =
     events.length === 0 && hasFilterValue
       ? useNoToolCallEventsMessage
-        ? 'No tool call events.'
+        ? ChatDebugStrings.noToolCallEvents()
         : noFilteredEventsMessage
-      : 'No events have been found'
+      : ChatDebugStrings.noEventsFound()
 
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex

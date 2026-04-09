@@ -1,3 +1,5 @@
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
+
 export const Response = 'response'
 export const Preview = 'preview'
 export const Timing = 'timing'
@@ -10,10 +12,10 @@ export const isDetailTab = (value: string): boolean => {
 
 export const getDetailTabLabel = (value: string): string => {
   if (value === Preview) {
-    return 'Preview'
+    return ChatDebugStrings.preview()
   }
   if (value === Timing) {
-    return 'Timing'
+    return ChatDebugStrings.timing()
   }
-  return 'Response'
+  return ChatDebugStrings.response()
 }
