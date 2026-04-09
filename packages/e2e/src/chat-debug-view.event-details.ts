@@ -25,12 +25,15 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   const responseTab = Locator('#ChatDebugViewDetailsTab-response')
   const timingTab = Locator('#ChatDebugViewDetailsTab-timing')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert
   await expect(Locator('.ChatDebugViewEventRowSelected')).toHaveCount(1)
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
   await expect(Locator('.ChatDebugViewDetailsTitle')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewDetailsTop [role="tablist"]')).toBeVisible()
+  await expect(detailsBottom).toHaveCount(1)
+  await expect(detailsBottom).toHaveAttribute('role', 'tabpanel')
   // await expect(responseTab).toHaveAttribute('aria-selected', 'true')
   // await expect(timingTab).toHaveAttribute('aria-selected', 'false')
   await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
