@@ -175,3 +175,71 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     text('400'),
   ])
 })
+
+test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'ChatDebugViewEventRow',
+      'data-index': '0',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      type: VirtualDomElements.Td,
+    },
+    text('request'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0ms'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 3,
+      className: 'ChatDebugViewEventRow TableRowEven',
+      'data-index': '1',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      type: VirtualDomElements.Td,
+    },
+    text('response'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0ms'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+  ])
+})
