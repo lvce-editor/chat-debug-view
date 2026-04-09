@@ -29,9 +29,11 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // act
-  await Command.execute('ChatDebugView.handleTableBodyContextMenu', 0, 300)
+  await Command.execute('ChatDebug.handleTableBodyContextMenu', 0, 300)
 
   // assert
   const menuItems = Locator('.MenuItem')
-  await expect(menuItems).toHaveCount(99)
+  await expect(menuItems).toHaveCount(1)
+  const menuItem = menuItems.nth(0)
+  await expect(menuItem).toHaveText('Copy')
 }
