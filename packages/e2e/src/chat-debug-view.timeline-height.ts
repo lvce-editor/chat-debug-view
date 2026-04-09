@@ -3,6 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'chat-debug-view.timeline-height'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  // arrange
   await ChatDebug.open('e2e-session-timeline-height')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -19,10 +20,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
     },
   ]
 
+  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
   const timeline = Locator('.ChatDebugViewTimeline')
+
+  // assert
   await expect(timeline).toBeVisible()
   await expect(timeline).toHaveJSProperty('offsetHeight', 75)
 }

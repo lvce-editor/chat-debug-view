@@ -5,6 +5,7 @@ export const name = 'chat-debug-view.error-status'
 export const skip = 1
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  // arrange
   await ChatDebug.open('e2e-session-error-status')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -25,12 +26,14 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
     },
   ]
 
+  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
   const row = Locator('.ChatDebugViewEventRow').nth(0)
   const statusCell = Locator('.ChatDebugViewCellStatusError').nth(0)
 
+  // assert
   await expect(row).toContainText('400')
   await expect(row).not.toContainText('200')
   await expect(statusCell).toContainText('400')
