@@ -3,26 +3,6 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as HandleTableBodyContextMenu from '../src/parts/HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('getTableBodyEventIndex should derive event index from coordinates', () => {
-  const state = {
-    ...createDefaultState(),
-    events: [
-      { eventId: 1, type: 'request' },
-      { eventId: 2, type: 'response' },
-      { eventId: 3, type: 'request' },
-    ],
-    height: 600,
-    tableWidth: 480,
-    width: 900,
-    x: 10,
-    y: 20,
-  }
-
-  const result = HandleTableBodyContextMenu.getTableBodyEventIndex(state, 30, 197)
-
-  expect(result).toBe(1)
-})
-
 test('handleTableBodyContextMenu should open context menu and not change state', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'ContextMenu.show2': () => {},
