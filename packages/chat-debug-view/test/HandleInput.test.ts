@@ -78,11 +78,13 @@ test('handleInput should preserve selected event when filter still includes it',
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
+        eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
@@ -99,12 +101,14 @@ test.skip('handleInput should preserve selected merged tool event when filter st
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         toolName: 'read_file',
         type: 'tool-execution-started',
       },
       {
+        eventId: 1,
         output: {
           contents: 'hello',
         },
@@ -114,6 +118,7 @@ test.skip('handleInput should preserve selected merged tool event when filter st
         type: 'tool-execution-finished',
       },
       {
+        eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:02.000Z',
         type: 'response',
@@ -131,12 +136,14 @@ test('handleInput should preserve selected event when category filter still incl
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         toolName: 'read_file',
         type: 'tool-execution-started',
       },
       {
+        eventId: 2,
         path: '/chat',
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
@@ -154,11 +161,13 @@ test('handleInput should clear selected event when filter hides it', () => {
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
+        eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',

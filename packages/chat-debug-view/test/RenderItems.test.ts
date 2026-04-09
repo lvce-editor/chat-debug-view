@@ -10,11 +10,13 @@ test('renderItems should not show count for visible events', () => {
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
+        eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'handle-input',
@@ -41,11 +43,13 @@ test('renderItems should not show plural count when multiple events are visible'
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
+        eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
@@ -68,6 +72,7 @@ test('renderItems should show filter-specific message when no events match', () 
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
@@ -119,20 +124,21 @@ test('renderItems should preserve existing eventId values', () => {
 
 test('renderItems should assign numeric eventId values when they are missing', () => {
   const oldState: ChatDebugViewState = createDefaultState()
+  const legacyEvents = [
+    {
+      sessionId: 'session-1',
+      timestamp: 'a',
+      type: 'request',
+    },
+    {
+      sessionId: 'session-1',
+      timestamp: 'b',
+      type: 'response',
+    },
+  ] as unknown as ChatDebugViewState['events']
   const newState: ChatDebugViewState = {
     ...createDefaultState(),
-    events: [
-      {
-        sessionId: 'session-1',
-        timestamp: 'a',
-        type: 'request',
-      },
-      {
-        sessionId: 'session-1',
-        timestamp: 'b',
-        type: 'response',
-      },
-    ],
+    events: legacyEvents,
     sessionId: 'session-1',
     uid: 5,
     useDevtoolsLayout: false,

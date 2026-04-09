@@ -3,6 +3,7 @@ import * as IsUiEvent from '../src/parts/IsUiEvent/IsUiEvent.ts'
 
 test('isUiEvent should return true for handled ui events', () => {
   const result = IsUiEvent.isUiEvent({
+    eventId: 1,
     type: 'handle-input',
   })
 
@@ -11,6 +12,7 @@ test('isUiEvent should return true for handled ui events', () => {
 
 test('isUiEvent should return false for handle-response events', () => {
   const result = IsUiEvent.isUiEvent({
+    eventId: 1,
     type: 'handle-response',
   })
 
@@ -19,6 +21,7 @@ test('isUiEvent should return false for handle-response events', () => {
 
 test('isUiEvent should return false for non-ui events', () => {
   const result = IsUiEvent.isUiEvent({
+    eventId: 1,
     type: 'request',
   })
 
