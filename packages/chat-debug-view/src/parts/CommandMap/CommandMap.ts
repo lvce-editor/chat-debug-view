@@ -36,11 +36,9 @@ export const commandMap = {
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,
-<<<<<<< HEAD
   'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
-=======
   'ChatDebug.getMenuIds': getMenuIds,
->>>>>>> origin/main
+  'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.handleDetailTab),
