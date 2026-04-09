@@ -57,6 +57,7 @@ test('chat debug empty-state strings should return localized messages', () => {
   expect(ChatDebugStrings.noEventsFound()).toBe('No events have been found')
   expect(ChatDebugStrings.noEventsFoundMatching('response')).toBe('No events found matching response')
   expect(ChatDebugStrings.noToolCallEvents()).toBe('No tool call events.')
+  expect(ChatDebugStrings.network()).toBe('Network')
 })
 
 test('hasErrorStatus should return true for error events', () => {
