@@ -216,6 +216,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -262,11 +263,13 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
 
 test('getChatDebugViewDom should not stringify unselected events in devtools layout', () => {
   const circularEvent: {
+    readonly eventId: number
     readonly sessionId: string
     readonly timestamp: string
     readonly type: string
     self?: unknown
   } = {
+    eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
@@ -296,11 +299,13 @@ test('getChatDebugViewDom should not stringify unselected events in devtools lay
 test('getChatDebugViewDom should not render event count message', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
@@ -336,6 +341,7 @@ test('getChatDebugViewDom should not render event count message', () => {
 test('getChatDebugViewDom should render tool execution type with tool name in legacy layout', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'getWorkspaceUri',

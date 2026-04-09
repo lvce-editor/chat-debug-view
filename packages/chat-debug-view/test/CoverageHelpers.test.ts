@@ -25,10 +25,7 @@ test('getLightweightEvent should keep only summary fields', () => {
     type: 'request',
   }
   Reflect.deleteProperty(event, 'eventId')
-  const result = getLightweightEvent(
-    event,
-    5,
-  )
+  const result = getLightweightEvent(event, 5)
 
   expect(result).toEqual({
     duration: 7,
