@@ -22,8 +22,18 @@ export const getCss = (state: ChatDebugViewState): string => {
   contain: strict;
 }
 
+.ChatDebugViewDetailsBottom {
+  display: flex;
+  contain: strict;
+  flex:1
+
+}
 .ChatDebugViewEvent {
   contain: content
+}
+
+.row {
+  flex-shrink: 0;
 }
 `
 }
