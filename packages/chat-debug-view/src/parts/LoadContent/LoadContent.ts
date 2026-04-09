@@ -3,6 +3,6 @@ import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 
 export { loadEventsDependencies as loadContentDependencies } from '../LoadEvents/LoadEvents.ts'
 
-export const loadContent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
+export const loadContent = async (state: ChatDebugViewState, savedState: unknown): Promise<ChatDebugViewState> => {
   return loadEventsFromUri(state)
 }
