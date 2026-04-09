@@ -5,12 +5,22 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
+      name: DomEventListenerFunctions.HandleHeaderContextMenu,
+      params: ['handleHeaderContextMenu'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenerFunctions.HandleEventRowClick,
       params: ['handleEventRowClick', 'event.target.dataset.index', EventExpression.Button],
     },
     {
       name: DomEventListenerFunctions.HandleTableBodyContextMenu,
       params: ['handleTableBodyContextMenu', EventExpression.ClientX, EventExpression.ClientY],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleDetailsContextMenu,
+      params: ['handleDetailsContextMenu'],
       preventDefault: true,
     },
     {
@@ -36,6 +46,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenerFunctions.HandleClickRefresh,
       params: ['handleClickRefresh'],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableKeyDown,
+      params: ['handleTableKeyDown', 'event.key'],
     },
     {
       name: DomEventListenerFunctions.HandleSashPointerDown,
