@@ -2,6 +2,10 @@ import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 
+export const appendEvent = async (event: ChatViewEvent): Promise<void> => {
+  return ChatStorageWorker.invoke('ChatStorage.appendEvent', event) as Promise<void>
+}
+
 export const listChatViewEvents = async (sessionId: string): Promise<ListChatViewEventsResult> => {
   return ChatStorageWorker.invoke('ChatStorage.listChatViewEvents', sessionId) as Promise<ListChatViewEventsResult>
 }
