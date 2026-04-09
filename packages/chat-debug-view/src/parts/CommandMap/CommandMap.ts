@@ -2,6 +2,7 @@ import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AppendStoredEventForTest from '../AppendStoredEventForTest/AppendStoredEventForTest.ts'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
 import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts'
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
@@ -38,6 +39,7 @@ export const commandMap = {
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,
+  'ChatDebug.getMenuEntries': wrapGetter(getMenuEntries2),
   'ChatDebug.getMenuIds': getMenuIds,
   'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
