@@ -1,16 +1,71 @@
 import { TokenBoolean, TokenKey, TokenNumeric, TokenString, TokenText } from '../ClassNames/ClassNames.ts'
-import { pushToken } from '../PushToken/PushToken.ts'
 
-const numberRegex = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/
-const whitespaceRegex = /\s/u
-
-interface TokenSegment {
+export interface TokenSegment {
   readonly className: string
   readonly value: string
 }
 
-export const getTokenSegments = (json: string): readonly TokenSegment[] => {
-  let segments: readonly TokenSegment[] = []
+interface MutableTokenSegment {
+  className: string
+  value: string
+}
+
+type TokenHandler = (className: string, value: string) => void
+
+const isDigit = (character: string | undefined): boolean => {
+  return character !== undefined && character >= '0' && character <= '9'
+}
+
+const isWhitespace = (character: string | undefined): boolean => {
+  return character === ' ' || character === '\n' || character === '\r' || character === '\t'
+}
+
+const getNumberEnd = (json: string, start: number): number => {
+  let i = start
+  if (json[i] === '-') {
+    i++
+  }
+
+  if (json[i] === '0') {
+    i++
+  } else {
+    if (!isDigit(json[i])) {
+      return start
+    }
+    while (isDigit(json[i])) {
+      i++
+    }
+  }
+
+  if (json[i] === '.') {
+    const decimalStart = i
+    i++
+    if (!isDigit(json[i])) {
+      return decimalStart
+    }
+    while (isDigit(json[i])) {
+      i++
+    }
+  }
+
+  if (json[i] === 'e' || json[i] === 'E') {
+    const exponentStart = i
+    i++
+    if (json[i] === '+' || json[i] === '-') {
+      i++
+    }
+    if (!isDigit(json[i])) {
+      return exponentStart
+    }
+    while (isDigit(json[i])) {
+      i++
+    }
+  }
+
+  return i
+}
+
+export const forEachTokenSegment = (json: string, onToken: TokenHandler): void => {
   let i = 0
   while (i < json.length) {
     const character = json[i]
@@ -29,43 +84,57 @@ export const getTokenSegments = (json: string): readonly TokenSegment[] => {
         }
         i++
       }
-      const tokenValue = json.slice(start, i)
       let lookAheadIndex = i
-      while (lookAheadIndex < json.length && whitespaceRegex.test(json[lookAheadIndex])) {
+      while (lookAheadIndex < json.length && isWhitespace(json[lookAheadIndex])) {
         lookAheadIndex++
       }
       const className = json[lookAheadIndex] === ':' ? TokenKey : TokenString
-      segments = pushToken(segments, className, tokenValue)
+      onToken(className, json.slice(start, i))
       continue
     }
 
-    const numberMatch = numberRegex.exec(json.slice(i))
-    if (numberMatch) {
-      segments = pushToken(segments, TokenNumeric, numberMatch[0])
-      i += numberMatch[0].length
+    const numberEnd = getNumberEnd(json, i)
+    if (numberEnd > i) {
+      onToken(TokenNumeric, json.slice(i, numberEnd))
+      i = numberEnd
       continue
     }
 
     if (json.startsWith('true', i)) {
-      segments = pushToken(segments, TokenBoolean, 'true')
+      onToken(TokenBoolean, 'true')
       i += 4
       continue
     }
 
     if (json.startsWith('false', i)) {
-      segments = pushToken(segments, TokenBoolean, 'false')
+      onToken(TokenBoolean, 'false')
       i += 5
       continue
     }
 
     if (json.startsWith('null', i)) {
-      segments = pushToken(segments, TokenBoolean, 'null')
+      onToken(TokenBoolean, 'null')
       i += 4
       continue
     }
 
-    segments = pushToken(segments, TokenText, character)
+    onToken(TokenText, character)
     i++
   }
+}
+
+export const getTokenSegments = (json: string): readonly TokenSegment[] => {
+  const segments: MutableTokenSegment[] = []
+  forEachTokenSegment(json, (className, value) => {
+    if (!value) {
+      return
+    }
+    const lastSegment = segments.at(-1)
+    if (lastSegment && lastSegment.className === className) {
+      lastSegment.value += value
+      return
+    }
+    segments.push({ className, value })
+  })
   return segments
 }

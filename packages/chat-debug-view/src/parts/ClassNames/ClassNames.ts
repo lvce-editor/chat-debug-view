@@ -62,11 +62,12 @@ export const ChatDebugViewCellStatusError = 'ChatDebugViewCellStatusError'
 export const ChatDebugViewCellType = 'ChatDebugViewCellType'
 export const InputBox = 'InputBox'
 export const Row = 'row'
-export const TokenBoolean = 'TokenBoolean'
-export const TokenKey = 'TokenKey'
-export const TokenNumeric = 'TokenNumeric'
-export const TokenString = 'TokenString'
-export const TokenText = 'TokenText'
+export const Token = 'Token'
+export const TokenBoolean = 'Token TokenBoolean'
+export const TokenKey = 'Token TokenKey'
+export const TokenNumeric = 'Token TokenNumeric'
+export const TokenString = 'Token TokenString'
+export const TokenText = 'Token TokenText'
 
 export const joinClassNames = (...classNames: readonly (string | false | null | undefined)[]): string => {
   return classNames.filter(Boolean).join(' ')

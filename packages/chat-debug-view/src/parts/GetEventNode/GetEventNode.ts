@@ -2,11 +2,11 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { ChatDebugViewEvent, ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Row, TokenText } from '../ClassNames/ClassNames.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
-import { getTokenSegments } from '../GetTokenSegments/GetTokenSegments.ts'
+import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 
-interface TokenSegment {
-  readonly className: string
-  readonly value: string
+interface MutableTokenSegment {
+  className: string
+  value: string
 }
 
 const getJsonLines = (value: unknown): readonly (readonly TokenSegment[])[] => {
@@ -14,25 +14,31 @@ const getJsonLines = (value: unknown): readonly (readonly TokenSegment[])[] => {
   if (!json) {
     return [[{ className: TokenText, value: String(json) }]]
   }
-  const segments = getTokenSegments(json)
   const lines: TokenSegment[][] = []
-  let currentLine: TokenSegment[] = []
-  for (const segment of segments) {
-    const parts = segment.value.split('\n')
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i]
-      if (part) {
-        currentLine.push({
-          className: segment.className,
-          value: part,
-        })
-      }
-      if (i < parts.length - 1) {
+  let currentLine: MutableTokenSegment[] = []
+  const pushLineSegment = (className: string, lineValue: string): void => {
+    if (!lineValue) {
+      return
+    }
+    const lastSegment = currentLine.at(-1)
+    if (lastSegment && lastSegment.className === className) {
+      lastSegment.value += lineValue
+      return
+    }
+    currentLine.push({ className, value: lineValue })
+  }
+  forEachTokenSegment(json, (className, segmentValue) => {
+    let start = 0
+    for (let i = 0; i < segmentValue.length; i++) {
+      if (segmentValue[i] === '\n') {
+        pushLineSegment(className, segmentValue.slice(start, i))
         lines.push(currentLine)
         currentLine = []
+        start = i + 1
       }
     }
-  }
+    pushLineSegment(className, segmentValue.slice(start))
+  })
   lines.push(currentLine)
   return lines
 }
