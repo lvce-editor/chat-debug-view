@@ -1,4 +1,5 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
+import * as AppendStoredEventForTest from '../AppendStoredEventForTest/AppendStoredEventForTest.ts'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
@@ -33,6 +34,7 @@ import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 
 export const commandMap = {
+  'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,
