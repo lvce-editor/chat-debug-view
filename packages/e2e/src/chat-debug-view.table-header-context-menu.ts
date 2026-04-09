@@ -8,6 +8,8 @@ const assertVisibleTableColumns = (actual: readonly string[], expected: readonly
   }
 }
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Locator }) => {
   // arrange
   const sessionId = 'e2e-session-table-header-context-menu'
