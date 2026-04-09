@@ -8,6 +8,31 @@ const isChatMessageUpdatedEvent = (event: ChatViewEvent): boolean => {
   return event.type === 'chat-message-updated'
 }
 
+const isChatMessageAddedEvent = (event: ChatViewEvent): boolean => {
+  return event.type === 'chat-message-added'
+}
+
+const getPreviewMessageText = (event: ChatViewEvent): string | undefined => {
+  if (isChatMessageUpdatedEvent(event) && typeof event.text === 'string') {
+    return event.text
+  }
+  if (!isChatMessageAddedEvent(event)) {
+    return undefined
+  }
+  const { message } = event
+  if (!message || typeof message !== 'object') {
+    return undefined
+  }
+  if (!Object.hasOwn(message, 'text')) {
+    return undefined
+  }
+  const { text } = message as { readonly text?: unknown }
+  if (typeof text !== 'string') {
+    return undefined
+  }
+  return text
+}
+
 const getPreviewName = (event: ChatViewEvent): string | undefined => {
   if (typeof event.name === 'string' && event.name) {
     return event.name
@@ -29,8 +54,9 @@ const shouldIncludeArguments = (event: ChatViewEvent, name: string | undefined):
 }
 
 export const getPreviewEvent = (event: ChatViewEvent): unknown => {
-  if (isChatMessageUpdatedEvent(event) && typeof event.text === 'string') {
-    return event.text
+  const previewMessageText = getPreviewMessageText(event)
+  if (previewMessageText !== undefined) {
+    return previewMessageText
   }
   const name = getPreviewName(event)
   const previewEvent = {
