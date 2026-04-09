@@ -105,8 +105,6 @@ test('getEventNode should render json details as numbered rows', () => {
     text('}'),
   ])
 })
-<<<<<<< Updated upstream
-=======
 
 test('getEventNode should preserve numbered rows for nested json values', () => {
   const value = {
@@ -317,4 +315,3 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     text('}'),
   ])
 })
->>>>>>> Stashed changes
