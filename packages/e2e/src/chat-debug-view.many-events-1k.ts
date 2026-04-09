@@ -2,6 +2,4 @@ import { createLargeStoredEventsTest } from './parts/CreateLargeStoredEventsTest
 
 export const name = 'chat-debug-view.many-events-1k'
 
-export const skip = 1
-
 export const test = createLargeStoredEventsTest(1000)

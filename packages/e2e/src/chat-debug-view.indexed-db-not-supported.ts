@@ -5,7 +5,9 @@ export const name = 'chat-debug-view.indexed-db-not-supported'
 export const skip = 1
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  // arrange
   await ChatDebug.open('e2e-session-indexed-db-not-supported')
+
   try {
     // act
     await ChatDebug.setIndexedDbSupportForTest(false)

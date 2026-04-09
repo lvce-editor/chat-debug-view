@@ -3,6 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'chat-debug-view.tool-execution-name-from-name'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  // arrange
   await ChatDebug.open('e2e-session-tool-execution-name-from-name')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -20,10 +21,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
     },
   ]
 
+  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.ChatDebugViewEventRow')
+
+  // assert
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('tool-execution, getWorkspaceUri')
   await expect(rows.nth(0)).toContainText('400')

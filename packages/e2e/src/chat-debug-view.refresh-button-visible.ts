@@ -6,6 +6,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-refresh-button-visible')
   await expect(Locator('.ChatDebugView')).toBeVisible()
+
+  // act
   await ChatDebug.setEvents([])
   await ChatDebug.useDevtoolsLayout()
 

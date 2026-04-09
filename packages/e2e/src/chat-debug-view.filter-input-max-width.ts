@@ -15,6 +15,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
     },
   ]
 
+  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
