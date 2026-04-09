@@ -1,3 +1,5 @@
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
+
 export const getSessionNotFoundMessage = (sessionId: string): string => {
-  return `No chat session found for sessionId "${sessionId}".`
+  return ChatDebugStrings.noChatSessionFound(sessionId)
 }

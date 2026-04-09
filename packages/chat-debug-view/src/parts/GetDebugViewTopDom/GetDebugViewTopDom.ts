@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewFilterInput,
   ChatDebugViewFilterInputDevtools,
@@ -14,7 +15,7 @@ import * as InputName from '../InputName/InputName.ts'
 const getRefreshButtonDom = (): readonly VirtualDomNode[] => {
   return [
     {
-      'aria-label': 'Refresh events',
+      'aria-label': ChatDebugStrings.refreshEvents(),
       childCount: 1,
       className: ChatDebugViewRefreshButton,
       name: InputName.Refresh,
@@ -22,7 +23,7 @@ const getRefreshButtonDom = (): readonly VirtualDomNode[] => {
       type: VirtualDomElements.Button,
       value: InputName.Refresh,
     },
-    text('Refresh'),
+    text(ChatDebugStrings.refresh()),
   ]
 }
 
@@ -47,7 +48,7 @@ export const getDebugViewTopDom = (
         inputType: 'search',
         name: InputName.Filter,
         onInput: DomEventListenerFunctions.HandleFilterInput,
-        placeholder: 'Filter events',
+        placeholder: ChatDebugStrings.filterEvents(),
         type: VirtualDomElements.Input,
         value: filterValue,
       },
@@ -70,7 +71,7 @@ export const getDebugViewTopDom = (
       inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,
-      placeholder: 'Filter events',
+      placeholder: ChatDebugStrings.filterEvents(),
       type: VirtualDomElements.Input,
       value: filterValue,
     },

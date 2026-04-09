@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewDetails,
   ChatDebugViewDetailsBottom,
@@ -73,7 +74,7 @@ export const getDetailsDom = (
       type: VirtualDomElements.Div,
     },
     {
-      'aria-label': 'Close details',
+      'aria-label': ChatDebugStrings.closeDetails(),
       childCount: 0,
       className: ChatDebugViewDetailsClose,
       name: InputName.CloseDetails,
@@ -83,7 +84,7 @@ export const getDetailsDom = (
       value: 'close',
     },
     {
-      'aria-label': 'Detail sections',
+      'aria-label': ChatDebugStrings.detailSections(),
       childCount: DetailTab.detailTabs.length,
       className: ChatDebugViewDetailsTabs,
       role: 'tablist',
