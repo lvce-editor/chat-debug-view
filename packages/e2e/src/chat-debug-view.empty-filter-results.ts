@@ -17,10 +17,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       url: 'https://example.com/alpha',
     },
   ]
-
-  // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
+
+  // act
   await ChatDebug.setFilter('missing')
 
   // assert
