@@ -222,6 +222,27 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
   expect(splitPane?.childCount).toBe(3)
 })
 
+test('getDevtoolsDom should expose none role on the devtools split container', () => {
+  const events = [
+    {
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+    readonly className?: string
+    readonly role?: string
+  }[]
+  const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+
+  expect(splitPane).toEqual(
+    expect.objectContaining({
+      role: 'none',
+    }),
+  )
+})
+
 test('getDevtoolsDom should make the events pane full width when details are closed', () => {
   const events = [
     {
