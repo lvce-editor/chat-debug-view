@@ -39,11 +39,8 @@ test.skip('create should restore serializable state from saved state', () => {
   expect(result.oldState.selectedDetailTab).toBe(DetailTab.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
-<<<<<<< HEAD
   expect(result.newState.tableWidth).toBe(defaultTableWidth)
   expect(result.oldState.tableWidth).toBe(defaultTableWidth)
-=======
->>>>>>> origin/main
 })
 
 test('create should restore event category filter from filter tokens when the explicit field is missing', () => {

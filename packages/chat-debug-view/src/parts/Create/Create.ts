@@ -21,11 +21,6 @@ export const create = (
   savedState: Partial<SavedState> = {},
 ): void => {
   const defaultState = createDefaultState()
-<<<<<<< HEAD
-=======
-  const { filterValue, selectedEventId, timelineEndSeconds, timelineStartSeconds } = savedState
-  const restoredEventCategoryFilter = getRestoredEventCategoryFilter(savedState)
->>>>>>> origin/main
   const state: ChatDebugViewState = {
     ...restoreSavedState(defaultState, savedState),
     assetDir,
@@ -37,11 +32,6 @@ export const create = (
     platform,
     sessionId,
     sessionIdIndexName,
-<<<<<<< HEAD
-=======
-    timelineEndSeconds: timelineEndSeconds ?? defaultState.timelineEndSeconds,
-    timelineStartSeconds: timelineStartSeconds ?? defaultState.timelineStartSeconds,
->>>>>>> origin/main
     uid,
     uri,
     width,
