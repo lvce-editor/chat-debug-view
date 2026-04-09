@@ -7,6 +7,7 @@ import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts'
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
+import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
 import * as HandleDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
 import * as HandleEventRowClick from '../HandleEventRowClick/HandleEventRowClick.ts'
@@ -17,6 +18,7 @@ import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPoint
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
+import * as HandleTimelineContextMenu from '../HandleTimelineContextMenu/HandleTimelineContextMenu.ts'
 import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
 import * as HandleTimelinePointerDown from '../HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
 import * as HandleTimelinePointerMove from '../HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
@@ -44,6 +46,7 @@ export const commandMap = {
   'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
+  'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
   'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.handleDetailTab),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
   'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
@@ -56,6 +59,7 @@ export const commandMap = {
   'ChatDebug.handleShowInputEvents': wrapCommand(HandleVisibilityToggles.handleShowInputEvents),
   'ChatDebug.handleShowResponsePartEvents': wrapCommand(HandleVisibilityToggles.handleShowResponsePartEvents),
   'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
+  'ChatDebug.handleTimelineContextMenu': wrapCommand(HandleTimelineContextMenu.handleTimelineContextMenu),
   'ChatDebug.handleTimelineDoubleClick': wrapCommand(HandleTimelineDoubleClick.handleTimelineDoubleClick),
   'ChatDebug.handleTimelineEndSeconds': wrapCommand(HandleTimelineInput.handleTimelineEndSeconds),
   'ChatDebug.handleTimelinePointerDown': wrapCommand(HandleTimelinePointerDown.handleTimelinePointerDown),

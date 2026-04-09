@@ -219,6 +219,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onContextMenu?: number
   }[]
   const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const timeline = dom.find((node) => node.className === 'ChatDebugViewTimeline')
@@ -226,6 +227,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
 
   expect(mainPane?.childCount).toBe(2)
   expect(timeline?.childCount).toBe(2)
+  expect(timeline?.onContextMenu).toBe(DomEventListenerFunctions.HandleTimelineContextMenu)
   expect(timeline).toBeDefined()
   expect(splitPane?.childCount).toBe(3)
 })

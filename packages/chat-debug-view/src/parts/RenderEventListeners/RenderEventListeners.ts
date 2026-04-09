@@ -24,6 +24,16 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       preventDefault: true,
     },
     {
+      name: DomEventListenerFunctions.HandleDetailsTopContextMenu,
+      params: ['handleDetailsTopContextMenu'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelineContextMenu,
+      params: ['handleTimelineContextMenu'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenerFunctions.HandleFilterInput,
       params: ['handleInput', EventExpression.TargetName, EventExpression.TargetValue],
     },
