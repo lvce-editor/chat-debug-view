@@ -103,15 +103,9 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     text('Timing'),
     {
-      childCount: 1,
-      className: 'ChatDebugViewDetailsBody',
-      role: 'document',
-      type: VirtualDomElements.Div,
-    },
-    {
       'aria-labelledby': 'ChatDebugViewDetailsTab-response',
       childCount: 1,
-      className: 'ChatDebugViewDetailsPanel',
+      className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-response',
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
@@ -157,8 +151,8 @@ test('getDetailsDom should render timing panel content when timing tab is select
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsBody',
-      role: 'document',
+      className: 'ChatDebugViewDetailsBottom',
+      role: 'tabpanel',
     }),
   )
   expect(dom).toContainEqual(
@@ -212,7 +206,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
   expect(dom).toContainEqual(
     expect.objectContaining({
       'aria-labelledby': 'ChatDebugViewDetailsTab-preview',
-      className: 'ChatDebugViewDetailsPanel',
+      className: 'ChatDebugViewDetailsBottom',
       role: 'tabpanel',
     }),
   )

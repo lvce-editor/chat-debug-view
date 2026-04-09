@@ -2,9 +2,8 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
   ChatDebugViewDetails,
-  ChatDebugViewDetailsBody,
+  ChatDebugViewDetailsBottom,
   ChatDebugViewDetailsClose,
-  ChatDebugViewDetailsPanel,
   ChatDebugViewDetailsTab,
   ChatDebugViewDetailsTabSelected,
   ChatDebugViewDetailsTabs,
@@ -92,15 +91,9 @@ export const getDetailsDom = (
     },
     ...getTabNodes(selectedDetailTab),
     {
-      childCount: 1,
-      className: ChatDebugViewDetailsBody,
-      role: 'document',
-      type: VirtualDomElements.Div,
-    },
-    {
       'aria-labelledby': getTabId(selectedDetailTab),
       childCount: 1,
-      className: ChatDebugViewDetailsPanel,
+      className: ChatDebugViewDetailsBottom,
       id: getPanelId(selectedDetailTab),
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
