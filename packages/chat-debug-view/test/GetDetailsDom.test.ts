@@ -33,7 +33,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     {
       childCount: 2,
       className: 'ChatDebugViewDetails',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       childCount: 2,
