@@ -23,16 +23,19 @@ test('getBucketDom should render selected bucket with units', () => {
     {
       childCount: 2,
       className: 'ChatDebugViewTimelineBucketBar ChatDebugViewTimelineBucketBarSelected',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
   ])
@@ -58,11 +61,13 @@ test('getBucketDom should render empty bucket placeholder', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTimelineBucketBar',
+      'data-value': '0:0.5',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
+      'data-value': '0:0.5',
       type: VirtualDomElements.Div,
     },
   ])

@@ -24,8 +24,9 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
     {
       childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
       className: joinClassNames(ChatDebugViewTimelineBucketBar, bucket.isSelected && ChatDebugViewTimelineBucketBarSelected),
+      'data-value': presetValue,
       type: VirtualDomElements.Div,
     },
-    ...getBucketUnitDom(bucket.unitCount),
+    ...getBucketUnitDom(bucket.unitCount, presetValue),
   ]
 }

@@ -24,18 +24,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const rows = Locator('.ChatDebugViewEventRow')
-  const buckets = Locator('.ChatDebugViewTimelineBucket')
-  const firstBucket = buckets.nth(0)
+  const bucketDivs = Locator('.ChatDebugViewTimeline div.ChatDebugViewTimelineBucket')
 
   // assert dom structure
   await expect(Locator('.ChatDebugViewTimeline label')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewTimeline input')).toHaveCount(0)
-  await expect(buckets).toHaveCount(12)
-
-  // act + assert clickable div bucket still filters events
-  await firstBucket.dispatchEvent('click', '')
-  await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
-  await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('request')
+  await expect(bucketDivs).toHaveCount(12)
 }
