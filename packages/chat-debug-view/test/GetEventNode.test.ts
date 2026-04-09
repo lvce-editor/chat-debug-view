@@ -109,8 +109,8 @@ test('getEventNode should render json details as numbered rows', () => {
 test('getEventNode should preserve numbered rows for nested json values', () => {
   const value = {
     nested: {
-      ok: true,
       count: 2,
+      ok: true,
     },
   }
 
@@ -161,7 +161,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     },
     text('2'),
     {
-      childCount: 4,
+      childCount: 3,
       className: 'ChatDebugViewEventLineContent',
       type: VirtualDomElements.Span,
     },
@@ -195,47 +195,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     },
     text('3'),
     {
-      childCount: 4,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('    '),
-    {
-      childCount: 1,
-      className: 'TokenKey',
-      type: VirtualDomElements.Span,
-    },
-    text('"ok"'),
-    {
-      childCount: 1,
-      className: 'TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text(': '),
-    {
-      childCount: 1,
-      className: 'TokenBoolean',
-      type: VirtualDomElements.Span,
-    },
-    text('true,'),
-    {
-      childCount: 2,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('4'),
-    {
-      childCount: 4,
+      childCount: 5,
       className: 'ChatDebugViewEventLineContent',
       type: VirtualDomElements.Span,
     },
@@ -263,6 +223,52 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
       type: VirtualDomElements.Span,
     },
     text('2'),
+    {
+      childCount: 1,
+      className: 'TokenText',
+      type: VirtualDomElements.Span,
+    },
+    text(','),
+    {
+      childCount: 2,
+      className: 'row',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineNumber',
+      type: VirtualDomElements.Span,
+    },
+    text('4'),
+    {
+      childCount: 4,
+      className: 'ChatDebugViewEventLineContent',
+      type: VirtualDomElements.Span,
+    },
+    {
+      childCount: 1,
+      className: 'TokenText',
+      type: VirtualDomElements.Span,
+    },
+    text('    '),
+    {
+      childCount: 1,
+      className: 'TokenKey',
+      type: VirtualDomElements.Span,
+    },
+    text('"ok"'),
+    {
+      childCount: 1,
+      className: 'TokenText',
+      type: VirtualDomElements.Span,
+    },
+    text(': '),
+    {
+      childCount: 1,
+      className: 'TokenBoolean',
+      type: VirtualDomElements.Span,
+    },
+    text('true'),
     {
       childCount: 2,
       className: 'row',
