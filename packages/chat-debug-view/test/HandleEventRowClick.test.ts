@@ -82,16 +82,17 @@ test('handleEventRowClick should ignore non-primary button clicks', async () => 
 })
 
 test('handleEventRowClick should fall back to the in-memory event when it has no eventId', async () => {
+  const event = {
+    eventId: 1,
+    path: '/chat',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  }
   const state = {
     ...createDefaultState(),
-    events: [
-      {
-        path: '/chat',
-        timestamp: '2026-03-08T00:00:00.000Z',
-        type: 'request',
-      },
-    ],
+    events: [event],
   }
+  Reflect.deleteProperty(event, 'eventId')
 
   const result = await handleEventRowClick(state, '0', 0)
 

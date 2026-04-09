@@ -5,6 +5,7 @@ import * as GetDevtoolsRows from '../src/parts/GetDevtoolsRows/GetDevtoolsRows.t
 test('getDevtoolsRows should render tool execution labels with the tool name', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'get_workspace_uri',
@@ -49,6 +50,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
         name: 'read_file',
         uri: 'file:///tmp/file.txt',
       },
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'tool-execution',
@@ -93,6 +95,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
         pattern: '**/*',
       },
       error: 'Invalid argument: baseUri must be an absolute URI.',
+      eventId: 1,
       name: 'getWorkspaceUri',
       sessionId: 'session-1',
       timestamp: '2026-04-01T20:56:07.857Z',
@@ -136,6 +139,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       arguments: {
         uri: '/home/simon/Documents/lvce-editor/playground',
       },
+      eventId: 1,
       name: 'list_files',
       result: {
         error: 'Invalid argument: uri must be an absolute URI.',
@@ -179,11 +183,13 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
 test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',

@@ -5,18 +5,21 @@ import * as GetFilteredEvents from '../src/parts/GetFilteredEvents/GetFilteredEv
 
 const events: readonly ChatViewEvent[] = [
   {
+    eventId: 1,
     name: 'filter',
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
     type: 'handle-input',
   },
   {
+    eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:30.000Z',
     type: 'handle-submit',
     value: 'hello',
   },
   {
+    eventId: 3,
     path: '/chat',
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:00.000Z',
@@ -26,12 +29,14 @@ const events: readonly ChatViewEvent[] = [
     arguments: {
       path: '/tmp/file.txt',
     },
+    eventId: 4,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
   },
   {
+    eventId: 4,
     output: {
       contents: 'hello',
     },
@@ -41,6 +46,7 @@ const events: readonly ChatViewEvent[] = [
     type: 'tool-execution-finished',
   },
   {
+    eventId: 5,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:02:00.000Z',
     type: 'sse-response-part',
@@ -49,6 +55,7 @@ const events: readonly ChatViewEvent[] = [
     },
   },
   {
+    eventId: 6,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:03:00.000Z',
     type: 'event-stream-finished',

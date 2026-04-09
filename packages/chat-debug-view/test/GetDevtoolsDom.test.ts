@@ -23,6 +23,7 @@ test('getDevtoolsDom should render empty state when there are no events', () => 
 test('getDevtoolsDom should render selected details panel and close input', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -54,6 +55,7 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
+      eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
       timestamp: '2026-03-08T00:00:01.000Z',
@@ -100,6 +102,7 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
 test('getDevtoolsDom should wrap header and body in a table container', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -124,6 +127,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
 test('getDevtoolsDom should make the events container keyboard focusable and expose application role', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -149,6 +153,7 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
 test('getDevtoolsDom should delegate row pointerdown from table body using data-index', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -176,11 +181,13 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
 test('getDevtoolsDom should render timeline filters when timestamps are available', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
       type: 'response',
@@ -203,6 +210,7 @@ test('getDevtoolsDom should render timeline filters when timestamps are availabl
 test('getDevtoolsDom should keep the timeline outside the table-details split', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -225,6 +233,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
 test('getDevtoolsDom should expose none role on the devtools split container', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -246,6 +255,7 @@ test('getDevtoolsDom should expose none role on the devtools split container', (
 test('getDevtoolsDom should make the events pane full width when details are closed', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -264,6 +274,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
 test('getDevtoolsDom should keep details as a second split-pane child when selected', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
@@ -289,11 +300,13 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
 test('getDevtoolsDom should count direct table body children per event', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
@@ -312,6 +325,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
+      eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:00.000Z',
       timestamp: '2026-03-08T00:00:00.000Z',
@@ -343,6 +357,7 @@ test('getDevtoolsDom should render computed duration without start and end times
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
+      eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
       timestamp: '2026-03-08T00:00:01.000Z',
@@ -375,6 +390,7 @@ test('getDevtoolsDom should render computed duration without start and end times
 test('getDevtoolsDom should render 200 status for successful events', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'read_file',
@@ -401,6 +417,7 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
 test('getDevtoolsDom should render tool execution row labels with tool name', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'getWorkspaceUri',
@@ -424,6 +441,7 @@ test('getDevtoolsDom should render tool execution row labels with top-level name
       arguments: {
         uri: 'file:///workspace',
       },
+      eventId: 1,
       name: 'list_files',
       sessionId: 'session-1',
       timestamp: '2026-04-02T07:26:35.172Z',
@@ -445,6 +463,7 @@ test('getDevtoolsDom should render 400 status for errored events', () => {
   const events = [
     {
       error: 'tool call failed',
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'apply_patch',
@@ -466,6 +485,7 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
+      eventId: 1,
       output: {
         contents: 'hello',
       },
@@ -499,6 +519,7 @@ test('getDevtoolsDom should simplify preview json to name, arguments and result 
       arguments: {
         uri: 'file:///workspace/README.md',
       },
+      eventId: 1,
       id: 'call-1',
       name: 'read_file',
       result: {
@@ -555,6 +576,7 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
         pattern: '**/*',
       },
       error: 'Invalid argument: baseUri must be an absolute URI.',
+      eventId: 1,
       name: 'getWorkspaceUri',
       result: {
         uri: 'file:///workspace',

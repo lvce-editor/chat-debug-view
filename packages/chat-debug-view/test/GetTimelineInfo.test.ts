@@ -4,21 +4,25 @@ import * as GetTimelineInfo from '../src/parts/GetTimelineInfo/GetTimelineInfo.t
 
 const events: readonly ChatViewEvent[] = [
   {
+    eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
     type: 'request',
   },
   {
+    eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:05.500Z',
     type: 'response',
   },
   {
+    eventId: 3,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:06.500Z',
     type: 'tool-execution-started',
   },
   {
+    eventId: 4,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:10.000Z',
     type: 'event-stream-finished',
@@ -27,10 +31,12 @@ const events: readonly ChatViewEvent[] = [
 
 const eventsWithoutTime: readonly ChatViewEvent[] = [
   {
+    eventId: 1,
     sessionId: 'session-1',
     type: 'request',
   },
   {
+    eventId: 2,
     sessionId: 'session-1',
     timestamp: 'invalid',
     type: 'response',
@@ -39,11 +45,13 @@ const eventsWithoutTime: readonly ChatViewEvent[] = [
 
 const zeroDurationEvents: readonly ChatViewEvent[] = [
   {
+    eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
     type: 'request',
   },
   {
+    eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
     type: 'response',

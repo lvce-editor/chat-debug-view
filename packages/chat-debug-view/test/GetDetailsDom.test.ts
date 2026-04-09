@@ -137,6 +137,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     undefined,
     {
       ended: '2026-03-08T00:00:01.250Z',
+      eventId: 1,
       started: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },

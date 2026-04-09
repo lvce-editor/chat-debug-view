@@ -1,6 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { getStableEventId } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
@@ -17,8 +16,7 @@ export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEv
 }
 
 const getEventIndexByStableId = (events: readonly ChatViewEvent[], event: ChatViewEvent): number => {
-  const stableEventId = getStableEventId(event)
-  return events.findIndex((candidate) => getStableEventId(candidate) === stableEventId)
+  return events.findIndex((candidate) => candidate.eventId === event.eventId)
 }
 
 export const getSelectedEventIndex = (state: ChatDebugViewState): number | null => {

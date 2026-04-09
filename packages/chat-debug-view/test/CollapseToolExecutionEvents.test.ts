@@ -1,8 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import { collapseToolExecutionEvents, getStableEventId } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
-
-const collapsedEventIdPattern = /^event-\d+:event-\d+$/
+import { collapseToolExecutionEvents } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 
 test('collapseToolExecutionEvents should merge matching started and finished events', () => {
   const startedEvent: ChatViewEvent = {
@@ -16,6 +14,7 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
     type: 'tool-execution-started',
   }
   const finishedEvent: ChatViewEvent = {
+    eventId: 7,
     output: {
       contents: 'hello',
     },
@@ -48,12 +47,14 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
 
 test('collapseToolExecutionEvents should keep non-matching events separate', () => {
   const startedEvent: ChatViewEvent = {
+    eventId: 0,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
   }
   const finishedEvent: ChatViewEvent = {
+    eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:45.000Z',
     toolName: 'write_file',
@@ -63,35 +64,4 @@ test('collapseToolExecutionEvents should keep non-matching events separate', () 
   const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
 
   expect(result).toEqual([startedEvent, finishedEvent])
-})
-
-test('getStableEventId should stay stable for the same event instance', () => {
-  const event: ChatViewEvent = {
-    sessionId: 'session-1',
-    timestamp: '2026-01-01T10:01:30.000Z',
-    type: 'request',
-  }
-
-  const stableEventId = getStableEventId(event)
-
-  expect(getStableEventId(event)).toBe(stableEventId)
-})
-
-test('collapseToolExecutionEvents should assign a merged stable id to collapsed events', () => {
-  const startedEvent: ChatViewEvent = {
-    sessionId: 'session-1',
-    timestamp: '2026-01-01T10:01:30.000Z',
-    toolName: 'read_file',
-    type: 'tool-execution-started',
-  }
-  const finishedEvent: ChatViewEvent = {
-    sessionId: 'session-1',
-    timestamp: '2026-01-01T10:01:45.000Z',
-    toolName: 'read_file',
-    type: 'tool-execution-finished',
-  }
-
-  const [result] = collapseToolExecutionEvents([startedEvent, finishedEvent])
-
-  expect(getStableEventId(result)).toMatch(collapsedEventIdPattern)
 })

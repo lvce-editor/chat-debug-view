@@ -16,16 +16,16 @@ test('getEventCategoryFilterLabel should return labels for all known filters and
 })
 
 test('getLightweightEvent should keep only summary fields', () => {
-  const result = getLightweightEvent(
-    {
-      durationMs: 7,
-      error: 'ignored',
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    },
-    5,
-  )
+  const event = {
+    durationMs: 7,
+    error: 'ignored',
+    eventId: 1,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T00:00:00.000Z',
+    type: 'request',
+  }
+  Reflect.deleteProperty(event, 'eventId')
+  const result = getLightweightEvent(event, 5)
 
   expect(result).toEqual({
     duration: 7,
@@ -55,6 +55,7 @@ test('getTimelineFilterDescription should return empty string when there is no r
 test('hasErrorStatus should return true for error events', () => {
   expect(
     hasErrorStatus({
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
       type: 'error',
@@ -65,6 +66,7 @@ test('hasErrorStatus should return true for error events', () => {
 test('hasErrorStatus should return true when success or ok is false', () => {
   expect(
     hasErrorStatus({
+      eventId: 1,
       sessionId: 'session-1',
       success: false,
       timestamp: '2026-01-01T00:00:00.000Z',
@@ -74,6 +76,7 @@ test('hasErrorStatus should return true when success or ok is false', () => {
 
   expect(
     hasErrorStatus({
+      eventId: 2,
       ok: false,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
@@ -85,6 +88,7 @@ test('hasErrorStatus should return true when success or ok is false', () => {
 test('hasErrorStatus should return true for numeric and string status codes >= 400', () => {
   expect(
     hasErrorStatus({
+      eventId: 1,
       sessionId: 'session-1',
       status: 500,
       timestamp: '2026-01-01T00:00:00.000Z',
@@ -94,6 +98,7 @@ test('hasErrorStatus should return true for numeric and string status codes >= 4
 
   expect(
     hasErrorStatus({
+      eventId: 2,
       sessionId: 'session-1',
       status: '404',
       timestamp: '2026-01-01T00:00:00.000Z',
@@ -106,6 +111,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
   expect(
     hasErrorStatus({
       error: 'failed',
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
       type: 'request',
@@ -115,6 +121,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
   expect(
     hasErrorStatus({
       errorMessage: 'failed',
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
       type: 'request',
@@ -123,6 +130,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
 
   expect(
     hasErrorStatus({
+      eventId: 3,
       exception: 'failed',
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
@@ -134,6 +142,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
 test('hasErrorStatus should return true for tool-execution events with result.error', () => {
   expect(
     hasErrorStatus({
+      eventId: 1,
       result: {
         error: {
           message: 'Invalid argument: uri must be an absolute URI.',
@@ -149,6 +158,7 @@ test('hasErrorStatus should return true for tool-execution events with result.er
 test('hasErrorStatus should return false for non-error events', () => {
   expect(
     hasErrorStatus({
+      eventId: 1,
       sessionId: 'session-1',
       status: 204,
       timestamp: '2026-01-01T00:00:00.000Z',

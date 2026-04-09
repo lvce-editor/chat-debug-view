@@ -6,7 +6,11 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('getTableBodyEventIndex should derive event index from coordinates', () => {
   const state = {
     ...createDefaultState(),
-    events: [{ type: 'request' }, { type: 'response' }, { type: 'request' }],
+    events: [
+      { eventId: 1, type: 'request' },
+      { eventId: 2, type: 'response' },
+      { eventId: 3, type: 'request' },
+    ],
     height: 600,
     tableWidth: 480,
     width: 900,
