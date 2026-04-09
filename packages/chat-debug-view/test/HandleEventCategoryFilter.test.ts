@@ -14,12 +14,14 @@ test('handleEventCategoryFilter should preserve selected event when category fil
     ...createDefaultState(),
     events: [
       {
+        eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
         toolName: 'read_file',
         type: 'tool-execution-started',
       },
       {
+        eventId: 2,
         path: '/chat',
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',

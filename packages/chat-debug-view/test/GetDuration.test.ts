@@ -4,6 +4,7 @@ import * as GetDuration from '../src/parts/GetDuration/GetDuration.ts'
 test('getDuration should return explicit finite durationMs', () => {
   const result = GetDuration.getDuration({
     durationMs: 7,
+    eventId: 1,
     started: '2026-01-01T00:00:00.000Z',
     timestamp: '2026-01-01T00:00:00.000Z',
     type: 'request',
@@ -15,6 +16,7 @@ test('getDuration should return explicit finite durationMs', () => {
 test('getDuration should calculate duration from derived start and end times', () => {
   const result = GetDuration.getDuration({
     ended: '2026-01-01T00:00:01.000Z',
+    eventId: 1,
     started: '2026-01-01T00:00:00.000Z',
     type: 'request',
   })
@@ -25,6 +27,7 @@ test('getDuration should calculate duration from derived start and end times', (
 test('getDuration should return zero for invalid times', () => {
   const result = GetDuration.getDuration({
     endTime: 'not-a-date',
+    eventId: 1,
     startTime: '2026-01-01T00:00:00.000Z',
     type: 'request',
   })

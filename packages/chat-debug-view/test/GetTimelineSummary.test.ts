@@ -4,11 +4,13 @@ import { getTimelineSummary } from '../src/parts/GetTimelineSummary/GetTimelineS
 test('getTimelineSummary should describe selected window', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
       type: 'response',
@@ -21,11 +23,13 @@ test('getTimelineSummary should describe selected window', () => {
 test('getTimelineSummary should describe full window when selection is empty', () => {
   const events = [
     {
+      eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
       type: 'response',
