@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenerFunctions.HandleHeaderContextMenu,
-      params: ['handleHeaderContextMenu'],
+      params: ['handleHeaderContextMenu', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
     },
     {
@@ -21,6 +21,16 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenerFunctions.HandleDetailsContextMenu,
       params: ['handleDetailsContextMenu'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleDetailsTopContextMenu,
+      params: ['handleDetailsTopContextMenu'],
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandleTimelineContextMenu,
+      params: ['handleTimelineContextMenu'],
       preventDefault: true,
     },
     {

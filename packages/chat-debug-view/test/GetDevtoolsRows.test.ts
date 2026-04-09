@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as GetDevtoolsRows from '../src/parts/GetDevtoolsRows/GetDevtoolsRows.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getDevtoolsRows should render tool execution labels with the tool name', () => {
   const events = [
@@ -241,6 +242,42 @@ test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
       type: VirtualDomElements.Td,
     },
     text('0ms'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+  ])
+})
+
+test('getDevtoolsRows should omit hidden columns', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:01.250Z',
+      eventId: 1,
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:01.000Z',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'request',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, null, [TableColumn.Type, TableColumn.Status])
+
+  expect(result).toEqual([
+    {
+      childCount: 2,
+      className: 'ChatDebugViewEventRow',
+      'data-index': '0',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      type: VirtualDomElements.Td,
+    },
+    text('request'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus',

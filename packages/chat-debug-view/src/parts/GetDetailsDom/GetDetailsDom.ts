@@ -71,6 +71,7 @@ export const getDetailsDom = (
     {
       childCount: 2,
       className: ChatDebugViewDetailsTop,
+      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
       type: VirtualDomElements.Div,
     },
     {

@@ -344,6 +344,10 @@ export const refreshEvents = (): string => {
   return I18nString.i18nString(UiStrings.RefreshEvents)
 }
 
+export const resetColumns = (): string => {
+  return I18nString.i18nString(UiStrings.ResetColumns)
+}
+
 export const response = (): string => {
   return I18nString.i18nString(UiStrings.Response)
 }

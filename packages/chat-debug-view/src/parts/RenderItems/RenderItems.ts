@@ -40,6 +40,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.timelineSelectionAnchorSeconds,
     newState.timelineSelectionFocusSeconds,
     newState.selectedDetailTab,
+    newState.visibleTableColumns,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

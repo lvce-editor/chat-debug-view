@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
   const dom = GetDevtoolsDom.getDevtoolsDom([], null, null, [], '', '', 'No events have been found') as readonly {
@@ -219,6 +220,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onContextMenu?: number
   }[]
   const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const timeline = dom.find((node) => node.className === 'ChatDebugViewTimeline')
@@ -226,6 +228,7 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
 
   expect(mainPane?.childCount).toBe(2)
   expect(timeline?.childCount).toBe(2)
+  expect(timeline?.onContextMenu).toBe(DomEventListenerFunctions.HandleTimelineContextMenu)
   expect(timeline).toBeDefined()
   expect(splitPane?.childCount).toBe(3)
 })
@@ -379,10 +382,50 @@ test('getDevtoolsDom should render computed duration without start and end times
       text: 'Mar 08, 2026, 00:00:01.000 UTC',
     }),
   )
-
   expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: 'Mar 08, 2026, 00:00:01.250 UTC',
+    }),
+  )
+})
+
+test('getDevtoolsDom should hide disabled table columns in header and rows', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:01.250Z',
+      eventId: 1,
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:01.000Z',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '', 'No events have been found', false, '', '', 'response', [
+    TableColumn.Type,
+    TableColumn.Status,
+  ]) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Type',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Status',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      text: 'Duration',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
     }),
   )
 })

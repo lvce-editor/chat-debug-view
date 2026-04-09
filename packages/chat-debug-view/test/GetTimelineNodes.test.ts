@@ -41,6 +41,7 @@ test('getTimelineNodes should render the timeline container as a section', () =>
   const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onContextMenu?: number
     readonly type?: number
   }[]
 
@@ -49,6 +50,7 @@ test('getTimelineNodes should render the timeline container as a section', () =>
   expect(timeline).toEqual({
     childCount: 2,
     className: 'ChatDebugViewTimeline',
+    onContextMenu: DomEventListenerFunctions.HandleTimelineContextMenu,
     type: VirtualDomElements.Section,
   })
 })

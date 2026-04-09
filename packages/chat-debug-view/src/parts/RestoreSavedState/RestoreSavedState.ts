@@ -3,6 +3,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
+import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const validEventCategoryFilters = new Set<string>([
   EventCategoryFilter.All,
@@ -30,6 +31,9 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
   if (!isSavedState(savedState)) {
     return state
   }
+  const restoredVisibleTableColumns = Array.isArray(savedState.visibleTableColumns)
+    ? getOrderedVisibleTableColumns(savedState.visibleTableColumns.filter((value): value is string => typeof value === 'string'))
+    : state.visibleTableColumns
   return {
     ...state,
     eventCategoryFilter: getRestoredEventCategoryFilter(savedState, state.eventCategoryFilter),
@@ -42,5 +46,6 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
       typeof savedState.selectedEventId === 'number' || savedState.selectedEventId === null ? savedState.selectedEventId : state.selectedEventId,
     timelineEndSeconds: typeof savedState.timelineEndSeconds === 'string' ? savedState.timelineEndSeconds : state.timelineEndSeconds,
     timelineStartSeconds: typeof savedState.timelineStartSeconds === 'string' ? savedState.timelineStartSeconds : state.timelineStartSeconds,
+    visibleTableColumns: restoredVisibleTableColumns,
   }
 }

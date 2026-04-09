@@ -3,6 +3,7 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetTableDom from '../src/parts/GetTableDom/GetTableDom.ts'
 import * as GetTableHeaderDom from '../src/parts/GetTableHeaderDom/GetTableHeaderDom.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getTableHeaderDom should render the table header nodes', () => {
   const dom = GetTableHeaderDom.getTableHeaderDom() as readonly {
@@ -15,6 +16,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableHeader',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
@@ -36,6 +38,42 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.Th,
     },
     text('Duration'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      scope: 'col',
+      type: VirtualDomElements.Th,
+    },
+    text('Status'),
+  ])
+})
+
+test('getTableHeaderDom should omit hidden columns', () => {
+  const dom = GetTableHeaderDom.getTableHeaderDom([TableColumn.Type, TableColumn.Status]) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly scope?: string
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 1,
+      className: 'ChatDebugViewTableHeader',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
+      type: VirtualDomElements.THead,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewTableHeaderRow',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeaderCell',
+      scope: 'col',
+      type: VirtualDomElements.Th,
+    },
+    text('Type'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell',
@@ -71,6 +109,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewTableHeader',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {

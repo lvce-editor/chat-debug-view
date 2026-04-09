@@ -13,6 +13,7 @@ test('saveState should persist serializable non-layout state fields', () => {
     sessionId: 'session-1',
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
+    visibleTableColumns: ['type', 'status'],
   }
   const result = SaveState.saveState(state)
 
@@ -24,5 +25,6 @@ test('saveState should persist serializable non-layout state fields', () => {
     sessionId: 'session-1',
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
+    visibleTableColumns: ['type', 'status'],
   })
 })

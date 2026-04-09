@@ -38,6 +38,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     {
       childCount: 2,
       className: 'ChatDebugViewDetailsTop',
+      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
       type: VirtualDomElements.Div,
     },
     {

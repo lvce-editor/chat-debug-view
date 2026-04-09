@@ -32,6 +32,7 @@ export interface ChatDebugViewState {
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean
+  readonly visibleTableColumns: readonly string[]
   readonly width: number
   readonly x: number
   readonly y: number

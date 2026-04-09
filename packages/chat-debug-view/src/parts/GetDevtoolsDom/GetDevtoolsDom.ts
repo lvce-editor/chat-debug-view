@@ -13,6 +13,7 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
@@ -26,8 +27,9 @@ export const getDevtoolsDom = (
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
   selectedDetailTab = DetailTab.Response,
+  visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
 ): readonly VirtualDomNode[] => {
-  const rowNodes = getDevtoolsRows(events, selectedEventIndex)
+  const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const timelineNodes = getTimelineNodes(
     timelineEvents,
     timelineStartSeconds,
@@ -39,7 +41,7 @@ export const getDevtoolsDom = (
   const previewEventNodes = selectedEvent ? getEventNode(getPreviewEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
-  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length)
+  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, visibleTableColumns)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(
     previewEventNodes,

@@ -68,6 +68,7 @@ export const getTimelineNodes = (
     {
       childCount: 2,
       className: ChatDebugViewTimeline,
+      onContextMenu: DomEventListenerFunctions.HandleTimelineContextMenu,
       type: VirtualDomElements.Section,
     },
     {

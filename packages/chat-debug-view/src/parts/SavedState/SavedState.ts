@@ -6,4 +6,5 @@ export interface SavedState {
   readonly sessionId: string
   readonly timelineEndSeconds: string
   readonly timelineStartSeconds: string
+  readonly visibleTableColumns: readonly string[]
 }
