@@ -6,7 +6,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
       name: DomEventListenerFunctions.HandleHeaderContextMenu,
-      params: ['handleHeaderContextMenu'],
+      params: ['handleHeaderContextMenu', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
     },
     {

@@ -17,8 +17,8 @@ import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPoint
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
-import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
 import * as HandleTimelineContextMenu from '../HandleTimelineContextMenu/HandleTimelineContextMenu.ts'
+import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
 import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
 import * as HandleTimelinePointerDown from '../HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
 import * as HandleTimelinePointerMove from '../HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
@@ -30,11 +30,13 @@ import * as Refresh from '../Refresh/Refresh.ts'
 import { render2 } from '../Render2/Render2.ts'
 import { renderEventListeners } from '../RenderEventListeners/RenderEventListeners.ts'
 import * as Rerender from '../Rerender/Rerender.ts'
+import * as ResetTableColumns from '../ResetTableColumns/ResetTableColumns.ts'
 import * as Resize from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import * as SetEvents from '../SetEvents/SetEvents.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
+import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
 export const commandMap = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
@@ -74,9 +76,11 @@ export const commandMap = {
   'ChatDebug.render2': render2,
   'ChatDebug.renderEventListeners': renderEventListeners,
   'ChatDebug.rerender': wrapCommand(Rerender.rerender),
+  'ChatDebug.resetTableColumns': wrapCommand(ResetTableColumns.resetTableColumns),
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,
+  'ChatDebug.toggleTableColumnVisibility': wrapCommand(ToggleTableColumnVisibility.toggleTableColumnVisibility),
 }
