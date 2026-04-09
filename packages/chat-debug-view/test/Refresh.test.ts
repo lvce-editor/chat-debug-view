@@ -1,6 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
-import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { getInvalidUriMessage } from '../src/parts/GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../src/parts/GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
@@ -57,7 +56,7 @@ test('refresh should return session-not-found state when latest events are empty
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })
 
-test('refresh should update events with latest data from indexeddb', async () => {
+test('refresh should update events with latest data from chat storage worker', async () => {
   const events = [{ eventId: 1, time: 1, type: 'request' }]
   const listChatViewEventsSpy = jest.spyOn(refreshDependencies, 'listChatViewEvents').mockResolvedValue({
     events,
@@ -65,7 +64,6 @@ test('refresh should update events with latest data from indexeddb', async () =>
   })
   const state = {
     ...createDefaultState(),
-    indexedDbSupportOverride: true,
     sessionId: 'session-1',
     uri: 'chat-debug://session-1',
   }
@@ -81,7 +79,7 @@ test('refresh should update events with latest data from indexeddb', async () =>
     selectedEventIndex: null,
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', true)
+  expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId')
 })
 
 test('refresh should return failed-to-load state when listing events returns an error', async () => {
@@ -101,29 +99,6 @@ test('refresh should return failed-to-load state when listing events returns an 
   expect(result).toEqual({
     ...state,
     errorMessage: getFailedToLoadMessage('session-1', error),
-    events: [],
-    initial: false,
-    selectedEvent: null,
-    selectedEventIndex: null,
-  })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-})
-
-test('refresh should return indexeddb-not-supported state when IndexedDB is unavailable', async () => {
-  const listChatViewEventsSpy = jest.spyOn(refreshDependencies, 'listChatViewEvents').mockResolvedValue({
-    type: 'not-supported',
-  })
-  const state = {
-    ...createDefaultState(),
-    sessionId: 'session-1',
-    uri: 'chat-debug://session-1',
-  }
-
-  const result = await refresh(state)
-
-  expect(result).toEqual({
-    ...state,
-    errorMessage: getIndexedDbNotSupportedMessage(),
     events: [],
     initial: false,
     selectedEvent: null,

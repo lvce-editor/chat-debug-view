@@ -2,7 +2,6 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
-import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { getInvalidUriMessage } from '../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { getSessionNotFoundMessage } from '../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
@@ -97,27 +96,8 @@ export const getSessionIdFromUri = (state: ChatDebugViewState): string | undefin
 }
 
 export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const { databaseName, dataBaseVersion, eventStoreName, indexedDbSupportOverride, sessionIdIndexName } = state
-  const result = await loadEventsDependencies.listChatViewEvents(
-    sessionId,
-    databaseName,
-    dataBaseVersion,
-    eventStoreName,
-    sessionIdIndexName,
-    indexedDbSupportOverride,
-  )
-  if (result.type === 'not-supported') {
-    return {
-      ...state,
-      errorMessage: getIndexedDbNotSupportedMessage(),
-      events: [],
-      initial: false,
-      selectedEvent: null,
-      selectedEventId: null,
-      selectedEventIndex: null,
-      sessionId,
-    }
-  }
+  const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
+  const result = await loadEventsDependencies.listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
 
   if (result.type === 'error') {
     return {

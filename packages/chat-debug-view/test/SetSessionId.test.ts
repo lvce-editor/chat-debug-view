@@ -1,6 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
-import { getIndexedDbNotSupportedMessage } from '../src/parts/GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import { setSessionId, setSessionIdDependencies } from '../src/parts/SetSessionId/SetSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -17,7 +16,6 @@ test('setSessionId should load events for the given session id and clear selecti
   const state = {
     ...createDefaultState(),
     errorMessage: 'previous error',
-    indexedDbSupportOverride: true,
     initial: true,
     selectedEvent: { eventId: 1, type: 'request' },
     selectedEventId: 1,
@@ -37,7 +35,7 @@ test('setSessionId should load events for the given session id and clear selecti
     sessionId: 'session-1',
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', true)
+  expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId')
 })
 
 test('setSessionId should return failed-to-load state when listing events returns an error', async () => {
@@ -59,33 +57,6 @@ test('setSessionId should return failed-to-load state when listing events return
   expect(result).toEqual({
     ...state,
     errorMessage: getFailedToLoadMessage('session-1', error),
-    events: [],
-    initial: false,
-    selectedEvent: null,
-    selectedEventId: null,
-    selectedEventIndex: null,
-    sessionId: 'session-1',
-  })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-})
-
-test('setSessionId should return indexeddb-not-supported state when IndexedDB is unavailable', async () => {
-  const listChatViewEventsSpy = jest.spyOn(setSessionIdDependencies, 'listChatViewEvents').mockResolvedValue({
-    type: 'not-supported',
-  })
-  const state = {
-    ...createDefaultState(),
-    initial: true,
-    selectedEvent: { eventId: 2, type: 'response' },
-    selectedEventId: 2,
-    selectedEventIndex: 1,
-  }
-
-  const result = await setSessionId(state, 'session-1')
-
-  expect(result).toEqual({
-    ...state,
-    errorMessage: getIndexedDbNotSupportedMessage(),
     events: [],
     initial: false,
     selectedEvent: null,

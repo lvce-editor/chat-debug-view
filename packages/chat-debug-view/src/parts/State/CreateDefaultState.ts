@@ -15,7 +15,6 @@ export const createDefaultState = (): ChatDebugViewState => {
     eventStoreName: 'chat-view-events',
     filterValue: '',
     height: 0,
-    indexedDbSupportOverride: undefined,
     initial: false,
     platform: 0,
     selectedDetailTab: DetailTab.Response,
