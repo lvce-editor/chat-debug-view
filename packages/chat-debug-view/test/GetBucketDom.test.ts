@@ -14,9 +14,9 @@ test('getBucketDom should render selected bucket with units', () => {
 
   expect(result).toEqual([
     {
-      'data-value': '5:7',
       childCount: 1,
       className: 'ChatDebugViewTimelineBucket ChatDebugViewTimelineBucketSelected',
+      'data-value': '5:7',
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
       type: VirtualDomElements.Div,
     },
@@ -49,9 +49,9 @@ test('getBucketDom should render empty bucket placeholder', () => {
 
   expect(result).toEqual([
     {
-      'data-value': '0:0.5',
       childCount: 1,
       className: 'ChatDebugViewTimelineBucket',
+      'data-value': '0:0.5',
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
       type: VirtualDomElements.Div,
     },

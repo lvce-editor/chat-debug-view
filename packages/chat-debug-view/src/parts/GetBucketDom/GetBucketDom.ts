@@ -15,9 +15,9 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
   const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
   return [
     {
-      'data-value': presetValue,
       childCount: 1,
       className: joinClassNames(ChatDebugViewTimelineBucket, bucket.isSelected && ChatDebugViewTimelineBucketSelected),
+      'data-value': presetValue,
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
       type: VirtualDomElements.Div,
     },
