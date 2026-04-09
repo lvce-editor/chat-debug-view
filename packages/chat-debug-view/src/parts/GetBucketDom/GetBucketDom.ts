@@ -5,31 +5,21 @@ import {
   ChatDebugViewTimelineBucketBar,
   ChatDebugViewTimelineBucketBarSelected,
   ChatDebugViewTimelineBucketSelected,
-  ChatDebugViewTimelinePresetInput,
   joinClassNames,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getBucketUnitDom } from '../GetBucketUnitDom/GetBucketUnitDom.ts'
-import * as InputName from '../InputName/InputName.ts'
 
 export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] => {
   const presetValue = `${formatTimelinePresetValue(bucket.startSeconds)}:${formatTimelinePresetValue(bucket.endSeconds)}`
   return [
     {
-      childCount: 2,
+      'data-value': presetValue,
+      childCount: 1,
       className: joinClassNames(ChatDebugViewTimelineBucket, bucket.isSelected && ChatDebugViewTimelineBucketSelected),
-      type: VirtualDomElements.Label,
-    },
-    {
-      checked: false,
-      childCount: 0,
-      className: ChatDebugViewTimelinePresetInput,
-      inputType: 'radio',
-      name: InputName.TimelineRangePreset,
-      onChange: DomEventListenerFunctions.HandleTimelineRangePreset,
-      type: VirtualDomElements.Input,
-      value: presetValue,
+      onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      type: VirtualDomElements.Div,
     },
     {
       childCount: bucket.unitCount === 0 ? 1 : bucket.unitCount,
