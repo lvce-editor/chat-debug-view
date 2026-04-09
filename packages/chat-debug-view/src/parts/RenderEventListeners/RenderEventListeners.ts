@@ -27,7 +27,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleTimelineRangePreset,
-      params: ['handleTimelineRangePreset', EventExpression.TargetValue],
+      params: ['handleTimelineRangePreset', 'event.target.dataset.value'],
     },
     {
       name: DomEventListenerFunctions.HandleCloseDetails,

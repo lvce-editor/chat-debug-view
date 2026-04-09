@@ -14,33 +14,28 @@ test('getBucketDom should render selected bucket with units', () => {
 
   expect(result).toEqual([
     {
-      childCount: 2,
+      childCount: 1,
       className: 'ChatDebugViewTimelineBucket ChatDebugViewTimelineBucketSelected',
-      type: VirtualDomElements.Label,
-    },
-    {
-      checked: false,
-      childCount: 0,
-      className: 'ChatDebugViewTimelinePresetInput',
-      inputType: 'radio',
-      name: 'timelineRangePreset',
-      onChange: DomEventListenerFunctions.HandleTimelineRangePreset,
-      type: VirtualDomElements.Input,
-      value: '5:7',
+      'data-value': '5:7',
+      onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      type: VirtualDomElements.Div,
     },
     {
       childCount: 2,
       className: 'ChatDebugViewTimelineBucketBar ChatDebugViewTimelineBucketBarSelected',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit',
+      'data-value': '5:7',
       type: VirtualDomElements.Div,
     },
   ])
@@ -57,28 +52,22 @@ test('getBucketDom should render empty bucket placeholder', () => {
 
   expect(result).toEqual([
     {
-      childCount: 2,
+      childCount: 1,
       className: 'ChatDebugViewTimelineBucket',
-      type: VirtualDomElements.Label,
-    },
-    {
-      checked: false,
-      childCount: 0,
-      className: 'ChatDebugViewTimelinePresetInput',
-      inputType: 'radio',
-      name: 'timelineRangePreset',
-      onChange: DomEventListenerFunctions.HandleTimelineRangePreset,
-      type: VirtualDomElements.Input,
-      value: '0:0.5',
+      'data-value': '0:0.5',
+      onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
       className: 'ChatDebugViewTimelineBucketBar',
+      'data-value': '0:0.5',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 0,
       className: 'ChatDebugViewTimelineBucketUnit ChatDebugViewTimelineBucketUnitEmpty',
+      'data-value': '0:0.5',
       type: VirtualDomElements.Div,
     },
   ])
