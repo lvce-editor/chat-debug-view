@@ -37,6 +37,22 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
   )
 })
 
+test('getTimelineNodes should render the timeline container as a section', () => {
+  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  const timeline = nodes.find((node) => node.className === 'ChatDebugViewTimeline')
+
+  expect(timeline).toEqual({
+    childCount: 2,
+    className: 'ChatDebugViewTimeline',
+    type: VirtualDomElements.Section,
+  })
+})
+
 test('getTimelineNodes should render selection markers only when a range exists', () => {
   const nodes = getTimelineNodes(events, '2', '8', false, '', '') as readonly {
     readonly childCount?: number
