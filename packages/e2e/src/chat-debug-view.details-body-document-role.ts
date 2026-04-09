@@ -25,9 +25,11 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  const detailsBody = Locator('.ChatDebugViewDetailsBody')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert
-  await expect(detailsBody).toBeVisible()
-  await expect(detailsBody).toHaveAttribute('role', 'document')
+  await expect(detailsBottom).toBeVisible()
+  await expect(detailsBottom).toHaveAttribute('role', 'tabpanel')
+  await expect(Locator('.ChatDebugViewDetailsBody')).toHaveCount(0)
+  await expect(Locator('.ChatDebugViewDetailsPanel')).toHaveCount(0)
 }

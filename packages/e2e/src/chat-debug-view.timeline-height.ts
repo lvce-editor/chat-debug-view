@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.timeline-height'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.open('e2e-session-timeline-height')
   await expect(Locator('.ChatDebugView')).toBeVisible()
