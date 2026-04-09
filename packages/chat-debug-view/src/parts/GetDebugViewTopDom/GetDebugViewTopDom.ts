@@ -1,7 +1,8 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import {
   ChatDebugViewFilterInput,
   ChatDebugViewFilterInputDevtools,
+  ChatDebugViewRefreshButton,
   ChatDebugViewTop,
   ChatDebugViewTopDevtools,
   InputBox,
@@ -10,15 +11,31 @@ import {
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+const getRefreshButtonDom = (): readonly VirtualDomNode[] => {
+  return [
+    {
+      'aria-label': 'Refresh events',
+      childCount: 1,
+      className: ChatDebugViewRefreshButton,
+      name: InputName.Refresh,
+      onClick: DomEventListenerFunctions.HandleClickRefresh,
+      type: VirtualDomElements.Button,
+      value: InputName.Refresh,
+    },
+    text('Refresh'),
+  ]
+}
+
 export const getDebugViewTopDom = (
   filterValue: string,
   useDevtoolsLayout: boolean,
   quickFilterNodes: readonly VirtualDomNode[],
 ): readonly VirtualDomNode[] => {
+  const refreshButtonDom = getRefreshButtonDom()
   if (useDevtoolsLayout) {
     return [
       {
-        childCount: 1 + (quickFilterNodes.length > 0 ? 1 : 0),
+        childCount: 2 + (quickFilterNodes.length > 0 ? 1 : 0),
         className: joinClassNames(ChatDebugViewTop, ChatDebugViewTopDevtools),
         onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
         type: VirtualDomElements.Search,
@@ -35,12 +52,13 @@ export const getDebugViewTopDom = (
         value: filterValue,
       },
       ...quickFilterNodes,
+      ...refreshButtonDom,
     ]
   }
 
   return [
     {
-      childCount: 1,
+      childCount: 2,
       className: ChatDebugViewTop,
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
@@ -56,5 +74,6 @@ export const getDebugViewTopDom = (
       type: VirtualDomElements.Input,
       value: filterValue,
     },
+    ...refreshButtonDom,
   ]
 }

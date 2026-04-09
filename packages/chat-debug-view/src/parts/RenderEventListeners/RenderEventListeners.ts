@@ -34,6 +34,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleCloseDetails'],
     },
     {
+      name: DomEventListenerFunctions.HandleClickRefresh,
+      params: ['handleClickRefresh'],
+    },
+    {
       name: DomEventListenerFunctions.HandleSashPointerDown,
       params: ['handleSashPointerDown', EventExpression.ClientX, EventExpression.ClientY],
       trackPointerEvents: [DomEventListenerFunctions.HandleSashPointerMove, DomEventListenerFunctions.HandleSashPointerUp],
