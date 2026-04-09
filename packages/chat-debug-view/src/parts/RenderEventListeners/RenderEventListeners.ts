@@ -10,7 +10,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      params: ['handleTableBodyContextMenu'],
+      params: ['handleTableBodyContextMenu', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
     },
     {
