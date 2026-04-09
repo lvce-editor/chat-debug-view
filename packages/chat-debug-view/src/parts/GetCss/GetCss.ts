@@ -1,5 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { clampTableWidth, getDetailsWidth, sashWidth, timelineHorizontalPadding, viewPadding } from '../SplitLayout/SplitLayout.ts'
+import { clampTableWidth, getDetailsWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
   const tableWidth = clampTableWidth(state.width, state.tableWidth)
