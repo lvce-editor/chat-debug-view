@@ -64,6 +64,14 @@ test('renderEventListeners should register close details action without params',
   expect(closeDetailsListener?.params).toEqual(['handleCloseDetails'])
 })
 
+test('renderEventListeners should register refresh click action without params', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+  const refreshListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleClickRefresh)
+
+  expect(refreshListener).toBeDefined()
+  expect(refreshListener?.params).toEqual(['handleClickRefresh'])
+})
+
 test('renderEventListeners should register sash pointer tracking with client coordinates', () => {
   const listeners = RenderEventListeners.renderEventListeners()
   const pointerDownListener = listeners.find((listener) => listener.name === DomEventListenerFunctions.HandleSashPointerDown)

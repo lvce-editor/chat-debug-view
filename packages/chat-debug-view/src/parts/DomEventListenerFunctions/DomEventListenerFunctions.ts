@@ -15,3 +15,4 @@ export const HandleTimelineDoubleClick = 17
 export const HandleTableKeyDown = 18
 export const HandleTimelineRangePreset = 19
 export const HandleCloseDetails = 20
+export const HandleClickRefresh = 21

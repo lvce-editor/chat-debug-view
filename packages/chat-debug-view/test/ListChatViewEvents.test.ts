@@ -25,7 +25,7 @@ afterEach(() => {
   getEventsBySessionIdSpy.mockReset()
   listChatViewEventsFromWorkerSpy.mockReset()
   setIndexedDbSupportForTest(undefined)
-  storageBackendConfig.useChatStorageWorker = false
+  storageBackendConfig.useChatStorageWorker = true
 })
 
 test('listChatViewEvents should use chat storage worker when configured', async () => {
@@ -71,6 +71,7 @@ test('listChatViewEvents should return error when chat storage worker loading fa
 })
 
 test('listChatViewEvents should return not-supported when IndexedDB is unavailable', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   setIndexedDbSupportForTest(false)
   const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
@@ -81,6 +82,7 @@ test('listChatViewEvents should return not-supported when IndexedDB is unavailab
 })
 
 test('listChatViewEvents should return success result with events', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   setIndexedDbSupportForTest(true)
   const store = {
     getAll: jest.fn(),
@@ -122,6 +124,7 @@ test('listChatViewEvents should return success result with events', async () => 
 })
 
 test('listChatViewEvents should return error result when opening the database fails', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   setIndexedDbSupportForTest(true)
   const error = new Error('failed to open database')
   openDatabaseSpy.mockRejectedValue(error)
@@ -135,6 +138,7 @@ test('listChatViewEvents should return error result when opening the database fa
 })
 
 test('listChatViewEvents should return success with empty events when store is missing', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   setIndexedDbSupportForTest(true)
   const database = {
     close: jest.fn(),
@@ -155,6 +159,7 @@ test('listChatViewEvents should return success with empty events when store is m
 })
 
 test('listChatViewEvents should return success with empty events when session id is empty', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   setIndexedDbSupportForTest(true)
   const store = {
     getAll: jest.fn(),

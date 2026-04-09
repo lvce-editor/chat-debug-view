@@ -23,7 +23,7 @@ afterEach(() => {
   openDatabaseSpy.mockReset()
   getEventDetailsBySessionIdAndEventIdSpy.mockReset()
   loadSelectedEventFromWorkerSpy.mockReset()
-  storageBackendConfig.useChatStorageWorker = false
+  storageBackendConfig.useChatStorageWorker = true
 })
 
 test('loadSelectedEvent should use chat storage worker when configured', async () => {
@@ -44,6 +44,7 @@ test('loadSelectedEvent should use chat storage worker when configured', async (
 })
 
 test('loadSelectedEvent should return null when the event store does not exist', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   const database = {
     close: jest.fn(),
     objectStoreNames: createDomStringList([]),
@@ -61,6 +62,7 @@ test('loadSelectedEvent should return null when the event store does not exist',
 })
 
 test('loadSelectedEvent should return the selected event details', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   const store = {
     index: jest.fn(),
   }
@@ -91,6 +93,7 @@ test('loadSelectedEvent should return the selected event details', async () => {
 })
 
 test('loadSelectedEvent should return null when event details are missing', async () => {
+  storageBackendConfig.useChatStorageWorker = false
   const store = {
     index: jest.fn(),
   }

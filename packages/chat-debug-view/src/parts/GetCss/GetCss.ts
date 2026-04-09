@@ -47,6 +47,27 @@ export const getCss = (state: ChatDebugViewState): string => {
   max-width: 80px;
 }
 
+.ChatDebugViewRefreshButton {
+  margin-left: auto;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--vscode-button-border, var(--vscode-editorWidget-border, #454545));
+  border-radius: 4px;
+  background: var(--vscode-button-secondaryBackground, rgba(90, 93, 94, 0.31));
+  color: var(--vscode-button-secondaryForeground, inherit);
+  cursor: pointer;
+  contain: content;
+}
+
+.ChatDebugViewRefreshButton:hover {
+  background: var(--vscode-button-secondaryHoverBackground, rgba(90, 93, 94, 0.45));
+}
+
+.ChatDebugViewRefreshButton:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder, #007fd4);
+  outline-offset: 1px;
+}
+
 .ChatDebugViewQuickFilterPill {
   display: flex;
   align-items: center;
