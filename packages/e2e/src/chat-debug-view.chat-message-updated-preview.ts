@@ -30,6 +30,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
+  // assert
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
   await expect(detailsEvent).toHaveText('1"Done - preview text only"')
 
