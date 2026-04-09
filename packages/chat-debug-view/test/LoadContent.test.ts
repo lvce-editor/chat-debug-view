@@ -19,7 +19,7 @@ test('loadContent should return failed-to-load state when listing events returns
     uri: 'chat-debug://session-1',
   }
 
-  const result = await loadContent(state)
+  const result = await loadContent(state, {})
 
   expect(result).toEqual({
     ...state,
@@ -56,7 +56,7 @@ test('loadContent should restore the selected event preview from selectedEventId
     useDevtoolsLayout: true,
   }
 
-  const result = await loadContent(state)
+  const result = await loadContent(state, {})
 
   expect(result).toEqual({
     ...state,
