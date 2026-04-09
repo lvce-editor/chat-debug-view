@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.table-row-context-menu.probe'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+  // arrange
   await ChatDebug.open('e2e-session-table-row-context-menu-probe')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -24,12 +25,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       type: 'tool-execution-finished',
     },
   ]
-
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  await Locator('.ChatDebugViewEventRow').nth(0).click({ button: 'right' })
+  // act
+  await Command.execute('ChatDebugView.handleTableBodyContextMenu', 0, 300)
 
+  // assert
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(99)
 }
