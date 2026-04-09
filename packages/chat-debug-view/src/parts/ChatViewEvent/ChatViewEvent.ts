@@ -3,7 +3,7 @@ export interface ChatViewEvent {
   readonly durationMs?: number
   readonly ended?: number | string
   readonly endTime?: number | string
-  readonly eventId?: number
+  readonly eventId: number
   readonly [key: string]: unknown
   readonly sessionId?: string
   readonly started?: number | string

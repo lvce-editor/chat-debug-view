@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import { collapseToolExecutionEvents, getStableEventId } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
+import { collapseToolExecutionEvents } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 
 test('collapseToolExecutionEvents should merge matching started and finished events', () => {
   const startedEvent: ChatViewEvent = {
@@ -46,12 +46,14 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
 
 test('collapseToolExecutionEvents should keep non-matching events separate', () => {
   const startedEvent: ChatViewEvent = {
+    eventId: 0,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
   }
   const finishedEvent: ChatViewEvent = {
+    eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:45.000Z',
     toolName: 'write_file',
