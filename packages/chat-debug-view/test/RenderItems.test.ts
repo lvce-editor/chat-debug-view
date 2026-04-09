@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ViewletCommand } from '@lvce-editor/constants'
+import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -86,7 +87,7 @@ test('renderItems should show filter-specific message when no events match', () 
   const result = RenderItems.renderItems(oldState, newState)
 
   const dom = result[2] as readonly { readonly text?: string }[]
-  const noMatchText = dom.find((node) => node.text === 'no events found matching response')
+  const noMatchText = dom.find((node) => node.text === ChatDebugStrings.noEventsFoundMatching('response'))
   expect(noMatchText).toBeDefined()
 })
 
