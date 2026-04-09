@@ -20,5 +20,3 @@ export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): r
   }
   return collapsedEvents
 }
-
-export { getStableEventId } from '../GetStableEventId/GetStableEventId.ts'
