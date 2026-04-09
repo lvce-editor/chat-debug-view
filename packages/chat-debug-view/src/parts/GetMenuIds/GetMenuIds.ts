@@ -1,3 +1,5 @@
+import { MenuChatDebugTableBody } from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
+
 export const getMenuIds = (): readonly number[] => {
-  return [555, 556, 557]
+  return [MenuChatDebugTableBody, 556, 557]
 }
