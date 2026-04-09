@@ -1,33 +1,17 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { getEventDetailsBySessionIdAndEventId } from '../src/parts/GetEventDetailsBySessionIdAndEventId/GetEventDetailsBySessionIdAndEventId.ts'
-import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { loadSelectedEvent, loadSelectedEventDependencies } from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
-import { storageBackendConfig } from '../src/parts/StorageBackendConfig/StorageBackendConfig.ts'
 
-const openDatabaseSpy = jest.spyOn(loadSelectedEventDependencies, 'openDatabase')
-const getEventDetailsBySessionIdAndEventIdSpy = jest.spyOn(loadSelectedEventDependencies, 'getEventDetailsBySessionIdAndEventId')
 const loadSelectedEventFromWorkerSpy = jest.spyOn(loadSelectedEventDependencies, 'loadSelectedEventFromWorker')
 
-const createDomStringList = (values: readonly string[]): DOMStringList => {
-  return {
-    contains: (value: string): boolean => values.includes(value),
-    item: (index: number): string | null => values[index] ?? null,
-    length: values.length,
-    *[Symbol.iterator](): IterableIterator<string> {
-      yield* values
-    },
-  } as unknown as DOMStringList
-}
-
 afterEach(() => {
-  openDatabaseSpy.mockReset()
-  getEventDetailsBySessionIdAndEventIdSpy.mockReset()
   loadSelectedEventFromWorkerSpy.mockReset()
+<<<<<<< HEAD
   storageBackendConfig.useChatStorageWorker = true
+=======
+>>>>>>> origin/main
 })
 
-test('loadSelectedEvent should use chat storage worker when configured', async () => {
-  storageBackendConfig.useChatStorageWorker = true
+test('loadSelectedEvent should use chat storage worker', async () => {
   const event = {
     eventId: 1,
     sessionId: 'session-1',
@@ -39,10 +23,9 @@ test('loadSelectedEvent should use chat storage worker when configured', async (
 
   expect(result).toEqual(event)
   expect(loadSelectedEventFromWorkerSpy).toHaveBeenCalledWith('session-1', 1, 'request')
-  expect(openDatabaseSpy).not.toHaveBeenCalled()
-  expect(getEventDetailsBySessionIdAndEventIdSpy).not.toHaveBeenCalled()
 })
 
+<<<<<<< HEAD
 test('loadSelectedEvent should return null when the event store does not exist', async () => {
   storageBackendConfig.useChatStorageWorker = false
   const database = {
@@ -74,24 +57,23 @@ test('loadSelectedEvent should return the selected event details', async () => {
     objectStoreNames: createDomStringList(['chat-view-events']),
     transaction: jest.fn().mockReturnValue(transaction),
   } as unknown as Awaited<ReturnType<typeof openDatabase>>
+=======
+test('loadSelectedEvent should return the selected event details from the worker', async () => {
+>>>>>>> origin/main
   const event = {
     eventId: 1,
     sessionId: 'session-1',
     type: 'request',
   }
-  const storeWithDetails = store as unknown as Parameters<typeof getEventDetailsBySessionIdAndEventId>[0]
-  openDatabaseSpy.mockResolvedValue(database)
-  getEventDetailsBySessionIdAndEventIdSpy.mockResolvedValue(event)
+  loadSelectedEventFromWorkerSpy.mockResolvedValue(event)
 
   const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 
   expect(result).toEqual(event)
-  expect(database.transaction).toHaveBeenCalledWith('chat-view-events', 'readonly')
-  expect(transaction.objectStore).toHaveBeenCalledWith('chat-view-events')
-  expect(getEventDetailsBySessionIdAndEventIdSpy).toHaveBeenCalledWith(storeWithDetails, 'session-1', 'sessionId', 1, 'request')
-  expect(database.close).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventFromWorkerSpy).toHaveBeenCalledWith('session-1', 1, 'request')
 })
 
+<<<<<<< HEAD
 test('loadSelectedEvent should return null when event details are missing', async () => {
   storageBackendConfig.useChatStorageWorker = false
   const store = {
@@ -108,10 +90,13 @@ test('loadSelectedEvent should return null when event details are missing', asyn
   const storeWithDetails = store as unknown as Parameters<typeof getEventDetailsBySessionIdAndEventId>[0]
   openDatabaseSpy.mockResolvedValue(database)
   getEventDetailsBySessionIdAndEventIdSpy.mockResolvedValue(undefined)
+=======
+test('loadSelectedEvent should return null when the worker has no details', async () => {
+  loadSelectedEventFromWorkerSpy.mockResolvedValue(null)
+>>>>>>> origin/main
 
   const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 
   expect(result).toBeNull()
-  expect(getEventDetailsBySessionIdAndEventIdSpy).toHaveBeenCalledWith(storeWithDetails, 'session-1', 'sessionId', 1, 'request')
-  expect(database.close).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventFromWorkerSpy).toHaveBeenCalledWith('session-1', 1, 'request')
 })

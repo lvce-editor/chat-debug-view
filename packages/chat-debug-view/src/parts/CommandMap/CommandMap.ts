@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
@@ -27,9 +28,7 @@ import { renderEventListeners } from '../RenderEventListeners/RenderEventListene
 import * as Rerender from '../Rerender/Rerender.ts'
 import * as Resize from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
-import * as SeedManyEventsInIndexedDbForTest from '../SeedManyEventsInIndexedDbForTest/SeedManyEventsInIndexedDbForTest.ts'
 import * as SetEvents from '../SetEvents/SetEvents.ts'
-import * as SetIndexedDbSupportForTest from '../SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 
@@ -37,7 +36,11 @@ export const commandMap = {
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,
+<<<<<<< HEAD
   'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
+=======
+  'ChatDebug.getMenuIds': getMenuIds,
+>>>>>>> origin/main
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.handleDetailTab),
@@ -68,9 +71,7 @@ export const commandMap = {
   'ChatDebug.rerender': wrapCommand(Rerender.rerender),
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
-  'ChatDebug.seedManyEventsInIndexedDbForTest': SeedManyEventsInIndexedDbForTest.seedManyEventsInIndexedDbForTest,
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
-  'ChatDebug.setIndexedDbSupportForTest': SetIndexedDbSupportForTest.setIndexedDbSupportForTest,
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,
 }

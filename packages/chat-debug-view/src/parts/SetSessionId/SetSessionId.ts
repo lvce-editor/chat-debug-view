@@ -1,6 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
-import { getIndexedDbNotSupportedMessage } from '../GetIndexedDbNotSupportedMessage/GetIndexedDbNotSupportedMessage.ts'
 import * as ListChatViewEvents from '../ListChatViewEvents/ListChatViewEvents.ts'
 
 export const setSessionIdDependencies = {
@@ -14,20 +13,7 @@ export const setSessionId = async (state: ChatDebugViewState, sessionId: string)
     state.dataBaseVersion,
     state.eventStoreName,
     state.sessionIdIndexName,
-    state.indexedDbSupportOverride,
   )
-  if (result.type === 'not-supported') {
-    return {
-      ...state,
-      errorMessage: getIndexedDbNotSupportedMessage(),
-      events: [],
-      initial: false,
-      selectedEvent: null,
-      selectedEventId: null,
-      selectedEventIndex: null,
-      sessionId,
-    }
-  }
   if (result.type === 'error') {
     return {
       ...state,

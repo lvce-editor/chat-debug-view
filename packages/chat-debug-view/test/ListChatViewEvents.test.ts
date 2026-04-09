@@ -1,35 +1,18 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { getEventsBySessionId } from '../src/parts/GetEventsBySessionId/GetEventsBySessionId.ts'
-import type { openDatabase } from '../src/parts/OpenDatabase/OpenDatabase.ts'
 import { listChatViewEvents, listChatViewEventsDependencies } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
-import { setIndexedDbSupportForTest } from '../src/parts/SetIndexedDbSupportForTest/SetIndexedDbSupportForTest.ts'
-import { storageBackendConfig } from '../src/parts/StorageBackendConfig/StorageBackendConfig.ts'
 
-const openDatabaseSpy = jest.spyOn(listChatViewEventsDependencies, 'openDatabase')
-const getEventsBySessionIdSpy = jest.spyOn(listChatViewEventsDependencies, 'getEventsBySessionId')
 const listChatViewEventsFromWorkerSpy = jest.spyOn(listChatViewEventsDependencies, 'listChatViewEventsFromWorker')
 
-const createDomStringList = (values: readonly string[]): DOMStringList => {
-  return {
-    contains: (value: string): boolean => values.includes(value),
-    item: (index: number): string | null => values[index] ?? null,
-    length: values.length,
-    *[Symbol.iterator](): IterableIterator<string> {
-      yield* values
-    },
-  } as unknown as DOMStringList
-}
-
 afterEach(() => {
-  openDatabaseSpy.mockReset()
-  getEventsBySessionIdSpy.mockReset()
   listChatViewEventsFromWorkerSpy.mockReset()
+<<<<<<< HEAD
   setIndexedDbSupportForTest(undefined)
   storageBackendConfig.useChatStorageWorker = true
+=======
+>>>>>>> origin/main
 })
 
-test('listChatViewEvents should use chat storage worker when configured', async () => {
-  storageBackendConfig.useChatStorageWorker = true
+test('listChatViewEvents should use chat storage worker', async () => {
   const events = [
     {
       duration: 0,
@@ -51,12 +34,9 @@ test('listChatViewEvents should use chat storage worker when configured', async 
     type: 'success',
   })
   expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
-  expect(openDatabaseSpy).not.toHaveBeenCalled()
-  expect(getEventsBySessionIdSpy).not.toHaveBeenCalled()
 })
 
 test('listChatViewEvents should return error when chat storage worker loading fails', async () => {
-  storageBackendConfig.useChatStorageWorker = true
   const error = new Error('worker failed')
   listChatViewEventsFromWorkerSpy.mockRejectedValue(error)
 
@@ -67,6 +47,7 @@ test('listChatViewEvents should return error when chat storage worker loading fa
     type: 'error',
   })
   expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
+<<<<<<< HEAD
   expect(openDatabaseSpy).not.toHaveBeenCalled()
 })
 
@@ -185,4 +166,6 @@ test('listChatViewEvents should return success with empty events when session id
   expect(transaction.objectStore).toHaveBeenCalledWith('chat-view-events')
   expect(getEventsBySessionIdSpy).not.toHaveBeenCalled()
   expect(database.close).toHaveBeenCalledTimes(1)
+=======
+>>>>>>> origin/main
 })

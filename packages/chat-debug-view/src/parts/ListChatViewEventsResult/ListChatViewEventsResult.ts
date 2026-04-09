@@ -10,8 +10,4 @@ export type ListChatViewEventsError = {
   readonly error: unknown
 }
 
-export type ListChatViewEventsNotSupported = {
-  readonly type: 'not-supported'
-}
-
-export type ListChatViewEventsResult = ListChatViewEventsSuccess | ListChatViewEventsError | ListChatViewEventsNotSupported
+export type ListChatViewEventsResult = ListChatViewEventsSuccess | ListChatViewEventsError
