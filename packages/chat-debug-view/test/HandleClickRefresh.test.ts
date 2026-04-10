@@ -1,22 +1,29 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import * as HandleClickRefresh from '../src/parts/HandleClickRefresh/HandleClickRefresh.ts'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import { handleClickRefresh } from '../src/parts/HandleClickRefresh/HandleClickRefresh.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('handleClickRefresh should delegate to refresh', async () => {
-  const state = createDefaultState()
+  const events = [{ eventId: 1, type: 'request' }]
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events,
+      type: 'success' as const,
+    }),
+  })
+  const state = {
+    ...createDefaultState(),
+    sessionId: 'session-1',
+  }
   const expectedState = {
     ...state,
+    errorMessage: '',
+    events,
     initial: false,
   }
-  const refreshSpy = jest.spyOn(HandleClickRefresh.handleClickRefreshDependencies, 'refresh').mockResolvedValue(expectedState)
 
-  const result = await HandleClickRefresh.handleClickRefresh(state)
+  const result = await handleClickRefresh(state)
 
-  expect(result).toBe(expectedState)
-  expect(refreshSpy).toHaveBeenCalledTimes(1)
-  expect(refreshSpy).toHaveBeenCalledWith(state)
+  expect(result).toEqual(expectedState)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })

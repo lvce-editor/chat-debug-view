@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { getCurrentEvents, selectEventAtIndex } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
+import { focusIndex } from '../FocusIndex/FocusIndex.ts'
+import { getCurrentEvents } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
 
 export const focusNext = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   const currentEvents = getCurrentEvents(state)
@@ -8,8 +9,5 @@ export const focusNext = async (state: ChatDebugViewState): Promise<ChatDebugVie
   }
   const currentIndex = state.selectedEventIndex === null || state.selectedEventIndex < 0 ? -1 : state.selectedEventIndex
   const nextIndex = Math.min(currentEvents.length - 1, currentIndex + 1)
-  if (nextIndex === state.selectedEventIndex) {
-    return state
-  }
-  return selectEventAtIndex(state, nextIndex)
+  return focusIndex(state, nextIndex)
 }
