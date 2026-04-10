@@ -12,6 +12,7 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
+import * as InputName from '../InputName/InputName.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 export const getChatDebugViewDom = (
@@ -32,7 +33,7 @@ export const getChatDebugViewDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
-  selectedDetailTab = DetailTab.Response,
+  selectedDetailTab = InputName.Response,
   visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
@@ -78,7 +79,7 @@ export const getChatDebugViewDom = (
         timelineSelectionActive,
         timelineSelectionAnchorSeconds,
         timelineSelectionFocusSeconds,
-        DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : DetailTab.Response,
+        DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : InputName.Response,
         visibleTableColumns,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))

@@ -20,15 +20,15 @@ export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   responseEventNodes: readonly VirtualDomNode[] = previewEventNodes,
   selectedEvent: ChatViewEvent | null = null,
-  selectedDetailTab = DetailTab.Response,
+  selectedDetailTab = InputName.Response,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
   const contentNodes =
-    selectedDetailTab === DetailTab.Timing && selectedEvent
+    selectedDetailTab === InputName.Timing && selectedEvent
       ? getTimingDetailsDom(selectedEvent)
-      : selectedDetailTab === DetailTab.Preview
+      : selectedDetailTab === InputName.Preview
         ? previewEventNodes
         : responseEventNodes
   return [
