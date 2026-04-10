@@ -75,13 +75,6 @@ export const getDetailsDom = (
       type: VirtualDomElements.Button,
       value: 'close',
     },
-    {
-      'aria-label': ChatDebugStrings.detailSections(),
-      childCount: detailTabs.length,
-      className: ChatDebugViewDetailsTabs,
-      role: 'tablist',
-      type: VirtualDomElements.Div,
-    },
     ...getTabNodes(detailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
