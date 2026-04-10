@@ -137,6 +137,25 @@ test('getFilteredEvents should prefer finished event payload for merged tool pre
 })
 
 test('getFilteredEvents should show only network events for network category filter', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', EventCategoryFilter.Network, true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Network], true, true, true)
   expect(result).toEqual([events[2]])
+})
+
+test('getFilteredEvents should show events from multiple selected category filters', () => {
+  const result = GetFilteredEvents.getFilteredEvents(
+    events,
+    '',
+    [EventCategoryFilter.Tools, EventCategoryFilter.Network],
+    true,
+    true,
+    true,
+  )
+
+  expect(result).toEqual([
+    events[2],
+    expect.objectContaining({
+      toolName: 'read_file',
+      type: 'tool-execution',
+    }),
+  ])
 })

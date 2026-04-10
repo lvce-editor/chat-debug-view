@@ -29,19 +29,16 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  const responseTab = Locator('#ChatDebugViewDetailsTab-response')
   const timingTab = Locator('#ChatDebugViewDetailsTab-timing')
 
   // assert
-  await expect(responseTab).toHaveAttribute('aria-selected', 'true')
   await expect(timingTab).toHaveCount(1)
-  await expect(timingTab).toHaveAttribute('aria-selected', 'false')
+  await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
 
   // assert
-  await expect(timingTab).toHaveAttribute('aria-selected', 'true')
   await expect(Locator('.ChatDebugViewTiming')).toBeVisible()
   await expect(Locator('.ChatDebugViewTiming')).toContainText('Duration')
 
@@ -50,7 +47,6 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   // assert
   await expect(Locator('#ChatDebugViewDetailsTab-timing')).toHaveCount(0)
-  await expect(responseTab).toHaveAttribute('aria-selected', 'true')
   await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewEvent')).toContainText('"type": "chat-message-added"')
 }

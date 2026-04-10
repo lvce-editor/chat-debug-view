@@ -1,6 +1,20 @@
 import { expect, test } from '@jest/globals'
+import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { restoreSavedState } from '../src/parts/RestoreSavedState/RestoreSavedState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+
+test('restoreSavedState should restore multiple selected event category filters', () => {
+  const state = createDefaultState()
+
+  const result = restoreSavedState(state, {
+    eventCategoryFilters: [EventCategoryFilter.Tools, EventCategoryFilter.Network],
+  })
+
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([
+    EventCategoryFilter.Tools,
+    EventCategoryFilter.Network,
+  ])
+})
 
 test('restoreSavedState should restore visible table columns', () => {
   const state = createDefaultState()

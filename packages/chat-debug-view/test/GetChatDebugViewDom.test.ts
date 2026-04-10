@@ -10,7 +10,7 @@ test('getChatDebugViewDom should return debug error dom when error message is se
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     'Failed to load chat debug session',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -51,7 +51,7 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -86,7 +86,7 @@ test('getChatDebugViewDom should not include top checkbox controls', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -114,7 +114,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -127,6 +127,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     [],
     [],
   ) as readonly {
+    readonly ['aria-multiselectable']?: boolean
     readonly ['aria-selected']?: boolean
     readonly className?: string
     readonly ['data-value']?: string
@@ -138,6 +139,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
 
   expect(quickFilterGroup).toBeDefined()
   expect(quickFilterGroup?.role).toBe('listbox')
+  expect(quickFilterGroup?.['aria-multiselectable']).toBe(true)
   expect(quickFilterGroup?.onClick).toBe(DomEventListenerFunctions.HandleEventCategoryFilter)
   expect(quickFilterPills).toHaveLength(5)
   expect(quickFilterPills[0]).toEqual(
@@ -164,7 +166,7 @@ test('getChatDebugViewDom should render dedicated empty message for tools quick 
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.Tools,
+    [EventCategoryFilter.Tools],
     categoryFilters,
     false,
     false,

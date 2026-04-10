@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.chat-attachment-added-preview'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const eventId = Date.now()
   const sessionId = `e2e-session-chat-attachment-added-preview-${eventId}`

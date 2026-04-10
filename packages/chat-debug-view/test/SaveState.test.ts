@@ -26,6 +26,7 @@ test('saveState should persist serializable non-layout state fields', () => {
 
   expect(result).toEqual({
     eventCategoryFilter: 'tools',
+    eventCategoryFilters: ['tools'],
     filterValue: 'error',
     selectedDetailTab: 'preview',
     selectedEventId: 3,

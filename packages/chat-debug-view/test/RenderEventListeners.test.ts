@@ -9,7 +9,7 @@ test('renderEventListeners should register delegated row click with dataset inde
   expect(listeners).toBeDefined()
   expect(listeners).not.toContainEqual(
     expect.objectContaining({
-      name: DomEventListenerFunctions.HandleTableKeyDown,
+      params: ['handleTableKeyDown', 'event.key'],
     }),
   )
 })
