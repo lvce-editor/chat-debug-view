@@ -1,10 +1,6 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 
-export const listChatViewEventsDependencies = {
-  listChatViewEventsFromWorker: ChatStorageWorkerClient.listChatViewEvents,
-}
-
 export const listChatViewEvents = async (
   sessionId: string,
   _databaseName: string,
@@ -13,7 +9,7 @@ export const listChatViewEvents = async (
   _sessionIdIndexName: string,
 ): Promise<ListChatViewEventsResult> => {
   try {
-    return await listChatViewEventsDependencies.listChatViewEventsFromWorker(sessionId)
+    return await ChatStorageWorkerClient.listChatViewEvents(sessionId)
   } catch (error) {
     return {
       error,

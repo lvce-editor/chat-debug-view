@@ -1,11 +1,6 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import { listChatViewEvents, listChatViewEventsDependencies } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
-
-const listChatViewEventsFromWorkerSpy = jest.spyOn(listChatViewEventsDependencies, 'listChatViewEventsFromWorker')
-
-afterEach(() => {
-  listChatViewEventsFromWorkerSpy.mockReset()
-})
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import { listChatViewEvents } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 
 test('listChatViewEvents should use chat storage worker', async () => {
   const events = [
@@ -17,23 +12,27 @@ test('listChatViewEvents should use chat storage worker', async () => {
       type: 'request',
     },
   ]
-  listChatViewEventsFromWorkerSpy.mockResolvedValue({
+  const expected = {
     events,
-    type: 'success',
+    type: 'success' as const,
+  }
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => expected,
   })
 
   const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
-  expect(result).toEqual({
-    events,
-    type: 'success',
-  })
-  expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
+  expect(result).toEqual(expected)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
 
 test('listChatViewEvents should return error when chat storage worker loading fails', async () => {
   const error = new Error('worker failed')
-  listChatViewEventsFromWorkerSpy.mockRejectedValue(error)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => {
+      throw error
+    },
+  })
 
   const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
 
@@ -41,5 +40,5 @@ test('listChatViewEvents should return error when chat storage worker loading fa
     error,
     type: 'error',
   })
-  expect(listChatViewEventsFromWorkerSpy).toHaveBeenCalledWith('session-1')
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
