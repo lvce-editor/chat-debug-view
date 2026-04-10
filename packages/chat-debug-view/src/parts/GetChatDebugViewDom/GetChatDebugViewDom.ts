@@ -80,7 +80,7 @@ export const getChatDebugViewDom = (
         timelineSelectionActive,
         timelineSelectionAnchorSeconds,
         timelineSelectionFocusSeconds,
-        DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab),
+        DetailTab.getSelectedDetailTab(detailTabs),
         visibleTableColumns,
         detailTabs,
         tableColumns,

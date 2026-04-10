@@ -56,7 +56,7 @@ export const getDevtoolsDom = (
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
-  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, tableColumns, visibleTableColumns)
+  const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs, safeSelectedDetailTab)
