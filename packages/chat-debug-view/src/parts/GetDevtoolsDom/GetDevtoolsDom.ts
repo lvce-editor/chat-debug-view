@@ -13,6 +13,7 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import * as InputName from '../InputName/InputName.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
@@ -26,7 +27,7 @@ export const getDevtoolsDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
-  selectedDetailTab = DetailTab.Response,
+  selectedDetailTab = InputName.Response,
   visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
@@ -47,7 +48,7 @@ export const getDevtoolsDom = (
     previewEventNodes,
     responseEventNodes,
     selectedEvent,
-    DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : DetailTab.Response,
+    DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : InputName.Response,
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1

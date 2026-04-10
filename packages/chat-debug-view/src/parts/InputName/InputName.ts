@@ -11,3 +11,7 @@ export const TimelineStartSeconds = 'timelineStartSeconds'
 export const TimelineEndSeconds = 'timelineEndSeconds'
 export const TimelineRangePreset = 'timelineRangePreset'
 export const Refresh = 'refresh'
+
+export const Response = 'response'
+export const Preview = 'preview'
+export const Timing = 'timing'
