@@ -38,7 +38,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   }
   return [
     {
-      childCount: resizerCount * 2,
+      childCount: resizerCount,
       className: ChatDebugViewResizers,
       type: VirtualDomElements.Div,
     },
