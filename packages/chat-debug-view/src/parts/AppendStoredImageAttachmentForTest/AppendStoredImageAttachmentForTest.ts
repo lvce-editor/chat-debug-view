@@ -2,7 +2,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 
 const decodeBase64 = (value: string): Uint8Array => {
-  return Uint8Array.from(atob(value), (character) => character.charCodeAt(0))
+  return Uint8Array.from(atob(value), (character) => character.codePointAt(0) || 0)
 }
 
 const createCanvasBlob = async (mimeType: string): Promise<Blob> => {

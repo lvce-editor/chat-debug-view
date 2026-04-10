@@ -1,5 +1,5 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { AttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
+import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 
 const selectedEventPreviewSymbol = Symbol('selectedEventPreview')
 

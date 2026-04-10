@@ -8,12 +8,12 @@ afterEach(() => {
 test('getAttachmentImagePreview should return an image preview for image attachments', async () => {
   const createImageBitmapMock = jest.fn(async (_blob: Blob) => {
     return {
-      close() {},
+      close(): void {},
     }
   })
   const fileReaderSyncMock = jest.fn(() => {
     return {
-      readAsDataURL() {
+      readAsDataURL(): string {
         return 'data:image/png;base64,preview'
       },
     }
@@ -48,16 +48,16 @@ test.each([
   ['image/svg+xml', 'photo.svg'],
 ])('getAttachmentImagePreview should accept %s attachments', async (mimeType, name) => {
   Object.assign(globalThis, {
+    createImageBitmap: jest.fn(async (_blob: Blob) => {
+      return {
+        close(): void {},
+      }
+    }),
     FileReaderSync: class {
-      readAsDataURL() {
+      readAsDataURL(): string {
         return `data:${mimeType};base64,preview`
       }
     },
-    createImageBitmap: jest.fn(async (_blob: Blob) => {
-      return {
-        close() {},
-      }
-    }),
   })
   const event = {
     blob: new Blob(['image'], {

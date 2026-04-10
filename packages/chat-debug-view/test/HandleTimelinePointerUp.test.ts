@@ -54,10 +54,10 @@ test('handleTimelinePointerUp should commit a resized left edge while keeping th
       },
     ],
     timelineEndSeconds: '8',
-    timelineStartSeconds: '2',
     timelineSelectionActive: true,
     timelineSelectionAnchorSeconds: '8',
     timelineSelectionFocusSeconds: '2',
+    timelineStartSeconds: '2',
     width: 436,
     x: 82,
   })

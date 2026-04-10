@@ -16,8 +16,8 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
       const isSelected = categoryFilter.isSelectedProperty
       return [
         {
-          'data-value': categoryFilter.name,
           'aria-selected': isSelected,
+          'data-value': categoryFilter.name,
           childCount: 1,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
           onClick: DomEventListenerFunctions.HandleEventCategoryFilter,

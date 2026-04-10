@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import * as SetAttachmentPreviewEventForTest from '../src/parts/SetAttachmentPreviewEventForTest/SetAttachmentPreviewEventForTest.ts'
 import { getSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
+import * as SetAttachmentPreviewEventForTest from '../src/parts/SetAttachmentPreviewEventForTest/SetAttachmentPreviewEventForTest.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('setAttachmentPreviewEventForTest should set an in-memory selected image preview event', () => {

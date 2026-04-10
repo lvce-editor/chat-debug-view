@@ -1,6 +1,6 @@
+import type { AttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import type { AttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 
 const getBlob = (event: ChatViewEvent): Blob | undefined => {
   const { blob } = event
