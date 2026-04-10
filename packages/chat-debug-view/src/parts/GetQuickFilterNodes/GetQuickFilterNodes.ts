@@ -14,14 +14,17 @@ export const getQuickFilterNodes = (eventCategoryFilter: string, categoryFilters
     {
       childCount: categoryFilters.length,
       className: ChatDebugViewQuickFilters,
+      role: 'listbox',
       type: VirtualDomElements.Div,
     },
     ...categoryFilters.flatMap((categoryFilter) => {
       const isSelected = categoryFilter.name === eventCategoryFilter
       return [
         {
+          ariaSelected: isSelected ? 'true' : 'false',
           childCount: 2,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
+          role: 'option',
           type: VirtualDomElements.Label,
         },
         {

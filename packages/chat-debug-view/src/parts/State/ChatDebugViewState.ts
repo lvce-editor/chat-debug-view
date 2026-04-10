@@ -1,6 +1,8 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { TableColumn } from '../TableColumn/TableColumn.ts'
 import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export interface ChatDebugViewState {
@@ -26,10 +28,13 @@ export interface ChatDebugViewState {
   readonly showEventStreamFinishedEvents: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
+  readonly tableColumns: readonly TableColumn[]
   readonly tableColumnWidths: TableColumnWidths
   readonly tableResizerDownId: number
   readonly tableWidth: number
   readonly timelineEndSeconds: string
+  readonly timelineEvents: readonly ChatViewEvent[]
+  readonly timelineInfo: TimelineInfo
   readonly timelineSelectionActive: boolean
   readonly timelineSelectionAnchorSeconds: string
   readonly timelineSelectionFocusSeconds: string

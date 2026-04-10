@@ -3,6 +3,7 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export { loadEventsDependencies as loadContentDependencies } from '../LoadEvents/LoadEvents.ts'
 
@@ -12,5 +13,6 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
     ...nextState,
     categoryFilters: EventCategoryFilter.createCategoryFilters(),
     detailTabs: DetailTab.createDetailTabs(),
+    tableColumns: TableColumn.createTableColumns(),
   }
 }

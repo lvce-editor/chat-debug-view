@@ -1,10 +1,8 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
-import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
-export const getTimelineSummary = (timelineEvents: readonly ChatViewEvent[], timelineStartSeconds: string, timelineEndSeconds: string): string => {
-  const timelineInfo = getTimelineInfo(timelineEvents, timelineStartSeconds, timelineEndSeconds)
+export const getTimelineSummary = (timelineInfo: TimelineInfo): string => {
   if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {
     return ChatDebugStrings.windowSummary(
       formatTimelineSeconds(timelineInfo.startSeconds),

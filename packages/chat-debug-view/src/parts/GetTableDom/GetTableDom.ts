@@ -3,12 +3,13 @@ import { ChatDebugViewTable, ChatDebugViewTableWrapper } from '../ClassNames/Cla
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
-import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getTableDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
-  visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
+  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
+  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
   const resizerNodes = getTableResizersDom(visibleTableColumns)
   return [
@@ -22,7 +23,7 @@ export const getTableDom = (
       className: ChatDebugViewTable,
       type: VirtualDomElements.Table,
     },
-    ...getTableHeaderDom(visibleTableColumns),
+    ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
     ...resizerNodes,
   ]

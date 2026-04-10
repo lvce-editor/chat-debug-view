@@ -2,10 +2,13 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import { ChatDebugViewTableHeader, ChatDebugViewTableHeaderRow } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getHeaderCellNodes } from '../GetHeaderCellNodes/GetHeaderCellNodes.ts'
-import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
-export const getTableHeaderDom = (visibleTableColumns: readonly string[] = defaultVisibleTableColumns): readonly VirtualDomNode[] => {
-  const headerCellNodes = getHeaderCellNodes(visibleTableColumns)
+export const getTableHeaderDom = (
+  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
+  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
+): readonly VirtualDomNode[] => {
+  const headerCellNodes = getHeaderCellNodes(visibleTableColumns, tableColumns)
   return [
     {
       childCount: 1,

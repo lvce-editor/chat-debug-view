@@ -3,6 +3,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
+import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -81,9 +82,10 @@ const parseSelectedEventIndex = (value: string): number | null => {
 }
 
 const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugViewState): ChatDebugViewState => {
-  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextState)
+  const nextStateWithTimelineInfo = getStateWithTimelineInfo(nextState)
+  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextStateWithTimelineInfo)
   return {
-    ...nextState,
+    ...nextStateWithTimelineInfo,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
     selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,

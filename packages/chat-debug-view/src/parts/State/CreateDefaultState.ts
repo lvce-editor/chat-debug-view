@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
@@ -29,10 +30,13 @@ export const createDefaultState = (): ChatDebugViewState => {
     showEventStreamFinishedEvents: false,
     showInputEvents: false,
     showResponsePartEvents: false,
+    tableColumns: [],
     tableColumnWidths: defaultTableColumnWidths,
     tableResizerDownId: 0,
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
+    timelineEvents: [],
+    timelineInfo: emptyTimelineInfo,
     timelineSelectionActive: false,
     timelineSelectionAnchorSeconds: '',
     timelineSelectionFocusSeconds: '',

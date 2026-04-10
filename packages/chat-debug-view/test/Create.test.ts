@@ -20,9 +20,11 @@ test('create should store state with the given uid', () => {
   expect(newState.height).toBe(400)
   expect(newState.assetDir).toBe('/assets')
   expect(newState.detailTabs).toEqual([])
+  expect(newState.tableColumns).toEqual([])
   expect(newState.sessionId).toBe('')
   expect(oldState.uid).toBe(uid)
   expect(oldState.detailTabs).toEqual([])
+  expect(oldState.tableColumns).toEqual([])
   expect(oldState.selectedEventId).toBeNull()
 })
 

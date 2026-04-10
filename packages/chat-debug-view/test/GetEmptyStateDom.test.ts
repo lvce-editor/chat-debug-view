@@ -21,3 +21,11 @@ test('getEmptyStateDom should render empty state container and message', () => {
     }),
   )
 })
+
+test('getEmptyStateDom should reuse the empty state container node', () => {
+  const first = getEmptyStateDom('first')
+  const second = getEmptyStateDom('second')
+
+  expect(first[0]).toBe(second[0])
+  expect(first[1]).not.toBe(second[1])
+})

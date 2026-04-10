@@ -47,3 +47,14 @@ test('getCss should expose table column width and resizer position variables', (
   expect(css).toContain('--ChatDebugViewResizerTwoLeft: 336px;')
   expect(css).toContain('.ChatDebugViewResizers')
 })
+
+test('getCss should size the table wrapper to the full main width when details are not visible', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('--ChatDebugViewDetailsWidth: 0px;')
+  expect(css).toContain('--ChatDebugViewTableWidth: 944px;')
+})

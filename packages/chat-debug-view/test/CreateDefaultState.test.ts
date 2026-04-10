@@ -7,6 +7,7 @@ test('createDefaultState should return expected defaults', () => {
   expect(state.categoryFilters).toEqual([])
   expect(state.detailTabs).toEqual([])
   expect(state.selectedDetailTab).toBe('response')
+  expect(state.tableColumns).toEqual([])
   expect(state.tableColumnWidths).toEqual({
     duration: 110,
     status: 110,

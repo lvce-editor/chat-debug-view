@@ -1,8 +1,8 @@
 export const ParseChatDebugUriErrorCode = {
-  InvalidSessionId: 'invalid-session-id',
-  InvalidUriEncoding: 'invalid-uri-encoding',
-  InvalidUriFormat: 'invalid-uri-format',
-  MissingUri: 'missing-uri',
+  InvalidSessionId: 1,
+  InvalidUriEncoding: 2,
+  InvalidUriFormat: 3,
+  MissingUri: 4,
 } as const
 
 export type ParseChatDebugUriErrorCodeType = (typeof ParseChatDebugUriErrorCode)[keyof typeof ParseChatDebugUriErrorCode]

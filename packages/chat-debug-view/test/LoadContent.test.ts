@@ -3,8 +3,10 @@ import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCate
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/LoadContent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 const categoryFilters = EventCategoryFilter.createCategoryFilters()
+const tableColumns = TableColumn.createTableColumns()
 
 const detailTabs = [
   {
@@ -53,6 +55,7 @@ test('loadContent should return failed-to-load state when listing events returns
     selectedEvent: null,
     selectedEventIndex: null,
     sessionId: 'session-1',
+    tableColumns,
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })
@@ -93,6 +96,7 @@ test('loadContent should restore the selected event preview from selectedEventId
     selectedEventId: 2,
     selectedEventIndex: 1,
     sessionId: 'session-1',
+    tableColumns,
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
@@ -141,6 +145,7 @@ test('loadContent should restore selected event and detail tab from savedState',
     selectedEventId: 2,
     selectedEventIndex: 1,
     sessionId: 'session-1',
+    tableColumns,
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)

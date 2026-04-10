@@ -24,18 +24,20 @@ export interface TimelineInfo {
   readonly startSeconds: number | null
 }
 
+export const emptyTimelineInfo: TimelineInfo = {
+  buckets: [],
+  durationSeconds: 0,
+  endSeconds: null,
+  hasSelection: false,
+  selectionEndPercent: null,
+  selectionStartPercent: null,
+  startSeconds: null,
+}
+
 export const getTimelineInfo = (events: readonly ChatViewEvent[], startValue: string, endValue: string): TimelineInfo => {
   const eventsWithTime = getEventsWithTime(events)
   if (eventsWithTime.length === 0) {
-    return {
-      buckets: [],
-      durationSeconds: 0,
-      endSeconds: null,
-      hasSelection: false,
-      selectionEndPercent: null,
-      selectionStartPercent: null,
-      startSeconds: null,
-    }
+    return emptyTimelineInfo
   }
   const baseTime = eventsWithTime[0].time
   const lastTime = eventsWithTime.at(-1)?.time ?? baseTime

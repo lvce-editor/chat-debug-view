@@ -17,6 +17,32 @@ import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+const getContentNode = (
+  previewEventNodes: readonly VirtualDomNode[],
+  payloadEventNodes: readonly VirtualDomNode[],
+  responseEventNodes: readonly VirtualDomNode[],
+  selectedEvent: ChatViewEvent | null,
+  detailTabs: readonly DetailTabType[],
+  selectedDetailTab: string,
+): {
+  readonly contentNodes: readonly VirtualDomNode[]
+  readonly safeSelectedDetailTab: string
+} => {
+  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
+  const contentNodes =
+    safeSelectedDetailTab === InputName.Timing && selectedEvent
+      ? getTimingDetailsDom(selectedEvent)
+      : safeSelectedDetailTab === InputName.Preview
+        ? previewEventNodes
+        : safeSelectedDetailTab === InputName.Payload
+          ? payloadEventNodes
+          : responseEventNodes
+  return {
+    contentNodes,
+    safeSelectedDetailTab,
+  }
+}
+
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -28,15 +54,14 @@ export const getDetailsDom = (
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
-  const contentNodes =
-    safeSelectedDetailTab === InputName.Timing && selectedEvent
-      ? getTimingDetailsDom(selectedEvent)
-      : safeSelectedDetailTab === InputName.Preview
-        ? previewEventNodes
-        : safeSelectedDetailTab === InputName.Payload
-          ? payloadEventNodes
-          : responseEventNodes
+  const { contentNodes, safeSelectedDetailTab } = getContentNode(
+    previewEventNodes,
+    payloadEventNodes,
+    responseEventNodes,
+    selectedEvent,
+    detailTabs,
+    selectedDetailTab,
+  )
   return [
     {
       childCount: 2,

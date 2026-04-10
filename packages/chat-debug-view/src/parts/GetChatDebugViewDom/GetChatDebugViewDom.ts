@@ -15,7 +15,7 @@ import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import * as InputName from '../InputName/InputName.ts'
-import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getChatDebugViewDom = (
   errorMessage: string,
@@ -36,8 +36,9 @@ export const getChatDebugViewDom = (
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
   selectedDetailTab = InputName.Response,
-  visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
+  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -80,6 +81,7 @@ export const getChatDebugViewDom = (
         DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab),
         visibleTableColumns,
         detailTabs,
+        tableColumns,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, categoryFilters) : []
