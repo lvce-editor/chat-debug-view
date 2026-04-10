@@ -10,18 +10,14 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   // act
   await Command.execute(
-    'ChatDebug.appendStoredImageAttachmentForTest',
+    'ChatDebug.setAttachmentPreviewEventForTest',
     sessionId,
-    7,
-    'image/png',
     'diagram.png',
-    'base64',
-    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+kZ0cAAAAASUVORK5CYII=',
-    '2026-04-10T11:35:00.000Z',
+    'image/png',
+    'image',
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+kZ0cAAAAASUVORK5CYII=',
   )
-  await Command.execute('ChatDebug.setSessionId', sessionId)
   await ChatDebug.useDevtoolsLayout()
-  await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   const previewImage = Locator('.ChatDebugViewImagePreviewImage')

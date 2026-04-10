@@ -8,18 +8,14 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   await Command.execute(
-    'ChatDebug.appendStoredImageAttachmentForTest',
+    'ChatDebug.setAttachmentPreviewEventForTest',
     sessionId,
-    1,
-    'image/svg+xml',
     'diagram.svg',
-    'text',
-    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="#0b6"/><circle cx="12" cy="12" r="6" fill="#fff"/></svg>',
-    '2026-04-10T11:35:00.000Z',
+    'image/svg+xml',
+    'image',
+    'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%230b6%22/%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%226%22%20fill%3D%22%23fff%22/%3E%3C/svg%3E',
   )
-  await Command.execute('ChatDebug.setSessionId', sessionId)
   await ChatDebug.useDevtoolsLayout()
-  await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   const previewImage = Locator('.ChatDebugViewImagePreviewImage')

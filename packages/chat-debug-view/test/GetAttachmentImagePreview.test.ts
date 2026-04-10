@@ -42,6 +42,42 @@ test('getAttachmentImagePreview should return an image preview for image attachm
   expect(createImageBitmapMock).toHaveBeenCalledTimes(1)
 })
 
+test.each([
+  ['image/jpeg', 'photo.jpg'],
+  ['image/avif', 'photo.avif'],
+  ['image/svg+xml', 'photo.svg'],
+])('getAttachmentImagePreview should accept %s attachments', async (mimeType, name) => {
+  Object.assign(globalThis, {
+    FileReaderSync: class {
+      readAsDataURL() {
+        return `data:${mimeType};base64,preview`
+      }
+    },
+    createImageBitmap: jest.fn(async (_blob: Blob) => {
+      return {
+        close() {},
+      }
+    }),
+  })
+  const event = {
+    blob: new Blob(['image'], {
+      type: mimeType,
+    }),
+    eventId: 1,
+    mimeType,
+    name,
+    type: 'chat-attachment-added',
+  }
+
+  const result = await getAttachmentImagePreview(event)
+
+  expect(result).toEqual({
+    alt: name,
+    previewType: 'image',
+    src: `data:${mimeType};base64,preview`,
+  })
+})
+
 test('getAttachmentImagePreview should return a fallback message when image validation fails', async () => {
   Object.assign(globalThis, {
     createImageBitmap: jest.fn(async () => {

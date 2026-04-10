@@ -38,6 +38,7 @@ import * as Rerender from '../Rerender/Rerender.ts'
 import * as ResetTableColumns from '../ResetTableColumns/ResetTableColumns.ts'
 import * as Resize from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
+import * as SetAttachmentPreviewEventForTest from '../SetAttachmentPreviewEventForTest/SetAttachmentPreviewEventForTest.ts'
 import * as SetEvents from '../SetEvents/SetEvents.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
@@ -89,6 +90,7 @@ export const commandMap = {
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.selectDetailTab': wrapCommand(SelectDetailTab.selectDetailTab),
+  'ChatDebug.setAttachmentPreviewEventForTest': wrapCommand(SetAttachmentPreviewEventForTest.setAttachmentPreviewEventForTest),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,
