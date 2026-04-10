@@ -129,7 +129,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     [],
   ) as readonly {
     readonly ['aria-multiselectable']?: boolean
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly className?: string
     readonly ['data-value']?: string
     readonly onClick?: number
@@ -145,7 +145,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   expect(quickFilterPills).toHaveLength(5)
   expect(quickFilterPills[0]).toEqual(
     expect.objectContaining({
-      'aria-selected': true,
+      ariaSelected: true,
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
       'data-value': EventCategoryFilter.All,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
@@ -154,7 +154,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   )
   expect(quickFilterPills[1]).toEqual(
     expect.objectContaining({
-      'aria-selected': false,
+      ariaSelected: false,
       className: 'ChatDebugViewQuickFilterPill',
       'data-value': EventCategoryFilter.Tools,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,

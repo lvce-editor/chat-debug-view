@@ -198,20 +198,28 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+  width: 100%;
   max-width: 100%;
+  min-height: 0;
 }
 
 .ChatDebugViewImagePreviewImage {
   display: block;
   max-width: 100%;
-  max-height: 320px;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  align-self: center;
   border: 1px solid var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
   border-radius: 6px;
   object-fit: contain;
 }
 
 .ChatDebugViewImagePreviewLabel {
-  color: var(--vscode-descriptionForeground, inherit);
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  align-self: center;
 }
 
 .ChatDebugViewTimeline {

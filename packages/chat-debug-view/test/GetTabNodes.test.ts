@@ -11,7 +11,7 @@ const detailTabs = DetailTab.createDetailTabs('timing')
 test('getTabNodes should render detail tabs and mark the selected tab', () => {
   const result = getTabNodes(detailTabs) as readonly {
     readonly ['aria-controls']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
@@ -34,7 +34,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -49,7 +49,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -64,7 +64,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
@@ -79,7 +79,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-timing',

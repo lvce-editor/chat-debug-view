@@ -24,7 +24,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     readonly ['aria-label']?: string
     readonly ['aria-controls']?: string
     readonly ['aria-labelledby']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
@@ -68,7 +68,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -83,7 +83,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -98,7 +98,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-response',
@@ -113,7 +113,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
@@ -170,7 +170,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     event,
     timingDetailTabs,
   ) as readonly {
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
     readonly text?: string
@@ -208,7 +208,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -223,7 +223,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -238,7 +238,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
@@ -253,7 +253,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-timing',
@@ -345,7 +345,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, previewDetailTabs) as readonly {
     readonly ['aria-labelledby']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
     readonly text?: string
@@ -383,7 +383,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -398,7 +398,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -413,7 +413,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
@@ -428,7 +428,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
@@ -475,7 +475,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, event, timingDetailTabs) as readonly {
     readonly ['aria-labelledby']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
@@ -515,7 +515,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -530,7 +530,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -545,7 +545,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-response',
@@ -593,7 +593,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
 
   const dom = GetDetailsDom.getDetailsDom(previewNodes, payloadNodes, previewNodes, null, payloadDetailTabs) as readonly {
     readonly ['aria-labelledby']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
     readonly text?: string
@@ -631,7 +631,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -646,7 +646,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     text('Preview'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-payload',
@@ -661,7 +661,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
@@ -676,7 +676,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     text('Response'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
