@@ -1,5 +1,5 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import {
   ChatDebugViewQuickFilterInput,
   ChatDebugViewQuickFilterPill,
@@ -9,18 +9,15 @@ import {
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-export const getQuickFilterNodes = (
-  eventCategoryFilter: string,
-  eventCategoryFilterOptions: readonly EventCategoryFilterOption[],
-): readonly VirtualDomNode[] => {
+export const getQuickFilterNodes = (eventCategoryFilter: string, categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
   return [
     {
-      childCount: eventCategoryFilterOptions.length,
+      childCount: categoryFilters.length,
       className: ChatDebugViewQuickFilters,
       type: VirtualDomElements.Div,
     },
-    ...eventCategoryFilterOptions.flatMap((option) => {
-      const isSelected = option.value === eventCategoryFilter
+    ...categoryFilters.flatMap((categoryFilter) => {
+      const isSelected = categoryFilter.name === eventCategoryFilter
       return [
         {
           childCount: 2,
@@ -35,9 +32,9 @@ export const getQuickFilterNodes = (
           name: InputName.EventCategoryFilter,
           onChange: DomEventListenerFunctions.HandleEventCategoryFilter,
           type: VirtualDomElements.Input,
-          value: option.value,
+          value: categoryFilter.name,
         },
-        text(option.label),
+        text(categoryFilter.label),
       ]
     }),
   ]

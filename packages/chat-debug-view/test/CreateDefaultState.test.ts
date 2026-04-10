@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
   expect(state).toBeDefined()
+  expect(state.categoryFilters).toEqual([])
   expect(state.detailTabs).toEqual([])
   expect(state.selectedDetailTab).toBe('response')
   expect(state.tableColumnWidths).toEqual({
@@ -11,26 +12,4 @@ test('createDefaultState should return expected defaults', () => {
     status: 110,
     type: 260,
   })
-  expect(state.eventCategoryFilterOptions).toEqual([
-    {
-      label: 'All',
-      value: 'all',
-    },
-    {
-      label: 'Tools',
-      value: 'tools',
-    },
-    {
-      label: 'Network',
-      value: 'network',
-    },
-    {
-      label: 'UI',
-      value: 'ui',
-    },
-    {
-      label: 'Stream',
-      value: 'stream',
-    },
-  ])
 })

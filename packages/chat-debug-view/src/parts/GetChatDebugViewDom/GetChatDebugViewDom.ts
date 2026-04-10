@@ -1,7 +1,7 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
-import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
@@ -21,7 +21,7 @@ export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
   eventCategoryFilter: string,
-  eventCategoryFilterOptions: readonly EventCategoryFilterOption[],
+  categoryFilters: readonly CategoryFilter[],
   _showEventStreamFinishedEvents: boolean,
   _showInputEvents: boolean,
   _showResponsePartEvents: boolean,
@@ -82,7 +82,7 @@ export const getChatDebugViewDom = (
         detailTabs,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
-  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, eventCategoryFilterOptions) : []
+  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, categoryFilters) : []
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, quickFilterNodes)
   const rootChildCount = 2
 

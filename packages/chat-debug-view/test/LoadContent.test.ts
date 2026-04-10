@@ -1,7 +1,10 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
+import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/LoadContent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+
+const categoryFilters = EventCategoryFilter.createCategoryFilters()
 
 const detailTabs = [
   {
@@ -42,6 +45,7 @@ test('loadContent should return failed-to-load state when listing events returns
 
   expect(result).toEqual({
     ...state,
+    categoryFilters,
     detailTabs,
     errorMessage: getFailedToLoadMessage('session-1', error),
     events: [],
@@ -80,6 +84,7 @@ test('loadContent should restore the selected event preview from selectedEventId
 
   expect(result).toEqual({
     ...state,
+    categoryFilters,
     detailTabs,
     errorMessage: '',
     events,
@@ -126,6 +131,7 @@ test('loadContent should restore selected event and detail tab from savedState',
 
   expect(result).toEqual({
     ...state,
+    categoryFilters,
     detailTabs,
     errorMessage: '',
     events,
