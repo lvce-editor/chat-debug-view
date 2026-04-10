@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewDetails,
@@ -21,17 +22,19 @@ export const getDetailsDom = (
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
   responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
+  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   selectedDetailTab = InputName.Response,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
+  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
   const contentNodes =
-    selectedDetailTab === InputName.Timing && selectedEvent
+    safeSelectedDetailTab === InputName.Timing && selectedEvent
       ? getTimingDetailsDom(selectedEvent)
-      : selectedDetailTab === InputName.Preview
+      : safeSelectedDetailTab === InputName.Preview
         ? previewEventNodes
-        : selectedDetailTab === InputName.Payload
+        : safeSelectedDetailTab === InputName.Payload
           ? payloadEventNodes
           : responseEventNodes
   return [
@@ -58,17 +61,17 @@ export const getDetailsDom = (
     },
     {
       'aria-label': ChatDebugStrings.detailSections(),
-      childCount: DetailTab.detailTabs.length,
+      childCount: detailTabs.length,
       className: ChatDebugViewDetailsTabs,
       role: 'tablist',
       type: VirtualDomElements.Div,
     },
-    ...getTabNodes(selectedDetailTab),
+    ...getTabNodes(detailTabs, safeSelectedDetailTab),
     {
-      'aria-labelledby': getTabId(selectedDetailTab),
+      'aria-labelledby': getTabId(safeSelectedDetailTab),
       childCount: 1,
       className: ChatDebugViewDetailsBottom,
-      id: getPanelId(selectedDetailTab),
+      id: getPanelId(safeSelectedDetailTab),
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
       role: 'tabpanel',
       type: VirtualDomElements.Div,

@@ -4,6 +4,7 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
   expect(state).toBeDefined()
+  expect(state.detailTabs).toEqual([])
   expect(state.selectedDetailTab).toBe('response')
   expect(state.tableColumnWidths).toEqual({
     duration: 110,

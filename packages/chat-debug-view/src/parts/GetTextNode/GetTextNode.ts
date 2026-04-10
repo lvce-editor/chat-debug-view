@@ -1,38 +1,24 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewEvent, ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Row, TokenText } from '../ClassNames/ClassNames.ts'
-
-const getLineNodes = (lines: readonly string[]): readonly VirtualDomNode[] => {
-  return lines.flatMap((line, index) => {
-    return [
-      {
-        childCount: 2,
-        className: Row,
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineNumber,
-        type: VirtualDomElements.Span,
-      },
-      text(String(index + 1)),
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineContent,
-        type: VirtualDomElements.Span,
-      },
-      {
-        childCount: 1,
-        className: TokenText,
-        type: VirtualDomElements.Span,
-      },
-      text(line),
-    ]
-  })
-}
+import { ChatDebugViewEvent, TokenText } from '../ClassNames/ClassNames.ts'
+import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 
 export const getTextNode = (value: string): readonly VirtualDomNode[] => {
   const lines = value.split('\n')
-  const lineNodes = getLineNodes(lines)
+  const lineNodes = getLineNodes(
+    lines.map((line) => {
+      return {
+        childCount: 1,
+        nodes: [
+          {
+            childCount: 1,
+            className: TokenText,
+            type: VirtualDomElements.Span,
+          },
+          text(line),
+        ],
+      }
+    }),
+  )
   return [
     {
       childCount: lines.length,

@@ -1,5 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
@@ -36,6 +37,7 @@ export const getChatDebugViewDom = (
   timelineSelectionFocusSeconds = '',
   selectedDetailTab = InputName.Response,
   visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
+  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -75,8 +77,9 @@ export const getChatDebugViewDom = (
         timelineSelectionActive,
         timelineSelectionAnchorSeconds,
         timelineSelectionFocusSeconds,
-        DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : InputName.Response,
+        DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab),
         visibleTableColumns,
+        detailTabs,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, eventCategoryFilterOptions) : []

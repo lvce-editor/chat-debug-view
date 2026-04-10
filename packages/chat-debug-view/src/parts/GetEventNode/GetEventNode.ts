@@ -1,7 +1,8 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { ChatDebugViewEvent, ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Row, TokenText } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewEvent, TokenText } from '../ClassNames/ClassNames.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
+import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 
 interface MutableTokenSegment {
@@ -56,31 +57,6 @@ const getLineContentNodes = (line: readonly TokenSegment[]): readonly VirtualDom
   })
 }
 
-const getLineNodes = (lines: readonly (readonly TokenSegment[])[]): readonly VirtualDomNode[] => {
-  return lines.flatMap((line, index) => {
-    const lineContentNodes = getLineContentNodes(line)
-    return [
-      {
-        childCount: 2,
-        className: Row,
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineNumber,
-        type: VirtualDomElements.Span,
-      },
-      text(String(index + 1)),
-      {
-        childCount: lineContentNodes.length / 2,
-        className: ChatDebugViewEventLineContent,
-        type: VirtualDomElements.Span,
-      },
-      ...lineContentNodes,
-    ]
-  })
-}
-
 const isChatViewEvent = (value: unknown): value is ChatViewEvent => {
   return typeof value === 'object' && value !== null && typeof (value as ChatViewEvent).type === 'string'
 }
@@ -93,7 +69,15 @@ export const getEventNode = (value: unknown): readonly VirtualDomNode[] => {
       }
     : value
   const lines = getJsonLines(renderedValue)
-  const lineNodes = getLineNodes(lines)
+  const lineNodes = getLineNodes(
+    lines.map((line) => {
+      const lineContentNodes = getLineContentNodes(line)
+      return {
+        childCount: lineContentNodes.length / 2,
+        nodes: lineContentNodes,
+      }
+    }),
+  )
   return [
     {
       childCount: lines.length,
