@@ -1,7 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clearTimelineSelectionState } from '../ClearTimelineSelectionState/ClearTimelineSelectionState.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
-import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
 import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
@@ -10,11 +9,10 @@ export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: numbe
   if (!state.timelineSelectionActive) {
     return state
   }
-  const timelineEvents = getTimelineEvents(state)
   const timelineLeft = getTimelineLeft(state)
   const timelineWidth = getTimelineWidth(state)
   const clientX = state.x + eventX
-  const focusSeconds = getTimelineSecondsFromClientX(timelineEvents, clientX, timelineLeft, timelineWidth)
+  const focusSeconds = getTimelineSecondsFromClientX(state.timelineEvents, clientX, timelineLeft, timelineWidth)
   if (focusSeconds === undefined) {
     return clearTimelineSelectionState(state)
   }

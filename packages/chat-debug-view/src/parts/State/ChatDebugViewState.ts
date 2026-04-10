@@ -19,7 +19,6 @@ export interface ChatDebugViewState {
   readonly height: number
   readonly initial: boolean
   readonly platform: number
-  readonly selectedDetailTab: string
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
   readonly selectedEventIndex: number | null

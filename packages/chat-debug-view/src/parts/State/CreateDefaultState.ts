@@ -1,7 +1,7 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import * as InputName from '../InputName/InputName.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
@@ -12,7 +12,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     categoryFilters: [],
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
-    detailTabs: [],
+    detailTabs: DetailTab.createDetailTabs(),
     errorMessage: '',
     eventCategoryFilter: EventCategoryFilter.All,
     events: [],
@@ -21,7 +21,6 @@ export const createDefaultState = (): ChatDebugViewState => {
     height: 0,
     initial: false,
     platform: 0,
-    selectedDetailTab: InputName.Response,
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,

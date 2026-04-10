@@ -4,7 +4,6 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
-import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
@@ -19,8 +18,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   if (newState.initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
-  const timelineEvents = getTimelineEvents(newState)
-  const filteredEvents = filterEventsByTimelineRange(timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
+  const filteredEvents = filterEventsByTimelineRange(newState.timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
   const dom = getChatDebugViewDom(
     newState.errorMessage,
     newState.filterValue,
@@ -33,15 +31,16 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.selectedEvent,
     newState.selectedEventIndex,
     newState.timelineStartSeconds,
-    newState.timelineEndSeconds,
+    withSessionEventIds(newState.timelineEvents),
     withSessionEventIds(timelineEvents),
     withSessionEventIds(filteredEvents),
     newState.timelineSelectionActive,
     newState.timelineSelectionAnchorSeconds,
     newState.timelineSelectionFocusSeconds,
-    newState.selectedDetailTab,
     newState.visibleTableColumns,
     newState.detailTabs,
+    newState.tableColumns,
+    newState.timelineInfo,
     newState.tableColumns,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]

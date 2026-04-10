@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
+import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getInvalidUriMessage } from '../../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { parseChatDebugUri } from '../../ParseChatDebugUri/ParseChatDebugUri.ts'
 import { ParseChatDebugUriResultType } from '../../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
@@ -8,7 +9,7 @@ export const getStateWithInvalidUri = (state: ChatDebugViewState): ChatDebugView
   if (parsed.type !== ParseChatDebugUriResultType.Error) {
     return state
   }
-  return {
+  return getStateWithTimelineInfo({
     ...state,
     errorMessage: getInvalidUriMessage(state.uri, parsed.code),
     events: [],
@@ -17,5 +18,5 @@ export const getStateWithInvalidUri = (state: ChatDebugViewState): ChatDebugView
     selectedEventId: null,
     selectedEventIndex: null,
     sessionId: '',
-  }
+  })
 }

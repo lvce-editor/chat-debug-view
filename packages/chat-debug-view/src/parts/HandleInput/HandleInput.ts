@@ -181,9 +181,13 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     if (!DetailTab.isDetailTab(value)) {
       return state
     }
+    const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+    if (detailTabs === state.detailTabs) {
+      return state
+    }
     return {
       ...state,
-      selectedDetailTab: value,
+      detailTabs,
     }
   }
   return state

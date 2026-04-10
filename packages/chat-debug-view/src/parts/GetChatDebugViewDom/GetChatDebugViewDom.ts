@@ -2,6 +2,7 @@ import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
@@ -39,6 +40,7 @@ export const getChatDebugViewDom = (
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
+  timelineInfo?: TimelineInfo,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -82,6 +84,7 @@ export const getChatDebugViewDom = (
         visibleTableColumns,
         detailTabs,
         tableColumns,
+        timelineInfo,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(eventCategoryFilter, categoryFilters) : []

@@ -5,8 +5,12 @@ export const selectDetailTab = (state: ChatDebugViewState, value: string): ChatD
   if (!DetailTab.isDetailTab(value)) {
     return state
   }
+  const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+  if (detailTabs === state.detailTabs) {
+    return state
+  }
   return {
     ...state,
-    selectedDetailTab: value,
+    detailTabs,
   }
 }
