@@ -82,6 +82,7 @@ export const getEventNode = (value: unknown): readonly VirtualDomNode[] => {
     {
       childCount: lines.length,
       className: ChatDebugViewEvent,
+      style: 'overflow:auto;',
       type: VirtualDomElements.Div,
     },
     ...lineNodes,

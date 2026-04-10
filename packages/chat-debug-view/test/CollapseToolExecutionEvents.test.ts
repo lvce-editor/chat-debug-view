@@ -65,3 +65,63 @@ test('collapseToolExecutionEvents should keep non-matching events separate', () 
 
   expect(result).toEqual([startedEvent, finishedEvent])
 })
+
+test('collapseToolExecutionEvents should merge handle-submit and sse-response-completed events', () => {
+  const startedEvent: ChatViewEvent = {
+    eventId: 41,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    type: 'handle-submit',
+    value: 'hello',
+  }
+  const finishedEvent: ChatViewEvent = {
+    eventId: 42,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    type: 'sse-response-completed',
+    value: {
+      type: 'response.completed',
+    },
+  }
+
+  const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
+
+  expect(result).toEqual([
+    {
+      ended: '2026-01-01T10:01:45.000Z',
+      eventId: 41,
+      sessionId: 'session-1',
+      started: '2026-01-01T10:01:30.000Z',
+      timestamp: '2026-01-01T10:01:45.000Z',
+      type: 'handle-submit',
+      value: {
+        type: 'response.completed',
+      },
+    },
+  ])
+})
+
+test('collapseToolExecutionEvents should keep non-adjacent handle-submit and sse-response-completed events separate', () => {
+  const startedEvent: ChatViewEvent = {
+    eventId: 41,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    type: 'handle-submit',
+  }
+  const middleEvent: ChatViewEvent = {
+    eventId: 99,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:31.000Z',
+    type: 'chat-message-added',
+  }
+  const finishedEvent: ChatViewEvent = {
+    eventId: 42,
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    type: 'sse-response-completed',
+  }
+
+  const result = collapseToolExecutionEvents([startedEvent, middleEvent, finishedEvent])
+
+  expect(result).toEqual([startedEvent, middleEvent, finishedEvent])
+})

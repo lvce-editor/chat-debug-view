@@ -134,6 +134,14 @@ export const getCss = (state: ChatDebugViewState): string => {
   border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
   background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
   color: var(--vscode-foreground, inherit);
+  overflow: auto;
+}
+
+.ChatDebugViewEventRawText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 
 .ChatDebugViewEventLineContent {
   flex: 1;
@@ -143,6 +151,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   white-space: pre-wrap;
   word-break: break-word;
   outline: 1px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.4));
+}
 
 .ChatDebugViewEventLineNumber {
   flex: none;

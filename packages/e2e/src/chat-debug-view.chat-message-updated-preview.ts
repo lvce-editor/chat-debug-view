@@ -7,13 +7,16 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-chat-message-updated-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
+  const previewText =
+    'Done - preview text only\nThis line should wrap automatically when it is long enough to reach the edge of the preview pane without being cut off.'
+
   const events = [
     {
       eventId: 156,
       inProgress: false,
       messageId: 'abc',
       sessionId: 'def',
-      text: 'Done - preview text only',
+      text: previewText,
       time: '11:17 AM',
       timestamp: '2026-04-07T09:17:45.786Z',
       toolCalls: [],
@@ -25,6 +28,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleInput', 'useDevtoolsLayout', '', true)
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
+  const rawPreviewText = Locator('.ChatDebugViewEventRawText')
 
   // act
   await ChatDebug.selectEventRow(0)
@@ -32,7 +36,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
-  await expect(detailsEvent).toHaveText('1Done - preview text only')
+  await expect(Locator('.ChatDebugViewEventLineNumber')).toHaveCount(0)
+  await expect(detailsEvent).toHaveText(previewText)
+  await expect(rawPreviewText).toHaveCSS('white-space', 'pre-wrap')
+  await expect(rawPreviewText).toHaveCSS('overflow-wrap', 'anywhere')
 
   // await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)
 

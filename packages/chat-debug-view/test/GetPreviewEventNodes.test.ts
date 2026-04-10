@@ -44,7 +44,39 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
   )
   expect(result).toContainEqual(
     expect.objectContaining({
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
       text: UiStrings.ImageCouldNotBeLoaded,
+    }),
+  )
+})
+
+test('getPreviewEventNodes should render chat-message-updated preview text without line numbers', () => {
+  const result = getPreviewEventNodes('first line\nsecond line', {
+    eventId: 1,
+    text: 'first line\nsecond line',
+    type: 'chat-message-updated',
+  }) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(result).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'first line\nsecond line',
     }),
   )
 })

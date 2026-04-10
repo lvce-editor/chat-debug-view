@@ -771,7 +771,7 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
   )
 })
 
-test('getDevtoolsDom should render chat message preview text with numbered rows', () => {
+test('getDevtoolsDom should render chat message preview text as raw wrapped text', () => {
   const events = [
     {
       eventId: 1,
@@ -807,22 +807,12 @@ test('getDevtoolsDom should render chat message preview text with numbered rows'
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '1',
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'first line',
-    }),
-  )
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      text: 'second line',
-    }),
-  )
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      text: '2',
+      text: 'first line\nsecond line',
     }),
   )
 })

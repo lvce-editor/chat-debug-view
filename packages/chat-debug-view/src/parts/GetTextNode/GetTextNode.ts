@@ -1,8 +1,19 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewEvent, TokenText } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewEvent, ChatDebugViewEventRawText, TokenText } from '../ClassNames/ClassNames.ts'
 import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
+  if (!showLineNumbers) {
+    return [
+      {
+        childCount: 1,
+        className: `${ChatDebugViewEvent} ${ChatDebugViewEventRawText}`,
+        style: 'overflow:auto;',
+        type: VirtualDomElements.Div,
+      },
+      text(value),
+    ]
+  }
   const lines = value.split('\n')
   const lineData = lines.map((line) => {
     return {
@@ -17,20 +28,12 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  let lineNodes: readonly VirtualDomNode[]
-  if (showLineNumbers) {
-    lineNodes = getLineNodes(lineData)
-  } else {
-    const nodes: VirtualDomNode[] = []
-    for (const line of lineData) {
-      nodes.push(...line.nodes)
-    }
-    lineNodes = nodes
-  }
+  const lineNodes = getLineNodes(lineData)
   return [
     {
       childCount: lines.length,
       className: ChatDebugViewEvent,
+      style: 'overflow:auto;',
       type: VirtualDomElements.Div,
     },
     ...lineNodes,
