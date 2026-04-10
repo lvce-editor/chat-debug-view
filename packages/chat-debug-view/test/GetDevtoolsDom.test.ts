@@ -79,7 +79,7 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
     },
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
     readonly text?: string

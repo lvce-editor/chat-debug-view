@@ -11,7 +11,7 @@ export const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[]
   return [
     {
       'aria-controls': getPanelId(detailTab.name),
-      'aria-selected': isSelected,
+      ariaSelected: isSelected,
       childCount: 1,
       className: mergeClassNames(ChatDebugViewDetailsTab, isSelected ? ChatDebugViewDetailsTabSelected : ''),
       id: getTabId(detailTab.name),

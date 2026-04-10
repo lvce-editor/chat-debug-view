@@ -71,6 +71,21 @@ test('getCss should size the table wrapper to the full main width when details a
   expect(css).toContain('--ChatDebugViewTableWidth: 944px;')
 })
 
+test('getCss should scale image previews to the available details pane size', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugViewImagePreview')
+  expect(css).toContain('width: 100%;')
+  expect(css).toContain('min-height: 0;')
+  expect(css).toContain('.ChatDebugViewImagePreviewImage')
+  expect(css).toContain('max-height: 100%;')
+  expect(css).toContain('width: auto;')
+})
+
 test('getCss should style timeline selection handles like draggable resize grips', () => {
   const css = getCss({
     ...createDefaultState(),

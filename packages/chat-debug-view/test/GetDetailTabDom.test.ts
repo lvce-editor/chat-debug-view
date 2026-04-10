@@ -13,7 +13,7 @@ test('getDetailTabDom should render an unselected detail tab', () => {
 
   const result = getDetailTabDom(detailTab) as readonly {
     readonly ['aria-controls']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
@@ -29,7 +29,7 @@ test('getDetailTabDom should render an unselected detail tab', () => {
   expect(result).toEqual([
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
-      'aria-selected': false,
+      ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
@@ -54,7 +54,7 @@ test('getDetailTabDom should render a selected detail tab', () => {
 
   const result = getDetailTabDom(detailTab) as readonly {
     readonly ['aria-controls']?: string
-    readonly ['aria-selected']?: boolean
+    readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
@@ -70,7 +70,7 @@ test('getDetailTabDom should render a selected detail tab', () => {
   expect(result).toEqual([
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
-      'aria-selected': true,
+      ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-timing',
