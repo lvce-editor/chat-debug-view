@@ -7,7 +7,7 @@ import { getTabId } from '../GetTabId/GetTabId.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[] => {
-  const isSelected = detailTab.isSelectedProperty
+  const isSelected = detailTab.isSelected
   return [
     {
       'aria-controls': getPanelId(detailTab.name),

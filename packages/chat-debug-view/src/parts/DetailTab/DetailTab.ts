@@ -2,7 +2,7 @@ import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 export interface DetailTab {
-  readonly isSelectedProperty: boolean
+  readonly isSelected: boolean
   readonly label: string
   readonly name: string
 }
@@ -15,22 +15,22 @@ export const createDetailTabs = (selectedDetailTab = InputName.Response): readon
   const safeSelectedDetailTab = getSafeSelectedDetailTab(selectedDetailTab)
   return [
     {
-      isSelectedProperty: safeSelectedDetailTab === InputName.Preview,
+      isSelected: safeSelectedDetailTab === InputName.Preview,
       label: ChatDebugStrings.preview(),
       name: InputName.Preview,
     },
     {
-      isSelectedProperty: safeSelectedDetailTab === InputName.Payload,
+      isSelected: safeSelectedDetailTab === InputName.Payload,
       label: ChatDebugStrings.payload(),
       name: InputName.Payload,
     },
     {
-      isSelectedProperty: safeSelectedDetailTab === InputName.Response,
+      isSelected: safeSelectedDetailTab === InputName.Response,
       label: ChatDebugStrings.response(),
       name: InputName.Response,
     },
     {
-      isSelectedProperty: safeSelectedDetailTab === InputName.Timing,
+      isSelected: safeSelectedDetailTab === InputName.Timing,
       label: ChatDebugStrings.timing(),
       name: InputName.Timing,
     },
@@ -46,7 +46,7 @@ export const hasDetailTab = (detailTabs: readonly DetailTab[], value: string): b
 }
 
 export const getSelectedDetailTab = (detailTabs: readonly DetailTab[]): string => {
-  const selectedDetailTab = detailTabs.find((detailTab) => detailTab.isSelectedProperty)
+  const selectedDetailTab = detailTabs.find((detailTab) => detailTab.isSelected)
   if (selectedDetailTab) {
     return selectedDetailTab.name
   }
@@ -63,12 +63,12 @@ export const selectDetailTab = (detailTabs: readonly DetailTab[], selectedDetail
   }
   return detailTabs.map((detailTab) => {
     const isSelectedProperty = detailTab.name === selectedDetailTab
-    if (detailTab.isSelectedProperty === isSelectedProperty) {
+    if (detailTab.isSelected === isSelectedProperty) {
       return detailTab
     }
     return {
       ...detailTab,
-      isSelectedProperty,
+      isSelected: isSelectedProperty,
     }
   })
 }
