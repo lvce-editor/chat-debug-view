@@ -8,8 +8,6 @@ const devtoolsTimelineHeight = 88
 const devtoolsTableHeaderHeight = 24
 const devtoolsTableRowHeight = 24
 
-export const MenuChatDebugTableBody = 2190
-
 const getTableBodyY = (state: ChatDebugViewState, hasTimeline: boolean): number => {
   return state.y + viewPadding + devtoolsTopHeight + devtoolsRootGap + (hasTimeline ? devtoolsTimelineHeight : 0) + devtoolsTableHeaderHeight
 }
