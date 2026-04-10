@@ -458,6 +458,123 @@ test('getDetailsDom should render selected event content when preview tab is sel
   ])
 })
 
+test('getDetailsDom should hide the timing tab when the selected event has no timing details', () => {
+  const selectedEventNodes = [
+    {
+      childCount: 1,
+      className: 'SelectedEventNode',
+      type: VirtualDomElements.Div,
+    },
+  ]
+  const event = {
+    eventId: 1,
+    text: 'hello',
+    timestamp: '2026-03-08T00:00:01.000Z',
+    type: 'chat-message-added',
+  } as const
+
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, event, timingDetailTabs) as readonly {
+    readonly ['aria-labelledby']?: string
+    readonly ['aria-selected']?: boolean
+    readonly childCount?: number
+    readonly className?: string
+    readonly id?: string
+    readonly role?: string
+    readonly text?: string
+    readonly value?: string
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 2,
+      className: 'ChatDebugViewDetails',
+      type: VirtualDomElements.Section,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewDetailsTop',
+      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
+      type: VirtualDomElements.Div,
+    },
+    {
+      'aria-label': 'Close details',
+      childCount: 0,
+      className: 'ChatDebugViewDetailsClose',
+      name: 'closeDetails',
+      onChange: DomEventListenerFunctions.HandleCloseDetails,
+      onClick: DomEventListenerFunctions.HandleCloseDetails,
+      type: VirtualDomElements.Button,
+      value: 'close',
+    },
+    {
+      'aria-label': 'Detail sections',
+      childCount: 3,
+      className: 'ChatDebugViewDetailsTabs',
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-preview',
+      'aria-selected': false,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab',
+      id: 'ChatDebugViewDetailsTab-preview',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+      value: 'preview',
+    },
+    text('Preview'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-payload',
+      'aria-selected': false,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab',
+      id: 'ChatDebugViewDetailsTab-payload',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+      value: 'payload',
+    },
+    text('Payload'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-response',
+      'aria-selected': true,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      id: 'ChatDebugViewDetailsTab-response',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      role: 'tab',
+      tabIndex: 0,
+      type: VirtualDomElements.Button,
+      value: 'response',
+    },
+    text('Response'),
+    {
+      'aria-labelledby': 'ChatDebugViewDetailsTab-response',
+      childCount: 1,
+      className: 'ChatDebugViewDetailsBottom',
+      id: 'ChatDebugViewDetailsPanel-response',
+      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
+      role: 'tabpanel',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'SelectedEventNode',
+      type: VirtualDomElements.Div,
+    },
+  ])
+})
+
 test('getDetailsDom should render payload content when payload tab is selected', () => {
   const previewNodes = [
     {

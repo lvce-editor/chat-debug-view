@@ -28,6 +28,10 @@ const isImageMimeType = (mimeType: string | undefined): boolean => {
   return typeof mimeType === 'string' && mimeType.startsWith('image/')
 }
 
+const shouldValidateImage = (mimeType: string | undefined): boolean => {
+  return mimeType !== 'image/svg+xml'
+}
+
 const readBlobAsPreviewUrl = (blob: Blob): string => {
   if (typeof FileReaderSync === 'function') {
     const reader = new FileReaderSync()
@@ -57,7 +61,9 @@ export const getAttachmentImagePreview = async (event: ChatViewEvent): Promise<A
     return undefined
   }
   try {
-    await validateImage(blob)
+    if (shouldValidateImage(mimeType)) {
+      await validateImage(blob)
+    }
     return {
       alt: getAltText(event),
       previewType: 'image',

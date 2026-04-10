@@ -155,7 +155,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
-test('getDevtoolsDom should make the events container keyboard focusable and expose application role', () => {
+test('getDevtoolsDom should make the events container focusable and expose application role', () => {
   const events = [
     {
       eventId: 1,
@@ -166,7 +166,6 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
-    readonly onKeyDown?: number
     readonly role?: string
     readonly tabIndex?: number
   }[]
@@ -174,7 +173,6 @@ test('getDevtoolsDom should make the events container keyboard focusable and exp
 
   expect(eventsPane).toEqual(
     expect.objectContaining({
-      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
     }),

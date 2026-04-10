@@ -6,7 +6,6 @@ import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
@@ -76,7 +75,6 @@ export const getDevtoolsDom = (
     {
       childCount: 1,
       className: eventsClassName,
-      onKeyDown: DomEventListenerFunctions.HandleTableKeyDown,
       role: 'application',
       tabIndex: 0,
       type: VirtualDomElements.Div,

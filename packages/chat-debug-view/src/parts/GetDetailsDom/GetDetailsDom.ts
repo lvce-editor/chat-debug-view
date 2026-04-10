@@ -46,7 +46,14 @@ export const getDetailsDom = (
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
-  const { contentNodes, safeSelectedDetailTab } = getContentNode(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
+  const normalizedDetailTabs = selectedEvent ? DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(detailTabs), selectedEvent) : detailTabs
+  const { contentNodes, safeSelectedDetailTab } = getContentNode(
+    previewEventNodes,
+    payloadEventNodes,
+    responseEventNodes,
+    selectedEvent,
+    normalizedDetailTabs,
+  )
   return [
     {
       childCount: 2,
@@ -69,7 +76,7 @@ export const getDetailsDom = (
       type: VirtualDomElements.Button,
       value: 'close',
     },
-    ...getTabNodes(detailTabs),
+    ...getTabNodes(normalizedDetailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
       childCount: 1,

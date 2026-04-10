@@ -78,6 +78,38 @@ test.each([
   })
 })
 
+test('getAttachmentImagePreview should return an SVG preview without bitmap validation', async () => {
+  const createImageBitmapMock = jest.fn(async () => {
+    throw new Error('svg bitmap validation is unavailable')
+  })
+  Object.assign(globalThis, {
+    createImageBitmap: createImageBitmapMock,
+    FileReaderSync: class {
+      readAsDataURL(): string {
+        return 'data:image/svg+xml;base64,preview'
+      }
+    },
+  })
+  const event = {
+    blob: new Blob(['<svg xmlns="http://www.w3.org/2000/svg"></svg>'], {
+      type: 'image/svg+xml',
+    }),
+    eventId: 1,
+    mimeType: 'image/svg+xml',
+    name: 'photo.svg',
+    type: 'chat-attachment-added',
+  }
+
+  const result = await getAttachmentImagePreview(event)
+
+  expect(result).toEqual({
+    alt: 'photo.svg',
+    previewType: 'image',
+    src: 'data:image/svg+xml;base64,preview',
+  })
+  expect(createImageBitmapMock).not.toHaveBeenCalled()
+})
+
 test('getAttachmentImagePreview should return a fallback message when image validation fails', async () => {
   Object.assign(globalThis, {
     createImageBitmap: jest.fn(async () => {

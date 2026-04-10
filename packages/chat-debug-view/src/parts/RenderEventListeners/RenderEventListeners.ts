@@ -58,10 +58,6 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleClickRefresh'],
     },
     {
-      name: DomEventListenerFunctions.HandleTableKeyDown,
-      params: ['handleTableKeyDown', 'event.key'],
-    },
-    {
       name: DomEventListenerFunctions.HandleSashPointerDown,
       params: ['handleSashPointerDown', EventExpression.ClientX, EventExpression.ClientY],
       trackPointerEvents: [DomEventListenerFunctions.HandleSashPointerMove, DomEventListenerFunctions.HandleSashPointerUp],

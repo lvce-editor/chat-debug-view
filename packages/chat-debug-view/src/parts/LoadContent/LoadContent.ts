@@ -12,7 +12,7 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
   return {
     ...nextState,
     categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilter(nextState.categoryFilters)),
-    detailTabs: DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(nextState.detailTabs)),
+    detailTabs: DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
     tableColumns: TableColumn.createTableColumns(),
   }
 }

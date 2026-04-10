@@ -1,5 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
@@ -32,6 +33,7 @@ export const selectEventAtIndex = async (
   selectedEventIndex: number,
   dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
 ): Promise<ChatDebugViewState> => {
+  const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
   if (!selectedEvent) {
@@ -62,6 +64,7 @@ export const selectEventAtIndex = async (
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(selectedEventDetails ?? selectedEvent)
   return {
     ...state,
+    detailTabs: DetailTab.createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
     selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,

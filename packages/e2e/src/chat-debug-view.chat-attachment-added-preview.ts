@@ -14,8 +14,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
     eventId,
     'image/png',
     'diagram.png',
-    'base64',
-    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+kZ0cAAAAASUVORK5CYII=',
+    'canvas',
+    '',
     '2026-04-10T11:35:00.000Z',
   )
   await Command.execute('ChatDebug.handleClickRefresh')
