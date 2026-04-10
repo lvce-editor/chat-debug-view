@@ -7,7 +7,7 @@ import { getTabId } from '../GetTabId/GetTabId.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[] => {
-  const isSelected = detailTab.isSelected
+  const { isSelected } = detailTab
   return [
     {
       'aria-controls': getPanelId(detailTab.name),
@@ -28,7 +28,5 @@ const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[] => {
 }
 
 export const getTabNodes = (detailTabs: readonly DetailTab[]): readonly VirtualDomNode[] => {
-  return detailTabs.flatMap((detailTab) => {
-    return getDetailTabDom(detailTab)
-  })
+  return detailTabs.flatMap(getDetailTabDom)
 }
