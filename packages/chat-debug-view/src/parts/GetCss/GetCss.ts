@@ -9,31 +9,61 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+.ChatDebugViewTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ChatDebugViewFilterInput {
+  flex: 1;
+  min-width: 0;
+}
+
   padding: ${viewPadding}px;
 }
 
 
 .ChatDebugViewDetails  {
-  contain: strict;
+  margin-left: auto;
+  min-height: 26px;
 }
-
-.ChatDebugViewDetailsTop {
-  height: 33px;
-  contain: strict;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--vscode-descriptionForeground, inherit);
 }
-
-.ChatDebugViewDetailsBottom {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   display: flex;
   contain: strict;
-  flex:1
+  flex:1;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 
 }
 .ChatDebugViewEvent {
-  contain: content
+  border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
+  background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
+  color: var(--vscode-foreground, inherit);
+
+.ChatDebugViewEventLineContent {
+  flex: 1;
+  background: var(--vscode-toolbar-activeBackground, rgba(255, 255, 255, 0.1));
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+  outline: 1px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.4));
+
+.ChatDebugViewEventLineNumber {
+  flex: none;
 }
 
 .row {
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .ChatDebugViewRefreshButton {

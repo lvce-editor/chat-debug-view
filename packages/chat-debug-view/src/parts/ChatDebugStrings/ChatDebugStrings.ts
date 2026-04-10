@@ -96,6 +96,10 @@ export const preview = (): string => {
   return I18nString.i18nString(UiStrings.Preview)
 }
 
+export const payload = (): string => {
+  return I18nString.i18nString(UiStrings.Payload)
+}
+
 export const refresh = (): string => {
   return I18nString.i18nString(UiStrings.Refresh)
 }

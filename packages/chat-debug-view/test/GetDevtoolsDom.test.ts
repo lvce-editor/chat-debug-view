@@ -95,6 +95,13 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab',
       role: 'tab',
+      value: 'payload',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab',
+      role: 'tab',
       value: 'timing',
     }),
   )
@@ -657,6 +664,93 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
   expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: '"baseUri"',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render chat message preview text with numbered rows', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      text: 'first line\nsecond line',
+      timestamp: '2026-04-10T10:00:00.000Z',
+      type: 'chat-message-updated',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '1',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'first line',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'second line',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '2',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render simplified tool json in the payload tab', () => {
+  const events = [
+    {
+      arguments: {
+        content: 'hello',
+        uri: 'file:///workspace/hello.txt',
+      },
+      eventId: 1,
+      name: 'write_file',
+      result: {
+        ok: true,
+      },
+      sessionId: 'session-1',
+      timestamp: '2026-04-10T10:00:00.000Z',
+      type: 'tool-execution',
+    },
+  ]
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'payload') as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"name"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"arguments"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"write_file"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"content"',
     }),
   )
 })

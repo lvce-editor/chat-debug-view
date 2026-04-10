@@ -10,6 +10,7 @@ export interface ContextMenuPropsTableHeader extends ContextMenuPropsBase {
 }
 
 export interface ContextMenuPropsTableRow extends ContextMenuPropsBase {
+  readonly eventIndex: number
   readonly menuId: typeof MenuChatDebugTableBody
 }
 

@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { MenuItemFlags } from '@lvce-editor/constants'
 import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts'
 import { MenuChatDebugTableHeader } from '../src/parts/HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
+import { MenuChatDebugTableBody } from '../src/parts/HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getMenuEntries2 should return checked table header entries and reset action', () => {
@@ -54,4 +55,23 @@ test('getMenuEntries2 should mark hidden table columns as unchecked', () => {
   })
 
   expect(result[1]?.flags).toBe(MenuItemFlags.Unchecked)
+})
+
+test('getMenuEntries2 should pass the clicked row index to the copy command', () => {
+  const state = createDefaultState()
+
+  const result = getMenuEntries2(state, {
+    eventIndex: 3,
+    menuId: MenuChatDebugTableBody,
+  })
+
+  expect(result).toEqual([
+    {
+      args: [3],
+      command: 'ChatDebug.handleTableRowCopy',
+      flags: MenuItemFlags.None,
+      id: 'copy',
+      label: 'Copy',
+    },
+  ])
 })

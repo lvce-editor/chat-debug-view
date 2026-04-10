@@ -45,3 +45,24 @@ test('getPreviewEvent should return only the nested message text for chat-messag
 
   expect(result).toBe('what tools do you have access to?')
 })
+
+test('getPreviewEvent should return write_file content for tool execution events', () => {
+  const event = {
+    arguments: {
+      content: 'line 1\nline 2',
+      uri: 'file:///workspace/test.txt',
+    },
+    eventId: 4,
+    name: 'write_file',
+    result: {
+      ok: true,
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'tool-execution',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('line 1\nline 2')
+})

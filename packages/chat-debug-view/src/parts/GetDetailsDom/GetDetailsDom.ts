@@ -18,11 +18,12 @@ import * as InputName from '../InputName/InputName.ts'
 
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
-  responseEventNodes: readonly VirtualDomNode[] = previewEventNodes,
+  payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
+  responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
   selectedDetailTab = InputName.Response,
 ): readonly VirtualDomNode[] => {
-  if (previewEventNodes.length === 0 && responseEventNodes.length === 0) {
+  if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
   const contentNodes =
@@ -30,7 +31,9 @@ export const getDetailsDom = (
       ? getTimingDetailsDom(selectedEvent)
       : selectedDetailTab === InputName.Preview
         ? previewEventNodes
-        : responseEventNodes
+        : selectedDetailTab === InputName.Payload
+          ? payloadEventNodes
+          : responseEventNodes
   return [
     {
       childCount: 2,
