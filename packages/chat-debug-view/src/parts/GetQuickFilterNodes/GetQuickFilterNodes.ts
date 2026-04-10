@@ -9,7 +9,7 @@ import {
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-export const getQuickFilterNodes = (eventCategoryFilter: string, categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
+export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
   return [
     {
       childCount: categoryFilters.length,
@@ -18,7 +18,7 @@ export const getQuickFilterNodes = (eventCategoryFilter: string, categoryFilters
       type: VirtualDomElements.Div,
     },
     ...categoryFilters.flatMap((categoryFilter) => {
-      const isSelected = categoryFilter.name === eventCategoryFilter
+      const isSelected = categoryFilter.isSelectedProperty
       return [
         {
           ariaSelected: isSelected ? 'true' : 'false',

@@ -4,6 +4,7 @@ import * as ApplyRender from '../src/parts/ApplyRender/ApplyRender.ts'
 import * as Create from '../src/parts/Create/Create.ts'
 import * as Diff2 from '../src/parts/Diff2/Diff2.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { render2 } from '../src/parts/Render2/Render2.ts'
 import { renderCss } from '../src/parts/RenderCss/RenderCss.ts'
 import { renderIncremental } from '../src/parts/RenderIncremental/RenderIncremental.ts'
@@ -134,18 +135,20 @@ test('setEvents should replace events and reset transient state', () => {
     ],
   )
 
-  expect(result).toEqual({
-    ...createDefaultState(),
-    errorMessage: '',
-    events: [
-      {
-        eventId: 1,
-        sessionId: 'session-1',
-        timestamp: '2026-01-01T00:00:00.000Z',
-        type: 'response',
-      },
-    ],
-    initial: false,
-    selectedEventIndex: null,
-  })
+  expect(result).toEqual(
+    getStateWithTimelineInfo({
+      ...createDefaultState(),
+      errorMessage: '',
+      events: [
+        {
+          eventId: 1,
+          sessionId: 'session-1',
+          timestamp: '2026-01-01T00:00:00.000Z',
+          type: 'response',
+        },
+      ],
+      initial: false,
+      selectedEventIndex: null,
+    }),
+  )
 })

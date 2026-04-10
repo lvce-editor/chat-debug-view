@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as HandleInput from '../src/parts/HandleInput/HandleInput.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
@@ -13,7 +14,7 @@ test('handleInput should update filter value', () => {
 test('handleInput should update event category filter', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.EventCategoryFilter, EventCategoryFilter.Tools, 'on')
-  expect(result.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.categoryFilters)).toBe(EventCategoryFilter.Tools)
 })
 
 test('handleInput should set selectedEventIndex when selecting row', () => {
@@ -64,7 +65,7 @@ test('handleInput should close details panel', () => {
 test('handleInput should update selected detail tab', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.DetailTab, 'preview', false)
-  expect(result.selectedDetailTab).toBe('preview')
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
 })
 
 test('handleInput should ignore invalid selected detail tab values', () => {

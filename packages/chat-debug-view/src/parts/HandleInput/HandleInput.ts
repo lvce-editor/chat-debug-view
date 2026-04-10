@@ -3,16 +3,17 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
-import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
+import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
+  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,
-    state.eventCategoryFilter,
+    eventCategoryFilter,
     state.showInputEvents,
     state.showResponsePartEvents,
     state.showEventStreamFinishedEvents,
@@ -101,9 +102,13 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     return withPreservedSelection(state, nextState)
   }
   if (name === InputName.EventCategoryFilter) {
+    const categoryFilters = EventCategoryFilter.selectCategoryFilter(state.categoryFilters, value || EventCategoryFilter.All)
+    if (categoryFilters === state.categoryFilters) {
+      return state
+    }
     const nextState = {
       ...state,
-      eventCategoryFilter: value || EventCategoryFilter.All,
+      categoryFilters,
     }
     return withPreservedSelection(state, nextState)
   }

@@ -4,7 +4,7 @@ import * as GetHeaderCellNodes from '../src/parts/GetHeaderCellNodes/GetHeaderCe
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getHeaderCellNodes should render the visible header cells', () => {
-  const tableColumns = [
+  const tableColumns: readonly TableColumn.TableColumn[] = [
     {
       label: 'Request Type',
       name: TableColumn.Type,

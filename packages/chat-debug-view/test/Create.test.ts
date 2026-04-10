@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import * as Create from '../src/parts/Create/Create.ts'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { defaultTableWidth } from '../src/parts/SplitLayout/SplitLayout.ts'
@@ -19,11 +20,11 @@ test('create should store state with the given uid', () => {
   expect(newState.width).toBe(300)
   expect(newState.height).toBe(400)
   expect(newState.assetDir).toBe('/assets')
-  expect(newState.detailTabs).toEqual([])
+  expect(newState.detailTabs).toEqual(DetailTab.createDetailTabs())
   expect(newState.tableColumns).toEqual([])
   expect(newState.sessionId).toBe('')
   expect(oldState.uid).toBe(uid)
-  expect(oldState.detailTabs).toEqual([])
+  expect(oldState.detailTabs).toEqual(DetailTab.createDetailTabs())
   expect(oldState.tableColumns).toEqual([])
   expect(oldState.selectedEventId).toBeNull()
 })
@@ -42,10 +43,10 @@ test('create should restore serializable state from saved state', () => {
   })
   const result = ChatDebugViewStates.get(uid)
 
-  expect(result.newState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
-  expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
-  expect(result.newState.selectedDetailTab).toBe(InputName.Preview)
-  expect(result.oldState.selectedDetailTab).toBe(InputName.Preview)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.newState.categoryFilters)).toBe(EventCategoryFilter.Tools)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.oldState.categoryFilters)).toBe(EventCategoryFilter.Tools)
+  expect(DetailTab.getSelectedDetailTab(result.newState.detailTabs)).toBe(InputName.Preview)
+  expect(DetailTab.getSelectedDetailTab(result.oldState.detailTabs)).toBe(InputName.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
   expect(result.newState.tableColumnWidths).toEqual({
@@ -69,8 +70,8 @@ test('create should restore event category filter from filter tokens when the ex
   })
   const result = ChatDebugViewStates.get(uid)
 
-  expect(result.newState.eventCategoryFilter).toBe(EventCategoryFilter.Network)
-  expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Network)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.newState.categoryFilters)).toBe(EventCategoryFilter.Network)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.oldState.categoryFilters)).toBe(EventCategoryFilter.Network)
   expect(result.newState.filterValue).toBe('@network error')
   expect(result.oldState.filterValue).toBe('@network error')
 })

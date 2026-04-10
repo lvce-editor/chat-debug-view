@@ -23,12 +23,11 @@ const getContentNode = (
   responseEventNodes: readonly VirtualDomNode[],
   selectedEvent: ChatViewEvent | null,
   detailTabs: readonly DetailTabType[],
-  selectedDetailTab: string,
 ): {
   readonly contentNodes: readonly VirtualDomNode[]
   readonly safeSelectedDetailTab: string
 } => {
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
+  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs)
   const contentNodes =
     safeSelectedDetailTab === InputName.Timing && selectedEvent
       ? getTimingDetailsDom(selectedEvent)
@@ -49,19 +48,11 @@ export const getDetailsDom = (
   responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
-  selectedDetailTab = InputName.Response,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
   }
-  const { contentNodes, safeSelectedDetailTab } = getContentNode(
-    previewEventNodes,
-    payloadEventNodes,
-    responseEventNodes,
-    selectedEvent,
-    detailTabs,
-    selectedDetailTab,
-  )
+  const { contentNodes, safeSelectedDetailTab } = getContentNode(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   return [
     {
       childCount: 2,
@@ -91,7 +82,7 @@ export const getDetailsDom = (
       role: 'tablist',
       type: VirtualDomElements.Div,
     },
-    ...getTabNodes(detailTabs, safeSelectedDetailTab),
+    ...getTabNodes(detailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
       childCount: 1,

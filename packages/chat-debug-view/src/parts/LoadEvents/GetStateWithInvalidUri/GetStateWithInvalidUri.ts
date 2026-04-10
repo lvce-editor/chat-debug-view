@@ -1,6 +1,6 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
-import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getInvalidUriMessage } from '../../GetInvalidUriMessage/GetInvalidUriMessage.ts'
+import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { parseChatDebugUri } from '../../ParseChatDebugUri/ParseChatDebugUri.ts'
 import { ParseChatDebugUriResultType } from '../../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 

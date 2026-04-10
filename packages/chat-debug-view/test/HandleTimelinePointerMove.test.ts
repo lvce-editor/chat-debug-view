@@ -1,9 +1,10 @@
 import { expect, test } from '@jest/globals'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as HandleTimelinePointerMove from '../src/parts/HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('handleTimelinePointerMove should update the drag preview range relative to the widget', () => {
-  const state = {
+  const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -24,7 +25,7 @@ test('handleTimelinePointerMove should update the drag preview range relative to
     timelineSelectionFocusSeconds: '2.5',
     width: 436,
     x: 82,
-  }
+  })
 
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 338)
 

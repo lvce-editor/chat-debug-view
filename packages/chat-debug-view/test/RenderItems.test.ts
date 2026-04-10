@@ -2,12 +2,13 @@ import { expect, test } from '@jest/globals'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('renderItems should not show count for visible events', () => {
   const oldState: ChatDebugViewState = createDefaultState()
-  const newState: ChatDebugViewState = {
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -26,7 +27,7 @@ test('renderItems should not show count for visible events', () => {
     sessionId: 'session-1',
     showInputEvents: false,
     uid: 1,
-  }
+  })
 
   const result = RenderItems.renderItems(oldState, newState)
 
@@ -40,7 +41,7 @@ test('renderItems should not show count for visible events', () => {
 
 test('renderItems should not show plural count when multiple events are visible', () => {
   const oldState: ChatDebugViewState = createDefaultState()
-  const newState: ChatDebugViewState = {
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -58,7 +59,7 @@ test('renderItems should not show plural count when multiple events are visible'
     ],
     sessionId: 'session-1',
     uid: 2,
-  }
+  })
 
   const result = RenderItems.renderItems(oldState, newState)
 
@@ -69,7 +70,7 @@ test('renderItems should not show plural count when multiple events are visible'
 
 test('renderItems should show filter-specific message when no events match', () => {
   const oldState: ChatDebugViewState = createDefaultState()
-  const newState: ChatDebugViewState = {
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -82,7 +83,7 @@ test('renderItems should show filter-specific message when no events match', () 
     filterValue: 'response',
     sessionId: 'session-1',
     uid: 3,
-  }
+  })
 
   const result = RenderItems.renderItems(oldState, newState)
 
@@ -93,7 +94,7 @@ test('renderItems should show filter-specific message when no events match', () 
 
 test('renderItems should preserve existing eventId values', () => {
   const oldState: ChatDebugViewState = createDefaultState()
-  const newState: ChatDebugViewState = {
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -112,7 +113,7 @@ test('renderItems should preserve existing eventId values', () => {
     sessionId: 'session-1',
     uid: 4,
     useDevtoolsLayout: false,
-  }
+  })
 
   const result = RenderItems.renderItems(oldState, newState)
 
@@ -137,13 +138,13 @@ test('renderItems should assign numeric eventId values when they are missing', (
       type: 'response',
     },
   ] as unknown as ChatDebugViewState['events']
-  const newState: ChatDebugViewState = {
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: legacyEvents,
     sessionId: 'session-1',
     uid: 5,
     useDevtoolsLayout: false,
-  }
+  })
 
   const result = RenderItems.renderItems(oldState, newState)
 

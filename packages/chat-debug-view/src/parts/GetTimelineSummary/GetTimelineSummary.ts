@@ -1,6 +1,6 @@
+import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
-import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
 export const getTimelineSummary = (timelineInfo: TimelineInfo): string => {
   if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {

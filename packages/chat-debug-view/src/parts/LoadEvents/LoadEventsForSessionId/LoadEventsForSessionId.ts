@@ -1,7 +1,7 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
-import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getSessionNotFoundMessage } from '../../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
+import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
 import { restoreSelectedEvent } from '../RestoreSelectedEvent/RestoreSelectedEvent.ts'
 

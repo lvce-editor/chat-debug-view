@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { handleTableKeyDown } from '../src/parts/HandleTableKeyDown/HandleTableKeyDown.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -13,6 +14,7 @@ test('handleTableKeyDown should focus the next row for ArrowDown', async () => {
   })
   const state = {
     ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -25,7 +27,6 @@ test('handleTableKeyDown should focus the next row for ArrowDown', async () => {
         type: 'response',
       },
     ],
-    selectedDetailTab: 'preview',
     selectedEventIndex: 0,
     sessionId: 'session-1',
   }
@@ -33,7 +34,7 @@ test('handleTableKeyDown should focus the next row for ArrowDown', async () => {
   const result = await handleTableKeyDown(state, 'ArrowDown')
 
   expect(result.selectedEventIndex).toBe(1)
-  expect(result.selectedDetailTab).toBe('preview')
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
 })
 

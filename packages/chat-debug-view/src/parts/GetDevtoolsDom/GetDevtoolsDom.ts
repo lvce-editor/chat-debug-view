@@ -9,6 +9,7 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
+import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
 import { getEmptyStateDom } from '../GetEmptyStateDom/GetEmptyStateDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
@@ -17,10 +18,8 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTextNode } from '../GetTextNode/GetTextNode.ts'
-import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
-import * as InputName from '../InputName/InputName.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
@@ -34,7 +33,6 @@ export const getDevtoolsDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
-  selectedDetailTab = InputName.Response,
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
@@ -58,8 +56,7 @@ export const getDevtoolsDom = (
   const hasSelectedEvent = responseEventNodes.length > 0
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
-  const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs, safeSelectedDetailTab)
+  const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)

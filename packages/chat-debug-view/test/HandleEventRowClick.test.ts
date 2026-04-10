@@ -1,5 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { handleEventRowClick, handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -142,6 +143,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
   } as ChatViewEvent)
   const state = {
     ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -154,13 +156,12 @@ test('handleEventRowClick should preserve selected detail tab when switching row
         type: 'response',
       },
     ],
-    selectedDetailTab: 'preview',
     sessionId: 'session-1',
   }
 
   const result = await handleEventRowClick(state, '1', 0)
 
-  expect(result.selectedDetailTab).toBe('preview')
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEventIndex).toBe(1)
   expect(result.selectedEvent).toEqual({
     detail: 'preview',

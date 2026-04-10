@@ -6,7 +6,6 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.categoryFilters !== newState.categoryFilters ||
     oldState.detailTabs !== newState.detailTabs ||
     oldState.errorMessage !== newState.errorMessage ||
-    oldState.eventCategoryFilter !== newState.eventCategoryFilter ||
     oldState.events !== newState.events ||
     oldState.filterValue !== newState.filterValue ||
     oldState.sessionId !== newState.sessionId ||
@@ -22,7 +21,6 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.timelineStartSeconds !== newState.timelineStartSeconds ||
     oldState.useDevtoolsLayout !== newState.useDevtoolsLayout ||
     oldState.visibleTableColumns !== newState.visibleTableColumns ||
-    oldState.selectedDetailTab !== newState.selectedDetailTab ||
     oldState.selectedEvent !== newState.selectedEvent ||
     oldState.selectedEventIndex !== newState.selectedEventIndex ||
     oldState.width !== newState.width ||

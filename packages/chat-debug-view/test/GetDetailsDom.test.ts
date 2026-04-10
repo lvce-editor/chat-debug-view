@@ -1,28 +1,15 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDetailsDom from '../src/parts/GetDetailsDom/GetDetailsDom.ts'
 import { getEndText } from '../src/parts/GetEndText/GetEndText.ts'
 import { getStartText } from '../src/parts/GetStartText/GetStartText.ts'
 
-const detailTabs = [
-  {
-    label: 'Preview',
-    name: 'preview',
-  },
-  {
-    label: 'Payload',
-    name: 'payload',
-  },
-  {
-    label: 'Response',
-    name: 'response',
-  },
-  {
-    label: 'Timing',
-    name: 'timing',
-  },
-]
+const detailTabs = DetailTab.createDetailTabs()
+const previewDetailTabs = DetailTab.createDetailTabs('preview')
+const payloadDetailTabs = DetailTab.createDetailTabs('payload')
+const timingDetailTabs = DetailTab.createDetailTabs('timing')
 
 test('getDetailsDom should render details panel nodes, close control, and tabs', () => {
   const selectedEventNodes = [
@@ -181,8 +168,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     undefined,
     undefined,
     event,
-    detailTabs,
-    'timing',
+    timingDetailTabs,
   ) as readonly {
     readonly ['aria-selected']?: boolean
     readonly className?: string
@@ -357,7 +343,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, detailTabs, 'preview') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, previewDetailTabs) as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string
@@ -488,7 +474,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(previewNodes, payloadNodes, previewNodes, null, detailTabs, 'payload') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(previewNodes, payloadNodes, previewNodes, null, payloadDetailTabs) as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string

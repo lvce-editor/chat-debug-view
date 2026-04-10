@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { handleClickRefresh } from '../src/parts/HandleClickRefresh/HandleClickRefresh.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -15,12 +16,12 @@ test('handleClickRefresh should delegate to refresh', async () => {
     ...createDefaultState(),
     sessionId: 'session-1',
   }
-  const expectedState = {
+  const expectedState = getStateWithTimelineInfo({
     ...state,
     errorMessage: '',
     events,
     initial: false,
-  }
+  })
 
   const result = await handleClickRefresh(state)
 

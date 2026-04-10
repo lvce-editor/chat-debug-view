@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineNodes } from '../src/parts/GetTimelineNodes/GetTimelineNodes.ts'
 
 const events = [
@@ -19,7 +20,7 @@ const events = [
 ]
 
 test('getTimelineNodes should wire interactive timeline selection handlers', () => {
-  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
     readonly onDoubleClick?: number
     readonly onPointerDown?: number
@@ -38,7 +39,7 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
 })
 
 test('getTimelineNodes should render the timeline container as a section', () => {
-  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onContextMenu?: number
@@ -56,7 +57,7 @@ test('getTimelineNodes should render the timeline container as a section', () =>
 })
 
 test('getTimelineNodes should render selection markers only when a range exists', () => {
-  const nodes = getTimelineNodes(events, '2', '8', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '2', '8')) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly style?: string
@@ -84,7 +85,7 @@ test('getTimelineNodes should render selection markers only when a range exists'
 })
 
 test('getTimelineNodes should omit selection markers when no range is selected', () => {
-  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
   }[]
 
@@ -93,7 +94,7 @@ test('getTimelineNodes should omit selection markers when no range is selected',
 })
 
 test('getTimelineNodes should not render a timeline title heading', () => {
-  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -103,7 +104,7 @@ test('getTimelineNodes should not render a timeline title heading', () => {
 })
 
 test('getTimelineNodes should render the timeline summary as a heading', () => {
-  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
     readonly type?: number
   }[]
@@ -114,7 +115,7 @@ test('getTimelineNodes should render the timeline summary as a heading', () => {
 })
 
 test('getTimelineNodes should render drag preview markers while selecting', () => {
-  const nodes = getTimelineNodes(events, '', '', true, '1', '4') as readonly {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '1', '4')) as readonly {
     readonly className?: string
     readonly style?: string
   }[]
