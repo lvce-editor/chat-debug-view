@@ -7,14 +7,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
-  await Command.execute(
-    'ChatDebug.setAttachmentPreviewEventForTest',
-    sessionId,
-    'broken.png',
-    'image/png',
-    'error',
-    'image could not be loaded',
-  )
+  await Command.execute('ChatDebug.setAttachmentPreviewEventForTest', sessionId, 'broken.png', 'image/png', 'error', 'image could not be loaded')
   await ChatDebug.useDevtoolsLayout()
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 

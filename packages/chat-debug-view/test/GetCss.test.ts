@@ -70,3 +70,16 @@ test('getCss should size the table wrapper to the full main width when details a
   expect(css).toContain('--ChatDebugViewDetailsWidth: 0px;')
   expect(css).toContain('--ChatDebugViewTableWidth: 944px;')
 })
+
+test('getCss should style timeline selection handles like draggable resize grips', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle')
+  expect(css).toContain('cursor: ew-resize;')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::before')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::after')
+})

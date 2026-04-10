@@ -1,11 +1,14 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
+  ChatDebugViewTimelineSelectionHandle,
   ChatDebugViewTimelineSelectionMarker,
   ChatDebugViewTimelineSelectionMarkerEnd,
   ChatDebugViewTimelineSelectionMarkerStart,
   ChatDebugViewTimelineSelectionRange,
 } from '../ClassNames/ClassNames.ts'
 import { formatPercent } from '../FormatPercent/FormatPercent.ts'
+import * as TimelineSelectionHandleName from '../TimelineSelectionHandleName/TimelineSelectionHandleName.ts'
 
 export const getSelectionNodesDom = (
   hasSelection: boolean,
@@ -24,15 +27,27 @@ export const getSelectionNodesDom = (
     },
     {
       childCount: 0,
-      className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerStart),
+      className: mergeClassNames(
+        ChatDebugViewTimelineSelectionHandle,
+        ChatDebugViewTimelineSelectionMarker,
+        ChatDebugViewTimelineSelectionMarkerStart,
+      ),
+      name: TimelineSelectionHandleName.Start,
+      role: AriaRoles.None,
       style: `left:${formatPercent(selectionStartPercent)};`,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
+      className: mergeClassNames(
+        ChatDebugViewTimelineSelectionHandle,
+        ChatDebugViewTimelineSelectionMarker,
+        ChatDebugViewTimelineSelectionMarkerEnd,
+      ),
+      name: TimelineSelectionHandleName.End,
+      role: AriaRoles.None,
       style: `left:${formatPercent(selectionEndPercent)};`,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
   ]
 }
