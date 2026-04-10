@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, mergeClassNames, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, AriaRoles, VirtualDomElements, mergeClassNames, text } from '@lvce-editor/virtual-dom-worker'
 import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewDetailsTab, ChatDebugViewDetailsTabSelected, ChatDebugViewDetailsTabs } from '../ClassNames/ClassNames.ts'
@@ -19,7 +19,7 @@ const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[] => {
       name: InputName.DetailTab,
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
-      role: 'tab',
+      role: AriaRoles.Tab,
       tabIndex: isSelected ? 0 : -1,
       type: VirtualDomElements.Button,
       value: detailTab.name,
@@ -34,7 +34,7 @@ export const getTabNodes = (detailTabs: readonly DetailTab[]): readonly VirtualD
       'aria-label': ChatDebugStrings.detailSections(),
       childCount: detailTabs.length,
       className: ChatDebugViewDetailsTabs,
-      role: 'tablist',
+      role: AriaRoles.TabList,
       type: VirtualDomElements.Div,
     },
     ...detailTabs.flatMap(getDetailTabDom),
