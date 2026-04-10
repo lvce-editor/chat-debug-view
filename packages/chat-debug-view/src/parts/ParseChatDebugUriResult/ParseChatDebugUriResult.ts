@@ -1,8 +1,8 @@
 import type { ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 
 export const ParseChatDebugUriResultType = {
-  Success: 1,
   Error: 2,
+  Success: 1,
 } as const
 
 export type ParseChatDebugUriResultType = (typeof ParseChatDebugUriResultType)[keyof typeof ParseChatDebugUriResultType]
