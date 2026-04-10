@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import * as Create from '../src/parts/Create/Create.ts'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import * as InputName from '../src/parts/InputName/InputName.ts'
 import { defaultTableWidth } from '../src/parts/SplitLayout/SplitLayout.ts'
 import * as ChatDebugViewStates from '../src/parts/State/ChatDebugViewStates.ts'
 
@@ -28,15 +28,15 @@ test('create should restore serializable state from saved state', () => {
   const uid = 124
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
     eventCategoryFilter: EventCategoryFilter.Tools,
-    selectedDetailTab: DetailTab.Preview,
+    selectedDetailTab: InputName.Preview,
     selectedEventId: 7,
   })
   const result = ChatDebugViewStates.get(uid)
 
   expect(result.newState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
   expect(result.oldState.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
-  expect(result.newState.selectedDetailTab).toBe(DetailTab.Preview)
-  expect(result.oldState.selectedDetailTab).toBe(DetailTab.Preview)
+  expect(result.newState.selectedDetailTab).toBe(InputName.Preview)
+  expect(result.oldState.selectedDetailTab).toBe(InputName.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
   expect(result.newState.tableWidth).toBe(defaultTableWidth)
