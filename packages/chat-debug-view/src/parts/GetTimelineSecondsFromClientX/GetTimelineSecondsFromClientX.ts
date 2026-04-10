@@ -1,6 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
-import { getTimelineDurationSeconds } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import { getTimelineDurationSeconds } from '../GetTimelineDurationSeconds/GetTimelineDurationSeconds.ts'
 
 export const getTimelineSecondsFromClientX = (
   events: readonly ChatViewEvent[],

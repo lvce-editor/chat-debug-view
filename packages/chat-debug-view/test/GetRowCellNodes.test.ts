@@ -40,6 +40,7 @@ test('getRowCellNodes should render visible columns in order', () => {
 
 test('getRowCellNodes should apply error status styling and ignore unknown columns', () => {
   const event = {
+    error: 'Invalid argument: uri must be an absolute URI.',
     eventId: 1,
     name: 'list_files',
     sessionId: 'session-1',

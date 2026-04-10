@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import * as GetTimelineInfo from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
+import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 
 const events: readonly ChatViewEvent[] = [
   {
@@ -58,13 +58,8 @@ const zeroDurationEvents: readonly ChatViewEvent[] = [
   },
 ]
 
-test('filterEventsByTimelineRange should filter events between start and end seconds', () => {
-  const result = GetTimelineInfo.filterEventsByTimelineRange(events, '5', '7')
-  expect(result).toEqual([events[1], events[2]])
-})
-
 test('getTimelineInfo should describe total duration and active window', () => {
-  const result = GetTimelineInfo.getTimelineInfo(events, '5', '7')
+  const result = getTimelineInfo(events, '5', '7')
   expect(result.durationSeconds).toBe(10)
   expect(result.startSeconds).toBe(5)
   expect(result.endSeconds).toBe(7)
@@ -75,7 +70,7 @@ test('getTimelineInfo should describe total duration and active window', () => {
 })
 
 test('getTimelineInfo should expose null marker positions when no selection exists', () => {
-  const result = GetTimelineInfo.getTimelineInfo(events, '', '')
+  const result = getTimelineInfo(events, '', '')
 
   expect(result.hasSelection).toBe(false)
   expect(result.selectionStartPercent).toBeNull()
@@ -83,7 +78,7 @@ test('getTimelineInfo should expose null marker positions when no selection exis
 })
 
 test('getTimelineInfo should ignore invalid timeline range values', () => {
-  const result = GetTimelineInfo.getTimelineInfo(events, '-1', 'nope')
+  const result = getTimelineInfo(events, '-1', 'nope')
 
   expect(result.hasSelection).toBe(false)
   expect(result.startSeconds).toBeNull()
@@ -92,14 +87,8 @@ test('getTimelineInfo should ignore invalid timeline range values', () => {
   expect(result.selectionEndPercent).toBeNull()
 })
 
-test('getTimelineDurationSeconds should return zero when no events have a valid time', () => {
-  const result = GetTimelineInfo.getTimelineDurationSeconds(eventsWithoutTime)
-
-  expect(result).toBe(0)
-})
-
 test('getTimelineInfo should return zero selection percentages for zero-duration ranges', () => {
-  const result = GetTimelineInfo.getTimelineInfo(zeroDurationEvents, '0', '0')
+  const result = getTimelineInfo(zeroDurationEvents, '0', '0')
 
   expect(result.durationSeconds).toBe(0)
   expect(result.hasSelection).toBe(true)

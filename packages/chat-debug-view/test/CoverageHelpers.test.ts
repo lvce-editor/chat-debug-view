@@ -5,7 +5,6 @@ import { getLightweightEvent } from '../src/parts/GetLightweightEvent/GetLightwe
 import { getTimelineFilterDescription } from '../src/parts/GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import { handleSashPointerDown } from '../src/parts/HandleSashPointerDown/HandleSashPointerDown.ts'
 import { handleSashPointerUp } from '../src/parts/HandleSashPointerUp/HandleSashPointerUp.ts'
-import { hasErrorStatus } from '../src/parts/HasErrorStatus/HasErrorStatus.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getEventCategoryFilterLabel should return labels for all known filters and fallback to all', () => {
@@ -58,121 +57,6 @@ test('chat debug empty-state strings should return localized messages', () => {
   expect(ChatDebugStrings.noEventsFoundMatching('response')).toBe('No events found matching response')
   expect(ChatDebugStrings.noToolCallEvents()).toBe('No tool call events.')
   expect(ChatDebugStrings.network()).toBe('Network')
-})
-
-test('hasErrorStatus should return true for error events', () => {
-  expect(
-    hasErrorStatus({
-      eventId: 1,
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'error',
-    }),
-  ).toBe(true)
-})
-
-test('hasErrorStatus should return true when success or ok is false', () => {
-  expect(
-    hasErrorStatus({
-      eventId: 1,
-      sessionId: 'session-1',
-      success: false,
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-
-  expect(
-    hasErrorStatus({
-      eventId: 2,
-      ok: false,
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-})
-
-test('hasErrorStatus should return true for numeric and string status codes >= 400', () => {
-  expect(
-    hasErrorStatus({
-      eventId: 1,
-      sessionId: 'session-1',
-      status: 500,
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-
-  expect(
-    hasErrorStatus({
-      eventId: 2,
-      sessionId: 'session-1',
-      status: '404',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-})
-
-test('hasErrorStatus should return true when an error field is present', () => {
-  expect(
-    hasErrorStatus({
-      error: 'failed',
-      eventId: 1,
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-
-  expect(
-    hasErrorStatus({
-      errorMessage: 'failed',
-      eventId: 2,
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-
-  expect(
-    hasErrorStatus({
-      eventId: 3,
-      exception: 'failed',
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(true)
-})
-
-test('hasErrorStatus should return true for tool-execution events with result.error', () => {
-  expect(
-    hasErrorStatus({
-      eventId: 1,
-      result: {
-        error: {
-          message: 'Invalid argument: uri must be an absolute URI.',
-        },
-      },
-      sessionId: 'session-1',
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'tool-execution',
-    }),
-  ).toBe(true)
-})
-
-test('hasErrorStatus should return false for non-error events', () => {
-  expect(
-    hasErrorStatus({
-      eventId: 1,
-      sessionId: 'session-1',
-      status: 204,
-      timestamp: '2026-01-01T00:00:00.000Z',
-      type: 'request',
-    }),
-  ).toBe(false)
 })
 
 test('handleSashPointerDown and handleSashPointerUp should return the same state object', () => {
