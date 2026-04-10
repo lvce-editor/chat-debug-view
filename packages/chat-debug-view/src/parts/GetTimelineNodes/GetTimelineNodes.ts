@@ -50,7 +50,7 @@ export const getTimelineNodes = (
     {
       childCount: 1,
       className: ChatDebugViewTimelineSummary,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.H2,
     },
     text(getTimelineSummary(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)),
     {

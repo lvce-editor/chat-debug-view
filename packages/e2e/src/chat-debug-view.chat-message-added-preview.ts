@@ -31,7 +31,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const detailsEvent = Locator('.ChatDebugViewEvent')
 
   // assert
-  await expect(detailsEvent).toHaveText('1"what tools do you have access to?"')
+  await expect(detailsEvent).toHaveText('1what tools do you have access to?')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)

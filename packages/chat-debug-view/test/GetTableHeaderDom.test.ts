@@ -26,21 +26,21 @@ test('getTableHeaderDom should render the table header nodes', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Duration'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -69,14 +69,14 @@ test('getTableHeaderDom should omit hidden columns', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -103,6 +103,11 @@ test('getTableDom should render header and body nodes for the table', () => {
   expect(dom).toEqual([
     {
       childCount: 2,
+      className: 'ChatDebugViewTableWrapper',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 2,
       className: 'ChatDebugViewTable',
       type: VirtualDomElements.Table,
     },
@@ -119,21 +124,21 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Duration'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -150,5 +155,53 @@ test('getTableDom should render header and body nodes for the table', () => {
       className: 'ChatDebugViewEventRow',
       type: VirtualDomElements.Tr,
     },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewResizers',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewResizer ChatDebugViewResizerOne',
+      name: 'ResizerOne',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ChatDebugViewResizerInner',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewResizer ChatDebugViewResizerTwo',
+      name: 'ResizerTwo',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ChatDebugViewResizerInner',
+      type: VirtualDomElements.Div,
+    },
   ])
+})
+
+test('getTableDom should count only direct children for the resizer wrapper', () => {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'ChatDebugViewEventRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
+
+  expect(resizers?.childCount).toBe(2)
 })

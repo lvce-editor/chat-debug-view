@@ -75,6 +75,19 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleSashPointerUp', EventExpression.ClientX, EventExpression.ClientY],
     },
     {
+      name: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      params: ['handleTableResizerPointerDown', EventExpression.TargetName, EventExpression.ClientX],
+      trackPointerEvents: [DomEventListenerFunctions.HandleTableResizerPointerMove, DomEventListenerFunctions.HandleTableResizerPointerUp],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableResizerPointerMove,
+      params: ['handleTableResizerPointerMove', EventExpression.ClientX],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableResizerPointerUp,
+      params: ['handleTableResizerPointerUp'],
+    },
+    {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
       params: ['handleTimelinePointerDown', EventExpression.ClientX],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],

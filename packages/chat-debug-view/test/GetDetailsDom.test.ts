@@ -53,7 +53,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     {
       'aria-label': 'Detail sections',
-      childCount: 3,
+      childCount: 4,
       className: 'ChatDebugViewDetailsTabs',
       role: 'tablist',
       type: VirtualDomElements.Div,
@@ -73,6 +73,21 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       value: 'preview',
     },
     text('Preview'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-payload',
+      'aria-selected': false,
+      childCount: 1,
+      className: 'ChatDebugViewDetailsTab',
+      id: 'ChatDebugViewDetailsTab-payload',
+      name: 'detailTab',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+      value: 'payload',
+    },
+    text('Payload'),
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
       'aria-selected': true,
@@ -136,6 +151,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
       },
     ],
     undefined,
+    undefined,
     {
       ended: '2026-03-08T00:00:01.250Z',
       eventId: 1,
@@ -190,7 +206,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
   ]
 
-  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, null, 'preview') as readonly {
+  const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, 'preview') as readonly {
     readonly ['aria-labelledby']?: string
     readonly ['aria-selected']?: boolean
     readonly className?: string
@@ -215,6 +231,56 @@ test('getDetailsDom should render selected event content when preview tab is sel
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'SelectedEventNode',
+    }),
+  )
+})
+
+test('getDetailsDom should render payload content when payload tab is selected', () => {
+  const previewNodes = [
+    {
+      childCount: 1,
+      className: 'PreviewNode',
+      type: VirtualDomElements.Div,
+    },
+  ]
+  const payloadNodes = [
+    {
+      childCount: 1,
+      className: 'PayloadNode',
+      type: VirtualDomElements.Div,
+    },
+  ]
+
+  const dom = GetDetailsDom.getDetailsDom(previewNodes, payloadNodes, previewNodes, null, 'payload') as readonly {
+    readonly ['aria-labelledby']?: string
+    readonly ['aria-selected']?: boolean
+    readonly className?: string
+    readonly role?: string
+    readonly value?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      role: 'tab',
+      value: 'payload',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      'aria-labelledby': 'ChatDebugViewDetailsTab-payload',
+      className: 'ChatDebugViewDetailsBottom',
+      role: 'tabpanel',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'PayloadNode',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'PreviewNode',
     }),
   )
 })

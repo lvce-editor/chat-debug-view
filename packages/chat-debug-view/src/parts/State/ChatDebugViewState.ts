@@ -1,5 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export interface ChatDebugViewState {
   readonly assetDir: string
@@ -23,6 +24,8 @@ export interface ChatDebugViewState {
   readonly showEventStreamFinishedEvents: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
+  readonly tableColumnWidths: TableColumnWidths
+  readonly tableResizerDownId: number
   readonly tableWidth: number
   readonly timelineEndSeconds: string
   readonly timelineSelectionActive: boolean

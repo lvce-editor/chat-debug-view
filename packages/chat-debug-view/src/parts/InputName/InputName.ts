@@ -20,4 +20,5 @@ export const Stream = 'stream'
 
 export const Response = 'response'
 export const Preview = 'preview'
+export const Payload = 'payload'
 export const Timing = 'timing'

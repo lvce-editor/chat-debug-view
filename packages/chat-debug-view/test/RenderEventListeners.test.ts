@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { EventExpression } from '@lvce-editor/constants'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as RenderEventListeners from '../src/parts/RenderEventListeners/RenderEventListeners.ts'
 
@@ -25,5 +26,23 @@ test('renderEventListeners should register timeline context menu listener with p
     name: DomEventListenerFunctions.HandleTimelineContextMenu,
     params: ['handleTimelineContextMenu'],
     preventDefault: true,
+  })
+})
+
+test('renderEventListeners should register table resizer pointer tracking listeners', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.HandleTableResizerPointerDown,
+    params: ['handleTableResizerPointerDown', EventExpression.TargetName, EventExpression.ClientX],
+    trackPointerEvents: [DomEventListenerFunctions.HandleTableResizerPointerMove, DomEventListenerFunctions.HandleTableResizerPointerUp],
+  })
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.HandleTableResizerPointerMove,
+    params: ['handleTableResizerPointerMove', EventExpression.ClientX],
+  })
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.HandleTableResizerPointerUp,
+    params: ['handleTableResizerPointerUp'],
   })
 })

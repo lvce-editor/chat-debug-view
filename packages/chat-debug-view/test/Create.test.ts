@@ -30,6 +30,11 @@ test('create should restore serializable state from saved state', () => {
     eventCategoryFilter: EventCategoryFilter.Tools,
     selectedDetailTab: InputName.Preview,
     selectedEventId: 7,
+    tableColumnWidths: {
+      duration: 88,
+      status: 132,
+      type: 260,
+    },
   })
   const result = ChatDebugViewStates.get(uid)
 
@@ -39,6 +44,16 @@ test('create should restore serializable state from saved state', () => {
   expect(result.oldState.selectedDetailTab).toBe(InputName.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
+  expect(result.newState.tableColumnWidths).toEqual({
+    duration: 88,
+    status: 132,
+    type: 260,
+  })
+  expect(result.oldState.tableColumnWidths).toEqual({
+    duration: 88,
+    status: 132,
+    type: 260,
+  })
   expect(result.newState.tableWidth).toBe(defaultTableWidth)
   expect(result.oldState.tableWidth).toBe(defaultTableWidth)
 })

@@ -1,0 +1,45 @@
+import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import {
+  ChatDebugViewResizer,
+  ChatDebugViewResizerInner,
+  ChatDebugViewResizerOne,
+  ChatDebugViewResizerTwo,
+  ChatDebugViewResizers,
+} from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+
+const resizerNames = ['ResizerOne', 'ResizerTwo'] as const
+const resizerClassNames = [ChatDebugViewResizerOne, ChatDebugViewResizerTwo] as const
+
+export const getTableResizersDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
+  const visibleColumnCount = getOrderedVisibleTableColumns(visibleTableColumns).length
+  const resizerCount = Math.max(0, visibleColumnCount - 1)
+  if (resizerCount === 0) {
+    return []
+  }
+  const visibleResizerClassNames = resizerClassNames.slice(0, resizerCount)
+  const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName, index) => [
+    {
+      childCount: 1,
+      className: `${ChatDebugViewResizer} ${resizerClassName}`,
+      name: resizerNames[index],
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: ChatDebugViewResizerInner,
+      type: VirtualDomElements.Div,
+    },
+  ])
+  return [
+    {
+      childCount: resizerCount,
+      className: ChatDebugViewResizers,
+      type: VirtualDomElements.Div,
+    },
+    ...resizerNodes,
+  ]
+}

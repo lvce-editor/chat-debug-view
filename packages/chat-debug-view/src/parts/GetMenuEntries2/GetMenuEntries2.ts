@@ -44,8 +44,8 @@ export const getMenuEntries2 = (state: ChatDebugViewState, props: ContextMenuPro
   if (props.menuId === MenuChatDebugTableBody) {
     return [
       {
-        args: [],
-        command: 'ChatDebug.copy',
+        args: [props.eventIndex],
+        command: 'ChatDebug.handleTableRowCopy',
         flags: MenuItemFlags.None,
         id: 'copy',
         label: ChatDebugStrings.copy(),
