@@ -17,9 +17,9 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
       return [
         {
           'aria-selected': isSelected,
-          'data-value': categoryFilter.name,
           childCount: 1,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
+          'data-value': categoryFilter.name,
           onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
           role: 'option',
           type: VirtualDomElements.Div,

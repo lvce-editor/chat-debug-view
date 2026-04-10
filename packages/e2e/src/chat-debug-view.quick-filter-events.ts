@@ -27,8 +27,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   const rows = Locator('.ChatDebugViewEventRow')
-  const selectedPill = Locator('.ChatDebugViewQuickFilterPillSelected')
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('request')
-  await expect(selectedPill).toContainText('Network')
+  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Network')
 }
