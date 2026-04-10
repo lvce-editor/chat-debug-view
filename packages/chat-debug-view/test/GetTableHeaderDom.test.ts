@@ -156,7 +156,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 4,
+      childCount: 2,
       className: 'ChatDebugViewResizers',
       type: VirtualDomElements.Div,
     },
@@ -187,4 +187,21 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Div,
     },
   ])
+})
+
+test('getTableDom should count only direct children for the resizer wrapper', () => {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'ChatDebugViewEventRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+  }[]
+  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
+
+  expect(resizers?.childCount).toBe(2)
 })

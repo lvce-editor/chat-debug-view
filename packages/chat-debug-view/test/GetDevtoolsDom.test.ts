@@ -127,13 +127,16 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
   const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
   const resizer = dom.find((node) => node.className === 'ChatDebugViewResizer ChatDebugViewResizerOne')
+  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
 
   expect(tableWrapper).toBeDefined()
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(2)
+  expect(tableWrapper?.childCount).toBe(2)
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
+  expect(resizers?.childCount).toBe(2)
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
