@@ -102,6 +102,17 @@ test('getTimelineNodes should not render a timeline title heading', () => {
   expect(nodes.some((node) => node.text === 'Timeline')).toBe(false)
 })
 
+test('getTimelineNodes should render the timeline summary as a heading', () => {
+  const nodes = getTimelineNodes(events, '', '', false, '', '') as readonly {
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  const summary = nodes.find((node) => node.className === 'ChatDebugViewTimelineSummary')
+
+  expect(summary?.type).toBe(VirtualDomElements.H2)
+})
+
 test('getTimelineNodes should render drag preview markers while selecting', () => {
   const nodes = getTimelineNodes(events, '', '', true, '1', '4') as readonly {
     readonly className?: string
