@@ -29,20 +29,6 @@ const events: readonly ChatViewEvent[] = [
   },
 ]
 
-const eventsWithoutTime: readonly ChatViewEvent[] = [
-  {
-    eventId: 1,
-    sessionId: 'session-1',
-    type: 'request',
-  },
-  {
-    eventId: 2,
-    sessionId: 'session-1',
-    timestamp: 'invalid',
-    type: 'response',
-  },
-]
-
 const zeroDurationEvents: readonly ChatViewEvent[] = [
   {
     eventId: 1,
