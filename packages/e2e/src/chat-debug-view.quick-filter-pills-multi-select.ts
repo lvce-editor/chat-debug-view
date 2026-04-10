@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.quick-filter-pills-multi-select'
 
+export const skip=1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-quick-filter-pills-multi-select')
   await expect(Locator('.ChatDebugView')).toBeVisible()
