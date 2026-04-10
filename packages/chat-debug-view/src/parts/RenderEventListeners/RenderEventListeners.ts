@@ -42,8 +42,8 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleEventCategoryFilter', EventExpression.TargetValue],
     },
     {
-      name: DomEventListenerFunctions.HandleDetailTab,
-      params: ['handleDetailTab', EventExpression.TargetValue],
+      name: DomEventListenerFunctions.SelectDetailTab,
+      params: ['selectDetailTab', EventExpression.TargetValue],
     },
     {
       name: DomEventListenerFunctions.HandleTimelineRangePreset,

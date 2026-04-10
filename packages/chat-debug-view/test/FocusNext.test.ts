@@ -1,18 +1,16 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import { focusNext, focusNextDependencies } from '../src/parts/FocusNext/FocusNext.ts'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import { focusNext } from '../src/parts/FocusNext/FocusNext.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('focusNext should select the first row when nothing is selected', async () => {
-  jest.spyOn(focusNextDependencies, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'row-1',
-    eventId: 1,
-    type: 'request',
-  } as ChatViewEvent)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'row-1',
+      eventId: 1,
+      type: 'request',
+    }),
+  })
   const state = {
     ...createDefaultState(),
     events: [
@@ -40,14 +38,17 @@ test('focusNext should select the first row when nothing is selected', async () 
     eventId: 1,
     type: 'request',
   })
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
 })
 
 test('focusNext should stop at the last row', async () => {
-  const loadSelectedEventSpy = jest.spyOn(focusNextDependencies, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'row-2',
-    eventId: 2,
-    type: 'response',
-  } as ChatViewEvent)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'row-2',
+      eventId: 2,
+      type: 'response',
+    }),
+  })
   const state = {
     ...createDefaultState(),
     events: [
@@ -69,5 +70,5 @@ test('focusNext should stop at the last row', async () => {
   const result = await focusNext(state)
 
   expect(result.selectedEventIndex).toBe(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
+  expect(mockRpc.invocations).toEqual([])
 })

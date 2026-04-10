@@ -1,10 +1,5 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { getCurrentEvents, selectEventAtIndex } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
-
-export const focusPreviousDependencies = {
-  loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
-}
 
 export const focusPrevious = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   const currentEvents = getCurrentEvents(state)
@@ -17,5 +12,5 @@ export const focusPrevious = async (state: ChatDebugViewState): Promise<ChatDebu
   if (nextIndex === state.selectedEventIndex) {
     return state
   }
-  return selectEventAtIndex(state, nextIndex, focusPreviousDependencies)
+  return selectEventAtIndex(state, nextIndex)
 }
