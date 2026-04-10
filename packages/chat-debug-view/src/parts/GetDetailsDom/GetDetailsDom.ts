@@ -2,12 +2,7 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import {
-  ChatDebugViewDetails,
-  ChatDebugViewDetailsBottom,
-  ChatDebugViewDetailsClose,
-  ChatDebugViewDetailsTop,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewDetails, ChatDebugViewDetailsBottom, ChatDebugViewDetailsClose, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'

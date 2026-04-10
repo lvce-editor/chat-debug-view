@@ -3,7 +3,17 @@ import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import type { AttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 
 const getBlob = (event: ChatViewEvent): Blob | undefined => {
-  return event.blob instanceof Blob ? event.blob : undefined
+  const { blob } = event
+  if (
+    typeof blob === 'object' &&
+    blob !== null &&
+    typeof (blob as Blob).arrayBuffer === 'function' &&
+    typeof (blob as Blob).slice === 'function' &&
+    typeof (blob as Blob).type === 'string'
+  ) {
+    return blob as Blob
+  }
+  return undefined
 }
 
 const getMimeType = (event: ChatViewEvent): string | undefined => {

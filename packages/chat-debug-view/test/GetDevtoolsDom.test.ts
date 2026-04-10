@@ -271,14 +271,7 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
       src: 'data:image/png;base64,preview',
     },
   )
-  const dom = GetDevtoolsDom.getDevtoolsDom(
-    events,
-    selectedEvent,
-    0,
-    events,
-    '',
-    '',
-  ) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, selectedEvent, 0, events, '', '') as readonly {
     readonly alt?: string
     readonly className?: string
     readonly src?: string

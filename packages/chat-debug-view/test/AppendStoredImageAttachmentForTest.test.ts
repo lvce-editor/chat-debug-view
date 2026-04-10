@@ -22,16 +22,19 @@ test('appendStoredImageAttachmentForTest should append a blob-backed attachment 
 
   expect(result).toBe(state)
   expect(mockRpc.invocations).toHaveLength(1)
-  const [command, event] = mockRpc.invocations[0] as [string, {
-    readonly attachmentId: string
-    readonly blob: Blob
-    readonly eventId: number
-    readonly mimeType: string
-    readonly name: string
-    readonly sessionId: string
-    readonly timestamp: string
-    readonly type: string
-  }]
+  const [command, event] = mockRpc.invocations[0] as [
+    string,
+    {
+      readonly attachmentId: string
+      readonly blob: Blob
+      readonly eventId: number
+      readonly mimeType: string
+      readonly name: string
+      readonly sessionId: string
+      readonly timestamp: string
+      readonly type: string
+    },
+  ]
   expect(command).toBe('ChatStorage.appendEvent')
   expect(event.attachmentId).toBe('attachment-7')
   expect(event.eventId).toBe(7)

@@ -19,8 +19,8 @@ test('getAttachmentImagePreview should return an image preview for image attachm
     }
   })
   Object.assign(globalThis, {
-    FileReaderSync: fileReaderSyncMock,
     createImageBitmap: createImageBitmapMock,
+    FileReaderSync: fileReaderSyncMock,
   })
   const event = {
     blob: new Blob(['png'], {
