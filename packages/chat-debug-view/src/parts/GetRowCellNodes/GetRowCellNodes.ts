@@ -14,8 +14,9 @@ import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
-  return visibleTableColumns.flatMap((column, index) => {
-    const isFixed = index < visibleTableColumns.length - 1
+  const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns)
+  return orderedVisibleTableColumns.flatMap((column, index) => {
+    const isFixed = index < orderedVisibleTableColumns.length - 1
     switch (column) {
       case TableColumn.Duration:
         return [
