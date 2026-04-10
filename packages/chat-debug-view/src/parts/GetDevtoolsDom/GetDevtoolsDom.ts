@@ -52,14 +52,7 @@ export const getDevtoolsDom = (
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, visibleTableColumns)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
-  const detailsNodes = getDetailsDom(
-    previewEventNodes,
-    payloadEventNodes,
-    responseEventNodes,
-    selectedEvent,
-    detailTabs,
-    safeSelectedDetailTab,
-  )
+  const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs, safeSelectedDetailTab)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)
