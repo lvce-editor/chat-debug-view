@@ -142,14 +142,7 @@ test('getFilteredEvents should show only network events for network category fil
 })
 
 test('getFilteredEvents should show events from multiple selected category filters', () => {
-  const result = GetFilteredEvents.getFilteredEvents(
-    events,
-    '',
-    [EventCategoryFilter.Tools, EventCategoryFilter.Network],
-    true,
-    true,
-    true,
-  )
+  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Tools, EventCategoryFilter.Network], true, true, true)
 
   expect(result).toEqual([
     events[2],
