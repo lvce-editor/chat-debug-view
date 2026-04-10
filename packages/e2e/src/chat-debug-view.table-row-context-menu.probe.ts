@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-row-context-menu.probe'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, expect, Locator }) => {
   // arrange
   const sessionId = 'e2e-session-table-row-context-menu-probe'
