@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewColumnFixed,
@@ -12,13 +12,12 @@ import * as TableColumn from '../TableColumn/TableColumn.ts'
 export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   return visibleTableColumns.flatMap((column, index) => {
     const isFixed = index < visibleTableColumns.length - 1
-    const fixedClassName = isFixed ? ` ${ChatDebugViewColumnFixed}` : ''
     switch (column) {
       case TableColumn.Duration:
         return [
           {
             childCount: 1,
-            className: `${ChatDebugViewHeaderCell} ${ChatDebugViewHeaderCellDuration}${fixedClassName}`,
+            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
             scope: 'col',
             type: VirtualDomElements.Th,
           },
@@ -28,7 +27,7 @@ export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): read
         return [
           {
             childCount: 1,
-            className: `${ChatDebugViewHeaderCell} ${ChatDebugViewHeaderCellStatus}${fixedClassName}`,
+            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellStatus, isFixed ? ChatDebugViewColumnFixed : ''),
             scope: 'col',
             type: VirtualDomElements.Th,
           },
@@ -38,7 +37,7 @@ export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): read
         return [
           {
             childCount: 1,
-            className: `${ChatDebugViewHeaderCell} ${ChatDebugViewHeaderCellType}${fixedClassName}`,
+            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellType, isFixed ? ChatDebugViewColumnFixed : ''),
             scope: 'col',
             type: VirtualDomElements.Th,
           },

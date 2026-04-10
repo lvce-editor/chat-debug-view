@@ -19,13 +19,13 @@ test('getRowCellNodes should render visible columns in order', () => {
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('250ms'),

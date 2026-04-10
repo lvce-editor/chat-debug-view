@@ -13,14 +13,14 @@ test('getHeaderCellNodes should render the visible header cells', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
