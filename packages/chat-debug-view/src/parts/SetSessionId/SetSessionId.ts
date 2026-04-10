@@ -7,13 +7,8 @@ export const setSessionIdDependencies = {
 }
 
 export const setSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const result = await setSessionIdDependencies.listChatViewEvents(
-    sessionId,
-    state.databaseName,
-    state.dataBaseVersion,
-    state.eventStoreName,
-    state.sessionIdIndexName,
-  )
+  const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
+  const result = await setSessionIdDependencies.listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
   if (result.type === 'error') {
     return {
       ...state,
