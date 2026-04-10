@@ -2,6 +2,7 @@ import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.t
 
 export interface SavedState {
   readonly eventCategoryFilter: string
+  readonly eventCategoryFilters?: readonly string[]
   readonly filterValue: string
   readonly selectedDetailTab: string
   readonly selectedEventId: number | null

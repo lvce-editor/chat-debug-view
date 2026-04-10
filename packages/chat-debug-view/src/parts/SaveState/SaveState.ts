@@ -17,6 +17,7 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
   } = state
   return {
     eventCategoryFilter: EventCategoryFilter.getSelectedEventCategoryFilter(categoryFilters),
+    eventCategoryFilters: EventCategoryFilter.getSelectedEventCategoryFilters(categoryFilters),
     filterValue,
     selectedDetailTab: DetailTab.getSelectedDetailTab(detailTabs),
     selectedEventId,

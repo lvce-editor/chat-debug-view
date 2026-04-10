@@ -17,10 +17,17 @@ import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
+const getEventCategoryFilterDescription = (eventCategoryFilters: readonly string[]): string => {
+  if (eventCategoryFilters.length === 0 || eventCategoryFilters.includes(EventCategoryFilter.All)) {
+    return ''
+  }
+  return eventCategoryFilters.map((eventCategoryFilter) => EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase()).join(', ')
+}
+
 export const getChatDebugViewDom = (
   errorMessage: string,
   filterValue: string,
-  eventCategoryFilter: string,
+  eventCategoryFilters: readonly string[],
   categoryFilters: readonly CategoryFilter[],
   _showEventStreamFinishedEvents: boolean,
   _showInputEvents: boolean,
@@ -46,8 +53,9 @@ export const getChatDebugViewDom = (
 
   const trimmedFilterValue = filterValue.trim()
   const filterDescriptionParts = []
-  if (eventCategoryFilter !== EventCategoryFilter.All) {
-    filterDescriptionParts.push(EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase())
+  const eventCategoryFilterDescription = getEventCategoryFilterDescription(eventCategoryFilters)
+  if (eventCategoryFilterDescription) {
+    filterDescriptionParts.push(eventCategoryFilterDescription)
   }
   if (trimmedFilterValue) {
     filterDescriptionParts.push(trimmedFilterValue)
@@ -60,7 +68,11 @@ export const getChatDebugViewDom = (
   const hasFilterValue = filterDescriptionParts.length > 0
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = ChatDebugStrings.noEventsFoundMatching(filterDescription)
-  const useNoToolCallEventsMessage = eventCategoryFilter === EventCategoryFilter.Tools && !trimmedFilterValue && !hasTimelineFilter
+  const useNoToolCallEventsMessage =
+    eventCategoryFilters.length === 1 &&
+    eventCategoryFilters[0] === EventCategoryFilter.Tools &&
+    !trimmedFilterValue &&
+    !hasTimelineFilter
   const emptyMessage = getEmptyMessage(events.length, hasFilterValue, useNoToolCallEventsMessage, noFilteredEventsMessage)
 
   const safeSelectedEventIndex =

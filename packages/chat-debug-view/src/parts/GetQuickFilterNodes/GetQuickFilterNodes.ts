@@ -6,6 +6,7 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
   return [
     {
+      'aria-multiselectable': true,
       childCount: categoryFilters.length,
       className: ChatDebugViewQuickFilters,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,

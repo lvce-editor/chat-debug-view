@@ -4,30 +4,54 @@ import { All, Network, Stream, Tools, Ui } from '../EventCategoryFilter/EventCat
 
 export type EventCategoryFilterType = typeof All | typeof Tools | typeof Network | typeof Ui | typeof Stream
 
-export const createCategoryFilters = (selectedEventCategoryFilter = All): readonly CategoryFilter[] => {
+const eventCategoryFilters = [All, Tools, Network, Ui, Stream] as const
+
+export const normalizeSelectedEventCategoryFilters = (
+  selectedEventCategoryFilter: EventCategoryFilterType | readonly EventCategoryFilterType[] = All,
+): readonly EventCategoryFilterType[] => {
+  const selectedEventCategoryFilters = Array.isArray(selectedEventCategoryFilter)
+    ? selectedEventCategoryFilter
+    : [selectedEventCategoryFilter]
+  const uniqueSelectedEventCategoryFilters = [...new Set(selectedEventCategoryFilters)]
+  const validSelectedEventCategoryFilters = uniqueSelectedEventCategoryFilters.filter((value): value is EventCategoryFilterType => {
+    return eventCategoryFilters.includes(value)
+  })
+  if (validSelectedEventCategoryFilters.length === 0) {
+    return [All]
+  }
+  if (validSelectedEventCategoryFilters.includes(All)) {
+    return [All]
+  }
+  return validSelectedEventCategoryFilters
+}
+
+export const createCategoryFilters = (
+  selectedEventCategoryFilter: EventCategoryFilterType | readonly EventCategoryFilterType[] = All,
+): readonly CategoryFilter[] => {
+  const selectedEventCategoryFilters = normalizeSelectedEventCategoryFilters(selectedEventCategoryFilter)
   return [
     {
-      isSelectedProperty: selectedEventCategoryFilter === All,
+      isSelectedProperty: selectedEventCategoryFilters.includes(All),
       label: ChatDebugStrings.all(),
       name: All,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilter === Tools,
+      isSelectedProperty: selectedEventCategoryFilters.includes(Tools),
       label: ChatDebugStrings.tools(),
       name: Tools,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilter === Network,
+      isSelectedProperty: selectedEventCategoryFilters.includes(Network),
       label: ChatDebugStrings.network(),
       name: Network,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilter === Ui,
+      isSelectedProperty: selectedEventCategoryFilters.includes(Ui),
       label: ChatDebugStrings.ui(),
       name: Ui,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilter === Stream,
+      isSelectedProperty: selectedEventCategoryFilters.includes(Stream),
       label: ChatDebugStrings.stream(),
       name: Stream,
     },

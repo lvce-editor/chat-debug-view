@@ -5,7 +5,7 @@ import { isStreamEvent } from '../IsStreamEvent/IsStreamEvent.ts'
 import { isToolEvent } from '../IsToolEvent/IsToolEvent.ts'
 import { isUiEvent } from '../IsUiEvent/IsUiEvent.ts'
 
-export const matchesEventCategoryFilter = (event: ChatViewEvent, eventCategoryFilter: string): boolean => {
+const matchesSingleEventCategoryFilter = (event: ChatViewEvent, eventCategoryFilter: string): boolean => {
   switch (eventCategoryFilter) {
     case EventCategoryFilter.Network:
       return isNetworkEvent(event)
@@ -18,4 +18,11 @@ export const matchesEventCategoryFilter = (event: ChatViewEvent, eventCategoryFi
     default:
       return true
   }
+}
+
+export const matchesEventCategoryFilter = (event: ChatViewEvent, eventCategoryFilters: readonly string[]): boolean => {
+  if (eventCategoryFilters.length === 0 || eventCategoryFilters.includes(EventCategoryFilter.All)) {
+    return true
+  }
+  return eventCategoryFilters.some((eventCategoryFilter) => matchesSingleEventCategoryFilter(event, eventCategoryFilter))
 }

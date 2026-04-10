@@ -39,7 +39,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleEventCategoryFilter,
-      params: ['handleEventCategoryFilter', 'event.target.dataset.value'],
+      params: ['handleEventCategoryFilter', 'event.target.dataset.value', 'event.ctrlKey', 'event.metaKey'],
     },
     {
       name: DomEventListenerFunctions.SelectDetailTab,

@@ -5,7 +5,7 @@ import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 
 export const getTimelineEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   const { events, filterValue, showEventStreamFinishedEvents, showInputEvents, showResponsePartEvents } = state
-  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
+  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(state.categoryFilters)
 
-  return getFilteredEvents(events, filterValue, eventCategoryFilter, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
+  return getFilteredEvents(events, filterValue, eventCategoryFilters, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
 }
