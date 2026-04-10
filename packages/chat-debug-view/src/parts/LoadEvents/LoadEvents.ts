@@ -87,7 +87,7 @@ const getStateWithInvalidUri = (state: ChatDebugViewState): ChatDebugViewState =
   }
 }
 
-export const getSessionIdFromUri = (state: ChatDebugViewState): string | undefined => {
+const getSessionIdFromUri = (state: ChatDebugViewState): string | undefined => {
   const parsed = parseChatDebugUri(state.uri)
   if (parsed.type === 'error') {
     return undefined
@@ -95,7 +95,7 @@ export const getSessionIdFromUri = (state: ChatDebugViewState): string | undefin
   return parsed.sessionId
 }
 
-export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
+const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
   const result = await loadEventsDependencies.listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
 

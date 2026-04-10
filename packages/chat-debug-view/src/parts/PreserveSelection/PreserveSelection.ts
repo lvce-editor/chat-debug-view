@@ -3,7 +3,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
-export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
+const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,

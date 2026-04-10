@@ -1,10 +1,10 @@
 export const defaultTableWidth = 480
-export const minTableWidth = 240
-export const minDetailsWidth = 280
+const minTableWidth = 240
+const minDetailsWidth = 280
 export const sashWidth = 8
 export const viewPadding = 8
 export const timelineHorizontalPadding = 10
-export const horizontalPadding = viewPadding * 2
+const horizontalPadding = viewPadding * 2
 export const leftPadding = viewPadding
 
 export const getMainWidth = (width: number): number => {
