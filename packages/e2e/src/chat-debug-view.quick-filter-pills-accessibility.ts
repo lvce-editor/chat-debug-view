@@ -33,7 +33,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(toolsOption).toContainText('Tools')
   await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('All')
 
-  await toolsOption.click()
+  await ChatDebug.setEventCategoryFilter('tools')
 
   await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
 }

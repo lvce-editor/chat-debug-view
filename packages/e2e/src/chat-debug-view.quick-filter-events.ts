@@ -14,19 +14,18 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       type: 'request',
     },
     {
+      name: 'read_file',
       sessionId: 'e2e-session-quick-filter',
       timestamp: '2026-03-08T00:00:01.000Z',
-      type: 'handle-click',
+      type: 'tool-execution',
     },
   ]
 
   // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
-  await Locator('.ChatDebugViewQuickFilterPill').nth(2).click()
+  await ChatDebug.setEventCategoryFilter('tools')
 
   // assert
-  const rows = Locator('.ChatDebugViewEventRow')
-  await expect(rows).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Network')
+  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
 }

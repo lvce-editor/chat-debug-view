@@ -11,6 +11,7 @@ export const setAttachmentPreviewEventForTest = (
   previewValue: string,
 ): ChatDebugViewState => {
   const event = {
+    eventId: 1,
     mimeType,
     name,
     sessionId,
