@@ -12,6 +12,12 @@ export const TimelineEndSeconds = 'timelineEndSeconds'
 export const TimelineRangePreset = 'timelineRangePreset'
 export const Refresh = 'refresh'
 
+export const All = 'all'
+export const Tools = 'tools'
+export const Network = 'network'
+export const Ui = 'ui'
+export const Stream = 'stream'
+
 export const Response = 'response'
 export const Preview = 'preview'
 export const Timing = 'timing'

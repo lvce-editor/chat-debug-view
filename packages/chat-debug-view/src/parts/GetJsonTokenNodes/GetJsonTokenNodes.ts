@@ -2,17 +2,21 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getTokenSegments } from '../GetTokenSegments/GetTokenSegments.ts'
 
+const getNullJsonDom = (json: string | undefined): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: TokenText,
+      type: VirtualDomElements.Span,
+    },
+    text(String(json)),
+  ]
+}
+
 export const getJsonTokenNodes = (value: unknown): readonly VirtualDomNode[] => {
   const json = JSON.stringify(value, null, 2)
   if (!json) {
-    return [
-      {
-        childCount: 1,
-        className: TokenText,
-        type: VirtualDomElements.Span,
-      },
-      text(String(json)),
-    ]
+    return getNullJsonDom(json)
   }
   const segments = getTokenSegments(json)
   return segments.flatMap((segment) => {

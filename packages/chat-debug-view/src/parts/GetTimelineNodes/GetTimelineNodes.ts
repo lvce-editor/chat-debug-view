@@ -1,21 +1,17 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
   ChatDebugViewTimeline,
   ChatDebugViewTimelineBuckets,
   ChatDebugViewTimelineInteractive,
-  ChatDebugViewTimelineSelectionMarker,
-  ChatDebugViewTimelineSelectionMarkerEnd,
-  ChatDebugViewTimelineSelectionMarkerStart,
   ChatDebugViewTimelineSelectionOverlay,
-  ChatDebugViewTimelineSelectionRange,
   ChatDebugViewTimelineSummary,
   ChatDebugViewTimelineTop,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { formatPercent } from '../FormatPercent/FormatPercent.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
 import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
+import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
@@ -38,31 +34,7 @@ export const getTimelineNodes = (
   if (timelineInfo.buckets.length === 0) {
     return []
   }
-  const selectionNodes =
-    timelineInfo.hasSelection && timelineInfo.selectionStartPercent !== null && timelineInfo.selectionEndPercent !== null
-      ? [
-          {
-            childCount: 0,
-            className: ChatDebugViewTimelineSelectionRange,
-            style: `left:${formatPercent(timelineInfo.selectionStartPercent)};width:${formatPercent(
-              timelineInfo.selectionEndPercent - timelineInfo.selectionStartPercent,
-            )};`,
-            type: VirtualDomElements.Div,
-          },
-          {
-            childCount: 0,
-            className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerStart),
-            style: `left:${formatPercent(timelineInfo.selectionStartPercent)};`,
-            type: VirtualDomElements.Div,
-          },
-          {
-            childCount: 0,
-            className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
-            style: `left:${formatPercent(timelineInfo.selectionEndPercent)};`,
-            type: VirtualDomElements.Div,
-          },
-        ]
-      : []
+  const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
   return [
     {
       childCount: 2,
