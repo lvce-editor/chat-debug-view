@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
 
@@ -9,6 +10,7 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
   const nextState = await loadEventsFromUri(restoreSavedState(state, savedState))
   return {
     ...nextState,
+    categoryFilters: EventCategoryFilter.createCategoryFilters(),
     detailTabs: DetailTab.createDetailTabs(),
   }
 }

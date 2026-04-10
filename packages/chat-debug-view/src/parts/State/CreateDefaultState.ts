@@ -8,12 +8,12 @@ import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout
 export const createDefaultState = (): ChatDebugViewState => {
   return {
     assetDir: '',
+    categoryFilters: [],
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
     detailTabs: [],
     errorMessage: '',
     eventCategoryFilter: EventCategoryFilter.All,
-    eventCategoryFilterOptions: EventCategoryFilter.createEventCategoryFilterOptions(),
     events: [],
     eventStoreName: 'chat-view-events',
     filterValue: '',

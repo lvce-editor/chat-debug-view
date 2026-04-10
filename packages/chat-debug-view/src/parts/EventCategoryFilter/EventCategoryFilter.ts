@@ -1,8 +1,8 @@
-export interface EventCategoryFilterOption {
+export interface CategoryFilter {
   readonly label: string
-  readonly value: string
+  readonly name: string
 }
 
 export { All, Network, Stream, Tools, Ui } from '../InputName/InputName.ts'
-export { createEventCategoryFilterOptions } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
+export { createCategoryFilters } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
 export { getEventCategoryFilterLabel } from '../GetEventCategoryFilterLabel/GetEventCategoryFilterLabel.ts'

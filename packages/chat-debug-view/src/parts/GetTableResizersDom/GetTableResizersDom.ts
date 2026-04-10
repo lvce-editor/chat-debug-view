@@ -1,4 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
   ChatDebugViewResizer,
   ChatDebugViewResizerInner,
@@ -25,7 +26,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
       className: `${ChatDebugViewResizer} ${resizerClassName}`,
       name: resizerNames[index],
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
-      role: 'none',
+      role: AriaRoles.None,
       type: VirtualDomElements.Button,
     },
     {

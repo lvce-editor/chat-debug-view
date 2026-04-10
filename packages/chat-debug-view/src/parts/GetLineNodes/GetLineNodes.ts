@@ -6,26 +6,28 @@ interface LineNodeData {
   readonly nodes: readonly VirtualDomNode[]
 }
 
+export const getLineNodeDom = (line: LineNodeData, index: number): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 2,
+      className: Row,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: ChatDebugViewEventLineNumber,
+      type: VirtualDomElements.Span,
+    },
+    text(String(index + 1)),
+    {
+      childCount: line.childCount,
+      className: ChatDebugViewEventLineContent,
+      type: VirtualDomElements.Span,
+    },
+    ...line.nodes,
+  ]
+}
+
 export const getLineNodes = (lines: readonly LineNodeData[]): readonly VirtualDomNode[] => {
-  return lines.flatMap((line, index) => {
-    return [
-      {
-        childCount: 2,
-        className: Row,
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineNumber,
-        type: VirtualDomElements.Span,
-      },
-      text(String(index + 1)),
-      {
-        childCount: line.childCount,
-        className: ChatDebugViewEventLineContent,
-        type: VirtualDomElements.Span,
-      },
-      ...line.nodes,
-    ]
-  })
+  return lines.flatMap(getLineNodeDom)
 }
