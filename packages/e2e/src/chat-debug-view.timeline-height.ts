@@ -28,5 +28,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(timeline).toBeVisible()
-  await expect(timeline).toHaveJSProperty('offsetHeight', 75)
+  await expect(timeline).toHaveJSProperty('offsetHeight', 95)
 }

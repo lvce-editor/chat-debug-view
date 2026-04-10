@@ -31,7 +31,7 @@ export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, e
   await ChatDebug.useDevtoolsLayout()
 
   // act
-  await Command.execute('ChatDebug.handleTableBodyContextMenu', 0, 300)
+  await Command.execute('ChatDebug.handleTableBodyContextMenu', 100, 164)
 
   // assert
   const menuItems = Locator('.MenuItem')
