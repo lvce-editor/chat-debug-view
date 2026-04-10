@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
   ChatDebugViewCell,
@@ -9,7 +9,6 @@ import {
   ChatDebugViewEventRow,
   ChatDebugViewEventRowSelected,
   TableRowEven,
-  joinClassNames,
 } from '../ClassNames/ClassNames.ts'
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
@@ -25,7 +24,7 @@ const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, visibleTa
         return [
           {
             childCount: 1,
-            className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellDuration),
+            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellDuration),
             type: VirtualDomElements.Td,
           },
           text(getDurationText(event)),
@@ -34,7 +33,7 @@ const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, visibleTa
         return [
           {
             childCount: 1,
-            className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellStatus, isErrorStatus && ChatDebugViewCellStatusError),
+            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellStatus, isErrorStatus ? ChatDebugViewCellStatusError : ''),
             type: VirtualDomElements.Td,
           },
           text(getStatusText(event)),
@@ -43,7 +42,7 @@ const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, visibleTa
         return [
           {
             childCount: 1,
-            className: joinClassNames(ChatDebugViewCell, ChatDebugViewCellType),
+            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellType),
             type: VirtualDomElements.Td,
           },
           text(getEventTypeLabel(event)),
@@ -68,7 +67,11 @@ export const getDevtoolsRows = (
     return [
       {
         childCount: visibleTableColumns.length,
-        className: joinClassNames(ChatDebugViewEventRow, isEvenRow && TableRowEven, isSelected && ChatDebugViewEventRowSelected),
+        className: mergeClassNames(
+          ChatDebugViewEventRow,
+          isEvenRow ? TableRowEven : '',
+          isSelected ? ChatDebugViewEventRowSelected : '',
+        ),
         'data-index': rowIndex,
         type: VirtualDomElements.Tr,
       },

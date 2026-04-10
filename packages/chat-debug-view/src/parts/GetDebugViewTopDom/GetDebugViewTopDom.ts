@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewFilterInput,
@@ -7,7 +7,6 @@ import {
   ChatDebugViewTop,
   ChatDebugViewTopDevtools,
   InputBox,
-  joinClassNames,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -37,14 +36,14 @@ export const getDebugViewTopDom = (
     return [
       {
         childCount: 2 + (quickFilterNodes.length > 0 ? 1 : 0),
-        className: joinClassNames(ChatDebugViewTop, ChatDebugViewTopDevtools),
+        className: mergeClassNames(ChatDebugViewTop, ChatDebugViewTopDevtools),
         onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
         type: VirtualDomElements.Search,
       },
       {
         autocomplete: 'off',
         childCount: 0,
-        className: joinClassNames(InputBox, ChatDebugViewFilterInput, ChatDebugViewFilterInputDevtools),
+        className: mergeClassNames(InputBox, ChatDebugViewFilterInput, ChatDebugViewFilterInputDevtools),
         inputType: 'search',
         name: InputName.Filter,
         onInput: DomEventListenerFunctions.HandleFilterInput,
@@ -67,7 +66,7 @@ export const getDebugViewTopDom = (
     {
       autocomplete: 'off',
       childCount: 0,
-      className: joinClassNames(InputBox, ChatDebugViewFilterInput),
+      className: mergeClassNames(InputBox, ChatDebugViewFilterInput),
       inputType: 'search',
       name: InputName.Filter,
       onInput: DomEventListenerFunctions.HandleFilterInput,

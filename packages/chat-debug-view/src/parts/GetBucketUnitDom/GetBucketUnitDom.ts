@@ -1,5 +1,5 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewTimelineBucketUnit, ChatDebugViewTimelineBucketUnitEmpty, joinClassNames } from '../ClassNames/ClassNames.ts'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { ChatDebugViewTimelineBucketUnit, ChatDebugViewTimelineBucketUnitEmpty } from '../ClassNames/ClassNames.ts'
 
 export const getBucketUnitDom = (unitCount: number, presetValue?: string): readonly VirtualDomNode[] => {
   if (unitCount === 0) {
@@ -11,7 +11,7 @@ export const getBucketUnitDom = (unitCount: number, presetValue?: string): reado
             }
           : {}),
         childCount: 0,
-        className: joinClassNames(ChatDebugViewTimelineBucketUnit, ChatDebugViewTimelineBucketUnitEmpty),
+        className: mergeClassNames(ChatDebugViewTimelineBucketUnit, ChatDebugViewTimelineBucketUnitEmpty),
         type: VirtualDomElements.Div,
       },
     ]

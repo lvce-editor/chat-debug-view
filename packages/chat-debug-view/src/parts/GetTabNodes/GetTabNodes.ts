@@ -1,5 +1,5 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewDetailsTab, ChatDebugViewDetailsTabSelected, joinClassNames } from '../ClassNames/ClassNames.ts'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { ChatDebugViewDetailsTab, ChatDebugViewDetailsTabSelected } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'
@@ -14,7 +14,7 @@ export const getTabNodes = (selectedDetailTab: string): readonly VirtualDomNode[
         'aria-controls': getPanelId(detailTab),
         'aria-selected': isSelected,
         childCount: 1,
-        className: joinClassNames(ChatDebugViewDetailsTab, isSelected && ChatDebugViewDetailsTabSelected),
+        className: mergeClassNames(ChatDebugViewDetailsTab, isSelected ? ChatDebugViewDetailsTabSelected : ''),
         id: getTabId(detailTab),
         name: InputName.DetailTab,
         onChange: DomEventListenerFunctions.SelectDetailTab,
