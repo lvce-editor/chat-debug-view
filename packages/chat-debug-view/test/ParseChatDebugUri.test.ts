@@ -1,12 +1,13 @@
 import { expect, test } from '@jest/globals'
 import * as ParseChatDebugUri from '../src/parts/ParseChatDebugUri/ParseChatDebugUri.ts'
 import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import { ParseChatDebugUriResultType } from '../src/parts/ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 test('parseChatDebugUri should return success for valid uri', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('chat-debug://session-1')
   expect(result).toEqual({
     sessionId: 'session-1',
-    type: 'success',
+    type: ParseChatDebugUriResultType.Success,
   })
 })
 
@@ -14,7 +15,7 @@ test('parseChatDebugUri should decode encoded session id', () => {
   const result = ParseChatDebugUri.parseChatDebugUri('chat-debug://session%20id')
   expect(result).toEqual({
     sessionId: 'session id',
-    type: 'success',
+    type: ParseChatDebugUriResultType.Success,
   })
 })
 
@@ -23,7 +24,7 @@ test('parseChatDebugUri should return missing-uri error for empty uri', () => {
   expect(result).toEqual({
     code: ParseChatDebugUriErrorCode.MissingUri,
     message: 'Missing URI',
-    type: 'error',
+    type: ParseChatDebugUriResultType.Error,
   })
 })
 
@@ -32,7 +33,7 @@ test('parseChatDebugUri should return invalid-uri-format error', () => {
   expect(result).toEqual({
     code: ParseChatDebugUriErrorCode.InvalidUriFormat,
     message: 'Invalid URI format',
-    type: 'error',
+    type: ParseChatDebugUriResultType.Error,
   })
 })
 
@@ -41,7 +42,7 @@ test('parseChatDebugUri should return invalid-uri-encoding error', () => {
   expect(result).toEqual({
     code: ParseChatDebugUriErrorCode.InvalidUriEncoding,
     message: 'Invalid URI encoding',
-    type: 'error',
+    type: ParseChatDebugUriResultType.Error,
   })
 })
 
@@ -50,6 +51,6 @@ test('parseChatDebugUri should return invalid-session-id error for encoded slash
   expect(result).toEqual({
     code: ParseChatDebugUriErrorCode.InvalidSessionId,
     message: 'Invalid session id',
-    type: 'error',
+    type: ParseChatDebugUriResultType.Error,
   })
 })

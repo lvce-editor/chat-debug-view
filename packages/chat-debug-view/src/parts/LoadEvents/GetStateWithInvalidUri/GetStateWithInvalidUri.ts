@@ -1,10 +1,11 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
 import { getInvalidUriMessage } from '../../GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { parseChatDebugUri } from '../../ParseChatDebugUri/ParseChatDebugUri.ts'
+import { ParseChatDebugUriResultType } from '../../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 export const getStateWithInvalidUri = (state: ChatDebugViewState): ChatDebugViewState => {
   const parsed = parseChatDebugUri(state.uri)
-  if (parsed.type !== 'error') {
+  if (parsed.type !== ParseChatDebugUriResultType.Error) {
     return state
   }
   return {

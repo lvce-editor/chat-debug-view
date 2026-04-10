@@ -1,6 +1,6 @@
-import type { ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import { ParseChatDebugUriResultType, type ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/
 const invalidSessionIdPattern = /[/?#]/
@@ -10,7 +10,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
     return {
       code: ParseChatDebugUriErrorCode.MissingUri,
       message: ChatDebugStrings.missingUri(),
-      type: 'error',
+      type: ParseChatDebugUriResultType.Error,
     }
   }
 
@@ -19,7 +19,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
     return {
       code: ParseChatDebugUriErrorCode.InvalidUriFormat,
       message: ChatDebugStrings.invalidUriFormat(),
-      type: 'error',
+      type: ParseChatDebugUriResultType.Error,
     }
   }
 
@@ -31,7 +31,7 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
     return {
       code: ParseChatDebugUriErrorCode.InvalidUriEncoding,
       message: ChatDebugStrings.invalidUriEncoding(),
-      type: 'error',
+      type: ParseChatDebugUriResultType.Error,
     }
   }
 
@@ -39,12 +39,12 @@ export const parseChatDebugUri = (uri: string): ParseChatDebugUriResult => {
     return {
       code: ParseChatDebugUriErrorCode.InvalidSessionId,
       message: ChatDebugStrings.invalidSessionId(),
-      type: 'error',
+      type: ParseChatDebugUriResultType.Error,
     }
   }
 
   return {
     sessionId,
-    type: 'success',
+    type: ParseChatDebugUriResultType.Success,
   }
 }
