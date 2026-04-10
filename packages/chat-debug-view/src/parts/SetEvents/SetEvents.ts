@@ -1,8 +1,9 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 
 export const setEvents = (state: ChatDebugViewState, events: readonly ChatViewEvent[]): ChatDebugViewState => {
-  return {
+  return getStateWithTimelineInfo({
     ...state,
     errorMessage: '',
     events,
@@ -10,5 +11,5 @@ export const setEvents = (state: ChatDebugViewState, events: readonly ChatViewEv
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,
-  }
+  })
 }

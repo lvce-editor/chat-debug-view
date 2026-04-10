@@ -1,5 +1,4 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewColumnFixed,
   ChatDebugViewHeaderCell,
@@ -9,8 +8,11 @@ import {
 } from '../ClassNames/ClassNames.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
-export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
-  const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns)
+export const getHeaderCellNodes = (
+  visibleTableColumns: readonly string[],
+  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
+): readonly VirtualDomNode[] => {
+  const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns, tableColumns)
   return orderedVisibleTableColumns.flatMap((column, index) => {
     const isFixed = index < orderedVisibleTableColumns.length - 1
     switch (column) {
@@ -22,7 +24,7 @@ export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): read
             scope: 'col',
             type: VirtualDomElements.Th,
           },
-          text(ChatDebugStrings.duration()),
+          text(TableColumn.getTableColumnLabel(tableColumns, column)),
         ]
       case TableColumn.Status:
         return [
@@ -32,7 +34,7 @@ export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): read
             scope: 'col',
             type: VirtualDomElements.Th,
           },
-          text(ChatDebugStrings.status()),
+          text(TableColumn.getTableColumnLabel(tableColumns, column)),
         ]
       case TableColumn.Type:
         return [
@@ -42,7 +44,7 @@ export const getHeaderCellNodes = (visibleTableColumns: readonly string[]): read
             scope: 'col',
             type: VirtualDomElements.Th,
           },
-          text(ChatDebugStrings.type()),
+          text(TableColumn.getTableColumnLabel(tableColumns, column)),
         ]
       default:
         return []

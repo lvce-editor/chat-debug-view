@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import {
   ChatDebugViewTimeline,
   ChatDebugViewTimelineBuckets,
@@ -10,27 +10,10 @@ import {
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
-import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
-import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
-export const getTimelineNodes = (
-  timelineEvents: readonly ChatViewEvent[],
-  timelineStartSeconds: string,
-  timelineEndSeconds: string,
-  timelineSelectionActive = false,
-  timelineSelectionAnchorSeconds = '',
-  timelineSelectionFocusSeconds = '',
-): readonly VirtualDomNode[] => {
-  const effectiveRange = getEffectiveTimelineRange(
-    timelineStartSeconds,
-    timelineEndSeconds,
-    timelineSelectionActive,
-    timelineSelectionAnchorSeconds,
-    timelineSelectionFocusSeconds,
-  )
-  const timelineInfo = getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
+export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
   }
@@ -52,7 +35,7 @@ export const getTimelineNodes = (
       className: ChatDebugViewTimelineSummary,
       type: VirtualDomElements.H2,
     },
-    text(getTimelineSummary(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)),
+    text(getTimelineSummary(timelineInfo)),
     {
       childCount: 2,
       className: ChatDebugViewTimelineInteractive,

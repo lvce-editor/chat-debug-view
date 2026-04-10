@@ -1,9 +1,10 @@
 import { expect, test } from '@jest/globals'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as HandleTimelinePointerDown from '../src/parts/HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('handleTimelinePointerDown should start a drag selection from the pointer position relative to the widget', () => {
-  const state = {
+  const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
       {
@@ -21,7 +22,7 @@ test('handleTimelinePointerDown should start a drag selection from the pointer p
     ],
     width: 436,
     x: 82,
-  }
+  })
 
   const result = HandleTimelinePointerDown.handleTimelinePointerDown(state, 168)
 

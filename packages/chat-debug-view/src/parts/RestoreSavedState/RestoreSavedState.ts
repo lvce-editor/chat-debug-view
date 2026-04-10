@@ -18,24 +18,30 @@ const isSavedState = (value: unknown): value is Partial<SavedState> => {
   return typeof value === 'object' && value !== null
 }
 
-const restoreEventCategoryFilter = (savedState: Partial<SavedState>, currentEventCategoryFilter: string): string => {
+const restoreCategoryFilters = (
+  savedState: Partial<SavedState>,
+  currentCategoryFilters: ChatDebugViewState['categoryFilters'],
+): ChatDebugViewState['categoryFilters'] => {
   if (typeof savedState.eventCategoryFilter === 'string' && validEventCategoryFilters.has(savedState.eventCategoryFilter)) {
-    return savedState.eventCategoryFilter
+    return EventCategoryFilter.selectCategoryFilter(currentCategoryFilters, savedState.eventCategoryFilter)
   }
   if (typeof savedState.filterValue === 'string') {
-    return parseFilterValue(savedState.filterValue).eventCategoryFilter
+    return EventCategoryFilter.selectCategoryFilter(currentCategoryFilters, parseFilterValue(savedState.filterValue).eventCategoryFilter)
   }
-  return currentEventCategoryFilter
+  return currentCategoryFilters
 }
 
 const restoreFilterValue = (savedState: Partial<SavedState>, currentFilterValue: string): string => {
   return typeof savedState.filterValue === 'string' ? savedState.filterValue : currentFilterValue
 }
 
-const restoreSelectedDetailTab = (savedState: Partial<SavedState>, currentSelectedDetailTab: string): string => {
+const restoreDetailTabs = (
+  savedState: Partial<SavedState>,
+  currentDetailTabs: ChatDebugViewState['detailTabs'],
+): ChatDebugViewState['detailTabs'] => {
   return typeof savedState.selectedDetailTab === 'string' && DetailTab.isDetailTab(savedState.selectedDetailTab)
-    ? savedState.selectedDetailTab
-    : currentSelectedDetailTab
+    ? DetailTab.selectDetailTab(currentDetailTabs, savedState.selectedDetailTab)
+    : currentDetailTabs
 }
 
 const restoreSelectedEventId = (
@@ -77,9 +83,9 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
   }
   return {
     ...state,
-    eventCategoryFilter: restoreEventCategoryFilter(savedState, state.eventCategoryFilter),
+    categoryFilters: restoreCategoryFilters(savedState, state.categoryFilters),
+    detailTabs: restoreDetailTabs(savedState, state.detailTabs),
     filterValue: restoreFilterValue(savedState, state.filterValue),
-    selectedDetailTab: restoreSelectedDetailTab(savedState, state.selectedDetailTab),
     selectedEventId: restoreSelectedEventId(savedState, state.selectedEventId),
     tableColumnWidths: restoreTableColumnWidths(savedState, state.tableColumnWidths),
     timelineEndSeconds: restoreTimelineEndSeconds(savedState, state.timelineEndSeconds),

@@ -1,6 +1,7 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
-import * as InputName from '../InputName/InputName.ts'
+import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
@@ -8,19 +9,17 @@ import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout
 export const createDefaultState = (): ChatDebugViewState => {
   return {
     assetDir: '',
-    categoryFilters: [],
+    categoryFilters: EventCategoryFilter.createCategoryFilters(),
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
-    detailTabs: [],
+    detailTabs: DetailTab.createDetailTabs(),
     errorMessage: '',
-    eventCategoryFilter: EventCategoryFilter.All,
     events: [],
     eventStoreName: 'chat-view-events',
     filterValue: '',
     height: 0,
     initial: false,
     platform: 0,
-    selectedDetailTab: InputName.Response,
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,
@@ -29,10 +28,13 @@ export const createDefaultState = (): ChatDebugViewState => {
     showEventStreamFinishedEvents: false,
     showInputEvents: false,
     showResponsePartEvents: false,
+    tableColumns: [],
     tableColumnWidths: defaultTableColumnWidths,
     tableResizerDownId: 0,
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
+    timelineEvents: [],
+    timelineInfo: emptyTimelineInfo,
     timelineSelectionActive: false,
     timelineSelectionAnchorSeconds: '',
     timelineSelectionFocusSeconds: '',

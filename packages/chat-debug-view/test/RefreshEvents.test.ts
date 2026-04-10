@@ -1,4 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { refreshEvents } from '../src/parts/LoadEvents/RefreshEvents/RefreshEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -21,13 +22,15 @@ test('refreshEvents should prefer the current state session id over the uri sess
 
   const result = await refreshEvents(state)
 
-  expect(result).toEqual({
-    ...state,
-    errorMessage: '',
-    events,
-    initial: false,
-    sessionId: 'session-from-state',
-  })
+  expect(result).toEqual(
+    getStateWithTimelineInfo({
+      ...state,
+      errorMessage: '',
+      events,
+      initial: false,
+      sessionId: 'session-from-state',
+    }),
+  )
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-from-state', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId')
 })

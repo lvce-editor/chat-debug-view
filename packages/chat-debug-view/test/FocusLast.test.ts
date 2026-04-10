@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { focusLast } from '../src/parts/FocusLast/FocusLast.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -29,6 +30,7 @@ test('focusLast should select the final event when another row is selected', asy
   })
   const state = {
     ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -41,7 +43,6 @@ test('focusLast should select the final event when another row is selected', asy
         type: 'response',
       },
     ],
-    selectedDetailTab: 'preview',
     selectedEventIndex: 0,
     sessionId: 'session-1',
   }
@@ -49,7 +50,7 @@ test('focusLast should select the final event when another row is selected', asy
   const result = await focusLast(state)
 
   expect(result.selectedEventIndex).toBe(1)
-  expect(result.selectedDetailTab).toBe('preview')
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEvent).toEqual({
     detail: 'row-2',
     eventId: 2,

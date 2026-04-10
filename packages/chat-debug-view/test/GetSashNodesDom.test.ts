@@ -26,3 +26,12 @@ test('getSashNodesDom should return sash and sash line when event is selected', 
     },
   ])
 })
+
+test('getSashNodesDom should reuse the selected sash dom', () => {
+  const first = GetSashNodesDom.getSashNodesDom(true)
+  const second = GetSashNodesDom.getSashNodesDom(true)
+
+  expect(first).toBe(second)
+  expect(first[0]).toBe(second[0])
+  expect(first[1]).toBe(second[1])
+})

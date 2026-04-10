@@ -17,18 +17,17 @@ import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
-export const getDetailsDom = (
+const getContentNode = (
   previewEventNodes: readonly VirtualDomNode[],
-  payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
-  responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
-  selectedEvent: ChatViewEvent | null = null,
-  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
-  selectedDetailTab = InputName.Response,
-): readonly VirtualDomNode[] => {
-  if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
-    return []
-  }
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
+  payloadEventNodes: readonly VirtualDomNode[],
+  responseEventNodes: readonly VirtualDomNode[],
+  selectedEvent: ChatViewEvent | null,
+  detailTabs: readonly DetailTabType[],
+): {
+  readonly contentNodes: readonly VirtualDomNode[]
+  readonly safeSelectedDetailTab: string
+} => {
+  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs)
   const contentNodes =
     safeSelectedDetailTab === InputName.Timing && selectedEvent
       ? getTimingDetailsDom(selectedEvent)
@@ -37,6 +36,23 @@ export const getDetailsDom = (
         : safeSelectedDetailTab === InputName.Payload
           ? payloadEventNodes
           : responseEventNodes
+  return {
+    contentNodes,
+    safeSelectedDetailTab,
+  }
+}
+
+export const getDetailsDom = (
+  previewEventNodes: readonly VirtualDomNode[],
+  payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
+  responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
+  selectedEvent: ChatViewEvent | null = null,
+  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+): readonly VirtualDomNode[] => {
+  if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
+    return []
+  }
+  const { contentNodes, safeSelectedDetailTab } = getContentNode(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   return [
     {
       childCount: 2,
@@ -66,7 +82,7 @@ export const getDetailsDom = (
       role: 'tablist',
       type: VirtualDomElements.Div,
     },
-    ...getTabNodes(detailTabs, safeSelectedDetailTab),
+    ...getTabNodes(detailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
       childCount: 1,

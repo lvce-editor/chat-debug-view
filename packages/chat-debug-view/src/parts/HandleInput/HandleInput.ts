@@ -5,13 +5,15 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
+import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
+  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,
-    state.eventCategoryFilter,
+    eventCategoryFilter,
     state.showInputEvents,
     state.showResponsePartEvents,
     state.showEventStreamFinishedEvents,
@@ -81,9 +83,10 @@ const parseSelectedEventIndex = (value: string): number | null => {
 }
 
 const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugViewState): ChatDebugViewState => {
-  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextState)
+  const nextStateWithTimelineInfo = getStateWithTimelineInfo(nextState)
+  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextStateWithTimelineInfo)
   return {
-    ...nextState,
+    ...nextStateWithTimelineInfo,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
     selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,
@@ -99,9 +102,13 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     return withPreservedSelection(state, nextState)
   }
   if (name === InputName.EventCategoryFilter) {
+    const categoryFilters = EventCategoryFilter.selectCategoryFilter(state.categoryFilters, value || EventCategoryFilter.All)
+    if (categoryFilters === state.categoryFilters) {
+      return state
+    }
     const nextState = {
       ...state,
-      eventCategoryFilter: value || EventCategoryFilter.All,
+      categoryFilters,
     }
     return withPreservedSelection(state, nextState)
   }
@@ -179,9 +186,13 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     if (!DetailTab.isDetailTab(value)) {
       return state
     }
+    const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+    if (detailTabs === state.detailTabs) {
+      return state
+    }
     return {
       ...state,
-      selectedDetailTab: value,
+      detailTabs,
     }
   }
   return state

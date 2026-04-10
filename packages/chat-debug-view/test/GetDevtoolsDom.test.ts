@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
@@ -415,7 +416,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '', 'No events have been found', false, '', '', 'response', [
+  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '', 'No events have been found', false, '', '', [
     TableColumn.Type,
     TableColumn.Status,
   ]) as readonly {
@@ -590,7 +591,20 @@ test('getDevtoolsDom should simplify preview json to name, arguments and result 
     },
   ]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    events[0],
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
     readonly text?: string
   }[]
 
@@ -645,7 +659,20 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
     },
   ]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    events[0],
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
     readonly text?: string
   }[]
 
@@ -687,7 +714,20 @@ test('getDevtoolsDom should render chat message preview text with numbered rows'
     },
   ]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'preview') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    events[0],
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -737,7 +777,20 @@ test('getDevtoolsDom should render simplified tool json in the payload tab', () 
     },
   ]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '', 'No events have been found', false, '', '', 'payload') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    events[0],
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('payload'),
+  ) as readonly {
     readonly text?: string
   }[]
 

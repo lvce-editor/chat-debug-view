@@ -26,3 +26,12 @@ test('getRefreshButtonDom should render refresh button nodes', () => {
     text('Refresh'),
   ])
 })
+
+test('getRefreshButtonDom should reuse the static refresh button dom', () => {
+  const first = GetRefreshButtonDom.getRefreshButtonDom()
+  const second = GetRefreshButtonDom.getRefreshButtonDom()
+
+  expect(first).toBe(second)
+  expect(first[0]).toBe(second[0])
+  expect(first[1]).toBe(second[1])
+})

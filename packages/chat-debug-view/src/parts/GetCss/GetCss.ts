@@ -1,10 +1,11 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import { clampTableWidth, getDetailsWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
+import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
-  const tableWidth = clampTableWidth(state.width, state.tableWidth)
-  const detailsWidth = getDetailsWidth(state.width, state.tableWidth)
+  const hasSelectedEvent = !!state.selectedEvent
+  const tableWidth = hasSelectedEvent ? clampTableWidth(state.width, state.tableWidth) : getMainWidth(state.width)
+  const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0

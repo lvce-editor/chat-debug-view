@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineSummary } from '../src/parts/GetTimelineSummary/GetTimelineSummary.ts'
 
 test('getTimelineSummary should describe selected window', () => {
@@ -17,7 +18,7 @@ test('getTimelineSummary should describe selected window', () => {
     },
   ]
 
-  expect(getTimelineSummary(events, '5', '7')).toBe('Window 5s-7s of 10s')
+  expect(getTimelineSummary(getTimelineInfo(events, '5', '7'))).toBe('Window 5s-7s of 10s')
 })
 
 test('getTimelineSummary should describe full window when selection is empty', () => {
@@ -36,5 +37,5 @@ test('getTimelineSummary should describe full window when selection is empty', (
     },
   ]
 
-  expect(getTimelineSummary(events, '', '')).toBe('Window 0s-10s of 10s')
+  expect(getTimelineSummary(getTimelineInfo(events, '', ''))).toBe('Window 0s-10s of 10s')
 })

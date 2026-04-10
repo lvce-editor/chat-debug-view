@@ -28,3 +28,12 @@ test('getDebugErrorDom should render root and error message nodes', () => {
     },
   ])
 })
+
+test('getDebugErrorDom should reuse static wrapper nodes', () => {
+  const first = getDebugErrorDom('first')
+  const second = getDebugErrorDom('second')
+
+  expect(first[0]).toBe(second[0])
+  expect(first[1]).toBe(second[1])
+  expect(first[2]).not.toBe(second[2])
+})

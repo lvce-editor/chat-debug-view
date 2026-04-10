@@ -138,7 +138,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
   const events = [
     {
       arguments: {
-        uri: '/home/simon/Documents/lvce-editor/playground',
+        uri: '/test/playground',
       },
       eventId: 1,
       name: 'list_files',

@@ -1,10 +1,12 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
+import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getPreservedSelectedEventIndex } from '../GetPreservedSelectedEventIndex/GetPreservedSelectedEventIndex.ts'
 
 export const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugViewState): ChatDebugViewState => {
-  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextState)
+  const nextStateWithTimelineInfo = getStateWithTimelineInfo(nextState)
+  const selectedEventIndex = getPreservedSelectedEventIndex(state, nextStateWithTimelineInfo)
   return {
-    ...nextState,
+    ...nextStateWithTimelineInfo,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
     selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,

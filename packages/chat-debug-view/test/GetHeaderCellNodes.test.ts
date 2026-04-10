@@ -4,7 +4,21 @@ import * as GetHeaderCellNodes from '../src/parts/GetHeaderCellNodes/GetHeaderCe
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getHeaderCellNodes should render the visible header cells', () => {
-  const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status]) as readonly {
+  const tableColumns: readonly TableColumn.TableColumn[] = [
+    {
+      label: 'Request Type',
+      name: TableColumn.Type,
+    },
+    {
+      label: 'Elapsed',
+      name: TableColumn.Duration,
+    },
+    {
+      label: 'Outcome',
+      name: TableColumn.Status,
+    },
+  ]
+  const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status], tableColumns) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly scope?: string
@@ -17,13 +31,13 @@ test('getHeaderCellNodes should render the visible header cells', () => {
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Type'),
+    text('Request Type'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Status'),
+    text('Outcome'),
   ])
 })

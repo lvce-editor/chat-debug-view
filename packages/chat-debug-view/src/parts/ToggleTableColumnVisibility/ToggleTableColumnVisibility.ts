@@ -5,14 +5,11 @@ export const toggleTableColumnVisibility = (state: ChatDebugViewState, column: s
   if (!isTableColumn(column)) {
     return state
   }
-  const nextVisibleColumns = new Set(state.visibleTableColumns)
-  if (nextVisibleColumns.has(column)) {
-    nextVisibleColumns.delete(column)
-  } else {
-    nextVisibleColumns.add(column)
-  }
+  const nextVisibleColumns = state.visibleTableColumns.includes(column)
+    ? state.visibleTableColumns.filter((visibleColumn) => visibleColumn !== column)
+    : [...state.visibleTableColumns, column]
   return {
     ...state,
-    visibleTableColumns: getOrderedVisibleTableColumns([...nextVisibleColumns]),
+    visibleTableColumns: getOrderedVisibleTableColumns(nextVisibleColumns),
   }
 }

@@ -6,7 +6,7 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('handleEventCategoryFilter should update event category filter', () => {
   const state = createDefaultState()
   const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Tools)
-  expect(result.eventCategoryFilter).toBe(EventCategoryFilter.Tools)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.categoryFilters)).toBe(EventCategoryFilter.Tools)
 })
 
 test('handleEventCategoryFilter should preserve selected event when category filter still includes it', () => {

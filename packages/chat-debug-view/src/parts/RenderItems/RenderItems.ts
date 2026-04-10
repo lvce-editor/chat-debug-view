@@ -2,9 +2,9 @@ import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
-import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
@@ -19,12 +19,11 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   if (newState.initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
-  const timelineEvents = getTimelineEvents(newState)
-  const filteredEvents = filterEventsByTimelineRange(timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
+  const filteredEvents = filterEventsByTimelineRange(newState.timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
   const dom = getChatDebugViewDom(
     newState.errorMessage,
     newState.filterValue,
-    newState.eventCategoryFilter,
+    EventCategoryFilter.getSelectedEventCategoryFilter(newState.categoryFilters),
     newState.categoryFilters,
     newState.showEventStreamFinishedEvents,
     newState.showInputEvents,
@@ -34,14 +33,15 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.selectedEventIndex,
     newState.timelineStartSeconds,
     newState.timelineEndSeconds,
-    withSessionEventIds(timelineEvents),
+    withSessionEventIds(newState.timelineEvents),
     withSessionEventIds(filteredEvents),
     newState.timelineSelectionActive,
     newState.timelineSelectionAnchorSeconds,
     newState.timelineSelectionFocusSeconds,
-    newState.selectedDetailTab,
     newState.visibleTableColumns,
     newState.detailTabs,
+    newState.tableColumns,
+    newState.timelineInfo,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

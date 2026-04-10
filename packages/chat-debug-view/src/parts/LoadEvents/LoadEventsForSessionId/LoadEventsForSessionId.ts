@@ -1,6 +1,7 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getSessionNotFoundMessage } from '../../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
+import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
 import { restoreSelectedEvent } from '../RestoreSelectedEvent/RestoreSelectedEvent.ts'
 
@@ -9,7 +10,7 @@ export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionI
   const result = await loadEventsDependencies.listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
 
   if (result.type === 'error') {
-    return {
+    return getStateWithTimelineInfo({
       ...state,
       errorMessage: getFailedToLoadMessage(sessionId, result.error),
       events: [],
@@ -18,12 +19,12 @@ export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionI
       selectedEventId: null,
       selectedEventIndex: null,
       sessionId,
-    }
+    })
   }
 
   const { events } = result
   if (events.length === 0) {
-    return {
+    return getStateWithTimelineInfo({
       ...state,
       errorMessage: getSessionNotFoundMessage(sessionId),
       events: [],
@@ -32,15 +33,15 @@ export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionI
       selectedEventId: null,
       selectedEventIndex: null,
       sessionId,
-    }
+    })
   }
 
-  const nextState = {
+  const nextState = getStateWithTimelineInfo({
     ...state,
     errorMessage: '',
     events,
     initial: false,
     sessionId,
-  }
+  })
   return restoreSelectedEvent(nextState)
 }
