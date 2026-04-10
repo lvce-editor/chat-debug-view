@@ -36,12 +36,15 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: relative;
   width: min(100%, var(--ChatDebugViewTableWidth));
   max-width: 100%;
+  flex:1;
+  display:flex
 }
 
 .ChatDebugViewTable {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
+  flex: 1;
 }
 
 .ChatDebugViewHeaderCell,
