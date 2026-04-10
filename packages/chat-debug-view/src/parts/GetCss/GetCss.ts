@@ -188,6 +188,46 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline-offset: 1px;
 }
 
+.ChatDebugViewDetailsClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vscode-descriptionForeground, inherit);
+  cursor: pointer;
+}
+
+.ChatDebugViewDetailsClose:hover {
+  background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.08));
+  color: var(--vscode-foreground, inherit);
+}
+
+.ChatDebugViewDetailsClose:focus-visible {
+  outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
+  outline-offset: 1px;
+}
+
+.maskIcon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  opacity: 0.86;
+  contain: strict;
+}
+
+.maskIcon.close {
+  background:
+    linear-gradient(45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(-45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px));
+}
+
 .ChatDebugViewEventRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);

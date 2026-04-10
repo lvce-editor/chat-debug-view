@@ -827,6 +827,54 @@ test('getDevtoolsDom should render chat message preview text with numbered rows'
   )
 })
 
+test('getDevtoolsDom should render invalid image fallback preview text without numbered rows', () => {
+  const events = [
+    {
+      eventId: 1,
+      mimeType: 'image/png',
+      name: 'broken.png',
+      sessionId: 'session-1',
+      timestamp: '2026-04-10T10:00:00.000Z',
+      type: 'chat-attachment-added',
+    },
+  ]
+  const selectedEvent = setSelectedEventPreview(
+    {
+      ...events[0],
+    },
+    'image could not be loaded',
+  )
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    selectedEvent,
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'image could not be loaded',
+    }),
+  )
+})
+
 test('getDevtoolsDom should render simplified tool json in the payload tab', () => {
   const events = [
     {
