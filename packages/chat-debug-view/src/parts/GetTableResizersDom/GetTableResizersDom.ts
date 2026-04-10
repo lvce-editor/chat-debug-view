@@ -18,24 +18,22 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   if (resizerCount === 0) {
     return []
   }
-  const resizerNodes = [] as VirtualDomNode[]
-  for (let index = 0; index < resizerCount; index++) {
-    resizerNodes.push(
-      {
-        childCount: 1,
-        className: `${ChatDebugViewResizer} ${resizerClassNames[index]}`,
-        name: resizerNames[index],
-        onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
-        role: 'none',
-        type: VirtualDomElements.Button,
-      },
-      {
-        childCount: 0,
-        className: ChatDebugViewResizerInner,
-        type: VirtualDomElements.Div,
-      },
-    )
-  }
+  const visibleResizerClassNames = resizerClassNames.slice(0, resizerCount)
+  const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName, index) => [
+    {
+      childCount: 1,
+      className: `${ChatDebugViewResizer} ${resizerClassName}`,
+      name: resizerNames[index],
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: ChatDebugViewResizerInner,
+      type: VirtualDomElements.Div,
+    },
+  ])
   return [
     {
       childCount: resizerCount,
