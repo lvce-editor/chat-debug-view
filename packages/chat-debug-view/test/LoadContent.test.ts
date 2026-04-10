@@ -1,6 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/LoadContent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
