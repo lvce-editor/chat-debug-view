@@ -14,7 +14,7 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
       type: VirtualDomElements.Div,
     },
     ...categoryFilters.flatMap((categoryFilter) => {
-      const isSelected = categoryFilter.isSelectedProperty
+      const isSelected = categoryFilter.isSelected
       return [
         {
           'aria-selected': isSelected,

@@ -29,27 +29,27 @@ export const createCategoryFilters = (
   const selectedEventCategoryFilters = normalizeSelectedEventCategoryFilters(selectedEventCategoryFilter)
   return [
     {
-      isSelectedProperty: selectedEventCategoryFilters.includes(All),
+      isSelected: selectedEventCategoryFilters.includes(All),
       label: ChatDebugStrings.all(),
       name: All,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilters.includes(Tools),
+      isSelected: selectedEventCategoryFilters.includes(Tools),
       label: ChatDebugStrings.tools(),
       name: Tools,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilters.includes(Network),
+      isSelected: selectedEventCategoryFilters.includes(Network),
       label: ChatDebugStrings.network(),
       name: Network,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilters.includes(Ui),
+      isSelected: selectedEventCategoryFilters.includes(Ui),
       label: ChatDebugStrings.ui(),
       name: Ui,
     },
     {
-      isSelectedProperty: selectedEventCategoryFilters.includes(Stream),
+      isSelected: selectedEventCategoryFilters.includes(Stream),
       label: ChatDebugStrings.stream(),
       name: Stream,
     },

@@ -1,5 +1,5 @@
 export interface CategoryFilter {
-  readonly isSelectedProperty: boolean
+  readonly isSelected: boolean
   readonly label: string
   readonly name: string
 }
@@ -26,7 +26,7 @@ export const isEventCategoryFilter = (value: string): value is EventCategoryFilt
 }
 
 export const getSelectedEventCategoryFilters = (categoryFilters: readonly CategoryFilter[]): readonly EventCategoryFilterType[] => {
-  const selectedCategoryFilters = categoryFilters.filter((categoryFilter) => categoryFilter.isSelectedProperty)
+  const selectedCategoryFilters = categoryFilters.filter((categoryFilter) => categoryFilter.isSelected)
   const selectedEventCategoryFilters = selectedCategoryFilters
     .map((categoryFilter) => categoryFilter.name)
     .filter((name): name is EventCategoryFilterType => isEventCategoryFilter(name))
@@ -50,12 +50,12 @@ export const selectCategoryFilters = (
   )
   return categoryFilters.map((categoryFilter) => {
     const isSelectedProperty = normalizedSelectedEventCategoryFilters.includes(categoryFilter.name as EventCategoryFilterType)
-    if (categoryFilter.isSelectedProperty === isSelectedProperty) {
+    if (categoryFilter.isSelected === isSelectedProperty) {
       return categoryFilter
     }
     return {
       ...categoryFilter,
-      isSelectedProperty,
+      isSelected: isSelectedProperty,
     }
   })
 }
