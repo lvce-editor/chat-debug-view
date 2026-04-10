@@ -8,7 +8,7 @@ import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
-import * as HandleDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
+import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
 import * as HandleEventRowClick from '../HandleEventRowClick/HandleEventRowClick.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
@@ -49,7 +49,6 @@ export const commandMap = {
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
-  'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.selectDetailTab),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
   'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
@@ -79,6 +78,7 @@ export const commandMap = {
   'ChatDebug.resetTableColumns': wrapCommand(ResetTableColumns.resetTableColumns),
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
+  'ChatDebug.selectDetailTab': wrapCommand(SelectDetailTab.selectDetailTab),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,

@@ -1,20 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { isErrorStatusCode } from '../IsErrorStatusCode/IsErrorStatusCode.ts'
+import { isRecord } from '../IsRecord/IsRecord.ts'
 import { isToolEvent } from '../IsToolEvent/IsToolEvent.ts'
-
-const isRecord = (value: unknown): value is Record<string, unknown> => {
-  return typeof value === 'object' && value !== null
-}
-
-const isErrorStatusCode = (value: unknown): boolean => {
-  if (typeof value === 'number') {
-    return value >= 400
-  }
-  if (typeof value === 'string') {
-    const parsedStatus = Number(value)
-    return Number.isFinite(parsedStatus) && parsedStatus >= 400
-  }
-  return false
-}
 
 export const hasErrorStatus = (event: ChatViewEvent): boolean => {
   if (event.type === 'error') {

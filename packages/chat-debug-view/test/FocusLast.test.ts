@@ -1,28 +1,32 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import { focusLast, focusLastDependencies } from '../src/parts/FocusLast/FocusLast.ts'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import { focusLast } from '../src/parts/FocusLast/FocusLast.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('focusLast should keep the same state when there are no visible events', async () => {
-  const loadSelectedEventSpy = jest.spyOn(focusLastDependencies, 'loadSelectedEvent')
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'unused',
+      eventId: 1,
+      type: 'request',
+    }),
+  })
   const state = createDefaultState()
 
   const result = await focusLast(state)
 
   expect(result).toBe(state)
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
+  expect(mockRpc.invocations).toEqual([])
 })
 
 test('focusLast should select the final event when another row is selected', async () => {
-  jest.spyOn(focusLastDependencies, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'row-2',
-    eventId: 2,
-    type: 'response',
-  } as ChatViewEvent)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'row-2',
+      eventId: 2,
+      type: 'response',
+    }),
+  })
   const state = {
     ...createDefaultState(),
     events: [
@@ -51,4 +55,5 @@ test('focusLast should select the final event when another row is selected', asy
     eventId: 2,
     type: 'response',
   })
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
 })

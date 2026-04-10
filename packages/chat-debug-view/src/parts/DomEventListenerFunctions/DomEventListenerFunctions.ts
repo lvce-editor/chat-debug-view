@@ -1,6 +1,6 @@
 export const HandleEventCategoryFilter = 4
 export const HandleFilterInput = 5
-export const HandleDetailTab = 6
+export const SelectDetailTab = 6
 export const HandleEventRowClick = 7
 export const HandleHeaderContextMenu = 8
 export const HandleSashPointerDown = 9

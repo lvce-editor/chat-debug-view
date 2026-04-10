@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
   ChatDebugViewTimeline,
@@ -11,7 +11,6 @@ import {
   ChatDebugViewTimelineSelectionRange,
   ChatDebugViewTimelineSummary,
   ChatDebugViewTimelineTop,
-  joinClassNames,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatPercent } from '../FormatPercent/FormatPercent.ts'
@@ -52,13 +51,13 @@ export const getTimelineNodes = (
           },
           {
             childCount: 0,
-            className: joinClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerStart),
+            className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerStart),
             style: `left:${formatPercent(timelineInfo.selectionStartPercent)};`,
             type: VirtualDomElements.Div,
           },
           {
             childCount: 0,
-            className: joinClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
+            className: mergeClassNames(ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
             style: `left:${formatPercent(timelineInfo.selectionEndPercent)};`,
             type: VirtualDomElements.Div,
           },

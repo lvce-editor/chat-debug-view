@@ -24,7 +24,7 @@ test('create should store state with the given uid', () => {
   expect(oldState.selectedEventId).toBeNull()
 })
 
-test.skip('create should restore serializable state from saved state', () => {
+test('create should restore serializable state from saved state', () => {
   const uid = 124
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
     eventCategoryFilter: EventCategoryFilter.Tools,
