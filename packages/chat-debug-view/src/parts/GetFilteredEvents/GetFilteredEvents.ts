@@ -8,7 +8,7 @@ import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
 export const getFilteredEvents = (
   events: readonly ChatViewEvent[],
   filterValue: string,
-  eventCategoryFilter: string,
+  eventCategoryFilters: readonly string[],
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
   showEventStreamFinishedEvents: boolean,
@@ -16,9 +16,9 @@ export const getFilteredEvents = (
   const visibleEvents = getVisibleEvents(events, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
   const collapsedEvents = collapseToolExecutionEvents(visibleEvents)
   const parsedFilter = parseFilterValue(filterValue)
-  const activeEventCategoryFilter =
-    parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilter : parsedFilter.eventCategoryFilter
-  const filteredByCategory = collapsedEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilter))
+  const activeEventCategoryFilters =
+    parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilters : [parsedFilter.eventCategoryFilter]
+  const filteredByCategory = collapsedEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilters))
   const { filterText } = parsedFilter
   if (!filterText) {
     return filteredByCategory

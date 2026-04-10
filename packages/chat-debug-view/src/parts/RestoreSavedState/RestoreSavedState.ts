@@ -22,6 +22,12 @@ const restoreCategoryFilters = (
   savedState: Partial<SavedState>,
   currentCategoryFilters: ChatDebugViewState['categoryFilters'],
 ): ChatDebugViewState['categoryFilters'] => {
+  if (Array.isArray(savedState.eventCategoryFilters)) {
+    return EventCategoryFilter.selectCategoryFilters(
+      currentCategoryFilters,
+      savedState.eventCategoryFilters.filter((value): value is string => typeof value === 'string'),
+    )
+  }
   if (typeof savedState.eventCategoryFilter === 'string' && validEventCategoryFilters.has(savedState.eventCategoryFilter)) {
     return EventCategoryFilter.selectCategoryFilter(currentCategoryFilters, savedState.eventCategoryFilter)
   }

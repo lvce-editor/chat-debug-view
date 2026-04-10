@@ -1,9 +1,38 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
+import * as TimelineSelectionHandleName from '../TimelineSelectionHandleName/TimelineSelectionHandleName.ts'
 
-export const handleTimelinePointerDown = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
+const getResizeState = (state: ChatDebugViewState, name: string): ChatDebugViewState | undefined => {
+  if (state.timelineInfo.startSeconds === null || state.timelineInfo.endSeconds === null) {
+    return undefined
+  }
+  if (name === TimelineSelectionHandleName.Start) {
+    return getStateWithTimelineInfo({
+      ...state,
+      timelineSelectionActive: true,
+      timelineSelectionAnchorSeconds: formatTimelinePresetValue(state.timelineInfo.endSeconds),
+      timelineSelectionFocusSeconds: formatTimelinePresetValue(state.timelineInfo.startSeconds),
+    })
+  }
+  if (name === TimelineSelectionHandleName.End) {
+    return getStateWithTimelineInfo({
+      ...state,
+      timelineSelectionActive: true,
+      timelineSelectionAnchorSeconds: formatTimelinePresetValue(state.timelineInfo.startSeconds),
+      timelineSelectionFocusSeconds: formatTimelinePresetValue(state.timelineInfo.endSeconds),
+    })
+  }
+  return undefined
+}
+
+export const handleTimelinePointerDown = (state: ChatDebugViewState, name: string, eventX: number): ChatDebugViewState => {
+  const resizeState = getResizeState(state, name)
+  if (resizeState) {
+    return resizeState
+  }
   const timelineLeft = getTimelineLeft(state)
   const timelineWidth = getTimelineWidth(state)
   const clientX = state.x + eventX

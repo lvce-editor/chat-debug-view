@@ -61,7 +61,11 @@ test('chat debug empty-state strings should return localized messages', () => {
 
 test('handleSashPointerDown and handleSashPointerUp should return the same state object', () => {
   const state = createDefaultState()
+  const pointerDownState = handleSashPointerDown(state, 10, 20)
 
-  expect(handleSashPointerDown(state, 10, 20)).toBe(state)
-  expect(handleSashPointerUp(state, 10, 20)).toBe(state)
+  expect(pointerDownState).toEqual({
+    ...state,
+    sashPointerActive: true,
+  })
+  expect(handleSashPointerUp(pointerDownState, 10, 20)).toEqual(state)
 })

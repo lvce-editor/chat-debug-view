@@ -20,6 +20,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     height: 0,
     initial: false,
     platform: 0,
+    sashPointerActive: false,
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,

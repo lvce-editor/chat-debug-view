@@ -1,43 +1,32 @@
+// cspell:ignore multiselectable
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
-import {
-  ChatDebugViewQuickFilterInput,
-  ChatDebugViewQuickFilterPill,
-  ChatDebugViewQuickFilterPillSelected,
-  ChatDebugViewQuickFilters,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewQuickFilterPill, ChatDebugViewQuickFilterPillSelected, ChatDebugViewQuickFilters } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as InputName from '../InputName/InputName.ts'
 
 export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
   return [
     {
+      'aria-multiselectable': true,
       childCount: categoryFilters.length,
       className: ChatDebugViewQuickFilters,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'listbox',
       type: VirtualDomElements.Div,
     },
     ...categoryFilters.flatMap((categoryFilter) => {
-      const isSelected = categoryFilter.isSelectedProperty
+      const { isSelected, label, name } = categoryFilter
       return [
         {
-          ariaSelected: isSelected ? 'true' : 'false',
-          childCount: 2,
+          'aria-selected': isSelected,
+          childCount: 1,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
+          'data-value': name,
+          onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
           role: 'option',
-          type: VirtualDomElements.Label,
+          type: VirtualDomElements.Div,
         },
-        {
-          checked: isSelected,
-          childCount: 0,
-          className: ChatDebugViewQuickFilterInput,
-          inputType: 'radio',
-          name: InputName.EventCategoryFilter,
-          onChange: DomEventListenerFunctions.HandleEventCategoryFilter,
-          type: VirtualDomElements.Input,
-          value: categoryFilter.name,
-        },
-        text(categoryFilter.label),
+        text(label),
       ]
     }),
   ]

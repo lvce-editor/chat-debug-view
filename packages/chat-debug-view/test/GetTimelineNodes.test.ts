@@ -60,6 +60,8 @@ test('getTimelineNodes should render selection markers only when a range exists'
   const nodes = getTimelineNodes(getTimelineInfo(events, '2', '8')) as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly name?: string
+    readonly role?: string
     readonly style?: string
     readonly type?: number
   }[]
@@ -71,15 +73,19 @@ test('getTimelineNodes should render selection markers only when a range exists'
   expect(markers).toEqual([
     {
       childCount: 0,
-      className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
+      className: 'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
+      name: 'TimelineSelectionStartHandle',
+      role: 'none',
       style: 'left:20%;',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
+      className: 'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
+      name: 'TimelineSelectionEndHandle',
+      role: 'none',
       style: 'left:80%;',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
   ])
 })

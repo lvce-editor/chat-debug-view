@@ -9,6 +9,34 @@ test('handleEventCategoryFilter should update event category filter', () => {
   expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.categoryFilters)).toBe(EventCategoryFilter.Tools)
 })
 
+test('handleEventCategoryFilter should add another event category filter on ctrl click', () => {
+  const state = {
+    ...createDefaultState(),
+    categoryFilters: EventCategoryFilter.selectCategoryFilter(createDefaultState().categoryFilters, EventCategoryFilter.Tools),
+  }
+
+  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Network, true, false)
+
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([
+    EventCategoryFilter.Tools,
+    EventCategoryFilter.Network,
+  ])
+})
+
+test('handleEventCategoryFilter should switch to the clicked event category filter on regular click', () => {
+  const state = {
+    ...createDefaultState(),
+    categoryFilters: EventCategoryFilter.selectCategoryFilters(createDefaultState().categoryFilters, [
+      EventCategoryFilter.Tools,
+      EventCategoryFilter.Network,
+    ]),
+  }
+
+  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Ui, false, false)
+
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.Ui])
+})
+
 test('handleEventCategoryFilter should preserve selected event when category filter still includes it', () => {
   const state = {
     ...createDefaultState(),

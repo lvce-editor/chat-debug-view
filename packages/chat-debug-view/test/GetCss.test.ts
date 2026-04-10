@@ -28,6 +28,18 @@ test('getCss should align the refresh button with the top row and use toolbar st
   expect(css).toContain('background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));')
 })
 
+test('getCss should keep the devtools filter input wider next to quick filters', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugViewFilterInput--devtools')
+  expect(css).toContain('flex: 1 1 220px;')
+  expect(css).toContain('min-width: 180px;')
+})
+
 test('getCss should expose table column width and resizer position variables', () => {
   const css = getCss({
     ...createDefaultState(),
@@ -57,4 +69,17 @@ test('getCss should size the table wrapper to the full main width when details a
 
   expect(css).toContain('--ChatDebugViewDetailsWidth: 0px;')
   expect(css).toContain('--ChatDebugViewTableWidth: 944px;')
+})
+
+test('getCss should style timeline selection handles like draggable resize grips', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle')
+  expect(css).toContain('cursor: ew-resize;')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::before')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::after')
 })

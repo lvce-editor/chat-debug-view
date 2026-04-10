@@ -1,9 +1,11 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
 export interface SelectEventAtIndexDependencies {
   readonly loadSelectedEvent: typeof LoadSelectedEvent.loadSelectedEvent
@@ -14,16 +16,18 @@ export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
 }
 
 export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
-  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
+  const { events, filterValue, showEventStreamFinishedEvents, showInputEvents, showResponsePartEvents, timelineEndSeconds, timelineStartSeconds } =
+    state
+  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(state.categoryFilters)
   const filteredEvents = getFilteredEvents(
-    state.events,
-    state.filterValue,
-    eventCategoryFilter,
-    state.showInputEvents,
-    state.showResponsePartEvents,
-    state.showEventStreamFinishedEvents,
+    events,
+    filterValue,
+    eventCategoryFilters,
+    showInputEvents,
+    showResponsePartEvents,
+    showEventStreamFinishedEvents,
   )
-  return filterEventsByTimelineRange(filteredEvents, state.timelineStartSeconds, state.timelineEndSeconds)
+  return filterEventsByTimelineRange(filteredEvents, timelineStartSeconds, timelineEndSeconds)
 }
 
 export const selectEventAtIndex = async (
@@ -31,6 +35,7 @@ export const selectEventAtIndex = async (
   selectedEventIndex: number,
   dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
 ): Promise<ChatDebugViewState> => {
+  const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
   if (!selectedEvent) {
@@ -58,9 +63,11 @@ export const selectEventAtIndex = async (
     selectedEvent.eventId,
     selectedEvent.type,
   )
+  const resolvedSelectedEvent = await withPreparedSelectedEventPreview(selectedEventDetails ?? selectedEvent)
   return {
     ...state,
-    selectedEvent: selectedEventDetails ?? selectedEvent,
+    detailTabs: DetailTab.createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
+    selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
   }

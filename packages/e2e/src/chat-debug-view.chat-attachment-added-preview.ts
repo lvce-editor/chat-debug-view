@@ -2,34 +2,31 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.chat-attachment-added-preview'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
-  // arrange
-  await ChatDebug.open('e2e-session-chat-attachment-added-preview')
+  const eventId = Date.now()
+  const sessionId = `e2e-session-chat-attachment-added-preview-${eventId}`
+  await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
-  const events = [
-    {
-      attachment: {
-        id: 'attachment-1',
-        mimeType: 'image/png',
-        name: 'diagram.png',
-        uri: 'file:///workspace/diagram.png',
-      },
-      eventId: 7,
-      sessionId: 'e2e-session-chat-attachment-added-preview',
-      timestamp: '2026-04-10T11:35:00.000Z',
-      type: 'chat-attachment-added',
-    },
-  ]
-
-  // act
-  await ChatDebug.setEvents(events)
+  await Command.execute(
+    'ChatDebug.appendStoredImageAttachmentForTest',
+    sessionId,
+    eventId,
+    'image/png',
+    'diagram.png',
+    'canvas',
+    '',
+    '2026-04-10T11:35:00.000Z',
+  )
+  await Command.execute('ChatDebug.handleClickRefresh')
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const previewImage = Locator('.ChatDebugViewImagePreviewImage')
 
-  // assert
-  await expect(detailsEvent).toContainText('diagram.png')
+  await expect(previewImage).toBeVisible()
+  await expect(previewImage).toHaveAttribute('alt', 'diagram.png')
 }

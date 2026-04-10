@@ -169,3 +169,41 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     type: 'response',
   })
 })
+
+test('handleEventRowClick should fall back to response and hide timing when the selected event has no timing details', async () => {
+  jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue({
+    detail: 'preview',
+    eventId: 2,
+    type: 'chat-message-added',
+  } as ChatViewEvent)
+  const state = {
+    ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs('timing'),
+    events: [
+      {
+        ended: '2026-03-08T00:00:00.250Z',
+        eventId: 1,
+        started: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        eventId: 2,
+        text: 'hello',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'chat-message-added',
+      },
+    ],
+    sessionId: 'session-1',
+  }
+
+  const result = await handleEventRowClick(state, '1', 0)
+
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('response')
+  expect(DetailTab.hasDetailTab(result.detailTabs, 'timing')).toBe(false)
+  expect(result.selectedEventIndex).toBe(1)
+  expect(result.selectedEvent).toEqual({
+    detail: 'preview',
+    eventId: 2,
+    type: 'chat-message-added',
+  })
+})

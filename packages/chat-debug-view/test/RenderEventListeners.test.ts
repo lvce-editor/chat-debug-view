@@ -7,6 +7,20 @@ test('renderEventListeners should register delegated row click with dataset inde
   const listeners = RenderEventListeners.renderEventListeners()
 
   expect(listeners).toBeDefined()
+  expect(listeners).not.toContainEqual(
+    expect.objectContaining({
+      params: ['handleTableKeyDown', 'event.key'],
+    }),
+  )
+})
+
+test('renderEventListeners should register quick filter click with dataset value', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.HandleEventCategoryFilter,
+    params: ['handleEventCategoryFilter', 'event.target.dataset.value', 'event.ctrlKey', 'event.metaKey'],
+  })
 })
 
 test('renderEventListeners should register details top context menu listener with preventDefault', () => {

@@ -23,7 +23,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   const dom = getChatDebugViewDom(
     newState.errorMessage,
     newState.filterValue,
-    EventCategoryFilter.getSelectedEventCategoryFilter(newState.categoryFilters),
+    EventCategoryFilter.getSelectedEventCategoryFilters(newState.categoryFilters),
     newState.categoryFilters,
     newState.showEventStreamFinishedEvents,
     newState.showInputEvents,

@@ -1,3 +1,4 @@
+// cspell:ignore multiselectable
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -10,7 +11,7 @@ test('getChatDebugViewDom should return debug error dom when error message is se
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     'Failed to load chat debug session',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -51,7 +52,7 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -86,7 +87,7 @@ test('getChatDebugViewDom should not include top checkbox controls', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -114,7 +115,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -127,44 +128,46 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     [],
     [],
   ) as readonly {
-    readonly ariaSelected?: string
-    readonly checked?: boolean
+    readonly ['aria-multiselectable']?: boolean
+    readonly ['aria-selected']?: boolean
     readonly className?: string
-    readonly name?: string
+    readonly ['data-value']?: string
+    readonly onClick?: number
     readonly role?: string
-    readonly value?: string
   }[]
   const quickFilterGroup = dom.find((node) => node.className === 'ChatDebugViewQuickFilters')
   const quickFilterPills = dom.filter((node) => node.className?.startsWith('ChatDebugViewQuickFilterPill'))
-  const allFilter = dom.find((node) => node.name === 'eventCategoryFilter' && node.value === EventCategoryFilter.All)
-  const toolsFilter = dom.find((node) => node.name === 'eventCategoryFilter' && node.value === EventCategoryFilter.Tools)
 
   expect(quickFilterGroup).toBeDefined()
   expect(quickFilterGroup?.role).toBe('listbox')
+  expect(quickFilterGroup?.['aria-multiselectable']).toBe(true)
+  expect(quickFilterGroup?.onClick).toBe(DomEventListenerFunctions.HandleEventCategoryFilter)
   expect(quickFilterPills).toHaveLength(5)
   expect(quickFilterPills[0]).toEqual(
     expect.objectContaining({
-      ariaSelected: 'true',
+      'aria-selected': true,
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
+      'data-value': EventCategoryFilter.All,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
     }),
   )
   expect(quickFilterPills[1]).toEqual(
     expect.objectContaining({
-      ariaSelected: 'false',
+      'aria-selected': false,
       className: 'ChatDebugViewQuickFilterPill',
+      'data-value': EventCategoryFilter.Tools,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
     }),
   )
-  expect(allFilter?.checked).toBe(true)
-  expect(toolsFilter?.checked).toBe(false)
 })
 
 test('getChatDebugViewDom should render dedicated empty message for tools quick filter', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.Tools,
+    [EventCategoryFilter.Tools],
     categoryFilters,
     false,
     false,
@@ -192,7 +195,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -244,7 +247,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -299,7 +302,7 @@ test('getChatDebugViewDom should not stringify unselected events in devtools lay
     GetChatDebugViewDom.getChatDebugViewDom(
       '',
       '',
-      EventCategoryFilter.All,
+      [EventCategoryFilter.All],
       categoryFilters,
       false,
       false,
@@ -333,7 +336,7 @@ test('getChatDebugViewDom should not render event count message', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -370,7 +373,7 @@ test('getChatDebugViewDom should render tool execution type with tool name in le
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,

@@ -1,5 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
+import { ChatDebugViewDetailsTabs } from '../src/parts/ClassNames/ClassNames.ts'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTabNodes } from '../src/parts/GetTabNodes/GetTabNodes.ts'
@@ -23,6 +25,13 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
   }[]
 
   expect(result).toEqual([
+    {
+      'aria-label': ChatDebugStrings.detailSections(),
+      childCount: 4,
+      className: ChatDebugViewDetailsTabs,
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
     {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
       'aria-selected': false,

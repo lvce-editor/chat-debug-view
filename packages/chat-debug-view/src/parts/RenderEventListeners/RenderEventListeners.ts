@@ -39,7 +39,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleEventCategoryFilter,
-      params: ['handleEventCategoryFilter', EventExpression.TargetValue],
+      params: ['handleEventCategoryFilter', 'event.target.dataset.value', 'event.ctrlKey', 'event.metaKey'],
     },
     {
       name: DomEventListenerFunctions.SelectDetailTab,
@@ -56,10 +56,6 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenerFunctions.HandleClickRefresh,
       params: ['handleClickRefresh'],
-    },
-    {
-      name: DomEventListenerFunctions.HandleTableKeyDown,
-      params: ['handleTableKeyDown', 'event.key'],
     },
     {
       name: DomEventListenerFunctions.HandleSashPointerDown,
@@ -89,7 +85,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
-      params: ['handleTimelinePointerDown', EventExpression.ClientX],
+      params: ['handleTimelinePointerDown', EventExpression.TargetName, EventExpression.ClientX],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],
     },
     {

@@ -9,11 +9,11 @@ import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWi
 import * as InputName from '../InputName/InputName.ts'
 
 const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
-  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
+  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(state.categoryFilters)
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,
-    eventCategoryFilter,
+    eventCategoryFilters,
     state.showInputEvents,
     state.showResponsePartEvents,
     state.showEventStreamFinishedEvents,

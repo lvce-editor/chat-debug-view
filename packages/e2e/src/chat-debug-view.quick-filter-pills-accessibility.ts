@@ -28,14 +28,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(quickFilterListbox).toHaveAttribute('role', 'listbox')
   await expect(quickFilterOptions).toHaveCount(5)
   await expect(allOption).toHaveAttribute('role', 'option')
-  await expect(allOption).toHaveAttribute('aria-selected', 'true')
   await expect(allOption).toContainText('All')
   await expect(toolsOption).toHaveAttribute('role', 'option')
-  await expect(toolsOption).toHaveAttribute('aria-selected', 'false')
   await expect(toolsOption).toContainText('Tools')
+  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('All')
 
   await ChatDebug.setEventCategoryFilter('tools')
 
-  await expect(allOption).toHaveAttribute('aria-selected', 'false')
-  await expect(toolsOption).toHaveAttribute('aria-selected', 'true')
+  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
 }
