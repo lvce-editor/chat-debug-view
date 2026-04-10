@@ -11,6 +11,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.showEventStreamFinishedEvents !== newState.showEventStreamFinishedEvents ||
     oldState.showInputEvents !== newState.showInputEvents ||
     oldState.showResponsePartEvents !== newState.showResponsePartEvents ||
+    oldState.tableColumnWidths !== newState.tableColumnWidths ||
     oldState.tableWidth !== newState.tableWidth ||
     oldState.timelineEndSeconds !== newState.timelineEndSeconds ||
     oldState.timelineSelectionActive !== newState.timelineSelectionActive ||

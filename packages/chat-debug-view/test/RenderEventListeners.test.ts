@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { EventExpression } from '@lvce-editor/constants'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as RenderEventListeners from '../src/parts/RenderEventListeners/RenderEventListeners.ts'
 
@@ -33,15 +34,12 @@ test('renderEventListeners should register table resizer pointer tracking listen
 
   expect(listeners).toContainEqual({
     name: DomEventListenerFunctions.HandleTableResizerPointerDown,
-    params: ['handleTableResizerPointerDown', 'event.target.name', 0],
-    trackPointerEvents: [
-      DomEventListenerFunctions.HandleTableResizerPointerMove,
-      DomEventListenerFunctions.HandleTableResizerPointerUp,
-    ],
+    params: ['handleTableResizerPointerDown', EventExpression.TargetName, EventExpression.ClientX],
+    trackPointerEvents: [DomEventListenerFunctions.HandleTableResizerPointerMove, DomEventListenerFunctions.HandleTableResizerPointerUp],
   })
   expect(listeners).toContainEqual({
     name: DomEventListenerFunctions.HandleTableResizerPointerMove,
-    params: ['handleTableResizerPointerMove', 0],
+    params: ['handleTableResizerPointerMove', EventExpression.ClientX],
   })
   expect(listeners).toContainEqual({
     name: DomEventListenerFunctions.HandleTableResizerPointerUp,

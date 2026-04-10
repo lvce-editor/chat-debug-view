@@ -3,6 +3,7 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import * as InputName from '../InputName/InputName.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
   return {
@@ -27,6 +28,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     showEventStreamFinishedEvents: false,
     showInputEvents: false,
     showResponsePartEvents: false,
+    tableColumnWidths: defaultTableColumnWidths,
+    tableResizerDownId: 0,
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
     timelineSelectionActive: false,

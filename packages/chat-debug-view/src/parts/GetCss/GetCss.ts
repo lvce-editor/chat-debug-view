@@ -1,14 +1,25 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clampTableWidth, getDetailsWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
+import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
   const tableWidth = clampTableWidth(state.width, state.tableWidth)
   const detailsWidth = getDetailsWidth(state.width, state.tableWidth)
+  const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
+  const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
+  const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
   return `
 .ChatDebugView {
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
+  --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
+  --ChatDebugViewResizerOneLeft: ${resizerOneLeft}px;
+  --ChatDebugViewResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
+  padding: ${viewPadding}px;
+}
+
 .ChatDebugViewTop {
   display: flex;
   align-items: center;
@@ -21,7 +32,74 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-width: 0;
 }
 
-  padding: ${viewPadding}px;
+.ChatDebugViewTableWrapper {
+  position: relative;
+  width: min(100%, var(--ChatDebugViewTableWidth));
+  max-width: 100%;
+}
+
+.ChatDebugViewTable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.ChatDebugViewHeaderCell,
+.ChatDebugViewCell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed,
+.ChatDebugViewCellType.ChatDebugViewColumnFixed {
+  width: var(--ChatDebugViewTypeColumnWidth);
+  max-width: var(--ChatDebugViewTypeColumnWidth);
+}
+
+.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed,
+.ChatDebugViewCellDuration.ChatDebugViewColumnFixed {
+  width: var(--ChatDebugViewDurationColumnWidth);
+  max-width: var(--ChatDebugViewDurationColumnWidth);
+}
+
+.ChatDebugViewResizers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ChatDebugViewResizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: auto;
+  cursor: col-resize;
+}
+
+.ChatDebugViewResizerOne {
+  left: var(--ChatDebugViewResizerOneLeft);
+  transform: translateX(-50%);
+}
+
+.ChatDebugViewResizerTwo {
+  left: var(--ChatDebugViewResizerTwoLeft);
+  transform: translateX(-50%);
+}
+
+.ChatDebugViewResizerInner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--vscode-widget-border, rgba(255, 255, 255, 0.18));
 }
 
 
@@ -71,6 +149,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   align-items: center;
   justify-content: center;
   flex: none;
+  margin-left: auto;
   min-height: 28px;
   padding: 0 10px;
   border: 1px solid rgba(255, 255, 255, 0.16);

@@ -119,6 +119,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onPointerDown?: number
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
@@ -352,7 +353,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
     }),
   )
   expect(dom).not.toContainEqual(
@@ -362,7 +363,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
     }),
   )
 })

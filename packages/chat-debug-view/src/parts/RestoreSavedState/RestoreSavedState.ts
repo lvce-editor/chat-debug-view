@@ -4,6 +4,7 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 const validEventCategoryFilters = new Set<string>([
   EventCategoryFilter.All,
@@ -63,6 +64,13 @@ const restoreVisibleTableColumns = (
   return getOrderedVisibleTableColumns(visibleTableColumns)
 }
 
+const restoreTableColumnWidths = (
+  savedState: Partial<SavedState>,
+  currentTableColumnWidths: ChatDebugViewState['tableColumnWidths'],
+): ChatDebugViewState['tableColumnWidths'] => {
+  return isTableColumnWidths(savedState.tableColumnWidths) ? savedState.tableColumnWidths : currentTableColumnWidths
+}
+
 export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown): ChatDebugViewState => {
   if (!isSavedState(savedState)) {
     return state
@@ -73,6 +81,7 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
     filterValue: restoreFilterValue(savedState, state.filterValue),
     selectedDetailTab: restoreSelectedDetailTab(savedState, state.selectedDetailTab),
     selectedEventId: restoreSelectedEventId(savedState, state.selectedEventId),
+    tableColumnWidths: restoreTableColumnWidths(savedState, state.tableColumnWidths),
     timelineEndSeconds: restoreTimelineEndSeconds(savedState, state.timelineEndSeconds),
     timelineStartSeconds: restoreTimelineStartSeconds(savedState, state.timelineStartSeconds),
     visibleTableColumns: restoreVisibleTableColumns(savedState, state.visibleTableColumns),
