@@ -6,7 +6,6 @@ import {
   ChatDebugViewDetails,
   ChatDebugViewDetailsBottom,
   ChatDebugViewDetailsClose,
-  ChatDebugViewDetailsTabs,
   ChatDebugViewDetailsTop,
 } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'

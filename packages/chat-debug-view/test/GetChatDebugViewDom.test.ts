@@ -128,24 +128,23 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     [],
   ) as readonly {
     readonly ariaSelected?: string
-    readonly checked?: boolean
     readonly className?: string
-    readonly name?: string
+    readonly ['data-value']?: string
+    readonly onClick?: number
     readonly role?: string
-    readonly value?: string
   }[]
   const quickFilterGroup = dom.find((node) => node.className === 'ChatDebugViewQuickFilters')
   const quickFilterPills = dom.filter((node) => node.className?.startsWith('ChatDebugViewQuickFilterPill'))
-  const allFilter = dom.find((node) => node.name === 'eventCategoryFilter' && node.value === EventCategoryFilter.All)
-  const toolsFilter = dom.find((node) => node.name === 'eventCategoryFilter' && node.value === EventCategoryFilter.Tools)
 
   expect(quickFilterGroup).toBeDefined()
   expect(quickFilterGroup?.role).toBe('listbox')
+  expect(quickFilterGroup?.onClick).toBe(DomEventListenerFunctions.HandleEventCategoryFilter)
   expect(quickFilterPills).toHaveLength(5)
   expect(quickFilterPills[0]).toEqual(
     expect.objectContaining({
       ariaSelected: 'true',
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
+      'data-value': EventCategoryFilter.All,
       role: 'option',
     }),
   )
@@ -153,11 +152,10 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     expect.objectContaining({
       ariaSelected: 'false',
       className: 'ChatDebugViewQuickFilterPill',
+      'data-value': EventCategoryFilter.Tools,
       role: 'option',
     }),
   )
-  expect(allFilter?.checked).toBe(true)
-  expect(toolsFilter?.checked).toBe(false)
 })
 
 test('getChatDebugViewDom should render dedicated empty message for tools quick filter', () => {

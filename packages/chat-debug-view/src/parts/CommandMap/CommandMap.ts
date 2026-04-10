@@ -1,5 +1,6 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AppendStoredEventForTest from '../AppendStoredEventForTest/AppendStoredEventForTest.ts'
+import * as AppendStoredImageAttachmentForTest from '../AppendStoredImageAttachmentForTest/AppendStoredImageAttachmentForTest.ts'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
@@ -44,6 +45,7 @@ import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/Tog
 
 export const commandMap = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
+  'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.getCommandIds': getCommandIds,

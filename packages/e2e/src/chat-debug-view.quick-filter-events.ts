@@ -23,7 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
-  await ChatDebug.setEventCategoryFilter('network')
+  await Locator('.ChatDebugViewQuickFilterPill').nth(2).click()
 
   // assert
   const rows = Locator('.ChatDebugViewEventRow')

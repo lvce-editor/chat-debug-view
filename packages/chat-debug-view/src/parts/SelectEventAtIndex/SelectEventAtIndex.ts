@@ -4,6 +4,7 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
 export interface SelectEventAtIndexDependencies {
   readonly loadSelectedEvent: typeof LoadSelectedEvent.loadSelectedEvent
@@ -58,9 +59,10 @@ export const selectEventAtIndex = async (
     selectedEvent.eventId,
     selectedEvent.type,
   )
+  const resolvedSelectedEvent = await withPreparedSelectedEventPreview(selectedEventDetails ?? selectedEvent)
   return {
     ...state,
-    selectedEvent: selectedEventDetails ?? selectedEvent,
+    selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
   }

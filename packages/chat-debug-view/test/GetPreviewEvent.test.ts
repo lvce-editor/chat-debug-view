@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { getPreviewEvent } from '../src/parts/GetPreviewEvent/GetPreviewEvent.ts'
+import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 
 test('getPreviewEvent should return only the message text for chat-message-updated events', () => {
   const event = {
@@ -65,4 +66,28 @@ test('getPreviewEvent should return write_file content for tool execution events
   const result = getPreviewEvent(event)
 
   expect(result).toBe('line 1\nline 2')
+})
+
+test('getPreviewEvent should prefer prepared selected event preview metadata', () => {
+  const event = setSelectedEventPreview(
+    {
+      eventId: 4,
+      mimeType: 'image/png',
+      name: 'diagram.png',
+      type: 'chat-attachment-added',
+    },
+    {
+      alt: 'diagram.png',
+      previewType: 'image',
+      src: 'data:image/png;base64,preview',
+    },
+  )
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toEqual({
+    alt: 'diagram.png',
+    previewType: 'image',
+    src: 'data:image/png;base64,preview',
+  })
 })

@@ -56,6 +56,10 @@ export const invalidSessionId = (): string => {
   return I18nString.i18nString(UiStrings.InvalidSessionId)
 }
 
+export const imageCouldNotBeLoaded = (): string => {
+  return I18nString.i18nString(UiStrings.ImageCouldNotBeLoaded)
+}
+
 export const invalidUriEncoding = (): string => {
   return I18nString.i18nString(UiStrings.InvalidUriEncoding)
 }

@@ -15,9 +15,9 @@ import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
+import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
-import { getTextNode } from '../GetTextNode/GetTextNode.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -49,8 +49,7 @@ export const getDevtoolsDom = (
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
   const timelineNodes = getTimelineNodes(resolvedTimelineInfo)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
-  const previewEventNodes =
-    typeof previewEvent === 'string' ? getTextNode(previewEvent) : previewEvent === undefined ? [] : getEventNode(previewEvent)
+  const previewEventNodes = getPreviewEventNodes(previewEvent)
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0

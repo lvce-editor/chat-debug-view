@@ -1,6 +1,7 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
 import { getCurrentEvents } from '../GetCurrentEvents/GetCurrentEvents.ts'
 import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
+import { withPreparedSelectedEventPreview } from '../../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
 export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   if (state.selectedEventId === null) {
@@ -38,9 +39,10 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
     selectedEvent.eventId,
     selectedEvent.type,
   )
+  const resolvedSelectedEvent = selectedEventDetails ? await withPreparedSelectedEventPreview(selectedEventDetails) : null
   return {
     ...state,
-    selectedEvent: selectedEventDetails,
+    selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
   }

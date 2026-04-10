@@ -34,7 +34,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(toolsOption).toHaveAttribute('aria-selected', 'false')
   await expect(toolsOption).toContainText('Tools')
 
-  await ChatDebug.setEventCategoryFilter('tools')
+  await toolsOption.click()
 
   await expect(allOption).toHaveAttribute('aria-selected', 'false')
   await expect(toolsOption).toHaveAttribute('aria-selected', 'true')

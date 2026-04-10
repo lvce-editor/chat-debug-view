@@ -3,6 +3,7 @@ import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
+import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
@@ -247,6 +248,56 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
   expect(timeline?.onContextMenu).toBe(DomEventListenerFunctions.HandleTimelineContextMenu)
   expect(timeline).toBeDefined()
   expect(splitPane?.childCount).toBe(3)
+})
+
+test('getDevtoolsDom should render attachment image previews in the preview panel', () => {
+  const events = [
+    {
+      eventId: 1,
+      mimeType: 'image/png',
+      name: 'diagram.png',
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'chat-attachment-added',
+    },
+  ]
+  const selectedEvent = setSelectedEventPreview(
+    {
+      ...events[0],
+    },
+    {
+      alt: 'diagram.png',
+      previewType: 'image',
+      src: 'data:image/png;base64,preview',
+    },
+  )
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    selectedEvent,
+    0,
+    events,
+    '',
+    '',
+  ) as readonly {
+    readonly alt?: string
+    readonly className?: string
+    readonly src?: string
+    readonly type?: number
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewImagePreview',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      alt: 'diagram.png',
+      className: 'ChatDebugViewImagePreviewImage',
+      src: 'data:image/png;base64,preview',
+      type: VirtualDomElements.Img,
+    }),
+  )
 })
 
 test('getDevtoolsDom should expose none role on the devtools split container', () => {

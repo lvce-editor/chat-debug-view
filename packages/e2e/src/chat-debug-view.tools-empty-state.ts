@@ -19,9 +19,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
-  await ChatDebug.setEventCategoryFilter('tools')
 
   const toolsPill = Locator('.ChatDebugViewQuickFilterPill').nth(1)
+  await toolsPill.click()
 
   // assert
   await expect(toolsPill).toContainText('Tools')

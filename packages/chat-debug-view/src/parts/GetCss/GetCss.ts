@@ -33,6 +33,11 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-width: 0;
 }
 
+.ChatDebugViewFilterInput--devtools {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
+
 .ChatDebugViewTableWrapper {
   position: relative;
   width: min(100%, var(--ChatDebugViewTableWidth));
@@ -186,6 +191,27 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewEventRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);
+}
+
+.ChatDebugViewImagePreview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.ChatDebugViewImagePreviewImage {
+  display: block;
+  max-width: 100%;
+  max-height: 320px;
+  border: 1px solid var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.ChatDebugViewImagePreviewLabel {
+  color: var(--vscode-descriptionForeground, inherit);
 }
 `
 }
