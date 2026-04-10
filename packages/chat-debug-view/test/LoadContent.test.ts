@@ -7,10 +7,8 @@ import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/L
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
-const categoryFilters = EventCategoryFilter.createCategoryFilters()
 const tableColumns = TableColumn.createTableColumns()
 const detailTabs = DetailTab.createDetailTabs()
-const previewDetailTabs = DetailTab.createDetailTabs('preview')
 
 afterEach(() => {
   jest.restoreAllMocks()
@@ -33,7 +31,7 @@ test('loadContent should return failed-to-load state when listing events returns
   expect(result).toEqual(
     getStateWithTimelineInfo({
       ...state,
-      categoryFilters,
+      categoryFilters: EventCategoryFilter.createCategoryFilters(),
       detailTabs,
       errorMessage: getFailedToLoadMessage('session-1', error),
       events: [],
@@ -75,8 +73,8 @@ test('loadContent should restore the selected event preview from selectedEventId
   expect(result).toEqual(
     getStateWithTimelineInfo({
       ...state,
-      categoryFilters,
-      detailTabs,
+      categoryFilters: EventCategoryFilter.createCategoryFilters('response'),
+      detailTabs: DetailTab.createDetailTabs('response', selectedEvent),
       errorMessage: '',
       events,
       initial: false,
@@ -124,8 +122,8 @@ test('loadContent should restore selected event and detail tab from savedState',
   expect(result).toEqual(
     getStateWithTimelineInfo({
       ...state,
-      categoryFilters,
-      detailTabs: previewDetailTabs,
+      categoryFilters: EventCategoryFilter.createCategoryFilters('response'),
+      detailTabs: DetailTab.createDetailTabs('preview', selectedEvent),
       errorMessage: '',
       events,
       initial: false,

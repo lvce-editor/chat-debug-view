@@ -19,7 +19,7 @@ test('renderEventListeners should register quick filter click with dataset value
 
   expect(listeners).toContainEqual({
     name: DomEventListenerFunctions.HandleEventCategoryFilter,
-    params: ['handleEventCategoryFilter', 'event.target.dataset.value'],
+    params: ['handleEventCategoryFilter', 'event.target.dataset.value', 'event.ctrlKey', 'event.metaKey'],
   })
 })
 

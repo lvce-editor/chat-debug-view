@@ -15,9 +15,7 @@ import { All, Network, Stream, Tools, Ui } from '../InputName/InputName.ts'
 
 export { type EventCategoryFilterType } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
 
-export const createCategoryFilters = (
-  selectedEventCategoryFilter: EventCategoryFilterType | readonly EventCategoryFilterType[] = All,
-): readonly CategoryFilter[] => {
+export const createCategoryFilters = (selectedEventCategoryFilter: string | readonly string[] = All): readonly CategoryFilter[] => {
   return createCategoryFiltersBase(selectedEventCategoryFilter)
 }
 
@@ -49,13 +47,13 @@ export const selectCategoryFilters = (
     selectedEventCategoryFilters.filter((value): value is EventCategoryFilterType => isEventCategoryFilter(value)),
   )
   return categoryFilters.map((categoryFilter) => {
-    const isSelectedProperty = normalizedSelectedEventCategoryFilters.includes(categoryFilter.name as EventCategoryFilterType)
-    if (categoryFilter.isSelected === isSelectedProperty) {
+    const isSelected = normalizedSelectedEventCategoryFilters.includes(categoryFilter.name as EventCategoryFilterType)
+    if (categoryFilter.isSelected === isSelected) {
       return categoryFilter
     }
     return {
       ...categoryFilter,
-      isSelected: isSelectedProperty,
+      isSelected,
     }
   })
 }

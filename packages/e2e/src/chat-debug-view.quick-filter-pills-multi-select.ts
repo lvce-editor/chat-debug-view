@@ -37,7 +37,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(selectedPills).toContainText('Tools')
   await expect(rows).toHaveCount(1)
 
-  await pills.nth(2).click({ modifiers: ['Control'] })
+  await pills.nth(2).dispatchEvent('click', '{"bubbles":true,"cancelable":true,"ctrlKey":true}')
   await expect(selectedPills).toHaveCount(2)
   await expect(selectedPills.nth(0)).toContainText('Tools')
   await expect(selectedPills.nth(1)).toContainText('Network')

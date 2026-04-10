@@ -1,3 +1,4 @@
+// cspell:ignore multiselectable
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { ChatDebugViewQuickFilterPill, ChatDebugViewQuickFilterPillSelected, ChatDebugViewQuickFilters } from '../ClassNames/ClassNames.ts'
@@ -14,18 +15,18 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
       type: VirtualDomElements.Div,
     },
     ...categoryFilters.flatMap((categoryFilter) => {
-      const isSelected = categoryFilter.isSelected
+      const { isSelected, label, name } = categoryFilter
       return [
         {
           'aria-selected': isSelected,
           childCount: 1,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
-          'data-value': categoryFilter.name,
+          'data-value': name,
           onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
           role: 'option',
           type: VirtualDomElements.Div,
         },
-        text(categoryFilter.label),
+        text(label),
       ]
     }),
   ]

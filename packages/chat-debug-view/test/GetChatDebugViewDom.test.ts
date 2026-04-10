@@ -1,3 +1,4 @@
+// cspell:ignore multiselectable
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -194,7 +195,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -246,7 +247,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -301,7 +302,7 @@ test('getChatDebugViewDom should not stringify unselected events in devtools lay
     GetChatDebugViewDom.getChatDebugViewDom(
       '',
       '',
-      EventCategoryFilter.All,
+      [EventCategoryFilter.All],
       categoryFilters,
       false,
       false,
@@ -335,7 +336,7 @@ test('getChatDebugViewDom should not render event count message', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
@@ -372,7 +373,7 @@ test('getChatDebugViewDom should render tool execution type with tool name in le
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
     '',
     '',
-    EventCategoryFilter.All,
+    [EventCategoryFilter.All],
     categoryFilters,
     false,
     false,
