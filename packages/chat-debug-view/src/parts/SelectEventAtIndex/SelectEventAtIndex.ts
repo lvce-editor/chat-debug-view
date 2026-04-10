@@ -16,11 +16,11 @@ export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
 }
 
 export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
-  const eventCategoryFilter = EventCategoryFilter.getSelectedEventCategoryFilter(state.categoryFilters)
+  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(state.categoryFilters)
   const filteredEvents = getFilteredEvents(
     state.events,
     state.filterValue,
-    eventCategoryFilter,
+    eventCategoryFilters,
     state.showInputEvents,
     state.showResponsePartEvents,
     state.showEventStreamFinishedEvents,

@@ -11,7 +11,7 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
   const nextState = await loadEventsFromUri(restoreSavedState(state, savedState))
   return {
     ...nextState,
-    categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilter(nextState.categoryFilters)),
+    categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilters(nextState.categoryFilters)),
     detailTabs: DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
     tableColumns: TableColumn.createTableColumns(),
   }
