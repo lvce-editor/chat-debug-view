@@ -71,8 +71,8 @@ test('hasErrorStatus should return true when an error field is present', () => {
 
   expect(
     hasErrorStatus({
-      eventId: 2,
       errorMessage: 'failed',
+      eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
       type: 'request',
