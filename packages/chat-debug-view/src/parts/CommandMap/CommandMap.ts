@@ -49,7 +49,7 @@ export const commandMap = {
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
-  'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.handleDetailTab),
+  'ChatDebug.handleDetailTab': wrapCommand(HandleDetailTab.selectDetailTab),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
   'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
