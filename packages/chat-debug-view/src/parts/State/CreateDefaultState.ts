@@ -10,6 +10,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     assetDir: '',
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
+    detailTabs: [],
     errorMessage: '',
     eventCategoryFilter: EventCategoryFilter.All,
     eventCategoryFilterOptions: EventCategoryFilter.createEventCategoryFilterOptions(),

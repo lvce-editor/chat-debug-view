@@ -1,4 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
@@ -6,6 +7,7 @@ export interface ChatDebugViewState {
   readonly assetDir: string
   readonly databaseName: string
   readonly dataBaseVersion: number
+  readonly detailTabs: readonly DetailTab[]
   readonly errorMessage: string
   readonly eventCategoryFilter: string
   readonly eventCategoryFilterOptions: readonly EventCategoryFilterOption[]

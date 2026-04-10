@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
@@ -31,6 +32,7 @@ export const getDevtoolsDom = (
   timelineSelectionFocusSeconds = '',
   selectedDetailTab = InputName.Response,
   visibleTableColumns: readonly string[] = defaultVisibleTableColumns,
+  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const timelineNodes = getTimelineNodes(
@@ -49,13 +51,8 @@ export const getDevtoolsDom = (
   const hasSelectedEvent = responseEventNodes.length > 0
   const tableNodes = events.length === 0 ? getEmptyStateDom(emptyMessage) : getTableDom(rowNodes, events.length, visibleTableColumns)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
-  const detailsNodes = getDetailsDom(
-    previewEventNodes,
-    payloadEventNodes,
-    responseEventNodes,
-    selectedEvent,
-    DetailTab.isDetailTab(selectedDetailTab) ? selectedDetailTab : InputName.Response,
-  )
+  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs, selectedDetailTab)
+  const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs, safeSelectedDetailTab)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)

@@ -3,8 +3,27 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTabNodes } from '../src/parts/GetTabNodes/GetTabNodes.ts'
 
+const detailTabs = [
+  {
+    label: 'Preview',
+    name: 'preview',
+  },
+  {
+    label: 'Payload',
+    name: 'payload',
+  },
+  {
+    label: 'Response',
+    name: 'response',
+  },
+  {
+    label: 'Timing',
+    name: 'timing',
+  },
+]
+
 test('getTabNodes should render detail tabs and mark the selected tab', () => {
-  const result = getTabNodes('timing') as readonly {
+  const result = getTabNodes(detailTabs, 'timing') as readonly {
     readonly ['aria-controls']?: string
     readonly ['aria-selected']?: boolean
     readonly childCount?: number

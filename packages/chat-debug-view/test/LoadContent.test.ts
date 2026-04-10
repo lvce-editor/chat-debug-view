@@ -3,6 +3,25 @@ import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetF
 import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/LoadContent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
+const detailTabs = [
+  {
+    label: 'Preview',
+    name: 'preview',
+  },
+  {
+    label: 'Payload',
+    name: 'payload',
+  },
+  {
+    label: 'Response',
+    name: 'response',
+  },
+  {
+    label: 'Timing',
+    name: 'timing',
+  },
+]
+
 afterEach(() => {
   jest.restoreAllMocks()
 })
@@ -23,6 +42,7 @@ test('loadContent should return failed-to-load state when listing events returns
 
   expect(result).toEqual({
     ...state,
+    detailTabs,
     errorMessage: getFailedToLoadMessage('session-1', error),
     events: [],
     initial: false,
@@ -60,6 +80,7 @@ test('loadContent should restore the selected event preview from selectedEventId
 
   expect(result).toEqual({
     ...state,
+    detailTabs,
     errorMessage: '',
     events,
     initial: false,
@@ -105,6 +126,7 @@ test('loadContent should restore selected event and detail tab from savedState',
 
   expect(result).toEqual({
     ...state,
+    detailTabs,
     errorMessage: '',
     events,
     initial: false,
