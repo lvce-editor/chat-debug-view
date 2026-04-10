@@ -21,18 +21,17 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
     {
       sessionId: 'e2e-session-quick-filter-pills-multi-select',
       timestamp: '2026-03-08T00:00:02.000Z',
-      type: 'focus-editor',
+      type: 'handle-click',
     },
   ]
 
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const pills = Locator('.ChatDebugViewQuickFilterPill')
   const rows = Locator('.ChatDebugViewEventRow')
   const selectedPills = Locator('.ChatDebugViewQuickFilterPillSelected')
 
-  await pills.nth(1).click()
+  await Command.execute('ChatDebug.handleEventCategoryFilter', 'tools', false, false)
   await expect(selectedPills).toHaveCount(1)
   await expect(selectedPills).toContainText('Tools')
   await expect(rows).toHaveCount(1)
