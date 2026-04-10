@@ -68,7 +68,7 @@ export const commandMap = {
   'ChatDebug.handleTimelinePointerUp': wrapCommand(HandleTimelinePointerUp.handleTimelinePointerUp),
   'ChatDebug.handleTimelineRangePreset': wrapCommand(HandleTimelineInput.handleTimelineRangePreset),
   'ChatDebug.handleTimelineStartSeconds': wrapCommand(HandleTimelineInput.handleTimelineStartSeconds),
-  'ChatDebug.handleUseDevtoolsLayout': wrapCommand(HandleUseDevtoolsLayout.handleUseDevtoolsLayout),
+  'ChatDebug.handleUseDevtoolsLayout': wrapCommand(HandleUseDevtoolsLayout.setUseDevtoolsLayout),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
   'ChatDebug.refresh': wrapCommand(Refresh.refresh),

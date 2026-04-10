@@ -18,7 +18,7 @@ test('handleUseDevtoolsLayout should preserve selected event when enabling layou
     useDevtoolsLayout: false,
   }
 
-  const result = HandleUseDevtoolsLayout.handleUseDevtoolsLayout(state, true)
+  const result = HandleUseDevtoolsLayout.setUseDevtoolsLayout(state, true)
 
   expect(result.useDevtoolsLayout).toBe(true)
   expect(result.selectedEventIndex).toBe(0)
