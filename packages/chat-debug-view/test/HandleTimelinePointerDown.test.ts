@@ -48,8 +48,8 @@ test('handleTimelinePointerDown should start resizing from the current end when 
         type: 'response',
       },
     ],
-    timelineStartSeconds: '2',
     timelineEndSeconds: '8',
+    timelineStartSeconds: '2',
     width: 436,
     x: 82,
   })
@@ -78,8 +78,8 @@ test('handleTimelinePointerDown should start resizing from the current start whe
         type: 'response',
       },
     ],
-    timelineStartSeconds: '2',
     timelineEndSeconds: '8',
+    timelineStartSeconds: '2',
     width: 436,
     x: 82,
   })

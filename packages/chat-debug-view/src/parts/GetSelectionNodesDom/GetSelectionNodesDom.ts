@@ -39,11 +39,7 @@ export const getSelectionNodesDom = (
     },
     {
       childCount: 0,
-      className: mergeClassNames(
-        ChatDebugViewTimelineSelectionHandle,
-        ChatDebugViewTimelineSelectionMarker,
-        ChatDebugViewTimelineSelectionMarkerEnd,
-      ),
+      className: mergeClassNames(ChatDebugViewTimelineSelectionHandle, ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
       name: TimelineSelectionHandleName.End,
       role: AriaRoles.None,
       style: `left:${formatPercent(selectionEndPercent)};`,

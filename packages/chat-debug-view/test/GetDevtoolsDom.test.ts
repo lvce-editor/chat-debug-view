@@ -32,7 +32,20 @@ test('getDevtoolsDom should render selected details panel and close input', () =
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    events[0],
+    0,
+    events,
+    '',
+    '',
+    undefined,
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
     readonly className?: string
     readonly name?: string
     readonly onChange?: number
@@ -271,7 +284,20 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
       src: 'data:image/png;base64,preview',
     },
   )
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, selectedEvent, 0, events, '', '') as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    selectedEvent,
+    0,
+    events,
+    '',
+    '',
+    undefined,
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
     readonly alt?: string
     readonly className?: string
     readonly src?: string
