@@ -1,11 +1,10 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { EventCategoryFilterOption } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import {
   ChatDebugViewQuickFilterInput,
   ChatDebugViewQuickFilterPill,
   ChatDebugViewQuickFilterPillSelected,
   ChatDebugViewQuickFilters,
-  joinClassNames,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -25,7 +24,7 @@ export const getQuickFilterNodes = (
       return [
         {
           childCount: 2,
-          className: joinClassNames(ChatDebugViewQuickFilterPill, isSelected && ChatDebugViewQuickFilterPillSelected),
+          className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
           type: VirtualDomElements.Label,
         },
         {

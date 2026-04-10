@@ -1,10 +1,7 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import * as AppendStoredEventForTest from '../src/parts/AppendStoredEventForTest/AppendStoredEventForTest.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
-
-afterEach(() => {
-  jest.restoreAllMocks()
-})
 
 test('appendStoredEventForTest should append the event through the chat storage worker client', async () => {
   const state = createDefaultState()
@@ -14,11 +11,12 @@ test('appendStoredEventForTest should append the event through the chat storage 
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
-  const appendEventSpy = jest.spyOn(AppendStoredEventForTest.appendStoredEventForTestDependencies, 'appendEvent').mockResolvedValue()
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.appendEvent': () => undefined,
+  })
 
   const result = await AppendStoredEventForTest.appendStoredEventForTest(state, event)
 
   expect(result).toBe(state)
-  expect(appendEventSpy).toHaveBeenCalledTimes(1)
-  expect(appendEventSpy).toHaveBeenCalledWith(event)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.appendEvent', event]])
 })

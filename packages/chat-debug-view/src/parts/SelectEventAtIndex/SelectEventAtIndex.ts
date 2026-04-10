@@ -1,11 +1,15 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import type { loadSelectedEvent } from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
-import { filterEventsByTimelineRange } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 
 export interface SelectEventAtIndexDependencies {
-  readonly loadSelectedEvent: typeof loadSelectedEvent
+  readonly loadSelectedEvent: typeof LoadSelectedEvent.loadSelectedEvent
+}
+
+export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
+  loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
 }
 
 export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
@@ -23,7 +27,7 @@ export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEv
 export const selectEventAtIndex = async (
   state: ChatDebugViewState,
   selectedEventIndex: number,
-  dependencies: SelectEventAtIndexDependencies,
+  dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
 ): Promise<ChatDebugViewState> => {
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]

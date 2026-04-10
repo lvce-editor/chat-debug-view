@@ -42,7 +42,6 @@ export const ChatDebugViewTimelineBucketUnit = 'ChatDebugViewTimelineBucketUnit'
 export const ChatDebugViewTimelineBucketUnitEmpty = 'ChatDebugViewTimelineBucketUnitEmpty'
 export const ChatDebugViewTimelineBuckets = 'ChatDebugViewTimelineBuckets'
 export const ChatDebugViewTimelineInteractive = 'ChatDebugViewTimelineInteractive'
-export const ChatDebugViewTimelinePresetInput = 'ChatDebugViewTimelinePresetInput'
 export const ChatDebugViewTimelineSelectionMarker = 'ChatDebugViewTimelineSelectionMarker'
 export const ChatDebugViewTimelineSelectionMarkerEnd = 'ChatDebugViewTimelineSelectionMarkerEnd'
 export const ChatDebugViewTimelineSelectionMarkerStart = 'ChatDebugViewTimelineSelectionMarkerStart'
@@ -63,13 +62,8 @@ export const ChatDebugViewCellStatusError = 'ChatDebugViewCellStatusError'
 export const ChatDebugViewCellType = 'ChatDebugViewCellType'
 export const InputBox = 'InputBox'
 export const Row = 'row'
-export const Token = 'Token'
 export const TokenBoolean = 'Token TokenBoolean'
 export const TokenKey = 'Token TokenKey'
 export const TokenNumeric = 'Token TokenNumeric'
 export const TokenString = 'Token TokenString'
 export const TokenText = 'Token TokenText'
-
-export const joinClassNames = (...classNames: readonly (string | false | null | undefined)[]): string => {
-  return classNames.filter(Boolean).join(' ')
-}
