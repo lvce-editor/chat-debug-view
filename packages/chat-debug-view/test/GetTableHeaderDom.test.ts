@@ -103,6 +103,11 @@ test('getTableDom should render header and body nodes for the table', () => {
   expect(dom).toEqual([
     {
       childCount: 2,
+      className: 'ChatDebugViewTableWrapper',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 2,
       className: 'ChatDebugViewTable',
       type: VirtualDomElements.Table,
     },
@@ -119,21 +124,21 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Duration'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell',
+      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -149,6 +154,37 @@ test('getTableDom should render header and body nodes for the table', () => {
       childCount: 0,
       className: 'ChatDebugViewEventRow',
       type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 4,
+      className: 'ChatDebugViewResizers',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewResizer ChatDebugViewResizerOne',
+      name: 'ResizerOne',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ChatDebugViewResizerInner',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewResizer ChatDebugViewResizerTwo',
+      name: 'ResizerTwo',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ChatDebugViewResizerInner',
+      type: VirtualDomElements.Div,
     },
   ])
 })

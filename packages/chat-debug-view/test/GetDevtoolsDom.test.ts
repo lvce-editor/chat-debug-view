@@ -122,14 +122,18 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const tableWrapper = dom.find((node) => node.className === 'ChatDebugViewTableWrapper')
   const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
   const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const resizer = dom.find((node) => node.className === 'ChatDebugViewResizer ChatDebugViewResizerOne')
 
+  expect(tableWrapper).toBeDefined()
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(2)
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
+  expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
 test('getDevtoolsDom should make the events container keyboard focusable and expose application role', () => {

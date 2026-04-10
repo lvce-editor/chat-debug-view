@@ -5,6 +5,11 @@ test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
   expect(state).toBeDefined()
   expect(state.selectedDetailTab).toBe('response')
+  expect(state.tableColumnWidths).toEqual({
+    duration: 110,
+    status: 110,
+    type: 260,
+  })
   expect(state.eventCategoryFilterOptions).toEqual([
     {
       label: 'All',

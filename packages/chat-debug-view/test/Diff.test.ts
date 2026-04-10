@@ -66,6 +66,19 @@ test('diff should return RenderIncremental and RenderCss when tableWidth changes
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
 })
 
+test('diff should return RenderIncremental and RenderCss when table column widths change', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    tableColumnWidths: {
+      ...oldState.tableColumnWidths,
+      type: 280,
+    },
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
 test('diff should return RenderIncremental and RenderCss when width changes', () => {
   const oldState = createDefaultState()
   const newState = {

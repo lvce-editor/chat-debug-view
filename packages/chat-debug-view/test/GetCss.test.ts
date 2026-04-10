@@ -27,3 +27,23 @@ test('getCss should align the refresh button with the top row and use toolbar st
   expect(css).toContain('margin-left: auto;')
   expect(css).toContain('background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));')
 })
+
+test('getCss should expose table column width and resizer position variables', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableColumnWidths: {
+      duration: 96,
+      status: 124,
+      type: 240,
+    },
+    tableWidth: 460,
+    visibleTableColumns: ['type', 'duration', 'status'],
+    width: 960,
+  })
+
+  expect(css).toContain('--ChatDebugViewTypeColumnWidth: 240px;')
+  expect(css).toContain('--ChatDebugViewDurationColumnWidth: 96px;')
+  expect(css).toContain('--ChatDebugViewResizerOneLeft: 240px;')
+  expect(css).toContain('--ChatDebugViewResizerTwoLeft: 336px;')
+  expect(css).toContain('.ChatDebugViewResizers')
+})

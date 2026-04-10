@@ -11,6 +11,11 @@ test('saveState should persist serializable non-layout state fields', () => {
     selectedEventId: 3,
     selectedEventIndex: 2,
     sessionId: 'session-1',
+    tableColumnWidths: {
+      duration: 96,
+      status: 124,
+      type: 260,
+    },
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
     visibleTableColumns: ['type', 'status'],
@@ -23,6 +28,11 @@ test('saveState should persist serializable non-layout state fields', () => {
     selectedDetailTab: 'preview',
     selectedEventId: 3,
     sessionId: 'session-1',
+    tableColumnWidths: {
+      duration: 96,
+      status: 124,
+      type: 260,
+    },
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
     visibleTableColumns: ['type', 'status'],
