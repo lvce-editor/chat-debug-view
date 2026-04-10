@@ -9,9 +9,7 @@ const eventCategoryFilters = [All, Tools, Network, Ui, Stream] as const
 export const normalizeSelectedEventCategoryFilters = (
   selectedEventCategoryFilter: EventCategoryFilterType | readonly EventCategoryFilterType[] = All,
 ): readonly EventCategoryFilterType[] => {
-  const selectedEventCategoryFilters = Array.isArray(selectedEventCategoryFilter)
-    ? selectedEventCategoryFilter
-    : [selectedEventCategoryFilter]
+  const selectedEventCategoryFilters = Array.isArray(selectedEventCategoryFilter) ? selectedEventCategoryFilter : [selectedEventCategoryFilter]
   const uniqueSelectedEventCategoryFilters = [...new Set(selectedEventCategoryFilters)]
   const validSelectedEventCategoryFilters = uniqueSelectedEventCategoryFilters.filter((value): value is EventCategoryFilterType => {
     return eventCategoryFilters.includes(value)

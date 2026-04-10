@@ -21,7 +21,9 @@ const getEventCategoryFilterDescription = (eventCategoryFilters: readonly string
   if (eventCategoryFilters.length === 0 || eventCategoryFilters.includes(EventCategoryFilter.All)) {
     return ''
   }
-  return eventCategoryFilters.map((eventCategoryFilter) => EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase()).join(', ')
+  return eventCategoryFilters
+    .map((eventCategoryFilter) => EventCategoryFilter.getEventCategoryFilterLabel(eventCategoryFilter).toLowerCase())
+    .join(', ')
 }
 
 export const getChatDebugViewDom = (
@@ -69,10 +71,7 @@ export const getChatDebugViewDom = (
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = ChatDebugStrings.noEventsFoundMatching(filterDescription)
   const useNoToolCallEventsMessage =
-    eventCategoryFilters.length === 1 &&
-    eventCategoryFilters[0] === EventCategoryFilter.Tools &&
-    !trimmedFilterValue &&
-    !hasTimelineFilter
+    eventCategoryFilters.length === 1 && eventCategoryFilters[0] === EventCategoryFilter.Tools && !trimmedFilterValue && !hasTimelineFilter
   const emptyMessage = getEmptyMessage(events.length, hasFilterValue, useNoToolCallEventsMessage, noFilteredEventsMessage)
 
   const safeSelectedEventIndex =
