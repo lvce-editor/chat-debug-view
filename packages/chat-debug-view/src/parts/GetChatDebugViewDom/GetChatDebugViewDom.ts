@@ -8,6 +8,7 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
 import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
 import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
+import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
@@ -57,12 +58,7 @@ export const getChatDebugViewDom = (
   const filterDescription = filterDescriptionParts.join(' ')
   const noFilteredEventsMessage = ChatDebugStrings.noEventsFoundMatching(filterDescription)
   const useNoToolCallEventsMessage = eventCategoryFilter === EventCategoryFilter.Tools && !trimmedFilterValue && !hasTimelineFilter
-  const emptyMessage =
-    events.length === 0 && hasFilterValue
-      ? useNoToolCallEventsMessage
-        ? ChatDebugStrings.noToolCallEvents()
-        : noFilteredEventsMessage
-      : ChatDebugStrings.noEventsFound()
+  const emptyMessage = getEmptyMessage(events.length, hasFilterValue, useNoToolCallEventsMessage, noFilteredEventsMessage)
 
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
