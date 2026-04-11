@@ -33,6 +33,6 @@ test('getTimelineTopDom should render top wrapper and summary text', () => {
       className: 'ChatDebugViewTimelineSummary',
       type: VirtualDomElements.H2,
     },
-    text('2 events over 10s'),
+    text('Window 0s-10s of 10s'),
   ])
 })
