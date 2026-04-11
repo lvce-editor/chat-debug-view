@@ -4,7 +4,6 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
-import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getTableDom = (
