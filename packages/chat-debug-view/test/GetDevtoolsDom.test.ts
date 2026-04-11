@@ -146,12 +146,12 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
 
   expect(tableWrapper).toBeDefined()
   expect(table).toBeDefined()
-  expect(table?.childCount).toBe(2)
-  expect(tableWrapper?.childCount).toBe(2)
+  expect(table?.childCount).toBe(3)
+  expect(tableWrapper?.childCount).toBe(3)
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
-  expect(resizers?.childCount).toBe(2)
+  expect(resizers?.childCount).toBe(3)
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
@@ -179,7 +179,7 @@ test('getDevtoolsDom should make the events container focusable and expose appli
   )
 })
 
-test('getDevtoolsDom should delegate row pointerdown from table body using data-index', () => {
+test('getDevtoolsDom should delegate row pointerdown from table body', () => {
   const events = [
     {
       eventId: 1,
@@ -189,7 +189,6 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
     },
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
-    readonly ['data-index']?: string
     readonly className?: string
     readonly inputType?: string
     readonly name?: string
@@ -203,7 +202,7 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
 
   expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClick)
   expect(tableBody?.onContextMenu).toBe(DomEventListenerFunctions.HandleTableBodyContextMenu)
-  expect(eventRow?.['data-index']).toBe('0')
+  expect(eventRow).toBeDefined()
   expect(selectedEventInput).toBeUndefined()
 })
 

@@ -15,13 +15,11 @@ export const getDevtoolsRows = (
     const rowClassName = isEvenRow ? TableRowEven : TableRowOdd
     const isSelected = selectedEventIndex === i
     const isErrorStatus = hasErrorStatus(event)
-    const rowIndex = String(i)
     const rowCellNodes = getRowCellNodes(event, isErrorStatus, visibleTableColumns)
     return [
       {
         childCount: visibleTableColumns.length,
         className: mergeClassNames(TableRow, rowClassName, isSelected ? ChatDebugViewEventRowSelected : ''),
-        'data-index': rowIndex,
         type: VirtualDomElements.Tr,
       },
       ...rowCellNodes,

@@ -20,7 +20,6 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -64,7 +63,6 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -110,7 +108,6 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -157,7 +154,6 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -203,7 +199,6 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -227,7 +222,6 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       childCount: 3,
       className: 'TableRow TableRowEven',
-      'data-index': '1',
       type: VirtualDomElements.Tr,
     },
     {
@@ -269,7 +263,6 @@ test('getDevtoolsRows should omit hidden columns', () => {
     {
       childCount: 2,
       className: 'TableRow TableRowOdd',
-      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {

@@ -1,8 +1,25 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { handleEventRowClick, handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+
+const tableClientX = 30
+const row0ClientY = 180
+const row1ClientY = 197
+const row2ClientY = 221
+
+const createClickableState = (): ChatDebugViewState => {
+  return {
+    ...createDefaultState(),
+    height: 600,
+    tableWidth: 480,
+    width: 900,
+    x: 10,
+    y: 20,
+  }
+}
 
 afterEach(() => {
   jest.restoreAllMocks()
@@ -15,7 +32,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     type: 'request',
   } as ChatViewEvent)
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     events: [
       {
         duration: 1,
@@ -41,7 +58,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   }
-  const result = await handleEventRowClick(state, '2', 0)
+  const result = await handleEventRowClick(state, tableClientX, row2ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
@@ -52,19 +69,19 @@ test('handleEventRowClick should select the clicked event row and load details',
   expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
 })
 
-test('handleEventRowClick should ignore clicks without a row index', async () => {
+test('handleEventRowClick should ignore clicks outside the table body', async () => {
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     selectedEventIndex: 1,
   }
-  const result = await handleEventRowClick(state, '', 0)
+  const result = await handleEventRowClick(state, tableClientX, 171, 0)
 
   expect(result).toBe(state)
 })
 
 test('handleEventRowClick should ignore non-primary button clicks', async () => {
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     events: [
       {
         duration: 1,
@@ -77,7 +94,7 @@ test('handleEventRowClick should ignore non-primary button clicks', async () => 
     selectedEventIndex: 1,
   }
 
-  const result = await handleEventRowClick(state, '0', 2)
+  const result = await handleEventRowClick(state, tableClientX, row0ClientY, 2)
 
   expect(result).toBe(state)
 })
@@ -90,12 +107,12 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
     type: 'request',
   }
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     events: [event],
   }
   Reflect.deleteProperty(event, 'eventId')
 
-  const result = await handleEventRowClick(state, '0', 0)
+  const result = await handleEventRowClick(state, tableClientX, row0ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBeNull()
@@ -109,7 +126,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
 test('handleEventRowClick should fall back to the selected list event when loading details returns null', async () => {
   jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue(null)
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     events: [
       {
         eventId: 1,
@@ -122,7 +139,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     sessionId: 'session-1',
   }
 
-  const result = await handleEventRowClick(state, '0', 0)
+  const result = await handleEventRowClick(state, tableClientX, row0ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBe(1)
@@ -142,7 +159,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     type: 'response',
   } as ChatViewEvent)
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
       {
@@ -159,7 +176,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     sessionId: 'session-1',
   }
 
-  const result = await handleEventRowClick(state, '1', 0)
+  const result = await handleEventRowClick(state, tableClientX, row1ClientY, 0)
 
   expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEventIndex).toBe(1)
@@ -177,7 +194,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     type: 'chat-message-added',
   } as ChatViewEvent)
   const state = {
-    ...createDefaultState(),
+    ...createClickableState(),
     detailTabs: DetailTab.createDetailTabs('timing'),
     events: [
       {
@@ -196,7 +213,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     sessionId: 'session-1',
   }
 
-  const result = await handleEventRowClick(state, '1', 0)
+  const result = await handleEventRowClick(state, tableClientX, row1ClientY, 0)
 
   expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('response')
   expect(DetailTab.hasDetailTab(result.detailTabs, 'timing')).toBe(false)
