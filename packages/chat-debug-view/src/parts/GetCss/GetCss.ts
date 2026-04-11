@@ -226,19 +226,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline-offset: 1px;
 }
 
-.maskIcon {
-  display: block;
-  width: 16px;
-  height: 16px;
-  opacity: 0.86;
-  contain: strict;
-}
-
-.maskIcon.close {
-  background:
-    linear-gradient(45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px)),
-    linear-gradient(-45deg, transparent calc(50% - 1px), currentColor calc(50% - 1px), currentColor calc(50% + 1px), transparent calc(50% + 1px));
-}
 
 .ChatDebugViewEventRow:hover {
   background: var(--ListHoverBackground);
