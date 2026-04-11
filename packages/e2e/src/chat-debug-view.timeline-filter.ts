@@ -25,7 +25,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // assert timeline visible before filtering
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
   await expect(Locator('.ChatDebugViewTimeline')).toBeVisible()
   await expect(rows).toHaveCount(2)
 

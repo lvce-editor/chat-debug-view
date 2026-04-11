@@ -30,7 +30,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const eventRows = Locator('.TableRow')
+  const eventRows = Locator('.TableBody .TableRow')
 
   // assert hidden by default
   await expect(eventRows).toHaveCount(1)

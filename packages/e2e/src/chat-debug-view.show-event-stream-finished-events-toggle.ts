@@ -25,7 +25,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // assert default hidden
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
   await expect(rows).toHaveCount(1)
 
   // act + assert visible when enabled

@@ -22,5 +22,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const rowCells = Locator('.TableBody .TableRow .TableCell')
 
   await expect(rowCells).toHaveCount(3)
-  await expect(rowCells.nth(1)).toHaveText('250 ms')
+  await expect(rowCells.nth(2)).toHaveText('250 ms')
 }
