@@ -131,9 +131,10 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     readonly ['aria-multiselectable']?: boolean
     readonly ariaSelected?: boolean
     readonly className?: string
-    readonly ['data-value']?: string
+    readonly name?: string
     readonly onClick?: number
     readonly role?: string
+    readonly type?: number
   }[]
   const quickFilterGroup = dom.find((node) => node.className === 'ChatDebugViewQuickFilters')
   const quickFilterPills = dom.filter((node) => node.className?.startsWith('ChatDebugViewQuickFilterPill'))
@@ -147,18 +148,20 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     expect.objectContaining({
       ariaSelected: true,
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
-      'data-value': EventCategoryFilter.All,
+      name: EventCategoryFilter.All,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
+      type: VirtualDomElements.Button,
     }),
   )
   expect(quickFilterPills[1]).toEqual(
     expect.objectContaining({
       ariaSelected: false,
       className: 'ChatDebugViewQuickFilterPill',
-      'data-value': EventCategoryFilter.Tools,
+      name: EventCategoryFilter.Tools,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
+      type: VirtualDomElements.Button,
     }),
   )
 })
