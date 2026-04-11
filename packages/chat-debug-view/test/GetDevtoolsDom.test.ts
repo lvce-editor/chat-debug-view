@@ -155,7 +155,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
-test('getDevtoolsDom should make the events container focusable and expose application role', () => {
+test('getDevtoolsDom should expose the events container application role', () => {
   const events = [
     {
       eventId: 1,
@@ -174,7 +174,6 @@ test('getDevtoolsDom should make the events container focusable and expose appli
   expect(eventsPane).toEqual(
     expect.objectContaining({
       role: 'application',
-      tabIndex: 0,
     }),
   )
 })

@@ -27,5 +27,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(eventsContainer).toBeVisible()
   await expect(eventsContainer).toHaveAttribute('role', 'application')
-  await expect(eventsContainer).toHaveAttribute('tabindex', '0')
+  await expect(eventsContainer).not.toHaveAttribute('tabindex', '0')
 }

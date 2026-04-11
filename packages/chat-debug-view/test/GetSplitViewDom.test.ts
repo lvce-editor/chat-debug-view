@@ -7,7 +7,7 @@ test('getSplitViewDom should wrap events table and details panes in the split la
   const sashNodes = [{ childCount: 0, className: 'Sash', type: VirtualDomElements.Button }]
   const detailsNodes = [{ childCount: 0, className: 'ChatDebugViewDetails', type: VirtualDomElements.Section }]
 
-  const result = GetSplitViewDom.getSplitViewDom(3, 'ChatDebugViewEvents', tableNodes, sashNodes, detailsNodes)
+  const result = GetSplitViewDom.getSplitViewDom(3, 2, 'ChatDebugViewEvents', tableNodes, sashNodes, detailsNodes)
 
   expect(result).toEqual([
     {
@@ -17,10 +17,9 @@ test('getSplitViewDom should wrap events table and details panes in the split la
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 1,
+      childCount: 2,
       className: 'ChatDebugViewEvents',
       role: 'application',
-      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     ...tableNodes,

@@ -4,6 +4,7 @@ import { ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 
 export const getSplitViewDom = (
   splitChildCount: number,
+  eventsChildCount: number,
   eventsClassName: string,
   tableNodes: readonly VirtualDomNode[],
   sashNodes: readonly VirtualDomNode[],
@@ -17,10 +18,9 @@ export const getSplitViewDom = (
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 1,
+      childCount: eventsChildCount,
       className: eventsClassName,
       role: 'application',
-      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     ...tableNodes,

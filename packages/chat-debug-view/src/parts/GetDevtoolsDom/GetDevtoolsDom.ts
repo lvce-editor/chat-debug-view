@@ -54,6 +54,7 @@ export const getDevtoolsDom = (
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
+  const eventsChildCount = events.length === 0 ? 1 : 2
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
@@ -62,5 +63,5 @@ export const getDevtoolsDom = (
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  return [...timelineNodes, ...getSplitViewDom(splitChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes)]
+  return [...timelineNodes, ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes)]
 }

@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as GetLegacyEventsDom from '../src/parts/GetLegacyEventsDom/GetLegacyEventsDom.ts'
 
-test('getLegacyEventsDom should make the events container keyboard focusable and expose application role', () => {
+test('getLegacyEventsDom should expose the events container application role', () => {
   const dom = GetLegacyEventsDom.getLegacyEventsDom('', 'No events have been found', []) as readonly {
     readonly childCount?: number
     readonly className?: string
