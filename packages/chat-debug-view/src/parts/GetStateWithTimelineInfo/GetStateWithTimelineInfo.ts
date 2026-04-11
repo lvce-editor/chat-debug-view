@@ -1,7 +1,7 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
-import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import { getTimelineEvents } from '../GetTimelineEvents/GetTimelineEvents.ts'
+import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 
 export const getStateWithTimelineInfo = (state: ChatDebugViewState): ChatDebugViewState => {
@@ -17,8 +17,8 @@ export const getStateWithTimelineInfo = (state: ChatDebugViewState): ChatDebugVi
   const timelineFilterDescription = getTimelineFilterDescription(state.timelineStartSeconds, state.timelineEndSeconds)
   return {
     ...state,
-    timelineFilterDescription,
     timelineEvents,
+    timelineFilterDescription,
     timelineInfo,
   }
 }

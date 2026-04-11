@@ -1,6 +1,6 @@
 import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
@@ -11,8 +11,8 @@ import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
 import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
-import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {

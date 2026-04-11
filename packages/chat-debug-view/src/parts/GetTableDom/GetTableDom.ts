@@ -1,11 +1,10 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { FocusOutline, Table, TableWrapper } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
-import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
 
@@ -35,6 +34,5 @@ export const getTableDom = (
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
     ...getTableResizersDom(visibleTableColumns),
-    ...getTableSummaryDom(summary),
   ]
 }
