@@ -12,7 +12,7 @@ test('getDevtoolsDom should render empty state when there are no events', () => 
     readonly text?: string
   }[]
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const table = dom.find((node) => node.className === 'Table')
 
   expect(emptyState).toBeDefined()
   expect(table).toBeUndefined()
@@ -137,7 +137,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly onPointerDown?: number
     readonly type?: number
   }[]
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const table = dom.find((node) => node.className === 'Table')
   const tableWrapper = dom.find((node) => node.className === 'ChatDebugViewTableWrapper')
   const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
   const body = dom.find((node) => node.className === 'TableBody')
@@ -375,7 +375,7 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
   }[]
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const table = dom.find((node) => node.className === 'Table')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
   expect(splitPane?.childCount).toBe(3)

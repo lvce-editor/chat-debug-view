@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewTableColumnGroup as colgroup, TableCol } from '../ClassNames/ClassNames.ts'
+import { colgroup, TableCol } from '../ClassNames/ClassNames.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo'] as const

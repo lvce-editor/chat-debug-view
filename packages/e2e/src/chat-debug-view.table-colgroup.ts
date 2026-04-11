@@ -22,7 +22,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await ChatDebug.setEvents(events)
 
-  const table = Locator('.ChatDebugViewTable')
+  const table = Locator('.Table')
   const colGroup = Locator('colgroup')
   const cols = Locator('col')
 

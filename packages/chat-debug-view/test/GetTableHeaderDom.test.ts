@@ -120,12 +120,12 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 3,
-      className: 'ChatDebugViewTable',
+      className: 'Table',
       type: VirtualDomElements.Table,
     },
     {
       childCount: 3,
-      className: 'ChatDebugViewTableColumnGroup',
+      className: 'colgroup',
       type: VirtualDomElements.ColGroup,
     },
     {
@@ -264,7 +264,7 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
     expect.arrayContaining([
       {
         childCount: 2,
-        className: 'ChatDebugViewTableColumnGroup',
+        className: 'colgroup',
         type: VirtualDomElements.ColGroup,
       },
       {
@@ -285,6 +285,38 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
         className: 'TableCol TableColTwo',
         type: VirtualDomElements.Col,
       },
+    ]),
+  )
+})
+
+test('getTableDom should render summary status below the table when provided', () => {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1, undefined, undefined, '1 event, 0ms from start to finish') as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly role?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        childCount: 1,
+        className: 'ChatDebugViewTableSummary',
+        role: 'status',
+        type: VirtualDomElements.Div,
+      }),
+      expect.objectContaining({
+        text: '1 event, 0ms from start to finish',
+        type: 12,
+      }),
     ]),
   )
 })

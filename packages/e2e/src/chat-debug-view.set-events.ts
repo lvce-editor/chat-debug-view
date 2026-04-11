@@ -23,7 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   const root = Locator('.ChatDebugView--devtools')
-  const table = Locator('.ChatDebugViewTable')
+  const table = Locator('.Table')
   const header = Locator('.ChatDebugViewTableHeader')
   const body = Locator('.TableBody')
   await expect(root).toBeVisible()

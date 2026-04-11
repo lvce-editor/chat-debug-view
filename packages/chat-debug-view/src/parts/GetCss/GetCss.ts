@@ -123,15 +123,26 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: relative;
   width: min(100%, var(--ChatDebugViewTableWidth));
   max-width: 100%;
-  flex:1;
-  display:flex
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.ChatDebugViewTable {
+.Table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
   flex: 1;
+}
+
+.ChatDebugViewTableSummary {
+  flex: none;
+  min-height: 24px;
+  padding: 6px 4px 0;
+  color: var(--vscode-descriptionForeground, inherit);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .TableCell {

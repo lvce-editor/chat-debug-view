@@ -13,7 +13,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(Locator('.ChatDebugView--devtools')).toBeVisible()
-  await expect(Locator('.ChatDebugViewTable')).toHaveCount(0)
+  await expect(Locator('.Table')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
   await expect(Locator('.ChatDebugViewEmpty')).toContainText('No events have been found')
 }

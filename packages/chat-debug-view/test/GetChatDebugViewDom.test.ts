@@ -455,6 +455,53 @@ test('getChatDebugViewDom should not render event count message', () => {
   expect(eventCountText).toBeUndefined()
 })
 
+test('getChatDebugViewDom should render table summary status in devtools layout', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:00.250Z',
+      eventId: 1,
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:00.000Z',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    [EventCategoryFilter.All],
+    categoryFilters,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    events,
+    events,
+  )
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewTableSummary',
+      role: 'status',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '2 events, 1s from start to finish',
+    }),
+  )
+})
+
 test('getChatDebugViewDom should render tool execution type with tool name in legacy layout', () => {
   const events = [
     {
