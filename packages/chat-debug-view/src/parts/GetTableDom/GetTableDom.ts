@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { Table, TableWrapper } from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'

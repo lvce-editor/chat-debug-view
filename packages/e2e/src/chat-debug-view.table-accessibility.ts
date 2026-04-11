@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-accessibility'
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, KeyBoard, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-accessibility')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -34,8 +34,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(table).toHaveAttribute('tabindex', '0')
 
   // act
-  await table.focus()
-  await table.press('ArrowDown')
+  await table.click()
+  await KeyBoard.press('ArrowDown')
 
   // assert
   await expect(table).toBeFocused()
