@@ -28,7 +28,7 @@ test('getCss should align the refresh button with the top row and use toolbar st
   expect(css).toContain('display: flex;')
   expect(css).toContain('.ChatDebugViewRefreshButton')
   expect(css).toContain('margin-left: auto;')
-  expect(css).toContain('background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));')
+  expect(css).toContain('background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));')
 })
 
 test('getCss should size the top row from a css variable based on width breakpoints', () => {
