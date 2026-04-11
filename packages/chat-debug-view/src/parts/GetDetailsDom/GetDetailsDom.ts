@@ -41,63 +41,6 @@ const getNormalizedDetailTabs = (selectedEvent: ChatViewEvent | null, detailTabs
   return DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(detailTabs), selectedEvent)
 }
 
-const getDetailContentNodes = (
-  selectedDetailTab: string,
-  selectedEvent: ChatViewEvent | null,
-  previewEventNodes: readonly VirtualDomNode[],
-  payloadEventNodes: readonly VirtualDomNode[],
-  responseEventNodes: readonly VirtualDomNode[],
-): readonly VirtualDomNode[] => {
-  if (selectedDetailTab === InputName.Timing) {
-    if (selectedEvent === null) {
-      return responseEventNodes
-    }
-    return getTimingDetailsDom(selectedEvent)
-  }
-
-  if (selectedDetailTab === InputName.Preview) {
-    if (selectedEvent === null) {
-      return previewEventNodes
-    }
-    return getPreviewEventNodes(getPreviewEvent(selectedEvent), selectedEvent)
-  }
-
-  if (selectedDetailTab === InputName.Payload) {
-    if (selectedEvent === null) {
-      return payloadEventNodes
-    }
-    return getEventNode(getPayloadEvent(selectedEvent))
-  }
-
-  if (selectedEvent === null) {
-    return responseEventNodes
-  }
-  return getEventNode(selectedEvent)
-}
-
-const getDetailContentDom = (
-  selectedDetailTab: string,
-  selectedEvent: ChatViewEvent | null,
-  previewEventNodes: readonly VirtualDomNode[],
-  payloadEventNodes: readonly VirtualDomNode[],
-  responseEventNodes: readonly VirtualDomNode[],
-): readonly VirtualDomNode[] => {
-  const contentNodes = getDetailContentNodes(selectedDetailTab, selectedEvent, previewEventNodes, payloadEventNodes, responseEventNodes)
-
-  return [
-    {
-      'aria-labelledby': getTabId(selectedDetailTab),
-      childCount: getDirectChildCount(contentNodes),
-      className: ChatDebugViewDetailsBottom,
-      id: getPanelId(selectedDetailTab),
-      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
-      role: 'tabpanel',
-      type: VirtualDomElements.Div,
-    },
-    ...contentNodes,
-  ]
-}
-
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -110,6 +53,58 @@ export const getDetailsDom = (
   }
   const normalizedDetailTabs = getNormalizedDetailTabs(selectedEvent, detailTabs)
   const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(normalizedDetailTabs)
+
+  const getDetailContentDom = (): readonly VirtualDomNode[] => {
+    const getDetailContentDomTiming = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return responseEventNodes
+      }
+      return getTimingDetailsDom(selectedEvent)
+    }
+
+    const getDetailContentDomPreview = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return previewEventNodes
+      }
+      return getPreviewEventNodes(getPreviewEvent(selectedEvent), selectedEvent)
+    }
+
+    const getDetailContentDomPayload = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return payloadEventNodes
+      }
+      return getEventNode(getPayloadEvent(selectedEvent))
+    }
+
+    const getDetailContentDomResponse = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return responseEventNodes
+      }
+      return getEventNode(selectedEvent)
+    }
+
+    const contentNodes =
+      safeSelectedDetailTab === InputName.Timing
+        ? getDetailContentDomTiming()
+        : safeSelectedDetailTab === InputName.Preview
+          ? getDetailContentDomPreview()
+          : safeSelectedDetailTab === InputName.Payload
+            ? getDetailContentDomPayload()
+            : getDetailContentDomResponse()
+
+    return [
+      {
+        'aria-labelledby': getTabId(safeSelectedDetailTab),
+        childCount: getDirectChildCount(contentNodes),
+        className: ChatDebugViewDetailsBottom,
+        id: getPanelId(safeSelectedDetailTab),
+        onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
+        role: 'tabpanel',
+        type: VirtualDomElements.Div,
+      },
+      ...contentNodes,
+    ]
+  }
 
   return [
     {
@@ -125,6 +120,6 @@ export const getDetailsDom = (
     },
     ...getDetailsCloseButtonDom(),
     ...getTabNodes(normalizedDetailTabs),
-    ...getDetailContentDom(safeSelectedDetailTab, selectedEvent, previewEventNodes, payloadEventNodes, responseEventNodes),
+    ...getDetailContentDom(),
   ]
 }
