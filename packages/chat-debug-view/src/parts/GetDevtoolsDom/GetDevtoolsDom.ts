@@ -1,4 +1,4 @@
-import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
@@ -20,6 +20,8 @@ import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
+import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
+import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 
 export const getDevtoolsDom = (
   events: readonly ChatViewEvent[],
@@ -65,6 +67,7 @@ export const getDevtoolsDom = (
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const rootChildCount = 4
+  const summary = getTableSummary(events)
   return [
     {
       childCount: rootChildCount,
