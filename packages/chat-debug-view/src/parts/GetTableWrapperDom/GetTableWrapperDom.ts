@@ -1,9 +1,9 @@
 import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { FocusOutline, TableWrapper } from '../ClassNames/ClassNames.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
+import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
-import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 
 export const getTableWrapperDom = (
   rowNodes: readonly VirtualDomNode[],
