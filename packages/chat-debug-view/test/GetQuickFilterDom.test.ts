@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import type { CategoryFilter } from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetQuickFilterDom from '../src/parts/GetQuickFilterDom/GetQuickFilterDom.ts'
 
 test('getQuickFilterDom should render an unselected quick filter pill', () => {

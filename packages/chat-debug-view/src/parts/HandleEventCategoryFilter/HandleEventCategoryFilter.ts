@@ -6,7 +6,6 @@ export const handleEventCategoryFilter = (state: ChatDebugViewState, value: stri
   const { categoryFilters } = state
 
   const newCategoryFilters = EventCategoryFilter.selectCategoryFilter(categoryFilters, value || EventCategoryFilter.All, ctrlKey || metaKey)
-  console.log({ ctrlKey, metaKey, newCategoryFilters, value })
   if (newCategoryFilters === categoryFilters) {
     return state
   }

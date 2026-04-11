@@ -1,6 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewFilterInput,
   ChatDebugViewFilterInputDevtools,
