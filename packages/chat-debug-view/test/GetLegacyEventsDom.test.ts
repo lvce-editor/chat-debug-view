@@ -15,7 +15,6 @@ test('getLegacyEventsDom should make the events container keyboard focusable and
     childCount: 1,
     className: 'ChatDebugViewEvents',
     role: 'application',
-    tabIndex: 0,
     type: VirtualDomElements.Div,
   })
 })

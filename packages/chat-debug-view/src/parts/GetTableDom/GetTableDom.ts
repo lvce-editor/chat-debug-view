@@ -1,5 +1,5 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { Table, TableWrapper } from '../ClassNames/ClassNames.ts'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { FocusOutline, Table, TableWrapper } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
@@ -7,6 +7,7 @@ import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
+import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
 
 export const getTableDom = (
   rowNodes: readonly VirtualDomNode[],
@@ -14,11 +15,13 @@ export const getTableDom = (
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   summary = '',
+  focus = 0,
 ): readonly VirtualDomNode[] => {
+  const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '')
   return [
     {
       childCount: 2,
-      className: TableWrapper,
+      className: tableWrapperClassName,
       type: VirtualDomElements.Div,
     },
     {

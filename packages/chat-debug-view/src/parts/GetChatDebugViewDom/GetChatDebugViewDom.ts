@@ -67,6 +67,7 @@ export const getChatDebugViewDom = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,
+  focus = 0,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -113,6 +114,7 @@ export const getChatDebugViewDom = (
         tableColumns,
         timelineInfo,
         timelineHoverPercent,
+        focus,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)

@@ -37,6 +37,7 @@ export const getDevtoolsDom = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,
+  focus = 0,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const effectiveRange = getEffectiveTimelineRange(
@@ -56,7 +57,7 @@ export const getDevtoolsDom = (
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events))
+      : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)

@@ -27,6 +27,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.visibleTableColumns !== newState.visibleTableColumns ||
     oldState.selectedEvent !== newState.selectedEvent ||
     oldState.selectedEventIndex !== newState.selectedEventIndex ||
+    oldState.focus !== newState.focus ||
     oldState.width !== newState.width ||
     oldState.uid !== newState.uid
   ) {
