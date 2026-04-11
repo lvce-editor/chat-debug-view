@@ -5,69 +5,69 @@ import * as WhenExpression from '../WhenExpression/WhenExpression.ts'
 export const getKeyBindings = (): readonly KeyBinding[] => {
   return [
     {
-      command: 'KeyBindings.focusNext',
+      command: 'ChatDebug.focusNext',
       key: KeyCode.DownArrow,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusPrevious',
+      command: 'ChatDebug.focusPrevious',
       key: KeyCode.UpArrow,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusFirst',
+      command: 'ChatDebug.focusFirst',
       key: KeyCode.Home,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusFirst',
+      command: 'ChatDebug.focusFirst',
       key: KeyCode.PageUp,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusLast',
+      command: 'ChatDebug.focusLast',
       key: KeyCode.PageDown,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusLast',
+      command: 'ChatDebug.focusLast',
       key: KeyCode.End,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.selectCurrent',
+      command: 'ChatDebug.selectCurrent',
       key: KeyCode.Space,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.selectCurrent',
+      command: 'ChatDebug.selectCurrent',
       key: KeyCode.Enter,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.acceptWhenExprssion',
+      command: 'ChatDebug.acceptWhenExprssion',
       key: KeyCode.Enter,
       when: WhenExpression.FocusKeyBindingsWhenExpression,
     },
     {
-      command: 'KeyBindings.focusFirst',
+      command: 'ChatDebug.focusFirst',
       key: KeyCode.Home,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.focusLast',
+      command: 'ChatDebug.focusLast',
       key: KeyCode.End,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
     {
-      command: 'KeyBindings.cancelEditingWhenExprssion',
+      command: 'ChatDebug.cancelEditingWhenExprssion',
       key: KeyCode.Escape,
       when: WhenExpression.FocusKeyBindingsWhenExpression,
     },
     {
-      command: 'KeyBindings.handleEscape',
+      command: 'ChatDebug.handleEscape',
       key: KeyCode.Escape,
-      when: WhenExpression.FocusKeyBindingsTable,
+      when: WhenExpression.FocusChatDebugTable,
     },
   ]
 }
