@@ -114,6 +114,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTableSummary {
   flex: none;
   min-height: 24px;
+  width: min(100%, var(--ChatDebugViewTableWidth));
+  max-width: 100%;
   padding: 6px 4px 0;
   color: var(--vscode-descriptionForeground, inherit);
   font-size: 12px;
@@ -156,7 +158,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   max-width: var(--ChatDebugViewTableColTwoWidth);
 }
 
-.ChatDebugViewResizers {
+.Resizers {
   position: absolute;
   inset: 0;
   pointer-events: none;

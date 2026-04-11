@@ -31,7 +31,7 @@ test('getRowCellNodes should render visible columns in order', () => {
     text('250 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),
@@ -53,7 +53,7 @@ test('getRowCellNodes should apply error status styling and ignore unknown colum
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError',
       type: VirtualDomElements.Td,
     },
     text('400'),

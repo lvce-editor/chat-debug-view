@@ -19,7 +19,7 @@ export const getTableDom = (
   const summaryNodes = summary ? getTableSummaryDom(summary) : []
   return [
     {
-      childCount: 1 + (summaryNodes.length > 0 ? 1 : 0) + (resizerNodes.length > 0 ? 1 : 0),
+      childCount: 1 + (resizerNodes.length > 0 ? 1 : 0),
       className: TableWrapper,
       type: VirtualDomElements.Div,
     },
@@ -31,7 +31,7 @@ export const getTableDom = (
     ...columnGroupNodes,
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
-    ...summaryNodes,
     ...resizerNodes,
+    ...summaryNodes,
   ]
 }

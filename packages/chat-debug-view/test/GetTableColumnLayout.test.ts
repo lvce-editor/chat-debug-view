@@ -25,9 +25,9 @@ test('getTableColumnLayout should order visible columns and clamp widths for rem
 
   expect(result).toEqual({
     fixedColumns: ['type', 'duration'],
-    resizerLefts: [200, 280],
+    resizerLefts: [224, 304],
     visibleColumns: ['type', 'duration', 'status'],
-    visibleColumnWidths: [200, 80, 80],
+    visibleColumnWidths: [224, 80, 56],
   })
 })
 
@@ -43,5 +43,20 @@ test('getTableColumnLayout should give a single visible column the full table wi
     resizerLefts: [],
     visibleColumns: ['status'],
     visibleColumnWidths: [240],
+  })
+})
+
+test('getTableColumnLayout should allow the trailing status column to use a smaller minimum width', () => {
+  const result = GetTableColumnLayout.getTableColumnLayout(360, ['type', 'duration', 'status'], {
+    duration: 240,
+    status: 110,
+    type: 260,
+  })
+
+  expect(result).toEqual({
+    fixedColumns: ['type', 'duration'],
+    resizerLefts: [224, 304],
+    visibleColumns: ['type', 'duration', 'status'],
+    visibleColumnWidths: [224, 80, 56],
   })
 })

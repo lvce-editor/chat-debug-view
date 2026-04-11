@@ -36,7 +36,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),
@@ -79,7 +79,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),
@@ -124,7 +124,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError',
       type: VirtualDomElements.Td,
     },
     text('400'),
@@ -170,7 +170,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError',
       type: VirtualDomElements.Td,
     },
     text('400'),
@@ -215,7 +215,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),
@@ -238,7 +238,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('0 ms'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),
@@ -273,7 +273,7 @@ test('getDevtoolsRows should omit hidden columns', () => {
     text('request'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),

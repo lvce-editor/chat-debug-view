@@ -4,7 +4,6 @@ import {
   ChatDebugViewHeaderCell,
   ChatDebugViewHeaderCellDuration,
   ChatDebugViewHeaderCellStatus,
-  ChatDebugViewHeaderCellType,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -43,7 +42,7 @@ export const getHeaderCellNodes = (
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellType, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: ChatDebugViewHeaderCell,
             name: column,
             onClick: DomEventListenerFunctions.HandleTableHeaderClick,
             type: VirtualDomElements.Th,

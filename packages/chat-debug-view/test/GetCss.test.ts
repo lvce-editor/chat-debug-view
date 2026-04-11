@@ -101,7 +101,7 @@ test('getCss should expose table column width and resizer position variables', (
   expect(css).toContain('--ChatDebugViewTableColZeroWidth: 240px;')
   expect(css).toContain('--ChatDebugViewTableColOneWidth: 96px;')
   expect(css).toContain('--ChatDebugViewTableColTwoWidth: 608px;')
-  expect(css).toContain('.ChatDebugViewResizers')
+  expect(css).toContain('.Resizers')
   expect(css).toContain('.ChatDebugViewResizerOne')
   expect(css).toContain('.ChatDebugViewResizerTwo')
   expect(css).toContain('.TableColZero')

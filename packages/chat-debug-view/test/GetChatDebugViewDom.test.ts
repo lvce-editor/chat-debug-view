@@ -488,7 +488,10 @@ test('getChatDebugViewDom should render table summary status in devtools layout'
     events,
     events,
   )
+  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
+  const summaryIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTableSummary')
 
+  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewTableSummary',

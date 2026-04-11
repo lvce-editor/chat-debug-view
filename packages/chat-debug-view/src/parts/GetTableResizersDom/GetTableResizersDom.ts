@@ -5,7 +5,7 @@ import {
   ChatDebugViewResizerInner,
   ChatDebugViewResizerOne,
   ChatDebugViewResizerTwo,
-  ChatDebugViewResizers,
+  Resizers,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
@@ -39,7 +39,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   return [
     {
       childCount: resizerCount + 1,
-      className: ChatDebugViewResizers,
+      className: Resizers,
       type: VirtualDomElements.Div,
     },
     ...resizerNodes,

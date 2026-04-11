@@ -86,6 +86,37 @@ test('getPreviewEvent should return read_file result text for tool execution eve
   expect(result).toBe('line 1\nline 2')
 })
 
+test('getPreviewEvent should return only result.entries for list_files tool execution events', () => {
+  const entries = [
+    {
+      name: '.git',
+      type: 'folder',
+    },
+    {
+      name: 'README.md',
+      type: 'file',
+    },
+  ]
+  const event = {
+    arguments: {
+      uri: 'file:///workspace',
+    },
+    eventId: 6,
+    name: 'list_files',
+    result: {
+      entries,
+      ignored: false,
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'tool-execution',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toEqual(entries)
+})
+
 test('getPreviewEvent should prefer prepared selected event preview metadata', () => {
   const event = setSelectedEventPreview(
     {

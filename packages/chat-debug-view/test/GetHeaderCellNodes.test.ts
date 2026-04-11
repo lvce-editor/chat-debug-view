@@ -29,7 +29,7 @@ test('getHeaderCellNodes should render the visible header cells', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,

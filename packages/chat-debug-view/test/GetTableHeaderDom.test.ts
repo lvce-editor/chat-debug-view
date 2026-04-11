@@ -28,7 +28,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -74,7 +74,7 @@ test('getTableHeaderDom should omit hidden columns', () => {
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -120,7 +120,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 3,
-      className: 'colgroup',
+      className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
     {
@@ -151,7 +151,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -186,8 +186,8 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 2,
-      className: 'ChatDebugViewResizers',
+      childCount: 3,
+      className: 'Resizers',
       type: VirtualDomElements.Div,
     },
     {
@@ -233,9 +233,9 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
     readonly childCount?: number
     readonly className?: string
   }[]
-  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
+  const resizers = dom.find((node) => node.className === 'Resizers')
 
-  expect(resizers?.childCount).toBe(2)
+  expect(resizers?.childCount).toBe(3)
 })
 
 test('getTableDom should omit hidden columns from the colgroup', () => {
@@ -256,7 +256,7 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
     expect.arrayContaining([
       {
         childCount: 2,
-        className: 'colgroup',
+        className: 'ColGroup',
         type: VirtualDomElements.ColGroup,
       },
       {
@@ -296,7 +296,18 @@ test('getTableDom should render summary status below the table when provided', (
     readonly text?: string
     readonly type?: number
   }[]
+  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
+  const summaryIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTableSummary')
+  const tableWrapper = dom[tableWrapperIndex]
 
+  expect(tableWrapper).toEqual(
+    expect.objectContaining({
+      childCount: 2,
+      className: 'TableWrapper',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
   expect(dom).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
