@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
   ChatDebugViewResizer,
@@ -23,7 +23,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName, index) => [
     {
       childCount: 1,
-      className: `${ChatDebugViewResizer} ${resizerClassName}`,
+      className: mergeClassNames(ChatDebugViewResizer, resizerClassName),
       name: resizerNames[index],
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: AriaRoles.None,
