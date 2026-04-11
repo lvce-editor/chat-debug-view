@@ -138,8 +138,8 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'Table')
-  const tableWrapper = dom.find((node) => node.className === 'ChatDebugViewTableWrapper')
-  const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
+  const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
+  const header = dom.find((node) => node.className === 'TableHeader')
   const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'ChatDebugViewResizer ChatDebugViewResizerOne')
   const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')

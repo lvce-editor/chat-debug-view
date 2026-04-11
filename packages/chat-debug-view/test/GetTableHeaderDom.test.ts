@@ -17,13 +17,13 @@ test('getTableHeaderDom should render the table header nodes', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewTableHeader',
+      className: 'TableHeader',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
       childCount: 3,
-      className: 'ChatDebugViewTableHeaderRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
     {
@@ -31,7 +31,6 @@ test('getTableHeaderDom should render the table header nodes', () => {
       className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
@@ -40,7 +39,6 @@ test('getTableHeaderDom should render the table header nodes', () => {
       className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Time'),
@@ -49,7 +47,6 @@ test('getTableHeaderDom should render the table header nodes', () => {
       className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Status'),
@@ -66,13 +63,13 @@ test('getTableHeaderDom should omit hidden columns', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewTableHeader',
+      className: 'TableHeader',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
       childCount: 2,
-      className: 'ChatDebugViewTableHeaderRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
     {
@@ -80,7 +77,6 @@ test('getTableHeaderDom should omit hidden columns', () => {
       className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
@@ -89,7 +85,6 @@ test('getTableHeaderDom should omit hidden columns', () => {
       className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Status'),
@@ -115,7 +110,7 @@ test('getTableDom should render header and body nodes for the table', () => {
   expect(dom).toEqual([
     {
       childCount: 2,
-      className: 'ChatDebugViewTableWrapper',
+      className: 'TableWrapper',
       type: VirtualDomElements.Div,
     },
     {
@@ -145,13 +140,13 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewTableHeader',
+      className: 'TableHeader',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
       childCount: 3,
-      className: 'ChatDebugViewTableHeaderRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
     {
@@ -159,7 +154,6 @@ test('getTableDom should render header and body nodes for the table', () => {
       className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Type'),
@@ -168,7 +162,6 @@ test('getTableDom should render header and body nodes for the table', () => {
       className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Time'),
@@ -177,7 +170,6 @@ test('getTableDom should render header and body nodes for the table', () => {
       className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Status'),

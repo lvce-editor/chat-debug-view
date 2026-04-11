@@ -19,7 +19,7 @@ test('getRowCellNodes should render visible columns in order', () => {
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
@@ -74,7 +74,7 @@ test('getRowCellNodes should render list_files without the tool-execution prefix
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('list_files'),

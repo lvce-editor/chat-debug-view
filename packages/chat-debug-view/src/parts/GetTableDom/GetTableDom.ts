@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { Table, ChatDebugViewTableWrapper } from '../ClassNames/ClassNames.ts'
+import { Table, TableWrapper } from '../ClassNames/ClassNames.ts'
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
@@ -20,7 +20,7 @@ export const getTableDom = (
   return [
     {
       childCount: 1 + (summaryNodes.length > 0 ? 1 : 0) + (resizerNodes.length > 0 ? 1 : 0),
-      className: ChatDebugViewTableWrapper,
+      className: TableWrapper,
       type: VirtualDomElements.Div,
     },
     {

@@ -25,7 +25,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
@@ -69,7 +69,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, read_file'),
@@ -115,7 +115,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, getWorkspaceUri'),
@@ -162,7 +162,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('list_files'),
@@ -208,7 +208,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('request'),
@@ -232,7 +232,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('response'),
@@ -274,7 +274,7 @@ test('getDevtoolsRows should omit hidden columns', () => {
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('request'),

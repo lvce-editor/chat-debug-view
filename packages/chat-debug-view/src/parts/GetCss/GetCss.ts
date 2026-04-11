@@ -119,7 +119,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   contain: strict;
 }
 
-.ChatDebugViewTableWrapper {
+.TableWrapper {
   position: relative;
   width: min(100%, var(--ChatDebugViewTableWidth));
   max-width: 100%;

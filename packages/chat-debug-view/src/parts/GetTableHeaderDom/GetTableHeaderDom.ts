@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { TableHeader, ChatDebugViewTableHeaderRow } from '../ClassNames/ClassNames.ts'
+import { TableHeader, TableRow } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getHeaderCellNodes } from '../GetHeaderCellNodes/GetHeaderCellNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -18,7 +18,7 @@ export const getTableHeaderDom = (
     },
     {
       childCount: visibleTableColumns.length,
-      className: ChatDebugViewTableHeaderRow,
+      className: TableRow,
       type: VirtualDomElements.Tr,
     },
     ...headerCellNodes,

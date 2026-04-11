@@ -5,7 +5,6 @@ import {
   ChatDebugViewCellDuration,
   ChatDebugViewCellStatus,
   ChatDebugViewCellStatusError,
-  ChatDebugViewCellType,
   TableCell,
 } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
@@ -45,7 +44,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(TableCell, ChatDebugViewCellType, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: TableCell,
             type: VirtualDomElements.Td,
           },
           text(getEventTableTypeLabel(event)),
