@@ -97,26 +97,27 @@ export const getChatDebugViewDom = (
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
-  const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(
-        events,
-        selectedEvent,
-        safeSelectedEventIndex,
-        timelineEvents,
-        timelineStartSeconds,
-        timelineEndSeconds,
-        emptyMessage,
-        timelineSelectionActive,
-        timelineSelectionAnchorSeconds,
-        timelineSelectionFocusSeconds,
-        visibleTableColumns,
-        detailTabs,
-        tableColumns,
-        timelineInfo,
-        timelineHoverPercent,
-        focus,
-      )
-    : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
+  if (useDevtoolsLayout) {
+    return getDevtoolsDom(
+      events,
+      selectedEvent,
+      safeSelectedEventIndex,
+      timelineEvents,
+      timelineStartSeconds,
+      timelineEndSeconds,
+      emptyMessage,
+      timelineSelectionActive,
+      timelineSelectionAnchorSeconds,
+      timelineSelectionFocusSeconds,
+      visibleTableColumns,
+      detailTabs,
+      tableColumns,
+      timelineInfo,
+      timelineHoverPercent,
+      focus,
+    )
+  }
+  const contentNodes = getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)
   const rootChildCount = 1 + getTopLevelChildCount(contentNodes)
 
