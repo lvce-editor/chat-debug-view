@@ -8,7 +8,7 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       {
         childCount: 1,
         className: ChatDebugViewEventRawText,
-        type: VirtualDomElements.Div,
+        type: VirtualDomElements.P,
       },
       text(value),
     ]

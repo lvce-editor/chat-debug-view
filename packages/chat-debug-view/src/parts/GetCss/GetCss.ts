@@ -235,6 +235,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEventRawText {
+  margin: 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
