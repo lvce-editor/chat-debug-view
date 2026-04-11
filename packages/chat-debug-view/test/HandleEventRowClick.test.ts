@@ -2,7 +2,7 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
-import { handleEventRowClick, handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
+import { handleEventRowClick, handleEventRowClickDependencies } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 const tableClientX = 30

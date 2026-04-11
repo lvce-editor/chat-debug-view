@@ -11,7 +11,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandleEventRowClick,
-      params: ['handleEventRowClick', EventExpression.ClientX, EventExpression.ClientY, EventExpression.Button],
+      params: ['handleEventRowClick', '0', EventExpression.Button],
     },
     {
       name: DomEventListenerFunctions.HandleEventRowClickAt,

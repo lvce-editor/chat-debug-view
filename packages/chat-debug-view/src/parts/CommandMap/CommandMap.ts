@@ -11,7 +11,7 @@ import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDet
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
 import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
-import * as HandleEventRowClick from '../HandleEventRowClick/HandleEventRowClick.ts'
+import * as HandleEventRowClick from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
