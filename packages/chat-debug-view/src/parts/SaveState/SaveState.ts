@@ -4,7 +4,6 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 
 export const saveState = (state: ChatDebugViewState): SavedState => {
-  console.log('befeore save')
   const {
     categoryFilters,
     detailTabs,

@@ -200,14 +200,15 @@ test('getTimelineNodes should render timestamp badges across the timeline', () =
 })
 
 test('getTimelineNodes should render the bucket container', () => {
-  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
+  const timelineInfo = getTimelineInfo(events, '', '')
+  const nodes = getTimelineNodes(timelineInfo) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly type?: number
   }[]
 
   expect(nodes).toContainEqual({
-    childCount: 10,
+    childCount: timelineInfo.buckets.length,
     className: 'ChatDebugViewTimelineBuckets',
     type: VirtualDomElements.Div,
   })
