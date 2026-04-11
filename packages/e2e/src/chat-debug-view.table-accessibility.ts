@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-accessibility'
 
-export const test: Test = async ({ ChatDebug, KeyBoard, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, KeyBoard, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-accessibility')
   await expect(Locator('.ChatDebugView')).toBeVisible()
