@@ -9,6 +9,27 @@ export const getCss = (state: ChatDebugViewState): string => {
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
+  const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
+  const timelineSelectionHandleStartCss =
+    selectionStartPercent === null ? '' : `
+.ChatDebugViewTimelineSelectionHandleStart {
+  left: ${selectionStartPercent}%;
+}
+
+.ChatDebugViewTimelineSelectionMarkerStart {
+  left: ${selectionStartPercent}%;
+}
+`
+  const timelineSelectionHandleEndCss =
+    selectionEndPercent === null ? '' : `
+.ChatDebugViewTimelineSelectionHandleEnd {
+  left: ${selectionEndPercent}%;
+}
+
+.ChatDebugViewTimelineSelectionMarkerEnd {
+  left: ${selectionEndPercent}%;
+}
+`
   return `
 .ChatDebugView {
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
@@ -416,6 +437,8 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
 }
+
+${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
 
 .TokenString {
   white-space: nowrap;

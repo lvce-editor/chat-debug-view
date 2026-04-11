@@ -10,7 +10,7 @@ export const handleEventCategoryFilter = (state: ChatDebugViewState, value: stri
   }
   const nextState = {
     ...state,
-    newCategoryFilters,
+    categoryFilters: newCategoryFilters,
   }
   return withPreservedSelection(state, nextState)
 }
