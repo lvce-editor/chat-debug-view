@@ -1,10 +1,8 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -16,6 +14,7 @@ import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
+import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
@@ -62,23 +61,5 @@ export const getDevtoolsDom = (
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  return [
-    ...timelineNodes,
-    {
-      childCount: splitChildCount,
-      className: ChatDebugViewDevtoolsSplit,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: eventsClassName,
-      role: 'application',
-      tabIndex: 0,
-      type: VirtualDomElements.Div,
-    },
-    ...tableNodes,
-    ...sashNodes,
-    ...detailsNodes,
-  ]
+  return [...timelineNodes, ...getSplitViewDom(splitChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes)]
 }
