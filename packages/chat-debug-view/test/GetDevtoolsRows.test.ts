@@ -34,7 +34,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus',
@@ -78,7 +78,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus',
@@ -124,7 +124,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
@@ -171,7 +171,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
@@ -217,7 +217,7 @@ test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus',
@@ -241,7 +241,7 @@ test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('0ms'),
+    text('0 ms'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellStatus',

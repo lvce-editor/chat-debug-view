@@ -40,7 +40,6 @@ export const getChatDebugViewDom = (
   timelineEndSeconds: string,
   timelineEvents: readonly ChatViewEvent[],
   events: readonly ChatViewEvent[],
-  timelineHoverPercent: number | null = null,
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
@@ -48,6 +47,7 @@ export const getChatDebugViewDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
+  timelineHoverPercent: number | null = null,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -86,7 +86,6 @@ export const getChatDebugViewDom = (
         timelineStartSeconds,
         timelineEndSeconds,
         emptyMessage,
-        timelineHoverPercent,
         timelineSelectionActive,
         timelineSelectionAnchorSeconds,
         timelineSelectionFocusSeconds,
@@ -94,6 +93,7 @@ export const getChatDebugViewDom = (
         detailTabs,
         tableColumns,
         timelineInfo,
+        timelineHoverPercent,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)

@@ -36,7 +36,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('handle-submit')
   await expect(durationCells).toHaveCount(1)
-  await expect(durationCells.nth(0)).toHaveText('250ms')
+  await expect(durationCells.nth(0)).toHaveText('250 ms')
 
   await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)

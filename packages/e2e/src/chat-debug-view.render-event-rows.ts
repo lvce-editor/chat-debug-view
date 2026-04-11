@@ -32,7 +32,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const rows = Locator('.ChatDebugViewEventRow')
   await expect(rows).toHaveCount(2)
   await expect(rows.nth(0)).toContainText('request')
-  await expect(rows.nth(0)).toContainText('250ms')
+  await expect(rows.nth(0)).toContainText('250 ms')
   await expect(rows.nth(0)).toContainText('200')
   await expect(rows.nth(1)).toContainText('tool-execution-finished, apply_patch')
   await expect(rows.nth(1)).toContainText('400')

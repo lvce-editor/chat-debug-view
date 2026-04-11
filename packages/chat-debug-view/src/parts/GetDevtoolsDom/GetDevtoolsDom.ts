@@ -29,7 +29,6 @@ export const getDevtoolsDom = (
   timelineStartSeconds: string,
   timelineEndSeconds: string,
   emptyMessage = ChatDebugStrings.noEventsFound(),
-  timelineHoverPercent: number | null = null,
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
@@ -37,6 +36,7 @@ export const getDevtoolsDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
+  timelineHoverPercent: number | null = null,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const effectiveRange = getEffectiveTimelineRange(

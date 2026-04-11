@@ -457,7 +457,7 @@ test('getDevtoolsDom should render computed duration without start and end times
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '250ms',
+      text: '250 ms',
     }),
   )
 

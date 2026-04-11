@@ -21,6 +21,6 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
     const rows = Locator('.ChatDebugViewEventRow')
     await expect(rows).toHaveCount(1)
     await expect(rows.nth(0)).toContainText('request')
-    await expect(rows.nth(0)).toContainText('100ms')
+    await expect(rows.nth(0)).toContainText('100 ms')
   }
 }
