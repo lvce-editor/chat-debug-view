@@ -1,6 +1,6 @@
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyEventIndex } from '../GetTableBodyEventIndex/GetTableBodyEventIndex.ts'
 import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
-import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const handleEventRowClickAt = async (
   state: ChatDebugViewState,
