@@ -63,22 +63,31 @@ export const getDetailsDom = (
     }
 
     const getDetailContentDomPreview = (): readonly VirtualDomNode[] => {
-      if (selectedEvent === null) {
+      if (previewEventNodes.length > 0) {
         return previewEventNodes
+      }
+      if (selectedEvent === null) {
+        return []
       }
       return getPreviewEventNodes(getPreviewEvent(selectedEvent), selectedEvent)
     }
 
     const getDetailContentDomPayload = (): readonly VirtualDomNode[] => {
-      if (selectedEvent === null) {
+      if (payloadEventNodes.length > 0) {
         return payloadEventNodes
+      }
+      if (selectedEvent === null) {
+        return []
       }
       return getEventNode(getPayloadEvent(selectedEvent))
     }
 
     const getDetailContentDomResponse = (): readonly VirtualDomNode[] => {
-      if (selectedEvent === null) {
+      if (responseEventNodes.length > 0) {
         return responseEventNodes
+      }
+      if (selectedEvent === null) {
+        return []
       }
       return getEventNode(selectedEvent)
     }
