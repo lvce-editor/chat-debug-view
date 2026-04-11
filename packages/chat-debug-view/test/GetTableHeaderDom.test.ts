@@ -37,19 +37,19 @@ test('getTableHeaderDom should render the table header nodes', () => {
     {
       childCount: 1,
       className: 'TableCell',
-      name: TableColumn.Duration,
-      onClick: handleTableHeaderClick,
-      type: VirtualDomElements.Th,
-    },
-    text('Time'),
-    {
-      childCount: 1,
-      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
     },
     text('Status'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Duration,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Time'),
   ])
 })
 
@@ -91,11 +91,11 @@ test('getTableHeaderDom should omit hidden columns', () => {
   ])
 })
 
-test('getTableDom should render header and body nodes for the table', () => {
+      name: TableColumn.Duration,
   const rowNodes = [
     {
       childCount: 0,
-      className: 'TableRow',
+    text('Time'),
       type: VirtualDomElements.Tr,
     },
   ]
