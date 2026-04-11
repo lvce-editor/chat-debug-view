@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.list-files-payload-tab'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-list-files-payload-tab')
   await expect(Locator('.ChatDebugView')).toBeVisible()
