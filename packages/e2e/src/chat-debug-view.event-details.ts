@@ -30,7 +30,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert
-  await expect(Locator('.ChatDebugViewEventRowSelected')).toHaveCount(1)
+  await expect(Locator('.TableRowSelected')).toHaveCount(1)
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
   await expect(Locator('.ChatDebugViewDetailsTitle')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewDetailsTop [role="tablist"]')).toBeVisible()
