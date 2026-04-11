@@ -52,6 +52,15 @@ test('renderEventListeners should register timeline context menu listener with p
   })
 })
 
+test('renderEventListeners should register timeline double click listener', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.HandleTimelineDoubleClick,
+    params: ['handleTimelineDoubleClick'],
+  })
+})
+
 test('renderEventListeners should register table resizer pointer tracking listeners', () => {
   const listeners = RenderEventListeners.renderEventListeners()
 

@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import { getCurrentEvents } from '../src/parts/LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as HandleTableHeaderClick from '../src/parts/HandleTableHeaderClick/HandleTableHeaderClick.ts'
+import { getCurrentEvents } from '../src/parts/LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
