@@ -1,12 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
-import {
-  Resizer,
-  ChatDebugViewResizerInner,
-  ChatDebugViewResizerOne,
-  ChatDebugViewResizerTwo,
-  Resizers,
-} from '../ClassNames/ClassNames.ts'
+import { Resizer, ChatDebugViewResizerInner, ChatDebugViewResizerOne, ChatDebugViewResizerTwo, Resizers } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
