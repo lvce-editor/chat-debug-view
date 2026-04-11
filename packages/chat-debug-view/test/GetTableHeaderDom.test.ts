@@ -171,6 +171,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 0,
       className: 'ChatDebugViewResizerInner',
+      role: 'none',
       type: VirtualDomElements.Div,
     },
     {
@@ -184,6 +185,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 0,
       className: 'ChatDebugViewResizerInner',
+      role: 'none',
       type: VirtualDomElements.Div,
     },
   ])

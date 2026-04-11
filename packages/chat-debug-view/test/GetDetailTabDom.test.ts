@@ -23,7 +23,6 @@ test('getDetailTabDom should render an unselected detail tab', () => {
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
-    readonly value?: string
   }[]
 
   expect(result).toEqual([
@@ -33,13 +32,12 @@ test('getDetailTabDom should render an unselected detail tab', () => {
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
   ])
@@ -64,7 +62,6 @@ test('getDetailTabDom should render a selected detail tab', () => {
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
-    readonly value?: string
   }[]
 
   expect(result).toEqual([
@@ -74,13 +71,12 @@ test('getDetailTabDom should render a selected detail tab', () => {
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-timing',
-      name: 'detailTab',
+      name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'timing',
     },
     text('Timing'),
   ])

@@ -32,6 +32,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     {
       childCount: 0,
       className: ChatDebugViewResizerInner,
+      role: AriaRoles.None,
       type: VirtualDomElements.Div,
     },
   ])
