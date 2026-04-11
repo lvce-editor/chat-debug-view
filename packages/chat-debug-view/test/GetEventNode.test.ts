@@ -17,7 +17,6 @@ test('getEventNode should render json details as numbered rows', () => {
     {
       childCount: 3,
       className: 'ChatDebugViewEvent',
-      style: 'overflow:auto;',
       type: VirtualDomElements.Div,
     },
     {
@@ -126,7 +125,6 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 6,
       className: 'ChatDebugViewEvent',
-      style: 'overflow:auto;',
       type: VirtualDomElements.Div,
     },
     {

@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import { ChatDebugViewEvent, ChatDebugViewEventRawText, TokenText } from '../ClassNames/ClassNames.ts'
 import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 
@@ -7,8 +7,7 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
     return [
       {
         childCount: 1,
-        className: `${ChatDebugViewEvent} ${ChatDebugViewEventRawText}`,
-        style: 'overflow:auto;',
+        className: mergeClassNames(ChatDebugViewEvent, ChatDebugViewEventRawText),
         type: VirtualDomElements.Div,
       },
       text(value),
@@ -33,7 +32,6 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
     {
       childCount: lines.length,
       className: ChatDebugViewEvent,
-      style: 'overflow:auto;',
       type: VirtualDomElements.Div,
     },
     ...lineNodes,
