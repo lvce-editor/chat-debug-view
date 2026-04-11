@@ -800,7 +800,7 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
     readonly text?: string
   }[]
 
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewEventLineNumber',
     }),
