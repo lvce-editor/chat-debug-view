@@ -29,6 +29,7 @@ export const getDevtoolsDom = (
   timelineStartSeconds: string,
   timelineEndSeconds: string,
   emptyMessage = ChatDebugStrings.noEventsFound(),
+  timelineHoverPercent: number | null = null,
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
@@ -46,7 +47,7 @@ export const getDevtoolsDom = (
     timelineSelectionFocusSeconds,
   )
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
-  const timelineNodes = getTimelineNodes(resolvedTimelineInfo)
+  const timelineNodes = getTimelineNodes(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
   const previewEventNodes = getPreviewEventNodes(previewEvent, selectedEvent)
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []

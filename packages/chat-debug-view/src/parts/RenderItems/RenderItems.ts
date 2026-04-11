@@ -35,6 +35,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.timelineEndSeconds,
     withSessionEventIds(newState.timelineEvents),
     withSessionEventIds(filteredEvents),
+    newState.timelineHoverPercent,
     newState.timelineSelectionActive,
     newState.timelineSelectionAnchorSeconds,
     newState.timelineSelectionFocusSeconds,

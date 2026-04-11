@@ -21,3 +21,4 @@ export const HandleCloseDetails = 23
 export const HandleClickRefresh = 24
 export const HandleDetailsTopContextMenu = 25
 export const HandleTimelineContextMenu = 26
+export const HandleTimelinePointerLeave = 27

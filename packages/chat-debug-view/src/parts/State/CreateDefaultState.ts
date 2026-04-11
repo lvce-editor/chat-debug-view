@@ -37,6 +37,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
     timelineEvents: [],
+    timelineHoverPercent: null,
+    timelineHoverSeconds: '',
     timelineInfo: emptyTimelineInfo,
     timelineSelectionActive: false,
     timelineSelectionAnchorSeconds: '',

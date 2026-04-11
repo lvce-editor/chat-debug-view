@@ -10,6 +10,14 @@ export const getCss = (state: ChatDebugViewState): string => {
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
+  const timelineCursorGuideCss =
+    state.timelineHoverPercent === null
+      ? ''
+      : `
+.ChatDebugViewTimelineCursorGuideVisible {
+  left: ${state.timelineHoverPercent}%;
+}
+`
   const timelineSelectionHandleStartCss =
     selectionStartPercent === null
       ? ''
@@ -391,6 +399,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   z-index: 1;
 }
 
+.ChatDebugViewTimelineCursorGuide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--vscode-foreground, rgba(255, 255, 255, 0.88)) 58%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 70%, transparent);
+}
+
 .ChatDebugViewTimelineSelectionRange {
   position: absolute;
   top: 20px;
@@ -469,7 +488,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline-offset: 1px;
 }
 
-${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
+${timelineCursorGuideCss}${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
 
 .TokenString {
   white-space: nowrap;

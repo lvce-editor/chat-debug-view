@@ -97,6 +97,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleTimelinePointerMove', EventExpression.ClientX],
     },
     {
+      name: DomEventListenerFunctions.HandleTimelinePointerLeave,
+      params: ['handleTimelinePointerLeave'],
+    },
+    {
       name: DomEventListenerFunctions.HandleTimelinePointerUp,
       params: ['handleTimelinePointerUp', EventExpression.ClientX],
     },

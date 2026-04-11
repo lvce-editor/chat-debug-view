@@ -1,5 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
+import { getSelectionPercent } from '../GetSelectionPercent/GetSelectionPercent.ts'
 import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
@@ -40,8 +41,11 @@ export const handleTimelinePointerDown = (state: ChatDebugViewState, name: strin
   if (seconds === undefined) {
     return state
   }
+  const timelineHoverPercent = getSelectionPercent(Number.parseFloat(seconds), state.timelineInfo.durationSeconds)
   return getStateWithTimelineInfo({
     ...state,
+    timelineHoverPercent,
+    timelineHoverSeconds: seconds,
     timelineSelectionActive: true,
     timelineSelectionAnchorSeconds: seconds,
     timelineSelectionFocusSeconds: seconds,

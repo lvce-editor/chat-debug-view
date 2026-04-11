@@ -3,6 +3,8 @@ import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import {
   ChatDebugViewTimeline,
   ChatDebugViewTimelineBuckets,
+  ChatDebugViewTimelineCursorGuide,
+  ChatDebugViewTimelineCursorGuideVisible,
   ChatDebugViewTimelineInteractive,
   ChatDebugViewTimelineSelectionOverlay,
   ChatDebugViewTimelineSummary,
@@ -14,12 +16,23 @@ import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesD
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
-export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDomNode[] => {
+export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
   }
   const badgeNodes = getTimelineBadgeNodes(timelineInfo)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
+  const cursorGuideNodes =
+    hoverPercent === null
+      ? []
+      : [
+          {
+            childCount: 0,
+            className: `${ChatDebugViewTimelineCursorGuide} ${ChatDebugViewTimelineCursorGuideVisible}`,
+            style: `left:${hoverPercent}%;`,
+            type: VirtualDomElements.Div,
+          },
+        ]
   return [
     {
       childCount: 2,
@@ -42,6 +55,8 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDo
       childCount: 3,
       className: ChatDebugViewTimelineInteractive,
       onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
+      onPointerLeave: DomEventListenerFunctions.HandleTimelinePointerLeave,
+      onPointerMove: DomEventListenerFunctions.HandleTimelinePointerMove,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
       type: VirtualDomElements.Div,
     },
@@ -53,10 +68,11 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDo
     },
     ...timelineInfo.buckets.flatMap(getBucketDom),
     {
-      childCount: selectionNodes.length,
+      childCount: selectionNodes.length + cursorGuideNodes.length,
       className: ChatDebugViewTimelineSelectionOverlay,
       type: VirtualDomElements.Div,
     },
+    ...cursorGuideNodes,
     ...selectionNodes,
   ]
 }
