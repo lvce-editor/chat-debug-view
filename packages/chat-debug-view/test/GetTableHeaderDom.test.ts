@@ -192,7 +192,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewResizer ChatDebugViewResizerOne',
+      className: 'Resizer ChatDebugViewResizerOne',
       name: 'ResizerOne',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
@@ -206,7 +206,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewResizer ChatDebugViewResizerTwo',
+      className: 'Resizer ChatDebugViewResizerTwo',
       name: 'ResizerTwo',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',

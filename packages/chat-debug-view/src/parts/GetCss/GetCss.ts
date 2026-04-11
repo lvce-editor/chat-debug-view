@@ -164,7 +164,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   pointer-events: none;
 }
 
-.ChatDebugViewResizer {
+.Resizer {
   position: absolute;
   top: 0;
   bottom: 0;
