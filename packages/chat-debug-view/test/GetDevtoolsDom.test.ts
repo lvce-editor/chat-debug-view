@@ -55,7 +55,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   }[]
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const closeButton = dom.find((node) => node.name === 'closeDetails')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sash = dom.find((node) => node.className === 'Sash')
   const sashLine = dom.find((node) => node.className === 'ChatDebugViewSashLine')
 
   expect(detailsPanel).toBeDefined()
@@ -353,7 +353,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     readonly className?: string
   }[]
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sash = dom.find((node) => node.className === 'Sash')
 
   expect(eventsPane).toBeDefined()
   expect(sash).toBeUndefined()
@@ -373,7 +373,7 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly className?: string
   }[]
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sash = dom.find((node) => node.className === 'Sash')
   const table = dom.find((node) => node.className === 'Table')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 

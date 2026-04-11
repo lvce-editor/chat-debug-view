@@ -1,13 +1,13 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewSash, ChatDebugViewSashLine } from '../ClassNames/ClassNames.ts'
+import { Sash, ChatDebugViewSashLine } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
 const sashNodesDom = [
   {
     childCount: 1,
-    className: ChatDebugViewSash,
+    className: Sash,
     onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Button,
   },
   {
     childCount: 0,

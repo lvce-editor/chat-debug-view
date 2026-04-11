@@ -15,9 +15,9 @@ test('getSashNodesDom should return sash and sash line when event is selected', 
   expect(nodes).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewSash',
+      className: 'Sash',
       onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
