@@ -3,6 +3,19 @@ import { ChatDebugViewHeaderCell } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
+const getHeaderCellNode = (column: TableColumn.TableColumnName, tableColumns: readonly TableColumn.TableColumn[]): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: ChatDebugViewHeaderCell,
+      name: column,
+      onClick: DomEventListenerFunctions.HandleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text(TableColumn.getTableColumnLabel(tableColumns, column)),
+  ]
+}
+
 export const getHeaderCellNodes = (
   visibleTableColumns: readonly string[],
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
@@ -11,38 +24,9 @@ export const getHeaderCellNodes = (
   return orderedVisibleTableColumns.flatMap((column) => {
     switch (column) {
       case TableColumn.Duration:
-        return [
-          {
-            childCount: 1,
-            className: ChatDebugViewHeaderCell,
-            name: column,
-            onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            type: VirtualDomElements.Th,
-          },
-          text(TableColumn.getTableColumnLabel(tableColumns, column)),
-        ]
       case TableColumn.Status:
-        return [
-          {
-            childCount: 1,
-            className: ChatDebugViewHeaderCell,
-            name: column,
-            onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            type: VirtualDomElements.Th,
-          },
-          text(TableColumn.getTableColumnLabel(tableColumns, column)),
-        ]
       case TableColumn.Type:
-        return [
-          {
-            childCount: 1,
-            className: ChatDebugViewHeaderCell,
-            name: column,
-            onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            type: VirtualDomElements.Th,
-          },
-          text(TableColumn.getTableColumnLabel(tableColumns, column)),
-        ]
+        return getHeaderCellNode(column, tableColumns)
       default:
         return []
     }
