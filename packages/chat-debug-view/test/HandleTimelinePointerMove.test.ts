@@ -25,8 +25,9 @@ test('handleTimelinePointerMove should update the timeline hover guide when not 
   })
 
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 338)
+  const resultRecord = result as Record<string, unknown>
 
-  expect(result.timelineHoverSeconds).toBe('8')
+  expect(resultRecord['timelineHoverSeconds']).toBe('8')
   expect(result.timelineSelectionActive).toBe(false)
 })
 
@@ -55,7 +56,8 @@ test('handleTimelinePointerMove should update the drag preview range relative to
   })
 
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 338)
+  const resultRecord = result as Record<string, unknown>
 
   expect(result.timelineSelectionFocusSeconds).toBe('8')
-  expect(result.timelineHoverSeconds).toBe('8')
+  expect(resultRecord['timelineHoverSeconds']).toBe('8')
 })

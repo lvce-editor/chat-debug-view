@@ -25,7 +25,7 @@ test('getMenuEntries2 should return checked table header entries and reset actio
       command: 'ChatDebug.toggleTableColumnVisibility',
       flags: MenuItemFlags.Checked,
       id: 'duration',
-      label: 'Duration',
+      label: 'Time',
     },
     {
       args: ['status'],

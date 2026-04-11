@@ -504,7 +504,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      text: 'Duration',
+      text: 'Time',
     }),
   )
   expect(dom).not.toContainEqual(

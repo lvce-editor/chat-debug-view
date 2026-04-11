@@ -16,23 +16,26 @@ import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesD
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
+const getCursorGuideNodes = (hoverPercent: number | null): readonly VirtualDomNode[] => {
+  return hoverPercent === null
+    ? []
+    : [
+        {
+          childCount: 0,
+          className: `${ChatDebugViewTimelineCursorGuide} ${ChatDebugViewTimelineCursorGuideVisible}`,
+          style: `left:${hoverPercent}%;`,
+          type: VirtualDomElements.Div,
+        },
+      ]
+}
+
 export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
   }
   const badgeNodes = getTimelineBadgeNodes(timelineInfo)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
-  const cursorGuideNodes =
-    hoverPercent === null
-      ? []
-      : [
-          {
-            childCount: 0,
-            className: `${ChatDebugViewTimelineCursorGuide} ${ChatDebugViewTimelineCursorGuideVisible}`,
-            style: `left:${hoverPercent}%;`,
-            type: VirtualDomElements.Div,
-          },
-        ]
+  const cursorGuideNodes = getCursorGuideNodes(hoverPercent)
   return [
     {
       childCount: 2,

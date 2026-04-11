@@ -43,7 +43,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Duration'),
+    text('Time'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
@@ -151,7 +151,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       scope: 'col',
       type: VirtualDomElements.Th,
     },
-    text('Duration'),
+    text('Time'),
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
