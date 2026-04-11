@@ -1,4 +1,4 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text, AriaRoles } from '@lvce-editor/virtual-dom-worker'
 import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import { ChatDebugViewDetailsTab, ChatDebugViewDetailsTabSelected } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -17,7 +17,7 @@ export const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[]
       name: detailTab.name,
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
-      role: 'tab',
+      role: AriaRoles.Tab,
       tabIndex: isSelected ? 0 : -1,
       type: VirtualDomElements.Button,
     },
