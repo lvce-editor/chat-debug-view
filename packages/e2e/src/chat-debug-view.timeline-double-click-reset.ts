@@ -25,7 +25,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   const interactiveTimeline = Locator('.ChatDebugViewTimelineInteractive')
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
 
   await expect(interactiveTimeline).toBeVisible()
   await ChatDebug.setTimelineRangePreset('0:0.833')

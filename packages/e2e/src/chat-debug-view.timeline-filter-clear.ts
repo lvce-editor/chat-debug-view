@@ -25,10 +25,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // act
   await ChatDebug.setTimelineRangePreset('0:0.833')
-  await expect(Locator('.ChatDebugViewEventRow')).toHaveCount(1)
+  await expect(Locator('.TableRow')).toHaveCount(1)
   await ChatDebug.setTimelineRangePreset('')
 
   // assert
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewEventRow')).toHaveCount(2)
+  await expect(Locator('.TableRow')).toHaveCount(2)
 }

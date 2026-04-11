@@ -32,7 +32,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setTimelineRangePreset('8:2')
 
   // assert
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(8)
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('response-part')

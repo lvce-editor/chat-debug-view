@@ -21,7 +21,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
   const typeCells = Locator('.ChatDebugViewCellType')
 
   await expect(rows).toHaveCount(1)

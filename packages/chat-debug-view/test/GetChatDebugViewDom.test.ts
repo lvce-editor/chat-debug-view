@@ -207,12 +207,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     text(ChatDebugStrings.refresh()),
     {
       childCount: 1,
-      className: 'ChatDebugViewDevtoolsMain',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewDevtoolsSplit',
       role: 'none',
       type: VirtualDomElements.Div,
@@ -279,12 +273,12 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
-  const mainPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
   expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
-  expect(mainPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(splitPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
@@ -294,6 +288,46 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
     }),
   )
   expect(root?.childCount).toBe(2)
+})
+
+test('getChatDebugViewDom should expose timeline and split as direct devtools children when timeline is visible', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:10.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    [EventCategoryFilter.All],
+    categoryFilters,
+    false,
+    false,
+    false,
+    true,
+    events[0],
+    0,
+    '',
+    '',
+    events,
+    events,
+  )
+  const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
+  const timelineIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTimeline')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+
+  expect(root?.childCount).toBe(3)
+  expect(timelineIndex).toBeGreaterThan(-1)
+  expect(splitPaneIndex).toBeGreaterThan(timelineIndex)
 })
 
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {

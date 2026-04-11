@@ -1,6 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { ChatDebugViewEventRow, ChatDebugViewEventRowSelected, TableRowEven } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewEventRowSelected, TableRow, TableRowEven, TableRowOdd } from '../ClassNames/ClassNames.ts'
 import { getRowCellNodes } from '../GetRowCellNodes/GetRowCellNodes.ts'
 import { hasErrorStatus } from '../HasErrorStatus/HasErrorStatus.ts'
 import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
@@ -12,6 +12,7 @@ export const getDevtoolsRows = (
 ): readonly VirtualDomNode[] => {
   return events.flatMap((event, i) => {
     const isEvenRow = i % 2 === 1
+    const rowClassName = isEvenRow ? TableRowEven : TableRowOdd
     const isSelected = selectedEventIndex === i
     const isErrorStatus = hasErrorStatus(event)
     const rowIndex = String(i)
@@ -19,7 +20,7 @@ export const getDevtoolsRows = (
     return [
       {
         childCount: visibleTableColumns.length,
-        className: mergeClassNames(ChatDebugViewEventRow, isEvenRow ? TableRowEven : '', isSelected ? ChatDebugViewEventRowSelected : ''),
+        className: mergeClassNames(TableRow, rowClassName, isSelected ? ChatDebugViewEventRowSelected : ''),
         'data-index': rowIndex,
         type: VirtualDomElements.Tr,
       },

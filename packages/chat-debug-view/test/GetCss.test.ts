@@ -43,6 +43,19 @@ test('getCss should keep the devtools filter input wider next to quick filters',
   expect(css).toContain('min-width: 180px;')
 })
 
+test('getCss should lay out devtools timeline and split without a wrapper element', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugView--devtools > .ChatDebugViewTimeline')
+  expect(css).toContain('.ChatDebugViewDevtoolsSplit')
+  expect(css).toContain('.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails')
+  expect(css).not.toContain('.ChatDebugViewDevtoolsMain')
+})
+
 test('getCss should expose table column width and resizer position variables', () => {
   const css = getCss({
     ...createDefaultState(),

@@ -4,7 +4,7 @@ import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { ChatDebugViewDevtoolsMain, ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -58,14 +58,7 @@ export const getDevtoolsDom = (
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  const mainChildCount = 1 + (timelineNodes.length > 0 ? 1 : 0)
   return [
-    {
-      childCount: mainChildCount,
-      className: ChatDebugViewDevtoolsMain,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
     ...timelineNodes,
     {
       childCount: splitChildCount,

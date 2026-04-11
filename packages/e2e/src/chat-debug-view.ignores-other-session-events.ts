@@ -29,7 +29,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // assert
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('request')
   await expect(rows.nth(0)).toContainText('match')

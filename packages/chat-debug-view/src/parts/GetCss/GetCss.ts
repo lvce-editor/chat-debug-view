@@ -52,6 +52,27 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableWidth: ${tableWidth}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  gap: 8px;
+  contain: strict;
+  flex: 1;
+  flex-direction: column;
+}
+
+.ChatDebugView--devtools {
+  gap: 4px;
+}
+
+.ChatDebugView--devtools > .ChatDebugViewTimeline {
+  flex: 0 0 auto;
+}
+
+.ChatDebugView--devtools .ChatDebugViewEvents {
+  border-radius: 6px;
+  margin-bottom: 0;
+  overflow: hidden;
 }
 
 .ChatDebugViewTop {
@@ -59,6 +80,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   align-items: center;
   gap: 8px;
   min-width: 0;
+}
+
+.ChatDebugViewTop--devtools {
+  align-items: stretch;
 }
 
 .ChatDebugViewFilterInput {
@@ -69,6 +94,17 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewFilterInput--devtools {
   flex: 1 1 220px;
   min-width: 180px;
+}
+
+.ChatDebugViewDevtoolsSplit {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  contain: strict;
 }
 
 .ChatDebugViewTableWrapper {
@@ -87,7 +123,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewHeaderCell,
-.ChatDebugViewCell {
+.TableCell {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -145,24 +181,33 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
-.ChatDebugViewDetails  {
-  margin-left: auto;
-  min-height: 26px;
-}
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--vscode-descriptionForeground, inherit);
-}
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.ChatDebugViewDetails {
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
   display: flex;
+  flex-direction: column;
   contain: strict;
-  flex:1;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
-
 }
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  flex: 1;
+}
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents {
+  flex: 0 1 var(--ChatDebugViewTableWidth);
+  min-width: 0;
+}
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
+  flex: 1 1 100%;
+}
+
 .ChatDebugViewEvent {
   border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
   background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
@@ -260,7 +305,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
-.ChatDebugViewEventRow:hover {
+.TableRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);
 }

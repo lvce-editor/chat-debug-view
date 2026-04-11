@@ -1,26 +1,27 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-debug-view.render-event-rows'
+export const name = 'chat-debug-view.table-row-class-names'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
-  await ChatDebug.open('e2e-session-render-event-rows')
+  const sessionId = 'e2e-session-table-row-class-names'
+  await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
-      sessionId: 'e2e-session-render-event-rows',
+      sessionId,
       started: '2026-03-08T00:00:01.000Z',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
     {
-      error: 'tool call failed',
-      sessionId: 'e2e-session-render-event-rows',
+      ended: '2026-03-08T00:00:02.500Z',
+      sessionId,
+      started: '2026-03-08T00:00:02.000Z',
       timestamp: '2026-03-08T00:00:02.000Z',
-      toolName: 'apply_patch',
-      type: 'tool-execution-finished',
+      type: 'response',
     },
   ]
 
@@ -31,9 +32,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   const rows = Locator('.TableRow')
   await expect(rows).toHaveCount(2)
-  await expect(rows.nth(0)).toContainText('request')
-  await expect(rows.nth(0)).toContainText('250 ms')
-  await expect(rows.nth(0)).toContainText('200')
-  await expect(rows.nth(1)).toContainText('tool-execution-finished, apply_patch')
-  await expect(rows.nth(1)).toContainText('400')
+  await expect(rows.nth(0)).toHaveAttribute('class', 'TableRow TableRowOdd')
+  await expect(rows.nth(1)).toHaveAttribute('class', 'TableRow TableRowEven')
 }

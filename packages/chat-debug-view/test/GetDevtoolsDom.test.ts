@@ -198,7 +198,7 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
     readonly type?: number
   }[]
   const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
-  const eventRow = dom.find((node) => node.className === 'ChatDebugViewEventRow ChatDebugViewEventRowSelected')
+  const eventRow = dom.find((node) => node.className === 'TableRow TableRowOdd ChatDebugViewEventRowSelected')
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
   expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClick)
@@ -250,14 +250,16 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
     readonly className?: string
     readonly onContextMenu?: number
   }[]
-  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const timeline = dom.find((node) => node.className === 'ChatDebugViewTimeline')
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+  const timelineIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTimeline')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
 
-  expect(mainPane?.childCount).toBe(2)
   expect(timeline?.childCount).toBe(2)
   expect(timeline?.onContextMenu).toBe(DomEventListenerFunctions.HandleTimelineContextMenu)
   expect(timeline).toBeDefined()
+  expect(timelineIndex).toBeGreaterThan(-1)
+  expect(splitPaneIndex).toBeGreaterThan(timelineIndex)
   expect(splitPane?.childCount).toBe(3)
 })
 
@@ -371,13 +373,11 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly childCount?: number
     readonly className?: string
   }[]
-  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
-  expect(mainPane?.childCount).toBe(2)
   expect(splitPane?.childCount).toBe(3)
   expect(sash).toBeDefined()
   expect(table).toBeDefined()
@@ -435,7 +435,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
     }),
   )
 })
@@ -509,7 +509,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      className: 'TableCell ChatDebugViewCellDuration',
     }),
   )
 })

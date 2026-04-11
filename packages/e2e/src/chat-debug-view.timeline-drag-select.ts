@@ -31,7 +31,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
   const interactiveTimeline = Locator('.ChatDebugViewTimelineInteractive')
 
   // assert

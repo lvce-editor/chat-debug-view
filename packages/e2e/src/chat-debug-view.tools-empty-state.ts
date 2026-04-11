@@ -28,5 +28,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
   await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
   await expect(Locator('.ChatDebugViewEmpty')).toContainText('No tool call events.')
-  await expect(Locator('.ChatDebugViewEventRow')).toHaveCount(0)
+  await expect(Locator('.TableRow')).toHaveCount(0)
 }

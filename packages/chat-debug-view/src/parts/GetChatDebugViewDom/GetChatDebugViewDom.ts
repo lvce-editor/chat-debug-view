@@ -16,6 +16,25 @@ import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
+const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
+  let nextSiblingIndex = index + 1
+  const childCount = nodes[index]?.childCount || 0
+  for (let i = 0; i < childCount; i++) {
+    nextSiblingIndex = getNextSiblingIndex(nodes, nextSiblingIndex)
+  }
+  return nextSiblingIndex
+}
+
+const getTopLevelChildCount = (nodes: readonly VirtualDomNode[]): number => {
+  let count = 0
+  let index = 0
+  while (index < nodes.length) {
+    count++
+    index = getNextSiblingIndex(nodes, index)
+  }
+  return count
+}
+
 const getEventCategoryFilterDescription = (eventCategoryFilters: readonly string[]): string => {
   if (eventCategoryFilters.length === 0 || eventCategoryFilters.includes(EventCategoryFilter.All)) {
     return ''
@@ -97,7 +116,7 @@ export const getChatDebugViewDom = (
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)
-  const rootChildCount = 2
+  const rootChildCount = 1 + getTopLevelChildCount(contentNodes)
 
   return [
     {

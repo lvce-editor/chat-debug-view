@@ -1,12 +1,12 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
-  ChatDebugViewCell,
   ChatDebugViewColumnFixed,
   ChatDebugViewCellDuration,
   ChatDebugViewCellStatus,
   ChatDebugViewCellStatusError,
   ChatDebugViewCellType,
+  TableCell,
 } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
 import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
@@ -22,7 +22,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: mergeClassNames(TableCell, ChatDebugViewCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
             type: VirtualDomElements.Td,
           },
           text(getEventTableDurationText(event)),
@@ -32,7 +32,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
           {
             childCount: 1,
             className: mergeClassNames(
-              ChatDebugViewCell,
+              TableCell,
               ChatDebugViewCellStatus,
               isErrorStatus ? ChatDebugViewCellStatusError : '',
               isFixed ? ChatDebugViewColumnFixed : '',
@@ -45,7 +45,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellType, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: mergeClassNames(TableCell, ChatDebugViewCellType, isFixed ? ChatDebugViewColumnFixed : ''),
             type: VirtualDomElements.Td,
           },
           text(getEventTableTypeLabel(event)),
