@@ -78,7 +78,7 @@ export const getDetailsDom = (
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     ...getTabNodes(normalizedDetailTabs),

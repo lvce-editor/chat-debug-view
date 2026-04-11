@@ -61,7 +61,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     {
@@ -206,7 +206,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     {
@@ -386,7 +386,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     {
@@ -523,7 +523,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     {
@@ -644,7 +644,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     },
     {
       childCount: 0,
-      className: 'maskIcon close',
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
     {
