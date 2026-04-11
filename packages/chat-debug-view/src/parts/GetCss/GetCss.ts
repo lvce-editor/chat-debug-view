@@ -316,9 +316,35 @@ export const getCss = (state: ChatDebugViewState): string => {
   user-select: none;
 }
 
+.ChatDebugViewTimelineBadges {
+  position: absolute;
+  inset: 4px 8px auto 8px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ChatDebugViewTimelineBadge {
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 12px;
+  padding: 0 5px;
+  border: 1px solid color-mix(in srgb, var(--vscode-widget-border, rgba(255, 255, 255, 0.18)) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 90%, transparent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+  color: var(--vscode-descriptionForeground, inherit);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .ChatDebugViewTimelineBuckets {
   position: absolute;
-  inset: 18px 8px 8px;
+  inset: 20px 8px 8px;
   display: flex;
   align-items: flex-end;
   gap: 2px;
@@ -362,11 +388,12 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
 .ChatDebugViewTimelineSelectionRange {
   position: absolute;
-  top: 18px;
+  top: 20px;
   bottom: 8px;
   border-radius: 6px;
   background: color-mix(in srgb, var(--vscode-charts-orange, rgba(255, 174, 0, 0.95)) 18%, transparent);

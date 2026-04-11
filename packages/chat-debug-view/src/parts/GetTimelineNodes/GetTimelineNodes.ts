@@ -9,6 +9,7 @@ import {
   ChatDebugViewTimelineTop,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
@@ -17,6 +18,7 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDo
   if (timelineInfo.buckets.length === 0) {
     return []
   }
+  const badgeNodes = getTimelineBadgeNodes(timelineInfo)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
   return [
     {
@@ -37,12 +39,13 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDo
     },
     text(getTimelineSummary(timelineInfo)),
     {
-      childCount: 2,
+      childCount: 3,
       className: ChatDebugViewTimelineInteractive,
       onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
       type: VirtualDomElements.Div,
     },
+    ...badgeNodes,
     {
       childCount: timelineInfo.buckets.length,
       className: ChatDebugViewTimelineBuckets,
