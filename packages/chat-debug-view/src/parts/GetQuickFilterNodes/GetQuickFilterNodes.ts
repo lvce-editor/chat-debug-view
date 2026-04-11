@@ -21,10 +21,10 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
           ariaSelected: isSelected,
           childCount: 1,
           className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
-          'data-value': name,
+          name,
           onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
           role: 'option',
-          type: VirtualDomElements.Div,
+          type: VirtualDomElements.Button,
         },
         text(label),
       ]

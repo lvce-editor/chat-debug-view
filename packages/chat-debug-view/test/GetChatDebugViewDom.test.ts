@@ -23,11 +23,7 @@ test('getChatDebugViewDom should return debug error dom when error message is se
     '',
     [],
     [],
-  ) as readonly {
-    readonly childCount?: number
-    readonly className?: string
-    readonly text?: string
-  }[]
+  )
 
   expect(dom).toEqual([
     {
@@ -64,22 +60,13 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
     '',
     [],
     [],
-  ) as readonly {
-    readonly autocomplete?: string
-    readonly className?: string
-    readonly inputType?: string
-    readonly name?: string
-    readonly onInput?: number
-  }[]
+  )
   const filterInput = dom.find((node) => node.name === 'filter')
 
   expect(filterInput).toBeDefined()
-  // @ts-ignore
-  expect(filterInput.onInput).toBe(DomEventListenerFunctions.HandleFilterInput)
-  // @ts-ignore
-  expect(filterInput.inputType).toBe('search')
-  // @ts-ignore
-  expect(filterInput.autocomplete).toBe('off')
+  expect(filterInput?.onInput).toBe(DomEventListenerFunctions.HandleFilterInput)
+  expect(filterInput?.inputType).toBe('search')
+  expect(filterInput?.autocomplete).toBe('off')
   expect(filterInput?.className).toBe('InputBox ChatDebugViewFilterInput')
 })
 
@@ -99,10 +86,7 @@ test('getChatDebugViewDom should not include top checkbox controls', () => {
     '',
     [],
     [],
-  ) as readonly {
-    readonly checked?: boolean
-    readonly name?: string
-  }[]
+  )
   const names = dom.map((node) => node.name).filter(Boolean)
 
   expect(names).not.toContain('showEventStreamFinishedEvents')
@@ -127,14 +111,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     '',
     [],
     [],
-  ) as readonly {
-    readonly ['aria-multiselectable']?: boolean
-    readonly ariaSelected?: boolean
-    readonly className?: string
-    readonly ['data-value']?: string
-    readonly onClick?: number
-    readonly role?: string
-  }[]
+  )
   const quickFilterGroup = dom.find((node) => node.className === 'ChatDebugViewQuickFilters')
   const quickFilterPills = dom.filter((node) => node.className?.startsWith('ChatDebugViewQuickFilterPill'))
 
@@ -147,18 +124,20 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     expect.objectContaining({
       ariaSelected: true,
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
-      'data-value': EventCategoryFilter.All,
+      name: EventCategoryFilter.All,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
+      type: VirtualDomElements.Button,
     }),
   )
   expect(quickFilterPills[1]).toEqual(
     expect.objectContaining({
       ariaSelected: false,
       className: 'ChatDebugViewQuickFilterPill',
-      'data-value': EventCategoryFilter.Tools,
+      name: EventCategoryFilter.Tools,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
+      type: VirtualDomElements.Button,
     }),
   )
 })
@@ -179,10 +158,7 @@ test('getChatDebugViewDom should render dedicated empty message for tools quick 
     '',
     [],
     [],
-  ) as readonly {
-    readonly className?: string
-    readonly text?: string
-  }[]
+  )
 
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
   const emptyStateText = dom.find((node) => node.text === 'No tool call events.')
@@ -207,13 +183,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
     '',
     [],
     [],
-  ) as readonly {
-    readonly childCount?: number
-    readonly className?: string
-    readonly inputType?: string
-    readonly name?: string
-    readonly type?: number
-  }[]
+  )
 
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
@@ -259,11 +229,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
     '',
     events,
     events,
-  ) as readonly {
-    readonly ['aria-label']?: string
-    readonly className?: string
-    readonly name?: string
-  }[]
+  )
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const detailsTopIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDetailsTop')
 
@@ -348,10 +314,7 @@ test('getChatDebugViewDom should not render event count message', () => {
     '',
     events,
     events,
-  ) as readonly {
-    readonly className?: string
-    readonly text?: string
-  }[]
+  )
 
   const eventCount = dom.find((node) => node.className === 'ChatDebugViewEventCount')
   const eventCountText = dom.find((node) => node.text === '2 events')
@@ -385,9 +348,7 @@ test('getChatDebugViewDom should render tool execution type with tool name in le
     '',
     events,
     events,
-  ) as readonly {
-    readonly text?: string
-  }[]
+  )
 
   expect(dom).toContainEqual(
     expect.objectContaining({

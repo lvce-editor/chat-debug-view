@@ -3,6 +3,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 export const name = 'chat-debug-view.chat-attachment-added-invalid-image'
 
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+  // arrange
   const eventId = Date.now()
   const sessionId = `e2e-session-chat-attachment-added-invalid-image-${eventId}`
   await ChatDebug.open(sessionId)
@@ -21,7 +22,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleClickRefresh')
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await ChatDebug.openTabPreview()
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
