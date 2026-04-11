@@ -103,10 +103,12 @@ test('getTableDom should render header and body nodes for the table', () => {
     readonly childCount?: number
     readonly className?: string
     readonly onContextMenu?: number
+    readonly onFocus?: number
     readonly onPointerDown?: number
     readonly role?: string
     readonly scope?: string
     readonly text?: string
+    readonly tabIndex?: number
     readonly type?: number
   }[]
 
@@ -119,6 +121,8 @@ test('getTableDom should render header and body nodes for the table', () => {
     {
       childCount: 3,
       className: 'Table',
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
       type: VirtualDomElements.Table,
     },
     {
