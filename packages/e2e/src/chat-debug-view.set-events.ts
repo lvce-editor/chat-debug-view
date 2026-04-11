@@ -30,7 +30,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(table).toBeVisible()
   await expect(header).toBeVisible()
   await expect(header).toContainText('Type')
-  await expect(header).toContainText('Duration')
+  await expect(header).toContainText('Time')
   await expect(header).toContainText('Status')
   await expect(body).toBeVisible()
 }

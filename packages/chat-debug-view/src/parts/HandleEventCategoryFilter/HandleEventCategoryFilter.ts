@@ -4,6 +4,7 @@ import { withPreservedSelection } from '../PreserveSelection/PreserveSelection.t
 
 export const handleEventCategoryFilter = (state: ChatDebugViewState, value: string, ctrlKey = false, metaKey = false): ChatDebugViewState => {
   const { categoryFilters } = state
+
   const newCategoryFilters = EventCategoryFilter.selectCategoryFilter(categoryFilters, value || EventCategoryFilter.All, ctrlKey || metaKey)
   if (newCategoryFilters === categoryFilters) {
     return state

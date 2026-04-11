@@ -27,3 +27,28 @@ test('getCurrentEvents should apply event filters and timeline range', () => {
 
   expect(result).toEqual([responseEvent])
 })
+
+test('getCurrentEvents should sort by selected table column', () => {
+  const responseEvent = {
+    eventId: 2,
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:01.000Z',
+    type: 'response',
+  }
+  const requestEvent = {
+    eventId: 1,
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  }
+  const state = {
+    ...createDefaultState(),
+    events: [responseEvent, requestEvent],
+    sortColumn: 'type' as const,
+    sortDescending: false,
+  }
+
+  const result = getCurrentEvents(state)
+
+  expect(result).toEqual([requestEvent, responseEvent])
+})

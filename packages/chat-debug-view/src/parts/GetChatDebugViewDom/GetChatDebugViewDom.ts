@@ -13,7 +13,6 @@ import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
-import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
@@ -48,6 +47,7 @@ export const getChatDebugViewDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
+  timelineHoverPercent: number | null = null,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -93,10 +93,10 @@ export const getChatDebugViewDom = (
         detailTabs,
         tableColumns,
         timelineInfo,
+        timelineHoverPercent,
       )
     : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
-  const quickFilterNodes = useDevtoolsLayout ? getQuickFilterNodes(categoryFilters) : []
-  const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, quickFilterNodes)
+  const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)
   const rootChildCount = 2
 
   return [

@@ -27,12 +27,16 @@ export interface ChatDebugViewState {
   readonly showEventStreamFinishedEvents: boolean
   readonly showInputEvents: boolean
   readonly showResponsePartEvents: boolean
+  readonly sortColumn: TableColumn['name'] | ''
+  readonly sortDescending: boolean
   readonly tableColumns: readonly TableColumn[]
   readonly tableColumnWidths: TableColumnWidths
   readonly tableResizerDownId: number
   readonly tableWidth: number
   readonly timelineEndSeconds: string
   readonly timelineEvents: readonly ChatViewEvent[]
+  readonly timelineHoverPercent: number | null
+  readonly timelineHoverSeconds: string
   readonly timelineInfo: TimelineInfo
   readonly timelineSelectionActive: boolean
   readonly timelineSelectionAnchorSeconds: string

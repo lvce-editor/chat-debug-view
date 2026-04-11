@@ -36,6 +36,7 @@ export const getDevtoolsDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
+  timelineHoverPercent: number | null = null,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const effectiveRange = getEffectiveTimelineRange(
@@ -46,7 +47,7 @@ export const getDevtoolsDom = (
     timelineSelectionFocusSeconds,
   )
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
-  const timelineNodes = getTimelineNodes(resolvedTimelineInfo)
+  const timelineNodes = getTimelineNodes(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
   const previewEventNodes = getPreviewEventNodes(previewEvent, selectedEvent)
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []

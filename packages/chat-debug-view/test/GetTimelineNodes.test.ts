@@ -22,7 +22,9 @@ const events = [
 test('getTimelineNodes should wire interactive timeline selection handlers', () => {
   const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
-    readonly onDoubleClick?: number
+    readonly onDblClick?: number
+    readonly onPointerLeave?: number
+    readonly onPointerMove?: number
     readonly onPointerDown?: number
     readonly type?: number
   }[]
@@ -31,8 +33,10 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
   expect(interactive).toEqual(
     expect.objectContaining({
       className: 'ChatDebugViewTimelineInteractive',
-      onDoubleClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
+      onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
+      onPointerLeave: DomEventListenerFunctions.HandleTimelinePointerLeave,
+      onPointerMove: DomEventListenerFunctions.HandleTimelinePointerMove,
       type: VirtualDomElements.Div,
     }),
   )
@@ -120,6 +124,22 @@ test('getTimelineNodes should render the timeline summary as a heading', () => {
   expect(summary?.type).toBe(VirtualDomElements.H2)
 })
 
+test('getTimelineNodes should render the timeline top container', () => {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  const top = nodes.find((node) => node.className === 'ChatDebugViewTimelineTop')
+
+  expect(top).toEqual({
+    childCount: 1,
+    className: 'ChatDebugViewTimelineTop',
+    type: VirtualDomElements.Div,
+  })
+})
+
 test('getTimelineNodes should render drag preview markers while selecting', () => {
   const nodes = getTimelineNodes(getTimelineInfo(events, '1', '4')) as readonly {
     readonly className?: string
@@ -129,4 +149,67 @@ test('getTimelineNodes should render drag preview markers while selecting', () =
   const range = nodes.find((node) => node.className === 'ChatDebugViewTimelineSelectionRange')
 
   expect(range?.style).toBe('left:10%;width:30%;')
+})
+
+test('getTimelineNodes should render timestamp badges across the timeline', () => {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
+    readonly className?: string
+    readonly style?: string
+    readonly text?: string
+  }[]
+
+  const badgeTexts = nodes.flatMap((node, index) => {
+    if (node.className !== 'ChatDebugViewTimelineBadge') {
+      return []
+    }
+    const textNode = nodes[index + 1]
+    return [
+      {
+        style: node.style,
+        text: textNode?.text,
+      },
+    ]
+  })
+
+  expect(badgeTexts).toEqual([
+    {
+      style: 'left:0;transform:translateX(0);',
+      text: '0s',
+    },
+    {
+      style: 'left:20%;transform:translateX(-50%);',
+      text: '2s',
+    },
+    {
+      style: 'left:40%;transform:translateX(-50%);',
+      text: '4s',
+    },
+    {
+      style: 'left:60%;transform:translateX(-50%);',
+      text: '6s',
+    },
+    {
+      style: 'left:80%;transform:translateX(-50%);',
+      text: '8s',
+    },
+    {
+      style: 'left:100%;transform:translateX(-100%);',
+      text: '10s',
+    },
+  ])
+})
+
+test('getTimelineNodes should render the bucket container', () => {
+  const timelineInfo = getTimelineInfo(events, '', '')
+  const nodes = getTimelineNodes(timelineInfo) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  expect(nodes).toContainEqual({
+    childCount: timelineInfo.buckets.length,
+    className: 'ChatDebugViewTimelineBuckets',
+    type: VirtualDomElements.Div,
+  })
 })

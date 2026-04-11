@@ -102,6 +102,23 @@ test('getCss should style timeline selection handles like draggable resize grips
   expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::after')
 })
 
+test('getCss should render timeline cursor guide positions via dedicated classes', () => {
+  const state = {
+    ...createDefaultState(),
+    tableWidth: 420,
+    timelineHoverPercent: 37.5,
+    width: 960,
+  } as ReturnType<typeof createDefaultState> & {
+    readonly timelineHoverPercent: number | null
+  }
+  const css = getCss(state)
+
+  expect(css).toContain('.ChatDebugViewTimelineCursorGuide {')
+  expect(css).toContain('pointer-events: none;')
+  expect(css).toContain('.ChatDebugViewTimelineCursorGuideVisible {')
+  expect(css).toContain('left: 37.5%;')
+})
+
 test('getCss should render timeline selection handle positions via dedicated classes', () => {
   const events = [
     {

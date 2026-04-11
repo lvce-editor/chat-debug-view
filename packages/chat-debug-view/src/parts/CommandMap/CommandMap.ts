@@ -18,6 +18,7 @@ import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPoint
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
+import * as HandleTableHeaderClick from '../HandleTableHeaderClick/HandleTableHeaderClick.ts'
 import * as HandleTableResizerPointerDown from '../HandleTableResizerPointerDown/HandleTableResizerPointerDown.ts'
 import * as HandleTableResizerPointerMove from '../HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
 import * as HandleTableResizerPointerUp from '../HandleTableResizerPointerUp/HandleTableResizerPointerUp.ts'
@@ -26,6 +27,7 @@ import * as HandleTimelineContextMenu from '../HandleTimelineContextMenu/HandleT
 import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
 import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
 import * as HandleTimelinePointerDown from '../HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
+import * as HandleTimelinePointerLeave from '../HandleTimelinePointerLeave/HandleTimelinePointerLeave.ts'
 import * as HandleTimelinePointerMove from '../HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
 import * as HandleTimelinePointerUp from '../HandleTimelinePointerUp/HandleTimelinePointerUp.ts'
 import * as HandleUseDevtoolsLayout from '../HandleUseDevtoolsLayout/HandleUseDevtoolsLayout.ts'
@@ -66,6 +68,7 @@ export const commandMap = {
   'ChatDebug.handleShowInputEvents': wrapCommand(HandleVisibilityToggles.handleShowInputEvents),
   'ChatDebug.handleShowResponsePartEvents': wrapCommand(HandleVisibilityToggles.handleShowResponsePartEvents),
   'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
+  'ChatDebug.handleTableHeaderClick': wrapCommand(HandleTableHeaderClick.handleTableHeaderClick),
   'ChatDebug.handleTableResizerPointerDown': wrapCommand(HandleTableResizerPointerDown.handleTableResizerPointerDown),
   'ChatDebug.handleTableResizerPointerMove': wrapCommand(HandleTableResizerPointerMove.handleTableResizerPointerMove),
   'ChatDebug.handleTableResizerPointerUp': wrapCommand(HandleTableResizerPointerUp.handleTableResizerPointerUp),
@@ -74,6 +77,7 @@ export const commandMap = {
   'ChatDebug.handleTimelineDoubleClick': wrapCommand(HandleTimelineDoubleClick.handleTimelineDoubleClick),
   'ChatDebug.handleTimelineEndSeconds': wrapCommand(HandleTimelineInput.handleTimelineEndSeconds),
   'ChatDebug.handleTimelinePointerDown': wrapCommand(HandleTimelinePointerDown.handleTimelinePointerDown),
+  'ChatDebug.handleTimelinePointerLeave': wrapCommand(HandleTimelinePointerLeave.handleTimelinePointerLeave),
   'ChatDebug.handleTimelinePointerMove': wrapCommand(HandleTimelinePointerMove.handleTimelinePointerMove),
   'ChatDebug.handleTimelinePointerUp': wrapCommand(HandleTimelinePointerUp.handleTimelinePointerUp),
   'ChatDebug.handleTimelineRangePreset': wrapCommand(HandleTimelineInput.handleTimelineRangePreset),

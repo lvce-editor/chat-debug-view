@@ -8,8 +8,8 @@ import {
   ChatDebugViewCellStatusError,
   ChatDebugViewCellType,
 } from '../ClassNames/ClassNames.ts'
-import { getDurationText } from '../GetDurationText/GetDurationText.ts'
-import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
+import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
+import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
@@ -25,7 +25,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
             className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
             type: VirtualDomElements.Td,
           },
-          text(getDurationText(event)),
+          text(getEventTableDurationText(event)),
         ]
       case TableColumn.Status:
         return [
@@ -48,7 +48,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
             className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellType, isFixed ? ChatDebugViewColumnFixed : ''),
             type: VirtualDomElements.Td,
           },
-          text(getEventTypeLabel(event)),
+          text(getEventTableTypeLabel(event)),
         ]
       default:
         return []

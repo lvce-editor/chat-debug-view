@@ -52,7 +52,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(rows.nth(1)).toContainText('response')
 
   // act
-  await interactiveTimeline.dispatchEvent('dblclick', '')
+  await interactiveTimeline.click()
+  await interactiveTimeline.click()
 
   // assert
   await expect(Locator('.ChatDebugViewTimelineSelectionMarker')).toHaveCount(0)

@@ -1,7 +1,10 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetHeaderCellNodes from '../src/parts/GetHeaderCellNodes/GetHeaderCellNodes.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+
+const handleTableHeaderClick = (DomEventListenerFunctions as Record<string, number>).HandleTableHeaderClick
 
 test('getHeaderCellNodes should render the visible header cells', () => {
   const tableColumns: readonly TableColumn.TableColumn[] = [
@@ -28,6 +31,8 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      name: TableColumn.Type,
+      onClick: handleTableHeaderClick,
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -35,6 +40,8 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      name: TableColumn.Status,
+      onClick: handleTableHeaderClick,
       scope: 'col',
       type: VirtualDomElements.Th,
     },

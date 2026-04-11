@@ -12,9 +12,13 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.showEventStreamFinishedEvents !== newState.showEventStreamFinishedEvents ||
     oldState.showInputEvents !== newState.showInputEvents ||
     oldState.showResponsePartEvents !== newState.showResponsePartEvents ||
+    oldState.sortColumn !== newState.sortColumn ||
+    oldState.sortDescending !== newState.sortDescending ||
     oldState.tableColumnWidths !== newState.tableColumnWidths ||
     oldState.tableWidth !== newState.tableWidth ||
     oldState.timelineEndSeconds !== newState.timelineEndSeconds ||
+    oldState.timelineHoverPercent !== newState.timelineHoverPercent ||
+    oldState.timelineHoverSeconds !== newState.timelineHoverSeconds ||
     oldState.timelineSelectionActive !== newState.timelineSelectionActive ||
     oldState.timelineSelectionAnchorSeconds !== newState.timelineSelectionAnchorSeconds ||
     oldState.timelineSelectionFocusSeconds !== newState.timelineSelectionFocusSeconds ||

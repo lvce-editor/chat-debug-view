@@ -42,6 +42,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.detailTabs,
     newState.tableColumns,
     newState.timelineInfo,
+    newState.timelineHoverPercent,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

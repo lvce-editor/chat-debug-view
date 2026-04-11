@@ -457,7 +457,7 @@ test('getDevtoolsDom should render computed duration without start and end times
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '250ms',
+      text: '250 ms',
     }),
   )
 
@@ -504,7 +504,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      text: 'Duration',
+      text: 'Time',
     }),
   )
   expect(dom).not.toContainEqual(
@@ -581,7 +581,7 @@ test('getDevtoolsDom should render tool execution row labels with top-level name
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'tool-execution, list_files',
+      text: 'list_files',
     }),
   )
 })

@@ -324,7 +324,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
       className: 'ChatDebugViewTimingLabel',
       type: VirtualDomElements.Span,
     },
-    text('Duration'),
+    text('Time'),
     {
       childCount: 1,
       className: 'ChatDebugViewTimingValue',

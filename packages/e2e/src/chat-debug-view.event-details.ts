@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.event-details'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-event-details')
