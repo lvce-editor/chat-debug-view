@@ -141,7 +141,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
   const header = dom.find((node) => node.className === 'TableHead')
   const body = dom.find((node) => node.className === 'TableBody')
-  const resizer = dom.find((node) => node.className === 'Resizer ChatDebugViewResizerOne')
+  const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
   const resizers = dom.find((node) => node.className === 'Resizers')
 
   expect(tableWrapper).toBeDefined()

@@ -13,12 +13,12 @@ test('getHeaderCellNodes should render the visible header cells', () => {
       name: TableColumn.Type,
     },
     {
-      label: 'Elapsed',
-      name: TableColumn.Duration,
-    },
-    {
       label: 'Outcome',
       name: TableColumn.Status,
+    },
+    {
+      label: 'Elapsed',
+      name: TableColumn.Duration,
     },
   ]
   const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status], tableColumns) as readonly {

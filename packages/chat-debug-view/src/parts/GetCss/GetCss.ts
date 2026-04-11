@@ -22,8 +22,8 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
-  --ChatDebugViewResizerOneLeft: ${resizerOneLeft}px;
-  --ChatDebugViewResizerTwoLeft: ${resizerTwoLeft}px;
+  --ResizerOneLeft: ${resizerOneLeft}px;
+  --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
   --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
@@ -177,17 +177,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   cursor: col-resize;
 }
 
-.ChatDebugViewResizerOne {
-  left: var(--ChatDebugViewResizerOneLeft);
+.ResizerOne {
+  left: var(--ResizerOneLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerTwo {
-  left: var(--ChatDebugViewResizerTwoLeft);
+.ResizerTwo {
+  left: var(--ResizerTwoLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerInner {
+.ResizerInner {
   position: absolute;
   top: 0;
   bottom: 0;

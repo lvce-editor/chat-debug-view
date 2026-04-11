@@ -192,7 +192,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'Resizer ChatDebugViewResizerOne',
+      className: 'Resizer ResizerOne',
       name: 'ResizerOne',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
@@ -200,13 +200,13 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewResizerInner',
+      className: 'ResizerInner',
       role: 'none',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'Resizer ChatDebugViewResizerTwo',
+      className: 'Resizer ResizerTwo',
       name: 'ResizerTwo',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
@@ -214,7 +214,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewResizerInner',
+      className: 'ResizerInner',
       role: 'none',
       type: VirtualDomElements.Div,
     },

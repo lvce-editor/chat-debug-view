@@ -1,11 +1,11 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
-import { Resizer, ChatDebugViewResizerInner, ChatDebugViewResizerOne, ChatDebugViewResizerTwo, Resizers } from '../ClassNames/ClassNames.ts'
+import { Resizer, ResizerInner, ResizerOne, ResizerTwo, Resizers } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const resizerNames = ['ResizerOne', 'ResizerTwo'] as const
-const resizerClassNames = [ChatDebugViewResizerOne, ChatDebugViewResizerTwo] as const
+const resizerClassNames = [ResizerOne, ResizerTwo] as const
 
 export const getTableResizersDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   const visibleColumnCount = getOrderedVisibleTableColumns(visibleTableColumns).length
@@ -25,7 +25,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     },
     {
       childCount: 0,
-      className: ChatDebugViewResizerInner,
+      className: ResizerInner,
       role: AriaRoles.None,
       type: VirtualDomElements.Div,
     },
