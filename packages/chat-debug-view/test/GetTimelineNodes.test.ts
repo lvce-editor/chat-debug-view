@@ -22,7 +22,7 @@ const events = [
 test('getTimelineNodes should wire interactive timeline selection handlers', () => {
   const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
-    readonly onDoubleClick?: number
+    readonly onDblClick?: number
     readonly onPointerDown?: number
     readonly type?: number
   }[]
@@ -31,7 +31,7 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
   expect(interactive).toEqual(
     expect.objectContaining({
       className: 'ChatDebugViewTimelineInteractive',
-      onDoubleClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
+      onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
       type: VirtualDomElements.Div,
     }),

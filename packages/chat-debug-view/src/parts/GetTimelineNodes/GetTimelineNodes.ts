@@ -39,7 +39,7 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDo
     {
       childCount: 2,
       className: ChatDebugViewTimelineInteractive,
-      onDoubleClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
+      onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
       type: VirtualDomElements.Div,
     },

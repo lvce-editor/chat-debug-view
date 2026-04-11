@@ -4,6 +4,22 @@ import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.
 import { ChatDebugViewQuickFilterPill, ChatDebugViewQuickFilterPillSelected, ChatDebugViewQuickFilters } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
+const getQuickFilterDom = (categoryFilter: CategoryFilter): readonly VirtualDomNode[] => {
+  const { isSelected, label, name } = categoryFilter
+  return [
+    {
+      ariaSelected: isSelected,
+      childCount: 1,
+      className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
+      name,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text(label),
+  ]
+}
+
 export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]): readonly VirtualDomNode[] => {
   return [
     {
@@ -14,20 +30,6 @@ export const getQuickFilterNodes = (categoryFilters: readonly CategoryFilter[]):
       role: 'listbox',
       type: VirtualDomElements.Div,
     },
-    ...categoryFilters.flatMap((categoryFilter) => {
-      const { isSelected, label, name } = categoryFilter
-      return [
-        {
-          ariaSelected: isSelected,
-          childCount: 1,
-          className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
-          name,
-          onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
-          role: 'option',
-          type: VirtualDomElements.Button,
-        },
-        text(label),
-      ]
-    }),
+    ...categoryFilters.flatMap(getQuickFilterDom),
   ]
 }

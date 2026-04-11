@@ -29,12 +29,13 @@ export const sortEventsByTableColumn = (
   if (!sortColumn || !TableColumn.isTableColumn(sortColumn)) {
     return events
   }
-  return events
-    .map((event, index) => ({
-      event,
-      index,
-      value: getEventTableColumnValue(event, sortColumn),
-    }))
-    .toSorted((a, b) => compareSortableEventEntries(a, b, sortDescending))
-    .map((item) => item.event)
+  const sortableEvents: readonly SortableEventEntry[] = events.map((event, index) => ({
+    event,
+    index,
+    value: getEventTableColumnValue(event, sortColumn),
+  }))
+  const compareEntries = (a: Readonly<SortableEventEntry>, b: Readonly<SortableEventEntry>): number => {
+    return compareSortableEventEntries(a, b, sortDescending)
+  }
+  return sortableEvents.toSorted(compareEntries).map((item: Readonly<SortableEventEntry>) => item.event)
 }
