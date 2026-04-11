@@ -94,7 +94,7 @@ test('diff should return RenderIncremental and RenderCss when table sort changes
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
-    sortColumn: 'type',
+    sortColumn: 'type' as const,
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])

@@ -2,8 +2,6 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import {
   ChatDebugViewTimeline,
-  ChatDebugViewTimelineCursorGuide,
-  ChatDebugViewTimelineCursorGuideVisible,
   ChatDebugViewTimelineInteractive,
   ChatDebugViewTimelineSelectionOverlay,
   ChatDebugViewTimelineSummary,
@@ -11,22 +9,10 @@ import {
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getBucketsDom } from '../GetBucketsDom/GetBucketsDom.ts'
+import { getCursorGuideNodes } from '../GetCursorGuideNodes/GetCursorGuideNodes.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
-
-const getCursorGuideNodes = (hoverPercent: number | null): readonly VirtualDomNode[] => {
-  return hoverPercent === null
-    ? []
-    : [
-        {
-          childCount: 0,
-          className: `${ChatDebugViewTimelineCursorGuide} ${ChatDebugViewTimelineCursorGuideVisible}`,
-          style: `left:${hoverPercent}%;`,
-          type: VirtualDomElements.Div,
-        },
-      ]
-}
 
 export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {

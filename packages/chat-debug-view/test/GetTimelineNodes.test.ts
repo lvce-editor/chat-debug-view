@@ -42,23 +42,6 @@ test('getTimelineNodes should wire interactive timeline selection handlers', () 
   )
 })
 
-test('getTimelineNodes should render a cursor guide marker when hover position exists', () => {
-  const timelineInfo = getTimelineInfo(events, '', '')
-  const nodes = getTimelineNodes(timelineInfo, 37.5) as readonly {
-    readonly className?: string
-    readonly style?: string
-    readonly type?: number
-  }[]
-
-  expect(nodes).toContainEqual(
-    expect.objectContaining({
-      className: 'ChatDebugViewTimelineCursorGuide ChatDebugViewTimelineCursorGuideVisible',
-      style: 'left:37.5%;',
-      type: VirtualDomElements.Div,
-    }),
-  )
-})
-
 test('getTimelineNodes should render the timeline container as a section', () => {
   const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
     readonly childCount?: number

@@ -44,7 +44,7 @@ test('getCurrentEvents should sort by selected table column', () => {
   const state = {
     ...createDefaultState(),
     events: [responseEvent, requestEvent],
-    sortColumn: 'type',
+    sortColumn: 'type' as const,
     sortDescending: false,
   }
 
