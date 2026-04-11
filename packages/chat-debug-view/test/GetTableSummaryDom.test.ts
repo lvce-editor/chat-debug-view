@@ -8,7 +8,7 @@ test('getTableSummaryDom should render a status region with the summary text', (
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewTableSummary',
+      className: 'TableSummary',
       role: 'status',
       type: VirtualDomElements.Div,
     },

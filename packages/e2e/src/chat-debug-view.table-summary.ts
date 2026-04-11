@@ -24,7 +24,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const tableSummary = Locator('.ChatDebugViewTableSummary')
+  const tableSummary = Locator('.TableSummary')
 
   await expect(tableSummary).toBeVisible()
   await expect(tableSummary).toHaveAttribute('role', 'status')

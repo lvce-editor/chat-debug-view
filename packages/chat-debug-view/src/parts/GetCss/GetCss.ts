@@ -111,7 +111,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   height: var(--ChatDebugViewTableRowHeight);
 }
 
-.ChatDebugViewTableSummary {
+.TableSummary {
   flex: none;
   min-height: 24px;
   width: min(100%, var(--ChatDebugViewTableWidth));

@@ -1,10 +1,10 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
-import { ChatDebugViewTableSummary } from '../ClassNames/ClassNames.ts'
+import { TableSummary } from '../ClassNames/ClassNames.ts'
 
 const tableSummaryNode = {
   childCount: 1,
-  className: ChatDebugViewTableSummary,
+  className: TableSummary,
   role: AriaRoles.Status,
   type: VirtualDomElements.Div,
 }

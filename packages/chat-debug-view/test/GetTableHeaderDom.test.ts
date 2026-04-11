@@ -297,7 +297,7 @@ test('getTableDom should render summary status below the table when provided', (
     readonly type?: number
   }[]
   const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
-  const summaryIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTableSummary')
+  const summaryIndex = dom.findIndex((node) => node.className === 'TableSummary')
   const tableWrapper = dom[tableWrapperIndex]
 
   expect(tableWrapper).toEqual(
@@ -312,7 +312,7 @@ test('getTableDom should render summary status below the table when provided', (
     expect.arrayContaining([
       expect.objectContaining({
         childCount: 1,
-        className: 'ChatDebugViewTableSummary',
+        className: 'TableSummary',
         role: 'status',
         type: VirtualDomElements.Div,
       }),
