@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.event-preview-overflow'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.open('e2e-session-event-preview-overflow')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
