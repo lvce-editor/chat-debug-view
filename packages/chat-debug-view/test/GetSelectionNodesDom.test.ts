@@ -20,18 +20,18 @@ test('getSelectionNodesDom should render selection range and markers', () => {
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
+      className:
+        'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionHandleStart ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerStart',
       name: 'TimelineSelectionStartHandle',
       role: 'none',
-      style: 'left:25%;',
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
+      className:
+        'ChatDebugViewTimelineSelectionHandle ChatDebugViewTimelineSelectionHandleEnd ChatDebugViewTimelineSelectionMarker ChatDebugViewTimelineSelectionMarkerEnd',
       name: 'TimelineSelectionEndHandle',
       role: 'none',
-      style: 'left:75%;',
       type: VirtualDomElements.Button,
     },
   ])
