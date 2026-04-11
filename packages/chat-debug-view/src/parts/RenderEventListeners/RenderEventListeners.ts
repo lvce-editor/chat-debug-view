@@ -43,7 +43,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.SelectDetailTab,
-      params: ['selectDetailTab', EventExpression.TargetValue],
+      params: ['selectDetailTab', EventExpression.TargetName],
     },
     {
       name: DomEventListenerFunctions.HandleTimelineRangePreset,

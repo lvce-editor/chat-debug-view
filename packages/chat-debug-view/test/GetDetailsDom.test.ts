@@ -34,7 +34,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     readonly onContextMenu?: number
     readonly role?: string
     readonly tabIndex?: number
-    readonly value?: string
   }[]
 
   expect(dom).toEqual([
@@ -77,13 +76,12 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
     {
@@ -92,13 +90,12 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
-      name: 'detailTab',
+      name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'payload',
     },
     text('Payload'),
     {
@@ -107,13 +104,12 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
+      name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'response',
     },
     text('Response'),
     {
@@ -122,13 +118,12 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
-      name: 'detailTab',
+      name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'timing',
     },
     text('Timing'),
     {
@@ -179,7 +174,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
     readonly className?: string
     readonly role?: string
     readonly text?: string
-    readonly value?: string
   }[]
 
   expect(dom).toEqual([
@@ -222,13 +216,12 @@ test('getDetailsDom should render timing panel content when timing tab is select
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
     {
@@ -237,13 +230,12 @@ test('getDetailsDom should render timing panel content when timing tab is select
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
-      name: 'detailTab',
+      name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'payload',
     },
     text('Payload'),
     {
@@ -252,13 +244,12 @@ test('getDetailsDom should render timing panel content when timing tab is select
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
+      name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'response',
     },
     text('Response'),
     {
@@ -267,13 +258,12 @@ test('getDetailsDom should render timing panel content when timing tab is select
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-timing',
-      name: 'detailTab',
+      name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'timing',
     },
     text('Timing'),
     {
@@ -402,13 +392,12 @@ test('getDetailsDom should render selected event content when preview tab is sel
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
     {
@@ -417,13 +406,12 @@ test('getDetailsDom should render selected event content when preview tab is sel
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
-      name: 'detailTab',
+      name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'payload',
     },
     text('Payload'),
     {
@@ -432,13 +420,12 @@ test('getDetailsDom should render selected event content when preview tab is sel
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
+      name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'response',
     },
     text('Response'),
     {
@@ -447,13 +434,12 @@ test('getDetailsDom should render selected event content when preview tab is sel
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
-      name: 'detailTab',
+      name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'timing',
     },
     text('Timing'),
     {
@@ -494,9 +480,9 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     readonly childCount?: number
     readonly className?: string
     readonly id?: string
+    readonly name?: string
     readonly role?: string
     readonly text?: string
-    readonly value?: string
   }[]
 
   expect(dom).toEqual([
@@ -539,13 +525,12 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
     {
@@ -554,13 +539,12 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-payload',
-      name: 'detailTab',
+      name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'payload',
     },
     text('Payload'),
     {
@@ -569,13 +553,12 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
+      name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'response',
     },
     text('Response'),
     {
@@ -615,9 +598,9 @@ test('getDetailsDom should render payload content when payload tab is selected',
     readonly ['aria-labelledby']?: string
     readonly ariaSelected?: boolean
     readonly className?: string
+    readonly name?: string
     readonly role?: string
     readonly text?: string
-    readonly value?: string
   }[]
 
   expect(dom).toEqual([
@@ -660,13 +643,12 @@ test('getDetailsDom should render payload content when payload tab is selected',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-preview',
-      name: 'detailTab',
+      name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'preview',
     },
     text('Preview'),
     {
@@ -675,13 +657,12 @@ test('getDetailsDom should render payload content when payload tab is selected',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
       id: 'ChatDebugViewDetailsTab-payload',
-      name: 'detailTab',
+      name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,
-      value: 'payload',
     },
     text('Payload'),
     {
@@ -690,13 +671,12 @@ test('getDetailsDom should render payload content when payload tab is selected',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-response',
-      name: 'detailTab',
+      name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'response',
     },
     text('Response'),
     {
@@ -705,13 +685,12 @@ test('getDetailsDom should render payload content when payload tab is selected',
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
       id: 'ChatDebugViewDetailsTab-timing',
-      name: 'detailTab',
+      name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
-      value: 'timing',
     },
     text('Timing'),
     {

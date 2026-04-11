@@ -1,6 +1,7 @@
 // cspell:ignore multiselectable
 import { expect, test } from '@jest/globals'
-import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { text, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
@@ -112,34 +113,124 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     [],
     [],
   )
-  const quickFilterGroup = dom.find((node) => node.className === 'ChatDebugViewQuickFilters')
-  const quickFilterPills = dom.filter((node) => node.className?.startsWith('ChatDebugViewQuickFilterPill'))
 
-  expect(quickFilterGroup).toBeDefined()
-  expect(quickFilterGroup?.role).toBe('listbox')
-  expect(quickFilterGroup?.['aria-multiselectable']).toBe(true)
-  expect(quickFilterGroup?.onClick).toBe(DomEventListenerFunctions.HandleEventCategoryFilter)
-  expect(quickFilterPills).toHaveLength(5)
-  expect(quickFilterPills[0]).toEqual(
-    expect.objectContaining({
+  expect(dom).toEqual([
+    {
+      childCount: 2,
+      className: 'ChatDebugView ChatDebugView--devtools',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 3,
+      className: 'ChatDebugViewTop ChatDebugViewTop--devtools',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
+      type: VirtualDomElements.Search,
+    },
+    {
+      autocomplete: 'off',
+      childCount: 0,
+      className: 'InputBox ChatDebugViewFilterInput ChatDebugViewFilterInput--devtools',
+      inputType: 'search',
+      name: 'filter',
+      onInput: DomEventListenerFunctions.HandleFilterInput,
+      placeholder: ChatDebugStrings.filterEvents(),
+      type: VirtualDomElements.Input,
+      value: '',
+    },
+    {
+      'aria-multiselectable': true,
+      childCount: 5,
+      className: 'ChatDebugViewQuickFilters',
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'listbox',
+      type: VirtualDomElements.Div,
+    },
+    {
       ariaSelected: true,
+      childCount: 1,
       className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
       name: EventCategoryFilter.All,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
       type: VirtualDomElements.Button,
-    }),
-  )
-  expect(quickFilterPills[1]).toEqual(
-    expect.objectContaining({
+    },
+    text(ChatDebugStrings.all()),
+    {
       ariaSelected: false,
+      childCount: 1,
       className: 'ChatDebugViewQuickFilterPill',
       name: EventCategoryFilter.Tools,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: 'option',
       type: VirtualDomElements.Button,
-    }),
-  )
+    },
+    text(ChatDebugStrings.tools()),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Network,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text(ChatDebugStrings.network()),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Ui,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text(ChatDebugStrings.ui()),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Stream,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text(ChatDebugStrings.stream()),
+    {
+      'aria-label': ChatDebugStrings.refreshEvents(),
+      childCount: 1,
+      className: 'ChatDebugViewRefreshButton',
+      name: 'refresh',
+      onClick: DomEventListenerFunctions.HandleClickRefresh,
+      type: VirtualDomElements.Button,
+      value: 'refresh',
+    },
+    text(ChatDebugStrings.refresh()),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewDevtoolsMain',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewDevtoolsSplit',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEvents ChatDebugViewEventsFullWidth',
+      role: 'application',
+      tabIndex: 0,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEmpty',
+      type: VirtualDomElements.Div,
+    },
+    text(ChatDebugStrings.noEventsFound()),
+  ])
 })
 
 test('getChatDebugViewDom should render dedicated empty message for tools quick filter', () => {
@@ -245,6 +336,13 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
     expect.objectContaining({
       'aria-label': 'Detail sections',
       className: 'ChatDebugViewDetailsTabs',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      name: 'response',
+      onClick: DomEventListenerFunctions.SelectDetailTab,
     }),
   )
 })

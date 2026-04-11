@@ -81,9 +81,9 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly ariaSelected?: boolean
     readonly className?: string
+    readonly name?: string
     readonly role?: string
     readonly text?: string
-    readonly value?: string
   }[]
 
   expect(dom).toContainEqual(
@@ -95,29 +95,29 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      name: 'response',
       role: 'tab',
-      value: 'response',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab',
+      name: 'preview',
       role: 'tab',
-      value: 'preview',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab',
+      name: 'payload',
       role: 'tab',
-      value: 'payload',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewDetailsTab',
+      name: 'timing',
       role: 'tab',
-      value: 'timing',
     }),
   )
 })

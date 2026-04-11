@@ -23,6 +23,15 @@ test('renderEventListeners should register quick filter click with target name',
   })
 })
 
+test('renderEventListeners should register detail tab selection with target name', () => {
+  const listeners = RenderEventListeners.renderEventListeners()
+
+  expect(listeners).toContainEqual({
+    name: DomEventListenerFunctions.SelectDetailTab,
+    params: ['selectDetailTab', EventExpression.TargetName],
+  })
+})
+
 test('renderEventListeners should register details top context menu listener with preventDefault', () => {
   const listeners = RenderEventListeners.renderEventListeners()
 
