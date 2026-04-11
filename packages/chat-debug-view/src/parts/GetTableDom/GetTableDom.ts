@@ -23,6 +23,8 @@ export const getTableDom = (
     {
       childCount: 3,
       className: Table,
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
       type: VirtualDomElements.Table,
     },
     ...getTableColumnGroupDom(visibleTableColumns),

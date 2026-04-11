@@ -11,6 +11,7 @@ import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDet
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
 import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
+import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
 import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
@@ -18,6 +19,7 @@ import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPoint
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
+import * as HandleTableFocus from '../HandleTableFocus/HandleTableFocus.ts'
 import * as HandleTableHeaderClick from '../HandleTableHeaderClick/HandleTableHeaderClick.ts'
 import * as HandleTableResizerPointerDown from '../HandleTableResizerPointerDown/HandleTableResizerPointerDown.ts'
 import * as HandleTableResizerPointerMove from '../HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
@@ -44,7 +46,6 @@ import * as SetEvents from '../SetEvents/SetEvents.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
-import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
 
 export const commandMap = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
@@ -70,6 +71,7 @@ export const commandMap = {
   'ChatDebug.handleShowInputEvents': wrapCommand(HandleVisibilityToggles.handleShowInputEvents),
   'ChatDebug.handleShowResponsePartEvents': wrapCommand(HandleVisibilityToggles.handleShowResponsePartEvents),
   'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
+  'ChatDebug.handleTableFocus': wrapCommand(HandleTableFocus.handleTableFocus),
   'ChatDebug.handleTableHeaderClick': wrapCommand(HandleTableHeaderClick.handleTableHeaderClick),
   'ChatDebug.handleTableResizerPointerDown': wrapCommand(HandleTableResizerPointerDown.handleTableResizerPointerDown),
   'ChatDebug.handleTableResizerPointerMove': wrapCommand(HandleTableResizerPointerMove.handleTableResizerPointerMove),

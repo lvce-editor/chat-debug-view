@@ -23,3 +23,4 @@ export const HandleDetailsTopContextMenu = 25
 export const HandleTimelineContextMenu = 26
 export const HandleTimelinePointerLeave = 27
 export const HandleEventRowClick = 28
+export const HandleTableFocus = 29

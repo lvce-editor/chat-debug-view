@@ -23,6 +23,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       preventDefault: true,
     },
     {
+      name: DomEventListenerFunctions.HandleTableFocus,
+      params: ['handleTableFocus'],
+    },
+    {
       name: DomEventListenerFunctions.HandleDetailsContextMenu,
       params: ['handleDetailsContextMenu'],
       preventDefault: true,
