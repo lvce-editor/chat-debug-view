@@ -44,6 +44,7 @@ import * as SetEvents from '../SetEvents/SetEvents.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
+import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
 
 export const commandMap = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
@@ -58,7 +59,7 @@ export const commandMap = {
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
-  'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
+  'ChatDebug.handleEventRowClick': wrapCommand(handleEventRowClick),
   'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
