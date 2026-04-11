@@ -28,12 +28,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
+  const lineContents = Locator('.ChatDebugViewEventLineContent')
 
   await expect(detailsEvent).toHaveText('1first line2second line')
   await expect(lineNumbers).toHaveCount(2)
   await expect(lineNumbers.nth(0)).toHaveText('1')
   await expect(lineNumbers.nth(1)).toHaveText('2')
-  await expect(detailsEvent).not.toContainText('"name": "read_file"')
-  await expect(detailsEvent).not.toContainText('"arguments"')
-  await expect(detailsEvent).not.toContainText('"result"')
+  await expect(lineContents).toHaveCount(2)
+  await expect(lineContents.nth(0)).toHaveText('first line')
+  await expect(lineContents.nth(1)).toHaveText('second line')
 }
