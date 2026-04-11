@@ -31,6 +31,6 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   // assert
-  const detailsEvent = Locator('.ChatDebugViewEvent')
-  await expect(detailsEvent).toHaveText('1{2  "name": "getWorkspaceUri",3  "result": {4    "uri": "file:///workspace"5  }6}')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
+  await expect(detailsBottom).toHaveText('1{2  "name": "getWorkspaceUri",3  "result": {4    "uri": "file:///workspace"5  }6}')
 }

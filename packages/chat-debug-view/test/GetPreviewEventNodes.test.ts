@@ -35,6 +35,7 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
   const result = getPreviewEventNodes(UiStrings.ImageCouldNotBeLoaded) as readonly {
     readonly className?: string
     readonly text?: string
+    readonly type?: number
   }[]
 
   expect(result).not.toContainEqual(
@@ -44,7 +45,8 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+      className: 'ChatDebugViewEventRawText',
+      type: VirtualDomElements.P,
     }),
   )
   expect(result).toContainEqual(
@@ -62,6 +64,7 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   }) as readonly {
     readonly className?: string
     readonly text?: string
+    readonly type?: number
   }[]
 
   expect(result).not.toContainEqual(
@@ -71,7 +74,8 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+      className: 'ChatDebugViewEventRawText',
+      type: VirtualDomElements.P,
     }),
   )
   expect(result).toContainEqual(

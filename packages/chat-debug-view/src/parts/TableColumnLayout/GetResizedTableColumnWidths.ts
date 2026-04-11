@@ -1,7 +1,7 @@
 import type { TableColumnWidths } from './TableColumnWidths.ts'
 import { clampTableWidth, leftPadding } from '../SplitLayout/SplitLayout.ts'
 import { getTableColumnLayout } from './GetTableColumnLayout.ts'
-import { minimumTableColumnWidth } from './MinimumTableColumnWidth.ts'
+import { getMinimumTableColumnWidth } from './MinimumTableColumnWidth.ts'
 
 export const getResizedTableColumnWidths = (
   width: number,
@@ -19,11 +19,14 @@ export const getResizedTableColumnWidths = (
   }
   const boundaryIndex = resizerDownId - 1
   const precedingWidth = layout.visibleColumnWidths.slice(0, boundaryIndex).reduce((total, current) => total + current, 0)
-  const remainingVisibleColumnCount = layout.visibleColumns.length - boundaryIndex - 1
-  const maxWidth = Math.max(minimumTableColumnWidth, clampedTableWidth - precedingWidth - minimumTableColumnWidth * remainingVisibleColumnCount)
-  const nextWidth = clientX - viewX - leftPadding - precedingWidth
-  const clampedWidth = Math.max(minimumTableColumnWidth, Math.min(nextWidth, maxWidth))
   const resizedColumn = layout.visibleColumns[boundaryIndex]
+  const minimumWidth = getMinimumTableColumnWidth(resizedColumn)
+  const minimumRemainingWidth = layout.visibleColumns
+    .slice(boundaryIndex + 1)
+    .reduce((total, column) => total + getMinimumTableColumnWidth(column), 0)
+  const maxWidth = Math.max(minimumWidth, clampedTableWidth - precedingWidth - minimumRemainingWidth)
+  const nextWidth = clientX - viewX - leftPadding - precedingWidth
+  const clampedWidth = Math.max(minimumWidth, Math.min(nextWidth, maxWidth))
   return {
     ...tableColumnWidths,
     [resizedColumn]: clampedWidth,

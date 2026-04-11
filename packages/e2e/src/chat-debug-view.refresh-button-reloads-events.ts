@@ -29,7 +29,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.setSessionId', sessionId)
   await ChatDebug.useDevtoolsLayout()
 
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableRow')
   const refreshButton = Locator('.ChatDebugViewRefreshButton')
 
   // assert

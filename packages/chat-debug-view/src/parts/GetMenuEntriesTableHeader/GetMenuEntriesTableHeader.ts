@@ -15,18 +15,18 @@ export const getMenuEntriesTableHeader = (state: ChatDebugViewState): readonly M
       label: ChatDebugStrings.type(),
     },
     {
-      args: [TableColumn.Duration],
-      command: 'ChatDebug.toggleTableColumnVisibility',
-      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Duration),
-      id: 'duration',
-      label: ChatDebugStrings.duration(),
-    },
-    {
       args: [TableColumn.Status],
       command: 'ChatDebug.toggleTableColumnVisibility',
       flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Status),
       id: 'status',
       label: ChatDebugStrings.status(),
+    },
+    {
+      args: [TableColumn.Duration],
+      command: 'ChatDebug.toggleTableColumnVisibility',
+      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Duration),
+      id: 'duration',
+      label: ChatDebugStrings.duration(),
     },
     {
       args: [],

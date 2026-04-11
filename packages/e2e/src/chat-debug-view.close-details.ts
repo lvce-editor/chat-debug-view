@@ -33,5 +33,5 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewEventRowSelected')).toHaveCount(0)
+  await expect(Locator('.TableRowSelected')).toHaveCount(0)
 }

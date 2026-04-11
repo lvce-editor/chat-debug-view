@@ -26,11 +26,11 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabPreview()
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
   const lineContents = Locator('.ChatDebugViewEventLineContent')
 
-  await expect(detailsEvent).toHaveText('1first line2second line')
+  await expect(detailsBottom).toHaveText('1first line2second line')
   await expect(lineNumbers).toHaveCount(2)
   await expect(lineNumbers.nth(0)).toHaveText('1')
   await expect(lineNumbers.nth(1)).toHaveText('2')

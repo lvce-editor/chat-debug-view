@@ -19,7 +19,7 @@ test('toggleTableColumnVisibility should restore original ordering when re-enabl
 
   const result = toggleTableColumnVisibility(state, 'duration')
 
-  expect(result.visibleTableColumns).toEqual(['type', 'duration', 'status'])
+  expect(result.visibleTableColumns).toEqual(['type', 'status', 'duration'])
 })
 
 test('resetTableColumns should restore default columns', () => {
@@ -35,6 +35,6 @@ test('resetTableColumns should restore default columns', () => {
 
   const result = resetTableColumns(state)
 
-  expect(result.visibleTableColumns).toEqual(['type', 'duration', 'status'])
+  expect(result.visibleTableColumns).toEqual(['type', 'status', 'duration'])
   expect(result.tableColumnWidths).toEqual(createDefaultState().tableColumnWidths)
 })

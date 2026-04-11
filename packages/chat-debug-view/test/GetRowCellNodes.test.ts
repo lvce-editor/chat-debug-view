@@ -19,22 +19,22 @@ test('getRowCellNodes should render visible columns in order', () => {
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('250 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('250 ms'),
   ])
 })
 
@@ -53,7 +53,7 @@ test('getRowCellNodes should apply error status styling and ignore unknown colum
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError',
       type: VirtualDomElements.Td,
     },
     text('400'),
@@ -74,7 +74,7 @@ test('getRowCellNodes should render list_files without the tool-execution prefix
   expect(result).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('list_files'),

@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-debug-view.devtools-main-accessibility'
+export const name = 'chat-debug-view.devtools-split-accessibility'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
@@ -19,9 +19,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const devtoolsMain = Locator('.ChatDebugViewDevtoolsMain')
+  const devtoolsSplit = Locator('.ChatDebugViewDevtoolsSplit')
 
   // assert
-  await expect(devtoolsMain).toBeVisible()
-  await expect(devtoolsMain).toHaveAttribute('role', 'none')
+  await expect(devtoolsSplit).toBeVisible()
+  await expect(devtoolsSplit).toHaveAttribute('role', 'none')
 }

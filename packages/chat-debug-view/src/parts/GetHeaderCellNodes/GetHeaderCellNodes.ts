@@ -1,11 +1,5 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import {
-  ChatDebugViewColumnFixed,
-  ChatDebugViewHeaderCell,
-  ChatDebugViewHeaderCellDuration,
-  ChatDebugViewHeaderCellStatus,
-  ChatDebugViewHeaderCellType,
-} from '../ClassNames/ClassNames.ts'
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { ChatDebugViewHeaderCell } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
@@ -14,17 +8,15 @@ export const getHeaderCellNodes = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
   const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns, tableColumns)
-  return orderedVisibleTableColumns.flatMap((column, index) => {
-    const isFixed = index < orderedVisibleTableColumns.length - 1
+  return orderedVisibleTableColumns.flatMap((column) => {
     switch (column) {
       case TableColumn.Duration:
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: ChatDebugViewHeaderCell,
             name: column,
             onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            scope: 'col',
             type: VirtualDomElements.Th,
           },
           text(TableColumn.getTableColumnLabel(tableColumns, column)),
@@ -33,10 +25,9 @@ export const getHeaderCellNodes = (
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellStatus, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: ChatDebugViewHeaderCell,
             name: column,
             onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            scope: 'col',
             type: VirtualDomElements.Th,
           },
           text(TableColumn.getTableColumnLabel(tableColumns, column)),
@@ -45,10 +36,9 @@ export const getHeaderCellNodes = (
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellType, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: ChatDebugViewHeaderCell,
             name: column,
             onClick: DomEventListenerFunctions.HandleTableHeaderClick,
-            scope: 'col',
             type: VirtualDomElements.Th,
           },
           text(TableColumn.getTableColumnLabel(tableColumns, column)),

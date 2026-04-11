@@ -25,10 +25,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(Locator('.ChatDebugViewTimeline')).toBeVisible()
   await expect(badges).toHaveCount(6)
-  await expect(badges.nth(0)).toHaveText('0s')
-  await expect(badges.nth(1)).toHaveText('8.8s')
-  await expect(badges.nth(2)).toHaveText('17.6s')
-  await expect(badges.nth(3)).toHaveText('26.4s')
-  await expect(badges.nth(4)).toHaveText('35.2s')
-  await expect(badges.nth(5)).toHaveText('44s')
+  await expect(badges.nth(0)).toHaveText('0ms')
+  await expect(badges.nth(1)).toHaveText('8800ms')
+  await expect(badges.nth(2)).toHaveText('17600ms')
+  await expect(badges.nth(3)).toHaveText('26400ms')
+  await expect(badges.nth(4)).toHaveText('35200ms')
+  await expect(badges.nth(5)).toHaveText('44000ms')
 }

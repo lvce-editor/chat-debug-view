@@ -19,28 +19,27 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
   expect(result).toEqual([
     {
       childCount: 3,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })
 
@@ -63,28 +62,27 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
   expect(result).toEqual([
     {
       childCount: 3,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, read_file'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })
 
@@ -109,28 +107,27 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
   expect(result).toEqual([
     {
       childCount: 3,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, getWorkspaceUri'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('400'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })
 
@@ -156,32 +153,31 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
   expect(result).toEqual([
     {
       childCount: 3,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('list_files'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus ChatDebugViewCellStatusError',
+      className: 'TableCell ChatDebugViewCellStatusError ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('400'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })
 
-test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
+test('getDevtoolsRows should add odd and even row classes to table rows', () => {
   const events = [
     {
       eventId: 1,
@@ -202,52 +198,50 @@ test('getDevtoolsRows should add TableRowEven class to even table rows', () => {
   expect(result).toEqual([
     {
       childCount: 3,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('request'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('200'),
     {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
+    {
       childCount: 3,
-      className: 'ChatDebugViewEventRow TableRowEven',
-      'data-index': '1',
+      className: 'TableRow TableRowEven',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('response'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
-      type: VirtualDomElements.Td,
-    },
-    text('0 ms'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
     text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })
 
@@ -268,19 +262,18 @@ test('getDevtoolsRows should omit hidden columns', () => {
   expect(result).toEqual([
     {
       childCount: 2,
-      className: 'ChatDebugViewEventRow',
-      'data-index': '0',
+      className: 'TableRow TableRowOdd',
       type: VirtualDomElements.Tr,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('request'),
     {
       childCount: 1,
-      className: 'ChatDebugViewCell ChatDebugViewCellStatus',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('200'),

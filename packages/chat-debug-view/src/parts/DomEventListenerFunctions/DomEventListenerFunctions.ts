@@ -1,7 +1,7 @@
 export const HandleEventCategoryFilter = 4
 export const HandleFilterInput = 5
 export const SelectDetailTab = 6
-export const HandleEventRowClick = 7
+export const HandleEventRowClickAt = 7
 export const HandleHeaderContextMenu = 8
 export const HandleSashPointerDown = 9
 export const HandleSashPointerMove = 10
@@ -22,3 +22,5 @@ export const HandleClickRefresh = 24
 export const HandleDetailsTopContextMenu = 25
 export const HandleTimelineContextMenu = 26
 export const HandleTimelinePointerLeave = 27
+export const HandleEventRowClick = 28
+export const HandleTableFocus = 29

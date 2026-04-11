@@ -207,12 +207,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     text(ChatDebugStrings.refresh()),
     {
       childCount: 1,
-      className: 'ChatDebugViewDevtoolsMain',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewDevtoolsSplit',
       role: 'none',
       type: VirtualDomElements.Div,
@@ -221,7 +215,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
       childCount: 1,
       className: 'ChatDebugViewEvents ChatDebugViewEventsFullWidth',
       role: 'application',
-      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     {
@@ -279,12 +272,12 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
-  const mainPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsMain')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
   expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
-  expect(mainPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(splitPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
@@ -294,6 +287,46 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
     }),
   )
   expect(root?.childCount).toBe(2)
+})
+
+test('getChatDebugViewDom should expose timeline and split as direct devtools children when timeline is visible', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:10.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    [EventCategoryFilter.All],
+    categoryFilters,
+    false,
+    false,
+    false,
+    true,
+    events[0],
+    0,
+    '',
+    '',
+    events,
+    events,
+  )
+  const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
+  const timelineIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTimeline')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+
+  expect(root?.childCount).toBe(3)
+  expect(timelineIndex).toBeGreaterThan(-1)
+  expect(splitPaneIndex).toBeGreaterThan(timelineIndex)
 })
 
 test('getChatDebugViewDom should render selected details panel in devtools layout', () => {
@@ -419,6 +452,56 @@ test('getChatDebugViewDom should not render event count message', () => {
 
   expect(eventCount).toBeUndefined()
   expect(eventCountText).toBeUndefined()
+})
+
+test('getChatDebugViewDom should render table summary status in devtools layout', () => {
+  const events = [
+    {
+      ended: '2026-03-08T00:00:00.250Z',
+      eventId: 1,
+      sessionId: 'session-1',
+      started: '2026-03-08T00:00:00.000Z',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+  ]
+  const dom = GetChatDebugViewDom.getChatDebugViewDom(
+    '',
+    '',
+    [EventCategoryFilter.All],
+    categoryFilters,
+    false,
+    false,
+    false,
+    true,
+    null,
+    null,
+    '',
+    '',
+    events,
+    events,
+  )
+  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
+  const summaryIndex = dom.findIndex((node) => node.className === 'TableSummary')
+
+  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      className: 'TableSummary',
+      role: 'status',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '2 events, 1s from start to finish',
+    }),
+  )
 })
 
 test('getChatDebugViewDom should render tool execution type with tool name in legacy layout', () => {

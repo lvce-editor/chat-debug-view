@@ -4,7 +4,7 @@ export const Type = 'type'
 export const Duration = 'duration'
 export const Status = 'status'
 
-export const tableColumnNames = [Type, Duration, Status] as const
+export const tableColumnNames = [Type, Status, Duration] as const
 
 export type TableColumnName = (typeof tableColumnNames)[number]
 
@@ -20,12 +20,12 @@ export const createTableColumns = (): readonly TableColumn[] => {
       name: Type,
     },
     {
-      label: ChatDebugStrings.duration(),
-      name: Duration,
-    },
-    {
       label: ChatDebugStrings.status(),
       name: Status,
+    },
+    {
+      label: ChatDebugStrings.duration(),
+      name: Duration,
     },
   ]
 }

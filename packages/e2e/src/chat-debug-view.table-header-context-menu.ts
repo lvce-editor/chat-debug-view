@@ -27,7 +27,7 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   ])
 
   const headerCells = Locator('.ChatDebugViewHeaderCell')
-  const durationCells = Locator('.ChatDebugViewCellDuration')
+  const rowCells = Locator('.TableBody .TableRow .TableCell')
 
   // act
   await Command.execute('ChatDebug.handleHeaderContextMenu', 0, 300)
@@ -48,7 +48,7 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   await expect(headerCells).toHaveCount(2)
   await expect(headerCells.nth(0)).toHaveText('Type')
   await expect(headerCells.nth(1)).toHaveText('Status')
-  await expect(durationCells).toHaveCount(0)
+  await expect(rowCells).toHaveCount(2)
   const savedStateAfterToggle = await Command.execute('ChatDebug.saveState')
   assertVisibleTableColumns(savedStateAfterToggle.visibleTableColumns, ['type', 'status'])
 
@@ -61,7 +61,8 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   await expect(headerCells.nth(0)).toHaveText('Type')
   await expect(headerCells.nth(1)).toHaveText('Duration')
   await expect(headerCells.nth(2)).toHaveText('Status')
-  await expect(durationCells).toHaveCount(1)
+  await expect(rowCells).toHaveCount(3)
+  await expect(rowCells.nth(1)).toHaveText('250 ms')
   const savedStateAfterReset = await Command.execute('ChatDebug.saveState')
   assertVisibleTableColumns(savedStateAfterReset.visibleTableColumns, ['type', 'duration', 'status'])
 }

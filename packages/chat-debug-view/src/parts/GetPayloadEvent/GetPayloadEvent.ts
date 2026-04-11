@@ -5,6 +5,9 @@ import { shouldIncludeArguments } from '../ShouldIncludeArguments/ShouldIncludeA
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
   const name = getPreviewName(event)
+  if (name === 'list_files' && hasOwn(event, 'arguments')) {
+    return event.arguments
+  }
   const payloadEvent = {
     ...(name === undefined ? {} : { name }),
     ...(shouldIncludeArguments(event, name) ? { arguments: event.arguments } : {}),

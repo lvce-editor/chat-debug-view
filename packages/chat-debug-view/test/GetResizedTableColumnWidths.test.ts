@@ -56,3 +56,25 @@ test('getResizedTableColumnWidths should clamp resized widths to the minimum wid
     type: 80,
   })
 })
+
+test('getResizedTableColumnWidths should allow shrinking the status column below the shared column minimum', () => {
+  const result = GetResizedTableColumnWidths.getResizedTableColumnWidths(
+    1000,
+    480,
+    ['type', 'duration', 'status'],
+    {
+      duration: 110,
+      status: 110,
+      type: 260,
+    },
+    10,
+    424,
+    2,
+  )
+
+  expect(result).toEqual({
+    duration: 110,
+    status: 140,
+    type: 260,
+  })
+})

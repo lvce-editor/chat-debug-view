@@ -139,6 +139,13 @@ export const timing = (): string => {
   return I18nString.i18nString(UiStrings.Timing)
 }
 
+export const tableSummary = (eventCount: number, duration: string): string => {
+  return I18nString.i18nString(eventCount === 1 ? UiStrings.TableSummarySingular : UiStrings.TableSummaryPlural, {
+    PH1: String(eventCount),
+    PH2: duration,
+  })
+}
+
 export const toSeconds = (seconds: string): string => {
   return I18nString.i18nString(UiStrings.ToSeconds, {
     PH1: seconds,

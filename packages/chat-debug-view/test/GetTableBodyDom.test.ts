@@ -7,7 +7,7 @@ test('getTableBodyDom should render the table body nodes', () => {
   const rowNodes = [
     {
       childCount: 0,
-      className: 'ChatDebugViewEventRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
   ]
@@ -21,14 +21,14 @@ test('getTableBodyDom should render the table body nodes', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewTableBody',
+      className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewEventRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
   ])
@@ -43,9 +43,9 @@ test('getTableBodyDom should render an empty table body when there are no rows',
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewTableBody',
+      className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
   ])

@@ -1,7 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { ChatDebugViewTimelineBadge, ChatDebugViewTimelineBadges } from '../ClassNames/ClassNames.ts'
-import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
+import { formatTimelineMilliseconds } from '../FormatTimelineMilliseconds/FormatTimelineMilliseconds.ts'
 import { roundSeconds } from '../RoundSeconds/RoundSeconds.ts'
 
 const getTimelineBadgeValues = (durationSeconds: number): readonly number[] => {
@@ -43,7 +43,7 @@ export const getTimelineBadgeNodes = (timelineInfo: TimelineInfo): readonly Virt
         style: getTimelineBadgeStyle(index, lastIndex),
         type: VirtualDomElements.Span,
       },
-      text(formatTimelineSeconds(value)),
+      text(formatTimelineMilliseconds(value)),
     ]),
   ]
 }

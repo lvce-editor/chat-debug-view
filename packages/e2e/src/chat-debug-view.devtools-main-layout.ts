@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-debug-view.devtools-main-layout'
+export const name = 'chat-debug-view.devtools-split-layout'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
@@ -20,8 +20,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // assert
-  const main = Locator('.ChatDebugViewDevtoolsMain')
-  await expect(main).toBeVisible()
-  await expect(main).toHaveCSS('contain', 'strict')
-  await expect(main).toHaveCSS('flex', '1 1 0%')
+  const split = Locator('.ChatDebugViewDevtoolsSplit')
+  await expect(split).toBeVisible()
+  await expect(split).toHaveCSS('contain', 'strict')
+  await expect(split).toHaveCSS('flex', '1 1 0%')
 }

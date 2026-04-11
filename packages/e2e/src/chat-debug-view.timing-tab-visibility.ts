@@ -35,7 +35,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   // assert
   await expect(timingTab).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
+  await expect(Locator('.ChatDebugViewDetailsBottom')).toContainText('"path": "/chat"')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
@@ -50,5 +50,5 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // assert
   await expect(Locator('#ChatDebugViewDetailsTab-timing')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewEvent')).toContainText('"type": "chat-message-added"')
+  await expect(Locator('.ChatDebugViewDetailsBottom')).toContainText('"type": "chat-message-added"')
 }

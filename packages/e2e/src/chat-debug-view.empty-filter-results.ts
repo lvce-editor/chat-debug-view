@@ -26,5 +26,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
   await expect(Locator('.ChatDebugViewEmpty')).toContainText('no events found matching missing')
-  await expect(Locator('.ChatDebugViewEventRow')).toHaveCount(0)
+  await expect(Locator('.TableRow')).toHaveCount(0)
 }

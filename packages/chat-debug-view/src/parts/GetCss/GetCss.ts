@@ -1,64 +1,73 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
+import { devtoolsTableHeaderHeight, devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
   const hasSelectedEvent = !!state.selectedEvent
   const tableWidth = hasSelectedEvent ? clampTableWidth(state.width, state.tableWidth) : getMainWidth(state.width)
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
+  const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
-  const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
-  const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
+  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
+  const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
+  const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
-  const timelineCursorGuideCss =
-    state.timelineHoverPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineCursorGuideVisible {
-  left: ${state.timelineHoverPercent}%;
-}
-`
-  const timelineSelectionHandleStartCss =
-    selectionStartPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineSelectionHandleStart {
-  left: ${selectionStartPercent}%;
-}
-
-.ChatDebugViewTimelineSelectionMarkerStart {
-  left: ${selectionStartPercent}%;
-}
-`
-  const timelineSelectionHandleEndCss =
-    selectionEndPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineSelectionHandleEnd {
-  left: ${selectionEndPercent}%;
-}
-
-.ChatDebugViewTimelineSelectionMarkerEnd {
-  left: ${selectionEndPercent}%;
-}
-`
   return `
 .ChatDebugView {
+  --ChatDebugViewTableHeaderHeight: ${devtoolsTableHeaderHeight}px;
+  --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
+  --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
+  --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
-  --ChatDebugViewResizerOneLeft: ${resizerOneLeft}px;
-  --ChatDebugViewResizerTwoLeft: ${resizerTwoLeft}px;
+  --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
+  --ResizerOneLeft: ${resizerOneLeft}px;
+  --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
+  --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
+  --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
+  --ChatDebugViewTopSize: ${topSize}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  gap: 8px;
+  contain: strict;
+  flex: 1;
+  flex-direction: column;
+}
+
+.ChatDebugView--devtools {
+  gap: 4px;
+}
+
+.ChatDebugView--devtools > .ChatDebugViewTimeline {
+  flex: 0 0 auto;
+}
+
+.ChatDebugView--devtools .ChatDebugViewEvents {
+  border-radius: 6px;
+  margin-bottom: 0;
+  overflow: hidden;
 }
 
 .ChatDebugViewTop {
   display: flex;
   align-items: center;
+  flex: 0 0 var(--ChatDebugViewTopSize);
   gap: 8px;
+  height: var(--ChatDebugViewTopSize);
+  min-height: var(--ChatDebugViewTopSize);
   min-width: 0;
+  contain: strict;
+}
+
+.ChatDebugViewTop--devtools {
+  align-items: stretch;
 }
 
 .ChatDebugViewFilterInput {
@@ -71,47 +80,96 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-width: 180px;
 }
 
-.ChatDebugViewTableWrapper {
+.ChatDebugViewDevtoolsSplit {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  contain: strict;
+}
+
+.TableWrapper {
   position: relative;
   width: min(100%, var(--ChatDebugViewTableWidth));
   max-width: 100%;
-  flex:1;
-  display:flex
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-.ChatDebugViewTable {
+.FocusOutline {
+  outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
+  outline-offset: 1px;
+}
+
+.Table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  flex: 1;
 }
 
-.ChatDebugViewHeaderCell,
-.ChatDebugViewCell {
+.TableRow {
+  height: var(--ChatDebugViewTableRowHeight);
+}
+
+.TableSummary {
+  flex: none;
+  min-height: 24px;
+  width: min(100%, var(--ChatDebugViewTableWidth));
+  max-width: 100%;
+  padding: 6px 4px 0;
+  color: var(--vscode-descriptionForeground, inherit);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.TableCell {
+  box-sizing: border-box;
+  height: var(--ChatDebugViewTableHeaderHeight);
+  max-height: var(--ChatDebugViewTableHeaderHeight);
+  padding: 0 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
-.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed,
-.ChatDebugViewCellType.ChatDebugViewColumnFixed {
-  width: var(--ChatDebugViewTypeColumnWidth);
-  max-width: var(--ChatDebugViewTypeColumnWidth);
+.TableBody .TableCell {
+  height: var(--ChatDebugViewTableRowHeight);
+  max-height: var(--ChatDebugViewTableRowHeight);
+  line-height: var(--ChatDebugViewTableRowHeight);
 }
 
-.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed,
-.ChatDebugViewCellDuration.ChatDebugViewColumnFixed {
-  width: var(--ChatDebugViewDurationColumnWidth);
-  max-width: var(--ChatDebugViewDurationColumnWidth);
+.TableCol {
+  width: auto;
 }
 
-.ChatDebugViewResizers {
+.TableColZero {
+  width: var(--ChatDebugViewTableColZeroWidth);
+  max-width: var(--ChatDebugViewTableColZeroWidth);
+}
+
+.TableColOne {
+  width: var(--ChatDebugViewTableColOneWidth);
+  max-width: var(--ChatDebugViewTableColOneWidth);
+}
+
+.TableColTwo {
+  width: var(--ChatDebugViewTableColTwoWidth);
+  max-width: var(--ChatDebugViewTableColTwoWidth);
+}
+
+.Resizers {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.ChatDebugViewResizer {
+.Resizer {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -124,17 +182,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   cursor: col-resize;
 }
 
-.ChatDebugViewResizerOne {
-  left: var(--ChatDebugViewResizerOneLeft);
+.ResizerOne {
+  left: var(--ResizerOneLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerTwo {
-  left: var(--ChatDebugViewResizerTwoLeft);
+.ResizerTwo {
+  left: var(--ResizerTwoLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerInner {
+.ResizerInner {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -145,35 +203,44 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
-.ChatDebugViewDetails  {
-  margin-left: auto;
-  min-height: 26px;
-}
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--vscode-descriptionForeground, inherit);
-}
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.ChatDebugViewDetails {
+  border: 1px solid var(--vscode-editorWidget-border, #454545);
+  border-radius: 6px;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
   display: flex;
+  flex-direction: column;
   contain: strict;
-  flex:1;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
-
 }
-.ChatDebugViewEvent {
-  border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
-  background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails {
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  flex: 1;
+}
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents {
+  flex: 0 1 var(--ChatDebugViewTableWidth);
+  min-width: 0;
+}
+
+.ChatDebugViewDevtoolsSplit > .ChatDebugViewEvents.ChatDebugViewEventsFullWidth {
+  flex: 1 1 100%;
+}
+
+.ChatDebugViewDetailsBottom {
   color: var(--vscode-foreground, inherit);
   overflow: auto;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  min-width: 0;
+  min-height: 0;
 }
 
 .ChatDebugViewEventRawText {
+  margin: 0;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -260,7 +327,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
-.ChatDebugViewEventRow:hover {
+.TableRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);
 }
@@ -410,6 +477,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 70%, transparent);
 }
 
+.ChatDebugViewTimelineCursorGuideVisible {
+  left: var(--ChatDebugViewTimelineCursorGuideLeft);
+}
+
 .ChatDebugViewTimelineSelectionRange {
   position: absolute;
   top: 20px;
@@ -439,6 +510,16 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineSelectionHandle {
   pointer-events: auto;
   cursor: ew-resize;
+}
+
+.ChatDebugViewTimelineSelectionHandleStart,
+.ChatDebugViewTimelineSelectionMarkerStart {
+  left: var(--ChatDebugViewTimelineSelectionStartLeft);
+}
+
+.ChatDebugViewTimelineSelectionHandleEnd,
+.ChatDebugViewTimelineSelectionMarkerEnd {
+  left: var(--ChatDebugViewTimelineSelectionEndLeft);
 }
 
 .ChatDebugViewTimelineSelectionHandle::before {
@@ -487,8 +568,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
 }
-
-${timelineCursorGuideCss}${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
 
 .TokenString {
   white-space: nowrap;

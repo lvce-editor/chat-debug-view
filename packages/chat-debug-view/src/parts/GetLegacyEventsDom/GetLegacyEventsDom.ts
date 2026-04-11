@@ -7,7 +7,6 @@ export const getLegacyEventsDom = (errorMessage: string, emptyMessage: string, e
       childCount: eventNodes.length === 0 ? 1 : eventNodes.length,
       className: ChatDebugViewEvents,
       role: 'application',
-      tabIndex: 0,
       type: VirtualDomElements.Div,
     },
     ...(eventNodes.length === 0

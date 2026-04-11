@@ -40,7 +40,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setFilter('@tools hello')
 
   // assert
-  const rows = Locator('.ChatDebugViewEventRow')
+  const rows = Locator('.TableBody .TableRow')
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('tool-execution')
 }

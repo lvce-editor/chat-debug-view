@@ -12,7 +12,7 @@ test('getDevtoolsDom should render empty state when there are no events', () => 
     readonly text?: string
   }[]
   const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const table = dom.find((node) => node.className === 'Table')
 
   expect(emptyState).toBeDefined()
   expect(table).toBeUndefined()
@@ -55,7 +55,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   }[]
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const closeButton = dom.find((node) => node.name === 'closeDetails')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sash = dom.find((node) => node.className === 'Sash')
   const sashLine = dom.find((node) => node.className === 'ChatDebugViewSashLine')
 
   expect(detailsPanel).toBeDefined()
@@ -137,25 +137,25 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly onPointerDown?: number
     readonly type?: number
   }[]
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
-  const tableWrapper = dom.find((node) => node.className === 'ChatDebugViewTableWrapper')
-  const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
-  const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
-  const resizer = dom.find((node) => node.className === 'ChatDebugViewResizer ChatDebugViewResizerOne')
-  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
+  const table = dom.find((node) => node.className === 'Table')
+  const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
+  const header = dom.find((node) => node.className === 'TableHead')
+  const body = dom.find((node) => node.className === 'TableBody')
+  const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
+  const resizers = dom.find((node) => node.className === 'Resizers')
 
   expect(tableWrapper).toBeDefined()
   expect(table).toBeDefined()
-  expect(table?.childCount).toBe(2)
+  expect(table?.childCount).toBe(3)
   expect(tableWrapper?.childCount).toBe(2)
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
-  expect(resizers?.childCount).toBe(2)
+  expect(resizers?.childCount).toBe(3)
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
-test('getDevtoolsDom should make the events container focusable and expose application role', () => {
+test('getDevtoolsDom should expose the events container application role', () => {
   const events = [
     {
       eventId: 1,
@@ -174,12 +174,11 @@ test('getDevtoolsDom should make the events container focusable and expose appli
   expect(eventsPane).toEqual(
     expect.objectContaining({
       role: 'application',
-      tabIndex: 0,
     }),
   )
 })
 
-test('getDevtoolsDom should delegate row pointerdown from table body using data-index', () => {
+test('getDevtoolsDom should delegate row pointerdown from table body', () => {
   const events = [
     {
       eventId: 1,
@@ -189,7 +188,6 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
     },
   ]
   const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
-    readonly ['data-index']?: string
     readonly className?: string
     readonly inputType?: string
     readonly name?: string
@@ -197,13 +195,13 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
     readonly onContextMenu?: number
     readonly type?: number
   }[]
-  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
-  const eventRow = dom.find((node) => node.className === 'ChatDebugViewEventRow ChatDebugViewEventRowSelected')
+  const tableBody = dom.find((node) => node.className === 'TableBody')
+  const eventRow = dom.find((node) => node.className === 'TableRow TableRowOdd TableRowSelected')
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
-  expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClick)
+  expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClickAt)
   expect(tableBody?.onContextMenu).toBe(DomEventListenerFunctions.HandleTableBodyContextMenu)
-  expect(eventRow?.['data-index']).toBe('0')
+  expect(eventRow).toBeDefined()
   expect(selectedEventInput).toBeUndefined()
 })
 
@@ -250,14 +248,16 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
     readonly className?: string
     readonly onContextMenu?: number
   }[]
-  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const timeline = dom.find((node) => node.className === 'ChatDebugViewTimeline')
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+  const timelineIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTimeline')
+  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
 
-  expect(mainPane?.childCount).toBe(2)
   expect(timeline?.childCount).toBe(2)
   expect(timeline?.onContextMenu).toBe(DomEventListenerFunctions.HandleTimelineContextMenu)
   expect(timeline).toBeDefined()
+  expect(timelineIndex).toBeGreaterThan(-1)
+  expect(splitPaneIndex).toBeGreaterThan(timelineIndex)
   expect(splitPane?.childCount).toBe(3)
 })
 
@@ -352,7 +352,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     readonly className?: string
   }[]
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
+  const sash = dom.find((node) => node.className === 'Sash')
 
   expect(eventsPane).toBeDefined()
   expect(sash).toBeUndefined()
@@ -371,13 +371,11 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     readonly childCount?: number
     readonly className?: string
   }[]
-  const mainPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsMain')
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
-  const sash = dom.find((node) => node.className === 'ChatDebugViewSash')
-  const table = dom.find((node) => node.className === 'ChatDebugViewTable')
+  const sash = dom.find((node) => node.className === 'Sash')
+  const table = dom.find((node) => node.className === 'Table')
   const details = dom.find((node) => node.className === 'ChatDebugViewDetails')
 
-  expect(mainPane?.childCount).toBe(2)
   expect(splitPane?.childCount).toBe(3)
   expect(sash).toBeDefined()
   expect(table).toBeDefined()
@@ -403,7 +401,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
     readonly childCount?: number
     readonly className?: string
   }[]
-  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const tableBody = dom.find((node) => node.className === 'TableBody')
 
   expect(tableBody?.childCount).toBe(2)
 })
@@ -425,17 +423,22 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
     }),
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
+      className: 'TableCell ChatDebugViewCellDuration',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      text: '1000 ms',
     }),
   )
 })
@@ -509,7 +512,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewCell ChatDebugViewCellDuration',
+      className: 'TableCell ChatDebugViewCellDuration',
     }),
   )
 })
@@ -798,6 +801,7 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
   ) as readonly {
     readonly className?: string
     readonly text?: string
+    readonly type?: number
   }[]
 
   expect(dom).not.toContainEqual(
@@ -807,7 +811,8 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+      className: 'ChatDebugViewEventRawText',
+      type: VirtualDomElements.P,
     }),
   )
   expect(dom).toContainEqual(

@@ -44,3 +44,48 @@ test('getPreviewMessageText should return undefined for unrelated events', () =>
 
   expect(result).toBeUndefined()
 })
+
+test('getPreviewMessageText should return the first response output text for sse-response-completed events', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    eventId: 1,
+    type: 'sse-response-completed',
+    value: {
+      response: {
+        output: [
+          {
+            content: [
+              {
+                text: 'completed response preview',
+                type: 'output_text',
+              },
+            ],
+          },
+        ],
+      },
+      type: 'response.completed',
+    },
+  })
+
+  expect(result).toBe('completed response preview')
+})
+
+test('getPreviewMessageText should return the direct response content text for sse-response-completed events', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    eventId: 1,
+    type: 'sse-response-completed',
+    value: {
+      response: {
+        output: [
+          {
+            content: {
+              text: 'direct content text',
+            },
+          },
+        ],
+      },
+      type: 'response.completed',
+    },
+  })
+
+  expect(result).toBe('direct content text')
+})

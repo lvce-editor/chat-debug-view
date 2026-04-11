@@ -1,4 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { getListFilesPreviewEvent } from '../GetListFilesPreviewEvent/GetListFilesPreviewEvent.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewMessageText } from '../GetPreviewMessageText/GetPreviewMessageText.ts'
 import { getPreviewName } from '../GetPreviewName/GetPreviewName.ts'
@@ -23,6 +24,10 @@ export const getPreviewEvent = (event: ChatViewEvent): unknown => {
   const readFilePreviewText = getReadFilePreviewText(event, name)
   if (readFilePreviewText !== undefined) {
     return readFilePreviewText
+  }
+  const listFilesPreviewEvent = getListFilesPreviewEvent(event, name)
+  if (listFilesPreviewEvent !== undefined) {
+    return listFilesPreviewEvent
   }
   return getPayloadEvent(event)
 }

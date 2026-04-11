@@ -13,36 +13,33 @@ test('getHeaderCellNodes should render the visible header cells', () => {
       name: TableColumn.Type,
     },
     {
-      label: 'Elapsed',
-      name: TableColumn.Duration,
-    },
-    {
       label: 'Outcome',
       name: TableColumn.Status,
+    },
+    {
+      label: 'Elapsed',
+      name: TableColumn.Duration,
     },
   ]
   const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status], tableColumns) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly scope?: string
   }[]
 
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Request Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
-      scope: 'col',
       type: VirtualDomElements.Th,
     },
     text('Outcome'),

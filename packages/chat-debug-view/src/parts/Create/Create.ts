@@ -27,6 +27,7 @@ export const create = (
     databaseName,
     dataBaseVersion,
     eventStoreName,
+    focus: 0,
     height,
     initial: true,
     platform,

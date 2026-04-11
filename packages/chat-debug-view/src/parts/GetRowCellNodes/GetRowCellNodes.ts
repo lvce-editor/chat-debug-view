@@ -1,13 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import {
-  ChatDebugViewCell,
-  ChatDebugViewColumnFixed,
-  ChatDebugViewCellDuration,
-  ChatDebugViewCellStatus,
-  ChatDebugViewCellStatusError,
-  ChatDebugViewCellType,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewColumnFixed, ChatDebugViewCellStatusError, TableCell } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
 import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
@@ -22,7 +15,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: TableCell,
             type: VirtualDomElements.Td,
           },
           text(getEventTableDurationText(event)),
@@ -31,12 +24,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(
-              ChatDebugViewCell,
-              ChatDebugViewCellStatus,
-              isErrorStatus ? ChatDebugViewCellStatusError : '',
-              isFixed ? ChatDebugViewColumnFixed : '',
-            ),
+            className: mergeClassNames(TableCell, isErrorStatus ? ChatDebugViewCellStatusError : '', isFixed ? ChatDebugViewColumnFixed : ''),
             type: VirtualDomElements.Td,
           },
           text(getStatusText(event)),
@@ -45,7 +33,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewCell, ChatDebugViewCellType, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: TableCell,
             type: VirtualDomElements.Td,
           },
           text(getEventTableTypeLabel(event)),

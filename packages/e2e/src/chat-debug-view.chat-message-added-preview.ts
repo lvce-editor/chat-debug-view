@@ -28,16 +28,16 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert
-  await expect(detailsEvent).toHaveText('1what tools do you have access to?')
+  await expect(detailsBottom).toHaveText('1what tools do you have access to?')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)
 
   // assert
-  await expect(detailsEvent).toContainText('"message"')
-  await expect(detailsEvent).toContainText('"text": "what tools do you have access to?"')
-  await expect(detailsEvent).toContainText('"type": "chat-message-added"')
+  await expect(detailsBottom).toContainText('"message"')
+  await expect(detailsBottom).toContainText('"text": "what tools do you have access to?"')
+  await expect(detailsBottom).toContainText('"type": "chat-message-added"')
 }

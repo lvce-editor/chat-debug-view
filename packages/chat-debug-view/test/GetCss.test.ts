@@ -10,7 +10,7 @@ test('getCss should wrap preview message lines', () => {
     width: 960,
   })
 
-  expect(css).toContain('.ChatDebugViewEvent')
+  expect(css).toContain('.ChatDebugViewDetailsBottom')
   expect(css).toContain('overflow: auto;')
   expect(css).toContain('.ChatDebugViewEventLineContent')
   expect(css).toContain('white-space: pre-wrap;')
@@ -28,7 +28,32 @@ test('getCss should align the refresh button with the top row and use toolbar st
   expect(css).toContain('display: flex;')
   expect(css).toContain('.ChatDebugViewRefreshButton')
   expect(css).toContain('margin-left: auto;')
-  expect(css).toContain('background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));')
+  expect(css).toContain('background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));')
+})
+
+test('getCss should size the top row from a css variable based on width breakpoints', () => {
+  const largeCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+  const mediumCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 720,
+  })
+  const smallCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 480,
+  })
+
+  expect(largeCss).toContain('--ChatDebugViewTopSize: 30px;')
+  expect(mediumCss).toContain('--ChatDebugViewTopSize: 60px;')
+  expect(smallCss).toContain('--ChatDebugViewTopSize: 60px;')
+  expect(largeCss).toContain('.ChatDebugViewTop')
+  expect(largeCss).toContain('contain: strict;')
+  expect(largeCss).toContain('height: var(--ChatDebugViewTopSize);')
 })
 
 test('getCss should keep the devtools filter input wider next to quick filters', () => {
@@ -41,6 +66,19 @@ test('getCss should keep the devtools filter input wider next to quick filters',
   expect(css).toContain('.ChatDebugViewFilterInput--devtools')
   expect(css).toContain('flex: 1 1 220px;')
   expect(css).toContain('min-width: 180px;')
+})
+
+test('getCss should lay out devtools timeline and split without a wrapper element', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugView--devtools > .ChatDebugViewTimeline')
+  expect(css).toContain('.ChatDebugViewDevtoolsSplit')
+  expect(css).toContain('.ChatDebugViewDevtoolsSplit > .ChatDebugViewDetails')
+  expect(css).not.toContain('.ChatDebugViewDevtoolsMain')
 })
 
 test('getCss should expose table column width and resizer position variables', () => {
@@ -58,9 +96,61 @@ test('getCss should expose table column width and resizer position variables', (
 
   expect(css).toContain('--ChatDebugViewTypeColumnWidth: 240px;')
   expect(css).toContain('--ChatDebugViewDurationColumnWidth: 96px;')
-  expect(css).toContain('--ChatDebugViewResizerOneLeft: 240px;')
-  expect(css).toContain('--ChatDebugViewResizerTwoLeft: 336px;')
-  expect(css).toContain('.ChatDebugViewResizers')
+  expect(css).toContain('--ResizerOneLeft: 240px;')
+  expect(css).toContain('--ResizerTwoLeft: 364px;')
+  expect(css).toContain('--ChatDebugViewTableColZeroWidth: 240px;')
+  expect(css).toContain('--ChatDebugViewTableColOneWidth: 124px;')
+  expect(css).toContain('--ChatDebugViewTableColTwoWidth: 580px;')
+  expect(css).toContain('.Resizers')
+  expect(css).toContain('.ResizerOne')
+  expect(css).toContain('.ResizerTwo')
+  expect(css).toContain('.TableColZero')
+  expect(css).toContain('width: var(--ChatDebugViewTableColZeroWidth);')
+  expect(css).toContain('.TableColOne')
+  expect(css).toContain('width: var(--ChatDebugViewTableColOneWidth);')
+  expect(css).toContain('.TableColTwo')
+  expect(css).toContain('width: var(--ChatDebugViewTableColTwoWidth);')
+})
+
+test('getCss should assign widths to visible col elements instead of individual cells', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableColumnWidths: {
+      duration: 120,
+      status: 110,
+      type: 180,
+    },
+    tableWidth: 520,
+    visibleTableColumns: ['type', 'status'],
+    width: 960,
+  })
+
+  expect(css).toContain('.TableColZero')
+  expect(css).toContain('--ChatDebugViewTableColZeroWidth: 180px;')
+  expect(css).toContain('width: var(--ChatDebugViewTableColZeroWidth);')
+  expect(css).toContain('.TableColOne')
+  expect(css).toContain('--ChatDebugViewTableColOneWidth: 764px;')
+  expect(css).toContain('width: var(--ChatDebugViewTableColOneWidth);')
+  expect(css).not.toContain('.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewCellType.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewCellDuration.ChatDebugViewColumnFixed')
+})
+
+test('getCss should keep devtools table rows at a fixed height instead of stretching the table', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('--ChatDebugViewTableRowHeight: 24px;')
+  expect(css).toContain('.Table {')
+  expect(css).not.toContain('.Table {\n  width: 100%;\n  table-layout: fixed;\n  border-collapse: collapse;\n  flex: 1;')
+  expect(css).toContain('.TableRow {')
+  expect(css).toContain('height: var(--ChatDebugViewTableRowHeight);')
+  expect(css).toContain('.TableBody .TableCell {')
+  expect(css).toContain('line-height: var(--ChatDebugViewTableRowHeight);')
 })
 
 test('getCss should size the table wrapper to the full main width when details are not visible', () => {
@@ -116,7 +206,8 @@ test('getCss should render timeline cursor guide positions via dedicated classes
   expect(css).toContain('.ChatDebugViewTimelineCursorGuide {')
   expect(css).toContain('pointer-events: none;')
   expect(css).toContain('.ChatDebugViewTimelineCursorGuideVisible {')
-  expect(css).toContain('left: 37.5%;')
+  expect(css).toContain('--ChatDebugViewTimelineCursorGuideLeft: 37.5%;')
+  expect(css).toContain('left: var(--ChatDebugViewTimelineCursorGuideLeft);')
 })
 
 test('getCss should render timeline selection handle positions via dedicated classes', () => {
@@ -142,8 +233,10 @@ test('getCss should render timeline selection handle positions via dedicated cla
     width: 960,
   })
 
-  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleStart {')
-  expect(css).toContain('left: 20%;')
-  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleEnd {')
-  expect(css).toContain('left: 80%;')
+  expect(css).toContain('--ChatDebugViewTimelineSelectionStartLeft: 20%;')
+  expect(css).toContain('--ChatDebugViewTimelineSelectionEndLeft: 80%;')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleStart,')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleEnd,')
+  expect(css).toContain('left: var(--ChatDebugViewTimelineSelectionStartLeft);')
+  expect(css).toContain('left: var(--ChatDebugViewTimelineSelectionEndLeft);')
 })
