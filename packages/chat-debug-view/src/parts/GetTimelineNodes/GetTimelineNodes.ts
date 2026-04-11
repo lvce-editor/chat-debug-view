@@ -1,3 +1,4 @@
+// cspell:ignore gettimelinedom
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { ChatDebugViewTimeline, ChatDebugViewTimelineInteractive, ChatDebugViewTimelineSelectionOverlay } from '../ClassNames/ClassNames.ts'
@@ -8,7 +9,7 @@ import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesD
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineTopDom } from '../GetTimelineTopDom/GetTimelineTopDom.ts'
 
-export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
+export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
   }
@@ -37,11 +38,19 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: numbe
     ...badgeNodes,
     ...bucketNodes,
     {
-      childCount: selectionNodes.length + cursorGuideNodes.length,
+      childCount: 2,
       className: ChatDebugViewTimelineSelectionOverlay,
       type: VirtualDomElements.Div,
     },
+    {
+      childCount: cursorGuideNodes.length,
+      type: VirtualDomElements.Div,
+    },
     ...cursorGuideNodes,
+    {
+      childCount: selectionNodes.length,
+      type: VirtualDomElements.Div,
+    },
     ...selectionNodes,
   ]
 }

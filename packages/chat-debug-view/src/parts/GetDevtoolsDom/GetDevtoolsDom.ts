@@ -18,7 +18,7 @@ import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNod
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import { getTimelineNodes } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
@@ -47,7 +47,7 @@ export const getDevtoolsDom = (
     timelineSelectionFocusSeconds,
   )
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
-  const timelineNodes = getTimelineNodes(resolvedTimelineInfo, timelineHoverPercent)
+  const timelineNodes = getTimelineDom(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
   const previewEventNodes = getPreviewEventNodes(previewEvent, selectedEvent)
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
