@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { colgroup, TableCol } from '../ClassNames/ClassNames.ts'
+import { TableCol } from '../ClassNames/ClassNames.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo'] as const
