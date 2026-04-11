@@ -3,6 +3,5 @@ import * as RenderEventListeners from '../src/parts/RenderEventListeners/RenderE
 
 test('renderEventListeners should register delegated row click with dataset index', () => {
   const listeners = RenderEventListeners.renderEventListeners()
-
   expect(listeners).toBeDefined()
 })
