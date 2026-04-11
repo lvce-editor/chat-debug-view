@@ -28,6 +28,7 @@ export const create = (
     dataBaseVersion,
     eventStoreName,
     height,
+    focus: 0,
     initial: true,
     platform,
     sessionId,

@@ -20,6 +20,7 @@ export interface ChatDebugViewState {
   readonly largeBreakpoint: number
   readonly mediumBreakpoint: number
   readonly platform: number
+  readonly focus: number
   readonly sashPointerActive: boolean
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
