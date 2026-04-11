@@ -1,7 +1,9 @@
+// cspell:ignore multiselectable
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import { ChatDebugViewFilterInputDevtools, ChatDebugViewTopDevtools } from '../src/parts/ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetDebugViewTopDom from '../src/parts/GetDebugViewTopDom/GetDebugViewTopDom.ts'
 
 test('getDebugViewTopDom should render search section with context menu listener', () => {
@@ -50,15 +52,11 @@ test('getDebugViewTopDom should render search section with context menu listener
 })
 
 test('getDebugViewTopDom should render devtools search section with context menu listener', () => {
-  const quickFilterNodes = [
-    {
-      childCount: 0,
-      className: 'QuickFilter',
-      type: VirtualDomElements.Div,
-    },
-  ]
-  const dom = GetDebugViewTopDom.getDebugViewTopDom('tool', true, quickFilterNodes as readonly any[]) as readonly {
+  const categoryFilters = EventCategoryFilter.selectCategoryFilters(EventCategoryFilter.createCategoryFilters(), [EventCategoryFilter.Tools])
+  const dom = GetDebugViewTopDom.getDebugViewTopDom('tool', true, categoryFilters) as readonly {
     readonly ['aria-label']?: string
+    readonly ['aria-multiselectable']?: boolean
+    readonly ariaSelected?: boolean
     readonly autocomplete?: string
     readonly childCount?: number
     readonly className?: string
@@ -90,10 +88,63 @@ test('getDebugViewTopDom should render devtools search section with context menu
       value: 'tool',
     },
     {
-      childCount: 0,
-      className: 'QuickFilter',
+      'aria-multiselectable': true,
+      childCount: 5,
+      className: 'ChatDebugViewQuickFilters',
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'listbox',
       type: VirtualDomElements.Div,
     },
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.All,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text('All'),
+    {
+      ariaSelected: true,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill ChatDebugViewQuickFilterPillSelected',
+      name: EventCategoryFilter.Tools,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text('Tool Calls'),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Network,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text('Network'),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Ui,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text('UI'),
+    {
+      ariaSelected: false,
+      childCount: 1,
+      className: 'ChatDebugViewQuickFilterPill',
+      name: EventCategoryFilter.Stream,
+      onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
+      role: 'option',
+      type: VirtualDomElements.Button,
+    },
+    text('Response Stream'),
     {
       'aria-label': 'Refresh events',
       childCount: 1,

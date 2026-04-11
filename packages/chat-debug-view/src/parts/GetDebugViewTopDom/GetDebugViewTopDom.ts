@@ -1,5 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
+import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import {
   ChatDebugViewFilterInput,
   ChatDebugViewFilterInputDevtools,
@@ -8,6 +9,7 @@ import {
   InputBox,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import * as GetRefreshButtonDom from '../GetRefreshButtonDom/GetRefreshButtonDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
@@ -30,10 +32,11 @@ const getFilterInputDom = (filterValue: string, useDevtoolsLayout: boolean): Vir
 export const getDebugViewTopDom = (
   filterValue: string,
   useDevtoolsLayout: boolean,
-  quickFilterNodes: readonly VirtualDomNode[],
+  categoryFilters: readonly CategoryFilter[],
 ): readonly VirtualDomNode[] => {
   const refreshButtonDom = GetRefreshButtonDom.getRefreshButtonDom()
   if (useDevtoolsLayout) {
+    const quickFilterNodes = getQuickFilterNodes(categoryFilters)
     return [
       {
         childCount: 2 + (quickFilterNodes.length > 0 ? 1 : 0),

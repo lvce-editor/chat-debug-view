@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetHeaderCellNodes from '../src/parts/GetHeaderCellNodes/GetHeaderCellNodes.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
@@ -28,6 +29,8 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      name: TableColumn.Type,
+      onClick: DomEventListenerFunctions.HandleTableHeaderClick,
       scope: 'col',
       type: VirtualDomElements.Th,
     },
@@ -35,6 +38,8 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      name: TableColumn.Status,
+      onClick: DomEventListenerFunctions.HandleTableHeaderClick,
       scope: 'col',
       type: VirtualDomElements.Th,
     },
