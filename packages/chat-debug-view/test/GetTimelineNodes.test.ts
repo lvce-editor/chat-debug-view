@@ -124,6 +124,22 @@ test('getTimelineNodes should render the timeline summary as a heading', () => {
   expect(summary?.type).toBe(VirtualDomElements.H2)
 })
 
+test('getTimelineNodes should render the timeline top container', () => {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  const top = nodes.find((node) => node.className === 'ChatDebugViewTimelineTop')
+
+  expect(top).toEqual({
+    childCount: 1,
+    className: 'ChatDebugViewTimelineTop',
+    type: VirtualDomElements.Div,
+  })
+})
+
 test('getTimelineNodes should render drag preview markers while selecting', () => {
   const nodes = getTimelineNodes(getTimelineInfo(events, '1', '4')) as readonly {
     readonly className?: string

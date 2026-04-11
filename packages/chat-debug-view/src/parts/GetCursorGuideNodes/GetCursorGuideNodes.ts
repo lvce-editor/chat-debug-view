@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { ChatDebugViewTimelineCursorGuide, ChatDebugViewTimelineCursorGuideVisible } from '../ClassNames/ClassNames.ts'
 
 export const getCursorGuideNodes = (hoverPercent: number | null): readonly VirtualDomNode[] => {
@@ -7,7 +7,7 @@ export const getCursorGuideNodes = (hoverPercent: number | null): readonly Virtu
     : [
         {
           childCount: 0,
-          className: `${ChatDebugViewTimelineCursorGuide} ${ChatDebugViewTimelineCursorGuideVisible}`,
+          className: mergeClassNames(ChatDebugViewTimelineCursorGuide, ChatDebugViewTimelineCursorGuideVisible),
           style: `left:${hoverPercent}%;`,
           type: VirtualDomElements.Div,
         },
