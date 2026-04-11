@@ -19,6 +19,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     filterValue: '',
     height: 0,
     initial: false,
+    largeBreakpoint: 900,
+    mediumBreakpoint: 600,
     platform: 0,
     sashPointerActive: false,
     selectedEvent: null,

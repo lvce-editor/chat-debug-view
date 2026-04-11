@@ -19,8 +19,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const durationCells = Locator('.ChatDebugViewCellDuration')
+  const rowCells = Locator('.TableBody .TableRow .TableCell')
 
-  await expect(durationCells).toHaveCount(1)
-  await expect(durationCells.nth(0)).toHaveText('250 ms')
+  await expect(rowCells).toHaveCount(3)
+  await expect(rowCells.nth(1)).toHaveText('250 ms')
 }

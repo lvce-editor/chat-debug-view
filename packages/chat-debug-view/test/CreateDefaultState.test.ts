@@ -6,6 +6,8 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
   const sortableState = state as typeof state & {
+    readonly largeBreakpoint: number
+    readonly mediumBreakpoint: number
     readonly sortColumn: string
     readonly sortDescending: boolean
   }
@@ -19,6 +21,8 @@ test('createDefaultState should return expected defaults', () => {
     status: 110,
     type: 260,
   })
+  expect(sortableState.mediumBreakpoint).toBe(600)
+  expect(sortableState.largeBreakpoint).toBe(900)
   expect(sortableState.sortColumn).toBe('')
   expect(sortableState.sortDescending).toBe(false)
 })

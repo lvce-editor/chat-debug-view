@@ -31,7 +31,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     text('tool-execution, get_workspace_uri'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -75,7 +75,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     text('tool-execution, read_file'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -121,7 +121,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('tool-execution, getWorkspaceUri'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -168,7 +168,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     text('list_files'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -214,7 +214,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('request'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -238,7 +238,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('response'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),

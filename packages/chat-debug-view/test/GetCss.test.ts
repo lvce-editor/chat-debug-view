@@ -31,6 +31,31 @@ test('getCss should align the refresh button with the top row and use toolbar st
   expect(css).toContain('background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));')
 })
 
+test('getCss should size the top row from a css variable based on width breakpoints', () => {
+  const largeCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+  const mediumCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 720,
+  })
+  const smallCss = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 480,
+  })
+
+  expect(largeCss).toContain('--ChatDebugViewTopSize: 30px;')
+  expect(mediumCss).toContain('--ChatDebugViewTopSize: 60px;')
+  expect(smallCss).toContain('--ChatDebugViewTopSize: 60px;')
+  expect(largeCss).toContain('.ChatDebugViewTop')
+  expect(largeCss).toContain('contain: strict;')
+  expect(largeCss).toContain('height: var(--ChatDebugViewTopSize);')
+})
+
 test('getCss should keep the devtools filter input wider next to quick filters', () => {
   const css = getCss({
     ...createDefaultState(),

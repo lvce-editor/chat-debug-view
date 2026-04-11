@@ -25,7 +25,7 @@ test('getRowCellNodes should render visible columns in order', () => {
     text('tool-execution, get_workspace_uri'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('250 ms'),

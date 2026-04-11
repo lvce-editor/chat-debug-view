@@ -17,6 +17,8 @@ export interface ChatDebugViewState {
   readonly filterValue: string
   readonly height: number
   readonly initial: boolean
+  readonly largeBreakpoint: number
+  readonly mediumBreakpoint: number
   readonly platform: number
   readonly sashPointerActive: boolean
   readonly selectedEvent: ChatViewEvent | null

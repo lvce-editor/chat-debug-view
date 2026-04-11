@@ -1,12 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import {
-  ChatDebugViewColumnFixed,
-  ChatDebugViewCellDuration,
-  ChatDebugViewCellStatus,
-  ChatDebugViewCellStatusError,
-  TableCell,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewColumnFixed, ChatDebugViewCellStatus, ChatDebugViewCellStatusError, TableCell } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
 import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
@@ -21,7 +15,7 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
         return [
           {
             childCount: 1,
-            className: mergeClassNames(TableCell, ChatDebugViewCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: TableCell,
             type: VirtualDomElements.Td,
           },
           text(getEventTableDurationText(event)),

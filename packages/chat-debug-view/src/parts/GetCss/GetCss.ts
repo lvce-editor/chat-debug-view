@@ -6,6 +6,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   const hasSelectedEvent = !!state.selectedEvent
   const tableWidth = hasSelectedEvent ? clampTableWidth(state.width, state.tableWidth) : getMainWidth(state.width)
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
+  const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
   const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo']
   const tableColCss = tableColumnLayout.visibleColumnWidths
@@ -62,6 +63,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTopSize: ${topSize}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
   display: flex;
@@ -90,8 +92,12 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTop {
   display: flex;
   align-items: center;
+  flex: 0 0 var(--ChatDebugViewTopSize);
   gap: 8px;
+  height: var(--ChatDebugViewTopSize);
+  min-height: var(--ChatDebugViewTopSize);
   min-width: 0;
+  contain: strict;
 }
 
 .ChatDebugViewTop--devtools {

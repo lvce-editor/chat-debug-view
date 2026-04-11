@@ -12,6 +12,7 @@ const isPrimaryButton = (button: number): boolean => {
 }
 
 export const handleEventRowClick = async (state: ChatDebugViewState, value: string, button: number = 0): Promise<ChatDebugViewState> => {
+  console.log({ value, button })
   if (!isPrimaryButton(button)) {
     return state
   }

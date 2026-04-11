@@ -9,7 +9,7 @@ export const getTableColumnGroupDom = (visibleTableColumns: readonly string[]): 
   return [
     {
       childCount: orderedVisibleTableColumns.length,
-      className: colgroup,
+      className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
     ...orderedVisibleTableColumns.map((_, index) => ({
