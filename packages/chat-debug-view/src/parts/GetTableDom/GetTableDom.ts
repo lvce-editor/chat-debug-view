@@ -16,6 +16,7 @@ export const getTableWrapperDom = (focus = 0): readonly VirtualDomNode[] => {
       className: tableWrapperClassName,
       type: VirtualDomElements.Div,
     },
+    ...getTableResizersDom(visibleTableColumns),
   ]
 }
 
@@ -38,6 +39,5 @@ export const getTableDom = (
     ...getTableColumnGroupDom(visibleTableColumns),
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
-    ...getTableResizersDom(visibleTableColumns),
   ]
 }

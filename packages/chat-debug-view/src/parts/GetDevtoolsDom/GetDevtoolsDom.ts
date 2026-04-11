@@ -16,11 +16,11 @@ import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNod
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
 import { getTableDom, getTableWrapperDom } from '../GetTableDom/GetTableDom.ts'
-import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
-import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
-import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
+import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
+import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 
 export const getDevtoolsDom = (
