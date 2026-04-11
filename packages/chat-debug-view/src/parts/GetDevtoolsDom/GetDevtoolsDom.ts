@@ -16,11 +16,11 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
-import { getTableWrapperDom } from '../GetTableWrapperDom/GetTableWrapperDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { getTableWrapperDom } from '../GetTableWrapperDom/GetTableWrapperDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (

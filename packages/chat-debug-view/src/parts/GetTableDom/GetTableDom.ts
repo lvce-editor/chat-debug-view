@@ -1,10 +1,10 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { Table } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
-import { Table } from '../ClassNames/ClassNames.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getTableDom = (
@@ -26,6 +26,5 @@ export const getTableDom = (
     ...getTableColumnGroupDom(visibleTableColumns),
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
-    ...getTableResizersDom(visibleTableColumns),
   ]
 }
