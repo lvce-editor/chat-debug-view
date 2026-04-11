@@ -84,7 +84,7 @@ export const getDetailsDom = (
     ...getTabNodes(normalizedDetailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
-      childCount: 1,
+      childCount: contentNodes.length,
       className: ChatDebugViewDetailsBottom,
       id: getPanelId(safeSelectedDetailTab),
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,

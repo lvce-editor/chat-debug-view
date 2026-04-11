@@ -10,7 +10,7 @@ test('getCss should wrap preview message lines', () => {
     width: 960,
   })
 
-  expect(css).toContain('.ChatDebugViewEvent')
+  expect(css).toContain('.ChatDebugViewDetailsBottom')
   expect(css).toContain('overflow: auto;')
   expect(css).toContain('.ChatDebugViewEventLineContent')
   expect(css).toContain('white-space: pre-wrap;')

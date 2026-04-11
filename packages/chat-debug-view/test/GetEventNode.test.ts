@@ -15,11 +15,6 @@ test('getEventNode should render json details as numbered rows', () => {
 
   expect(result).toEqual([
     {
-      childCount: 3,
-      className: 'ChatDebugViewEvent',
-      type: VirtualDomElements.Div,
-    },
-    {
       childCount: 2,
       className: 'row',
       type: VirtualDomElements.Div,
@@ -122,11 +117,6 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
   }[]
 
   expect(result).toEqual([
-    {
-      childCount: 6,
-      className: 'ChatDebugViewEvent',
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 2,
       className: 'row',

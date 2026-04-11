@@ -225,12 +225,13 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: 1 1 100%;
 }
 
-.ChatDebugViewEvent {
+.ChatDebugViewDetailsBottom {
   color: var(--vscode-foreground, inherit);
   overflow: auto;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  min-width: 0;
+  min-height: 0;
 }
 
 .ChatDebugViewEventRawText {

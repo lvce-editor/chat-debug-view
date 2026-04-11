@@ -1,6 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { ChatDebugViewEvent, TokenText } from '../ClassNames/ClassNames.ts'
+import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
@@ -78,12 +78,5 @@ export const getEventNode = (value: unknown): readonly VirtualDomNode[] => {
       }
     }),
   )
-  return [
-    {
-      childCount: lines.length,
-      className: ChatDebugViewEvent,
-      type: VirtualDomElements.Div,
-    },
-    ...lineNodes,
-  ]
+  return lineNodes
 }
