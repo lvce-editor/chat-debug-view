@@ -156,13 +156,13 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 ${tableColCss}
 
-.ChatDebugViewResizers {
+.Resizers {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.ChatDebugViewResizer {
+.Resizer {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -175,17 +175,17 @@ ${tableColCss}
   cursor: col-resize;
 }
 
-.ChatDebugViewResizerOne {
+.ResizerOne {
   left: var(--ChatDebugViewResizerOneLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerTwo {
+.ResizerTwo {
   left: var(--ChatDebugViewResizerTwoLeft);
   transform: translateX(-50%);
 }
 
-.ChatDebugViewResizerInner {
+.ResizerInner {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -193,6 +193,24 @@ ${tableColCss}
   width: 1px;
   transform: translateX(-50%);
   background: var(--vscode-widget-border, rgba(255, 255, 255, 0.18));
+}
+
+.ScrollBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  pointer-events: none;
+}
+
+.ScrollBarThumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
 }
 
 

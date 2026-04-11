@@ -1,17 +1,19 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
-  ChatDebugViewResizer,
-  ChatDebugViewResizerInner,
-  ChatDebugViewResizerOne,
-  ChatDebugViewResizerTwo,
-  ChatDebugViewResizers,
+  Resizer,
+  ResizerInner,
+  ResizerOne,
+  ResizerTwo,
+  Resizers,
+  ScrollBar,
+  ScrollBarThumb,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const resizerNames = ['ResizerOne', 'ResizerTwo'] as const
-const resizerClassNames = [ChatDebugViewResizerOne, ChatDebugViewResizerTwo] as const
+const resizerClassNames = [ResizerOne, ResizerTwo] as const
 
 export const getTableResizersDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   const visibleColumnCount = getOrderedVisibleTableColumns(visibleTableColumns).length
@@ -23,7 +25,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName, index) => [
     {
       childCount: 1,
-      className: `${ChatDebugViewResizer} ${resizerClassName}`,
+      className: `${Resizer} ${resizerClassName}`,
       name: resizerNames[index],
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: AriaRoles.None,
@@ -31,17 +33,27 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     },
     {
       childCount: 0,
-      className: ChatDebugViewResizerInner,
+      className: ResizerInner,
       role: AriaRoles.None,
       type: VirtualDomElements.Div,
     },
   ])
   return [
     {
-      childCount: resizerCount,
-      className: ChatDebugViewResizers,
+      childCount: resizerCount + 1,
+      className: Resizers,
       type: VirtualDomElements.Div,
     },
     ...resizerNodes,
+    {
+      childCount: 1,
+      className: ScrollBar,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 0,
+      className: ScrollBarThumb,
+      type: VirtualDomElements.Div,
+    },
   ]
 }
