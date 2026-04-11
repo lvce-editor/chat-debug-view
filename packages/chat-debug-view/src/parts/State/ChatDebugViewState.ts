@@ -15,12 +15,12 @@ export interface ChatDebugViewState {
   readonly events: readonly ChatViewEvent[]
   readonly eventStoreName: string
   readonly filterValue: string
+  readonly focus: number
   readonly height: number
   readonly initial: boolean
   readonly largeBreakpoint: number
   readonly mediumBreakpoint: number
   readonly platform: number
-  readonly focus: number
   readonly sashPointerActive: boolean
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null

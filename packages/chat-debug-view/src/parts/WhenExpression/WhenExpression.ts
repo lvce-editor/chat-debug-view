@@ -1,2 +1,2 @@
-export const FocusChatDebugTable = 221139
-export const FocusKeyBindingsWhenExpression = 221153
+export const FocusChatDebugTable = 221_139
+export const FocusKeyBindingsWhenExpression = 221_153
