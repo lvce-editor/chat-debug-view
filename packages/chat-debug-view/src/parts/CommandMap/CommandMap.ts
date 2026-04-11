@@ -11,7 +11,7 @@ import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDet
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
 import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
-import * as HandleEventRowClick from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
+import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
@@ -58,7 +58,8 @@ export const commandMap = {
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
-  'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClick.handleEventRowClick),
+  'ChatDebug.handleEventRowClick': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
+  'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
   'ChatDebug.handleSashPointerDown': wrapCommand(HandleSashPointerDown.handleSashPointerDown),
