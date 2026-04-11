@@ -24,6 +24,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
+  const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
 
-  await expect(detailsEvent).toContainText('image could not be loaded')
+  await expect(detailsEvent).toHaveText('image could not be loaded')
+  await expect(lineNumbers).toHaveCount(0)
 }

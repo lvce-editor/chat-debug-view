@@ -771,7 +771,7 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
   )
 })
 
-test('getDevtoolsDom should render chat message preview text with numbered rows', () => {
+test('getDevtoolsDom should render chat message preview text as raw wrapped text', () => {
   const events = [
     {
       eventId: 1,
@@ -800,29 +800,67 @@ test('getDevtoolsDom should render chat message preview text with numbered rows'
     readonly text?: string
   }[]
 
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       className: 'ChatDebugViewEventLineNumber',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '1',
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'first line',
+      text: 'first line\nsecond line',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render invalid image fallback preview text without numbered rows', () => {
+  const events = [
+    {
+      eventId: 1,
+      mimeType: 'image/png',
+      name: 'broken.png',
+      sessionId: 'session-1',
+      timestamp: '2026-04-10T10:00:00.000Z',
+      type: 'chat-attachment-added',
+    },
+  ]
+  const selectedEvent = setSelectedEventPreview(
+    {
+      ...events[0],
+    },
+    'image could not be loaded',
+  )
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    selectedEvent,
+    0,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    TableColumn.defaultVisibleTableColumns,
+    DetailTab.createDetailTabs('preview'),
+  ) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'second line',
-    }),
-  )
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      text: '2',
+      text: 'image could not be loaded',
     }),
   )
 })

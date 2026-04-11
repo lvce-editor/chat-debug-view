@@ -3,7 +3,11 @@ import { mergedEventType } from '../EventTypes/EventTypes.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
-export const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
+export const mergeToolExecutionEvents = (
+  startedEvent: ChatViewEvent,
+  finishedEvent: ChatViewEvent,
+  type: string = mergedEventType,
+): ChatViewEvent => {
   const ended = getEndedTimestamp(finishedEvent)
   const { eventId } = startedEvent
   const started = getStartedTimestamp(startedEvent)
@@ -13,7 +17,7 @@ export const mergeToolExecutionEvents = (startedEvent: ChatViewEvent, finishedEv
     ...(ended === undefined ? {} : { ended }),
     ...(eventId === undefined ? {} : { eventId }),
     ...(started === undefined ? {} : { started }),
-    type: mergedEventType,
+    type,
   }
   return mergedEvent
 }

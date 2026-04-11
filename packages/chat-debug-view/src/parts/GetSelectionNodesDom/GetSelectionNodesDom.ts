@@ -2,6 +2,8 @@ import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
   ChatDebugViewTimelineSelectionHandle,
+  ChatDebugViewTimelineSelectionHandleEnd,
+  ChatDebugViewTimelineSelectionHandleStart,
   ChatDebugViewTimelineSelectionMarker,
   ChatDebugViewTimelineSelectionMarkerEnd,
   ChatDebugViewTimelineSelectionMarkerStart,
@@ -29,20 +31,24 @@ export const getSelectionNodesDom = (
       childCount: 0,
       className: mergeClassNames(
         ChatDebugViewTimelineSelectionHandle,
+        ChatDebugViewTimelineSelectionHandleStart,
         ChatDebugViewTimelineSelectionMarker,
         ChatDebugViewTimelineSelectionMarkerStart,
       ),
       name: TimelineSelectionHandleName.Start,
       role: AriaRoles.None,
-      style: `left:${formatPercent(selectionStartPercent)};`,
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: mergeClassNames(ChatDebugViewTimelineSelectionHandle, ChatDebugViewTimelineSelectionMarker, ChatDebugViewTimelineSelectionMarkerEnd),
+      className: mergeClassNames(
+        ChatDebugViewTimelineSelectionHandle,
+        ChatDebugViewTimelineSelectionHandleEnd,
+        ChatDebugViewTimelineSelectionMarker,
+        ChatDebugViewTimelineSelectionMarkerEnd,
+      ),
       name: TimelineSelectionHandleName.End,
       role: AriaRoles.None,
-      style: `left:${formatPercent(selectionEndPercent)};`,
       type: VirtualDomElements.Button,
     },
   ]

@@ -275,7 +275,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
       name: 'closeDetails',
     }),
   )
-  expect(dom[detailsTopIndex + 2]).toEqual(
+  expect(dom[detailsTopIndex + 3]).toEqual(
     expect.objectContaining({
       'aria-label': 'Detail sections',
       className: 'ChatDebugViewDetailsTabs',

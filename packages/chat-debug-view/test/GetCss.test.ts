@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { getCss } from '../src/parts/GetCss/GetCss.ts'
+import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getCss should wrap preview message lines', () => {
@@ -9,6 +10,8 @@ test('getCss should wrap preview message lines', () => {
     width: 960,
   })
 
+  expect(css).toContain('.ChatDebugViewEvent')
+  expect(css).toContain('overflow: auto;')
   expect(css).toContain('.ChatDebugViewEventLineContent')
   expect(css).toContain('white-space: pre-wrap;')
   expect(css).toContain('overflow-wrap: anywhere;')
@@ -97,4 +100,33 @@ test('getCss should style timeline selection handles like draggable resize grips
   expect(css).toContain('cursor: ew-resize;')
   expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::before')
   expect(css).toContain('.ChatDebugViewTimelineSelectionHandle::after')
+})
+
+test('getCss should render timeline selection handle positions via dedicated classes', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:10.000Z',
+      type: 'response',
+    },
+  ]
+
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    timelineInfo: getTimelineInfo(events, '2', '8'),
+    width: 960,
+  })
+
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleStart {')
+  expect(css).toContain('left: 20%;')
+  expect(css).toContain('.ChatDebugViewTimelineSelectionHandleEnd {')
+  expect(css).toContain('left: 80%;')
 })

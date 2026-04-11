@@ -6,13 +6,9 @@ export const selectDetailTab = (detailTabs: readonly DetailTab[], selectedDetail
     return detailTabs
   }
   return detailTabs.map((detailTab) => {
-    const isSelectedProperty = detailTab.name === selectedDetailTab
-    if (detailTab.isSelected === isSelectedProperty) {
-      return detailTab
-    }
     return {
       ...detailTab,
-      isSelected: isSelectedProperty,
+      isSelected: detailTab.name === selectedDetailTab,
     }
   })
 }

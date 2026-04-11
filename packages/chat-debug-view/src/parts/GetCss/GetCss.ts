@@ -9,6 +9,31 @@ export const getCss = (state: ChatDebugViewState): string => {
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
+  const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
+  const timelineSelectionHandleStartCss =
+    selectionStartPercent === null
+      ? ''
+      : `
+.ChatDebugViewTimelineSelectionHandleStart {
+  left: ${selectionStartPercent}%;
+}
+
+.ChatDebugViewTimelineSelectionMarkerStart {
+  left: ${selectionStartPercent}%;
+}
+`
+  const timelineSelectionHandleEndCss =
+    selectionEndPercent === null
+      ? ''
+      : `
+.ChatDebugViewTimelineSelectionHandleEnd {
+  left: ${selectionEndPercent}%;
+}
+
+.ChatDebugViewTimelineSelectionMarkerEnd {
+  left: ${selectionEndPercent}%;
+}
+`
   return `
 .ChatDebugView {
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
@@ -134,15 +159,26 @@ export const getCss = (state: ChatDebugViewState): string => {
   border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
   background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
   color: var(--vscode-foreground, inherit);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.ChatDebugViewEventRawText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  flex: 1;
+}
 
 .ChatDebugViewEventLineContent {
   flex: 1;
-  background: var(--vscode-toolbar-activeBackground, rgba(255, 255, 255, 0.1));
   min-width: 0;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   word-break: break-word;
-  outline: 1px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.4));
+}
 
 .ChatDebugViewEventLineNumber {
   flex: none;
@@ -151,6 +187,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .row {
   flex-shrink: 0;
   min-width: 0;
+  width: 100%;
 }
 
 .ChatDebugViewRefreshButton {
@@ -187,6 +224,33 @@ export const getCss = (state: ChatDebugViewState): string => {
   outline: 2px solid rgba(255, 255, 255, 0.4);
   outline-offset: 1px;
 }
+
+.ChatDebugViewDetailsClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vscode-descriptionForeground, inherit);
+  cursor: pointer;
+}
+
+.ChatDebugViewDetailsClose:hover {
+  background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.08));
+  color: var(--vscode-foreground, inherit);
+}
+
+.ChatDebugViewDetailsClose:focus-visible {
+  outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
+  outline-offset: 1px;
+}
+
 
 .ChatDebugViewEventRow:hover {
   background: var(--ListHoverBackground);
@@ -376,6 +440,12 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineSelectionHandle:focus-visible {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
+}
+
+${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
+
+.TokenString {
+  white-space: nowrap;
 }
 `
 }

@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { getPreviewEventNodes } from '../src/parts/GetPreviewEventNodes/GetPreviewEventNodes.ts'
+import * as UiStrings from '../src/parts/UiStrings/UiStrings.ts'
 
 test('getPreviewEventNodes should render image previews using an img node', () => {
   const result = getPreviewEventNodes({
@@ -26,6 +27,56 @@ test('getPreviewEventNodes should render image previews using an img node', () =
   expect(result).toContainEqual(
     expect.objectContaining({
       text: 'diagram.png',
+    }),
+  )
+})
+
+test('getPreviewEventNodes should render invalid image fallback text without line numbers', () => {
+  const result = getPreviewEventNodes(UiStrings.ImageCouldNotBeLoaded) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(result).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: UiStrings.ImageCouldNotBeLoaded,
+    }),
+  )
+})
+
+test('getPreviewEventNodes should render chat-message-updated preview text without line numbers', () => {
+  const result = getPreviewEventNodes('first line\nsecond line', {
+    eventId: 1,
+    text: 'first line\nsecond line',
+    type: 'chat-message-updated',
+  }) as readonly {
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  expect(result).not.toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'first line\nsecond line',
     }),
   )
 })

@@ -68,13 +68,18 @@ export const getDetailsDom = (
     },
     {
       'aria-label': ChatDebugStrings.closeDetails(),
-      childCount: 0,
+      childCount: 1,
       className: ChatDebugViewDetailsClose,
       name: InputName.CloseDetails,
       onChange: DomEventListenerFunctions.HandleCloseDetails,
       onClick: DomEventListenerFunctions.HandleCloseDetails,
       type: VirtualDomElements.Button,
       value: 'close',
+    },
+    {
+      childCount: 0,
+      className: 'MaskIcon MaskIconClose',
+      type: VirtualDomElements.Div,
     },
     ...getTabNodes(normalizedDetailTabs),
     {
