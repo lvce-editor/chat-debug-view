@@ -8,6 +8,17 @@ import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
 
+export const getTableWrapperDom = (focus = 0): readonly VirtualDomNode[] => {
+  const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '')
+  return [
+    {
+      childCount: 2,
+      className: tableWrapperClassName,
+      type: VirtualDomElements.Div,
+    },
+  ]
+}
+
 export const getTableDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
@@ -16,13 +27,7 @@ export const getTableDom = (
   summary = '',
   focus = 0,
 ): readonly VirtualDomNode[] => {
-  const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '')
   return [
-    {
-      childCount: 2,
-      className: tableWrapperClassName,
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 3,
       className: Table,

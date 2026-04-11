@@ -114,11 +114,6 @@ test('getTableDom should render header and body nodes for the table', () => {
 
   expect(dom).toEqual([
     {
-      childCount: 2,
-      className: 'TableWrapper',
-      type: VirtualDomElements.Div,
-    },
-    {
       childCount: 3,
       className: 'Table',
       onFocus: DomEventListenerFunctions.HandleTableFocus,
@@ -228,6 +223,22 @@ test('getTableDom should render header and body nodes for the table', () => {
   ])
 })
 
+test('getTableWrapperDom should render the wrapper node', () => {
+  const dom = GetTableDom.getTableWrapperDom() as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 2,
+      className: 'TableWrapper',
+      type: VirtualDomElements.Div,
+    },
+  ])
+})
+
 test('getTableDom should count only direct children for the resizer wrapper', () => {
   const rowNodes = [
     {
@@ -288,45 +299,18 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
   )
 })
 
-test('getTableDom should render summary status below the table when provided', () => {
-  const rowNodes = [
-    {
-      childCount: 0,
-      className: 'TableRow',
-      type: VirtualDomElements.Tr,
-    },
-  ]
-  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1, undefined, undefined, '1 event, 0ms from start to finish') as readonly {
+test('getTableWrapperDom should add a focus outline when focused', () => {
+  const dom = GetTableDom.getTableWrapperDom(1) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly role?: string
-    readonly text?: string
     readonly type?: number
   }[]
-  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
-  const summaryIndex = dom.findIndex((node) => node.className === 'TableSummary')
-  const tableWrapper = dom[tableWrapperIndex]
 
-  expect(tableWrapper).toEqual(
-    expect.objectContaining({
+  expect(dom).toEqual([
+    {
       childCount: 2,
-      className: 'TableWrapper',
+      className: 'TableWrapper FocusOutline',
       type: VirtualDomElements.Div,
-    }),
-  )
-  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
-  expect(dom).toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({
-        childCount: 1,
-        className: 'TableSummary',
-        role: 'status',
-        type: VirtualDomElements.Div,
-      }),
-      expect.objectContaining({
-        text: '1 event, 0ms from start to finish',
-        type: 12,
-      }),
-    ]),
-  )
+    },
+  ])
 })

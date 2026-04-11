@@ -244,6 +244,7 @@ test('getChatDebugViewDom should render dedicated empty message for tools quick 
     null,
     '',
     '',
+    '',
     [],
     [],
   )
@@ -267,6 +268,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
     true,
     null,
     null,
+    '',
     '',
     '',
     [],

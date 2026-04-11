@@ -15,7 +15,7 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
-import { getTableDom } from '../GetTableDom/GetTableDom.ts'
+import { getTableDom, getTableWrapperDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
@@ -60,7 +60,7 @@ export const getDevtoolsDom = (
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+      : [...getTableWrapperDom(focus), ...getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)]
 
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
