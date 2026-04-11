@@ -9,7 +9,7 @@ test('renderEventListeners should register delegated row click with pointer coor
   const listeners = RenderEventListeners.renderEventListeners()
 
   expect(listeners).toContainEqual({
-    name: DomEventListenerFunctions.HandleEventRowClick,
+    name: DomEventListenerFunctions.HandleEventRowClickAt,
     params: ['handleEventRowClick', EventExpression.ClientX, EventExpression.ClientY, EventExpression.Button],
   })
 })

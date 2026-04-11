@@ -200,7 +200,7 @@ test('getDevtoolsDom should delegate row pointerdown from table body', () => {
   const eventRow = dom.find((node) => node.className === 'TableRow TableRowOdd TableRowSelected')
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
-  expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClick)
+  expect(tableBody?.onPointerDown).toBe(DomEventListenerFunctions.HandleEventRowClickAt)
   expect(tableBody?.onContextMenu).toBe(DomEventListenerFunctions.HandleTableBodyContextMenu)
   expect(eventRow).toBeDefined()
   expect(selectedEventInput).toBeUndefined()

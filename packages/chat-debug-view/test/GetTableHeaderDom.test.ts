@@ -177,7 +177,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       childCount: 1,
       className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
     {

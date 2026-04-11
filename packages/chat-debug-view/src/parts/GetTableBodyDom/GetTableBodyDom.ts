@@ -8,7 +8,7 @@ export const getTableBodyDom = (rowNodes: readonly VirtualDomNode[], eventCount:
       childCount: eventCount === 0 ? 1 : eventCount,
       className: TableBody,
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
     ...rowNodes,

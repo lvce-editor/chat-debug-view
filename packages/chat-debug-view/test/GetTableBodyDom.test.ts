@@ -23,7 +23,7 @@ test('getTableBodyDom should render the table body nodes', () => {
       childCount: 1,
       className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
     {
@@ -45,7 +45,7 @@ test('getTableBodyDom should render an empty table body when there are no rows',
       childCount: 1,
       className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
-      onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
   ])
