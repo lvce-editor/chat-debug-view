@@ -22,8 +22,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.ChatDebugViewEventRow')
+  const typeCells = Locator('.ChatDebugViewCellType')
 
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('list_files')
-  await expect(rows.nth(0)).not.toContainText('tool-execution, list_files')
+  await expect(typeCells).toHaveCount(1)
+  await expect(typeCells.nth(0)).toHaveText('list_files')
 }
