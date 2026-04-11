@@ -75,6 +75,22 @@ test('getTableHeaderDom should omit hidden columns', () => {
     {
       childCount: 1,
       className: 'TableCell',
+      name: TableColumn.Type,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Status,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Status'),
+  ])
+})
+
   test('getTableDom should render header and body nodes for the table', () => {
     const rowNodes = [
       {

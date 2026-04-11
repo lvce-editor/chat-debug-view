@@ -226,8 +226,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewEvent {
-  border-color: var(--vscode-widget-border, rgba(255, 255, 255, 0.14));
-  background: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.06));
   color: var(--vscode-foreground, inherit);
   overflow: auto;
   display: flex;
