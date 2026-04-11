@@ -1,10 +1,5 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import {
-  ChatDebugViewColumnFixed,
-  ChatDebugViewHeaderCell,
-  ChatDebugViewHeaderCellDuration,
-  ChatDebugViewHeaderCellStatus,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewHeaderCell, ChatDebugViewHeaderCellStatus } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
@@ -20,7 +15,7 @@ export const getHeaderCellNodes = (
         return [
           {
             childCount: 1,
-            className: mergeClassNames(ChatDebugViewHeaderCell, ChatDebugViewHeaderCellDuration, isFixed ? ChatDebugViewColumnFixed : ''),
+            className: ChatDebugViewHeaderCell,
             name: column,
             onClick: DomEventListenerFunctions.HandleTableHeaderClick,
             type: VirtualDomElements.Th,

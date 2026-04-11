@@ -10,5 +10,8 @@ const tableSummaryNode = {
 }
 
 export const getTableSummaryDom = (summary: string): readonly VirtualDomNode[] => {
+  if (!summary) {
+    return []
+  }
   return [tableSummaryNode, text(summary)]
 }

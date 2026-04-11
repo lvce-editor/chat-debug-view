@@ -14,12 +14,9 @@ export const getTableDom = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   summary = '',
 ): readonly VirtualDomNode[] => {
-  const resizerNodes = getTableResizersDom(visibleTableColumns)
-  const columnGroupNodes = getTableColumnGroupDom(visibleTableColumns)
-  const summaryNodes = summary ? getTableSummaryDom(summary) : []
   return [
     {
-      childCount: 1 + (resizerNodes.length > 0 ? 1 : 0),
+      childCount: 2,
       className: TableWrapper,
       type: VirtualDomElements.Div,
     },
@@ -28,10 +25,10 @@ export const getTableDom = (
       className: Table,
       type: VirtualDomElements.Table,
     },
-    ...columnGroupNodes,
+    ...getTableColumnGroupDom(visibleTableColumns),
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),
-    ...resizerNodes,
-    ...summaryNodes,
+    ...getTableResizersDom(visibleTableColumns),
+    ...getTableSummaryDom(summary),
   ]
 }

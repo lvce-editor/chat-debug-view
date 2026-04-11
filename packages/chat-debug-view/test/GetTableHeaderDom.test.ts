@@ -36,7 +36,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -159,7 +159,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
