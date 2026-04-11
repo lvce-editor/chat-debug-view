@@ -1,10 +1,10 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { ChatDebugViewDetails, ChatDebugViewDetailsBottom, ChatDebugViewDetailsClose, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewDetails, ChatDebugViewDetailsBottom, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'
 import { getTabId } from '../GetTabId/GetTabId.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
@@ -53,26 +53,6 @@ const getContentNode = (
     contentNodes,
     safeSelectedDetailTab,
   }
-}
-
-const getDetailsCloseButtonDom = (): readonly VirtualDomNode[] => {
-  return [
-    {
-      'aria-label': ChatDebugStrings.closeDetails(),
-      childCount: 1,
-      className: ChatDebugViewDetailsClose,
-      name: InputName.CloseDetails,
-      onChange: DomEventListenerFunctions.HandleCloseDetails,
-      onClick: DomEventListenerFunctions.HandleCloseDetails,
-      type: VirtualDomElements.Button,
-      value: 'close',
-    },
-    {
-      childCount: 0,
-      className: 'MaskIcon MaskIconClose',
-      type: VirtualDomElements.Div,
-    },
-  ]
 }
 
 export const getDetailsDom = (
