@@ -114,7 +114,7 @@ test('getDebugViewTopDom should render devtools search section with context menu
       role: 'option',
       type: VirtualDomElements.Button,
     },
-    text('Tool Calls'),
+    text('Tools'),
     {
       ariaSelected: false,
       childCount: 1,
@@ -144,7 +144,7 @@ test('getDebugViewTopDom should render devtools search section with context menu
       role: 'option',
       type: VirtualDomElements.Button,
     },
-    text('Response Stream'),
+    text('Stream'),
     {
       'aria-label': 'Refresh events',
       childCount: 1,

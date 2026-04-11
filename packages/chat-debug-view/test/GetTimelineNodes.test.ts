@@ -130,3 +130,51 @@ test('getTimelineNodes should render drag preview markers while selecting', () =
 
   expect(range?.style).toBe('left:10%;width:30%;')
 })
+
+test('getTimelineNodes should render timestamp badges across the timeline', () => {
+  const nodes = getTimelineNodes(getTimelineInfo(events, '', '')) as readonly {
+    readonly className?: string
+    readonly style?: string
+    readonly text?: string
+  }[]
+
+  const badgeTexts = nodes.flatMap((node, index) => {
+    if (node.className !== 'ChatDebugViewTimelineBadge') {
+      return []
+    }
+    const textNode = nodes[index + 1]
+    return [
+      {
+        style: node.style,
+        text: textNode?.text,
+      },
+    ]
+  })
+
+  expect(badgeTexts).toEqual([
+    {
+      style: 'left:0;transform:translateX(0);',
+      text: '0s',
+    },
+    {
+      style: 'left:20%;transform:translateX(-50%);',
+      text: '2s',
+    },
+    {
+      style: 'left:40%;transform:translateX(-50%);',
+      text: '4s',
+    },
+    {
+      style: 'left:60%;transform:translateX(-50%);',
+      text: '6s',
+    },
+    {
+      style: 'left:80%;transform:translateX(-50%);',
+      text: '8s',
+    },
+    {
+      style: 'left:100%;transform:translateX(-100%);',
+      text: '10s',
+    },
+  ])
+})
