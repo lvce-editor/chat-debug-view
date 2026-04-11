@@ -213,27 +213,27 @@ test('getTimelineNodes should render timestamp badges across the timeline', () =
   expect(badgeTexts).toEqual([
     {
       style: 'left:0;transform:translateX(0);',
-      text: '0s',
+      text: '0ms',
     },
     {
       style: 'left:20%;transform:translateX(-50%);',
-      text: '2s',
+      text: '2000ms',
     },
     {
       style: 'left:40%;transform:translateX(-50%);',
-      text: '4s',
+      text: '4000ms',
     },
     {
       style: 'left:60%;transform:translateX(-50%);',
-      text: '6s',
+      text: '6000ms',
     },
     {
       style: 'left:80%;transform:translateX(-50%);',
-      text: '8s',
+      text: '8000ms',
     },
     {
       style: 'left:100%;transform:translateX(-100%);',
-      text: '10s',
+      text: '10000ms',
     },
   ])
 })

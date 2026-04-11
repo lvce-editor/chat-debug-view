@@ -1,8 +1,8 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { formatTimelinePresetValue } from '../FormatTimelinePresetValue/FormatTimelinePresetValue.ts'
 import { getSelectionPercent } from '../GetSelectionPercent/GetSelectionPercent.ts'
-import { getTimelineEventX } from '../GetTimelineEventX/GetTimelineEventX.ts'
 import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
+import { getTimelineEventX } from '../GetTimelineEventX/GetTimelineEventX.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
 import * as TimelineSelectionHandleName from '../TimelineSelectionHandleName/TimelineSelectionHandleName.ts'
@@ -39,7 +39,6 @@ export const handleTimelinePointerDown = (state: ChatDebugViewState, name: strin
   const timelineWidth = getTimelineWidth(state)
   const clientX = getTimelineEventX(state, eventX)
   const seconds = getTimelineSecondsFromClientX(state.timelineEvents, clientX, timelineLeft, timelineWidth)
-  console.log({ clientX, eventX, seconds, timelineLeft, timelineWidth, x: state.x })
   if (seconds === undefined) {
     return state
   }
