@@ -44,7 +44,7 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+      className: 'ChatDebugViewEventRawText',
     }),
   )
   expect(result).toContainEqual(
@@ -71,7 +71,7 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEvent ChatDebugViewEventRawText',
+      className: 'ChatDebugViewEventRawText',
     }),
   )
   expect(result).toContainEqual(
