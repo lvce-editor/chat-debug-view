@@ -6,6 +6,23 @@ import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
 const resizerClassNames = [ResizerOne, ResizerTwo] as const
 
+const getResizerDom = (resizerClassName: string) => [
+  {
+    childCount: 1,
+    className: mergeClassNames(Resizer, resizerClassName),
+    name: resizerClassName,
+    onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+    role: AriaRoles.None,
+    type: VirtualDomElements.Button,
+  },
+  {
+    childCount: 0,
+    className: ResizerInner,
+    role: AriaRoles.None,
+    type: VirtualDomElements.Div,
+  },
+]
+
 export const getTableResizersDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   const visibleColumnCount = getOrderedVisibleTableColumns(visibleTableColumns).length
   const resizerCount = Math.max(0, visibleColumnCount - 1)
@@ -13,22 +30,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     return []
   }
   const visibleResizerClassNames = resizerClassNames.slice(0, resizerCount)
-  const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName) => [
-    {
-      childCount: 1,
-      className: mergeClassNames(Resizer, resizerClassName),
-      name: resizerClassName,
-      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Button,
-    },
-    {
-      childCount: 0,
-      className: ResizerInner,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
-  ])
+  const resizerNodes = visibleResizerClassNames.flatMap(getResizerDom)
   return [
     {
       childCount: resizerCount + 1,
