@@ -5,7 +5,11 @@ import { ChatDebugViewDetails, ChatDebugViewDetailsBottom, ChatDebugViewDetailsT
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
+import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'
+import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
+import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
+import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getTabId } from '../GetTabId/GetTabId.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
@@ -30,31 +34,6 @@ const getDirectChildCount = (nodes: readonly VirtualDomNode[]): number => {
   return count
 }
 
-const getContentNode = (
-  previewEventNodes: readonly VirtualDomNode[],
-  payloadEventNodes: readonly VirtualDomNode[],
-  responseEventNodes: readonly VirtualDomNode[],
-  selectedEvent: ChatViewEvent | null,
-  detailTabs: readonly DetailTabType[],
-): {
-  readonly contentNodes: readonly VirtualDomNode[]
-  readonly safeSelectedDetailTab: string
-} => {
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs)
-  const contentNodes =
-    safeSelectedDetailTab === InputName.Timing && selectedEvent
-      ? getTimingDetailsDom(selectedEvent)
-      : safeSelectedDetailTab === InputName.Preview
-        ? previewEventNodes
-        : safeSelectedDetailTab === InputName.Payload
-          ? payloadEventNodes
-          : responseEventNodes
-  return {
-    contentNodes,
-    safeSelectedDetailTab,
-  }
-}
-
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -66,13 +45,61 @@ export const getDetailsDom = (
     return []
   }
   const normalizedDetailTabs = selectedEvent ? DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(detailTabs), selectedEvent) : detailTabs
-  const { contentNodes, safeSelectedDetailTab } = getContentNode(
-    previewEventNodes,
-    payloadEventNodes,
-    responseEventNodes,
-    selectedEvent,
-    normalizedDetailTabs,
-  )
+
+  const getDetailContentDom = (): readonly VirtualDomNode[] => {
+    const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(normalizedDetailTabs)
+
+    const getDetailContentDomTiming = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return responseEventNodes
+      }
+      return getTimingDetailsDom(selectedEvent)
+    }
+
+    const getDetailContentDomPreview = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return previewEventNodes
+      }
+      return getPreviewEventNodes(getPreviewEvent(selectedEvent), selectedEvent)
+    }
+
+    const getDetailContentDomPayload = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return payloadEventNodes
+      }
+      return getEventNode(getPayloadEvent(selectedEvent))
+    }
+
+    const getDetailContentDomResponse = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return responseEventNodes
+      }
+      return getEventNode(selectedEvent)
+    }
+
+    const contentNodes =
+      safeSelectedDetailTab === InputName.Timing
+        ? getDetailContentDomTiming()
+        : safeSelectedDetailTab === InputName.Preview
+          ? getDetailContentDomPreview()
+          : safeSelectedDetailTab === InputName.Payload
+            ? getDetailContentDomPayload()
+            : getDetailContentDomResponse()
+
+    return [
+      {
+        'aria-labelledby': getTabId(safeSelectedDetailTab),
+        childCount: getDirectChildCount(contentNodes),
+        className: ChatDebugViewDetailsBottom,
+        id: getPanelId(safeSelectedDetailTab),
+        onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
+        role: 'tabpanel',
+        type: VirtualDomElements.Div,
+      },
+      ...contentNodes,
+    ]
+  }
+
   return [
     {
       childCount: 2,
@@ -87,15 +114,6 @@ export const getDetailsDom = (
     },
     ...getDetailsCloseButtonDom(),
     ...getTabNodes(normalizedDetailTabs),
-    {
-      'aria-labelledby': getTabId(safeSelectedDetailTab),
-      childCount: getDirectChildCount(contentNodes),
-      className: ChatDebugViewDetailsBottom,
-      id: getPanelId(safeSelectedDetailTab),
-      onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
-      role: 'tabpanel',
-      type: VirtualDomElements.Div,
-    },
-    ...contentNodes,
+    ...getDetailContentDom(),
   ]
 }
