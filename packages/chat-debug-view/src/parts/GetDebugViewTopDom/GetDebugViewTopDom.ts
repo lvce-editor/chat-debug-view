@@ -11,6 +11,22 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import * as GetRefreshButtonDom from '../GetRefreshButtonDom/GetRefreshButtonDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+const getFilterInputDom = (filterValue: string, useDevtoolsLayout: boolean): VirtualDomNode => {
+  return {
+    autocomplete: 'off',
+    childCount: 0,
+    className: useDevtoolsLayout
+      ? mergeClassNames(InputBox, ChatDebugViewFilterInput, ChatDebugViewFilterInputDevtools)
+      : mergeClassNames(InputBox, ChatDebugViewFilterInput),
+    inputType: 'search',
+    name: InputName.Filter,
+    onInput: DomEventListenerFunctions.HandleFilterInput,
+    placeholder: ChatDebugStrings.filterEvents(),
+    type: VirtualDomElements.Input,
+    value: filterValue,
+  }
+}
+
 export const getDebugViewTopDom = (
   filterValue: string,
   useDevtoolsLayout: boolean,
@@ -25,17 +41,7 @@ export const getDebugViewTopDom = (
         onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
         type: VirtualDomElements.Search,
       },
-      {
-        autocomplete: 'off',
-        childCount: 0,
-        className: mergeClassNames(InputBox, ChatDebugViewFilterInput, ChatDebugViewFilterInputDevtools),
-        inputType: 'search',
-        name: InputName.Filter,
-        onInput: DomEventListenerFunctions.HandleFilterInput,
-        placeholder: ChatDebugStrings.filterEvents(),
-        type: VirtualDomElements.Input,
-        value: filterValue,
-      },
+      getFilterInputDom(filterValue, true),
       ...quickFilterNodes,
       ...refreshButtonDom,
     ]
@@ -48,17 +54,7 @@ export const getDebugViewTopDom = (
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
-    {
-      autocomplete: 'off',
-      childCount: 0,
-      className: mergeClassNames(InputBox, ChatDebugViewFilterInput),
-      inputType: 'search',
-      name: InputName.Filter,
-      onInput: DomEventListenerFunctions.HandleFilterInput,
-      placeholder: ChatDebugStrings.filterEvents(),
-      type: VirtualDomElements.Input,
-      value: filterValue,
-    },
+    getFilterInputDom(filterValue, false),
     ...refreshButtonDom,
   ]
 }

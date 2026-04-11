@@ -15,4 +15,6 @@ test('createDefaultState should return expected defaults', () => {
     status: 110,
     type: 260,
   })
+  expect(state.sortColumn).toBe('')
+  expect(state.sortDescending).toBe(false)
 })

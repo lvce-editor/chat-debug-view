@@ -90,6 +90,16 @@ test('diff should return RenderIncremental and RenderCss when width changes', ()
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
 })
 
+test('diff should return RenderIncremental and RenderCss when table sort changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    sortColumn: 'type',
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
 test('diff should return empty array when no observed properties change', () => {
   const oldState = createDefaultState()
   const newState = {

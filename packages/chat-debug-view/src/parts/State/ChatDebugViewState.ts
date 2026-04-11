@@ -19,6 +19,8 @@ export interface ChatDebugViewState {
   readonly initial: boolean
   readonly platform: number
   readonly sashPointerActive: boolean
+  readonly sortColumn: TableColumn['name'] | ''
+  readonly sortDescending: boolean
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
   readonly selectedEventIndex: number | null

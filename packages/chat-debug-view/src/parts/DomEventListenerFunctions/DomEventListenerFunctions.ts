@@ -15,6 +15,7 @@ export const HandleTimelinePointerDown = 17
 export const HandleTimelinePointerMove = 18
 export const HandleTimelinePointerUp = 19
 export const HandleTimelineDoubleClick = 20
+export const HandleTableHeaderClick = 21
 export const HandleTimelineRangePreset = 22
 export const HandleCloseDetails = 23
 export const HandleClickRefresh = 24

@@ -21,6 +21,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     initial: false,
     platform: 0,
     sashPointerActive: false,
+    sortColumn: '',
+    sortDescending: false,
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,

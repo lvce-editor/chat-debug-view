@@ -1,10 +1,8 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
-import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
-import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
-import { getFilteredEvents } from '../GetFilteredEvents/GetFilteredEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+import { getCurrentEvents as getSharedCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
 export interface SelectEventAtIndexDependencies {
@@ -15,20 +13,7 @@ export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
   loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
 }
 
-export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => {
-  const { events, filterValue, showEventStreamFinishedEvents, showInputEvents, showResponsePartEvents, timelineEndSeconds, timelineStartSeconds } =
-    state
-  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(state.categoryFilters)
-  const filteredEvents = getFilteredEvents(
-    events,
-    filterValue,
-    eventCategoryFilters,
-    showInputEvents,
-    showResponsePartEvents,
-    showEventStreamFinishedEvents,
-  )
-  return filterEventsByTimelineRange(filteredEvents, timelineStartSeconds, timelineEndSeconds)
-}
+export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => getSharedCurrentEvents(state)
 
 export const selectEventAtIndex = async (
   state: ChatDebugViewState,

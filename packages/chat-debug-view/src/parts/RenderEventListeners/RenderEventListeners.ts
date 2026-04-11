@@ -42,6 +42,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleEventCategoryFilter', EventExpression.TargetName, 'event.ctrlKey', 'event.metaKey'],
     },
     {
+      name: DomEventListenerFunctions.HandleTableHeaderClick,
+      params: ['handleTableHeaderClick', EventExpression.TargetName],
+    },
+    {
       name: DomEventListenerFunctions.SelectDetailTab,
       params: ['selectDetailTab', EventExpression.TargetName],
     },

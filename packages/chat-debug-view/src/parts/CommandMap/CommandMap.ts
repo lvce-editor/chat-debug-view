@@ -17,6 +17,7 @@ import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
+import * as HandleTableHeaderClick from '../HandleTableHeaderClick/HandleTableHeaderClick.ts'
 import * as HandleTableBodyContextMenu from '../HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import * as HandleTableResizerPointerDown from '../HandleTableResizerPointerDown/HandleTableResizerPointerDown.ts'
 import * as HandleTableResizerPointerMove from '../HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
@@ -66,6 +67,7 @@ export const commandMap = {
   'ChatDebug.handleShowInputEvents': wrapCommand(HandleVisibilityToggles.handleShowInputEvents),
   'ChatDebug.handleShowResponsePartEvents': wrapCommand(HandleVisibilityToggles.handleShowResponsePartEvents),
   'ChatDebug.handleTableBodyContextMenu': wrapCommand(HandleTableBodyContextMenu.handleTableBodyContextMenu),
+  'ChatDebug.handleTableHeaderClick': wrapCommand(HandleTableHeaderClick.handleTableHeaderClick),
   'ChatDebug.handleTableResizerPointerDown': wrapCommand(HandleTableResizerPointerDown.handleTableResizerPointerDown),
   'ChatDebug.handleTableResizerPointerMove': wrapCommand(HandleTableResizerPointerMove.handleTableResizerPointerMove),
   'ChatDebug.handleTableResizerPointerUp': wrapCommand(HandleTableResizerPointerUp.handleTableResizerPointerUp),
