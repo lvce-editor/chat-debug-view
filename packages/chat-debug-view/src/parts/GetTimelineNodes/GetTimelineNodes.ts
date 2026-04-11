@@ -2,7 +2,6 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import {
   ChatDebugViewTimeline,
-  ChatDebugViewTimelineBuckets,
   ChatDebugViewTimelineCursorGuide,
   ChatDebugViewTimelineCursorGuideVisible,
   ChatDebugViewTimelineInteractive,
@@ -11,7 +10,7 @@ import {
   ChatDebugViewTimelineTop,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
+import { getBucketsDom } from '../GetBucketsDom/GetBucketsDom.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
@@ -34,6 +33,7 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: numbe
     return []
   }
   const badgeNodes = getTimelineBadgeNodes(timelineInfo)
+  const bucketNodes = getBucketsDom(timelineInfo.buckets)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
   const cursorGuideNodes = getCursorGuideNodes(hoverPercent)
   return [
@@ -64,12 +64,7 @@ export const getTimelineNodes = (timelineInfo: TimelineInfo, hoverPercent: numbe
       type: VirtualDomElements.Div,
     },
     ...badgeNodes,
-    {
-      childCount: timelineInfo.buckets.length,
-      className: ChatDebugViewTimelineBuckets,
-      type: VirtualDomElements.Div,
-    },
-    ...timelineInfo.buckets.flatMap(getBucketDom),
+    ...bucketNodes,
     {
       childCount: selectionNodes.length + cursorGuideNodes.length,
       className: ChatDebugViewTimelineSelectionOverlay,
