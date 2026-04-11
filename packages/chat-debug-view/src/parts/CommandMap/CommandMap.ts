@@ -3,18 +3,18 @@ import * as AppendStoredEventForTest from '../AppendStoredEventForTest/AppendSto
 import * as AppendStoredImageAttachmentForTest from '../AppendStoredImageAttachmentForTest/AppendStoredImageAttachmentForTest.ts'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
-import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
-import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
+import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
+import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts'
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
-import * as HandleEscape from '../HandleEscape/HandleEscape.ts'
 import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
+import * as HandleEscape from '../HandleEscape/HandleEscape.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
 import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
 import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
@@ -58,6 +58,10 @@ export const commandMap = {
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
+  'ChatDebug.focusFirst': wrapCommand(FocusFirst.focusFirst),
+  'ChatDebug.focusLast': wrapCommand(FocusLast.focusLast),
+  'ChatDebug.focusNext': wrapCommand(FocusNext.focusNext),
+  'ChatDebug.focusPrevious': wrapCommand(FocusPrevious.focusPrevious),
   'ChatDebug.getCommandIds': getCommandIds,
   'ChatDebug.getMenuEntries': wrapGetter(getMenuEntries2),
   'ChatDebug.getMenuIds': getMenuIds,
@@ -65,6 +69,7 @@ export const commandMap = {
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
+  'ChatDebug.handleEscape': wrapCommand(HandleEscape.handleEscape),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
   'ChatDebug.handleEventRowClick': wrapCommand(handleEventRowClick),
   'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
@@ -93,11 +98,6 @@ export const commandMap = {
   'ChatDebug.handleTimelineRangePreset': wrapCommand(HandleTimelineInput.handleTimelineRangePreset),
   'ChatDebug.handleTimelineStartSeconds': wrapCommand(HandleTimelineInput.handleTimelineStartSeconds),
   'ChatDebug.handleUseDevtoolsLayout': wrapCommand(HandleUseDevtoolsLayout.setUseDevtoolsLayout),
-  'ChatDebug.handleEscape': wrapCommand(HandleEscape.handleEscape),
-  'ChatDebug.focusFirst': wrapCommand(FocusFirst.focusFirst),
-  'ChatDebug.focusLast': wrapCommand(FocusLast.focusLast),
-  'ChatDebug.focusNext': wrapCommand(FocusNext.focusNext),
-  'ChatDebug.focusPrevious': wrapCommand(FocusPrevious.focusPrevious),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
   'ChatDebug.refresh': wrapCommand(Refresh.refresh),
