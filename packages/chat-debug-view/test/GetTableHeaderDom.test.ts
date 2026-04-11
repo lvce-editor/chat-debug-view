@@ -186,13 +186,13 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 3,
-      className: 'Resizers',
+      childCount: 2,
+      className: 'ChatDebugViewResizers',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'Resizer ResizerOne',
+      className: 'ChatDebugViewResizer ChatDebugViewResizerOne',
       name: 'ResizerOne',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
@@ -200,13 +200,13 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 0,
-      className: 'ResizerInner',
+      className: 'ChatDebugViewResizerInner',
       role: 'none',
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'Resizer ResizerTwo',
+      className: 'ChatDebugViewResizer ChatDebugViewResizerTwo',
       name: 'ResizerTwo',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
@@ -214,18 +214,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 0,
-      className: 'ResizerInner',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ScrollBar',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 0,
-      className: 'ScrollBarThumb',
+      className: 'ChatDebugViewResizerInner',
       role: 'none',
       type: VirtualDomElements.Div,
     },
@@ -244,9 +233,9 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
     readonly childCount?: number
     readonly className?: string
   }[]
-  const resizers = dom.find((node) => node.className === 'Resizers')
+  const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
 
-  expect(resizers?.childCount).toBe(3)
+  expect(resizers?.childCount).toBe(2)
 })
 
 test('getTableDom should omit hidden columns from the colgroup', () => {

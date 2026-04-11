@@ -1,14 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
-import {
-  Resizer,
-  ResizerInner,
-  ResizerOne,
-  ResizerTwo,
-  Resizers,
-  ScrollBar,
-  ScrollBarThumb,
-} from '../ClassNames/ClassNames.ts'
+import { Resizer, ResizerInner, ResizerOne, ResizerTwo, Resizers, ScrollBar, ScrollBarThumb } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 

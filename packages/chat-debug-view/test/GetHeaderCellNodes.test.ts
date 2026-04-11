@@ -24,7 +24,6 @@ test('getHeaderCellNodes should render the visible header cells', () => {
   const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status], tableColumns) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly scope?: string
   }[]
 
   expect(dom).toEqual([
