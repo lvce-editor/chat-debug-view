@@ -26,7 +26,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await ChatDebug.openTabPreview()
 
   const detailsEvent = Locator('.ChatDebugViewEvent')
 
