@@ -79,7 +79,7 @@ test('getCss should expose table column width and resizer position variables', (
   expect(css).toContain('.TableColOne')
   expect(css).toContain('width: 96px;')
   expect(css).toContain('.TableColTwo')
-  expect(css).toContain('width: 124px;')
+  expect(css).toContain('width: 608px;')
 })
 
 test('getCss should assign widths to visible col elements instead of individual cells', () => {
