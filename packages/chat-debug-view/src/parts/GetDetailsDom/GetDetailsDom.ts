@@ -55,6 +55,26 @@ const getContentNode = (
   }
 }
 
+const getDetailsCloseButtonDom = (): readonly VirtualDomNode[] => {
+  return [
+    {
+      'aria-label': ChatDebugStrings.closeDetails(),
+      childCount: 1,
+      className: ChatDebugViewDetailsClose,
+      name: InputName.CloseDetails,
+      onChange: DomEventListenerFunctions.HandleCloseDetails,
+      onClick: DomEventListenerFunctions.HandleCloseDetails,
+      type: VirtualDomElements.Button,
+      value: 'close',
+    },
+    {
+      childCount: 0,
+      className: 'MaskIcon MaskIconClose',
+      type: VirtualDomElements.Div,
+    },
+  ]
+}
+
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -85,21 +105,7 @@ export const getDetailsDom = (
       onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
       type: VirtualDomElements.Div,
     },
-    {
-      'aria-label': ChatDebugStrings.closeDetails(),
-      childCount: 1,
-      className: ChatDebugViewDetailsClose,
-      name: InputName.CloseDetails,
-      onChange: DomEventListenerFunctions.HandleCloseDetails,
-      onClick: DomEventListenerFunctions.HandleCloseDetails,
-      type: VirtualDomElements.Button,
-      value: 'close',
-    },
-    {
-      childCount: 0,
-      className: 'MaskIcon MaskIconClose',
-      type: VirtualDomElements.Div,
-    },
+    ...getDetailsCloseButtonDom(),
     ...getTabNodes(normalizedDetailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
