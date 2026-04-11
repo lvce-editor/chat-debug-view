@@ -4,7 +4,6 @@ import { Resizer, ResizerInner, ResizerOne, ResizerTwo, Resizers } from '../Clas
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
-const resizerNames = ['ResizerOne', 'ResizerTwo'] as const
 const resizerClassNames = [ResizerOne, ResizerTwo] as const
 
 export const getTableResizersDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
@@ -14,11 +13,11 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     return []
   }
   const visibleResizerClassNames = resizerClassNames.slice(0, resizerCount)
-  const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName, index) => [
+  const resizerNodes = visibleResizerClassNames.flatMap((resizerClassName) => [
     {
       childCount: 1,
       className: mergeClassNames(Resizer, resizerClassName),
-      name: resizerNames[index],
+      name: resizerClassName,
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: AriaRoles.None,
       type: VirtualDomElements.Button,
