@@ -44,11 +44,7 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       key: KeyCode.Enter,
       when: WhenExpression.FocusChatDebugTable,
     },
-    {
-      command: 'ChatDebug.acceptWhenExprssion',
-      key: KeyCode.Enter,
-      when: WhenExpression.FocusKeyBindingsWhenExpression,
-    },
+
     {
       command: 'ChatDebug.focusFirst',
       key: KeyCode.Home,
@@ -59,11 +55,7 @@ export const getKeyBindings = (): readonly KeyBinding[] => {
       key: KeyCode.End,
       when: WhenExpression.FocusChatDebugTable,
     },
-    {
-      command: 'ChatDebug.cancelEditingWhenExprssion',
-      key: KeyCode.Escape,
-      when: WhenExpression.FocusKeyBindingsWhenExpression,
-    },
+
     {
       command: 'ChatDebug.handleEscape',
       key: KeyCode.Escape,
