@@ -9,9 +9,9 @@ import {
   ChatDebugViewTimelineTop,
 } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getBucketDom } from '../GetBucketDom/GetBucketDom.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
+import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
 export const getTimelineNodes = (timelineInfo: TimelineInfo): readonly VirtualDomNode[] => {

@@ -165,7 +165,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       className: 'ChatDebugViewCell ChatDebugViewCellType ChatDebugViewColumnFixed',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, list_files'),
+    text('list_files'),
     {
       childCount: 1,
       className: 'ChatDebugViewCell ChatDebugViewCellDuration ChatDebugViewColumnFixed',

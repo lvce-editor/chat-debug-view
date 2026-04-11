@@ -581,7 +581,7 @@ test('getDevtoolsDom should render tool execution row labels with top-level name
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'tool-execution, list_files',
+      text: 'list_files',
     }),
   )
 })

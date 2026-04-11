@@ -59,3 +59,24 @@ test('getRowCellNodes should apply error status styling and ignore unknown colum
     text('400'),
   ])
 })
+
+test('getRowCellNodes should render list_files without the tool-execution prefix in the type column', () => {
+  const event = {
+    eventId: 1,
+    name: 'list_files',
+    sessionId: 'session-1',
+    timestamp: '2026-04-02T07:26:35.172Z',
+    type: 'tool-execution',
+  }
+
+  const result = GetRowCellNodes.getRowCellNodes(event, false, [TableColumn.Type])
+
+  expect(result).toEqual([
+    {
+      childCount: 1,
+      className: 'ChatDebugViewCell ChatDebugViewCellType',
+      type: VirtualDomElements.Td,
+    },
+    text('list_files'),
+  ])
+})
