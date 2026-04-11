@@ -38,7 +38,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(detailsBottom).toHaveAttribute('role', 'tabpanel')
   // await expect(responseTab).toHaveAttribute('aria-selected', 'true')
   // await expect(timingTab).toHaveAttribute('aria-selected', 'false')
-  await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
+  await expect(detailsBottom).toContainText('"path": "/chat"')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
@@ -49,13 +49,13 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(Locator('.ChatDebugViewTiming')).toBeVisible()
   await expect(Locator('.ChatDebugViewTiming')).toContainText('Duration')
   await expect(Locator('.ChatDebugViewTiming')).toContainText('250ms')
-  await expect(Locator('.ChatDebugViewEvent')).toHaveCount(0)
+  await expect(detailsBottom).not.toContainText('"path": "/chat"')
 
   // act
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)
 
   // assert
   // await expect(responseTab).toHaveAttribute('aria-selected', 'true')
-  await expect(Locator('.ChatDebugViewEvent')).toContainText('"path": "/chat"')
+  await expect(detailsBottom).toContainText('"path": "/chat"')
   await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
 }

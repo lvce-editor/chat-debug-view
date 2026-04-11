@@ -33,10 +33,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'payload', false)
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
-  await expect(detailsEvent).toHaveText('1{2  "uri": "file:///workspace"3}')
-  await expect(detailsEvent).not.toContainText('"name": "list_files"')
-  await expect(detailsEvent).not.toContainText('"entries"')
+  await expect(detailsBottom).toHaveText('1{2  "uri": "file:///workspace"3}')
+  await expect(detailsBottom).not.toContainText('"name": "list_files"')
+  await expect(detailsBottom).not.toContainText('"entries"')
 }

@@ -34,7 +34,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setFilter('beta')
 
   // assert
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('handle-response')
 }

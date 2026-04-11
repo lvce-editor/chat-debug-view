@@ -28,7 +28,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabPreview()
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
-  await expect(detailsEvent).toHaveCSS('overflow', 'auto')
+  await expect(detailsBottom).toHaveCSS('overflow', 'auto')
 }

@@ -27,7 +27,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const detailsEvent = Locator('.ChatDebugViewEvent')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
   const rawPreviewText = Locator('.ChatDebugViewEventRawText')
 
   // act
@@ -37,7 +37,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
   await expect(Locator('.ChatDebugViewEventLineNumber')).toHaveCount(0)
-  await expect(detailsEvent).toHaveText(previewText)
+  await expect(detailsBottom).toHaveText(previewText)
   await expect(rawPreviewText).toHaveCSS('white-space', 'pre-wrap')
   await expect(rawPreviewText).toHaveCSS('overflow-wrap', 'anywhere')
 
