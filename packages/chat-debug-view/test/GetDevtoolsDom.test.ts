@@ -351,9 +351,11 @@ test('getDevtoolsDom should make the events pane full width when details are clo
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
+  const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const sash = dom.find((node) => node.className === 'Sash')
 
+  expect(splitPane).toBeUndefined()
   expect(eventsPane).toBeDefined()
   expect(sash).toBeUndefined()
 })

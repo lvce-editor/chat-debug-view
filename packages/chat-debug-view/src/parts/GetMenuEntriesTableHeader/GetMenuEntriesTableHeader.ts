@@ -6,25 +6,26 @@ import * as GetColumnVisibilityFlags from '../GetColumnVisibilityFlags/GetColumn
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getMenuEntriesTableHeader = (state: ChatDebugViewState): readonly MenuEntry[] => {
+  const visibleTableColumns = TableColumn.getVisibleTableColumns(state.tableColumns)
   return [
     {
       args: [TableColumn.Type],
       command: 'ChatDebug.toggleTableColumnVisibility',
-      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Type),
+      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(visibleTableColumns, TableColumn.Type),
       id: 'type',
       label: ChatDebugStrings.type(),
     },
     {
       args: [TableColumn.Status],
       command: 'ChatDebug.toggleTableColumnVisibility',
-      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Status),
+      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(visibleTableColumns, TableColumn.Status),
       id: 'status',
       label: ChatDebugStrings.status(),
     },
     {
       args: [TableColumn.Duration],
       command: 'ChatDebug.toggleTableColumnVisibility',
-      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Duration),
+      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(visibleTableColumns, TableColumn.Duration),
       id: 'duration',
       label: ChatDebugStrings.duration(),
     },

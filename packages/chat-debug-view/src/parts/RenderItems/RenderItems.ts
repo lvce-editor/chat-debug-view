@@ -5,6 +5,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
   return events.map((event, index) => {
@@ -38,7 +39,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.timelineSelectionActive,
     newState.timelineSelectionAnchorSeconds,
     newState.timelineSelectionFocusSeconds,
-    newState.visibleTableColumns,
+    TableColumn.getVisibleTableColumns(newState.tableColumns),
     newState.detailTabs,
     newState.tableColumns,
     newState.timelineInfo,

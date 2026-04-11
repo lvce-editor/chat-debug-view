@@ -3,7 +3,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
-import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import { getTableColumnsWithVisibility } from '../TableColumn/TableColumn.ts'
 import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 const validEventCategoryFilters = new Set<string>([
@@ -67,13 +67,13 @@ const restoreTimelineStartSeconds = (savedState: Partial<SavedState>, currentTim
 
 const restoreVisibleTableColumns = (
   savedState: Partial<SavedState>,
-  currentVisibleTableColumns: ChatDebugViewState['visibleTableColumns'],
-): ChatDebugViewState['visibleTableColumns'] => {
+  currentTableColumns: ChatDebugViewState['tableColumns'],
+): ChatDebugViewState['tableColumns'] => {
   if (!Array.isArray(savedState.visibleTableColumns)) {
-    return currentVisibleTableColumns
+    return currentTableColumns
   }
   const visibleTableColumns = savedState.visibleTableColumns.filter((value): value is string => typeof value === 'string')
-  return getOrderedVisibleTableColumns(visibleTableColumns)
+  return getTableColumnsWithVisibility(currentTableColumns, visibleTableColumns)
 }
 
 const restoreTableColumnWidths = (
@@ -96,6 +96,6 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
     tableColumnWidths: restoreTableColumnWidths(savedState, state.tableColumnWidths),
     timelineEndSeconds: restoreTimelineEndSeconds(savedState, state.timelineEndSeconds),
     timelineStartSeconds: restoreTimelineStartSeconds(savedState, state.timelineStartSeconds),
-    visibleTableColumns: restoreVisibleTableColumns(savedState, state.visibleTableColumns),
+    tableColumns: restoreVisibleTableColumns(savedState, state.tableColumns),
   }
 }

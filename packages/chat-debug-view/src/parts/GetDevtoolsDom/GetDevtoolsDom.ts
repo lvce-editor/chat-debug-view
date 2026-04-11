@@ -59,9 +59,20 @@ export const getDevtoolsDom = (
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
       : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  return [...timelineNodes, ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes)]
+  const rootChildCount = 4
+  return [
+    {
+      childCount: rootChildCount,
+      className: mergeClassNames(ChatDebugView, ChatDebugViewDevtools),
+      type: VirtualDomElements.Div,
+    },
+    ...timelineNodes,
+    ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes),
+    ...getTableSummaryDom(summary),
+  ]
 }
