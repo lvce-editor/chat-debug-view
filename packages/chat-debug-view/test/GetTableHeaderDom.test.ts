@@ -17,7 +17,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'TableHeader',
+      className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
@@ -63,7 +63,7 @@ test('getTableHeaderDom should omit hidden columns', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'TableHeader',
+      className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
@@ -140,7 +140,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'TableHeader',
+      className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },

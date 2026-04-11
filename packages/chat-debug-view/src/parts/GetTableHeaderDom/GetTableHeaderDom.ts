@@ -1,5 +1,5 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { TableHeader, TableRow } from '../ClassNames/ClassNames.ts'
+import { TableHead, TableRow } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getHeaderCellNodes } from '../GetHeaderCellNodes/GetHeaderCellNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -12,7 +12,7 @@ export const getTableHeaderDom = (
   return [
     {
       childCount: 1,
-      className: TableHeader,
+      className: TableHead,
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },

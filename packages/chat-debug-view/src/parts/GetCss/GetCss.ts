@@ -1,6 +1,7 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
+import { devtoolsTableHeaderHeight, devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
   const hasSelectedEvent = !!state.selectedEvent
@@ -8,61 +9,26 @@ export const getCss = (state: ChatDebugViewState): string => {
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
   const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
   const tableColumnLayout = getTableColumnLayout(tableWidth, state.visibleTableColumns, state.tableColumnWidths)
-  const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo']
-  const tableColCss = tableColumnLayout.visibleColumnWidths
-    .map((width, index) => {
-      const className = tableColClassNames[index]
-      return `
-.${className} {
-  width: ${width}px;
-  max-width: ${width}px;
-}
-`
-    })
-    .join('')
-  const resizerOneLeft = tableColumnLayout.resizerLefts[0] || 0
-  const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
+  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
+  const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
+  const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
-  const timelineCursorGuideCss =
-    state.timelineHoverPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineCursorGuideVisible {
-  left: ${state.timelineHoverPercent}%;
-}
-`
-  const timelineSelectionHandleStartCss =
-    selectionStartPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineSelectionHandleStart {
-  left: ${selectionStartPercent}%;
-}
-
-.ChatDebugViewTimelineSelectionMarkerStart {
-  left: ${selectionStartPercent}%;
-}
-`
-  const timelineSelectionHandleEndCss =
-    selectionEndPercent === null
-      ? ''
-      : `
-.ChatDebugViewTimelineSelectionHandleEnd {
-  left: ${selectionEndPercent}%;
-}
-
-.ChatDebugViewTimelineSelectionMarkerEnd {
-  left: ${selectionEndPercent}%;
-}
-`
   return `
 .ChatDebugView {
+  --ChatDebugViewTableHeaderHeight: ${devtoolsTableHeaderHeight}px;
+  --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
+  --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
+  --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
+  --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewResizerOneLeft: ${resizerOneLeft}px;
   --ChatDebugViewResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
+  --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
+  --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
   --ChatDebugViewTopSize: ${topSize}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
@@ -139,7 +105,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  flex: 1;
+}
+
+.TableRow {
+  height: var(--ChatDebugViewTableRowHeight);
 }
 
 .ChatDebugViewTableSummary {
@@ -152,15 +121,40 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .TableCell {
+  box-sizing: border-box;
+  height: var(--ChatDebugViewTableHeaderHeight);
+  max-height: var(--ChatDebugViewTableHeaderHeight);
+  padding: 0 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  vertical-align: middle;
+}
+
+.TableBody .TableCell {
+  height: var(--ChatDebugViewTableRowHeight);
+  max-height: var(--ChatDebugViewTableRowHeight);
+  line-height: var(--ChatDebugViewTableRowHeight);
 }
 
 .TableCol {
   width: auto;
 }
-${tableColCss}
+
+.TableColZero {
+  width: var(--ChatDebugViewTableColZeroWidth);
+  max-width: var(--ChatDebugViewTableColZeroWidth);
+}
+
+.TableColOne {
+  width: var(--ChatDebugViewTableColOneWidth);
+  max-width: var(--ChatDebugViewTableColOneWidth);
+}
+
+.TableColTwo {
+  width: var(--ChatDebugViewTableColTwoWidth);
+  max-width: var(--ChatDebugViewTableColTwoWidth);
+}
 
 .ChatDebugViewResizers {
   position: absolute;
@@ -476,6 +470,10 @@ ${tableColCss}
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 70%, transparent);
 }
 
+.ChatDebugViewTimelineCursorGuideVisible {
+  left: var(--ChatDebugViewTimelineCursorGuideLeft);
+}
+
 .ChatDebugViewTimelineSelectionRange {
   position: absolute;
   top: 20px;
@@ -505,6 +503,16 @@ ${tableColCss}
 .ChatDebugViewTimelineSelectionHandle {
   pointer-events: auto;
   cursor: ew-resize;
+}
+
+.ChatDebugViewTimelineSelectionHandleStart,
+.ChatDebugViewTimelineSelectionMarkerStart {
+  left: var(--ChatDebugViewTimelineSelectionStartLeft);
+}
+
+.ChatDebugViewTimelineSelectionHandleEnd,
+.ChatDebugViewTimelineSelectionMarkerEnd {
+  left: var(--ChatDebugViewTimelineSelectionEndLeft);
 }
 
 .ChatDebugViewTimelineSelectionHandle::before {
@@ -553,8 +561,6 @@ ${tableColCss}
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
 }
-
-${timelineCursorGuideCss}${timelineSelectionHandleStartCss}${timelineSelectionHandleEndCss}
 
 .TokenString {
   white-space: nowrap;

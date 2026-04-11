@@ -2,8 +2,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyY } from '../GetTableBodyY/GetTableBodyY.ts'
 import { getCurrentEvents } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
 import { clampTableWidth, leftPadding } from '../SplitLayout/SplitLayout.ts'
-
-const devtoolsTableRowHeight = 24
+import { devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number, eventY: number): number => {
   if (!state.useDevtoolsLayout) {
