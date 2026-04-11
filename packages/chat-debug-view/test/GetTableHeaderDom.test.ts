@@ -224,9 +224,17 @@ test('getTableDom should render header and body nodes for the table', () => {
 })
 
 test('getTableWrapperDom should render the wrapper node', () => {
-  const dom = GetTableDom.getTableWrapperDom() as readonly {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableWrapperDom(rowNodes as readonly any[], 1) as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onFocus?: number
     readonly type?: number
   }[]
 
@@ -234,6 +242,113 @@ test('getTableWrapperDom should render the wrapper node', () => {
     {
       childCount: 2,
       className: 'TableWrapper',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 3,
+      className: 'Table',
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
+      type: VirtualDomElements.Table,
+    },
+    {
+      childCount: 3,
+      className: 'ColGroup',
+      type: VirtualDomElements.ColGroup,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColZero',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColOne',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColTwo',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 1,
+      className: 'TableHead',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
+      type: VirtualDomElements.THead,
+    },
+    {
+      childCount: 3,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Type,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Status,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Status'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Duration,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Time'),
+    {
+      childCount: 1,
+      className: 'TableBody',
+      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
+      type: VirtualDomElements.TBody,
+    },
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 3,
+      className: 'Resizers',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerOne',
+      name: 'ResizerOne',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerTwo',
+      name: 'ResizerTwo',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
       type: VirtualDomElements.Div,
     },
   ])
@@ -300,7 +415,14 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
 })
 
 test('getTableWrapperDom should add a focus outline when focused', () => {
-  const dom = GetTableDom.getTableWrapperDom(1) as readonly {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableWrapperDom(rowNodes as readonly any[], 1, undefined, undefined, '', 1) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly type?: number
@@ -311,6 +433,13 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
       childCount: 2,
       className: 'TableWrapper FocusOutline',
       type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 3,
+      className: 'Table',
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
+      type: VirtualDomElements.Table,
     },
   ])
 })

@@ -21,14 +21,5 @@ export const getHeaderCellNodes = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
   const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns, tableColumns)
-  return orderedVisibleTableColumns.flatMap((column) => {
-    switch (column) {
-      case TableColumn.Duration:
-      case TableColumn.Status:
-      case TableColumn.Type:
-        return getHeaderCellNode(column, tableColumns)
-      default:
-        return []
-    }
-  })
+  return orderedVisibleTableColumns.flatMap((column) => getHeaderCellNode(column, tableColumns))
 }
