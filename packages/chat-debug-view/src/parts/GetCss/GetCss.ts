@@ -11,7 +11,9 @@ export const getCss = (state: ChatDebugViewState): string => {
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] || 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
   const timelineSelectionHandleStartCss =
-    selectionStartPercent === null ? '' : `
+    selectionStartPercent === null
+      ? ''
+      : `
 .ChatDebugViewTimelineSelectionHandleStart {
   left: ${selectionStartPercent}%;
 }
@@ -21,7 +23,9 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 `
   const timelineSelectionHandleEndCss =
-    selectionEndPercent === null ? '' : `
+    selectionEndPercent === null
+      ? ''
+      : `
 .ChatDebugViewTimelineSelectionHandleEnd {
   left: ${selectionEndPercent}%;
 }
