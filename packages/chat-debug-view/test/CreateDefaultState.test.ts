@@ -21,6 +21,7 @@ test('createDefaultState should return expected defaults', () => {
     status: 110,
     type: 260,
   })
+  expect(state.timelineFilterDescription).toBe('')
   expect(sortableState.mediumBreakpoint).toBe(600)
   expect(sortableState.largeBreakpoint).toBe(900)
   expect(sortableState.sortColumn).toBe('')

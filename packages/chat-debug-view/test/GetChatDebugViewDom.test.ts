@@ -21,7 +21,6 @@ test('getChatDebugViewDom should return debug error dom when error message is se
     null,
     null,
     '',
-    '',
     [],
     [],
   )
@@ -58,7 +57,6 @@ test('getChatDebugViewDom should wire filter input to filter input listener', ()
     null,
     null,
     '',
-    '',
     [],
     [],
   )
@@ -84,7 +82,6 @@ test('getChatDebugViewDom should not include top checkbox controls', () => {
     null,
     null,
     '',
-    '',
     [],
     [],
   )
@@ -108,7 +105,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     true,
     null,
     null,
-    '',
     '',
     [],
     [],
