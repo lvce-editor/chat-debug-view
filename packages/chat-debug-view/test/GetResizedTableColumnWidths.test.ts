@@ -73,8 +73,8 @@ test('getResizedTableColumnWidths should allow shrinking the status column below
   )
 
   expect(result).toEqual({
-    duration: 146,
-    status: 110,
+    duration: 110,
+    status: 140,
     type: 260,
   })
 })

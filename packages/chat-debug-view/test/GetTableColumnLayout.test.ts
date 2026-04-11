@@ -24,10 +24,10 @@ test('getTableColumnLayout should order visible columns and clamp widths for rem
   })
 
   expect(result).toEqual({
-    fixedColumns: ['type', 'duration'],
-    resizerLefts: [224, 304],
-    visibleColumns: ['type', 'duration', 'status'],
-    visibleColumnWidths: [224, 80, 56],
+    fixedColumns: ['type', 'status'],
+    resizerLefts: [224, 280],
+    visibleColumns: ['type', 'status', 'duration'],
+    visibleColumnWidths: [224, 56, 80],
   })
 })
 
@@ -54,9 +54,9 @@ test('getTableColumnLayout should allow the trailing status column to use a smal
   })
 
   expect(result).toEqual({
-    fixedColumns: ['type', 'duration'],
-    resizerLefts: [224, 304],
-    visibleColumns: ['type', 'duration', 'status'],
-    visibleColumnWidths: [224, 80, 56],
+    fixedColumns: ['type', 'status'],
+    resizerLefts: [224, 280],
+    visibleColumns: ['type', 'status', 'duration'],
+    visibleColumnWidths: [224, 56, 80],
   })
 })

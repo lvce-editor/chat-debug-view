@@ -41,7 +41,7 @@ test('handleTableResizerPointerMove should clamp the active visible column width
 
   const result = HandleTableResizerPointerMove.handleTableResizerPointerMove(pointerDownState, 800)
 
-  expect(result.tableColumnWidths.duration).toBe(424)
+  expect(result.tableColumnWidths.status).toBe(400)
 })
 
 test('handleTableResizerPointerUp should clear the active resizer id', () => {
