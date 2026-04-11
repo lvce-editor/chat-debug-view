@@ -19,7 +19,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
     'not-a-real-png',
     '2026-04-10T11:35:00.000Z',
   )
-  await ChatDebug.handleClickRefresh()
+  await Command.execute('ChatDebug.handleClickRefresh')
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabPreview()
