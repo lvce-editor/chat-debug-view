@@ -11,6 +11,25 @@ import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
+  let nextSiblingIndex = index + 1
+  const childCount = nodes[index]?.childCount || 0
+  for (let i = 0; i < childCount; i++) {
+    nextSiblingIndex = getNextSiblingIndex(nodes, nextSiblingIndex)
+  }
+  return nextSiblingIndex
+}
+
+const getDirectChildCount = (nodes: readonly VirtualDomNode[]): number => {
+  let count = 0
+  let index = 0
+  while (index < nodes.length) {
+    count++
+    index = getNextSiblingIndex(nodes, index)
+  }
+  return count
+}
+
 const getContentNode = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[],
@@ -84,7 +103,7 @@ export const getDetailsDom = (
     ...getTabNodes(normalizedDetailTabs),
     {
       'aria-labelledby': getTabId(safeSelectedDetailTab),
-      childCount: contentNodes.length,
+      childCount: getDirectChildCount(contentNodes),
       className: ChatDebugViewDetailsBottom,
       id: getPanelId(safeSelectedDetailTab),
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
