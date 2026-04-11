@@ -137,6 +137,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   overflow: auto;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .ChatDebugViewEventRawText {
@@ -427,6 +428,10 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewTimelineSelectionHandle:focus-visible {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
+}
+
+.TokenString {
+  white-space: nowrap;
 }
 `
 }
