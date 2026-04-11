@@ -30,7 +30,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
   await expect(rows).toHaveCount(1)
 
-  await interactiveTimeline.dispatchEvent('dblclick', {})
+  await interactiveTimeline.dblclick()
 
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(0)
   await expect(rows).toHaveCount(2)

@@ -5,6 +5,10 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
+  const sortableState = state as typeof state & {
+    readonly sortColumn: string
+    readonly sortDescending: boolean
+  }
   expect(state).toBeDefined()
   expect(state.categoryFilters).toEqual(EventCategoryFilter.createCategoryFilters())
   expect(state.detailTabs).toEqual(DetailTab.createDetailTabs())
@@ -15,6 +19,6 @@ test('createDefaultState should return expected defaults', () => {
     status: 110,
     type: 260,
   })
-  expect(state.sortColumn).toBe('')
-  expect(state.sortDescending).toBe(false)
+  expect(sortableState.sortColumn).toBe('')
+  expect(sortableState.sortDescending).toBe(false)
 })
