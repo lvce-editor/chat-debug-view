@@ -37,7 +37,7 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     text('Request Type'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,

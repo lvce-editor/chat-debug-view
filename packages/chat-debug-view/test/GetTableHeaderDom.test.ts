@@ -44,7 +44,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     text('Time'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -82,7 +82,7 @@ test('getTableHeaderDom should omit hidden columns', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -167,7 +167,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     text('Time'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
