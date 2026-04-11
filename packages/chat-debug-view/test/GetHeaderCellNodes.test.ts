@@ -30,7 +30,7 @@ test('getHeaderCellNodes should render the visible header cells', () => {
   expect(dom).toEqual([
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -39,7 +39,7 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     text('Request Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       scope: 'col',

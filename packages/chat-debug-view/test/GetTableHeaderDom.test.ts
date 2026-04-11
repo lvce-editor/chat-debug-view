@@ -28,7 +28,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -37,7 +37,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -46,7 +46,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
     text('Time'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -77,7 +77,7 @@ test('getTableHeaderDom should omit hidden columns', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -86,7 +86,7 @@ test('getTableHeaderDom should omit hidden columns', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -100,7 +100,7 @@ test('getTableDom should render header and body nodes for the table', () => {
   const rowNodes = [
     {
       childCount: 0,
-      className: 'ChatDebugViewEventRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
   ]
@@ -119,9 +119,29 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 2,
+      childCount: 3,
       className: 'ChatDebugViewTable',
       type: VirtualDomElements.Table,
+    },
+    {
+      childCount: 3,
+      className: 'ChatDebugViewTableColumnGroup',
+      type: VirtualDomElements.ColGroup,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColZero',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColOne',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColTwo',
+      type: VirtualDomElements.Col,
     },
     {
       childCount: 1,
@@ -136,7 +156,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellType ChatDebugViewColumnFixed',
       name: TableColumn.Type,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -145,7 +165,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     text('Type'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -154,7 +174,7 @@ test('getTableDom should render header and body nodes for the table', () => {
     text('Time'),
     {
       childCount: 1,
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellStatus',
+      className: 'TableCell ChatDebugViewHeaderCellStatus',
       name: TableColumn.Status,
       onClick: handleTableHeaderClick,
       scope: 'col',
@@ -163,14 +183,14 @@ test('getTableDom should render header and body nodes for the table', () => {
     text('Status'),
     {
       childCount: 1,
-      className: 'ChatDebugViewTableBody',
+      className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
       onPointerDown: DomEventListenerFunctions.HandleEventRowClick,
       type: VirtualDomElements.TBody,
     },
     {
       childCount: 0,
-      className: 'ChatDebugViewEventRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
     {
@@ -213,7 +233,7 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
   const rowNodes = [
     {
       childCount: 0,
-      className: 'ChatDebugViewEventRow',
+      className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
   ]
@@ -224,4 +244,47 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
   const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
 
   expect(resizers?.childCount).toBe(2)
+})
+
+test('getTableDom should omit hidden columns from the colgroup', () => {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1, [TableColumn.Type, TableColumn.Status]) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+  }[]
+
+  expect(dom).toEqual(
+    expect.arrayContaining([
+      {
+        childCount: 2,
+        className: 'ChatDebugViewTableColumnGroup',
+        type: VirtualDomElements.ColGroup,
+      },
+      {
+        childCount: 0,
+        className: 'TableCol TableColZero',
+        type: VirtualDomElements.Col,
+      },
+      {
+        childCount: 0,
+        className: 'TableCol TableColOne',
+        type: VirtualDomElements.Col,
+      },
+    ]),
+  )
+  expect(dom).not.toEqual(
+    expect.arrayContaining([
+      {
+        className: 'TableCol TableColTwo',
+        type: VirtualDomElements.Col,
+      },
+    ]),
+  )
 })

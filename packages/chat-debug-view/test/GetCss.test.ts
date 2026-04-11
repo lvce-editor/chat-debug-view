@@ -74,6 +74,35 @@ test('getCss should expose table column width and resizer position variables', (
   expect(css).toContain('--ChatDebugViewResizerOneLeft: 240px;')
   expect(css).toContain('--ChatDebugViewResizerTwoLeft: 336px;')
   expect(css).toContain('.ChatDebugViewResizers')
+  expect(css).toContain('.TableColZero')
+  expect(css).toContain('width: 240px;')
+  expect(css).toContain('.TableColOne')
+  expect(css).toContain('width: 96px;')
+  expect(css).toContain('.TableColTwo')
+  expect(css).toContain('width: 124px;')
+})
+
+test('getCss should assign widths to visible col elements instead of individual cells', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableColumnWidths: {
+      duration: 120,
+      status: 110,
+      type: 180,
+    },
+    tableWidth: 520,
+    visibleTableColumns: ['type', 'status'],
+    width: 960,
+  })
+
+  expect(css).toContain('.TableColZero')
+  expect(css).toContain('width: 180px;')
+  expect(css).toContain('.TableColOne')
+  expect(css).toContain('width: 340px;')
+  expect(css).not.toContain('.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewCellType.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed')
+  expect(css).not.toContain('.ChatDebugViewCellDuration.ChatDebugViewColumnFixed')
 })
 
 test('getCss should size the table wrapper to the full main width when details are not visible', () => {

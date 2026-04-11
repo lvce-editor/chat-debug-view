@@ -30,7 +30,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  const tableCells = Locator('td.TableCell')
+  const tableCells = Locator('.TableCell')
   await expect(tableCells).toHaveCount(6)
-  await expect(Locator('td.ChatDebugViewCell')).toHaveCount(0)
+  await expect(Locator('td')).toHaveCount(6)
+  await expect(Locator('.ChatDebugViewCell')).toHaveCount(0)
 }

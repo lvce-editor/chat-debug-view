@@ -140,7 +140,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   const table = dom.find((node) => node.className === 'ChatDebugViewTable')
   const tableWrapper = dom.find((node) => node.className === 'ChatDebugViewTableWrapper')
   const header = dom.find((node) => node.className === 'ChatDebugViewTableHeader')
-  const body = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'ChatDebugViewResizer ChatDebugViewResizerOne')
   const resizers = dom.find((node) => node.className === 'ChatDebugViewResizers')
 
@@ -197,7 +197,7 @@ test('getDevtoolsDom should delegate row pointerdown from table body using data-
     readonly onContextMenu?: number
     readonly type?: number
   }[]
-  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const tableBody = dom.find((node) => node.className === 'TableBody')
   const eventRow = dom.find((node) => node.className === 'TableRow TableRowOdd ChatDebugViewEventRowSelected')
   const selectedEventInput = dom.find((node) => node.name === 'selectedEventIndex')
 
@@ -403,7 +403,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
     readonly childCount?: number
     readonly className?: string
   }[]
-  const tableBody = dom.find((node) => node.className === 'ChatDebugViewTableBody')
+  const tableBody = dom.find((node) => node.className === 'TableBody')
 
   expect(tableBody?.childCount).toBe(2)
 })
@@ -425,12 +425,12 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
+      className: 'TableCell ChatDebugViewHeaderCellDuration ChatDebugViewColumnFixed',
     }),
   )
   expect(dom).not.toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewHeaderCell ChatDebugViewCellDuration',
+      className: 'TableCell ChatDebugViewCellDuration',
     }),
   )
   expect(dom).toContainEqual(
