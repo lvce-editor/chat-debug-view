@@ -5,6 +5,7 @@ import * as GetTableDom from '../src/parts/GetTableDom/GetTableDom.ts'
 import * as GetTableHeaderDom from '../src/parts/GetTableHeaderDom/GetTableHeaderDom.ts'
 import * as GetTableWrapperDom from '../src/parts/GetTableWrapperDom/GetTableWrapperDom.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+import * as WhenExpression from '../src/parts/WhenExpression/WhenExpression.ts'
 
 const handleTableHeaderClick = (DomEventListenerFunctions as Record<string, number>).HandleTableHeaderClick
 
@@ -390,7 +391,14 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableWrapperDom.getTableWrapperDom(rowNodes as readonly any[], 1, undefined, undefined, '', 1) as readonly {
+  const dom = GetTableWrapperDom.getTableWrapperDom(
+    rowNodes as readonly any[],
+    1,
+    undefined,
+    undefined,
+    '',
+    WhenExpression.FocusChatDebugTable,
+  ) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly type?: number

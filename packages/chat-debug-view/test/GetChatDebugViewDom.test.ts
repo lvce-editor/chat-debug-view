@@ -120,7 +120,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
 
   expect(dom).toEqual([
     {
-      childCount: 2,
+      childCount: 3,
       className: 'ChatDebugView ChatDebugView--devtools',
       type: VirtualDomElements.Div,
     },
@@ -211,12 +211,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     text(ChatDebugStrings.refresh()),
     {
       childCount: 1,
-      className: 'ChatDebugViewDevtoolsSplit',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewEvents ChatDebugViewEventsFullWidth',
       role: 'application',
       type: VirtualDomElements.Div,
@@ -227,6 +221,13 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
       type: VirtualDomElements.Div,
     },
     text(ChatDebugStrings.noEventsFound()),
+    {
+      childCount: 1,
+      className: 'TableSummary',
+      role: 'status',
+      type: VirtualDomElements.Div,
+    },
+    text('0 events, 0ms from start to finish'),
   ])
 })
 
@@ -278,12 +279,12 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
-  const splitPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDevtoolsSplit')
+  const eventsPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
   expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
-  expect(splitPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(eventsPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
@@ -292,7 +293,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
       name: 'filter',
     }),
   )
-  expect(root?.childCount).toBe(2)
+  expect(root?.childCount).toBe(3)
 })
 
 test('getChatDebugViewDom should expose timeline and split as direct devtools children when timeline is visible', () => {

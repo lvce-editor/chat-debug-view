@@ -115,7 +115,7 @@ export const getChatDebugViewDom = (
       timelineHoverPercent,
       focus,
     )
-    const devtoolsContentNodes = devtoolsDom.slice(1, -2)
+    const devtoolsContentNodes = devtoolsDom.slice(1)
     const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]
     const rootChildCount = getTopLevelChildCount(topLevelNodes)
     return [
