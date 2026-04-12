@@ -11,7 +11,7 @@ export const resetTableColumns = (state: ChatDebugViewState): ChatDebugViewState
   }
   return {
     ...state,
-    tableColumnWidths: defaultTableColumnWidths,
     tableColumns: createTableColumns(),
+    tableColumnWidths: defaultTableColumnWidths,
   }
 }

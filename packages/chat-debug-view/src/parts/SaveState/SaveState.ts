@@ -11,10 +11,10 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     filterValue,
     selectedEventId,
     sessionId,
+    tableColumns,
     tableColumnWidths,
     timelineEndSeconds,
     timelineStartSeconds,
-    tableColumns,
   } = state
   return {
     eventCategoryFilter: EventCategoryFilter.getSelectedEventCategoryFilter(categoryFilters),

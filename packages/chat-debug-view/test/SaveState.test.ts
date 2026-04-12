@@ -20,7 +20,6 @@ test('saveState should persist serializable non-layout state fields', () => {
     },
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
-    visibleTableColumns: ['type', 'status'],
   }
   const result = SaveState.saveState(state)
 

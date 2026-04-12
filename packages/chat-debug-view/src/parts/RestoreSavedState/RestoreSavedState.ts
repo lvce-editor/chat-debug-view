@@ -93,9 +93,9 @@ export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown
     detailTabs: restoreDetailTabs(savedState, state.detailTabs),
     filterValue: restoreFilterValue(savedState, state.filterValue),
     selectedEventId: restoreSelectedEventId(savedState, state.selectedEventId),
+    tableColumns: restoreVisibleTableColumns(savedState, state.tableColumns),
     tableColumnWidths: restoreTableColumnWidths(savedState, state.tableColumnWidths),
     timelineEndSeconds: restoreTimelineEndSeconds(savedState, state.timelineEndSeconds),
     timelineStartSeconds: restoreTimelineStartSeconds(savedState, state.timelineStartSeconds),
-    tableColumns: restoreVisibleTableColumns(savedState, state.tableColumns),
   }
 }

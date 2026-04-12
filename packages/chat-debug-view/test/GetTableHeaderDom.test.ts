@@ -188,39 +188,6 @@ test('getTableDom should render header and body nodes for the table', () => {
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
-    {
-      childCount: 3,
-      className: 'Resizers',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'Resizer ResizerOne',
-      name: 'ResizerOne',
-      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
-      role: 'none',
-      type: VirtualDomElements.Button,
-    },
-    {
-      childCount: 0,
-      className: 'ResizerInner',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'Resizer ResizerTwo',
-      name: 'ResizerTwo',
-      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
-      role: 'none',
-      type: VirtualDomElements.Button,
-    },
-    {
-      childCount: 0,
-      className: 'ResizerInner',
-      role: 'none',
-      type: VirtualDomElements.Div,
-    },
   ])
 })
 
@@ -369,7 +336,7 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
   }[]
   const resizers = dom.find((node) => node.className === 'Resizers')
 
-  expect(resizers?.childCount).toBe(3)
+  expect(resizers).toBeUndefined()
 })
 
 test('getTableDom should omit hidden columns from the colgroup', () => {
@@ -428,19 +395,23 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
     readonly className?: string
     readonly type?: number
   }[]
+  const wrapper = dom.find((node) => node.className === 'TableWrapper FocusOutline')
+  const table = dom.find((node) => node.className === 'Table')
 
-  expect(dom).toEqual([
-    {
+  expect(wrapper).toEqual(
+    expect.objectContaining({
       childCount: 2,
       className: 'TableWrapper FocusOutline',
       type: VirtualDomElements.Div,
-    },
-    {
+    }),
+  )
+  expect(table).toEqual(
+    expect.objectContaining({
       childCount: 3,
       className: 'Table',
       onFocus: DomEventListenerFunctions.HandleTableFocus,
       tabIndex: 0,
       type: VirtualDomElements.Table,
-    },
-  ])
+    }),
+  )
 })

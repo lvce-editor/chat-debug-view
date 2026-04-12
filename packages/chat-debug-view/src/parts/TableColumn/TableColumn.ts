@@ -9,26 +9,26 @@ export const tableColumnNames = [Type, Status, Duration] as const
 export type TableColumnName = (typeof tableColumnNames)[number]
 
 export interface TableColumn {
-  readonly label: string
   readonly isVisible: boolean
+  readonly label: string
   readonly name: TableColumnName
 }
 
 export const createTableColumns = (): readonly TableColumn[] => {
   return [
     {
-      label: ChatDebugStrings.type(),
       isVisible: true,
+      label: ChatDebugStrings.type(),
       name: Type,
     },
     {
-      label: ChatDebugStrings.status(),
       isVisible: true,
+      label: ChatDebugStrings.status(),
       name: Status,
     },
     {
-      label: ChatDebugStrings.duration(),
       isVisible: true,
+      label: ChatDebugStrings.duration(),
       name: Duration,
     },
   ]

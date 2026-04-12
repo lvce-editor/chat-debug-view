@@ -7,7 +7,7 @@ import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 test('getColumnVisibilityFlags should return checked for visible column', () => {
   const state = createDefaultState()
 
-  const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Type)
+  const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Type)
 
   expect(result).toBe(MenuItemFlags.Checked)
 })
@@ -15,10 +15,10 @@ test('getColumnVisibilityFlags should return checked for visible column', () => 
 test('getColumnVisibilityFlags should return unchecked for hidden column', () => {
   const state = {
     ...createDefaultState(),
-    visibleTableColumns: [TableColumn.Type, TableColumn.Status],
+    tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, [TableColumn.Type, TableColumn.Status]),
   }
 
-  const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state, TableColumn.Duration)
+  const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Duration)
 
   expect(result).toBe(MenuItemFlags.Unchecked)
 })
