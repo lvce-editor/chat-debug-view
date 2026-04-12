@@ -9,14 +9,17 @@ const handleTableHeaderClick = (DomEventListenerFunctions as Record<string, numb
 test('getHeaderCellNodes should render the visible header cells', () => {
   const tableColumns: readonly TableColumn.TableColumn[] = [
     {
+      isVisible: true,
       label: 'Request Type',
       name: TableColumn.Type,
     },
     {
+      isVisible: true,
       label: 'Outcome',
       name: TableColumn.Status,
     },
     {
+      isVisible: true,
       label: 'Elapsed',
       name: TableColumn.Duration,
     },
