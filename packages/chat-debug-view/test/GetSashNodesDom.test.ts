@@ -9,20 +9,15 @@ test('getSashNodesDom should return empty array when no event is selected', () =
   expect(nodes).toEqual([])
 })
 
-test('getSashNodesDom should return sash and sash line when event is selected', () => {
+test('getSashNodesDom should return sash when event is selected', () => {
   const nodes = GetSashNodesDom.getSashNodesDom(true)
 
   expect(nodes).toEqual([
     {
-      childCount: 1,
+      childCount: 0,
       className: 'Sash',
       onPointerDown: DomEventListenerFunctions.HandleSashPointerDown,
       type: VirtualDomElements.Button,
-    },
-    {
-      childCount: 0,
-      className: 'ChatDebugViewSashLine',
-      type: VirtualDomElements.Div,
     },
   ])
 })
@@ -33,5 +28,4 @@ test('getSashNodesDom should reuse the selected sash dom', () => {
 
   expect(first).toBe(second)
   expect(first[0]).toBe(second[0])
-  expect(first[1]).toBe(second[1])
 })
