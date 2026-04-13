@@ -3,7 +3,7 @@ import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/
 import * as HandleTimelinePointerMove from '../src/parts/HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('handleTimelinePointerMove should update the timeline hover guide when not dragging', () => {
+test('handleTimelinePointerMove should update the timeline hover guide from browser client x', () => {
   const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
@@ -27,11 +27,11 @@ test('handleTimelinePointerMove should update the timeline hover guide when not 
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 338)
   const resultRecord = result as unknown as Record<string, unknown>
 
-  expect(resultRecord['timelineHoverSeconds']).toBe('8')
+  expect(resultRecord['timelineHoverSeconds']).toBe('5.95')
   expect(result.timelineSelectionActive).toBe(false)
 })
 
-test('handleTimelinePointerMove should update the drag preview range relative to the widget', () => {
+test('handleTimelinePointerMove should update the drag preview range from browser client x', () => {
   const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
@@ -58,6 +58,6 @@ test('handleTimelinePointerMove should update the drag preview range relative to
   const result = HandleTimelinePointerMove.handleTimelinePointerMove(state, 338)
   const resultRecord = result as unknown as Record<string, unknown>
 
-  expect(result.timelineSelectionFocusSeconds).toBe('8')
-  expect(resultRecord['timelineHoverSeconds']).toBe('8')
+  expect(result.timelineSelectionFocusSeconds).toBe('5.95')
+  expect(resultRecord['timelineHoverSeconds']).toBe('5.95')
 })
