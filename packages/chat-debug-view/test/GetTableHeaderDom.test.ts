@@ -298,6 +298,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       name: 'ResizerOne',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
+      tabIndex: -1,
       type: VirtualDomElements.Button,
     },
     {
@@ -312,6 +313,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       name: 'ResizerTwo',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
+      tabIndex: -1,
       type: VirtualDomElements.Button,
     },
     {

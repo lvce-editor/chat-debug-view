@@ -138,13 +138,15 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'Table')
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const tableWrapperWrapper = dom.find((node) => node.className === 'TableWrapperWrapper')
-  const tableWrapper = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
   const header = dom.find((node) => node.className === 'TableHead')
   const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
   const resizers = dom.find((node) => node.className === 'Resizers')
 
+  expect(eventsPane).toBeDefined()
   expect(tableWrapperWrapper).toBeDefined()
   expect(tableWrapper).toBeDefined()
   expect(tableWrapperWrapper?.childCount).toBe(2)
@@ -172,7 +174,7 @@ test('getDevtoolsDom should expose the events container application role', () =>
     readonly role?: string
     readonly tabIndex?: number
   }[]
-  const eventsPane = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
 
   expect(eventsPane).toEqual(
     expect.objectContaining({
@@ -361,7 +363,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     readonly className?: string
   }[]
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
-  const eventsPane = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const sash = dom.find((node) => node.className === 'Sash')
 
   expect(splitPane).toBeUndefined()

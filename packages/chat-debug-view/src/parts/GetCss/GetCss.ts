@@ -436,6 +436,84 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
+.ChatDebugViewTiming {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ChatDebugViewTimingPreview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ChatDebugViewTimingPreviewTrack {
+  position: relative;
+  height: 34px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--vscode-widget-border, rgba(255, 255, 255, 0.14)) 86%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  contain: strict;
+}
+
+.ChatDebugViewTimingPreviewRail {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  left: 12px;
+  height: 4px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vscode-foreground, rgba(255, 255, 255, 0.78)) 16%, transparent);
+}
+
+.ChatDebugViewTimingPreviewTrackOverlay {
+  position: absolute;
+  inset: 4px 12px;
+  pointer-events: none;
+}
+
+.ChatDebugViewTimingPreviewSegment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(91, 151, 255, 0.84), rgba(91, 151, 255, 0.56));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+  color: var(--vscode-editor-foreground, inherit);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ChatDebugViewTimingPreviewMarker {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  z-index: 1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vscode-charts-orange, rgba(255, 174, 0, 0.95)) 90%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 65%, transparent);
+}
+
+.ChatDebugViewTimingPreviewMarkerStart {
+  left: 12px;
+}
+
+.ChatDebugViewTimingPreviewMarkerEnd {
+  right: 12px;
+}
+
 .TableRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);

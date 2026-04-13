@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../src/parts/GetTimelineNodes/GetTimelineNodes.ts'
