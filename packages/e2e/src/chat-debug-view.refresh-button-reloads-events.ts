@@ -6,7 +6,7 @@ export const skip = 1
 
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
-  const sessionId = 'e2e-session-refresh-button-reloads-events'
+  const sessionId = `e2e-session-refresh-button-reloads-events-${Date.now()}`
   const initialEvent = {
     ended: '2026-03-08T00:00:00.250Z',
     sessionId,
