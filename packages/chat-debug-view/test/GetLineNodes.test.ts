@@ -49,6 +49,48 @@ test('getLineNodeDom should render numbered row', () => {
   ])
 })
 
+test('getLineNodeDom should render unnumbered row with one child', () => {
+  const result = GetLineNodes.getLineNodeDom(
+    {
+      childCount: 1,
+      nodes: [
+        {
+          childCount: 1,
+          className: 'Token TokenText',
+          type: VirtualDomElements.Span,
+        },
+        text('first'),
+      ],
+    },
+    0,
+    false,
+  ) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+    readonly text?: string
+  }[]
+
+  expect(result).toEqual([
+    {
+      childCount: 1,
+      className: 'row',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineContent',
+      type: VirtualDomElements.Span,
+    },
+    {
+      childCount: 1,
+      className: 'Token TokenText',
+      type: VirtualDomElements.Span,
+    },
+    text('first'),
+  ])
+})
+
 test('getLineNodes should render numbered rows', () => {
   const result = GetLineNodes.getLineNodes([
     {

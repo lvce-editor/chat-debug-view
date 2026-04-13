@@ -9,7 +9,7 @@ interface LineNodeData {
 export const getLineNodeDom = (line: LineNodeData, index: number, showLineNumbers = true): readonly VirtualDomNode[] => {
   return [
     {
-      childCount: 2,
+      childCount: showLineNumbers ? 2 : 1,
       className: Row,
       type: VirtualDomElements.Div,
     },
