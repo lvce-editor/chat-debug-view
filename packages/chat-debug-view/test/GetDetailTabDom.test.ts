@@ -16,7 +16,6 @@ test('getDetailTabDom should render an unselected detail tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
@@ -31,7 +30,6 @@ test('getDetailTabDom should render an unselected detail tab', () => {
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -55,7 +53,6 @@ test('getDetailTabDom should render a selected detail tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
@@ -70,7 +67,6 @@ test('getDetailTabDom should render a selected detail tab', () => {
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,

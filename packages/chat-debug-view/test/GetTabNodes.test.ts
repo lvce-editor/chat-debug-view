@@ -14,7 +14,6 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
@@ -36,7 +35,6 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -50,7 +48,6 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -64,7 +61,6 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -78,7 +74,6 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,

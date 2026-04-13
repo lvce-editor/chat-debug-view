@@ -84,3 +84,24 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
     }),
   )
 })
+
+test('getPreviewEventNodes should wrap preview line numbers in a gutter', () => {
+  const result = getPreviewEventNodes('first line\nsecond line') as readonly {
+    readonly className?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      className: 'Gutter',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewEventLineNumber',
+      type: VirtualDomElements.Span,
+    }),
+  )
+})

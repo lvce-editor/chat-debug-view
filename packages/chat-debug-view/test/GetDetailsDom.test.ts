@@ -23,11 +23,9 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, detailTabs) as readonly {
     readonly ['aria-label']?: string
     readonly ['aria-controls']?: string
-    readonly ['aria-labelledby']?: string
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
@@ -75,7 +73,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -89,7 +86,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -103,7 +99,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -117,7 +112,6 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -127,7 +121,7 @@ test('getDetailsDom should render details panel nodes, close control, and tabs',
     },
     text('Timing'),
     {
-      'aria-labelledby': 'ChatDebugViewDetailsTab-response',
+      'aria-label': 'Response',
       childCount: 1,
       className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-response',
@@ -170,6 +164,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     event,
     timingDetailTabs,
   ) as readonly {
+    readonly ['aria-label']?: string
     readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
@@ -215,7 +210,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -229,7 +223,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -243,7 +236,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -257,7 +249,6 @@ test('getDetailsDom should render timing panel content when timing tab is select
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -267,7 +258,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     },
     text('Timing'),
     {
-      'aria-labelledby': 'ChatDebugViewDetailsTab-timing',
+      'aria-label': 'Timing',
       childCount: 1,
       className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-timing',
@@ -344,7 +335,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
   ]
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, null, previewDetailTabs) as readonly {
-    readonly ['aria-labelledby']?: string
+    readonly ['aria-label']?: string
     readonly ariaSelected?: boolean
     readonly className?: string
     readonly role?: string
@@ -391,7 +382,6 @@ test('getDetailsDom should render selected event content when preview tab is sel
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -405,7 +395,6 @@ test('getDetailsDom should render selected event content when preview tab is sel
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -419,7 +408,6 @@ test('getDetailsDom should render selected event content when preview tab is sel
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -433,7 +421,6 @@ test('getDetailsDom should render selected event content when preview tab is sel
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -443,7 +430,7 @@ test('getDetailsDom should render selected event content when preview tab is sel
     },
     text('Timing'),
     {
-      'aria-labelledby': 'ChatDebugViewDetailsTab-preview',
+      'aria-label': 'Preview',
       childCount: 1,
       className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-preview',
@@ -479,7 +466,6 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly role?: string
     readonly text?: string
@@ -524,7 +510,6 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -538,7 +523,6 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -552,7 +536,6 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -562,7 +545,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     },
     text('Response'),
     {
-      'aria-labelledby': 'ChatDebugViewDetailsTab-response',
+      'aria-label': 'Response',
       childCount: 1,
       className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-response',

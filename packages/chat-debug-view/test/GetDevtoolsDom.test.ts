@@ -138,7 +138,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'Table')
-  const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
+  const tableWrapper = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const header = dom.find((node) => node.className === 'TableHead')
   const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
@@ -290,12 +290,10 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
     '',
     '',
     undefined,
-        const header = dom.find((node) => node.className === 'TableHead')
-        const body = dom.find((node) => node.className === 'TableBody')
-        const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
-        const resizers = dom.find((node) => node.className === 'Resizers')
-        const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
-        const tableWrapper = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+    false,
+    '',
+    '',
+    DetailTab.createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly alt?: string

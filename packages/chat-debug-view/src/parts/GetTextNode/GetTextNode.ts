@@ -27,6 +27,6 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  const lineNodes = getLineNodes(lineData)
+  const lineNodes = getLineNodes(lineData, true)
   return lineNodes
 }

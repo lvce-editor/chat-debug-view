@@ -260,6 +260,13 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: none;
 }
 
+.Gutter {
+  display: flex;
+  flex: none;
+  justify-content: flex-end;
+  padding-right: 8px;
+}
+
 .row {
   flex-shrink: 0;
   min-width: 0;
