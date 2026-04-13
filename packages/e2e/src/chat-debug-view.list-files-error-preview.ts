@@ -21,13 +21,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
         workspaceUri: '/home/simon/Documents/fib',
       },
       result: {
-<<<<<<< HEAD
         error: {
           message: 'Invalid argument: uri must be an absolute URI.',
         },
-=======
-        error: 'Invalid argument: uri must be an absolute URI.',
->>>>>>> origin/main
         errorCode: 'E_INVALID_URI',
       },
       sessionId,
@@ -51,7 +47,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(row).toContainText('400')
   await expect(statusCell).toHaveText('400')
-<<<<<<< HEAD
   await expect(detailsBottom).toContainText('"errorCode": "E_INVALID_URI"')
   await expect(lineNumbers).toHaveCount(6)
   await expect(lineNumbers.nth(0)).toHaveText('1')
@@ -60,7 +55,4 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(lineContents.nth(1)).toHaveText('  "error": {')
   await expect(lineContents.nth(2)).toHaveText('    "message": "Invalid argument: uri must be an absolute URI."')
   await expect(lineContents.nth(4)).toHaveText('  "errorCode": "E_INVALID_URI"')
-=======
-  await expect(detailsBottom).toContainText('Invalid argument: uri must be an absolute URI.')
->>>>>>> origin/main
 }
