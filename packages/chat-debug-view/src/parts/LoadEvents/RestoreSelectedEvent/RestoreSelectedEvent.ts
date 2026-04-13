@@ -7,6 +7,8 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
   if (state.selectedEventId === null) {
     return {
       ...state,
+      previewTextCursorColumnIndex: null,
+      previewTextCursorRowIndex: null,
       selectedEvent: null,
       selectedEventIndex: null,
     }
@@ -16,6 +18,8 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
   if (selectedEventIndex === -1) {
     return {
       ...state,
+      previewTextCursorColumnIndex: null,
+      previewTextCursorRowIndex: null,
       selectedEvent: null,
       selectedEventId: null,
       selectedEventIndex: null,
@@ -25,6 +29,8 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
   if (!selectedEvent || typeof selectedEvent.eventId !== 'number') {
     return {
       ...state,
+      previewTextCursorColumnIndex: null,
+      previewTextCursorRowIndex: null,
       selectedEvent: null,
       selectedEventId: null,
       selectedEventIndex: null,
@@ -42,6 +48,8 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
   const resolvedSelectedEvent = selectedEventDetails ? await withPreparedSelectedEventPreview(selectedEventDetails) : null
   return {
     ...state,
+    previewTextCursorColumnIndex: null,
+    previewTextCursorRowIndex: null,
     selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,

@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPreviewEventNodes } from '../src/parts/GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import * as UiStrings from '../src/parts/UiStrings/UiStrings.ts'
 
@@ -130,6 +131,7 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
 test('getPreviewEventNodes should render preview text in an editor shell', () => {
   const result = getPreviewEventNodes('first line\nsecond line') as readonly {
     readonly className?: string
+    readonly onPointerDown?: number
     readonly text?: string
     readonly role?: string
     readonly style?: string
@@ -177,6 +179,7 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
     {
       childCount: 2,
       className: 'EditorContent',
+      onPointerDown: DomEventListenerFunctions.HandlePreviewTextPointerDown,
       type: VirtualDomElements.Div,
     },
     {
@@ -200,14 +203,8 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 1,
-      className: 'Selections',
-      type: VirtualDomElements.Div,
-    },
-    {
       childCount: 0,
-      className: 'EditorSelection',
-      style: 'height: 20px; left: 0px; top: 20px; width: 0px;',
+      className: 'Selections',
       type: VirtualDomElements.Div,
     },
     {
@@ -238,4 +235,28 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
     },
     text('second line'),
   ])
+})
+
+test('getPreviewEventNodes should render a positioned cursor for numbered text previews', () => {
+  const result = getPreviewEventNodes('first line\nsecond line', undefined, {
+    columnIndex: 3,
+    rowIndex: 1,
+  }) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly style?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'Selections',
+    type: VirtualDomElements.Div,
+  })
+  expect(result).toContainEqual({
+    childCount: 0,
+    className: 'EditorSelection',
+    style: 'height: 20px; left: 27px; top: 20px; width: 0px;',
+    type: VirtualDomElements.Div,
+  })
 })

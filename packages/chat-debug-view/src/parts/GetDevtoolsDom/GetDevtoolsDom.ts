@@ -39,6 +39,8 @@ export const getDevtoolsDom = (
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,
   focus = 0,
+  previewTextCursorRowIndex: number | null = null,
+  previewTextCursorColumnIndex: number | null = null,
 ): readonly VirtualDomNode[] => {
   const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
   const effectiveRange = getEffectiveTimelineRange(
@@ -51,7 +53,16 @@ export const getDevtoolsDom = (
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
   const timelineNodes = getTimelineDom(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
-  const previewEventNodes = getPreviewEventNodes(previewEvent, selectedEvent)
+  const previewEventNodes = getPreviewEventNodes(
+    previewEvent,
+    selectedEvent,
+    previewTextCursorRowIndex === null || previewTextCursorColumnIndex === null
+      ? null
+      : {
+          columnIndex: previewTextCursorColumnIndex,
+          rowIndex: previewTextCursorRowIndex,
+        },
+  )
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
@@ -62,7 +73,15 @@ export const getDevtoolsDom = (
       ? getEmptyStateDom(emptyMessage)
       : getTableWrapperWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, summary, focus)
 
-  const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
+  const detailsNodes = getDetailsDom(
+    previewEventNodes,
+    payloadEventNodes,
+    responseEventNodes,
+    selectedEvent,
+    detailTabs,
+    previewTextCursorRowIndex,
+    previewTextCursorColumnIndex,
+  )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
   const rootChildCount = 3

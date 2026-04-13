@@ -1,6 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { LineData } from '../GetTextNode/LineData/LineData.ts'
+import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import {
   ChatDebugViewEventLineNumber,
   EditorContainer,
@@ -14,20 +15,31 @@ import {
   EditorViewlet,
   Gutter,
 } from '../ClassNames/ClassNames.ts'
+import { getPreviewTextCursorStyle } from '../PreviewTextCursor/PreviewTextCursor.ts'
 
-const getEditorSelectionDom = (): readonly VirtualDomNode[] => {
+const defaultEditorCursor: PreviewTextCursor = {
+  columnIndex: 0,
+  rowIndex: 1,
+}
+
+const getEditorSelectionDom = (cursor: PreviewTextCursor | null = defaultEditorCursor): readonly VirtualDomNode[] => {
+  const hasCursor = cursor !== null
   return [
     {
-      childCount: 1,
+      childCount: hasCursor ? 1 : 0,
       className: EditorSelections,
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 0,
-      className: EditorSelection,
-      style: 'height: 20px; left: 0px; top: 20px; width: 0px;',
-      type: VirtualDomElements.Div,
-    },
+    ...(hasCursor
+      ? [
+          {
+            childCount: 0,
+            className: EditorSelection,
+            style: getPreviewTextCursorStyle(cursor),
+            type: VirtualDomElements.Div,
+          },
+        ]
+      : []),
   ]
 }
 
@@ -76,7 +88,12 @@ const getEditorRowsDom = (lineData: readonly LineData[]): readonly VirtualDomNod
   ]
 }
 
-export const getEditorDom = (lineData: readonly LineData[], showLineNumbers = true): readonly VirtualDomNode[] => {
+export const getEditorDom = (
+  lineData: readonly LineData[],
+  showLineNumbers = true,
+  cursor: PreviewTextCursor | null = defaultEditorCursor,
+  onPointerDown?: number,
+): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 1,
@@ -93,6 +110,7 @@ export const getEditorDom = (lineData: readonly LineData[], showLineNumbers = tr
     {
       childCount: 2,
       className: EditorContent,
+      onPointerDown,
       type: VirtualDomElements.Div,
     },
     {
@@ -115,7 +133,7 @@ export const getEditorDom = (lineData: readonly LineData[], showLineNumbers = tr
       className: EditorLayers,
       type: VirtualDomElements.Div,
     },
-    ...getEditorSelectionDom(),
+    ...getEditorSelectionDom(cursor),
     ...getEditorRowsDom(lineData),
   ]
 }

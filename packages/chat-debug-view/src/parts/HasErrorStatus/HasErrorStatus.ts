@@ -11,6 +11,9 @@ export const hasErrorStatus = (event: ChatViewEvent): boolean => {
     return true
   }
   const { status } = event
+  if (status === 'error') {
+    return true
+  }
   if (isErrorStatusCode(status)) {
     return true
   }

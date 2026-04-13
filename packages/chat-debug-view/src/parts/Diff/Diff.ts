@@ -8,6 +8,8 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.errorMessage !== newState.errorMessage ||
     oldState.events !== newState.events ||
     oldState.filterValue !== newState.filterValue ||
+    oldState.previewTextCursorColumnIndex !== newState.previewTextCursorColumnIndex ||
+    oldState.previewTextCursorRowIndex !== newState.previewTextCursorRowIndex ||
     oldState.sessionId !== newState.sessionId ||
     oldState.showEventStreamFinishedEvents !== newState.showEventStreamFinishedEvents ||
     oldState.showInputEvents !== newState.showInputEvents ||

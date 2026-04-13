@@ -120,5 +120,13 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenerFunctions.HandleTimelineDoubleClick,
       params: ['handleTimelineDoubleClick'],
     },
+    {
+      name: DomEventListenerFunctions.HandlePreviewTextPointerDown,
+      params: [
+        'handlePreviewTextPointerDown',
+        'event.clientX - event.currentTarget.getBoundingClientRect().left',
+        'event.clientY - event.currentTarget.getBoundingClientRect().top',
+      ],
+    },
   ]
 }

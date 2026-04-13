@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.read-file-preview'
 
-export const skip = 1
-
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-read-file-preview'
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -28,14 +26,20 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.openTabPreview()
 
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
+  const cursor = Locator('.EditorSelection')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
   const lineContents = Locator('.ChatDebugViewEventLineContent')
 
   await expect(detailsBottom).toHaveText('1first line2second line')
+  await expect(cursor).toHaveCount(0)
   await expect(lineNumbers).toHaveCount(2)
   await expect(lineNumbers.nth(0)).toHaveText('1')
   await expect(lineNumbers.nth(1)).toHaveText('2')
   await expect(lineContents).toHaveCount(2)
   await expect(lineContents.nth(0)).toHaveText('first line')
   await expect(lineContents.nth(1)).toHaveText('second line')
+
+  await Command.execute('ChatDebug.handlePreviewTextPointerDown', 28, 21)
+
+  await expect(cursor).toHaveAttribute('style', 'height: 20px; left: 27px; top: 20px; width: 0px;')
 }

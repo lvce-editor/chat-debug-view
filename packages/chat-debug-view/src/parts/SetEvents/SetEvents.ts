@@ -8,6 +8,8 @@ export const setEvents = (state: ChatDebugViewState, events: readonly ChatViewEv
     errorMessage: '',
     events,
     initial: false,
+    previewTextCursorColumnIndex: null,
+    previewTextCursorRowIndex: null,
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,
