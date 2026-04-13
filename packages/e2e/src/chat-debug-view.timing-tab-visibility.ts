@@ -31,7 +31,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  const timingTab = Locator('#ChatDebugViewDetailsTab-timing')
+  const timingTab = Locator('.ChatDebugViewDetailsTop [name="timing"]')
 
   // assert
   await expect(timingTab).toHaveCount(1)
@@ -48,7 +48,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.selectEventRow(1)
 
   // assert
-  await expect(Locator('#ChatDebugViewDetailsTab-timing')).toHaveCount(0)
+  await expect(Locator('.ChatDebugViewDetailsTop [name="timing"]')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewDetailsBottom')).toContainText('"type": "chat-message-added"')
 }

@@ -211,12 +211,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     text(ChatDebugStrings.refresh()),
     {
       childCount: 1,
-      className: 'ChatDebugViewEvents ChatDebugViewEventsFullWidth',
-      role: 'application',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewEmpty',
       type: VirtualDomElements.Div,
     },

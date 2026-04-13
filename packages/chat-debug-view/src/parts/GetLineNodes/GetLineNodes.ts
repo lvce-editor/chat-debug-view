@@ -6,9 +6,6 @@ interface LineNodeData {
   readonly nodes: readonly VirtualDomNode[]
 }
 
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Gutter, Row } from '../ClassNames/ClassNames.ts'
-
 export const getLineNodeDom = (line: LineNodeData, index: number, showGutter = false): readonly VirtualDomNode[] => {
   return [
     {

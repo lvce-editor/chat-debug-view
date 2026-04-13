@@ -25,8 +25,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const tabs = Locator('.ChatDebugViewDetailsTop [role="tab"]')
 
   await expect(tabs).toHaveCount(3)
-  await expect(Locator('#ChatDebugViewDetailsTab-preview')).toHaveCount(1)
-  await expect(Locator('#ChatDebugViewDetailsTab-payload')).toHaveCount(1)
-  await expect(Locator('#ChatDebugViewDetailsTab-response')).toHaveCount(1)
-  await expect(Locator('#ChatDebugViewDetailsTab-timing')).toHaveCount(0)
+  await expect(Locator('.ChatDebugViewDetailsTop [name="preview"]')).toHaveCount(1)
+  await expect(Locator('.ChatDebugViewDetailsTop [name="payload"]')).toHaveCount(1)
+  await expect(Locator('.ChatDebugViewDetailsTop [name="response"]')).toHaveCount(1)
+  await expect(Locator('.ChatDebugViewDetailsTop [name="timing"]')).toHaveCount(0)
 }

@@ -25,8 +25,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  const responseTab = Locator('#ChatDebugViewDetailsTab-response')
-  const timingTab = Locator('#ChatDebugViewDetailsTab-timing')
+  const responseTab = Locator('.ChatDebugViewDetailsTop [name="response"]')
+  const timingTab = Locator('.ChatDebugViewDetailsTop [name="timing"]')
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert

@@ -232,7 +232,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     },
     text('Payload'),
     {
-      'aria-controls': 'ChatDebugViewDetailsPanel-response',
+      'aria-label': 'Timing',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
@@ -462,7 +462,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
   } as const
 
   const dom = GetDetailsDom.getDetailsDom(selectedEventNodes, undefined, undefined, event, timingDetailTabs) as readonly {
-    readonly ['aria-labelledby']?: string
+    readonly ['aria-label']?: string
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
@@ -578,7 +578,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
   ]
 
   const dom = GetDetailsDom.getDetailsDom(previewNodes, payloadNodes, previewNodes, null, payloadDetailTabs) as readonly {
-    readonly ['aria-labelledby']?: string
+    readonly ['aria-label']?: string
     readonly ariaSelected?: boolean
     readonly className?: string
     readonly name?: string
@@ -625,7 +625,6 @@ test('getDetailsDom should render payload content when payload tab is selected',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -639,7 +638,6 @@ test('getDetailsDom should render payload content when payload tab is selected',
       ariaSelected: true,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-payload',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -653,7 +651,6 @@ test('getDetailsDom should render payload content when payload tab is selected',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-response',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -667,7 +664,6 @@ test('getDetailsDom should render payload content when payload tab is selected',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-timing',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
@@ -677,7 +673,7 @@ test('getDetailsDom should render payload content when payload tab is selected',
     },
     text('Timing'),
     {
-      'aria-labelledby': 'ChatDebugViewDetailsTab-payload',
+      'aria-label': 'Payload',
       childCount: 1,
       className: 'ChatDebugViewDetailsBottom',
       id: 'ChatDebugViewDetailsPanel-payload',
