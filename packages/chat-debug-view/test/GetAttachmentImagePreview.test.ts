@@ -154,3 +154,43 @@ test('getAttachmentImagePreview should ignore non-image attachments', async () =
 
   expect(result).toBeUndefined()
 })
+
+test('getAttachmentImagePreview should return an image preview for removed image attachments', async () => {
+  const createImageBitmapMock = jest.fn(async (_blob: Blob) => {
+    return {
+      close(): void {},
+      height: 2,
+      width: 2,
+    }
+  })
+  const fileReaderSyncMock = jest.fn(() => {
+    return {
+      readAsDataURL(): string {
+        return 'data:image/png;base64,preview'
+      },
+    }
+  })
+  Object.assign(globalThis, {
+    createImageBitmap: createImageBitmapMock,
+    FileReaderSync: fileReaderSyncMock,
+  })
+  const event = {
+    blob: new Blob(['png'], {
+      type: 'image/png',
+    }),
+    eventId: 2,
+    mimeType: 'image/png',
+    name: 'removed.png',
+    type: 'chat-attachment-removed',
+  }
+
+  const result = await getAttachmentImagePreview(event)
+
+  expect(result).toEqual({
+    alt: 'removed.png',
+    previewType: 'image',
+    src: 'data:image/png;base64,preview',
+    stats: '2 × 2 px · 3 B',
+  })
+  expect(createImageBitmapMock).toHaveBeenCalledTimes(1)
+})
