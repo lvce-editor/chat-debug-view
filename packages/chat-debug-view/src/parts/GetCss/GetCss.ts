@@ -2,6 +2,8 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
+// cspell:ignore liga calt
+
 import { devtoolsTableHeaderHeight, devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
@@ -354,6 +356,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: none;
   align-items: flex-end;
   padding-right: 12px;
+  padding-left: 12px;
 }
 
 .Gutter > .ChatDebugViewEventLineNumber {
