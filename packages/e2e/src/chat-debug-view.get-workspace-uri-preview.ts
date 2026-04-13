@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.get-workspace-uri-preview'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-get-workspace-uri-preview')
@@ -32,6 +30,6 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   // assert
-  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
-  await expect(detailsBottom).toHaveText('1{2  "name": "getWorkspaceUri",3  "result": {4    "uri": "file:///workspace"5  }6}')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom .EditorContent')
+  await expect(detailsBottom).toHaveText('{  "name": "getWorkspaceUri",  "result": {    "uri": "file:///workspace"  }}')
 }
