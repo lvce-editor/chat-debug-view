@@ -2,22 +2,25 @@ import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virt
 import { ChatDebugViewEventLineNumber, Gutter, Row } from '../../ClassNames/ClassNames.ts'
 import { type LineData } from '../LineData/LineData.ts'
 
+const getGutterLineNumberDom = (gutterLineNumber: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: Row,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: ChatDebugViewEventLineNumber,
+      type: VirtualDomElements.Span,
+    },
+    text(gutterLineNumber),
+  ]
+}
+
 export const getGutterDom = (lineData: readonly LineData[]): readonly VirtualDomNode[] => {
-  const gutterNodes = lineData.flatMap((_, index) => {
-    return [
-      {
-        childCount: 1,
-        className: Row,
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineNumber,
-        type: VirtualDomElements.Span,
-      },
-      text(String(index + 1)),
-    ]
-  })
+  const gutterLineNumbers = lineData.map((_, index) => String(index + 1))
+  const gutterNodes = gutterLineNumbers.flatMap(getGutterLineNumberDom)
   return [
     {
       childCount: lineData.length,

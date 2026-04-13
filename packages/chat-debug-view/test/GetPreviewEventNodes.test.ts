@@ -8,6 +8,7 @@ test('getPreviewEventNodes should render image previews using an img node', () =
     alt: 'diagram.png',
     previewType: 'image',
     src: 'data:image/png;base64,preview',
+    stats: '2 × 2 px · 3 B',
   }) as readonly {
     readonly alt?: string
     readonly className?: string
@@ -26,7 +27,7 @@ test('getPreviewEventNodes should render image previews using an img node', () =
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      text: 'diagram.png',
+      text: '2 × 2 px · 3 B',
     }),
   )
 })

@@ -21,6 +21,6 @@ export const getImagePreviewDom = (preview: AttachmentImagePreview): readonly Vi
       className: ChatDebugViewImagePreviewLabel,
       type: VirtualDomElements.Span,
     },
-    text(preview.alt),
+    text(preview.stats ?? preview.alt),
   ]
 }

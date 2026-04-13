@@ -26,7 +26,9 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
 
   const previewImage = Locator('.ChatDebugViewImagePreviewImage')
+  const previewStats = Locator('.ChatDebugViewImagePreviewLabel')
 
   await expect(previewImage).toBeVisible()
   await expect(previewImage).toHaveAttribute('alt', 'diagram.png')
+  await expect(previewStats).toContainText('2 × 2 px')
 }

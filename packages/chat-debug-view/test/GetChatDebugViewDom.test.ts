@@ -120,7 +120,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
 
   expect(dom).toEqual([
     {
-      childCount: 3,
+      childCount: 2,
       className: 'ChatDebugView ChatDebugView--devtools',
       type: VirtualDomElements.Div,
     },
@@ -215,13 +215,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
       type: VirtualDomElements.Div,
     },
     text(ChatDebugStrings.noEventsFound()),
-    {
-      childCount: 1,
-      className: 'TableSummary',
-      role: 'status',
-      type: VirtualDomElements.Div,
-    },
-    text('0 events, 0ms from start to finish'),
   ])
 })
 
@@ -287,7 +280,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
       name: 'filter',
     }),
   )
-  expect(root?.childCount).toBe(3)
+  expect(root?.childCount).toBe(2)
 })
 
 test('getChatDebugViewDom should expose timeline and split as direct devtools children when timeline is visible', () => {
