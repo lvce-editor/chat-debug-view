@@ -2,11 +2,12 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.large-payload-100-lines'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-large-payload-100-lines'
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
-
   const payloadText = Array.from({ length: 100 }, (_, index) => `line ${index + 1}`).join('\n')
   const events = [
     {

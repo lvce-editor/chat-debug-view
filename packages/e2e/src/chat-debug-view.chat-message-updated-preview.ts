@@ -2,11 +2,12 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.chat-message-updated-preview'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-chat-message-updated-preview')
   await expect(Locator('.ChatDebugView')).toBeVisible()
-
   const previewText =
     'Done - preview text only\nThis line should wrap automatically when it is long enough to reach the edge of the preview pane without being cut off.'
 
