@@ -6,7 +6,7 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
-  const eventsPaneIndex = dom.findIndex((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+const eventsPaneIndex = dom.findIndex((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
 
 test('getChatDebugViewDom should return debug error dom when error message is set', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(

@@ -17,11 +17,7 @@ test('getSplitViewDom should render only the events pane when details are closed
 
   const result = GetSplitViewDom.getSplitViewDom(1, tableNodes, sashNodes, detailsNodes)
 
-  expect(result).toEqual([
-    ...tableNodes,
-    ...sashNodes,
-    ...detailsNodes,
-  ])
+  expect(result).toEqual([...tableNodes, ...sashNodes, ...detailsNodes])
 })
 
 test('getSplitViewDom should wrap events table and details panes in the split layout', () => {
