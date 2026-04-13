@@ -15,6 +15,44 @@ type LineData = {
   readonly nodes: readonly VirtualDomNode[]
 }
 
+const getGutterDom = (lineData: readonly LineData[]): readonly VirtualDomNode[] => {
+  const gutterNodes = lineData.flatMap((_, index) => {
+    return [
+      {
+        childCount: 1,
+        className: Row,
+        type: VirtualDomElements.Div,
+      },
+      {
+        childCount: 1,
+        className: ChatDebugViewEventLineNumber,
+        type: VirtualDomElements.Span,
+      },
+      text(String(index + 1)),
+    ]
+  })
+  return [
+    {
+      childCount: lineData.length,
+      className: Gutter,
+      type: VirtualDomElements.Div,
+    },
+    ...gutterNodes,
+  ]
+}
+
+const getLinesDom = (lineData: readonly LineData[]): readonly VirtualDomNode[] => {
+  const rowNodes = getLineNodes(lineData, false)
+  return [
+    {
+      childCount: lineData.length,
+      className: Rows,
+      type: VirtualDomElements.Div,
+    },
+    ...rowNodes,
+  ]
+}
+
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
   if (!showLineNumbers) {
     return [
@@ -40,39 +78,13 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  const gutterNodes = lineData.flatMap((_, index) => {
-    return [
-      {
-        childCount: 1,
-        className: Row,
-        type: VirtualDomElements.Div,
-      },
-      {
-        childCount: 1,
-        className: ChatDebugViewEventLineNumber,
-        type: VirtualDomElements.Span,
-      },
-      text(String(index + 1)),
-    ]
-  })
-  const rowNodes = getLineNodes(lineData, false)
   return [
     {
       childCount: 2,
       className: ChatDebugViewEventText,
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: lineData.length,
-      className: Gutter,
-      type: VirtualDomElements.Div,
-    },
-    ...gutterNodes,
-    {
-      childCount: lineData.length,
-      className: Rows,
-      type: VirtualDomElements.Div,
-    },
-    ...rowNodes,
+    ...getGutterDom(lineData),
+    ...getLinesDom(lineData),
   ]
 }
