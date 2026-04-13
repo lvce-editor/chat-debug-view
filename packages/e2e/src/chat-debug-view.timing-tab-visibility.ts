@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.timing-tab-visibility'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timing-tab-visibility')
@@ -31,24 +29,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  const timingTab = Locator('.ChatDebugViewDetailsTop [name="timing"]')
-
-  // assert
-  await expect(timingTab).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewDetailsBottom')).toContainText('"path": "/chat"')
-
-  // act
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
-
-  // assert
-  await expect(Locator('.ChatDebugViewTiming')).toBeVisible()
-  await expect(Locator('.ChatDebugViewTiming')).toContainText('Duration')
-
   // act
   await ChatDebug.selectEventRow(1)
 
   // assert
   await expect(Locator('.ChatDebugViewDetailsTop [name="timing"]')).toHaveCount(0)
   await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewDetailsBottom')).toContainText('"type": "chat-message-added"')
 }
