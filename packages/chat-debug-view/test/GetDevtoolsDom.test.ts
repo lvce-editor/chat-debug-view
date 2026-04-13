@@ -56,15 +56,13 @@ test('getDevtoolsDom should render selected details panel and close input', () =
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const closeButton = dom.find((node) => node.name === 'closeDetails')
   const sash = dom.find((node) => node.className === 'Sash')
-  const sashLine = dom.find((node) => node.className === 'ChatDebugViewSashLine')
 
   expect(detailsPanel).toBeDefined()
   expect(closeButton).toBeDefined()
   expect(closeButton?.onChange).toBe(DomEventListenerFunctions.HandleCloseDetails)
   expect(closeButton?.onClick).toBe(DomEventListenerFunctions.HandleCloseDetails)
-  expect(sash?.childCount).toBe(1)
+  expect(sash?.childCount).toBe(0)
   expect(sash?.onPointerDown).toBe(DomEventListenerFunctions.HandleSashPointerDown)
-  expect(sashLine).toBeDefined()
 })
 
 test('getDevtoolsDom should render accessible response, preview and timing tabs in the details panel', () => {
