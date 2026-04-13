@@ -46,6 +46,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.timelineInfo,
     newState.timelineHoverPercent,
     newState.focus,
+    newState.previewTextCursorRowIndex,
+    newState.previewTextCursorColumnIndex,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

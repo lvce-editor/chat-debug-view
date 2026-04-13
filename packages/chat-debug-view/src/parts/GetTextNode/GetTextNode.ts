@@ -1,10 +1,12 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import type { LineData } from './LineData/LineData.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 
-export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
+export const getTextNode = (value: string, showLineNumbers = true, cursor: PreviewTextCursor | null = null): readonly VirtualDomNode[] => {
   const lines = value.split('\n')
   const lineData: readonly LineData[] = lines.map((line): LineData => {
     return {
@@ -19,5 +21,5 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  return getEditorDom(lineData, showLineNumbers)
+  return getEditorDom(lineData, showLineNumbers, cursor, showLineNumbers ? DomEventListenerFunctions.HandlePreviewTextPointerDown : undefined)
 }

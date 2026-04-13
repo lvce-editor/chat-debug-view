@@ -52,6 +52,8 @@ export const selectEventAtIndex = async (
   return {
     ...state,
     detailTabs: DetailTab.createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
+    previewTextCursorColumnIndex: null,
+    previewTextCursorRowIndex: null,
     selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,

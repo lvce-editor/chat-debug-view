@@ -7,6 +7,8 @@ export const setUseDevtoolsLayout = (state: ChatDebugViewState, checked: string 
   const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
   return {
     ...state,
+    previewTextCursorColumnIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorColumnIndex : null,
+    previewTextCursorRowIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorRowIndex : null,
     selectedEvent: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEvent : null,
     selectedEventId: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEventId : null,
     selectedEventIndex,

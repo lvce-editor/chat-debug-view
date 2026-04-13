@@ -34,6 +34,18 @@ test('hasErrorStatus should return true when success or ok is false', () => {
   ).toBe(true)
 })
 
+test('hasErrorStatus should return true when status is the string error', () => {
+  expect(
+    hasErrorStatus({
+      eventId: 1,
+      sessionId: 'session-1',
+      status: 'error',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      type: 'tool-execution',
+    }),
+  ).toBe(true)
+})
+
 test('hasErrorStatus should return true for top-level and nested status codes >= 400', () => {
   expect(
     hasErrorStatus({

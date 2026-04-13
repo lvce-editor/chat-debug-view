@@ -73,6 +73,8 @@ const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugV
   const selectedEventIndex = getPreservedSelectedEventIndex(state, nextStateWithTimelineInfo)
   return {
     ...nextStateWithTimelineInfo,
+    previewTextCursorColumnIndex: selectedEventIndex === null ? null : state.previewTextCursorColumnIndex,
+    previewTextCursorRowIndex: selectedEventIndex === null ? null : state.previewTextCursorRowIndex,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
     selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,
@@ -124,6 +126,8 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
     return {
       ...state,
+      previewTextCursorColumnIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorColumnIndex : null,
+      previewTextCursorRowIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorRowIndex : null,
       selectedEvent: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEvent : null,
       selectedEventId: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEventId : null,
       selectedEventIndex,
@@ -134,6 +138,8 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     const selectedEventIndex = parseSelectedEventIndex(value)
     return {
       ...state,
+      previewTextCursorColumnIndex: selectedEventIndex === null ? null : state.previewTextCursorColumnIndex,
+      previewTextCursorRowIndex: selectedEventIndex === null ? null : state.previewTextCursorRowIndex,
       selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
       selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
       selectedEventIndex,
@@ -163,6 +169,8 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
   if (name === InputName.CloseDetails) {
     return {
       ...state,
+      previewTextCursorColumnIndex: null,
+      previewTextCursorRowIndex: null,
       selectedEvent: null,
       selectedEventId: null,
       selectedEventIndex: null,

@@ -98,7 +98,6 @@ export const ChatDebugViewTop = 'ChatDebugViewTop'
 export const ChatDebugViewTopDevtools = 'ChatDebugViewTop--devtools'
 export const TableCell = 'TableCell'
 export const ChatDebugViewCell = TableCell
-export const ChatDebugViewColumnFixed = 'ChatDebugViewColumnFixed'
 export const ChatDebugViewCellDuration = 'ChatDebugViewCellDuration'
 export const ChatDebugViewCellStatusError = 'ChatDebugViewCellStatusError'
 export const ChatDebugViewCellType = 'ChatDebugViewCellType'

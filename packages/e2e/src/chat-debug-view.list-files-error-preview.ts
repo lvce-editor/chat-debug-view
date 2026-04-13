@@ -10,15 +10,21 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const events = [
     {
       arguments: {
-        uri: '/workspace',
+        uri: '/home/simon/Documents/fib',
       },
+      ended: '2026-04-12T12:56:05.662Z',
       name: 'list_files',
+      options: {
+        platform: 2,
+        workspaceUri: '/home/simon/Documents/fib',
+      },
       result: {
-        error: {
-          message: 'Invalid argument: uri must be an absolute URI.',
-        },
+        error: 'Invalid argument: uri must be an absolute URI.',
+        errorCode: 'E_INVALID_URI',
       },
       sessionId,
+      started: '2026-04-12T12:56:05.657Z',
+      status: 'error',
       timestamp: '2026-04-13T10:00:00.000Z',
       type: 'tool-execution',
     },
@@ -35,5 +41,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(row).toContainText('400')
   await expect(statusCell).toHaveText('400')
-  await expect(detailsBottom).toContainText('"message": "Invalid argument: uri must be an absolute URI."')
+  await expect(detailsBottom).toContainText('Invalid argument: uri must be an absolute URI.')
 }
