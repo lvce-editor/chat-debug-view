@@ -152,15 +152,15 @@ test('getTimelineNodes should not render a timeline title heading', () => {
   expect(nodes.some((node) => node.text === 'Timeline')).toBe(false)
 })
 
-test('getTimelineNodes should render the timeline summary as a heading', () => {
+test('getTimelineNodes should render the timeline summary as plain text', () => {
   const nodes = getTimelineDom(getTimelineInfo(events, '', '')) as readonly {
     readonly className?: string
-    readonly type?: number
+    readonly text?: string
   }[]
 
-  const summary = nodes.find((node) => node.className === 'ChatDebugViewTimelineSummary')
+  const summary = nodes.find((node) => node.text === 'Window 0s-10s of 10s')
 
-  expect(summary?.type).toBe(VirtualDomElements.H2)
+  expect(summary).toEqual(text('Window 0s-10s of 10s'))
 })
 
 test('getTimelineNodes should render the timeline top container', () => {

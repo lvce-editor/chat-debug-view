@@ -28,11 +28,6 @@ test('getTimelineTopDom should render top wrapper and summary text', () => {
       className: 'ChatDebugViewTimelineTop',
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewTimelineSummary',
-      type: VirtualDomElements.H2,
-    },
     text('Window 0s-10s of 10s'),
   ])
 })

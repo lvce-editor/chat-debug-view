@@ -497,13 +497,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-width: 0;
 }
 
-.ChatDebugViewTimelineSummary {
-  margin: 0;
-  color: var(--vscode-descriptionForeground, inherit);
-  font-size: 11px;
-  font-weight: 600;
-}
-
 .ChatDebugViewTimelineInteractive {
   position: relative;
   height: 54px;
