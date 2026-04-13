@@ -4,22 +4,12 @@ import { ChatDebugViewDevtoolsSplit } from '../ClassNames/ClassNames.ts'
 
 export const getSplitViewDom = (
   splitChildCount: number,
-  eventsChildCount: number,
-  eventsClassName: string,
   tableNodes: readonly VirtualDomNode[],
   sashNodes: readonly VirtualDomNode[],
   detailsNodes: readonly VirtualDomNode[],
 ): readonly VirtualDomNode[] => {
   if (splitChildCount === 1) {
-    return [
-      {
-        childCount: eventsChildCount,
-        className: eventsClassName,
-        role: 'application',
-        type: VirtualDomElements.Div,
-      },
-      ...tableNodes,
-    ]
+    return tableNodes
   }
 
   return [
@@ -27,12 +17,6 @@ export const getSplitViewDom = (
       childCount: splitChildCount,
       className: ChatDebugViewDevtoolsSplit,
       role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: eventsChildCount,
-      className: eventsClassName,
-      role: 'application',
       type: VirtualDomElements.Div,
     },
     ...tableNodes,

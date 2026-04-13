@@ -56,13 +56,20 @@ export const getDevtoolsDom = (
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
-  const eventsChildCount = events.length === 0 ? 1 : 2
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+      : getTableWrapperDom(
+          rowNodes,
+          events.length,
+          visibleTableColumns,
+          tableColumns,
+          getTableSummary(events),
+          focus,
+          getEventsClassName(hasSelectedEvent),
+          'application',
+        )
 
-  const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
@@ -75,7 +82,7 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
-    ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes),
+    ...getSplitViewDom(splitChildCount, tableNodes, sashNodes, detailsNodes),
     ...getTableSummaryDom(summary),
   ]
 }

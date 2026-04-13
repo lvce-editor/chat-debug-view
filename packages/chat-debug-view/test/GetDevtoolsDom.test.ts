@@ -169,7 +169,7 @@ test('getDevtoolsDom should expose the events container application role', () =>
     readonly role?: string
     readonly tabIndex?: number
   }[]
-  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const eventsPane = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
 
   expect(eventsPane).toEqual(
     expect.objectContaining({
@@ -352,7 +352,7 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     readonly className?: string
   }[]
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
-  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const eventsPane = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const sash = dom.find((node) => node.className === 'Sash')
 
   expect(splitPane).toBeUndefined()
