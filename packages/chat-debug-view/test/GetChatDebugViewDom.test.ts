@@ -369,7 +369,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      className: 'PanelTab PanelTabSelected',
       name: 'response',
       onClick: DomEventListenerFunctions.SelectDetailTab,
     }),

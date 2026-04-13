@@ -36,7 +36,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -67,7 +67,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     },
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, read_file'),
@@ -79,7 +79,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -124,7 +124,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('400'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -158,7 +158,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('list_files'),
@@ -170,7 +170,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     text('400'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -203,7 +203,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('request'),

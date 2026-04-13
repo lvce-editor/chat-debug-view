@@ -7,6 +7,36 @@ import {
   ChatDebugViewImagePreviewLabel,
 } from '../ClassNames/ClassNames.ts'
 
+const getImagePreviewLabelDom = (preview: AttachmentImagePreview): readonly VirtualDomNode[] => {
+  if (preview.stats === undefined) {
+    return [
+      {
+        childCount: 1,
+        className: ChatDebugViewImagePreviewLabel,
+        type: VirtualDomElements.Span,
+      },
+      text(preview.alt),
+    ]
+  }
+  return [
+    {
+      childCount: 2,
+      className: ChatDebugViewImagePreviewLabel,
+      type: VirtualDomElements.Span,
+    },
+    {
+      childCount: 1,
+      type: VirtualDomElements.Span,
+    },
+    text(preview.stats),
+    {
+      childCount: 1,
+      type: VirtualDomElements.Span,
+    },
+    text(preview.alt),
+  ]
+}
+
 export const getImagePreviewDom = (preview: AttachmentImagePreview): readonly VirtualDomNode[] => {
   return [
     {
@@ -26,11 +56,6 @@ export const getImagePreviewDom = (preview: AttachmentImagePreview): readonly Vi
       src: preview.src,
       type: VirtualDomElements.Img,
     },
-    {
-      childCount: 1,
-      className: ChatDebugViewImagePreviewLabel,
-      type: VirtualDomElements.Span,
-    },
-    text(preview.stats ?? preview.alt),
+    ...getImagePreviewLabelDom(preview),
   ]
 }

@@ -94,28 +94,28 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      className: 'PanelTab PanelTabSelected',
       name: 'response',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'preview',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'payload',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'timing',
       role: 'tab',
     }),

@@ -33,7 +33,19 @@ test('getPreviewEventNodes should render image previews using an img node', () =
   )
   expect(result).toContainEqual(
     expect.objectContaining({
+      className: 'ChatDebugViewImagePreviewLabel',
+      childCount: 2,
+      type: VirtualDomElements.Span,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
       text: '2 × 2 px · 3 B',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'diagram.png',
     }),
   )
 })
