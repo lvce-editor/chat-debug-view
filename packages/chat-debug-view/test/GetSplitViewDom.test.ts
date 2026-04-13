@@ -15,13 +15,7 @@ test('getSplitViewDom should render only the events pane when details are closed
   const sashNodes = [{ childCount: 0, className: 'Sash', type: VirtualDomElements.Button }]
   const detailsNodes = [{ childCount: 0, className: 'ChatDebugViewDetails', type: VirtualDomElements.Section }]
 
-  const result = GetSplitViewDom.getSplitViewDom(
-    1,
-    'ChatDebugViewEvents ChatDebugViewEventsFullWidth',
-    tableNodes,
-    sashNodes,
-    detailsNodes,
-  )
+  const result = GetSplitViewDom.getSplitViewDom(1, 'ChatDebugViewEvents ChatDebugViewEventsFullWidth', tableNodes, sashNodes, detailsNodes)
 
   expect(result).toEqual([
     {

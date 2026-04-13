@@ -1,9 +1,10 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
+import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
-import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
+import { type LineData } from '../GetTextNode/LineData/LineData.ts'
 
 interface MutableTokenSegment {
   className: string
@@ -69,14 +70,12 @@ export const getEventNode = (value: unknown): readonly VirtualDomNode[] => {
       }
     : value
   const lines = getJsonLines(renderedValue)
-  const lineNodes = getLineNodes(
-    lines.map((line) => {
-      const lineContentNodes = getLineContentNodes(line)
-      return {
-        childCount: lineContentNodes.length / 2,
-        nodes: lineContentNodes,
-      }
-    }),
-  )
-  return lineNodes
+  const lineData: readonly LineData[] = lines.map((line) => {
+    const lineContentNodes = getLineContentNodes(line)
+    return {
+      childCount: lineContentNodes.length / 2,
+      nodes: lineContentNodes,
+    }
+  })
+  return getEditorDom(lineData)
 }

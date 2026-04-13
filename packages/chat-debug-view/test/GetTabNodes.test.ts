@@ -17,6 +17,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onFocus?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
@@ -38,6 +39,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -51,6 +53,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -64,6 +67,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -77,6 +81,7 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,

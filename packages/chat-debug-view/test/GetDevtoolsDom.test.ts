@@ -834,13 +834,18 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEventRawText',
-      type: VirtualDomElements.P,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'first line\nsecond line',
+      text: 'first line',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'second line',
     }),
   )
 })

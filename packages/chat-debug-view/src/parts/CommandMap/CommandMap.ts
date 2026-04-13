@@ -13,7 +13,7 @@ import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
-import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
+import * as HandleDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEscape from '../HandleEscape/HandleEscape.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
 import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
@@ -108,7 +108,8 @@ export const commandMap = {
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.selectCurrent': wrapCommand(SelectCurrent.selectCurrent),
-  'ChatDebug.selectDetailTab': wrapCommand(SelectDetailTab.selectDetailTab),
+  'ChatDebug.handleDetailTabsFocus': wrapCommand(HandleDetailTab.handleDetailTabsFocus),
+  'ChatDebug.selectDetailTab': wrapCommand(HandleDetailTab.selectDetailTab),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,

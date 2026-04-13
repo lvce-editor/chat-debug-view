@@ -4,6 +4,7 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 
 export { loadEventsDependencies as loadContentDependencies } from '../LoadEvents/LoadEvents.ts'
 

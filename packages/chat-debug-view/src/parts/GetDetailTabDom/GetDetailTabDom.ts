@@ -15,6 +15,7 @@ export const getDetailTabDom = (detailTab: DetailTab): readonly VirtualDomNode[]
       name: detailTab.name,
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: AriaRoles.Tab,
       tabIndex: isSelected ? 0 : -1,
       type: VirtualDomElements.Button,

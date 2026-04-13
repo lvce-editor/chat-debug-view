@@ -52,6 +52,7 @@ test('getPreviewEventNodes should render image previews using an img node', () =
 
 test('getPreviewEventNodes should render invalid image fallback text without line numbers', () => {
   const result = getPreviewEventNodes(UiStrings.ImageCouldNotBeLoaded) as readonly {
+    readonly childCount?: number
     readonly className?: string
     readonly text?: string
     readonly type?: number
@@ -64,8 +65,16 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEventRawText',
-      type: VirtualDomElements.P,
+      childCount: 1,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      childCount: 0,
+      className: 'Gutter',
+      type: VirtualDomElements.Div,
     }),
   )
   expect(result).toContainEqual(
@@ -81,6 +90,7 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
     text: 'first line\nsecond line',
     type: 'chat-message-updated',
   }) as readonly {
+    readonly childCount?: number
     readonly className?: string
     readonly text?: string
     readonly type?: number
@@ -93,13 +103,26 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEventRawText',
-      type: VirtualDomElements.P,
+      childCount: 1,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
     }),
   )
   expect(result).toContainEqual(
     expect.objectContaining({
-      text: 'first line\nsecond line',
+      childCount: 0,
+      className: 'Gutter',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'first line',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'second line',
     }),
   )
 })
@@ -135,10 +158,32 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 0,
+      childCount: 2,
       className: 'Gutter',
       type: VirtualDomElements.Div,
     },
+    {
+      childCount: 1,
+      className: 'row',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineNumber',
+      type: VirtualDomElements.Span,
+    },
+    text('1'),
+    {
+      childCount: 1,
+      className: 'row',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineNumber',
+      type: VirtualDomElements.Span,
+    },
+    text('2'),
     {
       childCount: 2,
       className: 'EditorContent',
