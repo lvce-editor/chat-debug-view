@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.list-files-payload-tab'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-list-files-payload-tab')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -35,10 +33,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'payload', false)
 
-  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom .EditorContent')
 
   await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
-  await expect(detailsBottom).toHaveText('1{2  "uri": "file:///workspace"3}')
-  await expect(detailsBottom).not.toContainText('"name": "list_files"')
-  await expect(detailsBottom).not.toContainText('"entries"')
+  await expect(detailsBottom).toHaveText('{  "uri": "file:///workspace"}')
 }
