@@ -100,6 +100,12 @@ test('getPreviewEventNodes should wrap preview line numbers in a gutter', () => 
   )
   expect(result).toContainEqual(
     expect.objectContaining({
+      className: 'Rows',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
       className: 'ChatDebugViewEventLineNumber',
       type: VirtualDomElements.Span,
     }),

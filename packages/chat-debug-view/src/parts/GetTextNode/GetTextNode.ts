@@ -1,5 +1,13 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewEventRawText, TokenText } from '../ClassNames/ClassNames.ts'
+import {
+  ChatDebugViewEventLineNumber,
+  ChatDebugViewEventRawText,
+  ChatDebugViewEventText,
+  Gutter,
+  Row,
+  Rows,
+  TokenText,
+} from '../ClassNames/ClassNames.ts'
 import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
@@ -27,6 +35,39 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  const lineNodes = getLineNodes(lineData, true)
-  return lineNodes
+  const gutterNodes = lineData.flatMap((_, index) => {
+    return [
+      {
+        childCount: 1,
+        className: Row,
+        type: VirtualDomElements.Div,
+      },
+      {
+        childCount: 1,
+        className: ChatDebugViewEventLineNumber,
+        type: VirtualDomElements.Span,
+      },
+      text(String(index + 1)),
+    ]
+  })
+  const rowNodes = getLineNodes(lineData, false)
+  return [
+    {
+      childCount: 2,
+      className: ChatDebugViewEventText,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: lineData.length,
+      className: Gutter,
+      type: VirtualDomElements.Div,
+    },
+    ...gutterNodes,
+    {
+      childCount: lineData.length,
+      className: Rows,
+      type: VirtualDomElements.Div,
+    },
+    ...rowNodes,
+  ]
 }
