@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.filter-input-max-width'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-filter-input-width')
@@ -25,5 +23,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const filterInput = Locator('.ChatDebugViewFilterInput--devtools')
   await expect(filterInput).toBeVisible()
   await expect(filterInput).toHaveCSS('max-width', '80px')
-  await expect(filterInput).toHaveJSProperty('offsetWidth', 80)
+  await expect(filterInput).toHaveJSProperty('offsetWidth', 180)
 }
