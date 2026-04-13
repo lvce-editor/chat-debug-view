@@ -355,7 +355,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-direction: column;
   flex: none;
   align-items: flex-end;
-  padding-right: 12px;
+  padding-right: 5px;
   padding-left: 12px;
 }
 
