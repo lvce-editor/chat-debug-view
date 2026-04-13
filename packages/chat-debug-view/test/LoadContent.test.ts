@@ -1,4 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
@@ -15,6 +16,9 @@ afterEach(() => {
 })
 
 test('loadContent should return failed-to-load state when listing events returns an error', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': () => false,
+  })
   const error = new Error('failed to load events')
   const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
     error,
@@ -42,10 +46,14 @@ test('loadContent should return failed-to-load state when listing events returns
       tableColumns,
     }),
   )
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
 })
 
 test('loadContent should restore the selected event preview from selectedEventId', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': () => true,
+  })
   const events = [
     { eventId: 1, type: 'request' },
     { eventId: 2, type: 'response' },
@@ -85,12 +93,16 @@ test('loadContent should restore the selected event preview from selectedEventId
       tableColumns,
     }),
   )
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
 })
 
 test('loadContent should restore selected event and detail tab from savedState', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': () => true,
+  })
   const events = [
     { eventId: 1, type: 'request' },
     { eventId: 2, type: 'response' },
@@ -134,6 +146,7 @@ test('loadContent should restore selected event and detail tab from savedState',
       tableColumns,
     }),
   )
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
   expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')

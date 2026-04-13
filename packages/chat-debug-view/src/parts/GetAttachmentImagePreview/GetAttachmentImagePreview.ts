@@ -92,7 +92,7 @@ const getImageStats = async (blob: Blob, mimeType: string | undefined): Promise<
 }
 
 export const getAttachmentImagePreview = async (event: ChatViewEvent): Promise<AttachmentImagePreview | string | undefined> => {
-  if (event.type !== 'chat-attachment-added') {
+  if (event.type !== 'chat-attachment-added' && event.type !== 'chat-attachment-removed') {
     return undefined
   }
   const blob = getBlob(event)
