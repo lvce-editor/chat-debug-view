@@ -156,7 +156,7 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
-  expect(resizers?.childCount).toBe(3)
+  expect(resizers?.childCount).toBe(2)
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 

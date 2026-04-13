@@ -288,7 +288,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 3,
+      childCount: 2,
       className: 'Resizers',
       type: VirtualDomElements.Div,
     },

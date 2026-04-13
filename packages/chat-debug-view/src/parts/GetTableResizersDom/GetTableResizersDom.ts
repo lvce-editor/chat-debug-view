@@ -33,7 +33,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   ])
   return [
     {
-      childCount: resizerCount + 1,
+      childCount: resizerCount,
       className: Resizers,
       type: VirtualDomElements.Div,
     },
