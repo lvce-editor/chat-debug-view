@@ -428,7 +428,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
       className: 'TableCell',
     }),
   )
-  expect(dom).not.toContainEqual(
+  expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'TableCell ChatDebugViewCellDuration',
     }),

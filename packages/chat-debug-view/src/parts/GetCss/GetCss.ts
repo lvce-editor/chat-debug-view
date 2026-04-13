@@ -145,6 +145,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   line-height: var(--ChatDebugViewTableRowHeight);
 }
 
+.ChatDebugViewCellDuration {
+  text-align: right;
+}
+
 .TableCol {
   width: auto;
 }

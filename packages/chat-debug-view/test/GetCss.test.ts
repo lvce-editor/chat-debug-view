@@ -132,6 +132,8 @@ test('getCss should assign widths to visible col elements instead of individual 
   expect(css).toContain('.TableColOne')
   expect(css).toContain('--ChatDebugViewTableColOneWidth: 764px;')
   expect(css).toContain('width: var(--ChatDebugViewTableColOneWidth);')
+  expect(css).toContain('.ChatDebugViewCellDuration {')
+  expect(css).toContain('text-align: right;')
   expect(css).not.toContain('.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed')
   expect(css).not.toContain('.ChatDebugViewCellType.ChatDebugViewColumnFixed')
   expect(css).not.toContain('.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed')
