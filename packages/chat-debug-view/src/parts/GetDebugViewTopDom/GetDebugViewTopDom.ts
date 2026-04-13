@@ -1,33 +1,10 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import {
-  ChatDebugViewFilterInput,
-  ChatDebugViewFilterInputDevtools,
-  ChatDebugViewTop,
-  ChatDebugViewTopDevtools,
-  InputBox,
-} from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewTop, ChatDebugViewTopDevtools } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as GetFilterInputDom from '../GetFilterInputDom/GetFilterInputDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import * as GetRefreshButtonDom from '../GetRefreshButtonDom/GetRefreshButtonDom.ts'
-import * as InputName from '../InputName/InputName.ts'
-
-const getFilterInputDom = (filterValue: string, useDevtoolsLayout: boolean): VirtualDomNode => {
-  return {
-    autocomplete: 'off',
-    childCount: 0,
-    className: useDevtoolsLayout
-      ? mergeClassNames(InputBox, ChatDebugViewFilterInput, ChatDebugViewFilterInputDevtools)
-      : mergeClassNames(InputBox, ChatDebugViewFilterInput),
-    inputType: 'search',
-    name: InputName.Filter,
-    onInput: DomEventListenerFunctions.HandleFilterInput,
-    placeholder: ChatDebugStrings.filterEvents(),
-    type: VirtualDomElements.Input,
-    value: filterValue,
-  }
-}
 
 export const getDebugViewTopDom = (
   filterValue: string,
@@ -44,7 +21,7 @@ export const getDebugViewTopDom = (
         onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
         type: VirtualDomElements.Search,
       },
-      getFilterInputDom(filterValue, true),
+      GetFilterInputDom.getFilterInputDom(filterValue, true),
       ...quickFilterNodes,
       ...refreshButtonDom,
     ]
@@ -57,7 +34,7 @@ export const getDebugViewTopDom = (
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
-    getFilterInputDom(filterValue, false),
+    GetFilterInputDom.getFilterInputDom(filterValue, false),
     ...refreshButtonDom,
   ]
 }
