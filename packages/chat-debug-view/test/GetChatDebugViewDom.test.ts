@@ -498,13 +498,24 @@ test('getChatDebugViewDom should render table summary status in devtools layout'
   expect(summaryIndex).toBeGreaterThan(tableWrapperWrapperIndex)
   expect(dom).toContainEqual(
     expect.objectContaining({
+      'aria-label': '2 events, 1s from start to finish',
       className: 'TableSummary',
       role: 'status',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '2 events, 1s from start to finish',
+      className: 'TableSummaryItem',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '2 events',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '1s from start to finish',
     }),
   )
 })

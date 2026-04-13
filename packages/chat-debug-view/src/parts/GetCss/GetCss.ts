@@ -130,6 +130,8 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .TableSummary {
+  display: flex;
+  align-items: center;
   flex: none;
   min-height: 24px;
   width: min(100%, var(--ChatDebugViewTableWidth));
@@ -139,6 +141,28 @@ export const getCss = (state: ChatDebugViewState): string => {
   opacity: 0.86;
   font-size: 12px;
   line-height: 1.4;
+}
+
+.TableSummaryItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.TableSummaryItem + .TableSummaryItem {
+  margin-left: 8px;
+  padding-left: 8px;
+}
+
+.TableSummaryItem + .TableSummaryItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 10px;
+  transform: translateY(-50%);
+  background: color-mix(in srgb, var(--vscode-foreground, rgba(255, 255, 255, 0.82)) 24%, transparent);
 }
 
 .TableCell {
@@ -571,12 +595,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.ChatDebugViewTimelineTop {
-  display: flex;
-  align-items: center;
-  min-width: 0;
 }
 
 .ChatDebugViewTimelineInteractive {
