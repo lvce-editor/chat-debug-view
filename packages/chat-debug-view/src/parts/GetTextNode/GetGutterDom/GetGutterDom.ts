@@ -1,6 +1,7 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../LineData/LineData.ts'
 import { ChatDebugViewEventLineNumber, Gutter } from '../../ClassNames/ClassNames.ts'
-import { type LineData } from '../LineData/LineData.ts'
 
 const getGutterLineNumberDom = (gutterLineNumber: string): readonly VirtualDomNode[] => {
   return [

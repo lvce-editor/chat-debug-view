@@ -1,4 +1,6 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../GetTextNode/LineData/LineData.ts'
 import {
   ChatDebugViewEventLineNumber,
   EditorContainer,
@@ -12,7 +14,6 @@ import {
   EditorViewlet,
   Gutter,
 } from '../ClassNames/ClassNames.ts'
-import { type LineData } from '../GetTextNode/LineData/LineData.ts'
 
 const getEditorSelectionDom = (): readonly VirtualDomNode[] => {
   return [

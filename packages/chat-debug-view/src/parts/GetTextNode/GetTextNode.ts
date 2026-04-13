@@ -1,7 +1,8 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from './LineData/LineData.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
-import { type LineData } from './LineData/LineData.ts'
 
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
   const lines = value.split('\n')

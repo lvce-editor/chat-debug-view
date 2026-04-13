@@ -1,7 +1,8 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../LineData/LineData.ts'
 import { Rows } from '../../ClassNames/ClassNames.ts'
 import { getLineNodes } from '../../GetLineNodes/GetLineNodes.ts'
-import { type LineData } from '../LineData/LineData.ts'
 
 export const getLinesDom = (lineData: readonly LineData[]): readonly VirtualDomNode[] => {
   const rowNodes = getLineNodes(lineData, false)

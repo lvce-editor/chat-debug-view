@@ -1,10 +1,12 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { LineData } from '../GetTextNode/LineData/LineData.ts'
+import type { TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
-import { type LineData } from '../GetTextNode/LineData/LineData.ts'
-import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
+import { forEachTokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 
 interface MutableTokenSegment {
   className: string
