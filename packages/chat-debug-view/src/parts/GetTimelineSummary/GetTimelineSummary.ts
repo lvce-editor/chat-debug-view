@@ -3,6 +3,9 @@ import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
 
 export const getTimelineSummary = (timelineInfo: TimelineInfo): string => {
+  if (timelineInfo.durationSeconds === 0) {
+    return ''
+  }
   if (timelineInfo.hasSelection && timelineInfo.startSeconds !== null && timelineInfo.endSeconds !== null) {
     return ChatDebugStrings.windowSummary(
       formatTimelineSeconds(timelineInfo.startSeconds),

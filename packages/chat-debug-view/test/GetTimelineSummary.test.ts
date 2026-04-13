@@ -39,3 +39,16 @@ test('getTimelineSummary should describe full window when selection is empty', (
 
   expect(getTimelineSummary(getTimelineInfo(events, '', ''))).toBe('Window 0s-10s of 10s')
 })
+
+test('getTimelineSummary should omit summary for zero-duration timeline', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+
+  expect(getTimelineSummary(getTimelineInfo(events, '', ''))).toBe('')
+})

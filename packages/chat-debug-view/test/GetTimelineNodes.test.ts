@@ -163,6 +163,27 @@ test('getTimelineNodes should render the timeline summary as plain text', () => 
   expect(summary).toEqual(text('Window 0s-10s of 10s'))
 })
 
+test('getTimelineNodes should omit the timeline summary for zero-duration timeline', () => {
+  const zeroDurationEvents = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+  ]
+  const nodes = getTimelineDom(getTimelineInfo(zeroDurationEvents, '', '')) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly text?: string
+  }[]
+
+  const timeline = nodes.find((node) => node.className === 'ChatDebugViewTimeline')
+
+  expect(timeline?.childCount).toBe(1)
+  expect(nodes.some((node) => node.text?.startsWith('Window '))).toBe(false)
+})
+
 test('getTimelineNodes should render drag preview markers while selecting', () => {
   const nodes = getTimelineDom(getTimelineInfo(events, '1', '4')) as readonly {
     readonly className?: string
