@@ -10,7 +10,7 @@ export const getTextNode = (value: string, showLineNumbers = true, cursor: Previ
   const lines = value.split('\n')
   const lineData: readonly LineData[] = lines.map((line): LineData => {
     return {
-      childCount: 2,
+      childCount: 1,
       nodes: [
         {
           childCount: 1,
