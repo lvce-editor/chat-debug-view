@@ -11,7 +11,6 @@ import {
   EditorSelections,
   EditorViewlet,
   Gutter,
-  Row,
 } from '../ClassNames/ClassNames.ts'
 import { type LineData } from '../GetTextNode/LineData/LineData.ts'
 
@@ -35,11 +34,6 @@ const getGutterDom = (lineData: readonly LineData[], showLineNumbers: boolean): 
   const gutterNodes = showLineNumbers
     ? lineData.flatMap((_, index) => {
         return [
-          {
-            childCount: 1,
-            className: Row,
-            type: VirtualDomElements.Div,
-          },
           {
             childCount: 1,
             className: ChatDebugViewEventLineNumber,

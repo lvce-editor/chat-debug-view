@@ -33,31 +33,16 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     {
       childCount: 1,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewEventLineNumber',
       type: VirtualDomElements.Span,
     },
     text('1'),
     {
       childCount: 1,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewEventLineNumber',
       type: VirtualDomElements.Span,
     },
     text('2'),
-    {
-      childCount: 1,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineNumber',

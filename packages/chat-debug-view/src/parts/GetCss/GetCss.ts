@@ -356,7 +356,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   padding-right: 12px;
 }
 
-.Gutter > .row {
+.Gutter > .ChatDebugViewEventLineNumber {
   display: inline-flex;
   justify-content: flex-end;
 }

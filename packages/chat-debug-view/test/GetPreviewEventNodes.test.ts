@@ -164,20 +164,10 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
     },
     {
       childCount: 1,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
       className: 'ChatDebugViewEventLineNumber',
       type: VirtualDomElements.Span,
     },
     text('1'),
-    {
-      childCount: 1,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineNumber',
