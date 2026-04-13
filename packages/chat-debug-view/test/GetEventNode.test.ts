@@ -28,7 +28,7 @@ test('getEventNode should render json details as numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -50,7 +50,7 @@ test('getEventNode should render json details as numbered rows', () => {
     {
       childCount: 4,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -90,7 +90,7 @@ test('getEventNode should render json details as numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -131,7 +131,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -153,7 +153,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 3,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -187,7 +187,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 5,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -233,7 +233,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 4,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -273,7 +273,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -295,7 +295,7 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,

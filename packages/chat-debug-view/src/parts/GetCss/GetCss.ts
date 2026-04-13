@@ -265,6 +265,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewEventLineContent {
   flex: 1;
   min-width: 0;
+  margin: 0;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   word-break: break-word;

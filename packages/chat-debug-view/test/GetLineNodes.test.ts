@@ -38,7 +38,7 @@ test('getLineNodeDom should render numbered row', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -80,7 +80,7 @@ test('getLineNodeDom should render unnumbered row with one child', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -137,7 +137,7 @@ test('getLineNodes should render numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -159,7 +159,7 @@ test('getLineNodes should render numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -216,7 +216,7 @@ test('getLineNodes should preserve content child counts', () => {
     {
       childCount: 3,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,

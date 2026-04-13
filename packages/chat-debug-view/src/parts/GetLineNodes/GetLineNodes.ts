@@ -26,7 +26,7 @@ export const getLineNodeDom = (line: LineNodeData, index: number, showLineNumber
     {
       childCount: line.childCount,
       className: ChatDebugViewEventLineContent,
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     ...line.nodes,
   ]
