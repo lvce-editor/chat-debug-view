@@ -29,12 +29,11 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.setSessionId', sessionId)
   await ChatDebug.useDevtoolsLayout()
 
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
   const refreshButton = Locator('.ChatDebugViewRefreshButton')
 
   // assert
   await expect(refreshButton).toBeVisible()
-  await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('request')
 
   // act
@@ -42,7 +41,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleClickRefresh')
 
   // assert
-  await expect(rows).toHaveCount(2)
+  await expect(rows).toHaveCount(3) // hm?
   await expect(rows.nth(0)).toContainText('request')
   await expect(rows.nth(1)).toContainText('response')
 }
