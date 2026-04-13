@@ -6,7 +6,7 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetChatDebugViewDom from '../src/parts/GetChatDebugViewDom/GetChatDebugViewDom.ts'
 
-const eventsPaneIndex = dom.findIndex((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+const categoryFilters = EventCategoryFilter.createCategoryFilters()
 
 test('getChatDebugViewDom should return debug error dom when error message is set', () => {
   const dom = GetChatDebugViewDom.getChatDebugViewDom(
@@ -279,7 +279,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
-  const eventsPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const eventsPaneIndex = dom.findIndex((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
   expect(filterRowIndex).toBeGreaterThan(-1)
@@ -366,27 +366,27 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
   const detailsPanel = dom.find((node) => node.className === 'ChatDebugViewDetails')
   const detailsTopIndex = dom.findIndex((node) => node.className === 'ChatDebugViewDetailsTop')
 
-  expect(detailsPanel).toBeDefined()
-  expect(detailsTopIndex).toBeGreaterThan(-1)
-  expect(dom[detailsTopIndex + 1]).toEqual(
-    expect.objectContaining({
-      className: 'ChatDebugViewDetailsClose',
-      name: 'closeDetails',
-    }),
-  )
-  expect(dom[detailsTopIndex + 3]).toEqual(
-    expect.objectContaining({
-      'aria-label': 'Detail sections',
-      className: 'ChatDebugViewDetailsTabs',
-    }),
-  )
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      name: 'response',
-      onClick: DomEventListenerFunctions.SelectDetailTab,
-    }),
-  )
+    expect(detailsPanel).toBeDefined()
+    expect(detailsTopIndex).toBeGreaterThan(-1)
+    expect(dom[detailsTopIndex + 1]).toEqual(
+      expect.objectContaining({
+        className: 'ChatDebugViewDetailsClose',
+        name: 'closeDetails',
+      }),
+    )
+    expect(dom[detailsTopIndex + 3]).toEqual(
+      expect.objectContaining({
+        'aria-label': 'Detail sections',
+        className: 'ChatDebugViewDetailsTabs',
+      }),
+    )
+    expect(dom).toContainEqual(
+      expect.objectContaining({
+        className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+        name: 'response',
+        onClick: DomEventListenerFunctions.SelectDetailTab,
+      }),
+    )
 })
 
 test('getChatDebugViewDom should not stringify unselected events in devtools layout', () => {

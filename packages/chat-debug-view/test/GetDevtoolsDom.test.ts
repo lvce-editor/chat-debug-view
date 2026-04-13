@@ -290,10 +290,12 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
     '',
     '',
     undefined,
-    false,
-    '',
-    '',
-    DetailTab.createDetailTabs('preview'),
+        const header = dom.find((node) => node.className === 'TableHead')
+        const body = dom.find((node) => node.className === 'TableBody')
+        const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
+        const resizers = dom.find((node) => node.className === 'Resizers')
+        const emptyState = dom.find((node) => node.className === 'ChatDebugViewEmpty')
+        const tableWrapper = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly alt?: string
