@@ -136,6 +136,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   max-width: 100%;
   padding: 6px 4px 0;
   color: var(--vscode-descriptionForeground, inherit);
+  opacity: 0.86;
   font-size: 12px;
   line-height: 1.4;
 }

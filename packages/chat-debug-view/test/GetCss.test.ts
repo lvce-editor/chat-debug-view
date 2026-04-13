@@ -156,6 +156,17 @@ test('getCss should keep devtools table rows at a fixed height instead of stretc
   expect(css).toContain('line-height: var(--ChatDebugViewTableRowHeight);')
 })
 
+test('getCss should slightly dim the table summary text', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.TableSummary {')
+  expect(css).toContain('opacity: 0.86;')
+})
+
 test('getCss should size the table wrapper to the full main width when details are not visible', () => {
   const css = getCss({
     ...createDefaultState(),
