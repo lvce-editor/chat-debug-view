@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-headings-case'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-headings-case')
@@ -23,12 +21,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
 
   // assert
-  const headerCells = Locator('.ChatDebugViewHeaderCell')
+  const headerCells = Locator('th')
   await expect(headerCells).toHaveCount(3)
   await expect(headerCells.nth(0)).toHaveText('Type')
   await expect(headerCells.nth(0)).toHaveCSS('text-transform', 'none')
-  await expect(headerCells.nth(1)).toHaveText('Duration')
+  await expect(headerCells.nth(1)).toHaveText('Status')
   await expect(headerCells.nth(1)).toHaveCSS('text-transform', 'none')
-  await expect(headerCells.nth(2)).toHaveText('Status')
+  await expect(headerCells.nth(2)).toHaveText('Time')
   await expect(headerCells.nth(2)).toHaveCSS('text-transform', 'none')
 }
