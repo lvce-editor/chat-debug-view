@@ -10,6 +10,11 @@ import {
 } from '../ClassNames/ClassNames.ts'
 import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
 
+type LineData = {
+  readonly childCount: number
+  readonly nodes: readonly VirtualDomNode[]
+}
+
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
   if (!showLineNumbers) {
     return [
@@ -22,7 +27,7 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
     ]
   }
   const lines = value.split('\n')
-  const lineData = lines.map((line) => {
+  const lineData: readonly LineData[] = lines.map((line): LineData => {
     return {
       childCount: 1,
       nodes: [
