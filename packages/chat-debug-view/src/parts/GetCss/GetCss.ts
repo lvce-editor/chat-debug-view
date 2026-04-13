@@ -219,7 +219,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 
 .ChatDebugViewDetails {
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   overflow: hidden;
   min-width: 0;
@@ -383,6 +382,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: 100%;
   max-width: 100%;
   min-height: 0;
+  flex: 1;
 }
 
 .ChatDebugViewImagePreviewImageWrapper {
@@ -409,7 +409,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewImagePreviewLabel {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 2px;
   width: auto;

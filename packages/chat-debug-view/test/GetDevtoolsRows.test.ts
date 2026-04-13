@@ -24,7 +24,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     },
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
@@ -112,7 +112,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, getWorkspaceUri'),
@@ -158,7 +158,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     },
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('list_files'),
@@ -170,7 +170,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     text('400'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
