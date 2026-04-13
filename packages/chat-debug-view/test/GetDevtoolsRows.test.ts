@@ -36,7 +36,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -67,7 +67,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, read_file'),
