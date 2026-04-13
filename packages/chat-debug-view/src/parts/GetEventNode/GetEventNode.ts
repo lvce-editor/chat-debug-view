@@ -3,8 +3,8 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
 import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
-import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 import { type LineData } from '../GetTextNode/LineData/LineData.ts'
+import { forEachTokenSegment, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 
 interface MutableTokenSegment {
   className: string

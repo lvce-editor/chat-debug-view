@@ -13,8 +13,8 @@ import {
 import { getDurationText } from '../GetDurationText/GetDurationText.ts'
 
 interface TimingPreviewSegment {
-  readonly label: string
   readonly endPercent: number
+  readonly label: string
   readonly startPercent: number
 }
 

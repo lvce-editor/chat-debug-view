@@ -767,5 +767,16 @@ export const getCss = (state: ChatDebugViewState): string => {
 .TokenString {
   white-space: nowrap;
 }
+
+.ChatDebug {
+    --EditorFontSize: 15px;
+    --EditorFontWeight: 400;
+    --EditorFontFamily: 'Fira Code';
+    --EditorLineHeight: 20px;
+    --EditorLetterSpacing: 0.5px;
+    --EditorFontFeatureSettings: "liga" 1, "calt" 1;
+    --EditorTabSize: 2;
+
+}
 `
 }
