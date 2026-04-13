@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.empty-filter-results'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-empty-filter-results')
@@ -25,6 +23,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
-  await expect(Locator('.ChatDebugViewEmpty')).toContainText('no events found matching missing')
+  await expect(Locator('.ChatDebugViewEmpty')).toHaveText('No events found matching missing')
   await expect(Locator('.TableRow')).toHaveCount(0)
 }
