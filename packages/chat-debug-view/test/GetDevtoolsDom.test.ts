@@ -138,13 +138,16 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'Table')
+  const tableWrapperWrapper = dom.find((node) => node.className === 'TableWrapperWrapper')
   const tableWrapper = dom.find((node) => node.className === 'TableWrapper ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const header = dom.find((node) => node.className === 'TableHead')
   const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
   const resizers = dom.find((node) => node.className === 'Resizers')
 
+  expect(tableWrapperWrapper).toBeDefined()
   expect(tableWrapper).toBeDefined()
+  expect(tableWrapperWrapper?.childCount).toBe(2)
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(3)
   expect(tableWrapper?.childCount).toBe(2)
@@ -408,7 +411,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
   expect(tableBody?.childCount).toBe(2)
 })
 
-test('getDevtoolsDom should apply duration and status column classes to rows only', () => {
+test('getDevtoolsDom should apply duration and status column classes to row cells', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',

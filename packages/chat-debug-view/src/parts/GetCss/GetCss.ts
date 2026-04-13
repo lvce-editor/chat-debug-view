@@ -102,6 +102,16 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-direction: column;
 }
 
+.TableWrapperWrapper {
+  position: relative;
+  width: min(100%, var(--ChatDebugViewTableWidth));
+  max-width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .FocusOutline {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
