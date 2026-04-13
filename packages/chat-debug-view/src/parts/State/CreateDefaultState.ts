@@ -3,7 +3,7 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
-import { defaultVisibleTableColumns } from '../TableColumn/TableColumn.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
@@ -34,12 +34,13 @@ export const createDefaultState = (): ChatDebugViewState => {
     showResponsePartEvents: false,
     sortColumn: '',
     sortDescending: false,
-    tableColumns: [],
+    tableColumns: TableColumn.createTableColumns(),
     tableColumnWidths: defaultTableColumnWidths,
     tableResizerDownId: 0,
     tableWidth: defaultTableWidth,
     timelineEndSeconds: '',
     timelineEvents: [],
+    timelineFilterDescription: '',
     timelineHoverPercent: null,
     timelineHoverSeconds: '',
     timelineInfo: emptyTimelineInfo,
@@ -50,7 +51,6 @@ export const createDefaultState = (): ChatDebugViewState => {
     uid: 0,
     uri: '',
     useDevtoolsLayout: true,
-    visibleTableColumns: defaultVisibleTableColumns,
     width: 0,
     x: 0,
     y: 0,

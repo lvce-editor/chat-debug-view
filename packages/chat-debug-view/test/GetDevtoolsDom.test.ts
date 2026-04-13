@@ -43,8 +43,8 @@ test('getDevtoolsDom should render selected details panel and close input', () =
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
     readonly name?: string
@@ -293,8 +293,8 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly alt?: string
     readonly className?: string
@@ -351,9 +351,11 @@ test('getDevtoolsDom should make the events pane full width when details are clo
   const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
+  const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
   const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
   const sash = dom.find((node) => node.className === 'Sash')
 
+  expect(splitPane).toBeUndefined()
   expect(eventsPane).toBeDefined()
   expect(sash).toBeUndefined()
 })
@@ -487,10 +489,20 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
       type: 'request',
     },
   ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '', 'No events have been found', false, '', '', [
-    TableColumn.Type,
-    TableColumn.Status,
-  ]) as readonly {
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    null,
+    null,
+    events,
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    DetailTab.createDetailTabs('preview'),
+    [TableColumn.Type, TableColumn.Status],
+  ) as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -673,8 +685,8 @@ test('getDevtoolsDom should simplify preview json to name, arguments and result 
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
   }[]
@@ -741,8 +753,8 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
   }[]
@@ -796,8 +808,8 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
     readonly text?: string
@@ -851,8 +863,8 @@ test('getDevtoolsDom should render invalid image fallback preview text without n
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('preview'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
     readonly text?: string
@@ -899,8 +911,8 @@ test('getDevtoolsDom should render simplified tool json in the payload tab', () 
     false,
     '',
     '',
-    TableColumn.defaultVisibleTableColumns,
     DetailTab.createDetailTabs('payload'),
+    TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
   }[]

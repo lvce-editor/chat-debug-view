@@ -3,7 +3,9 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetTableDom from '../src/parts/GetTableDom/GetTableDom.ts'
 import * as GetTableHeaderDom from '../src/parts/GetTableHeaderDom/GetTableHeaderDom.ts'
+import * as GetTableWrapperDom from '../src/parts/GetTableWrapperDom/GetTableWrapperDom.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+import * as WhenExpression from '../src/parts/WhenExpression/WhenExpression.ts'
 
 const handleTableHeaderClick = (DomEventListenerFunctions as Record<string, number>).HandleTableHeaderClick
 
@@ -109,6 +111,99 @@ test('getTableDom should render header and body nodes for the table', () => {
     readonly scope?: string
     readonly text?: string
     readonly tabIndex?: number
+    readonly type?: number
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 3,
+      className: 'Table',
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
+      type: VirtualDomElements.Table,
+    },
+    {
+      childCount: 3,
+      className: 'ColGroup',
+      type: VirtualDomElements.ColGroup,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColZero',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColOne',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 0,
+      className: 'TableCol TableColTwo',
+      type: VirtualDomElements.Col,
+    },
+    {
+      childCount: 1,
+      className: 'TableHead',
+      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
+      type: VirtualDomElements.THead,
+    },
+    {
+      childCount: 3,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Type,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Status,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Status'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Duration,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Time'),
+    {
+      childCount: 1,
+      className: 'TableBody',
+      onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
+      type: VirtualDomElements.TBody,
+    },
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ])
+})
+
+test('getTableWrapperDom should render the wrapper node', () => {
+  const rowNodes = [
+    {
+      childCount: 0,
+      className: 'TableRow',
+      type: VirtualDomElements.Tr,
+    },
+  ]
+  const dom = GetTableWrapperDom.getTableWrapperDom(rowNodes as readonly any[], 1) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly onFocus?: number
     readonly type?: number
   }[]
 
@@ -242,7 +337,7 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
   }[]
   const resizers = dom.find((node) => node.className === 'Resizers')
 
-  expect(resizers?.childCount).toBe(3)
+  expect(resizers).toBeUndefined()
 })
 
 test('getTableDom should omit hidden columns from the colgroup', () => {
@@ -288,7 +383,7 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
   )
 })
 
-test('getTableDom should render summary status below the table when provided', () => {
+test('getTableWrapperDom should add a focus outline when focused', () => {
   const rowNodes = [
     {
       childCount: 0,
@@ -296,37 +391,35 @@ test('getTableDom should render summary status below the table when provided', (
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1, undefined, undefined, '1 event, 0ms from start to finish') as readonly {
+  const dom = GetTableWrapperDom.getTableWrapperDom(
+    rowNodes as readonly any[],
+    1,
+    undefined,
+    undefined,
+    '',
+    WhenExpression.FocusChatDebugTable,
+  ) as readonly {
     readonly childCount?: number
     readonly className?: string
-    readonly role?: string
-    readonly text?: string
     readonly type?: number
   }[]
-  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
-  const summaryIndex = dom.findIndex((node) => node.className === 'TableSummary')
-  const tableWrapper = dom[tableWrapperIndex]
+  const wrapper = dom.find((node) => node.className === 'TableWrapper FocusOutline')
+  const table = dom.find((node) => node.className === 'Table')
 
-  expect(tableWrapper).toEqual(
+  expect(wrapper).toEqual(
     expect.objectContaining({
       childCount: 2,
-      className: 'TableWrapper',
+      className: 'TableWrapper FocusOutline',
       type: VirtualDomElements.Div,
     }),
   )
-  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
-  expect(dom).toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({
-        childCount: 1,
-        className: 'TableSummary',
-        role: 'status',
-        type: VirtualDomElements.Div,
-      }),
-      expect.objectContaining({
-        text: '1 event, 0ms from start to finish',
-        type: 12,
-      }),
-    ]),
+  expect(table).toEqual(
+    expect.objectContaining({
+      childCount: 3,
+      className: 'Table',
+      onFocus: DomEventListenerFunctions.HandleTableFocus,
+      tabIndex: 0,
+      type: VirtualDomElements.Table,
+    }),
   )
 })

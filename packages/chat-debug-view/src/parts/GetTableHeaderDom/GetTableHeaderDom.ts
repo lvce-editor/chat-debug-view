@@ -8,7 +8,6 @@ export const getTableHeaderDom = (
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
-  const headerCellNodes = getHeaderCellNodes(visibleTableColumns, tableColumns)
   return [
     {
       childCount: 1,
@@ -21,6 +20,6 @@ export const getTableHeaderDom = (
       className: TableRow,
       type: VirtualDomElements.Tr,
     },
-    ...headerCellNodes,
+    ...getHeaderCellNodes(visibleTableColumns, tableColumns),
   ]
 }

@@ -2,6 +2,7 @@ import type { SavedState } from '../SavedState/SavedState.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const saveState = (state: ChatDebugViewState): SavedState => {
   const {
@@ -10,10 +11,10 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     filterValue,
     selectedEventId,
     sessionId,
+    tableColumns,
     tableColumnWidths,
     timelineEndSeconds,
     timelineStartSeconds,
-    visibleTableColumns,
   } = state
   return {
     eventCategoryFilter: EventCategoryFilter.getSelectedEventCategoryFilter(categoryFilters),
@@ -25,6 +26,6 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     tableColumnWidths,
     timelineEndSeconds,
     timelineStartSeconds,
-    visibleTableColumns,
+    visibleTableColumns: TableColumn.getVisibleTableColumns(tableColumns),
   }
 }

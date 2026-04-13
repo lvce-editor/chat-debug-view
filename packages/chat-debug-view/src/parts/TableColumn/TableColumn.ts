@@ -9,6 +9,7 @@ export const tableColumnNames = [Type, Status, Duration] as const
 export type TableColumnName = (typeof tableColumnNames)[number]
 
 export interface TableColumn {
+  readonly isVisible: boolean
   readonly label: string
   readonly name: TableColumnName
 }
@@ -16,14 +17,17 @@ export interface TableColumn {
 export const createTableColumns = (): readonly TableColumn[] => {
   return [
     {
+      isVisible: true,
       label: ChatDebugStrings.type(),
       name: Type,
     },
     {
+      isVisible: true,
       label: ChatDebugStrings.status(),
       name: Status,
     },
     {
+      isVisible: true,
       label: ChatDebugStrings.duration(),
       name: Duration,
     },
@@ -36,6 +40,21 @@ export const isTableColumn = (value: string): value is TableColumnName => {
   return tableColumnNames.includes(value as TableColumnName)
 }
 
+export const getVisibleTableColumns = (tableColumns: readonly TableColumn[]): readonly TableColumnName[] => {
+  return tableColumns.filter((column) => column.isVisible).map((column) => column.name)
+}
+
+export const getTableColumnsWithVisibility = (
+  tableColumns: readonly TableColumn[],
+  visibleTableColumns: readonly string[],
+): readonly TableColumn[] => {
+  const visibleColumns = new Set(visibleTableColumns.filter(isTableColumn))
+  return tableColumns.map((column) => ({
+    ...column,
+    isVisible: visibleColumns.has(column.name),
+  }))
+}
+
 export const getOrderedVisibleTableColumns = (
   values: readonly string[],
   tableColumns: readonly TableColumn[] = createTableColumns(),
@@ -44,8 +63,8 @@ export const getOrderedVisibleTableColumns = (
   return tableColumns.map((column) => column.name).filter((column) => visibleColumns.has(column))
 }
 
-export const isVisibleTableColumn = (visibleTableColumns: readonly string[], column: TableColumnName): boolean => {
-  return visibleTableColumns.includes(column)
+export const isVisibleTableColumn = (tableColumns: readonly TableColumn[], column: TableColumnName): boolean => {
+  return tableColumns.some((tableColumn) => tableColumn.name === column && tableColumn.isVisible)
 }
 
 export const getTableColumnLabel = (tableColumns: readonly TableColumn[], name: TableColumnName): string => {

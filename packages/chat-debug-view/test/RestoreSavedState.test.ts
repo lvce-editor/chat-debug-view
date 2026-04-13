@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { restoreSavedState } from '../src/parts/RestoreSavedState/RestoreSavedState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('restoreSavedState should restore multiple selected event category filters', () => {
   const state = createDefaultState()
@@ -23,7 +24,7 @@ test('restoreSavedState should restore visible table columns', () => {
     visibleTableColumns: ['status', 'type'],
   })
 
-  expect(result.visibleTableColumns).toEqual(['type', 'status'])
+  expect(TableColumn.getVisibleTableColumns(result.tableColumns)).toEqual(['type', 'status'])
 })
 
 test('restoreSavedState should ignore invalid visible table columns', () => {
@@ -33,7 +34,7 @@ test('restoreSavedState should ignore invalid visible table columns', () => {
     visibleTableColumns: ['type', 'unknown'],
   })
 
-  expect(result.visibleTableColumns).toEqual(['type'])
+  expect(TableColumn.getVisibleTableColumns(result.tableColumns)).toEqual(['type'])
 })
 
 test('restoreSavedState should restore table column widths', () => {

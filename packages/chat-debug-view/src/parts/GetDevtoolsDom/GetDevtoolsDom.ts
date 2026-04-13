@@ -1,8 +1,9 @@
-import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
+import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -15,8 +16,9 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
-import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
+import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
+import { getTableWrapperDom } from '../GetTableWrapperDom/GetTableWrapperDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -32,8 +34,8 @@ export const getDevtoolsDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
-  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,
@@ -58,10 +60,22 @@ export const getDevtoolsDom = (
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+      : getTableWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  return [...timelineNodes, ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes)]
+  const rootChildCount = 4
+  const summary = getTableSummary(events)
+  return [
+    {
+      childCount: rootChildCount,
+      className: mergeClassNames(ChatDebugView, ChatDebugViewDevtools),
+      type: VirtualDomElements.Div,
+    },
+    ...timelineNodes,
+    ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes),
+    ...getTableSummaryDom(summary),
+  ]
 }

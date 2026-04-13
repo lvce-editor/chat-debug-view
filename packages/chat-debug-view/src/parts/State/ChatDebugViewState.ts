@@ -38,6 +38,7 @@ export interface ChatDebugViewState {
   readonly tableWidth: number
   readonly timelineEndSeconds: string
   readonly timelineEvents: readonly ChatViewEvent[]
+  readonly timelineFilterDescription: string
   readonly timelineHoverPercent: number | null
   readonly timelineHoverSeconds: string
   readonly timelineInfo: TimelineInfo
@@ -48,7 +49,6 @@ export interface ChatDebugViewState {
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean
-  readonly visibleTableColumns: readonly string[]
   readonly width: number
   readonly x: number
   readonly y: number

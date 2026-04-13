@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { getCss } from '../src/parts/GetCss/GetCss.ts'
 import { getTimelineInfo } from '../src/parts/GetTimelineInfo/GetTimelineInfo.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getCss should wrap preview message lines', () => {
   const css = getCss({
@@ -84,13 +85,13 @@ test('getCss should lay out devtools timeline and split without a wrapper elemen
 test('getCss should expose table column width and resizer position variables', () => {
   const css = getCss({
     ...createDefaultState(),
+    tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'duration', 'status']),
     tableColumnWidths: {
       duration: 96,
       status: 124,
       type: 240,
     },
     tableWidth: 460,
-    visibleTableColumns: ['type', 'duration', 'status'],
     width: 960,
   })
 
@@ -115,13 +116,13 @@ test('getCss should expose table column width and resizer position variables', (
 test('getCss should assign widths to visible col elements instead of individual cells', () => {
   const css = getCss({
     ...createDefaultState(),
+    tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'status']),
     tableColumnWidths: {
       duration: 120,
       status: 110,
       type: 180,
     },
     tableWidth: 520,
-    visibleTableColumns: ['type', 'status'],
     width: 960,
   })
 

@@ -4,6 +4,7 @@ import { getMenuEntries2 } from '../src/parts/GetMenuEntries2/GetMenuEntries2.ts
 import { MenuChatDebugTableHeader } from '../src/parts/HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import { MenuChatDebugTableBody } from '../src/parts/HandleTableBodyContextMenu/HandleTableBodyContextMenu.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getMenuEntries2 should return checked table header entries and reset action', () => {
   const state = createDefaultState()
@@ -47,7 +48,7 @@ test('getMenuEntries2 should return checked table header entries and reset actio
 test('getMenuEntries2 should mark hidden table columns as unchecked', () => {
   const state = {
     ...createDefaultState(),
-    visibleTableColumns: ['type', 'status'],
+    tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'status']),
   }
 
   const result = getMenuEntries2(state, {

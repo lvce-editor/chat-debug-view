@@ -3,13 +3,14 @@ import * as HandleTableResizerPointerDown from '../src/parts/HandleTableResizerP
 import * as HandleTableResizerPointerMove from '../src/parts/HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
 import * as HandleTableResizerPointerUp from '../src/parts/HandleTableResizerPointerUp/HandleTableResizerPointerUp.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('handleTableResizerPointerMove should update the first visible column width', () => {
   const pointerDownState = HandleTableResizerPointerDown.handleTableResizerPointerDown(
     {
       ...createDefaultState(),
+      tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'duration', 'status']),
       tableWidth: 480,
-      visibleTableColumns: ['type', 'duration', 'status'],
       width: 900,
       x: 100,
     },
@@ -30,8 +31,8 @@ test('handleTableResizerPointerMove should clamp the active visible column width
   const pointerDownState = HandleTableResizerPointerDown.handleTableResizerPointerDown(
     {
       ...createDefaultState(),
+      tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['duration', 'status']),
       tableWidth: 480,
-      visibleTableColumns: ['duration', 'status'],
       width: 900,
       x: 100,
     },

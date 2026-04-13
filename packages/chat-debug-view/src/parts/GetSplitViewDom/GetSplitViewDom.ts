@@ -10,6 +10,18 @@ export const getSplitViewDom = (
   sashNodes: readonly VirtualDomNode[],
   detailsNodes: readonly VirtualDomNode[],
 ): readonly VirtualDomNode[] => {
+  if (splitChildCount === 1) {
+    return [
+      {
+        childCount: eventsChildCount,
+        className: eventsClassName,
+        role: 'application',
+        type: VirtualDomElements.Div,
+      },
+      ...tableNodes,
+    ]
+  }
+
   return [
     {
       childCount: splitChildCount,

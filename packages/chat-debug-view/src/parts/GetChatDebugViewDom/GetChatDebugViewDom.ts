@@ -1,4 +1,4 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
@@ -13,7 +13,6 @@ import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
-import { getTimelineFilterDescription } from '../GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
@@ -57,6 +56,7 @@ export const getChatDebugViewDom = (
   selectedEventIndex: number | null,
   timelineStartSeconds: string,
   timelineEndSeconds: string,
+  timelineFilterDescription: string,
   timelineEvents: readonly ChatViewEvent[],
   events: readonly ChatViewEvent[],
   timelineSelectionActive = false,
@@ -82,7 +82,6 @@ export const getChatDebugViewDom = (
   if (trimmedFilterValue) {
     filterDescriptionParts.push(trimmedFilterValue)
   }
-  const timelineFilterDescription = getTimelineFilterDescription(timelineStartSeconds, timelineEndSeconds)
   if (timelineFilterDescription) {
     filterDescriptionParts.push(timelineFilterDescription)
   }
@@ -97,26 +96,38 @@ export const getChatDebugViewDom = (
   const safeSelectedEventIndex =
     selectedEventIndex === null || selectedEventIndex < 0 || selectedEventIndex >= events.length ? null : selectedEventIndex
 
-  const contentNodes = useDevtoolsLayout
-    ? getDevtoolsDom(
-        events,
-        selectedEvent,
-        safeSelectedEventIndex,
-        timelineEvents,
-        timelineStartSeconds,
-        timelineEndSeconds,
-        emptyMessage,
-        timelineSelectionActive,
-        timelineSelectionAnchorSeconds,
-        timelineSelectionFocusSeconds,
-        visibleTableColumns,
-        detailTabs,
-        tableColumns,
-        timelineInfo,
-        timelineHoverPercent,
-        focus,
-      )
-    : getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
+  if (useDevtoolsLayout) {
+    const devtoolsDom = getDevtoolsDom(
+      events,
+      selectedEvent,
+      safeSelectedEventIndex,
+      timelineEvents,
+      timelineStartSeconds,
+      timelineEndSeconds,
+      emptyMessage,
+      timelineSelectionActive,
+      timelineSelectionAnchorSeconds,
+      timelineSelectionFocusSeconds,
+      detailTabs,
+      visibleTableColumns,
+      tableColumns,
+      timelineInfo,
+      timelineHoverPercent,
+      focus,
+    )
+    const devtoolsContentNodes = devtoolsDom.slice(1)
+    const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]
+    const rootChildCount = getTopLevelChildCount(topLevelNodes)
+    return [
+      {
+        childCount: rootChildCount,
+        className: mergeClassNames(ChatDebugView, ChatDebugViewDevtools),
+        type: VirtualDomElements.Div,
+      },
+      ...topLevelNodes,
+    ]
+  }
+  const contentNodes = getLegacyEventsDom(errorMessage, emptyMessage, events.flatMap(getEventNode))
   const debugViewTopDom = getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters)
   const rootChildCount = 1 + getTopLevelChildCount(contentNodes)
 

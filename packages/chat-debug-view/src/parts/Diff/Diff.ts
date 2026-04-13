@@ -24,7 +24,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.timelineSelectionFocusSeconds !== newState.timelineSelectionFocusSeconds ||
     oldState.timelineStartSeconds !== newState.timelineStartSeconds ||
     oldState.useDevtoolsLayout !== newState.useDevtoolsLayout ||
-    oldState.visibleTableColumns !== newState.visibleTableColumns ||
+    oldState.tableColumns !== newState.tableColumns ||
     oldState.selectedEvent !== newState.selectedEvent ||
     oldState.selectedEventIndex !== newState.selectedEventIndex ||
     oldState.focus !== newState.focus ||
