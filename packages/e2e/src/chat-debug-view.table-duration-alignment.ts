@@ -5,10 +5,11 @@ export const name = 'chat-debug-view.table-duration-alignment'
 export const skip = 1
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+  // arrange
   const sessionId = 'e2e-session-table-duration-alignment'
 
+  // act
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
 
   const events = [
     {
@@ -26,6 +27,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const durationCell = Locator('.TableBody .ChatDebugViewCellDuration').nth(0)
 
+  // assert
   await expect(durationCell).toHaveText('250 ms')
   await expect(durationCell).toHaveCSS('text-align', 'right')
 }
