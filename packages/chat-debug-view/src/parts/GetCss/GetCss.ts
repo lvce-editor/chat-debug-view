@@ -281,6 +281,73 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-height: 0;
 }
 
+.EditorContainer {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.Viewlet.Editor {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorContent {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.EditorLayers {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.Selections {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.EditorSelection {
+  position: absolute;
+  background: var(--vscode-editor-selectionBackground, rgba(255, 255, 255, 0.2));
+}
+
+.EditorRows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorRow {
+  flex-shrink: 0;
+  min-width: 0;
+  width: 100%;
+  white-space: pre;
+}
+
 .Gutter {
   display: flex;
   flex-direction: column;
