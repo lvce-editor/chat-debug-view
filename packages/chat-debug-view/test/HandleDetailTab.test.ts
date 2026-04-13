@@ -14,3 +14,9 @@ test('selectDetailTab should ignore invalid selected detail tab values', () => {
   const result = SelectDetailTab.selectDetailTab(state, 'headers')
   expect(result).toBe(state)
 })
+
+test('handleDetailTabsFocus should update selected detail tab', () => {
+  const state = createDefaultState()
+  const result = SelectDetailTab.handleDetailTabsFocus(state, 'payload')
+  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('payload')
+})

@@ -12,14 +12,18 @@ export const getTableWrapperDom = (
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   summary = '',
   focus = 0,
+  className = '',
+  role = '',
 ): readonly VirtualDomNode[] => {
-  const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '')
+  const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '', className)
+  const tableWrapperNode = {
+    childCount: 2,
+    className: tableWrapperClassName,
+    type: VirtualDomElements.Div,
+    ...(role ? { role } : {}),
+  }
   return [
-    {
-      childCount: 2,
-      className: tableWrapperClassName,
-      type: VirtualDomElements.Div,
-    },
+    tableWrapperNode,
     ...getTableDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus),
     ...getTableResizersDom(visibleTableColumns),
   ]

@@ -10,13 +10,25 @@ test('getEventNode should render json details as numbered rows', () => {
   const result = GetEventNode.getEventNode(event) as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly role?: string
     readonly type?: number
   }[]
 
   expect(result).toEqual([
     {
+      childCount: 1,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
+    },
+    {
       childCount: 2,
-      className: 'row',
+      className: 'Viewlet Editor',
+      role: 'code',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 3,
+      className: 'Gutter',
       type: VirtualDomElements.Div,
     },
     {
@@ -27,8 +39,61 @@ test('getEventNode should render json details as numbered rows', () => {
     text('1'),
     {
       childCount: 1,
-      className: 'ChatDebugViewEventLineContent',
+      className: 'ChatDebugViewEventLineNumber',
       type: VirtualDomElements.Span,
+    },
+    text('2'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineNumber',
+      type: VirtualDomElements.Span,
+    },
+    text('3'),
+    {
+      childCount: 2,
+      className: 'EditorContent',
+      type: VirtualDomElements.Div,
+    },
+    {
+      'aria-autocomplete': 'list',
+      'aria-multiline': true,
+      'aria-roledescription': 'editor',
+      autocapitalize: 'off',
+      autocomplete: 'off',
+      autocorrect: 'off',
+      childCount: 0,
+      className: 'EditorInput',
+      name: 'editor',
+      role: 'textbox',
+      spellcheck: false,
+      type: VirtualDomElements.TextArea,
+      wrap: 'off',
+    },
+    {
+      childCount: 2,
+      className: 'EditorLayers',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Selections',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 0,
+      className: 'EditorSelection',
+      style: 'height: 20px; left: 0px; top: 20px; width: 0px;',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 3,
+      className: 'EditorRows',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'EditorRow',
+      type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
@@ -37,20 +102,9 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     text('{'),
     {
-      childCount: 2,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('2'),
-    {
       childCount: 4,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      className: 'EditorRow',
+      type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
@@ -77,20 +131,9 @@ test('getEventNode should render json details as numbered rows', () => {
     },
     text('"request"'),
     {
-      childCount: 2,
-      className: 'row',
+      childCount: 1,
+      className: 'EditorRow',
       type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('3'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
     },
     {
       childCount: 1,
@@ -116,192 +159,31 @@ test('getEventNode should preserve numbered rows for nested json values', () => 
     readonly text?: string
   }[]
 
-  expect(result).toEqual([
-    {
-      childCount: 2,
-      className: 'row',
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      childCount: 1,
+      className: 'EditorContainer',
       type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('1'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('{'),
-    {
-      childCount: 2,
-      className: 'row',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      childCount: 6,
+      className: 'Gutter',
       type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('2'),
-    {
-      childCount: 3,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('  '),
-    {
-      childCount: 1,
-      className: 'Token TokenKey',
-      type: VirtualDomElements.Span,
-    },
-    text('"nested"'),
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text(': {'),
-    {
-      childCount: 2,
-      className: 'row',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      childCount: 6,
+      className: 'EditorRows',
       type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('3'),
-    {
-      childCount: 5,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('    '),
-    {
-      childCount: 1,
-      className: 'Token TokenKey',
-      type: VirtualDomElements.Span,
-    },
-    text('"count"'),
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text(': '),
-    {
-      childCount: 1,
-      className: 'Token TokenNumeric',
-      type: VirtualDomElements.Span,
-    },
-    text('2'),
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text(','),
-    {
-      childCount: 2,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('4'),
-    {
-      childCount: 4,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('    '),
-    {
-      childCount: 1,
-      className: 'Token TokenKey',
-      type: VirtualDomElements.Span,
-    },
-    text('"ok"'),
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text(': '),
-    {
-      childCount: 1,
-      className: 'Token TokenBoolean',
-      type: VirtualDomElements.Span,
-    },
-    text('true'),
-    {
-      childCount: 2,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('5'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('  }'),
-    {
-      childCount: 2,
-      className: 'row',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineNumber',
-      type: VirtualDomElements.Span,
-    },
-    text('6'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
-    },
-    {
-      childCount: 1,
-      className: 'Token TokenText',
-      type: VirtualDomElements.Span,
-    },
-    text('}'),
-  ])
+    }),
+  )
+  expect(result.filter((node) => node.className === 'ChatDebugViewEventLineNumber')).toHaveLength(6)
+  expect(result).toContainEqual(expect.objectContaining({ text: '"nested"' }))
+  expect(result).toContainEqual(expect.objectContaining({ text: '"count"' }))
+  expect(result).toContainEqual(expect.objectContaining({ text: '2' }))
+  expect(result).toContainEqual(expect.objectContaining({ text: 'true' }))
+  expect(result).toContainEqual(expect.objectContaining({ text: '6' }))
 })

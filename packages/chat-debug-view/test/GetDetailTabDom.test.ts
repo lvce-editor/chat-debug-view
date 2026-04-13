@@ -16,10 +16,10 @@ test('getDetailTabDom should render an unselected detail tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onFocus?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
@@ -30,11 +30,11 @@ test('getDetailTabDom should render an unselected detail tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
       ariaSelected: false,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
+      className: 'PanelTab',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -55,10 +55,10 @@ test('getDetailTabDom should render a selected detail tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onFocus?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
@@ -69,11 +69,11 @@ test('getDetailTabDom should render a selected detail tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
       ariaSelected: true,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-timing',
+      className: 'PanelTab PanelTabSelected',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,

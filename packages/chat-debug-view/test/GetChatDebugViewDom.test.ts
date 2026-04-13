@@ -120,7 +120,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
 
   expect(dom).toEqual([
     {
-      childCount: 3,
+      childCount: 2,
       className: 'ChatDebugView ChatDebugView--devtools',
       type: VirtualDomElements.Div,
     },
@@ -221,13 +221,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
       type: VirtualDomElements.Div,
     },
     text(ChatDebugStrings.noEventsFound()),
-    {
-      childCount: 1,
-      className: 'TableSummary',
-      role: 'status',
-      type: VirtualDomElements.Div,
-    },
-    text('0 events, 0ms from start to finish'),
   ])
 })
 
@@ -279,12 +272,12 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const filterRowIndex = dom.findIndex((node) => node.className === 'ChatDebugViewTop ChatDebugViewTop--devtools')
   const filterRow = dom[filterRowIndex]
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
-  const eventsPaneIndex = dom.findIndex((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const emptyStateIndex = dom.findIndex((node) => node.className === 'ChatDebugViewEmpty')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
 
   expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
-  expect(eventsPaneIndex).toBeGreaterThan(quickFilterGroupIndex)
+  expect(emptyStateIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
   expect(dom[filterRowIndex + 1]).toEqual(
     expect.objectContaining({
@@ -293,7 +286,7 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
       name: 'filter',
     }),
   )
-  expect(root?.childCount).toBe(3)
+  expect(root?.childCount).toBe(2)
 })
 
 test('getChatDebugViewDom should expose timeline and split as direct devtools children when timeline is visible', () => {
@@ -382,7 +375,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      className: 'PanelTab PanelTabSelected',
       name: 'response',
       onClick: DomEventListenerFunctions.SelectDetailTab,
     }),
@@ -499,10 +492,10 @@ test('getChatDebugViewDom should render table summary status in devtools layout'
     events,
     events,
   )
-  const tableWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapper')
+  const tableWrapperWrapperIndex = dom.findIndex((node) => node.className === 'TableWrapperWrapper')
   const summaryIndex = dom.findIndex((node) => node.className === 'TableSummary')
 
-  expect(summaryIndex).toBeGreaterThan(tableWrapperIndex)
+  expect(summaryIndex).toBeGreaterThan(tableWrapperWrapperIndex)
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'TableSummary',

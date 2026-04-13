@@ -2,6 +2,10 @@ import type { AttachmentImagePreview } from '../AttachmentImagePreview/Attachmen
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 
+const svgWidthRegex = /\bwidth=["']([\d.]+)(?:px)?["']/i
+const svgHeightRegex = /\bheight=["']([\d.]+)(?:px)?["']/i
+const svgViewBoxRegex = /\bviewBox=["'][^"']*?([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)["']/i
+
 const getBlob = (event: ChatViewEvent): Blob | undefined => {
   const { blob } = event
   if (
@@ -28,8 +32,29 @@ const isImageMimeType = (mimeType: string | undefined): boolean => {
   return typeof mimeType === 'string' && mimeType.startsWith('image/')
 }
 
-const shouldValidateImage = (mimeType: string | undefined): boolean => {
-  return mimeType !== 'image/svg+xml'
+const formatImageSize = (size: number): string => {
+  if (size < 1024) {
+    return `${size} B`
+  }
+  return `${(size / 1024).toFixed(1)} kB`
+}
+
+const formatImageStats = (width: number, height: number, size: number): string => {
+  return `${width} × ${height} px · ${formatImageSize(size)}`
+}
+
+const getSvgImageStats = async (blob: Blob): Promise<string | undefined> => {
+  const text = await blob.text()
+  const widthMatch = text.match(svgWidthRegex)
+  const heightMatch = text.match(svgHeightRegex)
+  if (widthMatch && heightMatch) {
+    return formatImageStats(Number(widthMatch[1]), Number(heightMatch[1]), blob.size)
+  }
+  const viewBoxMatch = text.match(svgViewBoxRegex)
+  if (viewBoxMatch) {
+    return formatImageStats(Number(viewBoxMatch[3]), Number(viewBoxMatch[4]), blob.size)
+  }
+  return undefined
 }
 
 const readBlobAsPreviewUrl = (blob: Blob): string => {
@@ -43,16 +68,31 @@ const readBlobAsPreviewUrl = (blob: Blob): string => {
   throw new Error('image preview reader is not available')
 }
 
-const validateImage = async (blob: Blob): Promise<void> => {
+const getRasterImageStats = async (blob: Blob): Promise<string> => {
   if (typeof createImageBitmap !== 'function') {
-    return
+    throw new TypeError('image bitmap decoder is not available')
   }
   const bitmap = await createImageBitmap(blob)
-  bitmap.close?.()
+  try {
+    return formatImageStats(bitmap.width, bitmap.height, blob.size)
+  } finally {
+    bitmap.close?.()
+  }
+}
+
+const getImageStats = async (blob: Blob, mimeType: string | undefined): Promise<string> => {
+  if (mimeType === 'image/svg+xml') {
+    const svgStats = await getSvgImageStats(blob)
+    if (svgStats === undefined) {
+      throw new TypeError('image stats are not available')
+    }
+    return svgStats
+  }
+  return getRasterImageStats(blob)
 }
 
 export const getAttachmentImagePreview = async (event: ChatViewEvent): Promise<AttachmentImagePreview | string | undefined> => {
-  if (event.type !== 'chat-attachment-added') {
+  if (event.type !== 'chat-attachment-added' && event.type !== 'chat-attachment-removed') {
     return undefined
   }
   const blob = getBlob(event)
@@ -61,13 +101,12 @@ export const getAttachmentImagePreview = async (event: ChatViewEvent): Promise<A
     return undefined
   }
   try {
-    if (shouldValidateImage(mimeType)) {
-      await validateImage(blob)
-    }
+    const stats = await getImageStats(blob, mimeType)
     return {
       alt: getAltText(event),
       previewType: 'image',
       src: readBlobAsPreviewUrl(blob),
+      stats,
     }
   } catch {
     return ChatDebugStrings.imageCouldNotBeLoaded()

@@ -132,6 +132,8 @@ test('getCss should assign widths to visible col elements instead of individual 
   expect(css).toContain('.TableColOne')
   expect(css).toContain('--ChatDebugViewTableColOneWidth: 764px;')
   expect(css).toContain('width: var(--ChatDebugViewTableColOneWidth);')
+  expect(css).toContain('.ChatDebugViewCellDuration {')
+  expect(css).toContain('text-align: right;')
   expect(css).not.toContain('.ChatDebugViewHeaderCellType.ChatDebugViewColumnFixed')
   expect(css).not.toContain('.ChatDebugViewCellType.ChatDebugViewColumnFixed')
   expect(css).not.toContain('.ChatDebugViewHeaderCellDuration.ChatDebugViewColumnFixed')
@@ -152,6 +154,17 @@ test('getCss should keep devtools table rows at a fixed height instead of stretc
   expect(css).toContain('height: var(--ChatDebugViewTableRowHeight);')
   expect(css).toContain('.TableBody .TableCell {')
   expect(css).toContain('line-height: var(--ChatDebugViewTableRowHeight);')
+})
+
+test('getCss should slightly dim the table summary text', () => {
+  const css = getCss({
+    ...createDefaultState(),
+    tableWidth: 420,
+    width: 960,
+  })
+
+  expect(css).toContain('.TableSummary {')
+  expect(css).toContain('opacity: 0.86;')
 })
 
 test('getCss should size the table wrapper to the full main width when details are not visible', () => {
@@ -175,6 +188,9 @@ test('getCss should scale image previews to the available details pane size', ()
   expect(css).toContain('.ChatDebugViewImagePreview')
   expect(css).toContain('width: 100%;')
   expect(css).toContain('min-height: 0;')
+  expect(css).toContain('.ChatDebugViewImagePreviewImageWrapper')
+  expect(css).toContain('contain: strict;')
+  expect(css).toContain('flex: 1;')
   expect(css).toContain('.ChatDebugViewImagePreviewImage')
   expect(css).toContain('max-height: 100%;')
   expect(css).toContain('width: auto;')

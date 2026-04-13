@@ -21,6 +21,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
       name: resizerNames[index],
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: AriaRoles.None,
+      tabIndex: -1,
       type: VirtualDomElements.Button,
     },
     {
@@ -32,7 +33,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
   ])
   return [
     {
-      childCount: resizerCount + 1,
+      childCount: resizerCount,
       className: Resizers,
       type: VirtualDomElements.Div,
     },

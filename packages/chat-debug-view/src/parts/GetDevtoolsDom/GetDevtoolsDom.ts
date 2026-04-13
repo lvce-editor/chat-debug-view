@@ -17,8 +17,7 @@ import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNod
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
-import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
-import { getTableWrapperDom } from '../GetTableWrapperDom/GetTableWrapperDom.ts'
+import { getTableWrapperWrapperDom } from '../GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -56,18 +55,17 @@ export const getDevtoolsDom = (
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
   const hasSelectedEvent = responseEventNodes.length > 0
-  const eventsChildCount = events.length === 0 ? 1 : 2
+  const eventsClassName = getEventsClassName(hasSelectedEvent)
+  const summary = getTableSummary(events)
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, getTableSummary(events), focus)
+      : getTableWrapperWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, summary, focus)
 
-  const eventsClassName = getEventsClassName(hasSelectedEvent)
   const detailsNodes = getDetailsDom(previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, detailTabs)
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
-  const rootChildCount = 4
-  const summary = getTableSummary(events)
+  const rootChildCount = 3
   return [
     {
       childCount: rootChildCount,
@@ -75,7 +73,6 @@ export const getDevtoolsDom = (
       type: VirtualDomElements.Div,
     },
     ...timelineNodes,
-    ...getSplitViewDom(splitChildCount, eventsChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes),
-    ...getTableSummaryDom(summary),
+    ...getSplitViewDom(splitChildCount, eventsClassName, tableNodes, sashNodes, detailsNodes),
   ]
 }

@@ -1,3 +1,4 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
@@ -8,6 +9,7 @@ import * as TableColumn from '../TableColumn/TableColumn.ts'
 export { loadEventsDependencies as loadContentDependencies } from '../LoadEvents/LoadEvents.ts'
 
 export const loadContent = async (state: ChatDebugViewState, savedState: unknown): Promise<ChatDebugViewState> => {
+  await RendererWorker.getPreference('chatDebug.autoRefresh')
   const nextState = await loadEventsFromUri(restoreSavedState(state, savedState))
   return {
     ...nextState,

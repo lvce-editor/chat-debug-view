@@ -1,3 +1,5 @@
+// cspell:ignore liga calt
+
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -102,6 +104,16 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex-direction: column;
 }
 
+.TableWrapperWrapper {
+  position: relative;
+  width: min(100%, var(--ChatDebugViewTableWidth));
+  max-width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .FocusOutline {
   outline: 2px solid var(--vscode-focusBorder, rgba(255, 255, 255, 0.45));
   outline-offset: 1px;
@@ -124,6 +136,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   max-width: 100%;
   padding: 6px 4px 0;
   color: var(--vscode-descriptionForeground, inherit);
+  opacity: 0.86;
   font-size: 12px;
   line-height: 1.4;
 }
@@ -143,6 +156,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   height: var(--ChatDebugViewTableRowHeight);
   max-height: var(--ChatDebugViewTableRowHeight);
   line-height: var(--ChatDebugViewTableRowHeight);
+}
+
+.ChatDebugViewCellDuration {
+  text-align: right;
 }
 
 .TableCol {
@@ -205,7 +222,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 
 .ChatDebugViewDetails {
-  border: 1px solid var(--vscode-editorWidget-border, #454545);
   border-radius: 6px;
   overflow: hidden;
   min-width: 0;
@@ -251,6 +267,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewEventLineContent {
   flex: 1;
   min-width: 0;
+  margin: 0;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   word-break: break-word;
@@ -258,6 +275,101 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewEventLineNumber {
   flex: none;
+}
+
+.ChatDebugViewEventText {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorContainer {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.Viewlet.Editor {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorContent {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.EditorLayers {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.Selections {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.EditorSelection {
+  position: absolute;
+  background: var(--vscode-editor-selectionBackground, rgba(255, 255, 255, 0.2));
+}
+
+.EditorRows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.EditorRow {
+  flex-shrink: 0;
+  min-width: 0;
+  width: 100%;
+  white-space: pre;
+}
+
+.Gutter {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  align-items: flex-end;
+  padding-right: 5px;
+  padding-left: 12px;
+}
+
+.Gutter > .ChatDebugViewEventLineNumber {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.Rows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .row {
@@ -328,6 +440,84 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 
+.ChatDebugViewTiming {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ChatDebugViewTimingPreview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ChatDebugViewTimingPreviewTrack {
+  position: relative;
+  height: 34px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--vscode-widget-border, rgba(255, 255, 255, 0.14)) 86%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  contain: strict;
+}
+
+.ChatDebugViewTimingPreviewRail {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  left: 12px;
+  height: 4px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vscode-foreground, rgba(255, 255, 255, 0.78)) 16%, transparent);
+}
+
+.ChatDebugViewTimingPreviewTrackOverlay {
+  position: absolute;
+  inset: 4px 12px;
+  pointer-events: none;
+}
+
+.ChatDebugViewTimingPreviewSegment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(91, 151, 255, 0.84), rgba(91, 151, 255, 0.56));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+  color: var(--vscode-editor-foreground, inherit);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ChatDebugViewTimingPreviewMarker {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  z-index: 1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vscode-charts-orange, rgba(255, 174, 0, 0.95)) 90%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.92)) 65%, transparent);
+}
+
+.ChatDebugViewTimingPreviewMarkerStart {
+  left: 12px;
+}
+
+.ChatDebugViewTimingPreviewMarkerEnd {
+  right: 12px;
+}
+
 .TableRow:hover {
   background: var(--ListHoverBackground);
   color: var(--ListHoverForeground);
@@ -341,6 +531,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: 100%;
   max-width: 100%;
   min-height: 0;
+  flex: 1;
+}
+
+.ChatDebugViewImagePreviewImageWrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  contain: strict;
 }
 
 .ChatDebugViewImagePreviewImage {
@@ -356,6 +557,10 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewImagePreviewLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
   width: auto;
   height: auto;
   max-height: 100%;
@@ -372,13 +577,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: flex;
   align-items: center;
   min-width: 0;
-}
-
-.ChatDebugViewTimelineSummary {
-  margin: 0;
-  color: var(--vscode-descriptionForeground, inherit);
-  font-size: 11px;
-  font-weight: 600;
 }
 
 .ChatDebugViewTimelineInteractive {
@@ -572,6 +770,21 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .TokenString {
   white-space: nowrap;
+}
+
+.ChatDebug {
+    --EditorFontSize: 15px;
+    --EditorFontWeight: 400;
+    --EditorFontFamily: 'Fira Code';
+    --EditorLineHeight: 20px;
+    --EditorLetterSpacing: 0.5px;
+    --EditorFontFeatureSettings: "liga" 1, "calt" 1;
+    --EditorTabSize: 2;
+
+}
+
+.ChatDebug .Editor {
+  user-select: text;
 }
 `
 }

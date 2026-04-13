@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as AppendStoredEventForTest from '../AppendStoredEventForTest/AppendStoredEventForTest.ts'
 import * as AppendStoredImageAttachmentForTest from '../AppendStoredImageAttachmentForTest/AppendStoredImageAttachmentForTest.ts'
+import * as AppendStoredRemovedImageAttachmentForTest from '../AppendStoredRemovedImageAttachmentForTest/AppendStoredRemovedImageAttachmentForTest.ts'
 import * as Create from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
@@ -13,7 +14,7 @@ import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
 import * as HandleDetailsTopContextMenu from '../HandleDetailsTopContextMenu/HandleDetailsTopContextMenu.ts'
-import * as SelectDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
+import * as HandleDetailTab from '../HandleDetailTab/HandleDetailTab.ts'
 import * as HandleEscape from '../HandleEscape/HandleEscape.ts'
 import * as HandleEventCategoryFilter from '../HandleEventCategoryFilter/HandleEventCategoryFilter.ts'
 import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
@@ -56,6 +57,9 @@ import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/Tog
 export const commandMap = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
+  'ChatDebug.appendStoredRemovedImageAttachmentForTest': wrapCommand(
+    AppendStoredRemovedImageAttachmentForTest.appendStoredRemovedImageAttachmentForTest,
+  ),
   'ChatDebug.create': Create.create,
   'ChatDebug.diff2': diff2,
   'ChatDebug.focusFirst': wrapCommand(FocusFirst.focusFirst),
@@ -69,6 +73,7 @@ export const commandMap = {
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
   'ChatDebug.handleDetailsTopContextMenu': wrapCommand(HandleDetailsTopContextMenu.handleDetailsTopContextMenu),
+  'ChatDebug.handleDetailTabsFocus': wrapCommand(HandleDetailTab.handleDetailTabsFocus),
   'ChatDebug.handleEscape': wrapCommand(HandleEscape.handleEscape),
   'ChatDebug.handleEventCategoryFilter': wrapCommand(HandleEventCategoryFilter.handleEventCategoryFilter),
   'ChatDebug.handleEventRowClick': wrapCommand(handleEventRowClick),
@@ -108,7 +113,7 @@ export const commandMap = {
   'ChatDebug.resize': wrapCommand(Resize.resize),
   'ChatDebug.saveState': wrapGetter(saveState),
   'ChatDebug.selectCurrent': wrapCommand(SelectCurrent.selectCurrent),
-  'ChatDebug.selectDetailTab': wrapCommand(SelectDetailTab.selectDetailTab),
+  'ChatDebug.selectDetailTab': wrapCommand(HandleDetailTab.selectDetailTab),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
   'ChatDebug.terminate': terminate,

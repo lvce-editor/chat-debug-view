@@ -38,7 +38,49 @@ test('getLineNodeDom should render numbered row', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
+      type: VirtualDomElements.Pre,
+    },
+    {
+      childCount: 1,
+      className: 'Token TokenText',
       type: VirtualDomElements.Span,
+    },
+    text('first'),
+  ])
+})
+
+test('getLineNodeDom should render unnumbered row with one child', () => {
+  const result = GetLineNodes.getLineNodeDom(
+    {
+      childCount: 1,
+      nodes: [
+        {
+          childCount: 1,
+          className: 'Token TokenText',
+          type: VirtualDomElements.Span,
+        },
+        text('first'),
+      ],
+    },
+    0,
+    false,
+  ) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly type?: number
+    readonly text?: string
+  }[]
+
+  expect(result).toEqual([
+    {
+      childCount: 1,
+      className: 'row',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewEventLineContent',
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -95,7 +137,7 @@ test('getLineNodes should render numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -117,7 +159,7 @@ test('getLineNodes should render numbered rows', () => {
     {
       childCount: 1,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,
@@ -174,7 +216,7 @@ test('getLineNodes should preserve content child counts', () => {
     {
       childCount: 3,
       className: 'ChatDebugViewEventLineContent',
-      type: VirtualDomElements.Span,
+      type: VirtualDomElements.Pre,
     },
     {
       childCount: 1,

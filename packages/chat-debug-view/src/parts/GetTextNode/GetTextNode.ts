@@ -1,22 +1,14 @@
-import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import { ChatDebugViewEventRawText, TokenText } from '../ClassNames/ClassNames.ts'
-import { getLineNodes } from '../GetLineNodes/GetLineNodes.ts'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from './LineData/LineData.ts'
+import { TokenText } from '../ClassNames/ClassNames.ts'
+import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 
 export const getTextNode = (value: string, showLineNumbers = true): readonly VirtualDomNode[] => {
-  if (!showLineNumbers) {
-    return [
-      {
-        childCount: 1,
-        className: ChatDebugViewEventRawText,
-        type: VirtualDomElements.P,
-      },
-      text(value),
-    ]
-  }
   const lines = value.split('\n')
-  const lineData = lines.map((line) => {
+  const lineData: readonly LineData[] = lines.map((line): LineData => {
     return {
-      childCount: 1,
+      childCount: 2,
       nodes: [
         {
           childCount: 1,
@@ -27,6 +19,5 @@ export const getTextNode = (value: string, showLineNumbers = true): readonly Vir
       ],
     }
   })
-  const lineNodes = getLineNodes(lineData)
-  return lineNodes
+  return getEditorDom(lineData, showLineNumbers)
 }

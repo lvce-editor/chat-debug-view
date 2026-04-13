@@ -14,3 +14,7 @@ export const selectDetailTab = (state: ChatDebugViewState, value: string): ChatD
     detailTabs,
   }
 }
+
+export const handleDetailTabsFocus = (state: ChatDebugViewState, value: string): ChatDebugViewState => {
+  return selectDetailTab(state, value)
+}

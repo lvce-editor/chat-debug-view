@@ -2,6 +2,7 @@ export interface AttachmentImagePreview {
   readonly alt: string
   readonly previewType: 'image'
   readonly src: string
+  readonly stats?: string
 }
 
 export const isAttachmentImagePreview = (value: unknown): value is AttachmentImagePreview => {

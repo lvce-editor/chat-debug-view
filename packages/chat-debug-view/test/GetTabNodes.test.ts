@@ -14,10 +14,10 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
     readonly ariaSelected?: boolean
     readonly childCount?: number
     readonly className?: string
-    readonly id?: string
     readonly name?: string
     readonly onChange?: number
     readonly onClick?: number
+    readonly onFocus?: number
     readonly role?: string
     readonly tabIndex?: number
     readonly type?: number
@@ -35,11 +35,11 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-preview',
       ariaSelected: false,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-preview',
+      className: 'PanelTab',
       name: 'preview',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -49,11 +49,11 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-payload',
       ariaSelected: false,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-payload',
+      className: 'PanelTab',
       name: 'payload',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -63,11 +63,11 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-response',
       ariaSelected: false,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab',
-      id: 'ChatDebugViewDetailsTab-response',
+      className: 'PanelTab',
       name: 'response',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: -1,
       type: VirtualDomElements.Button,
@@ -77,11 +77,11 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       'aria-controls': 'ChatDebugViewDetailsPanel-timing',
       ariaSelected: true,
       childCount: 1,
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
-      id: 'ChatDebugViewDetailsTab-timing',
+      className: 'PanelTab PanelTabSelected',
       name: 'timing',
       onChange: DomEventListenerFunctions.SelectDetailTab,
       onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
       role: 'tab',
       tabIndex: 0,
       type: VirtualDomElements.Button,

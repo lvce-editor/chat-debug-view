@@ -94,28 +94,28 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab ChatDebugViewDetailsTabSelected',
+      className: 'PanelTab PanelTabSelected',
       name: 'response',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'preview',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'payload',
       role: 'tab',
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewDetailsTab',
+      className: 'PanelTab',
       name: 'timing',
       role: 'tab',
     }),
@@ -138,20 +138,25 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     readonly type?: number
   }[]
   const table = dom.find((node) => node.className === 'Table')
+  const eventsPane = dom.find((node) => node.className === 'ChatDebugViewEvents ChatDebugViewEventsFullWidth')
+  const tableWrapperWrapper = dom.find((node) => node.className === 'TableWrapperWrapper')
   const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
   const header = dom.find((node) => node.className === 'TableHead')
   const body = dom.find((node) => node.className === 'TableBody')
   const resizer = dom.find((node) => node.className === 'Resizer ResizerOne')
   const resizers = dom.find((node) => node.className === 'Resizers')
 
+  expect(eventsPane).toBeDefined()
+  expect(tableWrapperWrapper).toBeDefined()
   expect(tableWrapper).toBeDefined()
+  expect(tableWrapperWrapper?.childCount).toBe(2)
   expect(table).toBeDefined()
   expect(table?.childCount).toBe(3)
   expect(tableWrapper?.childCount).toBe(2)
   expect(table?.type).toBe(VirtualDomElements.Table)
   expect(header).toBeDefined()
   expect(body).toBeDefined()
-  expect(resizers?.childCount).toBe(3)
+  expect(resizers?.childCount).toBe(2)
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
@@ -309,6 +314,12 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
+      className: 'ChatDebugViewImagePreviewImageWrapper',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
       alt: 'diagram.png',
       className: 'ChatDebugViewImagePreviewImage',
       src: 'data:image/png;base64,preview',
@@ -408,7 +419,7 @@ test('getDevtoolsDom should count direct table body children per event', () => {
   expect(tableBody?.childCount).toBe(2)
 })
 
-test('getDevtoolsDom should apply duration and status column classes to rows only', () => {
+test('getDevtoolsDom should apply duration and status column classes to row cells', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.000Z',
@@ -428,7 +439,7 @@ test('getDevtoolsDom should apply duration and status column classes to rows onl
       className: 'TableCell',
     }),
   )
-  expect(dom).not.toContainEqual(
+  expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'TableCell ChatDebugViewCellDuration',
     }),
@@ -823,13 +834,18 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      className: 'ChatDebugViewEventRawText',
-      type: VirtualDomElements.P,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
     }),
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'first line\nsecond line',
+      text: 'first line',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'second line',
     }),
   )
 })

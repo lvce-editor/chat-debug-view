@@ -31,7 +31,7 @@ test('getRowCellNodes should render visible columns in order', () => {
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('250 ms'),

@@ -6,6 +6,7 @@ import { getDurationText } from '../src/parts/GetDurationText/GetDurationText.ts
 import { getEndText } from '../src/parts/GetEndText/GetEndText.ts'
 import { getStartText } from '../src/parts/GetStartText/GetStartText.ts'
 import { getTimingDetailsDom } from '../src/parts/GetTimingDetailsDom/GetTimingDetailsDom.ts'
+import { getTimingPreviewDom } from '../src/parts/GetTimingPreviewDom/GetTimingPreviewDom.ts'
 import { getTimingRowDom } from '../src/parts/GetTimingRowDom/GetTimingRowDom.ts'
 
 test('getTimingDetailsDom should render started ended and duration rows', () => {
@@ -20,10 +21,11 @@ test('getTimingDetailsDom should render started ended and duration rows', () => 
 
   expect(result).toEqual([
     {
-      childCount: 3,
+      childCount: 4,
       className: 'ChatDebugViewTiming',
       type: VirtualDomElements.Div,
     },
+    ...getTimingPreviewDom(event),
     ...getTimingRowDom(ChatDebugStrings.started(), getStartText(event)),
     ...getTimingRowDom(ChatDebugStrings.ended(), getEndText(event)),
     ...getTimingRowDom(ChatDebugStrings.duration(), getDurationText(event)),

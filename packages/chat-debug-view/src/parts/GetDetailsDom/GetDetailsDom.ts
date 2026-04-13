@@ -10,7 +10,6 @@ import { getPanelId } from '../GetPanelId/GetPanelId.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
-import { getTabId } from '../GetTabId/GetTabId.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
@@ -53,6 +52,7 @@ export const getDetailsDom = (
   }
   const normalizedDetailTabs = getNormalizedDetailTabs(selectedEvent, detailTabs)
   const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(normalizedDetailTabs)
+  const selectedDetailTab = normalizedDetailTabs.find((detailTab) => detailTab.name === safeSelectedDetailTab) ?? normalizedDetailTabs[0]
 
   const getDetailContentDom = (): readonly VirtualDomNode[] => {
     const getDetailContentDomTiming = (): readonly VirtualDomNode[] => {
@@ -103,7 +103,7 @@ export const getDetailsDom = (
 
     return [
       {
-        'aria-labelledby': getTabId(safeSelectedDetailTab),
+        'aria-label': selectedDetailTab.label,
         childCount: getDirectChildCount(contentNodes),
         className: ChatDebugViewDetailsBottom,
         id: getPanelId(safeSelectedDetailTab),
