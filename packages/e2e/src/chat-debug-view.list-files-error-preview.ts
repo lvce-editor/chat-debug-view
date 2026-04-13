@@ -43,7 +43,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const statusCell = Locator('.ChatDebugViewCellStatusError').nth(0)
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
-  const lineContents = Locator('.ChatDebugViewEventLineContent')
+  const lineContents = Locator('.EditorRow')
 
   await expect(row).toContainText('400')
   await expect(statusCell).toHaveText('400')
