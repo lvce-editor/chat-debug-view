@@ -778,5 +778,9 @@ export const getCss = (state: ChatDebugViewState): string => {
     --EditorTabSize: 2;
 
 }
+
+.ChatDebug .Editor {
+  user-select: text;
+}
 `
 }
