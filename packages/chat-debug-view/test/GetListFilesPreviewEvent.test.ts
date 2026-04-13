@@ -29,16 +29,18 @@ test('getListFilesPreviewEvent should return entries for successful list_files e
   ])
 })
 
-test('getListFilesPreviewEvent should return the error object for errored list_files events', () => {
+test('getListFilesPreviewEvent should return the full failed result for errored list_files events', () => {
   const error = {
     message: 'Invalid argument: uri must be an absolute URI.',
+  }
+  const resultValue = {
+    error,
+    errorCode: 'E_INVALID_URI',
   }
   const event = {
     eventId: 1,
     name: 'list_files',
-    result: {
-      error,
-    },
+    result: resultValue,
     sessionId: 'session-1',
     timestamp: '2026-04-13T10:00:00.000Z',
     type: 'tool-execution',
@@ -46,5 +48,5 @@ test('getListFilesPreviewEvent should return the error object for errored list_f
 
   const result = getListFilesPreviewEvent(event, 'list_files')
 
-  expect(result).toEqual(error)
+  expect(result).toEqual(resultValue)
 })
