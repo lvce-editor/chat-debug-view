@@ -82,7 +82,6 @@ export const ChatDebugViewTimelineSelectionMarkerEnd = 'ChatDebugViewTimelineSel
 export const ChatDebugViewTimelineSelectionMarkerStart = 'ChatDebugViewTimelineSelectionMarkerStart'
 export const ChatDebugViewTimelineSelectionOverlay = 'ChatDebugViewTimelineSelectionOverlay'
 export const ChatDebugViewTimelineSelectionRange = 'ChatDebugViewTimelineSelectionRange'
-export const ChatDebugViewTimelineTop = 'ChatDebugViewTimelineTop'
 export const ChatDebugViewTiming = 'ChatDebugViewTiming'
 export const ChatDebugViewTimingLabel = 'ChatDebugViewTimingLabel'
 export const ChatDebugViewTimingPreview = 'ChatDebugViewTimingPreview'

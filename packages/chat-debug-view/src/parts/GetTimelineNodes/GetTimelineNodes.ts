@@ -1,5 +1,5 @@
 // cspell:ignore gettimelinedom
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { ChatDebugViewTimeline, ChatDebugViewTimelineInteractive, ChatDebugViewTimelineSelectionOverlay } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -7,7 +7,7 @@ import { getBucketsDom } from '../GetBucketsDom/GetBucketsDom.ts'
 import { getCursorGuideNodes } from '../GetCursorGuideNodes/GetCursorGuideNodes.ts'
 import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesDom.ts'
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
-import { getTimelineTopDom } from '../GetTimelineTopDom/GetTimelineTopDom.ts'
+import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
 export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
@@ -17,7 +17,6 @@ export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number 
   const bucketNodes = getBucketsDom(timelineInfo.buckets)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
   const cursorGuideNodes = getCursorGuideNodes(hoverPercent)
-  const timelineTopDom = getTimelineTopDom(timelineInfo)
   return [
     {
       childCount: 2,
@@ -25,7 +24,7 @@ export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number 
       onContextMenu: DomEventListenerFunctions.HandleTimelineContextMenu,
       type: VirtualDomElements.Section,
     },
-    ...timelineTopDom,
+    text(getTimelineSummary(timelineInfo)),
     {
       childCount: 3,
       className: ChatDebugViewTimelineInteractive,
