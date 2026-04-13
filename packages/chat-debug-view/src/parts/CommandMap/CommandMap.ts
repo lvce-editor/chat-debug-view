@@ -21,6 +21,7 @@ import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.
 import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
+import * as HandlePreviewTextPointerDown from '../HandlePreviewTextPointerDown/HandlePreviewTextPointerDown.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
@@ -80,6 +81,7 @@ export const commandMap = {
   'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
+  'ChatDebug.handlePreviewTextPointerDown': wrapCommand(HandlePreviewTextPointerDown.handlePreviewTextPointerDown),
   'ChatDebug.handleSashPointerDown': wrapCommand(HandleSashPointerDown.handleSashPointerDown),
   'ChatDebug.handleSashPointerMove': wrapCommand(HandleSashPointerMove.handleSashPointerMove),
   'ChatDebug.handleSashPointerUp': wrapCommand(HandleSashPointerUp.handleSashPointerUp),

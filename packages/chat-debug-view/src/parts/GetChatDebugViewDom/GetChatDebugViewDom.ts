@@ -68,6 +68,8 @@ export const getChatDebugViewDom = (
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,
   focus = 0,
+  previewTextCursorRowIndex: number | null = null,
+  previewTextCursorColumnIndex: number | null = null,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -114,6 +116,8 @@ export const getChatDebugViewDom = (
       timelineInfo,
       timelineHoverPercent,
       focus,
+      previewTextCursorRowIndex,
+      previewTextCursorColumnIndex,
     )
     const devtoolsContentNodes = devtoolsDom.slice(1)
     const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]

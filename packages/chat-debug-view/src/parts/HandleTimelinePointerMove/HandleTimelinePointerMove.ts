@@ -8,7 +8,7 @@ import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/
 export const handleTimelinePointerMove = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
   const timelineLeft = getTimelineLeft(state)
   const timelineWidth = getTimelineWidth(state)
-  const clientX = getTimelineEventX(state, eventX)
+  const clientX = getTimelineEventX(eventX)
   const seconds = getTimelineSecondsFromClientX(state.timelineEvents, clientX, timelineLeft, timelineWidth)
   if (seconds === undefined) {
     return state

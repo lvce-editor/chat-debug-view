@@ -3,7 +3,7 @@ import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/
 import * as HandleTimelinePointerUp from '../src/parts/HandleTimelinePointerUp/HandleTimelinePointerUp.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('handleTimelinePointerUp should commit the normalized drag range relative to the widget', () => {
+test('handleTimelinePointerUp should commit the normalized drag range from browser client x', () => {
   const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
@@ -27,7 +27,7 @@ test('handleTimelinePointerUp should commit the normalized drag range relative t
     x: 82,
   })
 
-  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 98)
+  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 180)
 
   expect(result.timelineStartSeconds).toBe('2')
   expect(result.timelineEndSeconds).toBe('8')
@@ -62,7 +62,7 @@ test('handleTimelinePointerUp should commit a resized left edge while keeping th
     x: 82,
   })
 
-  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 18)
+  const result = HandleTimelinePointerUp.handleTimelinePointerUp(state, 100)
 
   expect(result.timelineStartSeconds).toBe('0')
   expect(result.timelineEndSeconds).toBe('8')

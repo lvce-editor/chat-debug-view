@@ -46,6 +46,8 @@ export const getDetailsDom = (
   responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  previewTextCursorRowIndex: number | null = null,
+  previewTextCursorColumnIndex: number | null = null,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
@@ -69,7 +71,16 @@ export const getDetailsDom = (
       if (selectedEvent === null) {
         return []
       }
-      return getPreviewEventNodes(getPreviewEvent(selectedEvent), selectedEvent)
+      return getPreviewEventNodes(
+        getPreviewEvent(selectedEvent),
+        selectedEvent,
+        previewTextCursorRowIndex === null || previewTextCursorColumnIndex === null
+          ? null
+          : {
+              columnIndex: previewTextCursorColumnIndex,
+              rowIndex: previewTextCursorRowIndex,
+            },
+      )
     }
 
     const getDetailContentDomPayload = (): readonly VirtualDomNode[] => {

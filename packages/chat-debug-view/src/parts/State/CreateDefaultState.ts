@@ -23,6 +23,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     largeBreakpoint: 900,
     mediumBreakpoint: 600,
     platform: 0,
+    previewTextCursorColumnIndex: null,
+    previewTextCursorRowIndex: null,
     sashPointerActive: false,
     selectedEvent: null,
     selectedEventId: null,

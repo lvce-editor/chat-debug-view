@@ -3,7 +3,7 @@ import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/
 import * as HandleTimelinePointerDown from '../src/parts/HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-test('handleTimelinePointerDown should start a drag selection from the pointer position relative to the widget', () => {
+test('handleTimelinePointerDown should start a drag selection from the browser client x position', () => {
   const state = getStateWithTimelineInfo({
     ...createDefaultState(),
     events: [
@@ -27,8 +27,8 @@ test('handleTimelinePointerDown should start a drag selection from the pointer p
   const result = HandleTimelinePointerDown.handleTimelinePointerDown(state, '', 168)
 
   expect(result.timelineSelectionActive).toBe(true)
-  expect(result.timelineSelectionAnchorSeconds).toBe('3.75')
-  expect(result.timelineSelectionFocusSeconds).toBe('3.75')
+  expect(result.timelineSelectionAnchorSeconds).toBe('1.7')
+  expect(result.timelineSelectionFocusSeconds).toBe('1.7')
 })
 
 test('handleTimelinePointerDown should start resizing from the current end when dragging the left handle', () => {
