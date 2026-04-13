@@ -36,7 +36,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -79,7 +79,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -124,7 +124,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('400'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -215,7 +215,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),

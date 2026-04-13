@@ -232,7 +232,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     },
     text('Payload'),
     {
-      'aria-label': 'Timing',
+      'aria-controls': 'ChatDebugViewDetailsPanel-response',
       ariaSelected: false,
       childCount: 1,
       className: 'ChatDebugViewDetailsTab',
