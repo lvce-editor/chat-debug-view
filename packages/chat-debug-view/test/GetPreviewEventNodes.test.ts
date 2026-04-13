@@ -19,6 +19,12 @@ test('getPreviewEventNodes should render image previews using an img node', () =
 
   expect(result).toContainEqual(
     expect.objectContaining({
+      className: 'ChatDebugViewImagePreviewImageWrapper',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
       alt: 'diagram.png',
       className: 'ChatDebugViewImagePreviewImage',
       src: 'data:image/png;base64,preview',

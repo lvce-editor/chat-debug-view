@@ -24,6 +24,7 @@ export const ChatDebugViewFilterInputDevtools = 'ChatDebugViewFilterInput--devto
 export const ChatDebugViewHeaderCell = 'TableCell'
 export const ChatDebugViewHeaderCellType = 'ChatDebugViewHeaderCellType'
 export const ChatDebugViewImagePreview = 'ChatDebugViewImagePreview'
+export const ChatDebugViewImagePreviewImageWrapper = 'ChatDebugViewImagePreviewImageWrapper'
 export const ChatDebugViewImagePreviewImage = 'ChatDebugViewImagePreviewImage'
 export const ChatDebugViewImagePreviewLabel = 'ChatDebugViewImagePreviewLabel'
 export const ChatDebugViewRefreshButton = 'ChatDebugViewRefreshButton'

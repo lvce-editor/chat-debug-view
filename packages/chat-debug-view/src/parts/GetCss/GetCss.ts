@@ -385,6 +385,16 @@ export const getCss = (state: ChatDebugViewState): string => {
   min-height: 0;
 }
 
+.ChatDebugViewImagePreviewImageWrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  contain: strict;
+}
+
 .ChatDebugViewImagePreviewImage {
   display: block;
   max-width: 100%;

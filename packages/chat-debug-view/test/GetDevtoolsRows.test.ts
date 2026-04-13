@@ -24,7 +24,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     },
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
@@ -124,7 +124,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     text('400'),
     {
       childCount: 1,
-      className: 'TableCell',
+      className: 'TableCell ChatDebugViewCellDuration',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -226,7 +226,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('response'),
@@ -238,7 +238,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     text('200'),
     {
       childCount: 1,
-      className: 'TableCell ChatDebugViewCellDuration',
+      className: 'TableCell',
       type: VirtualDomElements.Td,
     },
     text('0 ms'),
@@ -246,7 +246,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
 })
 
 test('getDevtoolsRows should omit hidden columns', () => {
-      className: 'TableCell',
+  const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
       eventId: 1,

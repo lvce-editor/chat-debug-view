@@ -312,6 +312,12 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
+      className: 'ChatDebugViewImagePreviewImageWrapper',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
       alt: 'diagram.png',
       className: 'ChatDebugViewImagePreviewImage',
       src: 'data:image/png;base64,preview',
