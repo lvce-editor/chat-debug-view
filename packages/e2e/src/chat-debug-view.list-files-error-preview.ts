@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.list-files-error-preview'
 
-export const skip = 1
+// export const skip = 1
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-list-files-error-preview'
@@ -12,13 +12,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const events = [
     {
       arguments: {
-        uri: '/home/simon/Documents/fib',
+        uri: '/test/fib',
       },
       ended: '2026-04-12T12:56:05.662Z',
       name: 'list_files',
       options: {
         platform: 2,
-        workspaceUri: '/home/simon/Documents/fib',
+        workspaceUri: '/test/fib',
       },
       result: {
         error: {
