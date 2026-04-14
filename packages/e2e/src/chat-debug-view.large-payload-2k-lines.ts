@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.large-payload-2k-lines'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-large-payload-2k-lines'
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -25,7 +25,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await ChatDebug.openTabPreview()
 
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
   const lineContents = Locator('.ChatDebugViewEventLineContent')
