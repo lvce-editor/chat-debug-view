@@ -2,8 +2,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.close-details'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-close-details')
@@ -24,7 +22,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
 
   const closeButton = Locator('.ChatDebugViewDetailsClose')
-  const closeIcon = Locator('.ChatDebugViewDetailsClose .maskIcon.close')
+  const closeIcon = Locator('.ChatDebugViewDetailsClose .MaskIconClose')
 
   await expect(closeButton).toHaveCount(1)
   await expect(closeIcon).toHaveCount(1)

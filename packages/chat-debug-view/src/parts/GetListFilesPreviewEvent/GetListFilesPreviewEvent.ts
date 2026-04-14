@@ -8,9 +8,9 @@ export const getListFilesPreviewEvent = (event: ChatViewEvent, name: string | un
   if (typeof result !== 'object' || result === null) {
     return undefined
   }
-  const { entries, error } = result as { readonly entries?: unknown; readonly error?: unknown }
+  const { entries } = result as { readonly entries?: unknown }
   if (entries !== undefined) {
     return entries
   }
-  return error
+  return result
 }

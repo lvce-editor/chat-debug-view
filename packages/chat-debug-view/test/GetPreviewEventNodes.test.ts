@@ -213,7 +213,7 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
       type: VirtualDomElements.Div,
     },
     {
-      childCount: 2,
+      childCount: 1,
       className: 'EditorRow',
       type: VirtualDomElements.Div,
     },
@@ -224,7 +224,7 @@ test('getPreviewEventNodes should render preview text in an editor shell', () =>
     },
     text('first line'),
     {
-      childCount: 2,
+      childCount: 1,
       className: 'EditorRow',
       type: VirtualDomElements.Div,
     },

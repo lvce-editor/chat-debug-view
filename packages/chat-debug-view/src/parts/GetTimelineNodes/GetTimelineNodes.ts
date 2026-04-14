@@ -13,18 +13,19 @@ export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number 
   if (timelineInfo.buckets.length === 0) {
     return []
   }
+  const summary = getTimelineSummary(timelineInfo)
   const badgeNodes = getTimelineBadgeNodes(timelineInfo)
   const bucketNodes = getBucketsDom(timelineInfo.buckets)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
   const cursorGuideNodes = getCursorGuideNodes(hoverPercent)
   return [
     {
-      childCount: 2,
+      childCount: summary ? 2 : 1,
       className: ChatDebugViewTimeline,
       onContextMenu: DomEventListenerFunctions.HandleTimelineContextMenu,
       type: VirtualDomElements.Section,
     },
-    text(getTimelineSummary(timelineInfo)),
+    ...(summary ? [text(summary)] : []),
     {
       childCount: 3,
       className: ChatDebugViewTimelineInteractive,

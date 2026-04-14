@@ -117,6 +117,34 @@ test('getPreviewEvent should return only result.entries for list_files tool exec
   expect(result).toEqual(entries)
 })
 
+test('getPreviewEvent should return the full failed result for list_files tool execution events', () => {
+  const event = {
+    arguments: {
+      uri: '/workspace',
+    },
+    eventId: 7,
+    name: 'list_files',
+    result: {
+      error: {
+        message: 'Invalid argument: uri must be an absolute URI.',
+      },
+      errorCode: 'E_INVALID_URI',
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'tool-execution',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toEqual({
+    error: {
+      message: 'Invalid argument: uri must be an absolute URI.',
+    },
+    errorCode: 'E_INVALID_URI',
+  })
+})
+
 test('getPreviewEvent should prefer prepared selected event preview metadata', () => {
   const event = setSelectedEventPreview(
     {
