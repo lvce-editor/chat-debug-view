@@ -12,6 +12,7 @@ const createState = (): ChatDebugViewState => {
       { eventId: 3, type: 'request' },
     ],
     height: 600,
+    tableMaxLineY: 3,
     tableWidth: 480,
     width: 900,
     x: 10,
@@ -60,4 +61,26 @@ test('getTableBodyEventIndex should return -1 when pointer is past the last row'
   const result = getTableBodyEventIndex(state, 30, 246)
 
   expect(result).toBe(-1)
+})
+
+test('getTableBodyEventIndex should add the virtual list offset to the clicked row', () => {
+  const state = {
+    ...createState(),
+    events: [
+      { eventId: 1, type: 'request' },
+      { eventId: 2, type: 'response' },
+      { eventId: 3, type: 'request' },
+      { eventId: 4, type: 'response' },
+      { eventId: 5, type: 'request' },
+      { eventId: 6, type: 'response' },
+      { eventId: 7, type: 'request' },
+      { eventId: 8, type: 'response' },
+    ],
+    tableMaxLineY: 8,
+    tableMinLineY: 5,
+  }
+
+  const result = getTableBodyEventIndex(state, 30, 173)
+
+  expect(result).toBe(5)
 })

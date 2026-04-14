@@ -13,6 +13,7 @@ export const getTableWrapperWrapperDom = (
   focus = 0,
   className = '',
   role = '',
+  showScrollBar = false,
 ): readonly VirtualDomNode[] => {
   const tableSummaryNodes = getTableSummaryDom(summary)
   return [
@@ -21,7 +22,7 @@ export const getTableWrapperWrapperDom = (
       className: TableWrapperWrapper,
       type: VirtualDomElements.Div,
     },
-    ...getTableWrapperDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus, className, role),
+    ...getTableWrapperDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus, className, role, showScrollBar),
     ...tableSummaryNodes,
   ]
 }

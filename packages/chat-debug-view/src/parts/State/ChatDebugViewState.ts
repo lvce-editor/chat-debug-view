@@ -36,7 +36,12 @@ export interface ChatDebugViewState {
   readonly sortDescending: boolean
   readonly tableColumns: readonly TableColumn[]
   readonly tableColumnWidths: TableColumnWidths
+  readonly tableDeltaY: number
+  readonly tableMaxLineY: number
+  readonly tableMinLineY: number
   readonly tableResizerDownId: number
+  readonly tableScrollBarHandleOffset: number
+  readonly tableScrollBarPointerActive: boolean
   readonly tableWidth: number
   readonly timelineEndSeconds: string
   readonly timelineEvents: readonly ChatViewEvent[]

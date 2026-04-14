@@ -21,8 +21,8 @@ export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number
   if (relativeX < 0 || relativeX >= tableWidth || relativeY < 0) {
     return -1
   }
-  const eventIndex = Math.floor(relativeY / devtoolsTableRowHeight)
-  if (eventIndex < 0 || eventIndex >= currentEvents.length) {
+  const eventIndex = state.tableMinLineY + Math.floor(relativeY / devtoolsTableRowHeight)
+  if (eventIndex < state.tableMinLineY || eventIndex >= state.tableMaxLineY || eventIndex >= currentEvents.length) {
     return -1
   }
   return eventIndex

@@ -279,3 +279,71 @@ test('getDevtoolsRows should omit hidden columns', () => {
     text('200'),
   ])
 })
+
+test('getDevtoolsRows should preserve row parity and selection for a virtualized slice', () => {
+  const events = [
+    {
+      eventId: 3,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:02.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 4,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:03.000Z',
+      type: 'response',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, 3, TableColumn.defaultVisibleTableColumns, 2)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'TableRow TableRowOdd',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('request'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
+    {
+      childCount: 3,
+      className: 'TableRow TableRowEven TableRowSelected',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('response'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
+  ])
+})
