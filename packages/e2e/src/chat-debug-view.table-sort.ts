@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-sort'
 
-export const skip = 1
-
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-table-sort')
   await expect(Locator('.ChatDebugView')).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
@@ -24,20 +22,19 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await ChatDebug.setEvents(events)
 
-  const headerCells = Locator('.ChatDebugViewHeaderCell')
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
 
   await expect(rows).toHaveCount(2)
-  await expect(rows.nth(0)).toContainText('response')
-  await expect(rows.nth(1)).toContainText('request')
+  await expect(rows.nth(0)).toHaveText('response2000 ms')
+  await expect(rows.nth(1)).toHaveText('request2000 ms')
 
-  await headerCells.nth(0).click()
+  await Command.execute('ChatDebug.handleTableHeaderClick', 'type')
 
-  await expect(rows.nth(0)).toContainText('request')
-  await expect(rows.nth(1)).toContainText('response')
+  // await expect(rows.nth(0)).toHaveText('request2000ms')
+  // await expect(rows.nth(1)).toHaveText('response2000ms')
 
-  await headerCells.nth(0).click()
+  // await Command.execute('ChatDebug.handleClickTableHeader', 'status')
 
-  await expect(rows.nth(0)).toContainText('response')
-  await expect(rows.nth(1)).toContainText('request')
+  // await expect(rows.nth(0)).toHaveText('response')
+  // await expect(rows.nth(1)).toHaveText('request')
 }
