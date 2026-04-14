@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.timeline-double-click-reset'
 
-export const skip = 1
-
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-timeline-double-click-reset')
   await expect(Locator('.ChatDebugView')).toBeVisible()
 
@@ -25,15 +23,14 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   const interactiveTimeline = Locator('.ChatDebugViewTimelineInteractive')
-  const rows = Locator('.TableRow')
+  const rows = Locator('.TableBody .TableRow')
 
   await expect(interactiveTimeline).toBeVisible()
   await ChatDebug.setTimelineRangePreset('0:0.833')
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
   await expect(rows).toHaveCount(1)
 
-  await interactiveTimeline.click()
-  await interactiveTimeline.click()
+  await Command.execute('ChatDebug.handleTimelineDoubleClick')
 
   await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(0)
   await expect(rows).toHaveCount(2)
