@@ -38,3 +38,13 @@ test('loadSelectedEvent should invoke ChatStorageWorker with the requested event
   expect(result).toEqual(expected)
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
 })
+
+test('registerUpdateListener should invoke ChatStorageWorker with the listener identity', async () => {
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.registerUpdateListener': () => undefined,
+  })
+
+  await ChatStorageWorkerClient.registerUpdateListener('session-1', 'handleStorageWorkerUpdate', 7)
+
+  expect(mockRpc.invocations).toEqual([['ChatStorage.registerUpdateListener', 'session-1', 'handleStorageWorkerUpdate', 7]])
+})

@@ -13,3 +13,7 @@ export const listChatViewEvents = async (sessionId: string): Promise<ListChatVie
 export const loadSelectedEvent = async (sessionId: string, eventId: number, type: string): Promise<ChatViewEvent | null> => {
   return ChatStorageWorker.invoke('ChatStorage.loadSelectedEvent', sessionId, eventId, type) as Promise<ChatViewEvent | null>
 }
+
+export const registerUpdateListener = async (sessionId: string, rpcId: string, uid: number): Promise<void> => {
+  return ChatStorageWorker.invoke('ChatStorage.registerUpdateListener', sessionId, rpcId, uid) as Promise<void>
+}
