@@ -5,21 +5,23 @@ import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
 
 const tableClientX = 30
 const row0ClientY = 180
 const row1ClientY = 197
 const row2ClientY = 221
 
-const createClickableState = (): ChatDebugViewState => {
-  return {
+const createClickableState = (overrides: Partial<ChatDebugViewState> = {}): ChatDebugViewState => {
+  return applyVirtualTableState({
     ...createDefaultState(),
     height: 600,
     tableWidth: 480,
     width: 900,
     x: 10,
     y: 20,
-  }
+    ...overrides,
+  })
 }
 
 afterEach(() => {
@@ -32,8 +34,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     eventId: 3,
     type: 'request',
   } as ChatViewEvent)
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     events: [
       {
         duration: 1,
@@ -58,7 +59,7 @@ test('handleEventRowClick should select the clicked event row and load details',
       },
     ],
     sessionId: 'session-1',
-  }
+  })
   const result = await handleEventRowClickAt(state, tableClientX, row2ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(2)
@@ -71,18 +72,16 @@ test('handleEventRowClick should select the clicked event row and load details',
 })
 
 test('handleEventRowClick should ignore clicks outside the table body', async () => {
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     selectedEventIndex: 1,
-  }
+  })
   const result = await handleEventRowClickAt(state, tableClientX, 171, 0)
 
   expect(result).toBe(state)
 })
 
 test('handleEventRowClick should ignore non-primary button clicks', async () => {
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     events: [
       {
         duration: 1,
@@ -93,7 +92,7 @@ test('handleEventRowClick should ignore non-primary button clicks', async () => 
       },
     ],
     selectedEventIndex: 1,
-  }
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 2)
 
@@ -107,10 +106,9 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     events: [event],
-  }
+  })
   Reflect.deleteProperty(event, 'eventId')
 
   const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 0)
@@ -126,8 +124,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
 
 test('handleEventRowClick should fall back to the selected list event when loading details returns null', async () => {
   jest.spyOn(handleEventRowClickDependencies, 'loadSelectedEvent').mockResolvedValue(null)
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     events: [
       {
         eventId: 1,
@@ -138,7 +135,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
       },
     ],
     sessionId: 'session-1',
-  }
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 0)
 
@@ -159,8 +156,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     eventId: 2,
     type: 'response',
   } as ChatViewEvent)
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
       {
@@ -175,7 +171,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
       },
     ],
     sessionId: 'session-1',
-  }
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
@@ -194,8 +190,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     eventId: 2,
     type: 'chat-message-added',
   } as ChatViewEvent)
-  const state = {
-    ...createClickableState(),
+  const state = createClickableState({
     detailTabs: DetailTab.createDetailTabs('timing'),
     events: [
       {
@@ -212,7 +207,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
       },
     ],
     sessionId: 'session-1',
-  }
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
