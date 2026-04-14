@@ -70,6 +70,8 @@ export const getChatDebugViewDom = (
   focus = 0,
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  minLineY = 0,
+  maxLineY = events.length,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -118,6 +120,8 @@ export const getChatDebugViewDom = (
       focus,
       previewTextCursorRowIndex,
       previewTextCursorColumnIndex,
+      minLineY,
+      maxLineY,
     )
     const devtoolsContentNodes = devtoolsDom.slice(1)
     const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]

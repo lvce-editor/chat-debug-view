@@ -100,6 +100,24 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleTableResizerPointerUp'],
     },
     {
+      name: DomEventListenerFunctions.HandleTableScrollBarPointerDown,
+      params: ['handleTableScrollBarPointerDown', EventExpression.ClientY],
+      trackPointerEvents: [DomEventListenerFunctions.HandleTableScrollBarPointerMove, DomEventListenerFunctions.HandleTableScrollBarPointerUp],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableScrollBarPointerMove,
+      params: ['handleTableScrollBarPointerMove', EventExpression.ClientY],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableScrollBarPointerUp,
+      params: ['handleTableScrollBarPointerUp'],
+    },
+    {
+      name: DomEventListenerFunctions.HandleTableWheel,
+      params: ['handleTableWheel', 'event.deltaY'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
       params: ['handleTimelinePointerDown', EventExpression.TargetName, EventExpression.ClientX],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],

@@ -32,6 +32,10 @@ import * as HandleTableResizerPointerDown from '../HandleTableResizerPointerDown
 import * as HandleTableResizerPointerMove from '../HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
 import * as HandleTableResizerPointerUp from '../HandleTableResizerPointerUp/HandleTableResizerPointerUp.ts'
 import * as HandleTableRowCopy from '../HandleTableRowCopy/HandleTableRowCopy.ts'
+import * as HandleTableScrollBarPointerDown from '../HandleTableScrollBarPointerDown/HandleTableScrollBarPointerDown.ts'
+import * as HandleTableScrollBarPointerMove from '../HandleTableScrollBarPointerMove/HandleTableScrollBarPointerMove.ts'
+import * as HandleTableScrollBarPointerUp from '../HandleTableScrollBarPointerUp/HandleTableScrollBarPointerUp.ts'
+import * as HandleTableWheel from '../HandleTableWheel/HandleTableWheel.ts'
 import * as HandleTimelineContextMenu from '../HandleTimelineContextMenu/HandleTimelineContextMenu.ts'
 import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
 import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
@@ -95,6 +99,10 @@ export const commandMap = {
   'ChatDebug.handleTableResizerPointerMove': wrapCommand(HandleTableResizerPointerMove.handleTableResizerPointerMove),
   'ChatDebug.handleTableResizerPointerUp': wrapCommand(HandleTableResizerPointerUp.handleTableResizerPointerUp),
   'ChatDebug.handleTableRowCopy': wrapCommand(HandleTableRowCopy.handleTableRowCopy),
+  'ChatDebug.handleTableScrollBarPointerDown': wrapCommand(HandleTableScrollBarPointerDown.handleTableScrollBarPointerDown),
+  'ChatDebug.handleTableScrollBarPointerMove': wrapCommand(HandleTableScrollBarPointerMove.handleTableScrollBarPointerMove),
+  'ChatDebug.handleTableScrollBarPointerUp': wrapCommand(HandleTableScrollBarPointerUp.handleTableScrollBarPointerUp),
+  'ChatDebug.handleTableWheel': wrapCommand(HandleTableWheel.handleTableWheel),
   'ChatDebug.handleTimelineContextMenu': wrapCommand(HandleTimelineContextMenu.handleTimelineContextMenu),
   'ChatDebug.handleTimelineDoubleClick': wrapCommand(HandleTimelineDoubleClick.handleTimelineDoubleClick),
   'ChatDebug.handleTimelineEndSeconds': wrapCommand(HandleTimelineInput.handleTimelineEndSeconds),

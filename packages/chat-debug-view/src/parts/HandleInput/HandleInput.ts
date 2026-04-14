@@ -6,6 +6,7 @@ import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
+import { applyVirtualTableState, withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 
 const parseTimelineRangePreset = (value: string): { readonly timelineEndSeconds: string; readonly timelineStartSeconds: string } => {
   if (!value) {
@@ -71,14 +72,14 @@ const parseSelectedEventIndex = (value: string): number | null => {
 const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugViewState): ChatDebugViewState => {
   const nextStateWithTimelineInfo = getStateWithTimelineInfo(nextState)
   const selectedEventIndex = getPreservedSelectedEventIndex(state, nextStateWithTimelineInfo)
-  return {
+  return withSelectedEventVisible({
     ...nextStateWithTimelineInfo,
     previewTextCursorColumnIndex: selectedEventIndex === null ? null : state.previewTextCursorColumnIndex,
     previewTextCursorRowIndex: selectedEventIndex === null ? null : state.previewTextCursorRowIndex,
     selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
     selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
     selectedEventIndex,
-  }
+  })
 }
 
 export const handleInput = (state: ChatDebugViewState, name: string, value: string, checked: string | boolean): ChatDebugViewState => {
@@ -124,7 +125,7 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
   if (name === InputName.UseDevtoolsLayout) {
     const useDevtoolsLayout = GetBoolean.getBoolean(checked)
     const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
-    return {
+    return applyVirtualTableState({
       ...state,
       previewTextCursorColumnIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorColumnIndex : null,
       previewTextCursorRowIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorRowIndex : null,
@@ -132,18 +133,18 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
       selectedEventId: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEventId : null,
       selectedEventIndex,
       useDevtoolsLayout,
-    }
+    })
   }
   if (name === InputName.SelectedEventIndex) {
     const selectedEventIndex = parseSelectedEventIndex(value)
-    return {
+    return withSelectedEventVisible({
       ...state,
       previewTextCursorColumnIndex: selectedEventIndex === null ? null : state.previewTextCursorColumnIndex,
       previewTextCursorRowIndex: selectedEventIndex === null ? null : state.previewTextCursorRowIndex,
       selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
       selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
       selectedEventIndex,
-    }
+    })
   }
   if (name === InputName.TimelineStartSeconds) {
     const nextState = {
@@ -167,14 +168,14 @@ export const handleInput = (state: ChatDebugViewState, name: string, value: stri
     return withPreservedSelection(state, nextState)
   }
   if (name === InputName.CloseDetails) {
-    return {
+    return applyVirtualTableState({
       ...state,
       previewTextCursorColumnIndex: null,
       previewTextCursorRowIndex: null,
       selectedEvent: null,
       selectedEventId: null,
       selectedEventIndex: null,
-    }
+    })
   }
   if (name === InputName.DetailTab) {
     if (!DetailTab.isDetailTab(value)) {

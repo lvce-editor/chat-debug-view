@@ -8,6 +8,7 @@ import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 import { loadEventsDependencies } from '../LoadEvents/LoadEvents.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
+import { applyVirtualTableState } from '../VirtualTable/VirtualTable.ts'
 
 export const loadContentDependencies = loadEventsDependencies as typeof loadEventsDependencies & {
   registerUpdateListener: typeof ChatStorageWorkerClient.registerUpdateListener
@@ -25,10 +26,10 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
       // ignore
     }
   }
-  return {
+  return applyVirtualTableState({
     ...nextState,
     categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilters(nextState.categoryFilters)),
     detailTabs: DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
     tableColumns: TableColumn.createTableColumns(),
-  }
+  })
 }

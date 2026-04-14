@@ -164,3 +164,40 @@ test('loadContent should restore selected event and detail tab from savedState',
   expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
   expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 9)
 })
+
+test('loadContent should initialize the virtual table window on first load when the view has height', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Preferences.get': () => true,
+  })
+  const events = Array.from({ length: 8 }, (_, index) => {
+    return {
+      eventId: index + 1,
+      type: index % 2 === 0 ? 'request' : 'response',
+    }
+  })
+  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
+    events,
+    type: 'success',
+  })
+  const registerUpdateListenerSpy = jest.spyOn(loadContentDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
+  const state = {
+    ...createDefaultState(),
+    height: 600,
+    initial: true,
+    uid: 10,
+    uri: 'chat-debug://session-1',
+    useDevtoolsLayout: true,
+    width: 900,
+    x: 10,
+    y: 20,
+  }
+
+  const result = await loadContent(state, {})
+
+  expect(result.tableMinLineY).toBe(0)
+  expect(result.tableMaxLineY).toBeGreaterThan(0)
+  expect(result.tableMaxLineY).toBeLessThanOrEqual(events.length)
+  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
+  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
+})

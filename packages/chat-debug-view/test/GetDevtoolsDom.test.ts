@@ -158,6 +158,61 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
   expect(resizer?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableResizerPointerDown)
 })
 
+test('getDevtoolsDom should render a table scrollbar when only a visible slice is rendered', () => {
+  const events = [
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 2,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:01.000Z',
+      type: 'response',
+    },
+    {
+      eventId: 3,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:02.000Z',
+      type: 'request',
+    },
+  ]
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    events,
+    null,
+    null,
+    events,
+    '',
+    '',
+    undefined,
+    false,
+    '',
+    '',
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    0,
+    undefined,
+    undefined,
+    1,
+    2,
+  ) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly onPointerDown?: number
+  }[]
+  const tableWrapper = dom.find((node) => node.className === 'TableWrapper')
+  const scrollBar = dom.find((node) => node.className === 'TableScrollBar')
+  const scrollBarThumb = dom.find((node) => node.className === 'TableScrollBarThumb')
+
+  expect(tableWrapper?.childCount).toBe(3)
+  expect(scrollBar?.onPointerDown).toBe(DomEventListenerFunctions.HandleTableScrollBarPointerDown)
+  expect(scrollBarThumb).toBeDefined()
+})
+
 test('getDevtoolsDom should expose the events container application role', () => {
   const events = [
     {

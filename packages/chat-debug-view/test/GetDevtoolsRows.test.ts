@@ -20,6 +20,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -63,6 +64,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -108,6 +110,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -154,6 +157,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -199,6 +203,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       childCount: 3,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -222,6 +227,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       childCount: 3,
       className: 'TableRow TableRowEven',
+      'data-index': '1',
       type: VirtualDomElements.Tr,
     },
     {
@@ -263,6 +269,7 @@ test('getDevtoolsRows should omit hidden columns', () => {
     {
       childCount: 2,
       className: 'TableRow TableRowOdd',
+      'data-index': '0',
       type: VirtualDomElements.Tr,
     },
     {
@@ -277,5 +284,75 @@ test('getDevtoolsRows should omit hidden columns', () => {
       type: VirtualDomElements.Td,
     },
     text('200'),
+  ])
+})
+
+test('getDevtoolsRows should preserve row parity and selection for a virtualized slice', () => {
+  const events = [
+    {
+      eventId: 3,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:02.000Z',
+      type: 'request',
+    },
+    {
+      eventId: 4,
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:03.000Z',
+      type: 'response',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, 3, TableColumn.defaultVisibleTableColumns, 2)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'TableRow TableRowOdd',
+      'data-index': '2',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('request'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
+    {
+      childCount: 3,
+      className: 'TableRow TableRowEven TableRowSelected',
+      'data-index': '3',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('response'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('0 ms'),
   ])
 })

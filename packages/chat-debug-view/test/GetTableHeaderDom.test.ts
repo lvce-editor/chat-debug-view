@@ -204,6 +204,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
     readonly childCount?: number
     readonly className?: string
     readonly onFocus?: number
+    readonly onWheel?: number
     readonly type?: number
   }[]
 
@@ -211,6 +212,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
     {
       childCount: 2,
       className: 'TableWrapper',
+      onWheel: DomEventListenerFunctions.HandleTableWheel,
       type: VirtualDomElements.Div,
     },
     {

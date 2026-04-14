@@ -3,8 +3,8 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
-import { filterEventsByTimelineRange } from '../FilterEventsByTimelineRange/FilterEventsByTimelineRange.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
+import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
@@ -20,7 +20,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
   if (newState.initial) {
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
-  const filteredEvents = filterEventsByTimelineRange(newState.timelineEvents, newState.timelineStartSeconds, newState.timelineEndSeconds)
+  const filteredEvents = getCurrentEvents(newState)
   const dom = getChatDebugViewDom(
     newState.errorMessage,
     newState.filterValue,
@@ -48,6 +48,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.focus,
     newState.previewTextCursorRowIndex,
     newState.previewTextCursorColumnIndex,
+    newState.tableMinLineY,
+    newState.tableMaxLineY,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

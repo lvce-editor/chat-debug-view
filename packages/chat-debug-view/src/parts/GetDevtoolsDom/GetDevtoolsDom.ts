@@ -41,8 +41,11 @@ export const getDevtoolsDom = (
   focus = 0,
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  minLineY = 0,
+  maxLineY = events.length,
 ): readonly VirtualDomNode[] => {
-  const rowNodes = getDevtoolsRows(events, selectedEventIndex, visibleTableColumns)
+  const visibleEvents = events.slice(minLineY, maxLineY)
+  const rowNodes = getDevtoolsRows(visibleEvents, selectedEventIndex, visibleTableColumns, minLineY)
   const effectiveRange = getEffectiveTimelineRange(
     timelineStartSeconds,
     timelineEndSeconds,
@@ -68,10 +71,11 @@ export const getDevtoolsDom = (
   const hasSelectedEvent = responseEventNodes.length > 0
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
+  const showScrollBar = visibleEvents.length < events.length
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableWrapperWrapperDom(rowNodes, events.length, visibleTableColumns, tableColumns, summary, focus)
+      : getTableWrapperWrapperDom(rowNodes, visibleEvents.length, visibleTableColumns, tableColumns, summary, focus, '', '', showScrollBar)
 
   const detailsNodes = getDetailsDom(
     previewEventNodes,
