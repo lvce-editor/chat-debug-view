@@ -22,6 +22,7 @@ export const getDevtoolsRows = (
       {
         childCount: visibleTableColumns.length,
         className: mergeClassNames(TableRow, rowClassName, isSelected ? TableRowSelected : ''),
+        'data-index': `${actualIndex}`,
         type: VirtualDomElements.Tr,
       },
       ...rowCellNodes,
