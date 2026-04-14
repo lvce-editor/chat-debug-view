@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableWrapperWrapperDom } from '../src/parts/GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
 
 test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes', () => {
@@ -28,6 +29,7 @@ test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes'
   expect(dom).toContainEqual(
     expect.objectContaining({
       className: 'TableWrapper',
+      onWheel: DomEventListenerFunctions.HandleTableWheel,
     }),
   )
   expect(dom).toContainEqual(

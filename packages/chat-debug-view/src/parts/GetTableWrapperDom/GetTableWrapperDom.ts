@@ -1,5 +1,6 @@
 import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import { FocusOutline, TableWrapper } from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import { getTableScrollBarDom } from '../GetTableScrollBarDom/GetTableScrollBarDom.ts'
@@ -22,6 +23,7 @@ export const getTableWrapperDom = (
   const tableWrapperNode = {
     childCount: showScrollBar ? 3 : 2,
     className: tableWrapperClassName,
+    onWheel: DomEventListenerFunctions.HandleTableWheel,
     type: VirtualDomElements.Div,
     ...(role ? { role } : {}),
   }

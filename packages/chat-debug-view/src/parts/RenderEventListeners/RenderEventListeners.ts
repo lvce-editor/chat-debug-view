@@ -113,6 +113,11 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleTableScrollBarPointerUp'],
     },
     {
+      name: DomEventListenerFunctions.HandleTableWheel,
+      params: ['handleTableWheel', 'event.deltaY'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
       params: ['handleTimelinePointerDown', EventExpression.TargetName, EventExpression.ClientX],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],

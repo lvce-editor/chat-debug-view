@@ -29,3 +29,4 @@ export const HandlePreviewTextPointerDown = 31
 export const HandleTableScrollBarPointerDown = 32
 export const HandleTableScrollBarPointerMove = 33
 export const HandleTableScrollBarPointerUp = 34
+export const HandleTableWheel = 35
