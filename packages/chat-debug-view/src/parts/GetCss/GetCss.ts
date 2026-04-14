@@ -24,7 +24,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
-  const { selectionEndPercent, selectionStartPercent } = timelineInfo
+  const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
   return `
 .ChatDebugView {
   --ChatDebugViewTableBodyHeight: ${tableBodyHeight}px;
@@ -33,7 +33,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
   --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
-  --ChatDebugViewDurationColumnWidth: ${tableColumnWidths.duration}px;
+  --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewTableScrollBarHeight: ${scrollBarHeight}px;
   --ChatDebugViewTableScrollBarOffset: ${scrollBarOffset}px;
@@ -41,12 +41,12 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ResizerOneLeft: ${resizerOneLeft}px;
   --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
-  --ChatDebugViewTableWidth: ${computedTableWidth}px;
-  --ChatDebugViewTimelineCursorGuideLeft: ${timelineHoverPercent ?? 0}%;
+  --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
   --ChatDebugViewTopSize: ${topSize}px;
-  --ChatDebugViewTypeColumnWidth: ${tableColumnWidths.type}px;
+  --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
 }
 
