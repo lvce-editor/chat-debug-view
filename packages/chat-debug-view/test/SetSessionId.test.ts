@@ -1,5 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
+import { rpcId as handleStorageWorkerUpdateRpcId } from '../src/parts/HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
 import { setSessionId, setSessionIdDependencies } from '../src/parts/SetSessionId/SetSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
@@ -13,6 +14,7 @@ test('setSessionId should load events for the given session id and clear selecti
     events,
     type: 'success',
   })
+  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     errorMessage: 'previous error',
@@ -36,6 +38,8 @@ test('setSessionId should load events for the given session id and clear selecti
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
   expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId')
+  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 0)
 })
 
 test('setSessionId should return failed-to-load state when listing events returns an error', async () => {
@@ -44,6 +48,7 @@ test('setSessionId should return failed-to-load state when listing events return
     error,
     type: 'error',
   })
+  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -65,6 +70,8 @@ test('setSessionId should return failed-to-load state when listing events return
     sessionId: 'session-1',
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 0)
 })
 
 test('setSessionId should keep an empty successful result as an empty events state', async () => {
@@ -72,6 +79,7 @@ test('setSessionId should keep an empty successful result as an empty events sta
     events: [],
     type: 'success',
   })
+  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     errorMessage: 'previous error',
@@ -94,4 +102,6 @@ test('setSessionId should keep an empty successful result as an empty events sta
     sessionId: 'session-2',
   })
   expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
+  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-2', handleStorageWorkerUpdateRpcId, 0)
 })
