@@ -18,10 +18,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
     '',
     '2026-04-10T11:35:00.000Z',
   )
-  await Command.execute('ChatDebug.handleClickRefresh')
+  await ChatDebug.handleClickRefresh()
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await ChatDebug.openTabPreview()
 
   const previewImage = Locator('.ChatDebugViewImagePreviewImage')
   const previewStats = Locator('.ChatDebugViewImagePreviewLabel')

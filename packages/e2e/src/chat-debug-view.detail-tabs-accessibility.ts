@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.detail-tabs-accessibility'
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-detail-tabs-accessibility')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -54,7 +54,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // await expect(panel).toHaveAttribute('aria-label', 'Response')
 
   // act
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
+  await ChatDebug.openTabTiming()
 
   // assert
   await expect(previewTab).toHaveAttribute('tabindex', '-1')

@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.handle-submit-response-completed-merge'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-handle-submit-response-completed-merge'
 
   await ChatDebug.open(sessionId)
@@ -41,7 +41,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(rowCells.nth(1)).toHaveText('250 ms')
 
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'timing', false)
+  await ChatDebug.openTabTiming()
 
   await expect(Locator('.ChatDebugViewTiming')).toContainText('Duration')
   await expect(Locator('.ChatDebugViewTiming')).toContainText('250ms')

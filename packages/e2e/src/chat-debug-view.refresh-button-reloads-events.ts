@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.refresh-button-reloads-events'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   const sessionId = `e2e-session-refresh-button-reloads-events-${Date.now()}`
   const initialEvent = {
@@ -25,8 +25,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // act
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
-  await Command.execute('ChatDebug.appendStoredEventForTest', initialEvent)
-  await Command.execute('ChatDebug.setSessionId', sessionId)
+  await ChatDebug.appendStoredEventForTest(initialEvent)
+  await ChatDebug.setSessionId(sessionId)
   await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.TableBody .TableRow')
@@ -37,8 +37,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(rows.nth(0)).toContainText('request')
 
   // act
-  await Command.execute('ChatDebug.appendStoredEventForTest', nextEvent)
-  await Command.execute('ChatDebug.handleClickRefresh')
+  await ChatDebug.appendStoredEventForTest(nextEvent)
+  await ChatDebug.handleClickRefresh()
 
   // assert
   await expect(rows).toHaveCount(3) // hm?

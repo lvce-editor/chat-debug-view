@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.chat-message-added-preview'
 
-export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('ff68dd2f-6053-453f-95a9-de785f33f67c')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -26,7 +26,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'preview', false)
+  await ChatDebug.openTabPreview()
 
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
@@ -34,7 +34,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await expect(detailsBottom).toHaveText('1what tools do you have access to?')
 
   // act
-  await Command.execute('ChatDebug.handleInput', 'detailTab', 'response', false)
+  await ChatDebug.openTabResponse()
 
   // assert
   await expect(detailsBottom).toContainText('"message"')
