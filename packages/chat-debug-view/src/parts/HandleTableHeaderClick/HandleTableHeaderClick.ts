@@ -3,14 +3,15 @@ import { withPreservedSelection } from '../PreserveSelection/WithPreservedSelect
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const handleTableHeaderClick = (state: ChatDebugViewState, value: string): ChatDebugViewState => {
+  const { sortColumn, sortDescending } = state
   if (!TableColumn.isTableColumn(value)) {
     return state
   }
-  const sortDescending = state.sortColumn === value ? !state.sortDescending : false
+  const newSortDescending = sortColumn === value ? !sortDescending : false
   const nextState = {
     ...state,
     sortColumn: value,
-    sortDescending,
+    sortDescending: newSortDescending,
   }
   return withPreservedSelection(state, nextState)
 }
