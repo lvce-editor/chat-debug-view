@@ -48,6 +48,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     timelineEndSeconds: '',
     timelineEvents: [],
     timelineFilterDescription: '',
+    timelineHeight: 81,
     timelineHoverPercent: null,
     timelineHoverSeconds: '',
     timelineInfo: emptyTimelineInfo,
