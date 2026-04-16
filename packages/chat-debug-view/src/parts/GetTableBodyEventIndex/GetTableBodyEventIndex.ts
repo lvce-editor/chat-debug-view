@@ -5,7 +5,7 @@ import { clampTableWidth, leftPadding } from '../SplitLayout/SplitLayout.ts'
 import { devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number, eventY: number): number => {
-  const { useDevtoolsLayout, width, x, tableWidth, tableMaxLineY, tableMinLineY } = state
+  const { tableMaxLineY, tableMinLineY, tableWidth, useDevtoolsLayout, width, x } = state
   if (!useDevtoolsLayout) {
     return -1
   }
