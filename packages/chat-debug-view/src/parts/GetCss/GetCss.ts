@@ -48,6 +48,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTopSize: ${topSize}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
   padding: ${viewPadding}px;
+  padding-right: 0;
 }
 
 .TableWrapper {
