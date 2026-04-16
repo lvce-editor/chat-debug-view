@@ -5,24 +5,25 @@ import { clampTableWidth, leftPadding } from '../SplitLayout/SplitLayout.ts'
 import { devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number, eventY: number): number => {
-  if (!state.useDevtoolsLayout) {
+  const { useDevtoolsLayout, width, x, tableWidth, tableMaxLineY, tableMinLineY } = state
+  if (!useDevtoolsLayout) {
     return -1
   }
   const currentEvents = getCurrentEvents(state)
   if (currentEvents.length === 0) {
     return -1
   }
-  const tableX = state.x + leftPadding
-  const tableWidth = clampTableWidth(state.width, state.tableWidth)
+  const tableX = x + leftPadding
+  const tableWidthNew = clampTableWidth(width, tableWidth)
   const hasTimeline = currentEvents.length > 0
   const tableBodyY = getTableBodyY(state, hasTimeline)
   const relativeX = eventX - tableX
   const relativeY = eventY - tableBodyY
-  if (relativeX < 0 || relativeX >= tableWidth || relativeY < 0) {
+  if (relativeX < 0 || relativeX >= tableWidthNew || relativeY < 0) {
     return -1
   }
-  const eventIndex = state.tableMinLineY + Math.floor(relativeY / devtoolsTableRowHeight)
-  if (eventIndex < state.tableMinLineY || eventIndex >= state.tableMaxLineY || eventIndex >= currentEvents.length) {
+  const eventIndex = tableMinLineY + Math.floor(relativeY / devtoolsTableRowHeight)
+  if (eventIndex < tableMinLineY || eventIndex >= tableMaxLineY || eventIndex >= currentEvents.length) {
     return -1
   }
   return eventIndex
