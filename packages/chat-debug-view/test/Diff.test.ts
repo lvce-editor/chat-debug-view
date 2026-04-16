@@ -90,6 +90,16 @@ test('diff should return RenderIncremental and RenderCss when width changes', ()
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
 })
 
+test('diff should return RenderIncremental and RenderCss when timelineHeight changes', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    timelineHeight: 96,
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
 test('diff should return RenderIncremental and RenderCss when table sort changes', () => {
   const oldState = createDefaultState()
   const newState = {

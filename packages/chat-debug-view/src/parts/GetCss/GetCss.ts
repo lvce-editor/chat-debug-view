@@ -42,6 +42,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
+  --ChatDebugViewTimelineHeight: ${state.timelineHeight}px;
   --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
@@ -59,6 +60,20 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .Table {
   width: calc(100% - var(--ChatDebugViewTableScrollBarWidth));
+}
+
+.ChatDebugViewTimeline {
+  contain: strict;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: var(--ChatDebugViewTimelineHeight);
+}
+
+.ChatDebugViewTimelineInteractive {
+  flex: 1;
+  min-height: 0;
+  position: relative;
 }
 
 .TableScrollBar {

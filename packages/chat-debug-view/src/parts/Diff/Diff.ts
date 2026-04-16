@@ -22,6 +22,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.tableMinLineY !== newState.tableMinLineY ||
     oldState.tableWidth !== newState.tableWidth ||
     oldState.timelineEndSeconds !== newState.timelineEndSeconds ||
+    oldState.timelineHeight !== newState.timelineHeight ||
     oldState.timelineHoverPercent !== newState.timelineHoverPercent ||
     oldState.timelineHoverSeconds !== newState.timelineHoverSeconds ||
     oldState.timelineSelectionActive !== newState.timelineSelectionActive ||
