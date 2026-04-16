@@ -19,7 +19,6 @@ export const getTableWrapperDom = (
   showScrollBar = false,
 ): readonly VirtualDomNode[] => {
   const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '', className)
-  const scrollBarNodes = getTableScrollBarDom(showScrollBar)
   const tableWrapperNode = {
     childCount: showScrollBar ? 3 : 2,
     className: tableWrapperClassName,
@@ -31,6 +30,6 @@ export const getTableWrapperDom = (
     tableWrapperNode,
     ...getTableDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus),
     ...getTableResizersDom(visibleTableColumns),
-    ...scrollBarNodes,
+    ...getTableScrollBarDom(showScrollBar),
   ]
 }
