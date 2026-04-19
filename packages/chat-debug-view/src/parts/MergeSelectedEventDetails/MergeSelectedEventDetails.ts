@@ -18,7 +18,7 @@ export const mergeSelectedEventDetails = (selectedEvent: ChatViewEvent, selected
     ...selectedEventDetails,
     ...selectedEvent,
     requestEvent: {
-      ...(requestEvent),
+      ...requestEvent,
       ...selectedEventDetails,
     },
     responseEvent: resolvedResponseEvent,
