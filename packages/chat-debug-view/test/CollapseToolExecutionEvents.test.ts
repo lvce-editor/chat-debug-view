@@ -125,3 +125,40 @@ test('collapseToolExecutionEvents should keep non-adjacent handle-submit and sse
 
   expect(result).toEqual([startedEvent, middleEvent, finishedEvent])
 })
+
+test('collapseToolExecutionEvents should merge matching request and response events', () => {
+  const startedEvent: ChatViewEvent = {
+    eventId: 9,
+    requestId: 'request-1',
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:30.000Z',
+    type: 'request',
+  }
+  const finishedEvent: ChatViewEvent = {
+    eventId: 10,
+    requestId: 'request-1',
+    response: {
+      id: 'resp_1',
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:01:45.000Z',
+    type: 'response',
+  }
+
+  const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
+
+  expect(result).toEqual([
+    {
+      ended: '2026-01-01T10:01:45.000Z',
+      eventId: 9,
+      requestId: 'request-1',
+      response: {
+        id: 'resp_1',
+      },
+      sessionId: 'session-1',
+      started: '2026-01-01T10:01:30.000Z',
+      timestamp: '2026-01-01T10:01:45.000Z',
+      type: 'request',
+    },
+  ])
+})
