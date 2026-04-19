@@ -56,3 +56,64 @@ test('selectEventAtIndex should keep the event selected when it has no numeric e
   })
   expect(loadSelectedEvent).toHaveBeenCalledTimes(0)
 })
+
+test('selectEventAtIndex should preserve merged ai request and response details', async () => {
+  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue({
+    body: {
+      input: ['1+1'],
+    },
+    eventId: 1,
+    requestId: 'request-1',
+    type: 'ai-request',
+  })
+  const mergedEvent = {
+    ended: '2026-04-19T12:00:00.250Z',
+    eventId: 1,
+    requestEvent: {
+      eventId: 1,
+      requestId: 'request-1',
+      type: 'ai-request',
+    },
+    responseEvent: {
+      eventId: 2,
+      requestId: 'request-1',
+      type: 'ai-response-success',
+      value: {
+        id: 'resp_1',
+      },
+    },
+    sessionId: 'session-1',
+    started: '2026-04-19T12:00:00.000Z',
+    type: 'ai-request',
+  }
+  const state = {
+    ...createDefaultState(),
+    events: [mergedEvent],
+    sessionId: 'session-1',
+  }
+
+  const result = await selectEventAtIndex(state, 0, {
+    loadSelectedEvent,
+  })
+
+  expect(result.selectedEvent).toEqual(
+    expect.objectContaining({
+      requestEvent: {
+        body: {
+          input: ['1+1'],
+        },
+        eventId: 1,
+        requestId: 'request-1',
+        type: 'ai-request',
+      },
+      responseEvent: {
+        eventId: 2,
+        requestId: 'request-1',
+        type: 'ai-response-success',
+        value: {
+          id: 'resp_1',
+        },
+      },
+    }),
+  )
+})

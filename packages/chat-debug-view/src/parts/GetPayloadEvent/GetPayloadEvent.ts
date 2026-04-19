@@ -4,6 +4,12 @@ import { hasOwn } from '../HasOwn/HasOwn.ts'
 import { shouldIncludeArguments } from '../ShouldIncludeArguments/ShouldIncludeArguments.ts'
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
+  const { requestEvent } = event as {
+    readonly requestEvent?: unknown
+  }
+  if (requestEvent && typeof requestEvent === 'object' && typeof (requestEvent as ChatViewEvent).type === 'string') {
+    return requestEvent
+  }
   const name = getPreviewName(event)
   if (name === 'list_files' && hasOwn(event, 'arguments')) {
     return event.arguments

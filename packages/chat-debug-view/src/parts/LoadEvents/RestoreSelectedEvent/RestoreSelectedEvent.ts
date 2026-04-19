@@ -1,4 +1,5 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
+import { mergeSelectedEventDetails } from '../../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
 import { withPreparedSelectedEventPreview } from '../../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 import { getCurrentEvents } from '../GetCurrentEvents/GetCurrentEvents.ts'
 import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
@@ -45,7 +46,7 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
     selectedEvent.eventId,
     selectedEvent.type,
   )
-  const resolvedSelectedEvent = selectedEventDetails ? await withPreparedSelectedEventPreview(selectedEventDetails) : null
+  const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return {
     ...state,
     previewTextCursorColumnIndex: null,

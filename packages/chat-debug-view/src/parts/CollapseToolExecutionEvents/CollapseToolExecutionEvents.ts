@@ -8,6 +8,14 @@ import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolE
 const requestEventTypes = new Set(['request', 'ai-request'])
 const responseEventTypes = new Set(['response', 'ai-response-success'])
 
+const mergeRequestResponseEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
+  return {
+    ...mergeToolExecutionEvents(startedEvent, finishedEvent, startedEvent.type),
+    requestEvent: startedEvent,
+    responseEvent: finishedEvent,
+  }
+}
+
 const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
   if (!requestEventTypes.has(startedEvent.type) || !responseEventTypes.has(finishedEvent.type)) {
     return false
@@ -39,7 +47,7 @@ export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): r
       continue
     }
     if (nextEvent && isMatchingRequestResponsePair(event, nextEvent)) {
-      collapsedEvents.push(mergeToolExecutionEvents(event, nextEvent, event.type))
+      collapsedEvents.push(mergeRequestResponseEvents(event, nextEvent))
       i++
       continue
     }

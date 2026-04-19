@@ -3,6 +3,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getCurrentEvents as getSharedCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
+import { mergeSelectedEventDetails } from '../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
 import { withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
@@ -49,7 +50,7 @@ export const selectEventAtIndex = async (
     selectedEvent.eventId,
     selectedEvent.type,
   )
-  const resolvedSelectedEvent = await withPreparedSelectedEventPreview(selectedEventDetails ?? selectedEvent)
+  const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({
     ...state,
     detailTabs: DetailTab.createDetailTabs(selectedDetailTab, resolvedSelectedEvent),

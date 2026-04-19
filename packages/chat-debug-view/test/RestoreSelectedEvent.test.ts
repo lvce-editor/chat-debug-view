@@ -80,3 +80,65 @@ test('restoreSelectedEvent should clear selection when the selected event is no 
   })
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
 })
+
+test('restoreSelectedEvent should preserve merged ai request and response details', async () => {
+  const selectedEventDetails = {
+    body: {
+      input: ['1+1'],
+    },
+    eventId: 1,
+    requestId: 'request-1',
+    type: 'ai-request',
+  }
+  const loadSelectedEventSpy = jest.spyOn(loadEventsDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEventDetails)
+  const mergedEvent = {
+    ended: '2026-04-19T12:00:00.250Z',
+    eventId: 1,
+    requestEvent: {
+      eventId: 1,
+      requestId: 'request-1',
+      type: 'ai-request',
+    },
+    responseEvent: {
+      eventId: 2,
+      requestId: 'request-1',
+      type: 'ai-response-success',
+      value: {
+        id: 'resp_1',
+      },
+    },
+    sessionId: 'session-1',
+    started: '2026-04-19T12:00:00.000Z',
+    type: 'ai-request',
+  }
+  const state = {
+    ...createDefaultState(),
+    events: [mergedEvent],
+    selectedEventId: 1,
+    sessionId: 'session-1',
+  }
+
+  const result = await restoreSelectedEvent(state)
+
+  expect(result.selectedEvent).toEqual(
+    expect.objectContaining({
+      requestEvent: {
+        body: {
+          input: ['1+1'],
+        },
+        eventId: 1,
+        requestId: 'request-1',
+        type: 'ai-request',
+      },
+      responseEvent: {
+        eventId: 2,
+        requestId: 'request-1',
+        type: 'ai-response-success',
+        value: {
+          id: 'resp_1',
+        },
+      },
+    }),
+  )
+  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
+})
