@@ -5,8 +5,11 @@ import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/Is
 import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
 import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
 
+const requestEventTypes = new Set(['request', 'ai-request'])
+const responseEventTypes = new Set(['response', 'ai-response-success'])
+
 const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
-  if (startedEvent.type !== 'request' || finishedEvent.type !== 'response') {
+  if (!requestEventTypes.has(startedEvent.type) || !responseEventTypes.has(finishedEvent.type)) {
     return false
   }
   if (startedEvent.sessionId !== finishedEvent.sessionId) {
