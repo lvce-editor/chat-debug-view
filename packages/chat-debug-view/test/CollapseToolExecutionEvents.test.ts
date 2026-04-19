@@ -151,10 +151,12 @@ test('collapseToolExecutionEvents should merge matching request and response eve
     {
       ended: '2026-01-01T10:01:45.000Z',
       eventId: 9,
+      requestEvent: startedEvent,
       requestId: 'request-1',
       response: {
         id: 'resp_1',
       },
+      responseEvent: finishedEvent,
       sessionId: 'session-1',
       started: '2026-01-01T10:01:30.000Z',
       timestamp: '2026-01-01T10:01:45.000Z',
@@ -188,10 +190,12 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
     {
       ended: '2026-04-19T12:00:00.004Z',
       eventId: 11,
+      requestEvent: startedEvent,
       requestId: 'request-11',
       response: {
         id: 'resp_11',
       },
+      responseEvent: finishedEvent,
       sessionId: 'session-1',
       started: '2026-04-19T12:00:00.000Z',
       timestamp: '2026-04-19T12:00:00.004Z',
