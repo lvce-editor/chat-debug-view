@@ -9,7 +9,13 @@ const requestEventTypes = new Set(['request', 'ai-request'])
 const responseEventTypes = new Set(['response', 'ai-response-success'])
 
 const getPairId = (event: ChatViewEvent): string | number | undefined => {
-  const { requestId, request_id: requestIdSnake, requestID, turnId, turn_id: turnIdSnake } = event as {
+  const {
+    requestId,
+    request_id: requestIdSnake,
+    requestID,
+    turnId,
+    turn_id: turnIdSnake,
+  } = event as {
     readonly requestID?: unknown
     readonly requestId?: unknown
     readonly request_id?: unknown
