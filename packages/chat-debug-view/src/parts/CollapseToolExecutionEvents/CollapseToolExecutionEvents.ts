@@ -5,6 +5,18 @@ import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/Is
 import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
 import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
 
+const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
+  if (startedEvent.type !== 'request' || finishedEvent.type !== 'response') {
+    return false
+  }
+  if (startedEvent.sessionId !== finishedEvent.sessionId) {
+    return false
+  }
+  const { requestId: startedRequestId } = startedEvent as { readonly requestId?: unknown }
+  const { requestId: finishedRequestId } = finishedEvent as { readonly requestId?: unknown }
+  return startedRequestId !== undefined && startedRequestId === finishedRequestId
+}
+
 const isMatchingHandleSubmitPair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
   return (
     startedEvent.type === handleSubmitEventType &&
@@ -20,6 +32,11 @@ export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): r
     const nextEvent = events[i + 1]
     if (nextEvent && isToolExecutionStartedEvent(event) && isToolExecutionFinishedEvent(nextEvent) && isMatchingToolExecutionPair(event, nextEvent)) {
       collapsedEvents.push(mergeToolExecutionEvents(event, nextEvent))
+      i++
+      continue
+    }
+    if (nextEvent && isMatchingRequestResponsePair(event, nextEvent)) {
+      collapsedEvents.push(mergeToolExecutionEvents(event, nextEvent, event.type))
       i++
       continue
     }

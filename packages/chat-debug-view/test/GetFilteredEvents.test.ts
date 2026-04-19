@@ -152,3 +152,40 @@ test('getFilteredEvents should show events from multiple selected category filte
     }),
   ])
 })
+
+test('getFilteredEvents should collapse matching request and response events', () => {
+  const requestEvent = {
+    eventId: 7,
+    requestId: 'request-7',
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:04:00.000Z',
+    type: 'request',
+  }
+  const responseEvent = {
+    eventId: 8,
+    requestId: 'request-7',
+    response: {
+      id: 'resp_7',
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:04:01.250Z',
+    type: 'response',
+  }
+
+  const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', [EventCategoryFilter.All], true, true, true)
+
+  expect(result).toEqual([
+    {
+      ended: '2026-01-01T10:04:01.250Z',
+      eventId: 7,
+      requestId: 'request-7',
+      response: {
+        id: 'resp_7',
+      },
+      sessionId: 'session-1',
+      started: '2026-01-01T10:04:00.000Z',
+      timestamp: '2026-01-01T10:04:01.250Z',
+      type: 'request',
+    },
+  ])
+})
