@@ -178,10 +178,12 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
     {
       ended: '2026-01-01T10:04:01.250Z',
       eventId: 7,
+      requestEvent,
       requestId: 'request-7',
       response: {
         id: 'resp_7',
       },
+      responseEvent,
       sessionId: 'session-1',
       started: '2026-01-01T10:04:00.000Z',
       timestamp: '2026-01-01T10:04:01.250Z',

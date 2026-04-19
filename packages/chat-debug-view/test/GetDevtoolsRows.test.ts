@@ -251,6 +251,61 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
   ])
 })
 
+test('getDevtoolsRows should render merged ai request duration from timestamps', () => {
+  const events = [
+    {
+      ended: '2026-04-19T12:00:00.250Z',
+      eventId: 1,
+      requestEvent: {
+        eventId: 1,
+        requestId: 'request-1',
+        timestamp: '2026-04-19T12:00:00.000Z',
+        type: 'ai-request',
+      },
+      requestId: 'request-1',
+      responseEvent: {
+        eventId: 2,
+        requestId: 'request-1',
+        timestamp: '2026-04-19T12:00:00.250Z',
+        type: 'ai-response-success',
+      },
+      sessionId: 'session-1',
+      started: '2026-04-19T12:00:00.000Z',
+      timestamp: '2026-04-19T12:00:00.250Z',
+      type: 'ai-request',
+    },
+  ]
+
+  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'TableRow TableRowOdd',
+      'data-index': '0',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('ai-request'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('200'),
+    {
+      childCount: 1,
+      className: 'TableCell ChatDebugViewCellDuration',
+      type: VirtualDomElements.Td,
+    },
+    text('250 ms'),
+  ])
+})
+
 test('getDevtoolsRows should omit hidden columns', () => {
   const events = [
     {

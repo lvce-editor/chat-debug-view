@@ -1004,3 +1004,59 @@ test('getDevtoolsDom should render simplified tool json in the payload tab', () 
     }),
   )
 })
+
+test('getDevtoolsDom should render merged ai response value in the response tab', () => {
+  const selectedEvent = {
+    ended: '2026-04-19T12:00:00.250Z',
+    eventId: 1,
+    requestEvent: {
+      body: {
+        input: ['1+1'],
+      },
+      eventId: 1,
+      requestId: 'request-1',
+      type: 'ai-request',
+    },
+    requestId: 'request-1',
+    responseEvent: {
+      eventId: 2,
+      requestId: 'request-1',
+      type: 'ai-response-success',
+      value: {
+        id: 'resp_1',
+      },
+    },
+    sessionId: 'session-1',
+    started: '2026-04-19T12:00:00.000Z',
+    timestamp: '2026-04-19T12:00:00.250Z',
+    type: 'ai-request',
+  }
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    [selectedEvent],
+    selectedEvent,
+    0,
+    [selectedEvent],
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    DetailTab.createDetailTabs('response'),
+    TableColumn.defaultVisibleTableColumns,
+  ) as readonly {
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"id"',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '"resp_1"',
+    }),
+  )
+})

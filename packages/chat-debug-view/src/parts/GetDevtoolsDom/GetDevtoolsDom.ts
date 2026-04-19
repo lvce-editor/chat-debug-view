@@ -14,6 +14,7 @@ import { getEventsClassName } from '../GetEventsClassName/GetEventsClassName.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
+import { getResponseEvent } from '../GetResponseEvent/GetResponseEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
 import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
@@ -67,7 +68,7 @@ export const getDevtoolsDom = (
         },
   )
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
-  const responseEventNodes = selectedEvent ? getEventNode(selectedEvent) : []
+  const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
   const hasSelectedEvent = responseEventNodes.length > 0
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
