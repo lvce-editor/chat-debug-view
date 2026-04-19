@@ -23,3 +23,7 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
 
   expect(getResponseEvent(event)).toEqual(responseEvent)
 })
+
+  expect(getResponseEvent(event)).toEqual({
+    id: 'resp_1',
+  })

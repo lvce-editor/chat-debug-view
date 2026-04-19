@@ -54,5 +54,7 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
 
   const result = GetPayloadEvent.getPayloadEvent(event)
 
-  expect(result).toEqual(requestEvent)
+  expect(result).toEqual({
+    input: ['1+1'],
+  })
 })

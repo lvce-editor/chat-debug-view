@@ -8,6 +8,19 @@ export const getPayloadEvent = (event: ChatViewEvent): unknown => {
     readonly requestEvent?: unknown
   }
   if (requestEvent && typeof requestEvent === 'object' && typeof (requestEvent as ChatViewEvent).type === 'string') {
+    const mergedRequestEvent = requestEvent as ChatViewEvent & {
+      readonly body?: unknown
+      readonly value?: unknown
+    }
+    if (mergedRequestEvent.body !== undefined) {
+      return mergedRequestEvent.body
+    }
+    if (mergedRequestEvent.value !== undefined) {
+      return mergedRequestEvent.value
+    }
+    if (hasOwn(mergedRequestEvent, 'arguments')) {
+      return mergedRequestEvent.arguments
+    }
     return requestEvent
   }
   const name = getPreviewName(event)
