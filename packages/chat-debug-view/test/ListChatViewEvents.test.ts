@@ -49,10 +49,10 @@ test('listChatViewEvents should use chat storage worker', async () => {
 test('listChatViewEvents should return error when chat storage worker loading fails', async () => {
   const error = new Error('worker failed')
   using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.getDebugEvents': () => [],
     'ChatStorage.getEvents': () => {
       throw error
     },
-    'ChatStorage.getDebugEvents': () => [],
   })
 
   const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')

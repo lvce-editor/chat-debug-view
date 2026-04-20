@@ -22,7 +22,7 @@ export const getCombinedEvents = async (sessionId: string): Promise<readonly Cha
   const [events, debugEvents] = await Promise.all([ChatStorageWorkerClient.getEvents(sessionId), ChatStorageWorkerClient.getDebugEvents(sessionId)])
   return [...events, ...debugEvents]
     .filter((event) => !isUserMessageEvent(event))
-    .sort((first, second) => getEventTime(first) - getEventTime(second))
+    .toSorted((first, second) => getEventTime(first) - getEventTime(second))
     .map((event, index) => ({
       ...event,
       eventId: index + 1,
