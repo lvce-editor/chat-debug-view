@@ -1,6 +1,8 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { isRecord } from '../IsRecord/IsRecord.ts'
 
+type UnknownRecord = Readonly<Record<string, unknown>>
+
 export interface HeaderDetailEntry {
   readonly label: string
   readonly value: string
@@ -11,7 +13,7 @@ export interface HeadersDetails {
   readonly responseHeaders: readonly HeaderDetailEntry[]
 }
 
-const getCandidateRecords = (value: unknown): readonly Record<string, unknown>[] => {
+const getCandidateRecords = (value: unknown): readonly UnknownRecord[] => {
   if (!isRecord(value)) {
     return []
   }
@@ -35,7 +37,7 @@ const getStringValue = (value: unknown): string | undefined => {
   return undefined
 }
 
-const getField = (records: readonly Record<string, unknown>[], keys: readonly string[]): string | undefined => {
+const getField = (records: readonly UnknownRecord[], keys: readonly string[]): string | undefined => {
   for (const record of records) {
     for (const key of keys) {
       const value = getStringValue(record[key])
@@ -66,7 +68,7 @@ const normalizeHeaderValue = (value: unknown): string => {
   try {
     return JSON.stringify(value)
   } catch {
-    return String(value)
+    return Object.prototype.toString.call(value)
   }
 }
 
@@ -103,7 +105,7 @@ const getHeaderEntries = (value: unknown): readonly HeaderDetailEntry[] => {
     return []
   }
   if (typeof value.entries === 'function') {
-    return Array.from(value.entries()).flatMap((entry): readonly HeaderDetailEntry[] => {
+    return [...value.entries()].flatMap((entry: readonly unknown[]): readonly HeaderDetailEntry[] => {
       if (!Array.isArray(entry) || entry.length < 2 || typeof entry[0] !== 'string') {
         return []
       }
@@ -115,16 +117,19 @@ const getHeaderEntries = (value: unknown): readonly HeaderDetailEntry[] => {
       ]
     })
   }
-  return Object.entries(value).map(([label, headerValue]) => ({
-    label,
-    value: normalizeHeaderValue(headerValue),
-  }))
+  const headerEntries: HeaderDetailEntry[] = []
+  for (const [label, headerValue] of Object.entries(value) as readonly (readonly [string, unknown])[]) {
+    headerEntries.push({
+      label,
+      value: normalizeHeaderValue(headerValue),
+    })
+  }
+  return headerEntries
 }
 
-export const getHeadersDetails = (event: ChatViewEvent): HeadersDetails | null => {
-  const eventRecord = isRecord(event) ? event : {}
-  const requestEvent = eventRecord.requestEvent
-  const responseEvent = eventRecord.responseEvent
+export const getHeadersDetails = (event: Readonly<ChatViewEvent>): HeadersDetails | null => {
+  const eventRecord: UnknownRecord = isRecord(event) ? event : {}
+  const { requestEvent, responseEvent } = eventRecord
   const requestRecords = [...getCandidateRecords(requestEvent), ...getCandidateRecords(event)]
   const responseRecords = [...getCandidateRecords(responseEvent), ...getCandidateRecords(event)]
 
