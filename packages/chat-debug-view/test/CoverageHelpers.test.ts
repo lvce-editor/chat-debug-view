@@ -56,7 +56,13 @@ test('chat debug empty-state strings should return localized messages', () => {
   expect(ChatDebugStrings.noEventsFound()).toBe('No events have been found')
   expect(ChatDebugStrings.noEventsFoundMatching('response')).toBe('No events found matching response')
   expect(ChatDebugStrings.noToolCallEvents()).toBe('No tool call events.')
+  expect(ChatDebugStrings.general()).toBe('General')
+  expect(ChatDebugStrings.headers()).toBe('Headers')
   expect(ChatDebugStrings.network()).toBe('Network')
+  expect(ChatDebugStrings.requestMethod()).toBe('Request Method')
+  expect(ChatDebugStrings.requestUrl()).toBe('Request URL')
+  expect(ChatDebugStrings.responseHeaders()).toBe('Response Headers')
+  expect(ChatDebugStrings.statusCode()).toBe('Status Code')
 })
 
 test('handleSashPointerDown and handleSashPointerUp should return the same state object', () => {

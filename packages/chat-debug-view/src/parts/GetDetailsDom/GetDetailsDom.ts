@@ -6,6 +6,7 @@ import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
+import { getHeadersDetailsDom } from '../GetHeadersDetailsDom/GetHeadersDetailsDom.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
@@ -49,7 +50,7 @@ export const getDetailsDom = (
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
 ): readonly VirtualDomNode[] => {
-  if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
+  if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0 && selectedEvent === null) {
     return []
   }
   const normalizedDetailTabs = getNormalizedDetailTabs(selectedEvent, detailTabs)
@@ -103,6 +104,13 @@ export const getDetailsDom = (
       return getEventNode(selectedEvent)
     }
 
+    const getDetailContentDomHeaders = (): readonly VirtualDomNode[] => {
+      if (selectedEvent === null) {
+        return responseEventNodes
+      }
+      return getHeadersDetailsDom(selectedEvent)
+    }
+
     const contentNodes =
       safeSelectedDetailTab === InputName.Timing
         ? getDetailContentDomTiming()
@@ -110,7 +118,9 @@ export const getDetailsDom = (
           ? getDetailContentDomPreview()
           : safeSelectedDetailTab === InputName.Payload
             ? getDetailContentDomPayload()
-            : getDetailContentDomResponse()
+            : safeSelectedDetailTab === InputName.Headers
+              ? getDetailContentDomHeaders()
+              : getDetailContentDomResponse()
 
     return [
       {
