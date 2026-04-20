@@ -10,6 +10,19 @@ export const listChatViewEvents = async (sessionId: string): Promise<ListChatVie
   return ChatStorageWorker.invoke('ChatStorage.listChatViewEvents', sessionId) as Promise<ListChatViewEventsResult>
 }
 
+export const getEvents = async (sessionId: string): Promise<readonly ChatViewEvent[]> => {
+  return ChatStorageWorker.invoke('ChatStorage.getEvents', sessionId) as Promise<readonly ChatViewEvent[]>
+}
+
+export const getDebugEvents = async (sessionId: string): Promise<readonly ChatViewEvent[]> => {
+  try {
+    return (await ChatStorageWorker.invoke('ChatStorage.getDebugEvents', sessionId)) as Promise<readonly ChatViewEvent[]>
+  } catch {
+    // ignore
+    return []
+  }
+}
+
 export const loadSelectedEvent = async (sessionId: string, eventId: number, type: string): Promise<ChatViewEvent | null> => {
   return ChatStorageWorker.invoke('ChatStorage.loadSelectedEvent', sessionId, eventId, type) as Promise<ChatViewEvent | null>
 }
