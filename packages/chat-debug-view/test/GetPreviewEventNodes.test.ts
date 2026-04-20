@@ -128,6 +128,41 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   )
 })
 
+test('getPreviewEventNodes should render message event preview text from nested content', () => {
+  const result = getPreviewEventNodes('first message', {
+    eventId: 1,
+    message: {
+      content: [
+        {
+          text: 'first message',
+          type: 'text',
+        },
+      ],
+      role: 'user',
+    },
+    requestId: 'request-1',
+    type: 'message',
+  }) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      childCount: 1,
+      className: 'EditorContainer',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'first message',
+    }),
+  )
+})
+
 test('getPreviewEventNodes should render preview text in an editor shell', () => {
   const result = getPreviewEventNodes('first line\nsecond line') as readonly {
     readonly className?: string
