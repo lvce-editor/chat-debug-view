@@ -47,6 +47,30 @@ test('getPreviewEvent should return only the nested message text for chat-messag
   expect(result).toBe('what tools do you have access to?')
 })
 
+test('getPreviewEvent should return the first nested message content text for message events', () => {
+  const event = {
+    eventId: 1,
+    id: 'f2a3e138-249e-4140-a644-5329f100f395',
+    message: {
+      content: [
+        {
+          text: 'first message',
+          type: 'text',
+        },
+      ],
+      role: 'user',
+    },
+    requestId: 'f2a3e138-249e-4140-a644-5329f100f395',
+    sessionId: '113bf25c-90e4-401f-9288-d8759cd145ca',
+    timestamp: '2026-04-20T16:59:46.962Z',
+    type: 'message',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('first message')
+})
+
 test('getPreviewEvent should return write_file content for tool execution events', () => {
   const event = {
     arguments: {

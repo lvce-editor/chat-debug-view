@@ -2,6 +2,33 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { isChatMessageAddedEvent } from '../IsChatMessageAddedEvent/IsChatMessageAddedEvent.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
 
+const getMessageContentText = (message: unknown): string | undefined => {
+  if (!message || typeof message !== 'object') {
+    return undefined
+  }
+  const { content } = message as { readonly content?: unknown }
+  if (!Array.isArray(content) || content.length === 0) {
+    return undefined
+  }
+  const [firstContentItem] = content
+  if (!firstContentItem || typeof firstContentItem !== 'object') {
+    return undefined
+  }
+  const { text } = firstContentItem as { readonly text?: unknown }
+  return typeof text === 'string' ? text : undefined
+}
+
+const getMessageText = (message: unknown): string | undefined => {
+  if (!message || typeof message !== 'object') {
+    return undefined
+  }
+  const { text } = message as { readonly text?: unknown }
+  if (typeof text === 'string') {
+    return text
+  }
+  return getMessageContentText(message)
+}
+
 const getResponseContentText = (content: unknown): string | undefined => {
   if (!content || typeof content !== 'object') {
     return undefined
@@ -50,19 +77,8 @@ export const getPreviewMessageText = (event: ChatViewEvent): string | undefined 
   if (sseResponseCompletedPreviewText !== undefined) {
     return sseResponseCompletedPreviewText
   }
-  if (!isChatMessageAddedEvent(event)) {
+  if (!isChatMessageAddedEvent(event) && event.type !== 'message') {
     return undefined
   }
-  const { message } = event
-  if (!message || typeof message !== 'object') {
-    return undefined
-  }
-  if (!Object.hasOwn(message, 'text')) {
-    return undefined
-  }
-  const { text } = message as { readonly text?: unknown }
-  if (typeof text !== 'string') {
-    return undefined
-  }
-  return text
+  return getMessageText(event.message)
 }
