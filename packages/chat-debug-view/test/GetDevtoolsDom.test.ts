@@ -1021,7 +1021,7 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
-      type: 'ai-response-success',
+      type: 'ai-response',
       value: {
         id: 'resp_1',
       },

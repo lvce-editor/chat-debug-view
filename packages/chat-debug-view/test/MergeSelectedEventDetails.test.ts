@@ -12,14 +12,14 @@ test('mergeSelectedEventDetails should prefer the loaded response event for ai r
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
-      type: 'ai-response-success',
+      type: 'ai-response',
     },
     type: 'ai-request',
   }
   const selectedEventDetails = {
     eventId: 2,
     requestId: 'request-1',
-    type: 'ai-response-success',
+    type: 'ai-response',
     value: {
       id: 'resp_1',
     },

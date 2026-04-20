@@ -165,7 +165,7 @@ test('collapseToolExecutionEvents should merge matching request and response eve
   ])
 })
 
-test('collapseToolExecutionEvents should merge matching ai-request and ai-response-success events', () => {
+test('collapseToolExecutionEvents should merge matching ai-request and ai-response events', () => {
   const startedEvent: ChatViewEvent = {
     eventId: 11,
     requestId: 'request-11',
@@ -181,7 +181,7 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
     },
     sessionId: 'session-1',
     timestamp: '2026-04-19T12:00:00.004Z',
-    type: 'ai-response-success',
+    type: 'ai-response',
   }
 
   const result = collapseToolExecutionEvents([startedEvent, finishedEvent])

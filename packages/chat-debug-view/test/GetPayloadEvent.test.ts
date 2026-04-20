@@ -43,7 +43,7 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
-      type: 'ai-response-success',
+      type: 'ai-response',
       value: {
         id: 'resp_1',
       },

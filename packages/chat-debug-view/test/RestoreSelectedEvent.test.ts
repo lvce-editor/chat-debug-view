@@ -102,7 +102,7 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
-      type: 'ai-response-success',
+      type: 'ai-response',
       value: {
         id: 'resp_1',
       },
@@ -133,7 +133,7 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
       responseEvent: {
         eventId: 2,
         requestId: 'request-1',
-        type: 'ai-response-success',
+        type: 'ai-response',
         value: {
           id: 'resp_1',
         },
