@@ -9,3 +9,12 @@ test('getCss should expose the timeline height variable and strict containment',
   expect(css).toContain('.ChatDebugViewTimeline {\n  contain: strict;')
   expect(css).toContain('height: var(--ChatDebugViewTimelineHeight);')
 })
+
+test('getCss should include devtools style rules for the headers details tab', () => {
+  const css = getCss(createDefaultState())
+
+  expect(css).toContain('--ChatDebugViewHeadersLabelWidth: 148px;')
+  expect(css).toContain('.ChatDebugViewHeadersSection {\n  display: flex;')
+  expect(css).toContain('.ChatDebugViewHeaders .ChatDebugViewTimingRow:hover {')
+  expect(css).toContain('.ChatDebugViewHeaders .ChatDebugViewTimingValue {\n  flex: 1;')
+})

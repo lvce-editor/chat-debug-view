@@ -1,5 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
+import { collapseToolExecutionEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
+import { getCombinedEvents } from '../GetCombinedEvents/GetCombinedEvents.ts'
 
 export const loadSelectedEvent = async (
   _databaseName: string,
@@ -10,5 +11,8 @@ export const loadSelectedEvent = async (
   eventId: number,
   type: string,
 ): Promise<ChatViewEvent | null> => {
-  return ChatStorageWorkerClient.loadSelectedEvent(sessionId, eventId, type)
+  const events = await getCombinedEvents(sessionId)
+  const collapsedEvents = collapseToolExecutionEvents(events)
+  const event = collapsedEvents.find((candidate) => candidate.eventId === eventId && candidate.type === type)
+  return event || null
 }

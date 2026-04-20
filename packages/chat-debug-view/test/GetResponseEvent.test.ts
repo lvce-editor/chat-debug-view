@@ -5,7 +5,7 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
-    type: 'ai-response-success',
+    type: 'ai-response',
     value: {
       id: 'resp_1',
     },

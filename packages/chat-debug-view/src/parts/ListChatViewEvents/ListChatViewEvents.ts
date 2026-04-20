@@ -1,5 +1,5 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
-import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
+import { getCombinedEvents } from '../GetCombinedEvents/GetCombinedEvents.ts'
 
 export const listChatViewEvents = async (
   sessionId: string,
@@ -9,7 +9,11 @@ export const listChatViewEvents = async (
   _sessionIdIndexName: string,
 ): Promise<ListChatViewEventsResult> => {
   try {
-    return await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    const combinedEvents = await getCombinedEvents(sessionId)
+    return {
+      events: combinedEvents,
+      type: 'success',
+    }
   } catch (error) {
     return {
       error,

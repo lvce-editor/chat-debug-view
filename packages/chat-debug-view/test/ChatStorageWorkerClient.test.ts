@@ -23,6 +23,30 @@ test('listChatViewEvents should invoke ChatStorageWorker with the session id', a
   expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
 
+test('getEvents should invoke ChatStorageWorker with the session id', async () => {
+  const expected = [{ sessionId: 'session-1', timestamp: '2026-03-08T00:00:00.000Z', type: 'chat-message-added' }]
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.getEvents': () => expected,
+  })
+
+  const result = await ChatStorageWorkerClient.getEvents('session-1')
+
+  expect(result).toEqual(expected)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.getEvents', 'session-1']])
+})
+
+test('getDebugEvents should invoke ChatStorageWorker with the session id', async () => {
+  const expected = [{ sessionId: 'session-1', timestamp: '2026-03-08T00:00:01.000Z', type: 'request' }]
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.getDebugEvents': () => expected,
+  })
+
+  const result = await ChatStorageWorkerClient.getDebugEvents('session-1')
+
+  expect(result).toEqual(expected)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.getDebugEvents', 'session-1']])
+})
+
 test('loadSelectedEvent should invoke ChatStorageWorker with the requested event identity', async () => {
   const expected = {
     eventId: 2,

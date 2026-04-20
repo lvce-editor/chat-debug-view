@@ -1021,7 +1021,7 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
-      type: 'ai-response-success',
+      type: 'ai-response',
       value: {
         id: 'resp_1',
       },
@@ -1057,6 +1057,121 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
   expect(dom).toContainEqual(
     expect.objectContaining({
       text: '"resp_1"',
+    }),
+  )
+})
+
+test('getDevtoolsDom should render a headers tab for merged ai request response events with headers', () => {
+  const selectedEvent = {
+    ended: '2026-04-19T12:00:00.250Z',
+    eventId: 1,
+    requestEvent: {
+      eventId: 1,
+      method: 'POST',
+      requestId: 'request-1',
+      type: 'ai-request',
+      url: 'https://example.com/v1/chat/completions',
+    },
+    requestId: 'request-1',
+    responseEvent: {
+      eventId: 2,
+      headers: {
+        'content-type': 'application/json',
+        'x-request-id': 'abc-123',
+      },
+      requestId: 'request-1',
+      status: 200,
+      type: 'ai-response',
+      value: {
+        id: 'resp_1',
+      },
+    },
+    sessionId: 'session-1',
+    started: '2026-04-19T12:00:00.000Z',
+    timestamp: '2026-04-19T12:00:00.250Z',
+    type: 'ai-request',
+  }
+
+  const dom = GetDevtoolsDom.getDevtoolsDom(
+    [selectedEvent],
+    selectedEvent,
+    0,
+    [selectedEvent],
+    '',
+    '',
+    'No events have been found',
+    false,
+    '',
+    '',
+    DetailTab.createDetailTabs('headers', selectedEvent),
+    TableColumn.defaultVisibleTableColumns,
+  ) as readonly {
+    readonly ariaSelected?: boolean
+    readonly className?: string
+    readonly name?: string
+    readonly text?: string
+  }[]
+
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      ariaSelected: true,
+      className: 'PanelTab PanelTabSelected',
+      name: 'headers',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Headers',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'General',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Request URL',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'https://example.com/v1/chat/completions',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Request Method',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'POST',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Status Code',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: '200',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Response Headers',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'content-type',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'application/json',
     }),
   )
 })

@@ -19,7 +19,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       requestId: 'request-1',
       sessionId,
       timestamp: '2026-03-08T00:00:00.250Z',
-      type: 'ai-response-success',
+      type: 'ai-response',
     },
   ]
 

@@ -6,7 +6,7 @@ import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsTo
 import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
 
 const requestEventTypes = new Set(['request', 'ai-request'])
-const responseEventTypes = new Set(['response', 'ai-response-success'])
+const responseEventTypes = new Set(['response', 'ai-response'])
 
 const getPairId = (event: ChatViewEvent): string | number | undefined => {
   const {
@@ -82,7 +82,7 @@ const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEven
   if (startedPairId !== undefined && finishedPairId !== undefined) {
     return startedPairId === finishedPairId
   }
-  return startedEvent.type === 'ai-request' && finishedEvent.type === 'ai-response-success'
+  return startedEvent.type === 'ai-request' && finishedEvent.type === 'ai-response'
 }
 
 const isMatchingHandleSubmitPair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {

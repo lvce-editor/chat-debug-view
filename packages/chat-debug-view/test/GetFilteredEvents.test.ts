@@ -153,7 +153,7 @@ test('getFilteredEvents should show events from multiple selected category filte
   ])
 })
 
-test('getFilteredEvents should collapse matching ai-request and ai-response-success events', () => {
+test('getFilteredEvents should collapse matching ai-request and ai-response events', () => {
   const requestEvent = {
     eventId: 7,
     requestId: 'request-7',
@@ -169,7 +169,7 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
     },
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:04:01.250Z',
-    type: 'ai-response-success',
+    type: 'ai-response',
   }
 
   const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', [EventCategoryFilter.All], true, true, true)

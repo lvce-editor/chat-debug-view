@@ -23,6 +23,42 @@ test('getPreviewMessageText should return the nested message text for chat-messa
   expect(result).toBe('added text')
 })
 
+test('getPreviewMessageText should return the first message content text for chat-message-added events', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    eventId: 1,
+    message: {
+      content: [
+        {
+          text: 'added content text',
+          type: 'text',
+        },
+      ],
+    },
+    type: 'chat-message-added',
+  })
+
+  expect(result).toBe('added content text')
+})
+
+test('getPreviewMessageText should return the first message content text for message events', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    eventId: 1,
+    message: {
+      content: [
+        {
+          text: 'first message',
+          type: 'text',
+        },
+      ],
+      role: 'user',
+    },
+    requestId: 'request-1',
+    type: 'message',
+  })
+
+  expect(result).toBe('first message')
+})
+
 test('getPreviewMessageText should return undefined when the nested message text is missing', () => {
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,

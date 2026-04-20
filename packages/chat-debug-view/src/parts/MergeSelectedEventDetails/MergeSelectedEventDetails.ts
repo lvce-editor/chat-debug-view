@@ -13,7 +13,7 @@ export const mergeSelectedEventDetails = (selectedEvent: ChatViewEvent, selected
   }
   const selectedEventDetailsType = selectedEventDetails.type
   const resolvedResponseEvent =
-    selectedEventDetailsType === 'response' || selectedEventDetailsType === 'ai-response-success' ? selectedEventDetails : responseEvent
+    selectedEventDetailsType === 'response' || selectedEventDetailsType === 'ai-response' ? selectedEventDetails : responseEvent
   return {
     ...selectedEventDetails,
     ...selectedEvent,
