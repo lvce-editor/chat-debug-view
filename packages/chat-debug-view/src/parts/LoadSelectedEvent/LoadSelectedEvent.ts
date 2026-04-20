@@ -1,21 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 import { collapseToolExecutionEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
-import { toTimeNumber } from '../ToTimeNumber/ToTimeNumber.ts'
-
-const getEventTime = (event: ChatViewEvent): number => {
-  return toTimeNumber(event.started ?? event.startTime ?? event.startTimestamp ?? event.timestamp) ?? Number.MAX_SAFE_INTEGER
-}
-
-const getCombinedEvents = async (sessionId: string): Promise<readonly ChatViewEvent[]> => {
-  const [events, debugEvents] = await Promise.all([ChatStorageWorkerClient.getEvents(sessionId), ChatStorageWorkerClient.getDebugEvents(sessionId)])
-  return [...events, ...debugEvents]
-    .sort((first, second) => getEventTime(first) - getEventTime(second))
-    .map((event, index) => ({
-      ...event,
-      eventId: index + 1,
-    }))
-}
+import { getCombinedEvents } from '../GetCombinedEvents/GetCombinedEvents.ts'
 
 export const loadSelectedEvent = async (
   _databaseName: string,

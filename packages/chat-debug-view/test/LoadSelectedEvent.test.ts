@@ -91,3 +91,48 @@ test('loadSelectedEvent should return null when the combined worker results do n
     ['ChatStorage.getDebugEvents', 'session-1'],
   ])
 })
+
+test('loadSelectedEvent should ignore filtered user message events when resolving combined worker results', async () => {
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.getDebugEvents': () => [
+      {
+        requestId: 'request-1',
+        sessionId: 'session-1',
+        timestamp: '2026-04-20T17:20:17.000Z',
+        type: 'request',
+      },
+    ],
+    'ChatStorage.getEvents': () => [
+      {
+        id: 'message-1',
+        message: {
+          content: [
+            {
+              text: 'first message',
+              type: 'text',
+            },
+          ],
+          role: 'user',
+        },
+        requestId: 'message-1',
+        sessionId: 'session-1',
+        timestamp: '2026-04-20T17:20:16.531Z',
+        type: 'message',
+      },
+    ],
+  })
+
+  const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+
+  expect(result).toEqual({
+    eventId: 1,
+    requestId: 'request-1',
+    sessionId: 'session-1',
+    timestamp: '2026-04-20T17:20:17.000Z',
+    type: 'request',
+  })
+  expect(mockRpc.invocations).toEqual([
+    ['ChatStorage.getEvents', 'session-1'],
+    ['ChatStorage.getDebugEvents', 'session-1'],
+  ])
+})

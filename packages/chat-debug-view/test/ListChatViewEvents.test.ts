@@ -66,3 +66,53 @@ test('listChatViewEvents should return error when chat storage worker loading fa
     ['ChatStorage.getDebugEvents', 'session-1'],
   ])
 })
+
+test('listChatViewEvents should filter out user message events from the displayed list', async () => {
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.getDebugEvents': () => [
+      {
+        requestId: 'request-1',
+        sessionId: 'session-1',
+        timestamp: '2026-04-20T17:20:17.000Z',
+        type: 'request',
+      },
+    ],
+    'ChatStorage.getEvents': () => [
+      {
+        id: 'message-1',
+        message: {
+          content: [
+            {
+              text: 'first message',
+              type: 'text',
+            },
+          ],
+          role: 'user',
+        },
+        requestId: 'message-1',
+        sessionId: 'session-1',
+        timestamp: '2026-04-20T17:20:16.531Z',
+        type: 'message',
+      },
+    ],
+  })
+
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    events: [
+      {
+        eventId: 1,
+        requestId: 'request-1',
+        sessionId: 'session-1',
+        timestamp: '2026-04-20T17:20:17.000Z',
+        type: 'request',
+      },
+    ],
+    type: 'success',
+  })
+  expect(mockRpc.invocations).toEqual([
+    ['ChatStorage.getEvents', 'session-1'],
+    ['ChatStorage.getDebugEvents', 'session-1'],
+  ])
+})
