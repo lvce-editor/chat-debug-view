@@ -27,6 +27,12 @@ export const getCss = (state: ChatDebugViewState): string => {
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
   return `
 .ChatDebugView {
+  --ChatDebugViewHeadersAccent: color-mix(in srgb, var(--vscode-focusBorder, #0e639c) 72%, transparent);
+  --ChatDebugViewHeadersBorder: color-mix(in srgb, var(--vscode-widget-border, rgba(255, 255, 255, 0.14)) 84%, transparent);
+  --ChatDebugViewHeadersLabelWidth: 148px;
+  --ChatDebugViewHeadersMutedForeground: color-mix(in srgb, var(--vscode-descriptionForeground, rgba(204, 204, 204, 0.72)) 90%, white 10%);
+  --ChatDebugViewHeadersPanelBackground: color-mix(in srgb, var(--vscode-editorWidget-background, rgba(30, 30, 30, 0.96)) 94%, black 6%);
+  --ChatDebugViewHeadersStrongForeground: color-mix(in srgb, var(--vscode-foreground, rgba(255, 255, 255, 0.94)) 96%, white 4%);
   --ChatDebugViewTableBodyHeight: ${tableBodyHeight}px;
   --ChatDebugViewTableHeaderHeight: ${devtoolsTableHeaderHeight}px;
   --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
@@ -94,6 +100,73 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: absolute;
   top: var(--ChatDebugViewTableScrollBarOffset);
   width: calc(100% - 4px);
+}
+
+.ChatDebugViewHeaders {
+  gap: 12px;
+  padding: 8px 0 16px;
+}
+
+.ChatDebugViewHeadersSection {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--ChatDebugViewHeadersBorder);
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), var(--ChatDebugViewHeadersPanelBackground));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.ChatDebugViewHeadersSectionTitle {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--ChatDebugViewHeadersBorder);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  color: var(--ChatDebugViewHeadersMutedForeground);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  opacity: 1;
+  text-transform: uppercase;
+}
+
+.ChatDebugViewHeaders .ChatDebugViewTimingRow {
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 30px;
+  padding: 8px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ChatDebugViewHeadersBorder) 80%, transparent);
+  background: transparent;
+}
+
+.ChatDebugViewHeaders .ChatDebugViewTimingRow:last-child {
+  border-bottom: none;
+}
+
+.ChatDebugViewHeaders .ChatDebugViewTimingRow:hover {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ChatDebugViewHeadersAccent) 14%, transparent), transparent 70%);
+}
+
+.ChatDebugViewHeaders .ChatDebugViewTimingLabel {
+  flex: 0 0 var(--ChatDebugViewHeadersLabelWidth);
+  min-width: 120px;
+  max-width: 42%;
+  color: var(--ChatDebugViewHeadersMutedForeground);
+  font-weight: 500;
+  opacity: 1;
+  overflow-wrap: anywhere;
+}
+
+.ChatDebugViewHeaders .ChatDebugViewTimingValue {
+  flex: 1;
+  min-width: 0;
+  color: var(--ChatDebugViewHeadersStrongForeground);
+  text-align: left;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 `

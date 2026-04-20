@@ -1,6 +1,13 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
+import {
+  ChatDebugViewHeaders,
+  ChatDebugViewHeadersSection,
+  ChatDebugViewHeadersSectionTitle,
+  ChatDebugViewTiming,
+  ChatDebugViewTimingLabel,
+} from '../src/parts/ClassNames/ClassNames.ts'
 import { getHeadersDetailsDom } from '../src/parts/GetHeadersDetailsDom/GetHeadersDetailsDom.ts'
 import { getTimingRowDom } from '../src/parts/GetTimingRowDom/GetTimingRowDom.ts'
 
@@ -29,13 +36,18 @@ test('getHeadersDetailsDom should render general and response headers sections f
 
   expect(result).toEqual([
     {
-      childCount: 7,
-      className: 'ChatDebugViewTiming',
+      childCount: 2,
+      className: `${ChatDebugViewTiming} ${ChatDebugViewHeaders}`,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 4,
+      className: ChatDebugViewHeadersSection,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
-      className: 'ChatDebugViewTimingLabel',
+      className: `${ChatDebugViewTimingLabel} ${ChatDebugViewHeadersSectionTitle}`,
       type: VirtualDomElements.Div,
     },
     text(ChatDebugStrings.general()),
@@ -43,8 +55,13 @@ test('getHeadersDetailsDom should render general and response headers sections f
     ...getTimingRowDom(ChatDebugStrings.requestMethod(), 'POST'),
     ...getTimingRowDom(ChatDebugStrings.statusCode(), '200'),
     {
+      childCount: 3,
+      className: ChatDebugViewHeadersSection,
+      type: VirtualDomElements.Div,
+    },
+    {
       childCount: 1,
-      className: 'ChatDebugViewTimingLabel',
+      className: `${ChatDebugViewTimingLabel} ${ChatDebugViewHeadersSectionTitle}`,
       type: VirtualDomElements.Div,
     },
     text(ChatDebugStrings.responseHeaders()),
