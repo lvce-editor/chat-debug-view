@@ -1,14 +1,14 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { isAttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getResponseEvent } from '../GetResponseEvent/GetResponseEvent.ts'
 import * as InputName from '../InputName/InputName.ts'
-import { isAttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
-import { defaultPreviewTextColumnWidth } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { defaultPreviewTextColumnWidth } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import * as UiStrings from '../UiStrings/UiStrings.ts'
 
 const getStringLineCount = (value: string): number => {
