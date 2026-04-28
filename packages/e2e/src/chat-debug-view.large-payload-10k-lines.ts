@@ -4,13 +4,11 @@ export const name = 'chat-debug-view.large-payload-10k-lines'
 
 export const skip = 1
 
-export const test: Test = async ({ FileSystem, Workspace, ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, FileSystem, Locator, Workspace }) => {
   const tmpDir = await FileSystem.getTmpDir()
   await Workspace.setPath(tmpDir)
   const payloadText = Array.from({ length: 10_000 }, (_, index) => `line ${index + 1}`).join('\n')
   await ChatDebug.open2({
-    sessionId: 'e2e-session-large-payload-10k-lines',
-    useDevtoolsLayout: true,
     events: [
       {
         arguments: {
@@ -23,6 +21,8 @@ export const test: Test = async ({ FileSystem, Workspace, ChatDebug, expect, Loc
         type: 'tool-execution',
       },
     ],
+    sessionId: 'e2e-session-large-payload-10k-lines',
+    useDevtoolsLayout: true,
   })
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabPreview()
