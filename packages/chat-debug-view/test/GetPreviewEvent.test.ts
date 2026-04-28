@@ -2,6 +2,72 @@ import { expect, test } from '@jest/globals'
 import { getPreviewEvent } from '../src/parts/GetPreviewEvent/GetPreviewEvent.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 
+test('getPreviewEvent should return the extracted text for sse-response-completed events when available', () => {
+  const event = {
+    eventId: 8,
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'sse-response-completed',
+    value: {
+      response: {
+        output: [
+          {
+            content: [
+              {
+                text: 'completed response preview',
+                type: 'output_text',
+              },
+            ],
+          },
+        ],
+      },
+      type: 'response.completed',
+    },
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('completed response preview')
+})
+
+test('getPreviewEvent should return response.output for sse-response-completed events when text preview is unavailable', () => {
+  const output = [
+    {
+      content: [
+        {
+          summary: [],
+          type: 'reasoning',
+        },
+      ],
+      id: 'rs_123',
+      type: 'reasoning',
+    },
+    {
+      arguments: '{"includeIgnoredFiles":false,"includePattern":"src/**"}',
+      call_id: 'call_123',
+      name: 'grep_search',
+      status: 'completed',
+      type: 'function_call',
+    },
+  ]
+  const event = {
+    eventId: 9,
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'sse-response-completed',
+    value: {
+      response: {
+        output,
+      },
+      type: 'response.completed',
+    },
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toEqual(output)
+})
+
 test('getPreviewEvent should return only the message text for chat-message-updated events', () => {
   const event = {
     eventId: 156,
