@@ -4,26 +4,26 @@ export const name = 'chat-debug-view.large-payload-10k-lines'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
-  const sessionId = 'e2e-session-large-payload-10k-lines'
-  await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+export const test: Test = async ({ FileSystem, Workspace, ChatDebug, expect, Locator }) => {
+  const tmpDir = await FileSystem.getTmpDir()
+  await Workspace.setPath(tmpDir)
   const payloadText = Array.from({ length: 10_000 }, (_, index) => `line ${index + 1}`).join('\n')
-  const events = [
-    {
-      arguments: {
-        uri: 'file:///workspace/large-10k.txt',
+  await ChatDebug.open2({
+    sessionId: 'e2e-session-large-payload-10k-lines',
+    useDevtoolsLayout: true,
+    events: [
+      {
+        arguments: {
+          uri: 'file:///workspace/large-10k.txt',
+        },
+        name: 'read_file',
+        result: payloadText,
+        sessionId: 'e2e-session-large-payload-10k-lines',
+        timestamp: '2026-04-13T10:00:00.000Z',
+        type: 'tool-execution',
       },
-      name: 'read_file',
-      result: payloadText,
-      sessionId,
-      timestamp: '2026-04-13T10:00:00.000Z',
-      type: 'tool-execution',
-    },
-  ]
-
-  await ChatDebug.setEvents(events)
-  await ChatDebug.useDevtoolsLayout()
+    ],
+  })
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabPreview()
 
