@@ -11,7 +11,7 @@ test('getTableBodyDom should render the table body nodes', () => {
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableBodyDom.getTableBodyDom(rowNodes as readonly any[], 1) as readonly {
+  const dom = GetTableBodyDom.getTableBodyDom(rowNodes, 1) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onPointerDown?: number
