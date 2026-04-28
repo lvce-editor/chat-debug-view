@@ -101,7 +101,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1) as readonly {
+  const dom = GetTableDom.getTableDom(rowNodes, 1) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onContextMenu?: number
@@ -200,7 +200,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableWrapperDom.getTableWrapperDom(rowNodes as readonly any[], 1) as readonly {
+  const dom = GetTableWrapperDom.getTableWrapperDom(rowNodes, 1) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onFocus?: number
@@ -335,7 +335,7 @@ test('getTableDom should count only direct children for the resizer wrapper', ()
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1) as readonly {
+  const dom = GetTableDom.getTableDom(rowNodes, 1) as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -352,7 +352,7 @@ test('getTableDom should omit hidden columns from the colgroup', () => {
       type: VirtualDomElements.Tr,
     },
   ]
-  const dom = GetTableDom.getTableDom(rowNodes as readonly any[], 1, [TableColumn.Type, TableColumn.Status]) as readonly {
+  const dom = GetTableDom.getTableDom(rowNodes, 1, [TableColumn.Type, TableColumn.Status]) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly type?: number
@@ -396,7 +396,7 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
     },
   ]
   const dom = GetTableWrapperDom.getTableWrapperDom(
-    rowNodes as readonly any[],
+    rowNodes,
     1,
     undefined,
     undefined,

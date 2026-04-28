@@ -12,7 +12,7 @@ test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes'
     },
   ]
 
-  const dom = getTableWrapperWrapperDom(rowNodes as readonly any[], 1, undefined, undefined, '2 events, 1s from start to finish') as readonly {
+  const dom = getTableWrapperWrapperDom(rowNodes, 1, undefined, undefined, '2 events, 1s from start to finish') as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly role?: string
