@@ -1,6 +1,7 @@
 // cspell:ignore liga calt
 
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getDetailsLineNumberWidth } from '../GetDetailsLineNumberWidth/GetDetailsLineNumberWidth.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -19,6 +20,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   const scrollBarOffset = getScrollBarOffset(state.tableDeltaY, maxDeltaY, tableBodyHeight, scrollBarHeight)
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
+  const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
   const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
   const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
@@ -32,6 +34,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
   --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
   --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
+  --ChatDebugViewDetailsLineNumberWidth: ${detailsLineNumberWidth}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
@@ -74,6 +77,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   flex: 1;
   min-height: 0;
   position: relative;
+}
+
+.ChatDebugViewDetailsBottom .Gutter {
+  flex: 0 0 var(--ChatDebugViewDetailsLineNumberWidth);
+  width: var(--ChatDebugViewDetailsLineNumberWidth);
+}
+
+.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {
+  display: inline-block;
+  min-width: var(--ChatDebugViewDetailsLineNumberWidth);
+  width: var(--ChatDebugViewDetailsLineNumberWidth);
 }
 
 .TableScrollBar {
