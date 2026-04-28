@@ -1,9 +1,8 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
 
