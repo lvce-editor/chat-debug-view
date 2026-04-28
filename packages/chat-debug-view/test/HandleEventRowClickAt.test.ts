@@ -33,7 +33,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     detail: 'value',
     eventId: 3,
     type: 'request',
-  } as ChatViewEvent)
+  })
   const state = createClickableState({
     events: [
       {
@@ -155,7 +155,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     detail: 'preview',
     eventId: 2,
     type: 'response',
-  } as ChatViewEvent)
+  })
   const state = createClickableState({
     detailTabs: DetailTab.createDetailTabs('preview'),
     events: [
@@ -189,7 +189,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     detail: 'preview',
     eventId: 2,
     type: 'chat-message-added',
-  } as ChatViewEvent)
+  })
   const state = createClickableState({
     detailTabs: DetailTab.createDetailTabs('timing'),
     events: [
