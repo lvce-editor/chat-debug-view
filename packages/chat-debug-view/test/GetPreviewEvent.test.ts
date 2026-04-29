@@ -152,6 +152,28 @@ test('getPreviewEvent should return read_file result text for tool execution eve
   expect(result).toBe('line 1\nline 2')
 })
 
+test('getPreviewEvent should return read_file result content for structured tool execution events', () => {
+  const event = {
+    arguments: {
+      uri: 'file:///workspace/test.txt',
+    },
+    eventId: 5,
+    name: 'read_file',
+    result: [
+      {
+        content: 'line 1\nline 2',
+      },
+    ],
+    sessionId: 'session-1',
+    timestamp: '2026-04-10T10:00:00.000Z',
+    type: 'tool-execution',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('line 1\nline 2')
+})
+
 test('getPreviewEvent should return only result.entries for list_files tool execution events', () => {
   const entries = [
     {

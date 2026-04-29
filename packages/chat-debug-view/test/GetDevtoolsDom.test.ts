@@ -716,7 +716,7 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
   )
 })
 
-test('getDevtoolsDom should simplify preview json to name, arguments and result when available', () => {
+test('getDevtoolsDom should show only read_file content in the preview tab when available', () => {
   const events = [
     {
       arguments: {
@@ -754,32 +754,22 @@ test('getDevtoolsDom should simplify preview json to name, arguments and result 
 
   expect(dom).toContainEqual(
     expect.objectContaining({
+      text: 'hello',
+    }),
+  )
+  expect(dom).not.toContainEqual(
+    expect.objectContaining({
       text: '"name"',
     }),
   )
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: '"arguments"',
     }),
   )
-  expect(dom).toContainEqual(
+  expect(dom).not.toContainEqual(
     expect.objectContaining({
       text: '"result"',
-    }),
-  )
-  expect(dom).toContainEqual(
-    expect.objectContaining({
-      text: '"read_file"',
-    }),
-  )
-  expect(dom).not.toContainEqual(
-    expect.objectContaining({
-      text: '"sessionId"',
-    }),
-  )
-  expect(dom).not.toContainEqual(
-    expect.objectContaining({
-      text: '"id"',
     }),
   )
 })
