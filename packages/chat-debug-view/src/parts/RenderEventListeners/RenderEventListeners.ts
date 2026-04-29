@@ -116,6 +116,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       name: DomEventListenerFunctions.HandleTableWheel,
       params: ['handleTableWheel', 'event.deltaY'],
       preventDefault: true,
+      passive: true,
     },
     {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
