@@ -395,6 +395,7 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
       type: VirtualDomElements.Tr,
     },
   ]
+<<<<<<< HEAD
   const dom = GetTableWrapperDom.getTableWrapperDom(
     rowNodes,
     1,
@@ -403,6 +404,9 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
     '',
     WhenExpression.FocusChatDebugTable,
   ) as readonly {
+=======
+  const dom = GetTableWrapperDom.getTableWrapperDom(rowNodes, 1, undefined, undefined, '', WhenExpression.FocusChatDebugTable) as readonly {
+>>>>>>> origin/main
     readonly childCount?: number
     readonly className?: string
     readonly type?: number
