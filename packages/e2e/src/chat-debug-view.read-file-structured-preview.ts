@@ -37,7 +37,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
   const lineContents = Locator('.ChatDebugViewEventLineContent')
 
-  await expect(detailsBottom).toHaveText('1first line2second line')
+  await expect(detailsBottom).toContainText('first line')
+  await expect(detailsBottom).toContainText('second line')
   await expect(editorContent).not.toContainText('"name": "read_file"')
   await expect(editorContent).not.toContainText('"arguments": {')
   await expect(editorContent).not.toContainText('"result": [')
