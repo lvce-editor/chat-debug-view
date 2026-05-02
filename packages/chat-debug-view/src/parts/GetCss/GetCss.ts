@@ -21,7 +21,10 @@ export const getCss = (state: ChatDebugViewState): string => {
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
   const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
-  const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
+  let topSize = 60
+  if (state.width >= state.largeBreakpoint) {
+    topSize = 30
+  }
   const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0

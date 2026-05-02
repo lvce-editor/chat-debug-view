@@ -13,8 +13,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const events = Array.from({ length: 23 }, (_, index) => ({
     sessionId,
     timestamp: new Date(baseTime + index * 2000).toISOString(),
-    type: index === 0 ? 'request' : index === 22 ? 'response' : 'response-part',
+    type: index === 0 ? 'request' : 'response-part',
   }))
+  events[22] = {
+    ...events[22],
+    type: 'response',
+  }
 
   // act
   await ChatDebug.setEvents(events)
