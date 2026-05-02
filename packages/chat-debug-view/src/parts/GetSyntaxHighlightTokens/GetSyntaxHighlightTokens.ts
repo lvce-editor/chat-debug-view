@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/prefer-readonly-parameter-types */
+
+import type { SyntaxHighlightLanguage } from '../GetLanguageFromFileExtension/GetLanguageFromFileExtension.ts'
 import {
   TokenAttributeName,
   TokenComment,
-  TokenKey,
   TokenKeyword,
   TokenNumeric,
   TokenPropertyName,
@@ -10,9 +12,19 @@ import {
   TokenTag,
   TokenText,
 } from '../ClassNames/ClassNames.ts'
-import type { SyntaxHighlightLanguage } from '../GetLanguageFromFileExtension/GetLanguageFromFileExtension.ts'
 import { getTokenSegments, type TokenSegment } from '../GetTokenSegments/GetTokenSegments.ts'
 import { pushToken } from '../PushToken/PushToken.ts'
+
+const jsIdentifierStartRegex = /[A-Za-z_$]/
+const jsIdentifierPartRegex = /[\w$]/
+const pythonIdentifierStartRegex = /[A-Za-z_]/
+const pythonIdentifierPartRegex = /\w/
+const cssIdentifierRegex = /[A-Za-z-]/
+const htmlTagNameRegex = /[A-Za-z0-9:-]/
+const htmlAttributeStartRegex = /[A-Za-z:_-]/
+const htmlAttributePartRegex = /[\w:-]/
+const leadingWhitespaceRegex = /^\s*/
+const trailingWhitespaceRegex = /\s*$/
 
 const jsKeywords = new Set([
   'async',
@@ -58,19 +70,19 @@ const pythonKeywords = new Set([
 ])
 
 const isIdentifierStart = (character: string | undefined): boolean => {
-  return !!character && /[A-Za-z_$]/.test(character)
+  return !!character && jsIdentifierStartRegex.test(character)
 }
 
 const isIdentifierPart = (character: string | undefined): boolean => {
-  return !!character && /[A-Za-z0-9_$]/.test(character)
+  return !!character && jsIdentifierPartRegex.test(character)
 }
 
 const isPythonIdentifierStart = (character: string | undefined): boolean => {
-  return !!character && /[A-Za-z_]/.test(character)
+  return !!character && pythonIdentifierStartRegex.test(character)
 }
 
 const isPythonIdentifierPart = (character: string | undefined): boolean => {
-  return !!character && /[A-Za-z0-9_]/.test(character)
+  return !!character && pythonIdentifierPartRegex.test(character)
 }
 
 const isDigit = (character: string | undefined): boolean => {
@@ -122,61 +134,115 @@ const getNumberEnd = (value: string, start: number): number => {
   return i
 }
 
+type IdentifierPredicate = (character: string | undefined) => boolean
+
+type MutableTokenizerState = {
+  i: number
+  segments: readonly TokenSegment[]
+}
+
+const appendLineComment = (value: string, state: MutableTokenizerState): boolean => {
+  if (!value.startsWith('//', state.i) && !value.startsWith('#', state.i)) {
+    return false
+  }
+  const end = getLineCommentEnd(value, state.i)
+  state.segments = pushToken(state.segments, TokenComment, value.slice(state.i, end))
+  state.i = end
+  return true
+}
+
+const appendBlockComment = (value: string, state: MutableTokenizerState): boolean => {
+  if (!value.startsWith('/*', state.i)) {
+    return false
+  }
+  const end = getBlockCommentEnd(value, state.i, '*/')
+  state.segments = pushToken(state.segments, TokenComment, value.slice(state.i, end))
+  state.i = end
+  return true
+}
+
+const appendStringToken = (value: string, state: MutableTokenizerState): boolean => {
+  const quote = value[state.i]
+  if (quote !== '"' && quote !== '\'' && quote !== '`') {
+    return false
+  }
+  const end = getStringEnd(value, state.i, quote)
+  state.segments = pushToken(state.segments, TokenString, value.slice(state.i, end))
+  state.i = end
+  return true
+}
+
+const appendNumericToken = (value: string, state: MutableTokenizerState): boolean => {
+  if (!isDigit(value[state.i])) {
+    return false
+  }
+  const end = getNumberEnd(value, state.i)
+  state.segments = pushToken(state.segments, TokenNumeric, value.slice(state.i, end))
+  state.i = end
+  return true
+}
+
+const appendIdentifierToken = (
+  value: string,
+  state: MutableTokenizerState,
+  keywords: ReadonlySet<string>,
+  isIdentifierStartCharacter: IdentifierPredicate,
+  isIdentifierPartCharacter: IdentifierPredicate,
+): boolean => {
+  if (!isIdentifierStartCharacter(value[state.i])) {
+    return false
+  }
+  let end = state.i + 1
+  while (isIdentifierPartCharacter(value[end])) {
+    end++
+  }
+  const identifier = value.slice(state.i, end)
+  const className = keywords.has(identifier) ? TokenKeyword : TokenText
+  state.segments = pushToken(state.segments, className, identifier)
+  state.i = end
+  return true
+}
+
+const appendTextCharacter = (value: string, state: MutableTokenizerState): void => {
+  state.segments = pushToken(state.segments, TokenText, value[state.i])
+  state.i++
+}
+
 const tokenizeCode = (
   value: string,
   keywords: ReadonlySet<string>,
-  isIdentifierStartCharacter: (character: string | undefined) => boolean,
-  isIdentifierPartCharacter: (character: string | undefined) => boolean,
-  lineCommentPrefix: string,
+  isIdentifierStartCharacter: IdentifierPredicate,
+  isIdentifierPartCharacter: IdentifierPredicate,
   supportsBlockComments: boolean,
 ): readonly TokenSegment[] => {
-  let segments: readonly TokenSegment[] = []
-  let i = 0
-  while (i < value.length) {
-    if (value.startsWith(lineCommentPrefix, i)) {
-      const end = getLineCommentEnd(value, i)
-      segments = pushToken(segments, TokenComment, value.slice(i, end))
-      i = end
-      continue
-    }
-    if (supportsBlockComments && value.startsWith('/*', i)) {
-      const end = getBlockCommentEnd(value, i, '*/')
-      segments = pushToken(segments, TokenComment, value.slice(i, end))
-      i = end
-      continue
-    }
-    if (value[i] === '"' || value[i] === "'" || value[i] === '`') {
-      const end = getStringEnd(value, i, value[i])
-      segments = pushToken(segments, TokenString, value.slice(i, end))
-      i = end
-      continue
-    }
-    if (isDigit(value[i])) {
-      const end = getNumberEnd(value, i)
-      segments = pushToken(segments, TokenNumeric, value.slice(i, end))
-      i = end
-      continue
-    }
-    if (isIdentifierStartCharacter(value[i])) {
-      let end = i + 1
-      while (isIdentifierPartCharacter(value[end])) {
-        end++
-      }
-      const identifier = value.slice(i, end)
-      const className = keywords.has(identifier) ? TokenKeyword : TokenText
-      segments = pushToken(segments, className, identifier)
-      i = end
-      continue
-    }
-    segments = pushToken(segments, TokenText, value[i])
-    i++
+  const state: MutableTokenizerState = {
+    i: 0,
+    segments: [],
   }
-  return segments
+  while (state.i < value.length) {
+    if (appendLineComment(value, state)) {
+      continue
+    }
+    if (supportsBlockComments && appendBlockComment(value, state)) {
+      continue
+    }
+    if (appendStringToken(value, state)) {
+      continue
+    }
+    if (appendNumericToken(value, state)) {
+      continue
+    }
+    if (appendIdentifierToken(value, state, keywords, isIdentifierStartCharacter, isIdentifierPartCharacter)) {
+      continue
+    }
+    appendTextCharacter(value, state)
+  }
+  return state.segments
 }
 
 const pushTrimmedSelector = (segments: readonly TokenSegment[], value: string): readonly TokenSegment[] => {
-  const leadingWhitespace = value.match(/^\s*/)?.[0] ?? ''
-  const trailingWhitespace = value.match(/\s*$/)?.[0] ?? ''
+  const leadingWhitespace = value.match(leadingWhitespaceRegex)?.[0] ?? ''
+  const trailingWhitespace = value.match(trailingWhitespaceRegex)?.[0] ?? ''
   const trimmed = value.slice(leadingWhitespace.length, value.length - trailingWhitespace.length)
   let result = segments
   result = pushToken(result, TokenText, leadingWhitespace)
@@ -185,71 +251,120 @@ const pushTrimmedSelector = (segments: readonly TokenSegment[], value: string): 
   return result
 }
 
+const getCssIdentifierEnd = (value: string, start: number): number => {
+  let end = start + 1
+  while (cssIdentifierRegex.test(value[end] ?? '')) {
+    end++
+  }
+  return end
+}
+
+const getCssIdentifierClassName = (value: string, end: number): string => {
+  let lookAhead = end
+  while (value[lookAhead] === ' ' || value[lookAhead] === '\t') {
+    lookAhead++
+  }
+  return value[lookAhead] === ':' ? TokenPropertyName : TokenText
+}
+
+const appendCssIdentifier = (value: string, state: MutableTokenizerState): boolean => {
+  if (!cssIdentifierRegex.test(value[state.i] ?? '')) {
+    return false
+  }
+  const end = getCssIdentifierEnd(value, state.i)
+  const identifier = value.slice(state.i, end)
+  state.segments = pushToken(state.segments, getCssIdentifierClassName(value, end), identifier)
+  state.i = end
+  return true
+}
+
+const appendCssOutsideDeclaration = (value: string, state: MutableTokenizerState): boolean => {
+  const nextBrace = value.indexOf('{', state.i)
+  if (nextBrace === -1) {
+    state.segments = pushToken(state.segments, TokenText, value.slice(state.i))
+    state.i = value.length
+    return true
+  }
+  state.segments = pushTrimmedSelector(state.segments, value.slice(state.i, nextBrace))
+  state.segments = pushToken(state.segments, TokenText, '{')
+  state.i = nextBrace + 1
+  return false
+}
+
 const tokenizeCss = (value: string): readonly TokenSegment[] => {
-  let segments: readonly TokenSegment[] = []
-  let i = 0
+  const state: MutableTokenizerState = {
+    i: 0,
+    segments: [],
+  }
   let inDeclarationBlock = false
 
-  while (i < value.length) {
-    if (value.startsWith('/*', i)) {
-      const end = getBlockCommentEnd(value, i, '*/')
-      segments = pushToken(segments, TokenComment, value.slice(i, end))
-      i = end
+  while (state.i < value.length) {
+    if (appendBlockComment(value, state)) {
       continue
     }
-    if (value[i] === '"' || value[i] === "'") {
-      const end = getStringEnd(value, i, value[i])
-      segments = pushToken(segments, TokenString, value.slice(i, end))
-      i = end
+    if (appendStringToken(value, state)) {
       continue
     }
     if (!inDeclarationBlock) {
-      const nextBrace = value.indexOf('{', i)
-      if (nextBrace === -1) {
-        segments = pushToken(segments, TokenText, value.slice(i))
+      if (appendCssOutsideDeclaration(value, state)) {
         break
       }
-      segments = pushTrimmedSelector(segments, value.slice(i, nextBrace))
-      segments = pushToken(segments, TokenText, '{')
-      i = nextBrace + 1
       inDeclarationBlock = true
       continue
     }
-    if (value[i] === '}') {
-      segments = pushToken(segments, TokenText, '}')
-      i++
+    if (value[state.i] === '}') {
+      state.segments = pushToken(state.segments, TokenText, '}')
+      state.i++
       inDeclarationBlock = false
       continue
     }
-    if (isDigit(value[i])) {
-      const end = getNumberEnd(value, i)
-      segments = pushToken(segments, TokenNumeric, value.slice(i, end))
-      i = end
+    if (appendNumericToken(value, state)) {
       continue
     }
-    if (/[A-Za-z-]/.test(value[i])) {
-      let end = i + 1
-      while (/[A-Za-z-]/.test(value[end] ?? '')) {
-        end++
-      }
-      const identifier = value.slice(i, end)
-      let lookAhead = end
-      while (value[lookAhead] === ' ' || value[lookAhead] === '\t') {
-        lookAhead++
-      }
-      if (value[lookAhead] === ':') {
-        segments = pushToken(segments, TokenPropertyName, identifier)
-      } else {
-        segments = pushToken(segments, TokenText, identifier)
-      }
-      i = end
+    if (appendCssIdentifier(value, state)) {
       continue
     }
-    segments = pushToken(segments, TokenText, value[i])
-    i++
+    appendTextCharacter(value, state)
   }
 
-  return segments
+  return state.segments
+}
+
+const getHtmlTagNameEnd = (value: string, start: number): number => {
+  let i = start + 1
+  while (htmlTagNameRegex.test(value[i] ?? '')) {
+    i++
+  }
+  return i
+}
+
+const getHtmlAttributeEnd = (value: string, start: number): number => {
+  let end = start + 1
+  while (htmlAttributePartRegex.test(value[end] ?? '')) {
+    end++
+  }
+  return end
+}
+
+const appendHtmlAttribute = (value: string, state: MutableTokenizerState): boolean => {
+  if (!htmlAttributeStartRegex.test(value[state.i] ?? '')) {
+    return false
+  }
+  const end = getHtmlAttributeEnd(value, state.i)
+  state.segments = pushToken(state.segments, TokenAttributeName, value.slice(state.i, end))
+  state.i = end
+  return true
+}
+
+const appendHtmlString = (value: string, state: MutableTokenizerState): boolean => {
+  const quote = value[state.i]
+  if (quote !== '"' && quote !== "'") {
+    return false
+  }
+  const end = getStringEnd(value, state.i, quote)
+  state.segments = pushToken(state.segments, TokenString, value.slice(state.i, end))
+  state.i = end
+  return true
 }
 
 const tokenizeHtmlTag = (value: string, start: number): { readonly end: number; readonly segments: readonly TokenSegment[] } => {
@@ -262,10 +377,7 @@ const tokenizeHtmlTag = (value: string, start: number): { readonly end: number; 
     return { end: tagEnd, segments }
   }
 
-  let i = start + 1
-  while (/[A-Za-z0-9:-]/.test(value[i] ?? '')) {
-    i++
-  }
+  let i = getHtmlTagNameEnd(value, start)
   segments = pushToken(segments, TokenTag, value.slice(start, i))
 
   while (i < value.length) {
@@ -273,20 +385,15 @@ const tokenizeHtmlTag = (value: string, start: number): { readonly end: number; 
       segments = pushToken(segments, TokenText, '>')
       return { end: i + 1, segments }
     }
-    if (value[i] === '"' || value[i] === "'") {
-      const end = getStringEnd(value, i, value[i])
-      segments = pushToken(segments, TokenString, value.slice(i, end))
-      i = end
+    const state: MutableTokenizerState = { i, segments }
+    if (appendHtmlString(value, state)) {
+      i = state.i
+      segments = state.segments
       continue
     }
-    if (/[A-Za-z:_-]/.test(value[i])) {
-      let end = i + 1
-      while (/[A-Za-z0-9:_-]/.test(value[end] ?? '')) {
-        end++
-      }
-      const attributeName = value.slice(i, end)
-      segments = pushToken(segments, TokenAttributeName, attributeName)
-      i = end
+    if (appendHtmlAttribute(value, state)) {
+      i = state.i
+      segments = state.segments
       continue
     }
     segments = pushToken(segments, TokenText, value[i])
@@ -307,11 +414,11 @@ const tokenizeHtml = (value: string): readonly TokenSegment[] => {
       continue
     }
     if (value[i] === '<') {
-      const tokenizedTag = tokenizeHtmlTag(value, i)
-      for (const segment of tokenizedTag.segments) {
+      const { end, segments: tagSegments } = tokenizeHtmlTag(value, i)
+      for (const segment of tagSegments) {
         segments = pushToken(segments, segment.className, segment.value)
       }
-      i = tokenizedTag.end
+      i = end
       continue
     }
     const nextTag = value.indexOf('<', i)
@@ -329,12 +436,12 @@ export const getSyntaxHighlightTokens = (value: string, language: SyntaxHighligh
     case 'html':
       return tokenizeHtml(value)
     case 'javascript':
-      return tokenizeCode(value, jsKeywords, isIdentifierStart, isIdentifierPart, '//', true)
+      return tokenizeCode(value, jsKeywords, isIdentifierStart, isIdentifierPart, true)
     case 'json':
       return getTokenSegments(value)
     case 'python':
-      return tokenizeCode(value, pythonKeywords, isPythonIdentifierStart, isPythonIdentifierPart, '#', false)
+      return tokenizeCode(value, pythonKeywords, isPythonIdentifierStart, isPythonIdentifierPart, false)
     case 'typescript':
-      return tokenizeCode(value, tsKeywords, isIdentifierStart, isIdentifierPart, '//', true)
+      return tokenizeCode(value, tsKeywords, isIdentifierStart, isIdentifierPart, true)
   }
 }
