@@ -29,5 +29,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(lineContents).toHaveCount(1)
   await expect(lineContents.nth(0)).toContainText('interface Person { age: number }')
-  await expect(tokenSpans).toHaveCount(3)
+  await expect(tokenSpans).toHaveCount(4)
 }

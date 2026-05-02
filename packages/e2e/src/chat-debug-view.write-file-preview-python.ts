@@ -32,5 +32,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(lineContents).toHaveCount(2)
   await expect(lineContents.nth(0)).toContainText('def greet(name):')
   await expect(lineContents.nth(1)).toContainText('return "hi"')
-  await expect(tokenSpans).toHaveCount(5)
+  await expect(tokenSpans).toHaveCount(6)
 }
