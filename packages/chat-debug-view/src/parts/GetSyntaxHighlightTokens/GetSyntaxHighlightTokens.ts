@@ -35,15 +35,7 @@ const jsKeywords = new Set([
   'while',
 ])
 
-const tsKeywords = new Set([
-  ...jsKeywords,
-  'interface',
-  'implements',
-  'number',
-  'readonly',
-  'string',
-  'type',
-])
+const tsKeywords = new Set([...jsKeywords, 'interface', 'implements', 'number', 'readonly', 'string', 'type'])
 
 const pythonKeywords = new Set([
   'as',
@@ -153,7 +145,7 @@ const tokenizeCode = (
       i = end
       continue
     }
-    if (value[i] === '"' || value[i] === '\'' || value[i] === '`') {
+    if (value[i] === '"' || value[i] === "'" || value[i] === '`') {
       const end = getStringEnd(value, i, value[i])
       segments = pushToken(segments, TokenString, value.slice(i, end))
       i = end
@@ -205,7 +197,7 @@ const tokenizeCss = (value: string): readonly TokenSegment[] => {
       i = end
       continue
     }
-    if (value[i] === '"' || value[i] === '\'') {
+    if (value[i] === '"' || value[i] === "'") {
       const end = getStringEnd(value, i, value[i])
       segments = pushToken(segments, TokenString, value.slice(i, end))
       i = end
@@ -281,7 +273,7 @@ const tokenizeHtmlTag = (value: string, start: number): { readonly end: number; 
       segments = pushToken(segments, TokenText, '>')
       return { end: i + 1, segments }
     }
-    if (value[i] === '"' || value[i] === '\'') {
+    if (value[i] === '"' || value[i] === "'") {
       const end = getStringEnd(value, i, value[i])
       segments = pushToken(segments, TokenString, value.slice(i, end))
       i = end
