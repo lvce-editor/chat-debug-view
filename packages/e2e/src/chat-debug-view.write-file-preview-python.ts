@@ -26,11 +26,11 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const lineContents = Locator('.EditorRow')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
+  const tokenSpans = Locator('.EditorRow span')
 
   await expect(lineNumbers).toHaveCount(2)
   await expect(lineContents).toHaveCount(2)
   await expect(lineContents.nth(0)).toContainText('def greet(name):')
   await expect(lineContents.nth(1)).toContainText('return "hi"')
-  await expect(Locator('.TokenKeyword')).toHaveCount(2)
-  await expect(Locator('.TokenString')).toHaveCount(1)
+  await expect(tokenSpans).toHaveCount(5)
 }

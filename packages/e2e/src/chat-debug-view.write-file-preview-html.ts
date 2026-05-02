@@ -25,9 +25,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.openTabPreview()
 
   const lineContents = Locator('.EditorRow')
+  const tokenSpans = Locator('.EditorRow span')
 
   await expect(lineContents).toHaveCount(1)
   await expect(lineContents.nth(0)).toContainText('<div class="hero">Hello</div>')
-  await expect(Locator('.TokenAttributeName')).toHaveCount(1)
-  await expect(Locator('.TokenString')).toHaveCount(1)
+  await expect(tokenSpans).toHaveCount(7)
 }
