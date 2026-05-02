@@ -1,11 +1,11 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import type { Test } from '@lvce-editor/test-with-playwright';
 
-export const name = 'chat-debug-view.write-file-preview-json'
+export const name = 'chat-debug-view.write-file-preview-json';
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
-  const sessionId = `e2e-session-write-file-preview-json-${Date.now()}`
-  await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const sessionId = `e2e-session-write-file-preview-json-${Date.now()}`;
+  await ChatDebug.open(sessionId);
+  await expect(Locator('.ChatDebugView')).toBeVisible();
 
   await ChatDebug.setEvents([
     {
@@ -19,15 +19,15 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       timestamp: '2026-05-02T09:00:00.000Z',
       type: 'tool-execution',
     },
-  ])
-  await ChatDebug.useDevtoolsLayout()
-  await ChatDebug.selectEventRow(0)
-  await ChatDebug.openTabPreview()
+  ]);
+  await ChatDebug.useDevtoolsLayout();
+  await ChatDebug.selectEventRow(0);
+  await ChatDebug.openTabPreview();
 
-  const lineContents = Locator('.EditorRow')
+  const lineContents = Locator('.EditorRow');
 
-  await expect(lineContents).toHaveCount(1)
-  await expect(lineContents.nth(0)).toContainText('{"ok": true}')
-  await expect(Locator('.TokenKey')).toHaveCount(1)
-  await expect(Locator('.TokenBoolean')).toHaveCount(1)
-})
+  await expect(lineContents).toHaveCount(1);
+  await expect(lineContents.nth(0)).toContainText('{"ok": true}');
+  await expect(Locator('.TokenKey')).toHaveCount(1);
+  await expect(Locator('.TokenBoolean')).toHaveCount(1);
+};
