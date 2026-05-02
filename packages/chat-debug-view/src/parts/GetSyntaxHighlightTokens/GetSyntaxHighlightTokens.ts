@@ -163,7 +163,7 @@ const appendBlockComment = (value: string, state: MutableTokenizerState): boolea
 
 const appendStringToken = (value: string, state: MutableTokenizerState): boolean => {
   const quote = value[state.i]
-  if (quote !== '"' && quote !== '\'' && quote !== '`') {
+  if (quote !== '"' && quote !== "'" && quote !== '`') {
     return false
   }
   const end = getStringEnd(value, state.i, quote)
