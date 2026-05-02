@@ -82,113 +82,129 @@ const withPreservedSelection = (state: ChatDebugViewState, nextState: ChatDebugV
   })
 }
 
+type InputHandler = (state: ChatDebugViewState, value: string, checked: string | boolean) => ChatDebugViewState
+
+const updateWithPreservedSelection = (state: ChatDebugViewState, updates: Partial<ChatDebugViewState>): ChatDebugViewState => {
+  return withPreservedSelection(state, {
+    ...state,
+    ...updates,
+  })
+}
+
+const handleFilter: InputHandler = (state, value) => {
+  return updateWithPreservedSelection(state, { filterValue: value })
+}
+
+const handleEventCategoryFilter: InputHandler = (state, value) => {
+  const categoryFilters = EventCategoryFilter.selectCategoryFilter(state.categoryFilters, value || EventCategoryFilter.All)
+  if (categoryFilters === state.categoryFilters) {
+    return state
+  }
+  return updateWithPreservedSelection(state, { categoryFilters })
+}
+
+const handleShowEventStreamFinishedEvents: InputHandler = (state, _value, checked) => {
+  return updateWithPreservedSelection(state, {
+    showEventStreamFinishedEvents: GetBoolean.getBoolean(checked),
+  })
+}
+
+const handleShowInputEvents: InputHandler = (state, _value, checked) => {
+  return updateWithPreservedSelection(state, {
+    showInputEvents: GetBoolean.getBoolean(checked),
+  })
+}
+
+const handleShowResponsePartEvents: InputHandler = (state, _value, checked) => {
+  return updateWithPreservedSelection(state, {
+    showResponsePartEvents: GetBoolean.getBoolean(checked),
+  })
+}
+
+const handleUseDevtoolsLayout: InputHandler = (state, _value, checked) => {
+  const useDevtoolsLayout = GetBoolean.getBoolean(checked)
+  const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
+  const hasSelectedEvent = useDevtoolsLayout && selectedEventIndex !== null
+  return applyVirtualTableState({
+    ...state,
+    previewTextCursorColumnIndex: hasSelectedEvent ? state.previewTextCursorColumnIndex : null,
+    previewTextCursorRowIndex: hasSelectedEvent ? state.previewTextCursorRowIndex : null,
+    selectedEvent: hasSelectedEvent ? state.selectedEvent : null,
+    selectedEventId: hasSelectedEvent ? state.selectedEventId : null,
+    selectedEventIndex,
+    useDevtoolsLayout,
+  })
+}
+
+const handleSelectedEventIndex: InputHandler = (state, value) => {
+  const selectedEventIndex = parseSelectedEventIndex(value)
+  const hasSelectedEvent = selectedEventIndex !== null
+  return withSelectedEventVisible({
+    ...state,
+    previewTextCursorColumnIndex: hasSelectedEvent ? state.previewTextCursorColumnIndex : null,
+    previewTextCursorRowIndex: hasSelectedEvent ? state.previewTextCursorRowIndex : null,
+    selectedEvent: hasSelectedEvent ? state.selectedEvent : null,
+    selectedEventId: hasSelectedEvent ? state.selectedEventId : null,
+    selectedEventIndex,
+  })
+}
+
+const handleTimelineStartSeconds: InputHandler = (state, value) => {
+  return updateWithPreservedSelection(state, { timelineStartSeconds: value })
+}
+
+const handleTimelineEndSeconds: InputHandler = (state, value) => {
+  return updateWithPreservedSelection(state, { timelineEndSeconds: value })
+}
+
+const handleTimelineRangePreset: InputHandler = (state, value) => {
+  return updateWithPreservedSelection(state, parseTimelineRangePreset(value))
+}
+
+const handleCloseDetails: InputHandler = (state) => {
+  return applyVirtualTableState({
+    ...state,
+    previewTextCursorColumnIndex: null,
+    previewTextCursorRowIndex: null,
+    selectedEvent: null,
+    selectedEventId: null,
+    selectedEventIndex: null,
+  })
+}
+
+const handleDetailTab: InputHandler = (state, value) => {
+  if (!DetailTab.isDetailTab(value)) {
+    return state
+  }
+  const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+  if (detailTabs === state.detailTabs) {
+    return state
+  }
+  return {
+    ...state,
+    detailTabs,
+  }
+}
+
+const inputHandlers: Record<string, InputHandler> = {
+  [InputName.CloseDetails]: handleCloseDetails,
+  [InputName.DetailTab]: handleDetailTab,
+  [InputName.EventCategoryFilter]: handleEventCategoryFilter,
+  [InputName.Filter]: handleFilter,
+  [InputName.SelectedEventIndex]: handleSelectedEventIndex,
+  [InputName.ShowEventStreamFinishedEvents]: handleShowEventStreamFinishedEvents,
+  [InputName.ShowInputEvents]: handleShowInputEvents,
+  [InputName.ShowResponsePartEvents]: handleShowResponsePartEvents,
+  [InputName.TimelineEndSeconds]: handleTimelineEndSeconds,
+  [InputName.TimelineRangePreset]: handleTimelineRangePreset,
+  [InputName.TimelineStartSeconds]: handleTimelineStartSeconds,
+  [InputName.UseDevtoolsLayout]: handleUseDevtoolsLayout,
+}
+
 export const handleInput = (state: ChatDebugViewState, name: string, value: string, checked: string | boolean): ChatDebugViewState => {
-  if (name === InputName.Filter) {
-    const nextState = {
-      ...state,
-      filterValue: value,
-    }
-    return withPreservedSelection(state, nextState)
+  const handler = inputHandlers[name]
+  if (!handler) {
+    return state
   }
-  if (name === InputName.EventCategoryFilter) {
-    const categoryFilters = EventCategoryFilter.selectCategoryFilter(state.categoryFilters, value || EventCategoryFilter.All)
-    if (categoryFilters === state.categoryFilters) {
-      return state
-    }
-    const nextState = {
-      ...state,
-      categoryFilters,
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.ShowEventStreamFinishedEvents) {
-    const nextState = {
-      ...state,
-      showEventStreamFinishedEvents: GetBoolean.getBoolean(checked),
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.ShowInputEvents) {
-    const nextState = {
-      ...state,
-      showInputEvents: GetBoolean.getBoolean(checked),
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.ShowResponsePartEvents) {
-    const nextState = {
-      ...state,
-      showResponsePartEvents: GetBoolean.getBoolean(checked),
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.UseDevtoolsLayout) {
-    const useDevtoolsLayout = GetBoolean.getBoolean(checked)
-    const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
-    return applyVirtualTableState({
-      ...state,
-      previewTextCursorColumnIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorColumnIndex : null,
-      previewTextCursorRowIndex: useDevtoolsLayout && selectedEventIndex !== null ? state.previewTextCursorRowIndex : null,
-      selectedEvent: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEvent : null,
-      selectedEventId: useDevtoolsLayout && selectedEventIndex !== null ? state.selectedEventId : null,
-      selectedEventIndex,
-      useDevtoolsLayout,
-    })
-  }
-  if (name === InputName.SelectedEventIndex) {
-    const selectedEventIndex = parseSelectedEventIndex(value)
-    return withSelectedEventVisible({
-      ...state,
-      previewTextCursorColumnIndex: selectedEventIndex === null ? null : state.previewTextCursorColumnIndex,
-      previewTextCursorRowIndex: selectedEventIndex === null ? null : state.previewTextCursorRowIndex,
-      selectedEvent: selectedEventIndex === null ? null : state.selectedEvent,
-      selectedEventId: selectedEventIndex === null ? null : state.selectedEventId,
-      selectedEventIndex,
-    })
-  }
-  if (name === InputName.TimelineStartSeconds) {
-    const nextState = {
-      ...state,
-      timelineStartSeconds: value,
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.TimelineEndSeconds) {
-    const nextState = {
-      ...state,
-      timelineEndSeconds: value,
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.TimelineRangePreset) {
-    const nextState = {
-      ...state,
-      ...parseTimelineRangePreset(value),
-    }
-    return withPreservedSelection(state, nextState)
-  }
-  if (name === InputName.CloseDetails) {
-    return applyVirtualTableState({
-      ...state,
-      previewTextCursorColumnIndex: null,
-      previewTextCursorRowIndex: null,
-      selectedEvent: null,
-      selectedEventId: null,
-      selectedEventIndex: null,
-    })
-  }
-  if (name === InputName.DetailTab) {
-    if (!DetailTab.isDetailTab(value)) {
-      return state
-    }
-    const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
-    if (detailTabs === state.detailTabs) {
-      return state
-    }
-    return {
-      ...state,
-      detailTabs,
-    }
-  }
-  return state
+  return handler(state, value, checked)
 }

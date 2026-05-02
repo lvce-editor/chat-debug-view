@@ -37,7 +37,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const timingTab = Locator('.ChatDebugViewDetailsTop [name="timing"]')
   // await expect(timingTab).toHaveAttribute('aria-controls', 'ChatDebugViewDetailsPanel-timing')
   // await expect(timingTab).toHaveAttribute('aria-selected', 'false')
-  const panel = Locator('[role="tabpanel"]')
 
   // assert
   // TODO
