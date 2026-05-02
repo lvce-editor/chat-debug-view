@@ -131,7 +131,11 @@ test('getPreviewEvent should return write_file content for tool execution events
 
   const result = getPreviewEvent(event)
 
-  expect(result).toBe('line 1\nline 2')
+  expect(result).toEqual({
+    content: 'line 1\nline 2',
+    previewType: 'write-file',
+    uri: 'file:///workspace/test.txt',
+  })
 })
 
 test('getPreviewEvent should return read_file result text for tool execution events', () => {
