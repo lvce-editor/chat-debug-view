@@ -291,6 +291,22 @@ const appendCssOutsideDeclaration = (value: string, state: MutableTokenizerState
   return false
 }
 
+const handleCssDeclarationToken = (value: string, state: MutableTokenizerState): boolean => {
+  if (value[state.i] === '}') {
+    state.segments = pushToken(state.segments, TokenText, '}')
+    state.i++
+    return false
+  }
+  if (appendNumericToken(value, state)) {
+    return true
+  }
+  if (appendCssIdentifier(value, state)) {
+    return true
+  }
+  appendTextCharacter(value, state)
+  return true
+}
+
 const tokenizeCss = (value: string): readonly TokenSegment[] => {
   const state: MutableTokenizerState = {
     i: 0,
@@ -312,19 +328,7 @@ const tokenizeCss = (value: string): readonly TokenSegment[] => {
       inDeclarationBlock = true
       continue
     }
-    if (value[state.i] === '}') {
-      state.segments = pushToken(state.segments, TokenText, '}')
-      state.i++
-      inDeclarationBlock = false
-      continue
-    }
-    if (appendNumericToken(value, state)) {
-      continue
-    }
-    if (appendCssIdentifier(value, state)) {
-      continue
-    }
-    appendTextCharacter(value, state)
+    inDeclarationBlock = handleCssDeclarationToken(value, state)
   }
 
   return state.segments
@@ -387,13 +391,11 @@ const tokenizeHtmlTag = (value: string, start: number): { readonly end: number; 
     }
     const state: MutableTokenizerState = { i, segments }
     if (appendHtmlString(value, state)) {
-      i = state.i
-      segments = state.segments
+      ;({ i, segments } = state)
       continue
     }
     if (appendHtmlAttribute(value, state)) {
-      i = state.i
-      segments = state.segments
+      ;({ i, segments } = state)
       continue
     }
     segments = pushToken(segments, TokenText, value[i])
