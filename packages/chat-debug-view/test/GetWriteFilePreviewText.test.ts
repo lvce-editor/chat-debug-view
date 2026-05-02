@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import * as GetWriteFilePreviewText from '../src/parts/GetWriteFilePreviewText/GetWriteFilePreviewText.ts'
 
-test('getWriteFilePreviewText should return content for write_file events', () => {
+test('getWriteFilePreviewText should return content and uri for write_file events', () => {
   const result = GetWriteFilePreviewText.getWriteFilePreviewText(
     {
       arguments: {
@@ -15,7 +15,11 @@ test('getWriteFilePreviewText should return content for write_file events', () =
     'write_file',
   )
 
-  expect(result).toBe('line 1\nline 2')
+  expect(result).toEqual({
+    content: 'line 1\nline 2',
+    previewType: 'write-file',
+    uri: 'file:///workspace/test.txt',
+  })
 })
 
 test('getWriteFilePreviewText should return undefined for other tool names', () => {
@@ -52,6 +56,23 @@ test('getWriteFilePreviewText should return undefined when content is not a stri
     {
       arguments: {
         content: 42,
+      },
+      eventId: 1,
+      name: 'write_file',
+      type: 'tool-execution',
+    },
+    'write_file',
+  )
+
+  expect(result).toBeUndefined()
+})
+
+test('getWriteFilePreviewText should return undefined when uri is not a string', () => {
+  const result = GetWriteFilePreviewText.getWriteFilePreviewText(
+    {
+      arguments: {
+        content: 'line 1\nline 2',
+        uri: 42,
       },
       eventId: 1,
       name: 'write_file',

@@ -260,3 +260,61 @@ test('getPreviewEventNodes should render a positioned cursor for numbered text p
     type: VirtualDomElements.Div,
   })
 })
+
+test('getPreviewEventNodes should render write_file previews with syntax-highlighted spans for supported languages', () => {
+  const result = getPreviewEventNodes({
+    content: 'const answer = 42',
+    previewType: 'write-file',
+    uri: 'file:///workspace/example.js',
+  }) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'Token TokenKeyword',
+    type: VirtualDomElements.Span,
+  })
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'Token TokenNumeric',
+    type: VirtualDomElements.Span,
+  })
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: 'const',
+    }),
+  )
+  expect(result).toContainEqual(
+    expect.objectContaining({
+      text: '42',
+    }),
+  )
+})
+
+test('getPreviewEventNodes should render unsupported write_file previews as plain text', () => {
+  const result = getPreviewEventNodes({
+    content: 'plain text',
+    previewType: 'write-file',
+    uri: 'file:///workspace/example.md',
+  }) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'Token TokenText',
+    type: VirtualDomElements.Span,
+  })
+  expect(result).not.toContainEqual(
+    expect.objectContaining({
+      className: 'Token TokenKeyword',
+    }),
+  )
+})

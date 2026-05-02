@@ -113,5 +113,37 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: calc(100% - 4px);
 }
 
+.TokenText {
+  color: var(--vscode-editor-foreground);
+}
+
+.TokenString {
+  color: var(--vscode-debugTokenExpression-string, #ce9178);
+}
+
+.TokenNumeric {
+  color: var(--vscode-debugTokenExpression-number, #b5cea8);
+}
+
+.TokenBoolean {
+  color: var(--vscode-debugTokenExpression-boolean, #569cd6);
+}
+
+.TokenKey,
+.TokenAttributeName,
+.TokenPropertyName {
+  color: var(--vscode-symbolIcon-propertyForeground, #9cdcfe);
+}
+
+.TokenKeyword,
+.TokenTag,
+.TokenSelector {
+  color: var(--vscode-symbolIcon-keywordForeground, #569cd6);
+}
+
+.TokenComment {
+  color: var(--vscode-editorLineNumber-foreground, #6a9955);
+}
+
 `
 }
