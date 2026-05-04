@@ -13,6 +13,7 @@ import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNod
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
+import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
   let nextSiblingIndex = index + 1
@@ -52,6 +53,7 @@ const getPreviewContentNodes = (
   selectedEvent: ChatViewEvent | null,
   previewTextCursorRowIndex: number | null,
   previewTextCursorColumnIndex: number | null,
+  virtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length > 0) {
     return previewEventNodes
@@ -68,6 +70,7 @@ const getPreviewContentNodes = (
           columnIndex: previewTextCursorColumnIndex,
           rowIndex: previewTextCursorRowIndex,
         },
+    virtualization,
   )
 }
 
@@ -99,12 +102,13 @@ const getSelectedContentNodes = (
   selectedEvent: ChatViewEvent | null,
   previewTextCursorRowIndex: number | null,
   previewTextCursorColumnIndex: number | null,
+  previewVirtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (safeSelectedDetailTab === InputName.Timing) {
     return getTimingContentNodes(responseEventNodes, selectedEvent)
   }
   if (safeSelectedDetailTab === InputName.Preview) {
-    return getPreviewContentNodes(previewEventNodes, selectedEvent, previewTextCursorRowIndex, previewTextCursorColumnIndex)
+    return getPreviewContentNodes(previewEventNodes, selectedEvent, previewTextCursorRowIndex, previewTextCursorColumnIndex, previewVirtualization)
   }
   if (safeSelectedDetailTab === InputName.Payload) {
     return getPayloadContentNodes(payloadEventNodes, selectedEvent)
@@ -120,6 +124,7 @@ export const getDetailsDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  previewVirtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
@@ -137,6 +142,7 @@ export const getDetailsDom = (
       selectedEvent,
       previewTextCursorRowIndex,
       previewTextCursorColumnIndex,
+      previewVirtualization,
     )
 
     return [

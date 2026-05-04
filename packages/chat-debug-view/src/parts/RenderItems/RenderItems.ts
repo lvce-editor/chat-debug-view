@@ -5,6 +5,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getChatDebugViewDom } from '../GetChatDebugViewDom/GetChatDebugViewDom.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
+import { getPreviewTextViewportHeight } from '../PreviewVirtualization/PreviewVirtualization.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const withSessionEventIds = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
@@ -21,6 +22,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     return [ViewletCommand.SetDom2, newState.uid, []]
   }
   const filteredEvents = getCurrentEvents(newState)
+  const previewTextViewportHeight = getPreviewTextViewportHeight(newState)
   const dom = getChatDebugViewDom(
     newState.errorMessage,
     newState.filterValue,
@@ -50,6 +52,8 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.previewTextCursorColumnIndex,
     newState.tableMinLineY,
     newState.tableMaxLineY,
+    newState.previewTextDeltaY,
+    previewTextViewportHeight,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

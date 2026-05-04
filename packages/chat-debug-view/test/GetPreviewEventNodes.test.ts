@@ -261,6 +261,82 @@ test('getPreviewEventNodes should render a positioned cursor for numbered text p
   })
 })
 
+test('getPreviewEventNodes should virtualize plain text preview lines', () => {
+  const result = getPreviewEventNodes('line 1\nline 2\nline 3\nline 4', undefined, null, {
+    endLineY: 3,
+    showScrollBar: true,
+    startLineY: 1,
+  }) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly onPointerDown?: number
+    readonly onWheel?: number
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result[0]).toEqual({
+    childCount: 2,
+    className: 'EditorContainer PreviewVirtualizedEditor',
+    onWheel: DomEventListenerFunctions.HandlePreviewTextWheel,
+    type: VirtualDomElements.Div,
+  })
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'ChatDebugViewEventLineNumber',
+    type: VirtualDomElements.Span,
+  })
+  expect(result).toContainEqual(text('2'))
+  expect(result).toContainEqual(text('3'))
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'PreviewTextScrollBar',
+    onPointerDown: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerDown,
+    type: VirtualDomElements.Div,
+  })
+  expect(result).toContainEqual({
+    childCount: 0,
+    className: 'PreviewTextScrollBarThumb',
+    type: VirtualDomElements.Div,
+  })
+  expect(result).not.toContainEqual(text('line 1'))
+  expect(result).toContainEqual(text('line 2'))
+  expect(result).toContainEqual(text('line 3'))
+  expect(result).not.toContainEqual(text('line 4'))
+})
+
+test('getPreviewEventNodes should virtualize write file preview lines', () => {
+  const result = getPreviewEventNodes(
+    {
+      content: 'line 1\nline 2\nline 3\nline 4',
+      previewType: 'write-file',
+      uri: 'file:///workspace/example.js',
+    },
+    undefined,
+    null,
+    {
+      endLineY: 4,
+      showScrollBar: true,
+      startLineY: 2,
+    },
+  ) as readonly {
+    readonly className?: string
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toContainEqual({
+    childCount: 1,
+    className: 'PreviewTextScrollBar',
+    onPointerDown: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerDown,
+    type: VirtualDomElements.Div,
+  })
+  expect(result).toContainEqual(text('3'))
+  expect(result).toContainEqual(text('4'))
+  expect(result).not.toContainEqual(text('line 1'))
+  expect(result).not.toContainEqual(text('line 2'))
+})
+
 test('getPreviewEventNodes should render write_file previews with syntax-highlighted spans for supported languages', () => {
   const result = getPreviewEventNodes({
     content: 'const answer = 42',

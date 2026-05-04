@@ -72,6 +72,8 @@ export const getChatDebugViewDom = (
   previewTextCursorColumnIndex: number | null = null,
   minLineY = 0,
   maxLineY = events.length,
+  previewTextDeltaY = 0,
+  previewTextViewportHeight = 0,
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -120,6 +122,8 @@ export const getChatDebugViewDom = (
       focus,
       previewTextCursorRowIndex,
       previewTextCursorColumnIndex,
+      previewTextDeltaY,
+      previewTextViewportHeight,
       minLineY,
       maxLineY,
     )

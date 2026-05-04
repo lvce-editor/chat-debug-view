@@ -7,6 +7,7 @@ import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding 
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
 import { devtoolsTableHeaderHeight, devtoolsTableRowHeight, devtoolsTableScrollBarWidth } from '../TableMetrics/TableMetrics.ts'
+import { getPreviewTextViewportHeight, getPreviewVirtualizationState } from '../PreviewVirtualization/PreviewVirtualization.ts'
 import { getMaxDeltaY, getScrollBarHeight, getScrollBarOffset, getTableBodyHeight } from '../VirtualTable/VirtualTable.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
@@ -21,14 +22,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
   const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
+  const previewTextViewportHeight = getPreviewTextViewportHeight(state)
+  const previewVirtualization = getPreviewVirtualizationState(state.selectedEvent, previewTextViewportHeight, state.previewTextDeltaY)
   let topSize = 60
   if (state.width >= state.largeBreakpoint) {
     topSize = 30
   }
   const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
-  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
+  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0, tableColThreeWidth = 0] = tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
+  const resizerThreeLeft = tableColumnLayout.resizerLefts[2] ?? 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
   return `
 .ChatDebugView {
@@ -37,15 +41,22 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
   --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
   --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
+  --ChatDebugViewTableColThreeWidth: ${tableColThreeWidth}px;
   --ChatDebugViewDetailsLineNumberWidth: ${detailsLineNumberWidth}px;
+  --ChatDebugViewPreviewScrollBarHeight: ${previewVirtualization.scrollBarHeight}px;
+  --ChatDebugViewPreviewScrollBarOffset: ${previewVirtualization.scrollBarOffset}px;
+  --ChatDebugViewPreviewScrollBarWidth: ${previewVirtualization.showScrollBar ? devtoolsTableScrollBarWidth : 0}px;
+  --ChatDebugViewPreviewViewportHeight: ${previewVirtualization.viewportHeight}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
+  --ChatDebugViewMethodColumnWidth: ${state.tableColumnWidths.method}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewTableScrollBarHeight: ${scrollBarHeight}px;
   --ChatDebugViewTableScrollBarOffset: ${scrollBarOffset}px;
   --ChatDebugViewTableScrollBarWidth: ${showScrollBar ? devtoolsTableScrollBarWidth : 0}px;
   --ResizerOneLeft: ${resizerOneLeft}px;
   --ResizerTwoLeft: ${resizerTwoLeft}px;
+  --ResizerThreeLeft: ${resizerThreeLeft}px;
   --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
   --ChatDebugViewTimelineHeight: ${state.timelineHeight}px;
@@ -91,6 +102,36 @@ export const getCss = (state: ChatDebugViewState): string => {
   display: inline-block;
   min-width: var(--ChatDebugViewDetailsLineNumberWidth);
   width: var(--ChatDebugViewDetailsLineNumberWidth);
+}
+
+.PreviewVirtualizedEditor {
+  height: var(--ChatDebugViewPreviewViewportHeight);
+  overflow: hidden;
+  position: relative;
+}
+
+.PreviewVirtualizedEditor .Editor {
+  width: calc(100% - var(--ChatDebugViewPreviewScrollBarWidth));
+}
+
+.PreviewTextScrollBar {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  height: var(--ChatDebugViewPreviewViewportHeight);
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: var(--ChatDebugViewPreviewScrollBarWidth);
+}
+
+.PreviewTextScrollBarThumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  height: var(--ChatDebugViewPreviewScrollBarHeight);
+  left: 2px;
+  position: absolute;
+  top: var(--ChatDebugViewPreviewScrollBarOffset);
+  width: calc(100% - 4px);
 }
 
 .TableScrollBar {

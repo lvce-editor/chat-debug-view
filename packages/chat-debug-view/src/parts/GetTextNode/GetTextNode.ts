@@ -5,7 +5,7 @@ import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.t
 import type { LineData } from './LineData/LineData.ts'
 import { TokenText } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import { getEditorDom } from '../GetEditorDom/GetEditorDom.ts'
+import { getEditorDom, getVirtualizedEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 
 const getTextLineData = (value: string): readonly LineData[] => {
   const lines = value.split('\n')
@@ -72,12 +72,45 @@ const getTokenLineData = (tokenSegments: readonly TokenSegment[]): readonly Line
   return lineData
 }
 
+const getLineData = (value: string, tokenSegments?: readonly TokenSegment[]): readonly LineData[] => {
+  return tokenSegments ? getTokenLineData(tokenSegments) : getTextLineData(value)
+}
+
+export interface TextNodeVirtualizationOptions {
+  readonly endLineY: number
+  readonly showScrollBar: boolean
+  readonly startLineY: number
+}
+
 export const getTextNode = (
   value: string,
   showLineNumbers = true,
   cursor: PreviewTextCursor | null = null,
   tokenSegments?: readonly TokenSegment[],
+  virtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
-  const lineData = tokenSegments ? getTokenLineData(tokenSegments) : getTextLineData(value)
+  const lineData = getLineData(value, tokenSegments)
+  if (virtualization) {
+    const slicedLineData = lineData.slice(virtualization.startLineY, virtualization.endLineY)
+    const visibleCursor =
+      cursor && cursor.rowIndex >= virtualization.startLineY && cursor.rowIndex < virtualization.endLineY
+        ? {
+            ...cursor,
+            rowIndex: cursor.rowIndex - virtualization.startLineY,
+          }
+        : null
+    return getVirtualizedEditorDom(
+      slicedLineData,
+      showLineNumbers,
+      visibleCursor,
+      showLineNumbers ? DomEventListenerFunctions.HandlePreviewTextPointerDown : undefined,
+      {
+        lineNumberStart: virtualization.startLineY,
+        onScrollBarPointerDown: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerDown,
+        onWheel: DomEventListenerFunctions.HandlePreviewTextWheel,
+        showScrollBar: virtualization.showScrollBar,
+      },
+    )
+  }
   return getEditorDom(lineData, showLineNumbers, cursor, showLineNumbers ? DomEventListenerFunctions.HandlePreviewTextPointerDown : undefined)
 }

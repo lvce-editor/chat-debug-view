@@ -22,6 +22,10 @@ import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowC
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
 import * as HandlePreviewTextPointerDown from '../HandlePreviewTextPointerDown/HandlePreviewTextPointerDown.ts'
+import * as HandlePreviewTextScrollBarPointerDown from '../HandlePreviewTextScrollBarPointerDown/HandlePreviewTextScrollBarPointerDown.ts'
+import * as HandlePreviewTextScrollBarPointerMove from '../HandlePreviewTextScrollBarPointerMove/HandlePreviewTextScrollBarPointerMove.ts'
+import * as HandlePreviewTextScrollBarPointerUp from '../HandlePreviewTextScrollBarPointerUp/HandlePreviewTextScrollBarPointerUp.ts'
+import * as HandlePreviewTextWheel from '../HandlePreviewTextWheel/HandlePreviewTextWheel.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
@@ -86,6 +90,10 @@ export const commandMap = {
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
   'ChatDebug.handlePreviewTextPointerDown': wrapCommand(HandlePreviewTextPointerDown.handlePreviewTextPointerDown),
+  'ChatDebug.handlePreviewTextScrollBarPointerDown': wrapCommand(HandlePreviewTextScrollBarPointerDown.handlePreviewTextScrollBarPointerDown),
+  'ChatDebug.handlePreviewTextScrollBarPointerMove': wrapCommand(HandlePreviewTextScrollBarPointerMove.handlePreviewTextScrollBarPointerMove),
+  'ChatDebug.handlePreviewTextScrollBarPointerUp': wrapCommand(HandlePreviewTextScrollBarPointerUp.handlePreviewTextScrollBarPointerUp),
+  'ChatDebug.handlePreviewTextWheel': wrapCommand(HandlePreviewTextWheel.handlePreviewTextWheel),
   'ChatDebug.handleSashPointerDown': wrapCommand(HandleSashPointerDown.handleSashPointerDown),
   'ChatDebug.handleSashPointerMove': wrapCommand(HandleSashPointerMove.handleSashPointerMove),
   'ChatDebug.handleSashPointerUp': wrapCommand(HandleSashPointerUp.handleSashPointerUp),

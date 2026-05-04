@@ -23,6 +23,9 @@ export interface ChatDebugViewState {
   readonly platform: number
   readonly previewTextCursorColumnIndex: number | null
   readonly previewTextCursorRowIndex: number | null
+  readonly previewTextDeltaY: number
+  readonly previewTextScrollBarHandleOffset: number
+  readonly previewTextScrollBarPointerActive: boolean
   readonly sashPointerActive: boolean
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
