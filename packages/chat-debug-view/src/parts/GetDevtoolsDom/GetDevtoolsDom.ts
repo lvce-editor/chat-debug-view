@@ -21,6 +21,7 @@ import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTableWrapperWrapperDom } from '../GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { getPreviewVirtualizationState } from '../PreviewVirtualization/PreviewVirtualization.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
@@ -44,6 +45,8 @@ export const getDevtoolsDom = (
   previewTextCursorColumnIndex: number | null = null,
   minLineY = 0,
   maxLineY = events.length,
+  previewTextDeltaY = 0,
+  previewTextViewportHeight = 0,
 ): readonly VirtualDomNode[] => {
   const visibleEvents = events.slice(minLineY, maxLineY)
   const rowNodes = getDevtoolsRows(visibleEvents, selectedEventIndex, visibleTableColumns, minLineY)
@@ -57,6 +60,15 @@ export const getDevtoolsDom = (
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
   const timelineNodes = getTimelineDom(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
+  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
+  const previewVirtualizationOptions =
+    previewTextViewportHeight <= 0 || previewVirtualization.totalLineCount === 0
+      ? undefined
+      : {
+          endLineY: previewVirtualization.endLineY,
+          showScrollBar: previewVirtualization.showScrollBar,
+          startLineY: previewVirtualization.startLineY,
+        }
   const previewEventNodes = getPreviewEventNodes(
     previewEvent,
     selectedEvent,
@@ -66,10 +78,11 @@ export const getDevtoolsDom = (
           columnIndex: previewTextCursorColumnIndex,
           rowIndex: previewTextCursorRowIndex,
         },
+    previewVirtualizationOptions,
   )
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
-  const hasSelectedEvent = responseEventNodes.length > 0
+  const hasSelectedEvent = !!selectedEvent
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
   const showScrollBar = visibleEvents.length < events.length
@@ -86,6 +99,7 @@ export const getDevtoolsDom = (
     detailTabs,
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
+    previewVirtualizationOptions,
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1

@@ -4,6 +4,7 @@ import * as GetResizedTableColumnWidths from '../src/parts/TableColumnLayout/Get
 test('getResizedTableColumnWidths should return existing widths for an invalid resizer id', () => {
   const tableColumnWidths = {
     duration: 110,
+    method: 90,
     status: 110,
     type: 260,
   }
@@ -20,6 +21,7 @@ test('getResizedTableColumnWidths should resize the preceding visible column', (
     ['status', 'type', 'duration'],
     {
       duration: 110,
+      method: 90,
       status: 110,
       type: 260,
     },
@@ -30,6 +32,7 @@ test('getResizedTableColumnWidths should resize the preceding visible column', (
 
   expect(result).toEqual({
     duration: 110,
+    method: 90,
     status: 110,
     type: 300,
   })
@@ -42,6 +45,7 @@ test('getResizedTableColumnWidths should clamp resized widths to the minimum wid
     ['type', 'duration', 'status'],
     {
       duration: 110,
+      method: 90,
       status: 110,
       type: 260,
     },
@@ -52,6 +56,7 @@ test('getResizedTableColumnWidths should clamp resized widths to the minimum wid
 
   expect(result).toEqual({
     duration: 110,
+    method: 90,
     status: 110,
     type: 80,
   })
@@ -64,6 +69,7 @@ test('getResizedTableColumnWidths should allow shrinking the status column below
     ['type', 'duration', 'status'],
     {
       duration: 110,
+      method: 90,
       status: 110,
       type: 260,
     },
@@ -74,6 +80,7 @@ test('getResizedTableColumnWidths should allow shrinking the status column below
 
   expect(result).toEqual({
     duration: 110,
+    method: 90,
     status: 140,
     type: 260,
   })

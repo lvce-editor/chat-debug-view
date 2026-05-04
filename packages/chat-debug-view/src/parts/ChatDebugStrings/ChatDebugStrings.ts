@@ -72,6 +72,10 @@ export const missingUri = (): string => {
   return I18nString.i18nString(UiStrings.MissingUri)
 }
 
+export const method = (): string => {
+  return I18nString.i18nString(UiStrings.Method)
+}
+
 export const network = (): string => {
   return I18nString.i18nString(UiStrings.Network)
 }

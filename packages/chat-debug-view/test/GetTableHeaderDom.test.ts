@@ -24,7 +24,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -36,6 +36,14 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.Th,
     },
     text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Method,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Method'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -123,7 +131,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Table,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
@@ -143,13 +151,18 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Col,
     },
     {
+      childCount: 0,
+      className: 'TableCol TableColThree',
+      type: VirtualDomElements.Col,
+    },
+    {
       childCount: 1,
       className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -161,6 +174,14 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Th,
     },
     text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Method,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Method'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -223,7 +244,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Table,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
@@ -243,13 +264,18 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Col,
     },
     {
+      childCount: 0,
+      className: 'TableCol TableColThree',
+      type: VirtualDomElements.Col,
+    },
+    {
       childCount: 1,
       className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -261,6 +287,14 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Th,
     },
     text('Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Method,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Method'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -290,7 +324,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 2,
+      childCount: 3,
       className: 'Resizers',
       type: VirtualDomElements.Div,
     },
@@ -313,6 +347,21 @@ test('getTableWrapperDom should render the wrapper node', () => {
       childCount: 1,
       className: 'Resizer ResizerTwo',
       name: 'ResizerTwo',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerThree',
+      name: 'ResizerThree',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
       tabIndex: -1,

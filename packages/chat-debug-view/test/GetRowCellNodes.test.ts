@@ -14,7 +14,7 @@ test('getRowCellNodes should render visible columns in order', () => {
     type: 'tool-execution',
   }
 
-  const result = GetRowCellNodes.getRowCellNodes(event, false, [TableColumn.Type, TableColumn.Duration, TableColumn.Status])
+  const result = GetRowCellNodes.getRowCellNodes(event, false, [TableColumn.Type, TableColumn.Method, TableColumn.Duration, TableColumn.Status])
 
   expect(result).toEqual([
     {
@@ -23,6 +23,12 @@ test('getRowCellNodes should render visible columns in order', () => {
       type: VirtualDomElements.Td,
     },
     text('tool-execution, get_workspace_uri'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text(''),
     {
       childCount: 1,
       className: 'TableCell',
@@ -78,5 +84,26 @@ test('getRowCellNodes should render list_files without the tool-execution prefix
       type: VirtualDomElements.Td,
     },
     text('list_files'),
+  ])
+})
+
+test('getRowCellNodes should render the mapped http-like method for file operations', () => {
+  const event = {
+    eventId: 1,
+    name: 'read_file',
+    sessionId: 'session-1',
+    timestamp: '2026-04-02T07:26:35.172Z',
+    type: 'tool-execution',
+  }
+
+  const result = GetRowCellNodes.getRowCellNodes(event, false, [TableColumn.Method])
+
+  expect(result).toEqual([
+    {
+      childCount: 1,
+      className: 'TableCell',
+      type: VirtualDomElements.Td,
+    },
+    text('GET'),
   ])
 })

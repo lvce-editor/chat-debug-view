@@ -6,6 +6,8 @@ const getTableResizerId = (name: string): number => {
       return 1
     case 'ResizerTwo':
       return 2
+    case 'ResizerThree':
+      return 3
     default:
       return 0
   }

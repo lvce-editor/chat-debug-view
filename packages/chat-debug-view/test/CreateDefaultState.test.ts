@@ -19,6 +19,7 @@ test('createDefaultState should return expected defaults', () => {
   expect(state.tableColumns).toEqual(TableColumn.createTableColumns())
   expect(state.tableColumnWidths).toEqual({
     duration: 110,
+    method: 90,
     status: 110,
     type: 260,
   })
