@@ -10,10 +10,10 @@ import { getPanelId } from '../GetPanelId/GetPanelId.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNodes.ts'
+import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 import { getTimingDetailsDom } from '../GetTimingDetailsDom/GetTimingDetailsDom.ts'
 import * as InputName from '../InputName/InputName.ts'
-import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
   let nextSiblingIndex = index + 1

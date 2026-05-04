@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
 import { handlePreviewTextWheel } from '../src/parts/HandlePreviewTextWheel/HandlePreviewTextWheel.ts'
-import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
+import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const createPreviewState = () => {
+const createPreviewState = (): ReturnType<typeof createDefaultState> => {
   return {
     ...createDefaultState(),
     height: 600,

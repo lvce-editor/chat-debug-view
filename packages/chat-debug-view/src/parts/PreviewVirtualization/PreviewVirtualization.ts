@@ -1,9 +1,9 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
+import { previewTextRowHeight } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import { getScrollBarHeight, getScrollBarOffset } from '../VirtualTable/VirtualTable.ts'
 import { isWriteFilePreview } from '../WriteFilePreview/WriteFilePreview.ts'
-import { previewTextRowHeight } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import { getTableBodyHeight } from '../VirtualTable/VirtualTable.ts'
 
 export interface PreviewVirtualizationState {
