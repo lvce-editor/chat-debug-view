@@ -119,6 +119,28 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       preventDefault: true,
     },
     {
+      name: DomEventListenerFunctions.HandlePreviewTextWheel,
+      params: ['handlePreviewTextWheel', 'event.deltaY'],
+      passive: true,
+      preventDefault: true,
+    },
+    {
+      name: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerDown,
+      params: ['handlePreviewTextScrollBarPointerDown', EventExpression.ClientY],
+      trackPointerEvents: [
+        DomEventListenerFunctions.HandlePreviewTextScrollBarPointerMove,
+        DomEventListenerFunctions.HandlePreviewTextScrollBarPointerUp,
+      ],
+    },
+    {
+      name: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerMove,
+      params: ['handlePreviewTextScrollBarPointerMove', EventExpression.ClientY],
+    },
+    {
+      name: DomEventListenerFunctions.HandlePreviewTextScrollBarPointerUp,
+      params: ['handlePreviewTextScrollBarPointerUp'],
+    },
+    {
       name: DomEventListenerFunctions.HandleTimelinePointerDown,
       params: ['handleTimelinePointerDown', EventExpression.TargetName, EventExpression.ClientX],
       trackPointerEvents: [DomEventListenerFunctions.HandleTimelinePointerMove, DomEventListenerFunctions.HandleTimelinePointerUp],

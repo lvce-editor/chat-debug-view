@@ -1,6 +1,7 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
+import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { ChatDebugViewDetails, ChatDebugViewDetailsBottom, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
@@ -52,6 +53,7 @@ const getPreviewContentNodes = (
   selectedEvent: ChatViewEvent | null,
   previewTextCursorRowIndex: number | null,
   previewTextCursorColumnIndex: number | null,
+  virtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length > 0) {
     return previewEventNodes
@@ -68,6 +70,7 @@ const getPreviewContentNodes = (
           columnIndex: previewTextCursorColumnIndex,
           rowIndex: previewTextCursorRowIndex,
         },
+    virtualization,
   )
 }
 
@@ -99,12 +102,13 @@ const getSelectedContentNodes = (
   selectedEvent: ChatViewEvent | null,
   previewTextCursorRowIndex: number | null,
   previewTextCursorColumnIndex: number | null,
+  previewVirtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (safeSelectedDetailTab === InputName.Timing) {
     return getTimingContentNodes(responseEventNodes, selectedEvent)
   }
   if (safeSelectedDetailTab === InputName.Preview) {
-    return getPreviewContentNodes(previewEventNodes, selectedEvent, previewTextCursorRowIndex, previewTextCursorColumnIndex)
+    return getPreviewContentNodes(previewEventNodes, selectedEvent, previewTextCursorRowIndex, previewTextCursorColumnIndex, previewVirtualization)
   }
   if (safeSelectedDetailTab === InputName.Payload) {
     return getPayloadContentNodes(payloadEventNodes, selectedEvent)
@@ -120,6 +124,7 @@ export const getDetailsDom = (
   detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  previewVirtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
@@ -137,6 +142,7 @@ export const getDetailsDom = (
       selectedEvent,
       previewTextCursorRowIndex,
       previewTextCursorColumnIndex,
+      previewVirtualization,
     )
 
     return [

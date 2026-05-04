@@ -40,3 +40,31 @@ test('handlePreviewTextPointerDown should ignore preview text without line numbe
 
   expect(result).toBe(state)
 })
+
+test('handlePreviewTextPointerDown should account for preview scroll offset', () => {
+  const state = {
+    ...createDefaultState(),
+    height: 300,
+    previewTextDeltaY: 40,
+    selectedEvent: {
+      arguments: {
+        uri: 'file:///workspace/example.txt',
+      },
+      eventId: 1,
+      name: 'read_file',
+      result: 'first line\nsecond line\nthird line\nfourth line\nfifth line\nsixth line\nseventh line\neighth line',
+      sessionId: 'session-1',
+      timestamp: '2026-04-13T10:00:00.000Z',
+      type: 'tool-execution',
+    },
+    useDevtoolsLayout: true,
+    width: 900,
+    x: 10,
+    y: 20,
+  }
+
+  const result = handlePreviewTextPointerDown(state, 28, 21)
+
+  expect(result.previewTextCursorColumnIndex).toBe(3)
+  expect(result.previewTextCursorRowIndex).toBe(3)
+})

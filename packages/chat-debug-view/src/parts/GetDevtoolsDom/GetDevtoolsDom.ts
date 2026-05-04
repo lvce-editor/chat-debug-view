@@ -43,6 +43,8 @@ export const getDevtoolsDom = (
   focus = 0,
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  previewTextDeltaY = 0,
+  previewTextViewportHeight = 0,
   minLineY = 0,
   maxLineY = events.length,
   previewTextDeltaY = 0,
@@ -82,7 +84,12 @@ export const getDevtoolsDom = (
   )
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
+<<<<<<< HEAD
   const hasSelectedEvent = !!selectedEvent
+=======
+  const hasSelectedEvent = responseEventNodes.length > 0
+  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
+>>>>>>> origin/main
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
   const showScrollBar = visibleEvents.length < events.length
@@ -99,7 +106,17 @@ export const getDevtoolsDom = (
     detailTabs,
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
+<<<<<<< HEAD
     previewVirtualizationOptions,
+=======
+    previewVirtualization.totalLineCount > 0
+      ? {
+          endLineY: previewVirtualization.endLineY,
+          showScrollBar: previewVirtualization.showScrollBar,
+          startLineY: previewVirtualization.startLineY,
+        }
+      : undefined,
+>>>>>>> origin/main
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1

@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { getCss } from '../src/parts/GetCss/GetCss.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
+import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getCss should expose the timeline height variable and strict containment', () => {
@@ -29,4 +30,34 @@ test('getCss should expose the details line number width variable and apply it t
   expect(css).toContain('.ChatDebugViewDetailsBottom .Gutter {')
   expect(css).toContain('width: var(--ChatDebugViewDetailsLineNumberWidth);')
   expect(css).toContain('.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {')
+})
+
+test('getCss should expose preview scrollbar variables for virtualized preview text', () => {
+  const selectedEvent = setSelectedEventPreview(
+    {
+      eventId: 1,
+      sessionId: 'session-1',
+      timestamp: '2026-05-04T10:00:00.000Z',
+      type: 'request',
+    },
+    Array.from({ length: 40 }, (_, index) => `line ${index + 1}`).join('\n'),
+  )
+  const css = getCss({
+    ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    height: 600,
+    previewTextDeltaY: 48,
+    selectedEvent,
+    useDevtoolsLayout: true,
+    width: 900,
+    x: 10,
+    y: 20,
+  })
+
+  expect(css).toContain('--ChatDebugViewPreviewScrollBarHeight:')
+  expect(css).toContain('--ChatDebugViewPreviewScrollBarOffset:')
+  expect(css).toContain('--ChatDebugViewPreviewScrollBarWidth: 12px;')
+  expect(css).toContain('--ChatDebugViewPreviewViewportHeight: 416px;')
+  expect(css).toContain('.PreviewTextScrollBar {')
+  expect(css).toContain('.PreviewVirtualizedEditor {')
 })
