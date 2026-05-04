@@ -4,9 +4,12 @@ import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.t
 import { isAttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getImagePreviewDom } from '../GetImagePreviewDom/GetImagePreviewDom.ts'
+import { getLanguageFromFileExtension } from '../GetLanguageFromFileExtension/GetLanguageFromFileExtension.ts'
+import { getSyntaxHighlightTokens } from '../GetSyntaxHighlightTokens/GetSyntaxHighlightTokens.ts'
 import { getTextNode } from '../GetTextNode/GetTextNode.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
 import * as UiStrings from '../UiStrings/UiStrings.ts'
+import { isWriteFilePreview } from '../WriteFilePreview/WriteFilePreview.ts'
 
 export const getPreviewEventNodes = (
   previewEvent: unknown,
@@ -18,6 +21,11 @@ export const getPreviewEventNodes = (
     const isChatMessageUpdatedPreview = !!selectedEvent && isChatMessageUpdatedEvent(selectedEvent)
     const showLineNumbers = !isInvalidImageMessage && !isChatMessageUpdatedPreview
     return getTextNode(previewEvent, showLineNumbers, showLineNumbers ? (previewTextCursor ?? null) : null)
+  }
+  if (isWriteFilePreview(previewEvent)) {
+    const language = getLanguageFromFileExtension(previewEvent.uri)
+    const tokenSegments = language ? getSyntaxHighlightTokens(previewEvent.content, language) : undefined
+    return getTextNode(previewEvent.content, true, previewTextCursor ?? null, tokenSegments)
   }
   if (previewEvent === undefined) {
     return []

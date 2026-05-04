@@ -40,6 +40,78 @@ const getNormalizedDetailTabs = (selectedEvent: ChatViewEvent | null, detailTabs
   return DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(detailTabs), selectedEvent)
 }
 
+const getTimingContentNodes = (responseEventNodes: readonly VirtualDomNode[], selectedEvent: ChatViewEvent | null): readonly VirtualDomNode[] => {
+  if (selectedEvent === null) {
+    return responseEventNodes
+  }
+  return getTimingDetailsDom(selectedEvent)
+}
+
+const getPreviewContentNodes = (
+  previewEventNodes: readonly VirtualDomNode[],
+  selectedEvent: ChatViewEvent | null,
+  previewTextCursorRowIndex: number | null,
+  previewTextCursorColumnIndex: number | null,
+): readonly VirtualDomNode[] => {
+  if (previewEventNodes.length > 0) {
+    return previewEventNodes
+  }
+  if (selectedEvent === null) {
+    return []
+  }
+  return getPreviewEventNodes(
+    getPreviewEvent(selectedEvent),
+    selectedEvent,
+    previewTextCursorRowIndex === null || previewTextCursorColumnIndex === null
+      ? null
+      : {
+          columnIndex: previewTextCursorColumnIndex,
+          rowIndex: previewTextCursorRowIndex,
+        },
+  )
+}
+
+const getPayloadContentNodes = (payloadEventNodes: readonly VirtualDomNode[], selectedEvent: ChatViewEvent | null): readonly VirtualDomNode[] => {
+  if (payloadEventNodes.length > 0) {
+    return payloadEventNodes
+  }
+  if (selectedEvent === null) {
+    return []
+  }
+  return getEventNode(getPayloadEvent(selectedEvent))
+}
+
+const getResponseContentNodes = (responseEventNodes: readonly VirtualDomNode[], selectedEvent: ChatViewEvent | null): readonly VirtualDomNode[] => {
+  if (responseEventNodes.length > 0) {
+    return responseEventNodes
+  }
+  if (selectedEvent === null) {
+    return []
+  }
+  return getEventNode(selectedEvent)
+}
+
+const getSelectedContentNodes = (
+  safeSelectedDetailTab: DetailTabType['name'],
+  previewEventNodes: readonly VirtualDomNode[],
+  payloadEventNodes: readonly VirtualDomNode[],
+  responseEventNodes: readonly VirtualDomNode[],
+  selectedEvent: ChatViewEvent | null,
+  previewTextCursorRowIndex: number | null,
+  previewTextCursorColumnIndex: number | null,
+): readonly VirtualDomNode[] => {
+  if (safeSelectedDetailTab === InputName.Timing) {
+    return getTimingContentNodes(responseEventNodes, selectedEvent)
+  }
+  if (safeSelectedDetailTab === InputName.Preview) {
+    return getPreviewContentNodes(previewEventNodes, selectedEvent, previewTextCursorRowIndex, previewTextCursorColumnIndex)
+  }
+  if (safeSelectedDetailTab === InputName.Payload) {
+    return getPayloadContentNodes(payloadEventNodes, selectedEvent)
+  }
+  return getResponseContentNodes(responseEventNodes, selectedEvent)
+}
+
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -57,60 +129,15 @@ export const getDetailsDom = (
   const selectedDetailTab = normalizedDetailTabs.find((detailTab) => detailTab.name === safeSelectedDetailTab) ?? normalizedDetailTabs[0]
 
   const getDetailContentDom = (): readonly VirtualDomNode[] => {
-    const getDetailContentDomTiming = (): readonly VirtualDomNode[] => {
-      if (selectedEvent === null) {
-        return responseEventNodes
-      }
-      return getTimingDetailsDom(selectedEvent)
-    }
-
-    const getDetailContentDomPreview = (): readonly VirtualDomNode[] => {
-      if (previewEventNodes.length > 0) {
-        return previewEventNodes
-      }
-      if (selectedEvent === null) {
-        return []
-      }
-      return getPreviewEventNodes(
-        getPreviewEvent(selectedEvent),
-        selectedEvent,
-        previewTextCursorRowIndex === null || previewTextCursorColumnIndex === null
-          ? null
-          : {
-              columnIndex: previewTextCursorColumnIndex,
-              rowIndex: previewTextCursorRowIndex,
-            },
-      )
-    }
-
-    const getDetailContentDomPayload = (): readonly VirtualDomNode[] => {
-      if (payloadEventNodes.length > 0) {
-        return payloadEventNodes
-      }
-      if (selectedEvent === null) {
-        return []
-      }
-      return getEventNode(getPayloadEvent(selectedEvent))
-    }
-
-    const getDetailContentDomResponse = (): readonly VirtualDomNode[] => {
-      if (responseEventNodes.length > 0) {
-        return responseEventNodes
-      }
-      if (selectedEvent === null) {
-        return []
-      }
-      return getEventNode(selectedEvent)
-    }
-
-    const contentNodes =
-      safeSelectedDetailTab === InputName.Timing
-        ? getDetailContentDomTiming()
-        : safeSelectedDetailTab === InputName.Preview
-          ? getDetailContentDomPreview()
-          : safeSelectedDetailTab === InputName.Payload
-            ? getDetailContentDomPayload()
-            : getDetailContentDomResponse()
+    const contentNodes = getSelectedContentNodes(
+      safeSelectedDetailTab,
+      previewEventNodes,
+      payloadEventNodes,
+      responseEventNodes,
+      selectedEvent,
+      previewTextCursorRowIndex,
+      previewTextCursorColumnIndex,
+    )
 
     return [
       {

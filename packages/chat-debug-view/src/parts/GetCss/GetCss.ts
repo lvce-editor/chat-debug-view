@@ -1,6 +1,7 @@
 // cspell:ignore liga calt
 
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getDetailsLineNumberWidth } from '../GetDetailsLineNumberWidth/GetDetailsLineNumberWidth.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -19,7 +20,11 @@ export const getCss = (state: ChatDebugViewState): string => {
   const scrollBarOffset = getScrollBarOffset(state.tableDeltaY, maxDeltaY, tableBodyHeight, scrollBarHeight)
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
   const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
-  const topSize = state.width >= state.largeBreakpoint ? 30 : state.width >= state.mediumBreakpoint ? 60 : 60
+  const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
+  let topSize = 60
+  if (state.width >= state.largeBreakpoint) {
+    topSize = 30
+  }
   const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0] = tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
@@ -32,6 +37,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableColZeroWidth: ${tableColZeroWidth}px;
   --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
   --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
+  --ChatDebugViewDetailsLineNumberWidth: ${detailsLineNumberWidth}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
@@ -76,6 +82,17 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: relative;
 }
 
+.ChatDebugViewDetailsBottom .Gutter {
+  flex: 0 0 var(--ChatDebugViewDetailsLineNumberWidth);
+  width: var(--ChatDebugViewDetailsLineNumberWidth);
+}
+
+.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {
+  display: inline-block;
+  min-width: var(--ChatDebugViewDetailsLineNumberWidth);
+  width: var(--ChatDebugViewDetailsLineNumberWidth);
+}
+
 .TableScrollBar {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 999px;
@@ -94,6 +111,38 @@ export const getCss = (state: ChatDebugViewState): string => {
   position: absolute;
   top: var(--ChatDebugViewTableScrollBarOffset);
   width: calc(100% - 4px);
+}
+
+.TokenText {
+  color: var(--vscode-editor-foreground);
+}
+
+.TokenString {
+  color: var(--vscode-debugTokenExpression-string, #ce9178);
+}
+
+.TokenNumeric {
+  color: var(--vscode-debugTokenExpression-number, #b5cea8);
+}
+
+.TokenBoolean {
+  color: var(--vscode-debugTokenExpression-boolean, #569cd6);
+}
+
+.TokenKey,
+.TokenAttributeName,
+.TokenPropertyName {
+  color: var(--vscode-symbolIcon-propertyForeground, #9cdcfe);
+}
+
+.TokenKeyword,
+.TokenTag,
+.TokenSelector {
+  color: var(--vscode-symbolIcon-keywordForeground, #569cd6);
+}
+
+.TokenComment {
+  color: var(--vscode-editorLineNumber-foreground, #6a9955);
 }
 
 `

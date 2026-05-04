@@ -15,7 +15,7 @@ export const mergeToolExecutionEvents = (
     ...startedEvent,
     ...finishedEvent,
     ...(ended === undefined ? {} : { ended }),
-    ...(eventId === undefined ? {} : { eventId }),
+    eventId,
     ...(started === undefined ? {} : { started }),
     type,
   }

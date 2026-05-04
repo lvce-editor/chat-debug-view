@@ -25,7 +25,7 @@ test('mergeSelectedEventDetails should prefer the loaded response event for ai r
     },
   }
 
-  const result = mergeSelectedEventDetails(selectedEvent as never, selectedEventDetails as never)
+  const result = mergeSelectedEventDetails(selectedEvent, selectedEventDetails)
 
   expect(result.responseEvent).toEqual(selectedEventDetails)
 })
