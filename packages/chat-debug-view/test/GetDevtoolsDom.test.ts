@@ -197,13 +197,8 @@ test('getDevtoolsDom should render a table scrollbar when only a visible slice i
     0,
     undefined,
     undefined,
-<<<<<<< HEAD
-    undefined,
-    undefined,
-=======
     0,
     0,
->>>>>>> origin/main
     1,
     2,
   ) as readonly {
