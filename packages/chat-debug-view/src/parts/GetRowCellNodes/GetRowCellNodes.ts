@@ -20,15 +20,6 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
           },
           text(getEventTableDurationText(event)),
         ]
-      case TableColumn.Status:
-        return [
-          {
-            childCount: 1,
-            className: mergeClassNames(TableCell, isErrorStatus ? ChatDebugViewCellStatusError : ''),
-            type: VirtualDomElements.Td,
-          },
-          text(getStatusText(event)),
-        ]
       case TableColumn.Method:
         return [
           {
@@ -37,6 +28,15 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
             type: VirtualDomElements.Td,
           },
           text(getEventTableMethodLabel(event)),
+        ]
+      case TableColumn.Status:
+        return [
+          {
+            childCount: 1,
+            className: mergeClassNames(TableCell, isErrorStatus ? ChatDebugViewCellStatusError : ''),
+            type: VirtualDomElements.Td,
+          },
+          text(getStatusText(event)),
         ]
       case TableColumn.Type:
         return [
