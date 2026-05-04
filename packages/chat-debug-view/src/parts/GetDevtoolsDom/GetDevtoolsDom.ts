@@ -21,6 +21,7 @@ import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
 import { getTableWrapperWrapperDom } from '../GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
+import { getPreviewVirtualizationState } from '../PreviewVirtualization/PreviewVirtualization.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getDevtoolsDom = (
@@ -42,6 +43,8 @@ export const getDevtoolsDom = (
   focus = 0,
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
+  previewTextDeltaY = 0,
+  previewTextViewportHeight = 0,
   minLineY = 0,
   maxLineY = events.length,
 ): readonly VirtualDomNode[] => {
@@ -70,6 +73,7 @@ export const getDevtoolsDom = (
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
   const hasSelectedEvent = responseEventNodes.length > 0
+  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
   const showScrollBar = visibleEvents.length < events.length
@@ -86,6 +90,13 @@ export const getDevtoolsDom = (
     detailTabs,
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
+    previewVirtualization.totalLineCount > 0
+      ? {
+          endLineY: previewVirtualization.endLineY,
+          showScrollBar: previewVirtualization.showScrollBar,
+          startLineY: previewVirtualization.startLineY,
+        }
+      : undefined,
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1
