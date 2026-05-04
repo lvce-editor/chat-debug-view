@@ -49,7 +49,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewPreviewViewportHeight: ${previewVirtualization.viewportHeight}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
   --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
-  --ChatDebugViewMethodColumnWidth: ${state.tableColumnWidths.method}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewTableScrollBarHeight: ${scrollBarHeight}px;
   --ChatDebugViewTableScrollBarOffset: ${scrollBarOffset}px;
