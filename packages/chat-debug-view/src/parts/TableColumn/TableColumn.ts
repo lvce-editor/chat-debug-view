@@ -1,10 +1,11 @@
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 
 export const Type = 'type'
+export const Method = 'method'
 export const Duration = 'duration'
 export const Status = 'status'
 
-export const tableColumnNames = [Type, Status, Duration] as const
+export const tableColumnNames = [Type, Method, Status, Duration] as const
 
 export type TableColumnName = (typeof tableColumnNames)[number]
 
@@ -20,6 +21,11 @@ export const createTableColumns = (): readonly TableColumn[] => {
       isVisible: true,
       label: ChatDebugStrings.type(),
       name: Type,
+    },
+    {
+      isVisible: true,
+      label: ChatDebugStrings.method(),
+      name: Method,
     },
     {
       isVisible: true,
@@ -75,6 +81,8 @@ export const getTableColumnLabel = (tableColumns: readonly TableColumn[], name: 
   switch (name) {
     case Duration:
       return ChatDebugStrings.duration()
+    case Method:
+      return ChatDebugStrings.method()
     case Status:
       return ChatDebugStrings.status()
     case Type:

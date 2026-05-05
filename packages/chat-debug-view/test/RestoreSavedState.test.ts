@@ -43,6 +43,7 @@ test('restoreSavedState should restore table column widths', () => {
   const result = restoreSavedState(state, {
     tableColumnWidths: {
       duration: 80,
+      method: 92,
       status: 140,
       type: 260,
     },
@@ -50,6 +51,7 @@ test('restoreSavedState should restore table column widths', () => {
 
   expect(result.tableColumnWidths).toEqual({
     duration: 80,
+    method: 92,
     status: 140,
     type: 260,
   })
@@ -61,6 +63,7 @@ test('restoreSavedState should ignore invalid table column widths', () => {
   const result = restoreSavedState(state, {
     tableColumnWidths: {
       duration: 'wide',
+      method: 92,
       status: 140,
       type: 260,
     },

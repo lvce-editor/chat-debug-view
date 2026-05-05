@@ -2,6 +2,7 @@ import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { ChatDebugViewCellDuration, ChatDebugViewCellStatusError, TableCell } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
+import { getEventTableMethodLabel } from '../GetEventTableMethodLabel/GetEventTableMethodLabel.ts'
 import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -18,6 +19,15 @@ export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, vi
             type: VirtualDomElements.Td,
           },
           text(getEventTableDurationText(event)),
+        ]
+      case TableColumn.Method:
+        return [
+          {
+            childCount: 1,
+            className: TableCell,
+            type: VirtualDomElements.Td,
+          },
+          text(getEventTableMethodLabel(event)),
         ]
       case TableColumn.Status:
         return [

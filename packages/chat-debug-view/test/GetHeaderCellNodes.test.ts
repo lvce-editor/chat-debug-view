@@ -15,6 +15,11 @@ test('getHeaderCellNodes should render the visible header cells', () => {
     },
     {
       isVisible: true,
+      label: 'Method',
+      name: TableColumn.Method,
+    },
+    {
+      isVisible: true,
       label: 'Outcome',
       name: TableColumn.Status,
     },
@@ -24,7 +29,7 @@ test('getHeaderCellNodes should render the visible header cells', () => {
       name: TableColumn.Duration,
     },
   ]
-  const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Status], tableColumns) as readonly {
+  const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Method, TableColumn.Status], tableColumns) as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -38,6 +43,14 @@ test('getHeaderCellNodes should render the visible header cells', () => {
       type: VirtualDomElements.Th,
     },
     text('Request Type'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Method,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Method'),
     {
       childCount: 1,
       className: 'TableCell',

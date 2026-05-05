@@ -37,6 +37,7 @@ test('create should restore serializable state from saved state', () => {
     selectedEventId: 7,
     tableColumnWidths: {
       duration: 88,
+      method: 92,
       status: 132,
       type: 260,
     },
@@ -51,11 +52,13 @@ test('create should restore serializable state from saved state', () => {
   expect(result.oldState.selectedEventId).toBe(7)
   expect(result.newState.tableColumnWidths).toEqual({
     duration: 88,
+    method: 92,
     status: 132,
     type: 260,
   })
   expect(result.oldState.tableColumnWidths).toEqual({
     duration: 88,
+    method: 92,
     status: 132,
     type: 260,
   })

@@ -27,9 +27,15 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
   const lineContents = Locator('.EditorRow')
+  const previewEditor = Locator('.PreviewVirtualizedEditor')
+  const previewScrollBar = Locator('.PreviewTextScrollBar')
 
-  await expect(lineNumbers).toHaveCount(1000)
+  await expect(previewEditor).toBeVisible()
+  await expect(previewScrollBar).toBeVisible()
+  await expect(lineNumbers).toHaveCount(24)
   await expect(lineNumbers.nth(0)).toHaveText('1')
-  await expect(lineNumbers.nth(999)).toHaveText('1000')
-  await expect(lineContents).toHaveCount(1000)
+  await expect(lineNumbers.nth(23)).toHaveText('24')
+  await expect(lineContents).toHaveCount(24)
+  await expect(lineContents.nth(0)).toHaveText('line 1')
+  await expect(lineContents.nth(23)).toHaveText('line 24')
 }

@@ -4,6 +4,8 @@ const getTableResizerId = (name: string): number => {
   switch (name) {
     case 'ResizerOne':
       return 1
+    case 'ResizerThree':
+      return 3
     case 'ResizerTwo':
       return 2
     default:

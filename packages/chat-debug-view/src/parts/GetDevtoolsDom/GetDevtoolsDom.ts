@@ -60,6 +60,15 @@ export const getDevtoolsDom = (
   const resolvedTimelineInfo = timelineInfo || getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
   const timelineNodes = getTimelineDom(resolvedTimelineInfo, timelineHoverPercent)
   const previewEvent = selectedEvent ? getPreviewEvent(selectedEvent) : undefined
+  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
+  const previewVirtualizationOptions =
+    previewTextViewportHeight <= 0 || previewVirtualization.totalLineCount === 0
+      ? undefined
+      : {
+          endLineY: previewVirtualization.endLineY,
+          showScrollBar: previewVirtualization.showScrollBar,
+          startLineY: previewVirtualization.startLineY,
+        }
   const previewEventNodes = getPreviewEventNodes(
     previewEvent,
     selectedEvent,
@@ -69,11 +78,11 @@ export const getDevtoolsDom = (
           columnIndex: previewTextCursorColumnIndex,
           rowIndex: previewTextCursorRowIndex,
         },
+    previewVirtualizationOptions,
   )
   const payloadEventNodes = selectedEvent ? getEventNode(getPayloadEvent(selectedEvent)) : []
   const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
-  const hasSelectedEvent = responseEventNodes.length > 0
-  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
+  const hasSelectedEvent = !!selectedEvent
   const eventsClassName = getEventsClassName(hasSelectedEvent)
   const summary = getTableSummary(events)
   const showScrollBar = visibleEvents.length < events.length
@@ -90,13 +99,7 @@ export const getDevtoolsDom = (
     detailTabs,
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
-    previewVirtualization.totalLineCount > 0
-      ? {
-          endLineY: previewVirtualization.endLineY,
-          showScrollBar: previewVirtualization.showScrollBar,
-          startLineY: previewVirtualization.startLineY,
-        }
-      : undefined,
+    previewVirtualizationOptions,
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1

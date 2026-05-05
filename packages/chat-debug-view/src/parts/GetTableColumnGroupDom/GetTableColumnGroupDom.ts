@@ -2,7 +2,7 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import { TableCol } from '../ClassNames/ClassNames.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
-const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo'] as const
+const tableColClassNames = ['TableColZero', 'TableColOne', 'TableColTwo', 'TableColThree'] as const
 
 export const getTableColumnGroupDom = (visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   const orderedVisibleTableColumns = getOrderedVisibleTableColumns(visibleTableColumns)
