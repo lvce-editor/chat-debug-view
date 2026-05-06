@@ -2,8 +2,11 @@ import { expect, test } from '@jest/globals'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import { getDetailsLineNumberWidth } from '../src/parts/GetDetailsLineNumberWidth/GetDetailsLineNumberWidth.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
-import { defaultPreviewTextColumnWidth } from '../src/parts/PreviewTextCursor/PreviewTextCursor.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+
+const expectedWidth = (digitCount: number): number => {
+  return digitCount * 8 + 8
+}
 
 const createObjectWithKeys = (count: number): Record<string, string> => {
   return Object.fromEntries(Array.from({ length: count }, (_, index) => [`key${index + 1}`, `value${index + 1}`]))
@@ -30,7 +33,7 @@ test('getDetailsLineNumberWidth should size preview line numbers from the curren
 
   const result = getDetailsLineNumberWidth(state)
 
-  expect(result).toBe(3 * defaultPreviewTextColumnWidth)
+  expect(result).toBe(expectedWidth(3))
 })
 
 test('getDetailsLineNumberWidth should size payload line numbers from pretty-printed payload content', () => {
@@ -52,7 +55,25 @@ test('getDetailsLineNumberWidth should size payload line numbers from pretty-pri
 
   const result = getDetailsLineNumberWidth(state)
 
-  expect(result).toBe(3 * defaultPreviewTextColumnWidth)
+  expect(result).toBe(expectedWidth(3))
+})
+
+test('getDetailsLineNumberWidth should include extra gutter buffer for smaller line counts', () => {
+  const selectedEvent = {
+    eventId: 1,
+    name: 'read_file',
+    result: Array.from({ length: 14 }, (_, index) => `line ${index + 1}`).join('\n'),
+    type: 'tool-execution',
+  }
+  const state = {
+    ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    selectedEvent,
+  }
+
+  const result = getDetailsLineNumberWidth(state)
+
+  expect(result).toBe(expectedWidth(2))
 })
 
 test('getDetailsLineNumberWidth should return 0 when preview line numbers are intentionally hidden', () => {

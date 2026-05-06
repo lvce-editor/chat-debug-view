@@ -26,10 +26,11 @@ test('getCss should expose the details line number width variable and apply it t
     selectedEvent,
   })
 
-  expect(css).toContain('--ChatDebugViewDetailsLineNumberWidth: 27px;')
+  expect(css).toContain('--ChatDebugViewDetailsLineNumberWidth: 32px;')
   expect(css).toContain('.ChatDebugViewDetailsBottom .Gutter {')
+  expect(css).toContain('flex: 0 0 var(--ChatDebugViewDetailsLineNumberWidth);')
   expect(css).toContain('width: var(--ChatDebugViewDetailsLineNumberWidth);')
-  expect(css).toContain('.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {')
+  expect(css).not.toContain('.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {')
 })
 
 test('getCss should expose preview scrollbar variables for virtualized preview text', () => {

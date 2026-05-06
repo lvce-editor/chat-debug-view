@@ -97,12 +97,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: var(--ChatDebugViewDetailsLineNumberWidth);
 }
 
-.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {
-  display: inline-block;
-  min-width: var(--ChatDebugViewDetailsLineNumberWidth);
-  width: var(--ChatDebugViewDetailsLineNumberWidth);
-}
-
 .ChatDebugViewHeadersTable {
   border-collapse: collapse;
   table-layout: fixed;
@@ -137,7 +131,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   font-weight: 500;
   width: 38%;
 }
-
 .PreviewVirtualizedEditor {
   height: var(--ChatDebugViewPreviewViewportHeight);
   overflow: hidden;
