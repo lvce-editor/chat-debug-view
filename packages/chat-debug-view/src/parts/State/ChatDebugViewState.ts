@@ -59,8 +59,8 @@ export interface ChatDebugViewState {
   readonly timelineEvents: readonly ChatViewEvent[]
   readonly timelineFilterDescription: string
   readonly timelineHeight: number
-  readonly timelineHoverPercent: number | null
   readonly timelineHorizontalPadding: number
+  readonly timelineHoverPercent: number | null
   readonly timelineHoverSeconds: string
   readonly timelineInfo: TimelineInfo
   readonly timelineSelectionActive: boolean
