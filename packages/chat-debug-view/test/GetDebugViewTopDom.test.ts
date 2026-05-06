@@ -6,7 +6,7 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetDebugViewTopDom from '../src/parts/GetDebugViewTopDom/GetDebugViewTopDom.ts'
 
-test('getDebugViewTopDom should render search section with context menu listener', () => {
+test('getDebugViewTopDom should render search section', () => {
   const dom = GetDebugViewTopDom.getDebugViewTopDom('', false, []) as readonly {
     readonly autocomplete?: string
     readonly childCount?: number
@@ -14,7 +14,6 @@ test('getDebugViewTopDom should render search section with context menu listener
     readonly inputType?: string
     readonly name?: string
     readonly onClick?: number
-    readonly onContextMenu?: number
     readonly onInput?: number
     readonly placeholder?: string
     readonly value?: string
@@ -24,7 +23,6 @@ test('getDebugViewTopDom should render search section with context menu listener
     {
       childCount: 2,
       className: 'ChatDebugViewTop',
-      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
     {
@@ -51,7 +49,7 @@ test('getDebugViewTopDom should render search section with context menu listener
   ])
 })
 
-test('getDebugViewTopDom should render devtools search section with context menu listener', () => {
+test('getDebugViewTopDom should render devtools search section', () => {
   const categoryFilters = EventCategoryFilter.selectCategoryFilters(EventCategoryFilter.createCategoryFilters(), [EventCategoryFilter.Tools])
   const dom = GetDebugViewTopDom.getDebugViewTopDom('tool', true, categoryFilters) as readonly {
     readonly ['aria-label']?: string
@@ -63,7 +61,6 @@ test('getDebugViewTopDom should render devtools search section with context menu
     readonly inputType?: string
     readonly name?: string
     readonly onClick?: number
-    readonly onContextMenu?: number
     readonly onInput?: number
     readonly placeholder?: string
     readonly value?: string
@@ -73,7 +70,6 @@ test('getDebugViewTopDom should render devtools search section with context menu
     {
       childCount: 3,
       className: `ChatDebugViewTop ${ChatDebugViewTopDevtools}`,
-      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
     {
