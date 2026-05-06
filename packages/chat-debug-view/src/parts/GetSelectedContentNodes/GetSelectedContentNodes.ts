@@ -1,9 +1,9 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { getPayloadContentNodes } from '../GetPayloadContentNodes/GetPayloadContentNodes.ts'
 import { getPreviewContentNodes } from '../GetPreviewContentNodes/GetPreviewContentNodes.ts'
 import { getResponseContentNodes } from '../GetResponseContentNodes/GetResponseContentNodes.ts'
-import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { getTimingContentNodes } from '../GetTimingContentNodes/GetTimingContentNodes.ts'
 import * as InputName from '../InputName/InputName.ts'
 

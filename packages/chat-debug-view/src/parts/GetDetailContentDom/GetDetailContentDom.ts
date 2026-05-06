@@ -1,9 +1,9 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
+import { ChatDebugViewDetailsBottom } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDirectChildCount } from '../GetDirectChildCount/GetDirectChildCount.ts'
 import { getPanelId } from '../GetPanelId/GetPanelId.ts'
-import { ChatDebugViewDetailsBottom } from '../ClassNames/ClassNames.ts'
 
 export const getDetailContentDom = (
   selectedDetailTab: DetailTabType,
