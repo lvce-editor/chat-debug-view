@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.list-files-payload-tab'
 
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-list-files-payload-tab')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -35,6 +36,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom .EditorContent')
 
-  await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
+  const locator2 = Locator('.ChatDebugViewDetails')
+  await expect(locator2).toBeVisible()
   await expect(detailsBottom).toHaveText('{  "uri": "file:///workspace"}')
 }

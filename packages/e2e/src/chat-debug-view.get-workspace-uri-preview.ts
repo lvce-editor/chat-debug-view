@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.get-workspace-uri-preview'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-get-workspace-uri-preview')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   const events = [
     {
       arguments: {

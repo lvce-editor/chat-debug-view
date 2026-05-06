@@ -8,7 +8,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-handle-submit-response-completed-merge'
 
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -43,6 +44,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabTiming()
 
-  await expect(Locator('.ChatDebugViewTiming')).toContainText('Duration')
-  await expect(Locator('.ChatDebugViewTiming')).toContainText('250ms')
+  const locator2 = Locator('.ChatDebugViewTiming')
+  await expect(locator2).toContainText('Duration')
+  const locator3 = Locator('.ChatDebugViewTiming')
+  await expect(locator3).toContainText('250ms')
 }

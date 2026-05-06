@@ -14,7 +14,8 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   // arrange
   const sessionId = 'e2e-session-table-header-context-menu'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.setEvents([
     {
@@ -39,7 +40,8 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   await expect(menuItems.nth(1)).toHaveText('Duration')
   await expect(menuItems.nth(2)).toHaveText('Status')
   await expect(menuItems.nth(3)).toHaveText('Reset columns')
-  await expect(Locator('[role="menuitemcheckbox"][aria-checked="true"]')).toHaveCount(3)
+  const locator2 = Locator('[role="menuitemcheckbox"][aria-checked="true"]')
+  await expect(locator2).toHaveCount(3)
 
   // act
   await ContextMenu.selectItem('Duration')

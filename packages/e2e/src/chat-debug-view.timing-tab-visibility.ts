@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timing-tab-visibility'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timing-tab-visibility')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -33,6 +34,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.selectEventRow(1)
 
   // assert
-  await expect(Locator('.ChatDebugViewDetailsTop [name="timing"]')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewTiming')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewDetailsTop [name="timing"]')
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.ChatDebugViewTiming')
+  await expect(locator3).toHaveCount(0)
 }

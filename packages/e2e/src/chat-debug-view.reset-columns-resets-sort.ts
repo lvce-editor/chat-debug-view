@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.reset-columns-resets-sort'
 export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Locator }) => {
   const sessionId = 'e2e-session-reset-columns-resets-sort'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.setEvents([
     {

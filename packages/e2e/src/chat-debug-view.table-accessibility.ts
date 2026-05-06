@@ -7,7 +7,8 @@ export const skip = 1
 export const test: Test = async ({ ChatDebug, Command, expect, KeyBoard, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-accessibility')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -41,6 +42,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, KeyBoard, Locator
 
   // assert
   await expect(table).toBeFocused()
-  await expect(Locator('.TableRowSelected')).toHaveCount(1)
-  await expect(Locator('.TableRowSelected')).toContainText('request')
+  const locator2 = Locator('.TableRowSelected')
+  await expect(locator2).toHaveCount(1)
+  const locator3 = Locator('.TableRowSelected')
+  await expect(locator3).toContainText('request')
 }

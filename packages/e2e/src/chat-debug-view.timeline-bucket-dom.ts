@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timeline-bucket-dom'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timeline-bucket-dom')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -27,7 +28,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const bucketDivs = Locator('.ChatDebugViewTimeline div.ChatDebugViewTimelineBucket')
 
   // assert dom structure
-  await expect(Locator('.ChatDebugViewTimeline label')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewTimeline input')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewTimeline label')
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.ChatDebugViewTimeline input')
+  await expect(locator3).toHaveCount(0)
   await expect(bucketDivs).toHaveCount(12)
 }

@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timeline-drag-select'
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timeline-drag-select')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -35,7 +36,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   // assert
   await expect(interactiveTimeline).toBeVisible()
   await expect(rows).toHaveCount(3)
-  await expect(Locator('.ChatDebugViewTimelineSelectionMarker')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewTimelineSelectionMarker')
+  await expect(locator2).toHaveCount(0)
 
   // act
   await Command.execute('ChatDebug.handleTimelinePointerDown', '', 0, 30)
@@ -43,8 +45,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleTimelinePointerUp', 30)
 
   // assert
-  await expect(Locator('.ChatDebugViewTimelineSelectionRange')).toBeVisible()
-  await expect(Locator('.ChatDebugViewTimelineSelectionMarker')).toHaveCount(2)
+  const locator3 = Locator('.ChatDebugViewTimelineSelectionRange')
+  await expect(locator3).toBeVisible()
+  const locator4 = Locator('.ChatDebugViewTimelineSelectionMarker')
+  await expect(locator4).toHaveCount(2)
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('request')
 }

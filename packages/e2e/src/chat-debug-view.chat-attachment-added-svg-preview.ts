@@ -9,7 +9,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const eventId = Date.now()
   const sessionId = `e2e-session-chat-attachment-added-svg-preview-${eventId}`
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   await Command.execute(
     'ChatDebug.appendStoredImageAttachmentForTest',

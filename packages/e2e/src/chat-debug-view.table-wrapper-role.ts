@@ -8,7 +8,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-table-wrapper-role'
 
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -23,5 +24,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  await expect(Locator('.TableWrapper')).toHaveAttribute('role', 'none')
+  const locator2 = Locator('.TableWrapper')
+  await expect(locator2).toHaveAttribute('role', 'none')
 }

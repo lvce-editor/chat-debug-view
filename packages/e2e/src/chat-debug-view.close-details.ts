@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.close-details'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-close-details')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -30,6 +31,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.closeDetails()
 
   // assert
-  await expect(Locator('.ChatDebugViewDetails')).toHaveCount(0)
-  await expect(Locator('.TableRowSelected')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewDetails')
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.TableRowSelected')
+  await expect(locator3).toHaveCount(0)
 }

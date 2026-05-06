@@ -7,7 +7,8 @@ export const skip = 1
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-sse-response-completed-preview'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   const previewText = 'The folder contains a total of 17 entries.'
   const events = [
     {

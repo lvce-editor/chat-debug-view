@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timeline-filter-reversed-range'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timeline-reversed')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -33,7 +34,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   const rows = Locator('.TableBody .TableRow')
-  await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(8)
+  const locator2 = Locator('.ChatDebugViewTimelineBucketSelected')
+  await expect(locator2).toHaveCount(8)
   await expect(rows).toHaveCount(1)
   await expect(rows.nth(0)).toContainText('response-part')
 }

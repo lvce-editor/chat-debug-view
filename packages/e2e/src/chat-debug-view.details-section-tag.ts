@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.details-section-tag'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-details-section-tag')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -26,5 +27,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(detailsSection).toHaveCount(1)
   await expect(detailsSection).toBeVisible()
-  await expect(Locator('div.ChatDebugViewDetails')).toHaveCount(0)
+  const locator2 = Locator('div.ChatDebugViewDetails')
+  await expect(locator2).toHaveCount(0)
 }

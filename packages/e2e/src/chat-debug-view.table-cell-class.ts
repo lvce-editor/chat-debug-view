@@ -6,7 +6,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-table-cell-class'
 
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -32,6 +33,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const tableCells = Locator('.TableBody .TableCell')
   await expect(tableCells).toHaveCount(8)
-  await expect(Locator('td')).toHaveCount(8)
-  await expect(Locator('.ChatDebugViewCell')).toHaveCount(0)
+  const locator2 = Locator('td')
+  await expect(locator2).toHaveCount(8)
+  const locator3 = Locator('.ChatDebugViewCell')
+  await expect(locator3).toHaveCount(0)
 }

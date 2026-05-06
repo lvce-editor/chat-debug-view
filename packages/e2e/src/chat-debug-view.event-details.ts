@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.event-details'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-event-details')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -27,10 +28,14 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
 
   // assert
-  await expect(Locator('.TableRowSelected')).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
-  await expect(Locator('.ChatDebugViewDetailsTitle')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewDetailsTop [role="tablist"]')).toBeVisible()
+  const locator2 = Locator('.TableRowSelected')
+  await expect(locator2).toHaveCount(1)
+  const locator3 = Locator('.ChatDebugViewDetails')
+  await expect(locator3).toBeVisible()
+  const locator4 = Locator('.ChatDebugViewDetailsTitle')
+  await expect(locator4).toHaveCount(0)
+  const locator5 = Locator('.ChatDebugViewDetailsTop [role="tablist"]')
+  await expect(locator5).toBeVisible()
   await expect(detailsBottom).toHaveCount(1)
   await expect(detailsBottom).toHaveAttribute('role', 'tabpanel')
   // await expect(responseTab).toHaveAttribute('aria-selected', 'true')

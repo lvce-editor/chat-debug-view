@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.chat-message-added-preview'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('ff68dd2f-6053-453f-95a9-de785f33f67c')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {

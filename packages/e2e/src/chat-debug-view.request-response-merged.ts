@@ -6,7 +6,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-request-response-merged'
 
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {

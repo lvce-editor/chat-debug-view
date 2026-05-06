@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.table-resizers-accessibility'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.open('e2e-session-table-resizers-accessibility')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
