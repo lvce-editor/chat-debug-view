@@ -1,3 +1,4 @@
+// cspell:ignore logprobs
 import { expect, test } from '@jest/globals'
 import { getPreviewEvent } from '../src/parts/GetPreviewEvent/GetPreviewEvent.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'

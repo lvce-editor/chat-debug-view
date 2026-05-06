@@ -1,3 +1,4 @@
+// cspell:ignore logprobs
 import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-response-preview'
@@ -9,6 +10,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await ChatDebug.setEvents([
     {
+      eventId: 4,
       headers: {
         'content-type': 'application/json',
       },
@@ -20,38 +22,38 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
       turnId: 'fa5bc854-6952-4470-8b7a-44c304ee7b49',
       type: 'ai-response',
       value: {
-        id: 'resp_0e2bccd5ef6f1ef10069faf72959c8819083716aa9d357e91b',
-        object: 'response',
-        created_at: 1778054953,
-        status: 'completed',
         background: false,
         billing: {
           payer: 'openai',
         },
-        completed_at: 1778054953,
+        completed_at: 1_778_054_953,
+        created_at: 1_778_054_953,
         error: null,
         frequency_penalty: 0,
+        id: 'resp_0e2bccd5ef6f1ef10069faf72959c8819083716aa9d357e91b',
         incomplete_details: null,
         instructions: null,
         max_output_tokens: null,
         max_tool_calls: null,
+        metadata: {},
         model: 'gpt-5.4-mini-2026-03-17',
         moderation: null,
+        object: 'response',
         output: [
           {
-            id: 'msg_0e2bccd5ef6f1ef10069faf729e320819084ac8bb487e8fc81',
-            type: 'message',
-            status: 'completed',
             content: [
               {
-                type: 'output_text',
                 annotations: [],
                 logprobs: [],
                 text: '4',
+                type: 'output_text',
               },
             ],
+            id: 'msg_0e2bccd5ef6f1ef10069faf729e320819084ac8bb487e8fc81',
             phase: 'final_answer',
             role: 'assistant',
+            status: 'completed',
+            type: 'message',
           },
         ],
         parallel_tool_calls: true,
@@ -65,6 +67,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
         },
         safety_identifier: null,
         service_tier: 'default',
+        status: 'completed',
         store: true,
         temperature: 1,
         text: {
@@ -90,9 +93,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
           total_tokens: 229,
         },
         user: null,
-        metadata: {},
       },
-      eventId: 4,
     },
   ])
 
