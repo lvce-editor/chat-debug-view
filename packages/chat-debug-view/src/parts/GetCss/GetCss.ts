@@ -4,7 +4,7 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getDetailsLineNumberWidth } from '../GetDetailsLineNumberWidth/GetDetailsLineNumberWidth.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { getPreviewTextViewportHeight, getPreviewVirtualizationState } from '../PreviewVirtualization/PreviewVirtualization.ts'
-import { clampTableWidth, getDetailsWidth, getMainWidth, sashWidth, viewPadding } from '../SplitLayout/SplitLayout.ts'
+import { clampTableWidth, getDetailsWidth, getMainWidth } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { getTableColumnLayout } from '../TableColumnLayout/TableColumnLayout.ts'
 import { devtoolsTableHeaderHeight, devtoolsTableRowHeight, devtoolsTableScrollBarWidth } from '../TableMetrics/TableMetrics.ts'
@@ -12,7 +12,7 @@ import { getMaxDeltaY, getScrollBarHeight, getScrollBarOffset, getTableBodyHeigh
 
 export const getCss = (state: ChatDebugViewState): string => {
   const hasSelectedEvent = !!state.selectedEvent
-  const tableWidth = hasSelectedEvent ? clampTableWidth(state.width, state.tableWidth) : getMainWidth(state.width)
+  const tableWidth = hasSelectedEvent ? clampTableWidth(state, state.tableWidth) : getMainWidth(state)
   const currentEvents = getCurrentEvents(state)
   const tableBodyHeight = getTableBodyHeight(state, currentEvents.length)
   const scrollBarHeight = getScrollBarHeight(currentEvents.length, tableBodyHeight)
@@ -20,7 +20,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   const showScrollBar = scrollBarHeight > 0
   const scrollBarOffset = getScrollBarOffset(state.tableDeltaY, maxDeltaY, tableBodyHeight, scrollBarHeight)
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
-  const detailsWidth = hasSelectedEvent ? getDetailsWidth(state.width, state.tableWidth) : 0
+  const detailsWidth = hasSelectedEvent ? getDetailsWidth(state, state.tableWidth) : 0
   const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
   const previewTextViewportHeight = getPreviewTextViewportHeight(state)
   const previewVirtualization = getPreviewVirtualizationState(state.selectedEvent, previewTextViewportHeight, state.previewTextDeltaY)
@@ -56,7 +56,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ResizerOneLeft: ${resizerOneLeft}px;
   --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ResizerThreeLeft: ${resizerThreeLeft}px;
-  --ChatDebugViewSashWidth: ${sashWidth}px;
+  --ChatDebugViewSashWidth: ${state.sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
   --ChatDebugViewTimelineHeight: ${state.timelineHeight}px;
   --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
@@ -64,7 +64,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
   --ChatDebugViewTopSize: ${topSize}px;
   --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
-  padding: ${viewPadding}px;
+  padding: ${state.viewPadding}px;
   padding-right: 0;
 }
 

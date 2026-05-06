@@ -10,6 +10,7 @@ export interface ChatDebugViewState {
   readonly categoryFilters: readonly CategoryFilter[]
   readonly databaseName: string
   readonly dataBaseVersion: number
+  readonly defaultTableWidth: number
   readonly detailTabs: readonly DetailTab[]
   readonly devtoolsRootGap: number
   readonly devtoolsTimelineHeight: number
@@ -20,15 +21,20 @@ export interface ChatDebugViewState {
   readonly filterValue: string
   readonly focus: number
   readonly height: number
+  readonly horizontalPadding: number
   readonly initial: boolean
   readonly largeBreakpoint: number
+  readonly leftPadding: number
   readonly mediumBreakpoint: number
+  readonly minDetailsWidth: number
+  readonly minTableWidth: number
   readonly platform: number
   readonly previewTextCursorColumnIndex: number | null
   readonly previewTextCursorRowIndex: number | null
   readonly previewTextDeltaY: number
   readonly previewTextScrollBarHandleOffset: number
   readonly previewTextScrollBarPointerActive: boolean
+  readonly sashWidth: number
   readonly sashPointerActive: boolean
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
@@ -54,6 +60,7 @@ export interface ChatDebugViewState {
   readonly timelineFilterDescription: string
   readonly timelineHeight: number
   readonly timelineHoverPercent: number | null
+  readonly timelineHorizontalPadding: number
   readonly timelineHoverSeconds: string
   readonly timelineInfo: TimelineInfo
   readonly timelineSelectionActive: boolean
@@ -63,6 +70,7 @@ export interface ChatDebugViewState {
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean
+  readonly viewPadding: number
   readonly width: number
   readonly x: number
   readonly y: number

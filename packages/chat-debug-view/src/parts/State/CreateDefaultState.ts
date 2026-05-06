@@ -2,16 +2,24 @@ import type { ChatDebugViewState } from './ChatDebugViewState.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
-import { defaultTableWidth } from '../SplitLayout/SplitLayout.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
+  const defaultTableWidth = 480
+  const minTableWidth = 240
+  const minDetailsWidth = 280
+  const sashWidth = 4
+  const viewPadding = 8
+  const timelineHorizontalPadding = 10
+  const horizontalPadding = viewPadding * 2
+  const leftPadding = viewPadding
   return {
     assetDir: '',
     categoryFilters: EventCategoryFilter.createCategoryFilters(),
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
+    defaultTableWidth,
     detailTabs: DetailTab.createDetailTabs(),
     devtoolsRootGap: 4,
     devtoolsTimelineHeight: 88,
@@ -22,15 +30,20 @@ export const createDefaultState = (): ChatDebugViewState => {
     filterValue: '',
     focus: 0,
     height: 0,
+    horizontalPadding,
     initial: false,
     largeBreakpoint: 900,
+    leftPadding,
     mediumBreakpoint: 600,
+    minDetailsWidth,
+    minTableWidth,
     platform: 0,
     previewTextCursorColumnIndex: null,
     previewTextCursorRowIndex: null,
     previewTextDeltaY: 0,
     previewTextScrollBarHandleOffset: 0,
     previewTextScrollBarPointerActive: false,
+    sashWidth,
     sashPointerActive: false,
     selectedEvent: null,
     selectedEventId: null,
@@ -56,6 +69,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     timelineFilterDescription: '',
     timelineHeight: 81,
     timelineHoverPercent: null,
+    timelineHorizontalPadding,
     timelineHoverSeconds: '',
     timelineInfo: emptyTimelineInfo,
     timelineSelectionActive: false,
@@ -65,6 +79,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     uid: 0,
     uri: '',
     useDevtoolsLayout: true,
+    viewPadding,
     width: 0,
     x: 0,
     y: 0,

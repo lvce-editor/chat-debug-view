@@ -1,7 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyY } from '../GetTableBodyY/GetTableBodyY.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
-import { viewPadding } from '../SplitLayout/SplitLayout.ts'
 import { devtoolsTableRowHeight, devtoolsTableSummaryHeight, minimumDevtoolsTableScrollBarHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getTableBodyHeight = (state: ChatDebugViewState, eventCount: number): number => {
@@ -9,7 +8,7 @@ export const getTableBodyHeight = (state: ChatDebugViewState, eventCount: number
     return 0
   }
   const tableBodyY = getTableBodyY(state, true)
-  return Math.max(0, state.height - (tableBodyY - state.y) - viewPadding - devtoolsTableSummaryHeight)
+  return Math.max(0, state.height - (tableBodyY - state.y) - state.viewPadding - devtoolsTableSummaryHeight)
 }
 
 export const getVisibleRowCount = (tableBodyHeight: number): number => {

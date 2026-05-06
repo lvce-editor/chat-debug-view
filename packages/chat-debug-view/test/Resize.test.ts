@@ -33,6 +33,6 @@ test('resize should clamp tableWidth when the next width is smaller', () => {
     y: 0,
   })
 
-  expect(result.tableWidth).toBe(296)
-  expect(getDetailsWidth(result.width, result.tableWidth)).toBe(280)
+  expect(result.tableWidth).toBe(300)
+  expect(getDetailsWidth(result, result.tableWidth)).toBe(280)
 })

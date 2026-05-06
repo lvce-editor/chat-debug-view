@@ -10,6 +10,6 @@ export const handleResize = (state: ChatDebugViewState, dimensions: ResizeDimens
   }
   return applyVirtualTableState({
     ...nextState,
-    tableWidth: clampTableWidth(nextState.width, state.tableWidth),
+    tableWidth: clampTableWidth(nextState, state.tableWidth),
   })
 }
