@@ -120,13 +120,11 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     {
       name: DomEventListenerFunctions.HandleTableWheel,
       params: ['handleTableWheel', 'event.deltaY'],
-      passive: true,
       preventDefault: true,
     },
     {
       name: DomEventListenerFunctions.HandlePreviewTextWheel,
       params: ['handlePreviewTextWheel', 'event.deltaY'],
-      passive: true,
       preventDefault: true,
     },
     {
