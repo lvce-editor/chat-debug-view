@@ -25,8 +25,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
       billing: {
         payer: 'openai',
       },
-      completed_at: 1778054953,
-      created_at: 1778054953,
+      completed_at: 1_778_054_953,
+      created_at: 1_778_054_953,
       error: null,
       frequency_penalty: 0,
       id: 'resp_0e2bccd5ef6f1ef10069faf72959c8819083716aa9d357e91b',

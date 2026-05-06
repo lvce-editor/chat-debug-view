@@ -20,7 +20,7 @@ const getNumber = (value: Record<string, unknown>, ...keys: readonly string[]): 
   return undefined
 }
 
-const getUsage = (event: ChatViewEvent): Record<string, unknown> | undefined => {
+const getUsage = (event: Readonly<ChatViewEvent>): Record<string, unknown> | undefined => {
   const responseEvent = getResponseEvent(event)
   if (isObject(responseEvent) && isObject(responseEvent.usage)) {
     return responseEvent.usage
@@ -31,18 +31,19 @@ const getUsage = (event: ChatViewEvent): Record<string, unknown> | undefined => 
   return undefined
 }
 
-export const getTokenUsageDetails = (event: ChatViewEvent): TokenUsageDetails | undefined => {
+export const getTokenUsageDetails = (event: Readonly<ChatViewEvent>): TokenUsageDetails | undefined => {
   const usage = getUsage(event)
   if (!usage) {
     return undefined
   }
   const inputTokens = getNumber(usage, 'input_tokens', 'inputTokens')
   const outputTokens = getNumber(usage, 'output_tokens', 'outputTokens')
-  const inputTokenDetails = isObject(usage.input_tokens_details)
-    ? usage.input_tokens_details
-    : isObject(usage.inputTokensDetails)
-      ? usage.inputTokensDetails
-      : undefined
+  let inputTokenDetails: Record<string, unknown> | undefined
+  if (isObject(usage.input_tokens_details)) {
+    inputTokenDetails = usage.input_tokens_details
+  } else if (isObject(usage.inputTokensDetails)) {
+    inputTokenDetails = usage.inputTokensDetails
+  }
   const cachedTokens = inputTokenDetails
     ? getNumber(inputTokenDetails, 'cached_tokens', 'cachedTokens')
     : getNumber(usage, 'cached_tokens', 'cachedTokens')
