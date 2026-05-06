@@ -97,12 +97,6 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: var(--ChatDebugViewDetailsLineNumberWidth);
 }
 
-.ChatDebugViewDetailsBottom .ChatDebugViewEventLineNumber {
-  display: inline-block;
-  min-width: var(--ChatDebugViewDetailsLineNumberWidth);
-  width: var(--ChatDebugViewDetailsLineNumberWidth);
-}
-
 .PreviewVirtualizedEditor {
   height: var(--ChatDebugViewPreviewViewportHeight);
   overflow: hidden;
