@@ -13,6 +13,7 @@ import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
@@ -134,6 +135,7 @@ export const getChatDebugViewDom = (
       {
         childCount: rootChildCount,
         className: mergeClassNames(ChatDebugView, ChatDebugViewDevtools),
+        onContextMenu: DomEventListenerFunctions.HandleRootContextMenu,
         type: VirtualDomElements.Div,
       },
       ...topLevelNodes,
@@ -147,6 +149,7 @@ export const getChatDebugViewDom = (
     {
       childCount: rootChildCount,
       className: mergeClassNames(ChatDebugView, useDevtoolsLayout ? ChatDebugViewDevtools : ''),
+      onContextMenu: DomEventListenerFunctions.HandleRootContextMenu,
       type: VirtualDomElements.Div,
     },
     ...debugViewTopDom,

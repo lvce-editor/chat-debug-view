@@ -122,6 +122,7 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     {
       childCount: 2,
       className: 'ChatDebugView ChatDebugView--devtools',
+      onContextMenu: DomEventListenerFunctions.HandleRootContextMenu,
       type: VirtualDomElements.Div,
     },
     {
