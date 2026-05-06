@@ -1,5 +1,6 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import { getHeadersContentNodes } from '../GetHeadersContentNodes/GetHeadersContentNodes.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { getPayloadContentNodes } from '../GetPayloadContentNodes/GetPayloadContentNodes.ts'
 import { getPreviewContentNodes } from '../GetPreviewContentNodes/GetPreviewContentNodes.ts'
@@ -25,6 +26,9 @@ export const getSelectedContentNodes = (
   }
   if (safeSelectedDetailTab === InputName.Payload) {
     return getPayloadContentNodes(payloadEventNodes, selectedEvent)
+  }
+  if (safeSelectedDetailTab === InputName.Headers) {
+    return getHeadersContentNodes(responseEventNodes, selectedEvent)
   }
   return getResponseContentNodes(responseEventNodes, selectedEvent)
 }

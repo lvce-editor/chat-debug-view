@@ -103,6 +103,41 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: var(--ChatDebugViewDetailsLineNumberWidth);
 }
 
+.ChatDebugViewHeadersTable {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ChatDebugViewHeadersCell {
+  border-bottom: 1px solid var(--vscode-panel-border, rgba(255, 255, 255, 0.12));
+  color: var(--vscode-editor-foreground);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.ChatDebugViewHeadersHead .ChatDebugViewHeadersCell {
+  color: var(--vscode-descriptionForeground, rgba(255, 255, 255, 0.7));
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ChatDebugViewHeadersRowOdd {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ChatDebugViewHeadersRowEven {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ChatDebugViewHeadersCellName {
+  font-weight: 500;
+  width: 38%;
+}
+
 .PreviewVirtualizedEditor {
   height: var(--ChatDebugViewPreviewViewportHeight);
   overflow: hidden;
