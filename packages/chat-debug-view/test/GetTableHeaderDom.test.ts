@@ -234,6 +234,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       childCount: 2,
       className: 'TableWrapper',
       onWheel: DomEventListenerFunctions.HandleTableWheel,
+      role: 'none',
       type: VirtualDomElements.Div,
     },
     {
@@ -457,6 +458,7 @@ test('getTableWrapperDom should add a focus outline when focused', () => {
     expect.objectContaining({
       childCount: 2,
       className: 'TableWrapper FocusOutline',
+      role: 'none',
       type: VirtualDomElements.Div,
     }),
   )

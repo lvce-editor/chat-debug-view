@@ -30,6 +30,7 @@ test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes'
     expect.objectContaining({
       className: 'TableWrapper',
       onWheel: DomEventListenerFunctions.HandleTableWheel,
+      role: 'none',
     }),
   )
   expect(dom).toContainEqual(
