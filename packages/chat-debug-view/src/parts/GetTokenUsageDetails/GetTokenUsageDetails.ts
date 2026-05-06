@@ -11,7 +11,7 @@ const isObject = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null
 }
 
-const getNumber = (value: Record<string, unknown>, ...keys: readonly string[]): number | undefined => {
+const getNumber = (value: Readonly<Record<string, unknown>>, ...keys: readonly string[]): number | undefined => {
   for (const key of keys) {
     if (typeof value[key] === 'number') {
       return value[key]
