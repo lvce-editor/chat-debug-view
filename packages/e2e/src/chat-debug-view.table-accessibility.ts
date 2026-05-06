@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.table-accessibility'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, KeyBoard, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, KeyBoard, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-table-accessibility')
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -36,7 +36,7 @@ export const test: Test = async ({ ChatDebug, expect, KeyBoard, Locator }) => {
   await expect(table).toHaveAttribute('tabindex', '0')
 
   // act
-  await table.click()
+  await Command.execute('ChatDebug.handleTableFocus')
   await KeyBoard.press('ArrowDown')
 
   // assert

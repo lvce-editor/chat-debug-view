@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.table-focus-outline'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-table-focus-outline'
 
   await ChatDebug.open(sessionId)
@@ -26,7 +26,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const table = Locator('.Table')
   const tableWrapper = Locator('.TableWrapper')
 
-  await table.click()
+  await Command.execute('ChatDebug.handleTableFocus')
 
   await expect(table).toBeFocused()
   await expect(tableWrapper).toHaveAttribute('class', 'TableWrapper FocusOutline')

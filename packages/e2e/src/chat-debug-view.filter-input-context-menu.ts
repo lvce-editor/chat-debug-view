@@ -4,7 +4,7 @@ export const name = 'chat-debug-view.filter-input-context-menu'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, KeyBoard, Locator }) => {
   const sessionId = 'e2e-session-filter-input-context-menu'
   await ChatDebug.open(sessionId)
   await expect(Locator('.ChatDebugView')).toBeVisible()
@@ -22,7 +22,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const filterInput = Locator('.ChatDebugViewFilterInput--devtools')
   await filterInput.type('request')
 
-  await filterInput.click({ button: 'right' })
+  await KeyBoard.press('Shift+F10')
 
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(4)
