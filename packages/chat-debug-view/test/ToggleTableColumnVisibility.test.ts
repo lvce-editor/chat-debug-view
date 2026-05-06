@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { resetTableColumns } from '../src/parts/ResetTableColumns/ResetTableColumns.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
@@ -24,8 +25,10 @@ test('toggleTableColumnVisibility should restore original ordering when re-enabl
 })
 
 test('resetTableColumns should restore default columns', () => {
-  const state = {
+  const state: ChatDebugViewState = {
     ...createDefaultState(),
+    sortColumn: TableColumn.Type,
+    sortDescending: true,
     tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'method', 'status']),
     tableColumnWidths: {
       duration: 80,
@@ -39,4 +42,6 @@ test('resetTableColumns should restore default columns', () => {
 
   expect(TableColumn.getVisibleTableColumns(result.tableColumns)).toEqual(['type', 'method', 'status', 'duration'])
   expect(result.tableColumnWidths).toEqual(createDefaultState().tableColumnWidths)
+  expect(result.sortColumn).toBe('')
+  expect(result.sortDescending).toBe(false)
 })
