@@ -44,9 +44,26 @@ test('getTokenUsageDetails should extract token counts from merged response even
   const result = getTokenUsageDetails(event)
 
   expect(result).toEqual({
-    cachedTokens: undefined,
     inputTokens: 12,
     outputTokens: 7,
+  })
+})
+
+test('getTokenUsageDetails should omit properties when token counts are missing', () => {
+  const event = {
+    eventId: 1,
+    type: 'ai-response',
+    value: {
+      usage: {
+        input_tokens: 9,
+      },
+    },
+  }
+
+  const result = getTokenUsageDetails(event)
+
+  expect(result).toEqual({
+    inputTokens: 9,
   })
 })
 
