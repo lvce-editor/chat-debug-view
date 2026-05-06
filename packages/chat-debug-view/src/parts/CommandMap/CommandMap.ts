@@ -26,6 +26,7 @@ import * as HandlePreviewTextScrollBarPointerDown from '../HandlePreviewTextScro
 import * as HandlePreviewTextScrollBarPointerMove from '../HandlePreviewTextScrollBarPointerMove/HandlePreviewTextScrollBarPointerMove.ts'
 import * as HandlePreviewTextScrollBarPointerUp from '../HandlePreviewTextScrollBarPointerUp/HandlePreviewTextScrollBarPointerUp.ts'
 import * as HandlePreviewTextWheel from '../HandlePreviewTextWheel/HandlePreviewTextWheel.ts'
+import * as HandleRootContextMenu from '../HandleRootContextMenu/HandleRootContextMenu.ts'
 import * as HandleSashPointerDown from '../HandleSashPointerDown/HandleSashPointerDown.ts'
 import * as HandleSashPointerMove from '../HandleSashPointerMove/HandleSashPointerMove.ts'
 import * as HandleSashPointerUp from '../HandleSashPointerUp/HandleSashPointerUp.ts'
@@ -94,6 +95,7 @@ export const commandMap = {
   'ChatDebug.handlePreviewTextScrollBarPointerMove': wrapCommand(HandlePreviewTextScrollBarPointerMove.handlePreviewTextScrollBarPointerMove),
   'ChatDebug.handlePreviewTextScrollBarPointerUp': wrapCommand(HandlePreviewTextScrollBarPointerUp.handlePreviewTextScrollBarPointerUp),
   'ChatDebug.handlePreviewTextWheel': wrapCommand(HandlePreviewTextWheel.handlePreviewTextWheel),
+  'ChatDebug.handleRootContextMenu': wrapCommand(HandleRootContextMenu.handleRootContextMenu),
   'ChatDebug.handleSashPointerDown': wrapCommand(HandleSashPointerDown.handleSashPointerDown),
   'ChatDebug.handleSashPointerMove': wrapCommand(HandleSashPointerMove.handleSashPointerMove),
   'ChatDebug.handleSashPointerUp': wrapCommand(HandleSashPointerUp.handleSashPointerUp),

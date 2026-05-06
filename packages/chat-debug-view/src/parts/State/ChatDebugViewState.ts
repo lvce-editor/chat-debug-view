@@ -11,6 +11,9 @@ export interface ChatDebugViewState {
   readonly databaseName: string
   readonly dataBaseVersion: number
   readonly detailTabs: readonly DetailTab[]
+  readonly devtoolsRootGap: number
+  readonly devtoolsTimelineHeight: number
+  readonly devtoolsTopHeight: number
   readonly errorMessage: string
   readonly events: readonly ChatViewEvent[]
   readonly eventStoreName: string

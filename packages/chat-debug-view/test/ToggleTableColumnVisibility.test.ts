@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { resetTableColumns } from '../src/parts/ResetTableColumns/ResetTableColumns.ts'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'

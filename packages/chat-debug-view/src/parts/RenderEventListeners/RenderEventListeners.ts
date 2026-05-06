@@ -5,6 +5,11 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 export const renderEventListeners = (): readonly DomEventListener[] => {
   return [
     {
+      name: DomEventListenerFunctions.HandleRootContextMenu,
+      params: ['handleRootContextMenu'],
+      preventDefault: true,
+    },
+    {
       name: DomEventListenerFunctions.HandleHeaderContextMenu,
       params: ['handleHeaderContextMenu', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
