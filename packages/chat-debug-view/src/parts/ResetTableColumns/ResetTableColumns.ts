@@ -5,12 +5,16 @@ import { defaultTableColumnWidths, isSameTableColumnWidths } from '../TableColum
 export const resetTableColumns = (state: ChatDebugViewState): ChatDebugViewState => {
   if (
     getVisibleTableColumns(state.tableColumns).join(',') === defaultVisibleTableColumns.join(',') &&
-    isSameTableColumnWidths(state.tableColumnWidths, defaultTableColumnWidths)
+    isSameTableColumnWidths(state.tableColumnWidths, defaultTableColumnWidths) &&
+    state.sortColumn === '' &&
+    state.sortDescending === false
   ) {
     return state
   }
   return {
     ...state,
+    sortColumn: '',
+    sortDescending: false,
     tableColumns: createTableColumns(),
     tableColumnWidths: defaultTableColumnWidths,
   }
