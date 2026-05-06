@@ -7,6 +7,17 @@ import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctio
 import { getTabNodes } from '../src/parts/GetTabNodes/GetTabNodes.ts'
 
 const detailTabs = DetailTab.createDetailTabs('timing')
+const tokenUsageEvent = {
+  eventId: 1,
+  type: 'ai-response',
+  value: {
+    usage: {
+      input_tokens: 224,
+      output_tokens: 5,
+    },
+  },
+} as const
+const tokenDetailTabs = DetailTab.createDetailTabs('tokens', tokenUsageEvent)
 
 test('getTabNodes should render detail tabs and mark the selected tab', () => {
   const result = getTabNodes(detailTabs) as readonly {
@@ -87,5 +98,88 @@ test('getTabNodes should render detail tabs and mark the selected tab', () => {
       type: VirtualDomElements.Button,
     },
     text('Timing'),
+  ])
+})
+
+test('getTabNodes should render the tokens tab when usage data is available', () => {
+  const result = getTabNodes(tokenDetailTabs) as readonly {
+    readonly ['aria-controls']?: string
+    readonly ariaSelected?: boolean
+    readonly childCount?: number
+    readonly className?: string
+    readonly name?: string
+    readonly onChange?: number
+    readonly onClick?: number
+    readonly onFocus?: number
+    readonly role?: string
+    readonly tabIndex?: number
+    readonly text?: string
+    readonly type?: number
+  }[]
+
+  expect(result).toEqual([
+    {
+      'aria-label': ChatDebugStrings.detailSections(),
+      childCount: 4,
+      className: ChatDebugViewDetailsTabs,
+      role: 'tablist',
+      type: VirtualDomElements.Div,
+    },
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-preview',
+      ariaSelected: false,
+      childCount: 1,
+      className: 'PanelTab',
+      name: 'preview',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    text('Preview'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-payload',
+      ariaSelected: false,
+      childCount: 1,
+      className: 'PanelTab',
+      name: 'payload',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    text('Payload'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-response',
+      ariaSelected: false,
+      childCount: 1,
+      className: 'PanelTab',
+      name: 'response',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
+      role: 'tab',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    text('Response'),
+    {
+      'aria-controls': 'ChatDebugViewDetailsPanel-tokens',
+      ariaSelected: true,
+      childCount: 1,
+      className: 'PanelTab PanelTabSelected',
+      name: 'tokens',
+      onChange: DomEventListenerFunctions.SelectDetailTab,
+      onClick: DomEventListenerFunctions.SelectDetailTab,
+      onFocus: DomEventListenerFunctions.HandleDetailTabsFocus,
+      role: 'tab',
+      tabIndex: 0,
+      type: VirtualDomElements.Button,
+    },
+    text('Tokens'),
   ])
 })

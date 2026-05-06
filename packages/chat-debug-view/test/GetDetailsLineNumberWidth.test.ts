@@ -92,3 +92,25 @@ test('getDetailsLineNumberWidth should return 0 when preview line numbers are in
 
   expect(result).toBe(0)
 })
+
+test('getDetailsLineNumberWidth should return 0 for the tokens tab', () => {
+  const selectedEvent = {
+    eventId: 1,
+    type: 'ai-response',
+    value: {
+      usage: {
+        input_tokens: 224,
+        output_tokens: 5,
+      },
+    },
+  }
+  const state = {
+    ...createDefaultState(),
+    detailTabs: DetailTab.createDetailTabs(InputName.Tokens, selectedEvent),
+    selectedEvent,
+  }
+
+  const result = getDetailsLineNumberWidth(state)
+
+  expect(result).toBe(0)
+})

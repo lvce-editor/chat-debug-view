@@ -61,7 +61,7 @@ const getLineCount = (state: ChatDebugViewState): number => {
     return 0
   }
   const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
-  if (selectedDetailTab === InputName.Timing) {
+  if (selectedDetailTab === InputName.Timing || selectedDetailTab === InputName.Tokens) {
     return 0
   }
   if (selectedDetailTab === InputName.Preview) {

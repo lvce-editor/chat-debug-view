@@ -41,6 +41,32 @@ const selectedEvent = {
   type: 'chat-message-added',
 } as const
 
+const tokenUsageEvent = {
+  eventId: 2,
+  type: 'ai-response',
+  value: {
+    usage: {
+      input_tokens: 224,
+      input_tokens_details: {
+        cached_tokens: 32,
+      },
+      output_tokens: 5,
+    },
+  },
+} as const
+
+test('getSelectedContentNodes should return token usage content for the tokens tab', () => {
+  const result = getSelectedContentNodes(InputName.Tokens, previewEventNodes, payloadEventNodes, responseEventNodes, tokenUsageEvent, null, null)
+
+  expect(result).not.toBe(responseEventNodes)
+  expect(result[0]).toEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewTiming',
+      type: VirtualDomElements.Div,
+    }),
+  )
+})
+
 test('getSelectedContentNodes should return timing content for the timing tab', () => {
   const result = getSelectedContentNodes(InputName.Timing, previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, null, null)
 
