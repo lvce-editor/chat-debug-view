@@ -34,3 +34,4 @@ export const HandlePreviewTextWheel = 36
 export const HandlePreviewTextScrollBarPointerDown = 37
 export const HandlePreviewTextScrollBarPointerMove = 38
 export const HandlePreviewTextScrollBarPointerUp = 39
+export const HandleRootContextMenu = 40

@@ -6,6 +6,7 @@ import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import * as DetailTab from '../DetailTab/DetailTab.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
 import { getDebugViewTopDom } from '../GetDebugViewTopDom/GetDebugViewTopDom.ts'
@@ -134,6 +135,7 @@ export const getChatDebugViewDom = (
       {
         childCount: rootChildCount,
         className: mergeClassNames(ChatDebugView, ChatDebugViewDevtools),
+        onContextMenu: DomEventListenerFunctions.HandleRootContextMenu,
         type: VirtualDomElements.Div,
       },
       ...topLevelNodes,
@@ -147,6 +149,7 @@ export const getChatDebugViewDom = (
     {
       childCount: rootChildCount,
       className: mergeClassNames(ChatDebugView, useDevtoolsLayout ? ChatDebugViewDevtools : ''),
+      onContextMenu: DomEventListenerFunctions.HandleRootContextMenu,
       type: VirtualDomElements.Div,
     },
     ...debugViewTopDom,
