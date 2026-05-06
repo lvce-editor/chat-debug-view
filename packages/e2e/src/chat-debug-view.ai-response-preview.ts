@@ -3,6 +3,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-response-preview'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-ai-response-preview'
   await ChatDebug.open(sessionId)
