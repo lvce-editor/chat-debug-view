@@ -8,8 +8,10 @@ import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getResponseEvent } from '../GetResponseEvent/GetResponseEvent.ts'
 import * as InputName from '../InputName/InputName.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
-import { defaultPreviewTextColumnWidth } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import * as UiStrings from '../UiStrings/UiStrings.ts'
+
+const detailsLineNumberDigitWidth = 8
+const detailsLineNumberHorizontalPadding = 8
 
 const getStringLineCount = (value: string): number => {
   return value.split('\n').length
@@ -76,5 +78,6 @@ export const getDetailsLineNumberWidth = (state: ChatDebugViewState): number => 
   if (lineCount === 0) {
     return 0
   }
-  return String(lineCount).length * defaultPreviewTextColumnWidth
+  const digitCount = String(lineCount).length
+  return digitCount * detailsLineNumberDigitWidth + detailsLineNumberHorizontalPadding
 }
