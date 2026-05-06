@@ -15,7 +15,7 @@ export const getTableWrapperDom = (
   summary = '',
   focus = 0,
   className = '',
-  role = '',
+  role = 'none',
   showScrollBar = false,
 ): readonly VirtualDomNode[] => {
   const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '', className)
