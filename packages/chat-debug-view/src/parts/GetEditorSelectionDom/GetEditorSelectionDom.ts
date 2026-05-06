@@ -1,7 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { EditorSelection, EditorSelections } from '../ClassNames/ClassNames.ts'
 import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
+import { EditorSelection, EditorSelections } from '../ClassNames/ClassNames.ts'
 import { getPreviewTextCursorStyle } from '../PreviewTextCursor/PreviewTextCursor.ts'
 
 const defaultEditorCursor: PreviewTextCursor = {

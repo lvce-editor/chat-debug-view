@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 import {
   ChatDebugViewEventLineNumber,
   EditorContainer,
@@ -16,7 +17,6 @@ import {
   PreviewVirtualizedEditor,
 } from '../src/parts/ClassNames/ClassNames.ts'
 import { getVirtualizedEditorDom } from '../src/parts/GetVirtualizedEditorDom/GetVirtualizedEditorDom.ts'
-import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 
 test('getVirtualizedEditorDom should render the editor with a scrollbar when requested', () => {
   const lineData: readonly LineData[] = [

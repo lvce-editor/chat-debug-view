@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 import {
   ChatDebugViewEventLineNumber,
   EditorContainer,
@@ -14,7 +15,6 @@ import {
   Gutter,
 } from '../src/parts/ClassNames/ClassNames.ts'
 import { getEditorDom } from '../src/parts/GetEditorDom/GetEditorDom.ts'
-import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 
 test('getEditorDom should render the non-virtualized editor DOM', () => {
   const lineData: readonly LineData[] = [

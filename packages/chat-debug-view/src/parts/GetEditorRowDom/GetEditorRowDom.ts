@@ -1,7 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import { EditorRow } from '../ClassNames/ClassNames.ts'
 import type { LineData } from '../GetTextNode/LineData/LineData.ts'
+import { EditorRow } from '../ClassNames/ClassNames.ts'
 
 export const getEditorRowDom = (line: LineData): readonly VirtualDomNode[] => {
   return [

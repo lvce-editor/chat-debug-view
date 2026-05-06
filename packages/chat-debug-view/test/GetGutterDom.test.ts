@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 import { ChatDebugViewEventLineNumber, Gutter } from '../src/parts/ClassNames/ClassNames.ts'
 import { getGutterDom } from '../src/parts/GetGutterDom/GetGutterDom.ts'
-import type { LineData } from '../src/parts/GetTextNode/LineData/LineData.ts'
 
 const lineData: readonly LineData[] = [
   {

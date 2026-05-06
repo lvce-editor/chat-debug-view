@@ -1,5 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { LineData } from '../GetTextNode/LineData/LineData.ts'
+import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
 import {
   EditorContainer,
   EditorContent,
@@ -13,8 +15,6 @@ import {
 import { getEditorRowsDom } from '../GetEditorRowsDom/GetEditorRowsDom.ts'
 import { getEditorSelectionDom } from '../GetEditorSelectionDom/GetEditorSelectionDom.ts'
 import { getGutterDom } from '../GetGutterDom/GetGutterDom.ts'
-import type { LineData } from '../GetTextNode/LineData/LineData.ts'
-import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
 
 export interface VirtualizedEditorOptions {
   readonly lineNumberStart?: number
