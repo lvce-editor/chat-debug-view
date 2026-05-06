@@ -5,6 +5,10 @@ export const copy = (): string => {
   return I18nString.i18nString(UiStrings.Copy)
 }
 
+export const cachedTokens = (): string => {
+  return I18nString.i18nString(UiStrings.CachedTokens)
+}
+
 export const status = (): string => {
   return I18nString.i18nString(UiStrings.Status)
 }
@@ -60,6 +64,10 @@ export const imageCouldNotBeLoaded = (): string => {
   return I18nString.i18nString(UiStrings.ImageCouldNotBeLoaded)
 }
 
+export const inputTokens = (): string => {
+  return I18nString.i18nString(UiStrings.InputTokens)
+}
+
 export const invalidUriEncoding = (): string => {
   return I18nString.i18nString(UiStrings.InvalidUriEncoding)
 }
@@ -108,6 +116,10 @@ export const payload = (): string => {
   return I18nString.i18nString(UiStrings.Payload)
 }
 
+export const outputTokens = (): string => {
+  return I18nString.i18nString(UiStrings.OutputTokens)
+}
+
 export const refresh = (): string => {
   return I18nString.i18nString(UiStrings.Refresh)
 }
@@ -141,6 +153,10 @@ export const stream = (): string => {
 
 export const timing = (): string => {
   return I18nString.i18nString(UiStrings.Timing)
+}
+
+export const tokens = (): string => {
+  return I18nString.i18nString(UiStrings.Tokens)
 }
 
 export const tableSummary = (eventCount: number, duration: string): string => {

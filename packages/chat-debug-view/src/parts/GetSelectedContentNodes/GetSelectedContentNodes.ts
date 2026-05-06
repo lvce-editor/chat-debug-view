@@ -4,6 +4,7 @@ import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.t
 import { getPayloadContentNodes } from '../GetPayloadContentNodes/GetPayloadContentNodes.ts'
 import { getPreviewContentNodes } from '../GetPreviewContentNodes/GetPreviewContentNodes.ts'
 import { getResponseContentNodes } from '../GetResponseContentNodes/GetResponseContentNodes.ts'
+import { getTokenUsageContentNodes } from '../GetTokenUsageContentNodes/GetTokenUsageContentNodes.ts'
 import { getTimingContentNodes } from '../GetTimingContentNodes/GetTimingContentNodes.ts'
 import * as InputName from '../InputName/InputName.ts'
 
@@ -17,6 +18,9 @@ export const getSelectedContentNodes = (
   previewTextCursorColumnIndex: number | null,
   previewVirtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
+  if (safeSelectedDetailTab === InputName.Tokens) {
+    return getTokenUsageContentNodes(responseEventNodes, selectedEvent)
+  }
   if (safeSelectedDetailTab === InputName.Timing) {
     return getTimingContentNodes(responseEventNodes, selectedEvent)
   }
