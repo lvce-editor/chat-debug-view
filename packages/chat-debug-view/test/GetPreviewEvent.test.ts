@@ -30,6 +30,45 @@ test('getPreviewEvent should return the extracted text for sse-response-complete
   expect(result).toBe('completed response preview')
 })
 
+test('getPreviewEvent should return the extracted text for ai-response events when available', () => {
+  const event = {
+    eventId: 10,
+    requestId: 'request-1',
+    sessionId: 'session-1',
+    statusCode: 200,
+    timestamp: '2026-05-06T08:09:12.229Z',
+    toolCalls: [],
+    turnId: 'turn-1',
+    type: 'ai-response',
+    value: {
+      id: 'resp_123',
+      object: 'response',
+      output: [
+        {
+          content: [
+            {
+              annotations: [],
+              logprobs: [],
+              text: '4',
+              type: 'output_text',
+            },
+          ],
+          id: 'msg_123',
+          phase: 'final_answer',
+          role: 'assistant',
+          status: 'completed',
+          type: 'message',
+        },
+      ],
+      status: 'completed',
+    },
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('4')
+})
+
 test('getPreviewEvent should return response.output for sse-response-completed events when text preview is unavailable', () => {
   const output = [
     {
