@@ -14,7 +14,7 @@ const isObject = (value: unknown): value is Record<string, unknown> => {
 const getNumber = (value: Record<string, unknown>, ...keys: readonly string[]): number | undefined => {
   for (const key of keys) {
     if (typeof value[key] === 'number') {
-      return value[key] as number
+      return value[key]
     }
   }
   return undefined

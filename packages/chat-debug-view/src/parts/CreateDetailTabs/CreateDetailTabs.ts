@@ -2,8 +2,8 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import * as GetSafeSelectedDetailTab from '../GetSafeSelectedDetailTab/GetSafeSelectedDetailTab.ts'
-import { hasTokenUsageDetails } from '../HasTokenUsageDetails/HasTokenUsageDetails.ts'
 import { hasTimingDetails } from '../HasTimingDetails/HasTimingDetails.ts'
+import { hasTokenUsageDetails } from '../HasTokenUsageDetails/HasTokenUsageDetails.ts'
 import * as InputName from '../InputName/InputName.ts'
 
 export const createDetailTabs = (selectedDetailTab = InputName.Response, event?: ChatViewEvent | null): readonly DetailTab[] => {
