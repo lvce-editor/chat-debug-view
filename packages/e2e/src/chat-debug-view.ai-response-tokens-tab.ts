@@ -6,7 +6,9 @@ export const name = 'chat-debug-view.ai-response-tokens-tab'
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-ai-response-tokens-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const chatDebugView = Locator('.ChatDebugView')
+
+  await expect(chatDebugView).toBeVisible()
 
   await Command.execute('ChatDebug.appendStoredEventForTest', {
     eventId: 4,
@@ -99,7 +101,9 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.selectEventRow(0)
 
-  await expect(Locator('.ChatDebugViewDetailsTop [name="tokens"]')).toHaveCount(1)
+  const tokensTab = Locator('.ChatDebugViewDetailsTop [name="tokens"]')
+
+  await expect(tokensTab).toHaveCount(1)
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'tokens', false)
 
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
