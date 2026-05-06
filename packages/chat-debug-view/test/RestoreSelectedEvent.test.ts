@@ -23,6 +23,8 @@ test('restoreSelectedEvent should load details for the selected visible event', 
   const selectedEvent = {
     detail: 'restored',
     eventId: 2,
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const loadSelectedEventSpy = jest.spyOn(loadEventsDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEvent)

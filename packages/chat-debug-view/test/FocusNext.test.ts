@@ -37,6 +37,7 @@ test('focusNext should select the first row when nothing is selected', async () 
   expect(result.selectedEvent).toEqual({
     detail: 'row-1',
     eventId: 1,
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])

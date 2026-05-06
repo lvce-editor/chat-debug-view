@@ -29,3 +29,33 @@ test('mergeSelectedEventDetails should prefer the loaded response event for ai r
 
   expect(result.responseEvent).toEqual(selectedEventDetails)
 })
+
+test('mergeSelectedEventDetails should preserve selected event fields when loaded details are partial', () => {
+  const selectedEvent = {
+    eventId: 1,
+    headers: {
+      Authorization: 'Bearer [redacted]',
+    },
+    type: 'ai-request',
+  }
+  const selectedEventDetails = {
+    body: {
+      model: 'test',
+    },
+    eventId: 1,
+    type: 'ai-request',
+  }
+
+  const result = mergeSelectedEventDetails(selectedEvent, selectedEventDetails)
+
+  expect(result).toEqual({
+    body: {
+      model: 'test',
+    },
+    eventId: 1,
+    headers: {
+      Authorization: 'Bearer [redacted]',
+    },
+    type: 'ai-request',
+  })
+})
