@@ -35,6 +35,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
     {
       childCount: resizerCount,
       className: Resizers,
+      role: AriaRoles.None,
       type: VirtualDomElements.Div,
     },
     ...resizerNodes,
