@@ -1,4 +1,4 @@
-import { type VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import * as GetHeaderCellNode from '../GetHeaderCellNode/GetHeaderCellNode.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
