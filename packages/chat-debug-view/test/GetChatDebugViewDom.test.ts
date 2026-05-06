@@ -127,7 +127,6 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
     {
       childCount: 3,
       className: 'ChatDebugViewTop ChatDebugViewTop--devtools',
-      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.Search,
     },
     {
