@@ -10,10 +10,10 @@ export interface ChatDebugViewState {
   readonly categoryFilters: readonly CategoryFilter[]
   readonly databaseName: string
   readonly dataBaseVersion: number
+  readonly detailTabs: readonly DetailTab[]
   readonly devtoolsRootGap: number
   readonly devtoolsTimelineHeight: number
   readonly devtoolsTopHeight: number
-  readonly detailTabs: readonly DetailTab[]
   readonly errorMessage: string
   readonly events: readonly ChatViewEvent[]
   readonly eventStoreName: string
