@@ -6,6 +6,8 @@ export const isDetailTab = (value: string): boolean => {
     value === InputName.Preview ||
     value === InputName.Payload ||
     value === InputName.Headers ||
+    value === InputName.Tokens ||
+    value === InputName.Headers ||
     value === InputName.Timing
   )
 }
