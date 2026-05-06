@@ -141,6 +141,45 @@ test('getFilteredEvents should show only network events for network category fil
   expect(result).toEqual([events[2]])
 })
 
+test('getFilteredEvents should include merged ai request response events for network category filter', () => {
+  const requestEvent = {
+    eventId: 7,
+    requestId: 'request-7',
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:04:00.000Z',
+    type: 'ai-request',
+  }
+  const responseEvent = {
+    eventId: 8,
+    requestId: 'request-7',
+    response: {
+      id: 'resp_7',
+    },
+    sessionId: 'session-1',
+    timestamp: '2026-01-01T10:04:01.250Z',
+    type: 'ai-response-success',
+  }
+
+  const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', [EventCategoryFilter.Network], true, true, true)
+
+  expect(result).toEqual([
+    {
+      ended: '2026-01-01T10:04:01.250Z',
+      eventId: 7,
+      requestEvent,
+      requestId: 'request-7',
+      response: {
+        id: 'resp_7',
+      },
+      responseEvent,
+      sessionId: 'session-1',
+      started: '2026-01-01T10:04:00.000Z',
+      timestamp: '2026-01-01T10:04:01.250Z',
+      type: 'ai-request',
+    },
+  ])
+})
+
 test('getFilteredEvents should show events from multiple selected category filters', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Tools, EventCategoryFilter.Network], true, true, true)
 

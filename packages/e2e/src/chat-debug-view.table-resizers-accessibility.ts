@@ -19,11 +19,14 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
+  const resizers = Locator('.Resizers')
   const resizerOne = Locator('[name="ResizerOne"]')
   const resizerTwo = Locator('[name="ResizerTwo"]')
 
+  await expect(resizers).toHaveCount(1)
   await expect(resizerOne).toHaveCount(1)
   await expect(resizerTwo).toHaveCount(1)
+  await expect(resizers).toHaveAttribute('role', 'none')
   await expect(resizerOne).toHaveAttribute('tabindex', '-1')
   await expect(resizerTwo).toHaveAttribute('tabindex', '-1')
 }
