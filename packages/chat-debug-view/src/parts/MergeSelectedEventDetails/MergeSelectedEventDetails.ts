@@ -9,7 +9,10 @@ export const mergeSelectedEventDetails = (selectedEvent: ChatViewEvent, selected
     readonly responseEvent?: unknown
   }
   if (!requestEvent || !responseEvent || typeof requestEvent !== 'object' || typeof responseEvent !== 'object') {
-    return selectedEventDetails
+    return {
+      ...selectedEvent,
+      ...selectedEventDetails,
+    }
   }
   const selectedEventDetailsType = selectedEventDetails.type
   const resolvedResponseEvent =

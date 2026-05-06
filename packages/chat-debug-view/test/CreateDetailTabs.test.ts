@@ -58,10 +58,5 @@ test('createDetailTabs should fall back to response when headers are unavailable
       label: 'Response',
       name: 'response',
     },
-    {
-      isSelected: false,
-      label: 'Timing',
-      name: 'timing',
-    },
   ])
 })
