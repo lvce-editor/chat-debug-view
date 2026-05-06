@@ -18,20 +18,33 @@ const getResponseContentText = (content: unknown): string | undefined => {
   return typeof text === 'string' ? text : undefined
 }
 
-const getSseResponseCompletedPreviewText = (event: ChatViewEvent): string | undefined => {
-  if (event.type !== 'sse-response-completed') {
-    return undefined
+const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
+  if (event.type === 'sse-response-completed') {
+    const { value } = event
+    if (!value || typeof value !== 'object') {
+      return undefined
+    }
+    const { response } = value as { readonly response?: unknown }
+    if (!response || typeof response !== 'object') {
+      return undefined
+    }
+    const { output } = response as { readonly output?: unknown }
+    return Array.isArray(output) ? output : undefined
   }
-  const { value } = event
-  if (!value || typeof value !== 'object') {
-    return undefined
+  if (event.type === 'ai-response') {
+    const { value } = event
+    if (!value || typeof value !== 'object') {
+      return undefined
+    }
+    const { output } = value as { readonly output?: unknown }
+    return Array.isArray(output) ? output : undefined
   }
-  const { response } = value as { readonly response?: unknown }
-  if (!response || typeof response !== 'object') {
-    return undefined
-  }
-  const { output } = response as { readonly output?: unknown }
-  if (!Array.isArray(output) || output.length === 0) {
+  return undefined
+}
+
+const getResponsePreviewText = (event: ChatViewEvent): string | undefined => {
+  const output = getResponseOutput(event)
+  if (!output || output.length === 0) {
     return undefined
   }
   const [firstOutput] = output
@@ -46,9 +59,9 @@ export const getPreviewMessageText = (event: ChatViewEvent): string | undefined 
   if (isChatMessageUpdatedEvent(event) && typeof event.text === 'string') {
     return event.text
   }
-  const sseResponseCompletedPreviewText = getSseResponseCompletedPreviewText(event)
-  if (sseResponseCompletedPreviewText !== undefined) {
-    return sseResponseCompletedPreviewText
+  const responsePreviewText = getResponsePreviewText(event)
+  if (responsePreviewText !== undefined) {
+    return responsePreviewText
   }
   if (!isChatMessageAddedEvent(event)) {
     return undefined
