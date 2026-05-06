@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.quick-filter-pills'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-quick-filter-pills')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {

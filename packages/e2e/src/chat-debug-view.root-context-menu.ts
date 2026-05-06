@@ -2,10 +2,11 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.root-context-menu'
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-root-context-menu'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.setEvents([
     {
@@ -19,9 +20,11 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const root = Locator('.ChatDebugView')
 
-  await root.click({ button: 'right' })
+  await Command.execute('ChatDebug.handleRootContextMenu')
 
   await expect(root).toBeVisible()
-  await expect(Locator('.Menu')).toHaveCount(0)
-  await expect(Locator('.MenuItem')).toHaveCount(0)
+  const locator2 = Locator('.Menu')
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.MenuItem')
+  await expect(locator3).toHaveCount(0)
 }

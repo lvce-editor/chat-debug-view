@@ -4,10 +4,11 @@ export const name = 'chat-debug-view.filter-input-context-menu'
 
 export const skip = 1
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, KeyBoard, Locator }) => {
   const sessionId = 'e2e-session-filter-input-context-menu'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
   await ChatDebug.setEvents([
     {
@@ -22,7 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const filterInput = Locator('.ChatDebugViewFilterInput--devtools')
   await filterInput.type('request')
 
-  await filterInput.click({ button: 'right' })
+  await KeyBoard.press('Shift+F10')
 
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(4)
@@ -30,8 +31,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(menuItems.nth(1)).toHaveText('Copy')
   await expect(menuItems.nth(2)).toHaveText('Paste')
   await expect(menuItems.nth(3)).toHaveText('Select All')
-  await expect(Locator('.MenuItem', { hasText: 'Type' })).toHaveCount(0)
-  await expect(Locator('.MenuItem', { hasText: 'Duration' })).toHaveCount(0)
-  await expect(Locator('.MenuItem', { hasText: 'Status' })).toHaveCount(0)
-  await expect(Locator('.MenuItem', { hasText: 'Reset columns' })).toHaveCount(0)
+  const locator2 = Locator('.MenuItem', { hasText: 'Type' })
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.MenuItem', { hasText: 'Duration' })
+  await expect(locator3).toHaveCount(0)
+  const locator4 = Locator('.MenuItem', { hasText: 'Status' })
+  await expect(locator4).toHaveCount(0)
+  const locator5 = Locator('.MenuItem', { hasText: 'Reset columns' })
+  await expect(locator5).toHaveCount(0)
 }

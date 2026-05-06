@@ -8,7 +8,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const eventId = Date.now()
   const sessionId = `e2e-session-chat-attachment-added-tabs-${eventId}`
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   await Command.execute(
     'ChatDebug.appendStoredImageAttachmentForTest',
@@ -27,8 +28,12 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const tabs = Locator('.ChatDebugViewDetailsTop [role="tab"]')
 
   await expect(tabs).toHaveCount(3)
-  await expect(Locator('.ChatDebugViewDetailsTop [name="preview"]')).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewDetailsTop [name="payload"]')).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewDetailsTop [name="response"]')).toHaveCount(1)
-  await expect(Locator('.ChatDebugViewDetailsTop [name="timing"]')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewDetailsTop [name="preview"]')
+  await expect(locator2).toHaveCount(1)
+  const locator3 = Locator('.ChatDebugViewDetailsTop [name="payload"]')
+  await expect(locator3).toHaveCount(1)
+  const locator4 = Locator('.ChatDebugViewDetailsTop [name="response"]')
+  await expect(locator4).toHaveCount(1)
+  const locator5 = Locator('.ChatDebugViewDetailsTop [name="timing"]')
+  await expect(locator5).toHaveCount(0)
 }

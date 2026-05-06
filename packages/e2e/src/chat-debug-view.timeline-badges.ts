@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timeline-badges'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timeline-badges')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -27,7 +28,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const badges = Locator('.ChatDebugViewTimelineBadge')
 
   // assert
-  await expect(Locator('.ChatDebugViewTimeline')).toBeVisible()
+  const locator2 = Locator('.ChatDebugViewTimeline')
+  await expect(locator2).toBeVisible()
   await expect(badges).toHaveCount(6)
   await expect(badges.nth(0)).toHaveText('0ms')
   await expect(badges.nth(1)).toHaveText('2000ms')

@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.table-duration-spacing'
 
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.open('e2e-session-table-duration-spacing')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {

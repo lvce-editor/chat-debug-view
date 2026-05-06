@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.quick-filter-events'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-quick-filter')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -27,5 +28,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setEventCategoryFilter('tools')
 
   // assert
-  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
+  const locator2 = Locator('.ChatDebugViewQuickFilterPillSelected')
+  await expect(locator2).toContainText('Tools')
 }

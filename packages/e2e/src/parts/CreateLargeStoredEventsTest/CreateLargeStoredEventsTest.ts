@@ -7,7 +7,8 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
     const sessionId = `e2e-session-many-events-${eventCount}`
 
     await ChatDebug.open(bootstrapSessionId)
-    await expect(Locator('.ChatDebugView')).toBeVisible()
+    const locator1 = Locator('.ChatDebugView')
+    await expect(locator1).toBeVisible()
 
     await Command.execute('ChatDebug.seedManyEventsInIndexedDbForTest', {
       sessionId,
@@ -15,7 +16,8 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
     })
 
     await ChatDebug.setSessionId(sessionId)
-    await expect(Locator('.ChatDebugView')).toBeVisible()
+    const locator2 = Locator('.ChatDebugView')
+    await expect(locator2).toBeVisible()
     await ChatDebug.useDevtoolsLayout()
 
     const rows = Locator('.TableRow')

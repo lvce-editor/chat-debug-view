@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.details-body-document-role'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-details-body-document-role')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -28,6 +29,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   await expect(detailsBottom).toBeVisible()
   await expect(detailsBottom).toHaveAttribute('role', 'tabpanel')
-  await expect(Locator('.ChatDebugViewDetailsBody')).toHaveCount(0)
-  await expect(Locator('.ChatDebugViewDetailsPanel')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewDetailsBody')
+  await expect(locator2).toHaveCount(0)
+  const locator3 = Locator('.ChatDebugViewDetailsPanel')
+  await expect(locator3).toHaveCount(0)
 }

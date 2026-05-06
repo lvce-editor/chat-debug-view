@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.empty-filter-results'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-empty-filter-results')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -22,7 +23,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.setFilter('missing')
 
   // assert
-  await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
-  await expect(Locator('.ChatDebugViewEmpty')).toHaveText('No events found matching missing')
-  await expect(Locator('.TableRow')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewEmpty')
+  await expect(locator2).toBeVisible()
+  const locator3 = Locator('.ChatDebugViewEmpty')
+  await expect(locator3).toHaveText('No events found matching missing')
+  const locator4 = Locator('.TableRow')
+  await expect(locator4).toHaveCount(0)
 }

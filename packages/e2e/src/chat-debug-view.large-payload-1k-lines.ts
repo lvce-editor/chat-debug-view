@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.large-payload-1k-lines'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-large-payload-1k-lines'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   const payloadText = Array.from({ length: 1000 }, (_, index) => `line ${index + 1}`).join('\n')
   const events = [
     {

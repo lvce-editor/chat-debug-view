@@ -8,7 +8,8 @@ export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, e
   // arrange
   const sessionId = 'e2e-session-table-row-context-menu-probe'
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ClipBoard.enableMemoryClipBoard()
 
   const events = [

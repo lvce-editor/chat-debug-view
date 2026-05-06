@@ -4,7 +4,8 @@ export const name = 'chat-debug-view.timeline-double-click-reset'
 
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.open('e2e-session-timeline-double-click-reset')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -27,11 +28,13 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await expect(interactiveTimeline).toBeVisible()
   await ChatDebug.setTimelineRangePreset('0:0.833')
-  await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(1)
+  const locator2 = Locator('.ChatDebugViewTimelineBucketSelected')
+  await expect(locator2).toHaveCount(1)
   await expect(rows).toHaveCount(1)
 
   await Command.execute('ChatDebug.handleTimelineDoubleClick')
 
-  await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(0)
+  const locator3 = Locator('.ChatDebugViewTimelineBucketSelected')
+  await expect(locator3).toHaveCount(0)
   await expect(rows).toHaveCount(2)
 }

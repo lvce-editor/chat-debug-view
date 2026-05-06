@@ -34,8 +34,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.openTabPreview()
 
   // assert
-  await expect(Locator('.ChatDebugViewDetails')).toBeVisible()
-  await expect(Locator('.ChatDebugViewEventLineNumber')).toHaveCount(0)
+  const locator1 = Locator('.ChatDebugViewDetails')
+  await expect(locator1).toBeVisible()
+  const locator2 = Locator('.ChatDebugViewEventLineNumber')
+  await expect(locator2).toHaveCount(0)
   await expect(detailsBottom).toHaveText(previewText)
   await expect(rawPreviewText).toHaveCSS('white-space', 'pre-wrap')
   await expect(rawPreviewText).toHaveCSS('overflow-wrap', 'anywhere')

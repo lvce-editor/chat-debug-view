@@ -30,7 +30,8 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   }
 
   await ChatDebug.open(sessionId)
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
   await ChatDebug.useDevtoolsLayout()
 
   const rows = Locator('.TableBody .TableRow')

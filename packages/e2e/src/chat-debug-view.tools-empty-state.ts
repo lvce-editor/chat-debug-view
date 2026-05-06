@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.tools-empty-state'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-tools-empty-state')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -25,8 +26,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(toolsPill).toContainText('Tools')
-  await expect(Locator('.ChatDebugViewQuickFilterPillSelected')).toContainText('Tools')
-  await expect(Locator('.ChatDebugViewEmpty')).toBeVisible()
-  await expect(Locator('.ChatDebugViewEmpty')).toContainText('No tool call events.')
-  await expect(Locator('.TableRow')).toHaveCount(0)
+  const locator2 = Locator('.ChatDebugViewQuickFilterPillSelected')
+  await expect(locator2).toContainText('Tools')
+  const locator3 = Locator('.ChatDebugViewEmpty')
+  await expect(locator3).toBeVisible()
+  const locator4 = Locator('.ChatDebugViewEmpty')
+  await expect(locator4).toContainText('No tool call events.')
+  const locator5 = Locator('.TableRow')
+  await expect(locator5).toHaveCount(0)
 }

@@ -5,7 +5,8 @@ export const name = 'chat-debug-view.timeline-filter-clear'
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // arrange
   await ChatDebug.open('e2e-session-timeline-clear')
-  await expect(Locator('.ChatDebugView')).toBeVisible()
+  const locator1 = Locator('.ChatDebugView')
+  await expect(locator1).toBeVisible()
 
   const events = [
     {
@@ -25,10 +26,13 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // act
   await ChatDebug.setTimelineRangePreset('0:0.833')
-  await expect(Locator('.TableBody .TableRow')).toHaveCount(1)
+  const locator2 = Locator('.TableBody .TableRow')
+  await expect(locator2).toHaveCount(1)
   await ChatDebug.setTimelineRangePreset('')
 
   // assert
-  await expect(Locator('.ChatDebugViewTimelineBucketSelected')).toHaveCount(0)
-  await expect(Locator('.TableBody .TableRow')).toHaveCount(2)
+  const locator3 = Locator('.ChatDebugViewTimelineBucketSelected')
+  await expect(locator3).toHaveCount(0)
+  const locator4 = Locator('.TableBody .TableRow')
+  await expect(locator4).toHaveCount(2)
 }
