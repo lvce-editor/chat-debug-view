@@ -17,6 +17,19 @@ const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+const stringifyHeaderValue = (value: Readonly<object>): string => {
+  try {
+    return JSON.stringify(value, (_key, nestedValue: unknown) => {
+      if (typeof nestedValue === 'bigint') {
+        return nestedValue.toString()
+      }
+      return nestedValue
+    })
+  } catch {
+    return '[unserializable]'
+  }
+}
+
 const getHeaderValueText = (value: unknown): string => {
   if (typeof value === 'string') {
     return value
@@ -24,8 +37,19 @@ const getHeaderValueText = (value: unknown): string => {
   if (value === undefined) {
     return ''
   }
-  const json = JSON.stringify(value)
-  return json === undefined ? String(value) : json
+  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+    return String(value)
+  }
+  if (value === null) {
+    return 'null'
+  }
+  if (typeof value === 'symbol') {
+    return value.description ? `Symbol(${value.description})` : 'Symbol()'
+  }
+  if (typeof value === 'function') {
+    return '[function]'
+  }
+  return stringifyHeaderValue(value)
 }
 
 const getHeaders = (selectedEvent: ChatViewEvent | null): readonly [string, unknown][] => {
@@ -35,6 +59,28 @@ const getHeaders = (selectedEvent: ChatViewEvent | null): readonly [string, unkn
   return Object.entries(selectedEvent.headers)
 }
 
+const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: number): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 2,
+      className: mergeClassNames(ChatDebugViewHeadersRow, index % 2 === 0 ? ChatDebugViewHeadersRowOdd : ChatDebugViewHeadersRowEven),
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
+      type: VirtualDomElements.Td,
+    },
+    text(headerName),
+    {
+      childCount: 1,
+      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
+      type: VirtualDomElements.Td,
+    },
+    text(getHeaderValueText(headerValue)),
+  ]
+}
+
 export const getHeadersContentNodes = (
   responseEventNodes: readonly VirtualDomNode[],
   selectedEvent: ChatViewEvent | null,
@@ -42,6 +88,10 @@ export const getHeadersContentNodes = (
   const headers = getHeaders(selectedEvent)
   if (headers.length === 0) {
     return responseEventNodes
+  }
+  const headerRows: VirtualDomNode[] = []
+  for (const [index, [headerName, headerValue]] of headers.entries()) {
+    headerRows.push(...getHeaderRowNodes(headerName, headerValue, index))
   }
   return [
     {
@@ -76,26 +126,6 @@ export const getHeadersContentNodes = (
       className: ChatDebugViewHeadersBody,
       type: VirtualDomElements.TBody,
     },
-    ...headers.flatMap(([headerName, headerValue], index) => {
-      return [
-        {
-          childCount: 2,
-          className: mergeClassNames(ChatDebugViewHeadersRow, index % 2 === 0 ? ChatDebugViewHeadersRowOdd : ChatDebugViewHeadersRowEven),
-          type: VirtualDomElements.Tr,
-        },
-        {
-          childCount: 1,
-          className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
-          type: VirtualDomElements.Td,
-        },
-        text(headerName),
-        {
-          childCount: 1,
-          className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
-          type: VirtualDomElements.Td,
-        },
-        text(getHeaderValueText(headerValue)),
-      ]
-    }),
+    ...headerRows,
   ]
 }

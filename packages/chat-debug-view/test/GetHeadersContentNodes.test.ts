@@ -104,3 +104,20 @@ test('getHeadersContentNodes should fall back to the response nodes when there a
 
   expect(result).toBe(responseEventNodes)
 })
+
+test('getHeadersContentNodes should stringify structured header values', () => {
+  const responseEventNodes = [] as const
+  const selectedEvent = {
+    eventId: 1,
+    headers: {
+      Meta: {
+        nested: true,
+      },
+    },
+    type: 'ai-request',
+  } as const
+
+  const result = getHeadersContentNodes(responseEventNodes, selectedEvent)
+
+  expect(result.at(-1)).toEqual(text('{"nested":true}'))
+})
