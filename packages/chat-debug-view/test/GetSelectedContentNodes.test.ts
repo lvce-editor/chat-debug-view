@@ -91,6 +91,26 @@ test('getSelectedContentNodes should return payload content for the payload tab'
   expect(result).toBe(payloadEventNodes)
 })
 
+test('getSelectedContentNodes should return headers content for the headers tab', () => {
+  const eventWithHeaders = {
+    eventId: 1,
+    headers: {
+      Authorization: 'Bearer [redacted]',
+    },
+    type: 'ai-request',
+  } as const
+
+  const result = getSelectedContentNodes(InputName.Headers, previewEventNodes, payloadEventNodes, responseEventNodes, eventWithHeaders, null, null)
+
+  expect(result).not.toBe(responseEventNodes)
+  expect(result[0]).toEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewHeadersTable',
+      type: VirtualDomElements.Table,
+    }),
+  )
+})
+
 test('getSelectedContentNodes should return response content for the response tab', () => {
   const result = getSelectedContentNodes(InputName.Response, previewEventNodes, payloadEventNodes, responseEventNodes, selectedEvent, null, null)
 

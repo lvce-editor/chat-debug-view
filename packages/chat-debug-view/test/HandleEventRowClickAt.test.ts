@@ -64,7 +64,10 @@ test('handleEventRowClick should select the clicked event row and load details',
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
     detail: 'value',
+    duration: 1,
+    endTime: '2026-03-08T00:00:02.000Z',
     eventId: 3,
+    startTime: '2026-03-08T00:00:02.000Z',
     type: 'request',
   })
   expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
@@ -179,6 +182,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
   expect(result.selectedEvent).toEqual({
     detail: 'preview',
     eventId: 2,
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   })
 })
@@ -216,6 +220,8 @@ test('handleEventRowClick should fall back to response and hide timing when the 
   expect(result.selectedEvent).toEqual({
     detail: 'preview',
     eventId: 2,
+    text: 'hello',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'chat-message-added',
   })
 })

@@ -5,8 +5,13 @@ export const name = 'chat-debug-view.ai-request-headers-tab'
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-ai-request-headers-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
+<<<<<<< HEAD
   const locator1 = Locator('.ChatDebugView')
   await expect(locator1).toBeVisible()
+=======
+  const chatDebugView = Locator('.ChatDebugView')
+  await expect(chatDebugView).toBeVisible()
+>>>>>>> origin/main
 
   await ChatDebug.setEvents([
     {

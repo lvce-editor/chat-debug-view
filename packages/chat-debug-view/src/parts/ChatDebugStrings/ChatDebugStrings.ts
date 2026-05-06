@@ -56,6 +56,10 @@ export const fromSeconds = (seconds: string): string => {
   })
 }
 
+export const headers = (): string => {
+  return I18nString.i18nString(UiStrings.Headers)
+}
+
 export const invalidSessionId = (): string => {
   return I18nString.i18nString(UiStrings.InvalidSessionId)
 }
@@ -82,6 +86,10 @@ export const missingUri = (): string => {
 
 export const method = (): string => {
   return I18nString.i18nString(UiStrings.Method)
+}
+
+export const name = (): string => {
+  return I18nString.i18nString(UiStrings.Name)
 }
 
 export const network = (): string => {
@@ -178,6 +186,10 @@ export const tools = (): string => {
 
 export const type = (): string => {
   return I18nString.i18nString(UiStrings.Type)
+}
+
+export const value = (): string => {
+  return I18nString.i18nString(UiStrings.Value)
 }
 
 export const ui = (): string => {

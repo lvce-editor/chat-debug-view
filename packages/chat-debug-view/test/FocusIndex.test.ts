@@ -54,6 +54,7 @@ test('focusIndex should select the requested visible event', async () => {
   expect(result.selectedEvent).toEqual({
     detail: 'row-2',
     eventId: 2,
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
