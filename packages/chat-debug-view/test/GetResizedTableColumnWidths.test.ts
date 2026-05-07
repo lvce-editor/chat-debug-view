@@ -1,8 +1,8 @@
 import { expect, test } from '@jest/globals'
-import * as GetResizedTableColumnWidths from '../src/parts/TableColumnLayout/GetResizedTableColumnWidths.ts'
 import * as CreateDefaultState from '../src/parts/State/CreateDefaultState.ts'
+import * as GetResizedTableColumnWidths from '../src/parts/TableColumnLayout/GetResizedTableColumnWidths.ts'
 
-const createState = () => ({
+const createState = (): ReturnType<typeof CreateDefaultState.createDefaultState> => ({
   ...CreateDefaultState.createDefaultState(),
   tableWidth: 480,
   width: 1000,

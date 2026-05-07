@@ -34,8 +34,8 @@ export interface ChatDebugViewState {
   readonly previewTextDeltaY: number
   readonly previewTextScrollBarHandleOffset: number
   readonly previewTextScrollBarPointerActive: boolean
-  readonly sashWidth: number
   readonly sashPointerActive: boolean
+  readonly sashWidth: number
   readonly selectedEvent: ChatViewEvent | null
   readonly selectedEventId: number | null
   readonly selectedEventIndex: number | null
