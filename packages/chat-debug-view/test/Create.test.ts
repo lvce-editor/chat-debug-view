@@ -3,7 +3,6 @@ import * as Create from '../src/parts/Create/Create.ts'
 import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
-import { defaultTableWidth } from '../src/parts/SplitLayout/SplitLayout.ts'
 import * as ChatDebugViewStates from '../src/parts/State/ChatDebugViewStates.ts'
 
 test('create should store state with the given uid', () => {
@@ -62,8 +61,8 @@ test('create should restore serializable state from saved state', () => {
     status: 132,
     type: 260,
   })
-  expect(result.newState.tableWidth).toBe(defaultTableWidth)
-  expect(result.oldState.tableWidth).toBe(defaultTableWidth)
+  expect(result.newState.tableWidth).toBe(result.newState.defaultTableWidth)
+  expect(result.oldState.tableWidth).toBe(result.oldState.defaultTableWidth)
 })
 
 test('create should restore event category filter from filter tokens when the explicit field is missing', () => {

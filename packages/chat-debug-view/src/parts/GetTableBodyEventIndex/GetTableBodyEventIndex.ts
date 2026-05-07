@@ -1,11 +1,11 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyY } from '../GetTableBodyY/GetTableBodyY.ts'
 import { getCurrentEvents } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
-import { clampTableWidth, leftPadding } from '../SplitLayout/SplitLayout.ts'
+import { clampTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
 export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number, eventY: number): number => {
-  const { tableMaxLineY, tableMinLineY, tableWidth, useDevtoolsLayout, width, x } = state
+  const { tableMaxLineY, tableMinLineY, tableWidth, useDevtoolsLayout, x } = state
   if (!useDevtoolsLayout) {
     return -1
   }
@@ -13,8 +13,8 @@ export const getTableBodyEventIndex = (state: ChatDebugViewState, eventX: number
   if (currentEvents.length === 0) {
     return -1
   }
-  const tableX = x + leftPadding
-  const tableWidthNew = clampTableWidth(width, tableWidth)
+  const tableX = x + state.leftPadding
+  const tableWidthNew = clampTableWidth(state, tableWidth)
   const hasTimeline = currentEvents.length > 0
   const tableBodyY = getTableBodyY(state, hasTimeline)
   const relativeX = eventX - tableX

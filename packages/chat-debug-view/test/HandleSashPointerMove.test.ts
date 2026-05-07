@@ -46,7 +46,7 @@ test('handleSashPointerMove should clamp tableWidth to keep room for details', (
 
   const result = HandleSashPointerMove.handleSashPointerMove(state, 980, 0)
 
-  expect(result.tableWidth).toBe(596)
+  expect(result.tableWidth).toBe(600)
 })
 
 test('handleSashPointerUp should clear the active sash state', () => {

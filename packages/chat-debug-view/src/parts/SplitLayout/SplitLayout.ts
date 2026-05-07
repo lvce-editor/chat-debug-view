@@ -1,30 +1,23 @@
-export const defaultTableWidth = 480
-const minTableWidth = 240
-const minDetailsWidth = 280
-export const sashWidth = 8
-export const viewPadding = 8
-export const timelineHorizontalPadding = 10
-const horizontalPadding = viewPadding * 2
-export const leftPadding = viewPadding
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
-export const getMainWidth = (width: number): number => {
-  return Math.max(0, width - horizontalPadding)
+export const getMainWidth = (state: ChatDebugViewState): number => {
+  return Math.max(0, state.width - state.horizontalPadding)
 }
 
-export const clampTableWidth = (width: number, tableWidth: number): number => {
-  const mainWidth = getMainWidth(width)
-  const maxTableWidth = Math.max(0, mainWidth - minDetailsWidth - sashWidth)
-  const minClampedTableWidth = Math.min(minTableWidth, maxTableWidth)
+export const clampTableWidth = (state: ChatDebugViewState, tableWidth: number): number => {
+  const mainWidth = getMainWidth(state)
+  const maxTableWidth = Math.max(0, mainWidth - state.minDetailsWidth - state.sashWidth)
+  const minClampedTableWidth = Math.min(state.minTableWidth, maxTableWidth)
   return Math.max(minClampedTableWidth, Math.min(tableWidth, maxTableWidth))
 }
 
-export const getDetailsWidth = (width: number, tableWidth: number): number => {
-  const mainWidth = getMainWidth(width)
-  const clampedTableWidth = clampTableWidth(width, tableWidth)
-  return Math.max(0, mainWidth - clampedTableWidth - sashWidth)
+export const getDetailsWidth = (state: ChatDebugViewState, tableWidth: number): number => {
+  const mainWidth = getMainWidth(state)
+  const clampedTableWidth = clampTableWidth(state, tableWidth)
+  return Math.max(0, mainWidth - clampedTableWidth - state.sashWidth)
 }
 
-export const getTableWidthFromClientX = (viewX: number, width: number, clientX: number): number => {
-  const nextTableWidth = clientX - viewX - leftPadding
-  return clampTableWidth(width, nextTableWidth)
+export const getTableWidthFromClientX = (state: ChatDebugViewState, clientX: number): number => {
+  const nextTableWidth = clientX - state.x - state.leftPadding
+  return clampTableWidth(state, nextTableWidth)
 }

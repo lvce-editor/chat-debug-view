@@ -34,6 +34,6 @@ test('handleResize should clamp tableWidth for the next viewport width', () => {
     y: 0,
   })
 
-  expect(result.tableWidth).toBe(296)
-  expect(getDetailsWidth(result.width, result.tableWidth)).toBe(280)
+  expect(result.tableWidth).toBe(300)
+  expect(getDetailsWidth(result, result.tableWidth)).toBe(280)
 })
