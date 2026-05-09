@@ -78,6 +78,51 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: calc(100% - var(--ChatDebugViewTableScrollBarWidth));
 }
 
+.Resizers {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: var(--ChatDebugViewTableScrollBarWidth);
+  top: 0;
+}
+
+.Resizer {
+  background: transparent;
+  border: 0;
+  bottom: 0;
+  cursor: col-resize;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  transform: translateX(calc(-0.5 * var(--ChatDebugViewSashWidth)));
+  width: var(--ChatDebugViewSashWidth);
+}
+
+.ResizerOne {
+  left: var(--ResizerOneLeft);
+}
+
+.ResizerTwo {
+  left: var(--ResizerTwoLeft);
+}
+
+.ResizerThree {
+  left: var(--ResizerThreeLeft);
+}
+
+.ResizerInner {
+  background: var(--vscode-panel-border, rgba(255, 255, 255, 0.12));
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translateX(-0.5px);
+  width: 1px;
+}
+
 .ChatDebugViewTimeline {
   contain: strict;
   display: flex;
