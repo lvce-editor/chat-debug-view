@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-row-open-in-new-tab'
 
-export const test: Test = async ({ ChatDebug, Command, ContextMenu, Editor, expect, Locator, Main }) => {
+export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Locator, Main }) => {
   const sessionId = `e2e-session-table-row-open-in-new-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
   const chatDebugView = Locator('.ChatDebugView')
@@ -30,5 +30,12 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, Editor, expe
   await ContextMenu.selectItem('Open in New Tab')
 
   await Main.selectTab(0, 1)
-  expect(await Editor.getText()).toBe(JSON.stringify(event, null, 2))
+
+  const editorRows = Locator('.EditorRow')
+  await expect(editorRows).toHaveCount(8)
+  await expect(editorRows.nth(0)).toHaveText('{')
+  await expect(editorRows.nth(1)).toContainText('"ended": "2026-03-08T00:00:01.250Z",')
+  await expect(editorRows.nth(2)).toContainText('"eventId": 1,')
+  await expect(editorRows.nth(3)).toContainText(`"sessionId": "${sessionId}",`)
+  await expect(editorRows.nth(7)).toHaveText('}')
 }

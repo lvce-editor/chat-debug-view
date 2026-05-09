@@ -5,7 +5,7 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('handleTableRowOpenInNewTab should open the clicked event as json data uri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Main.openUri': () => {},
+    'Main.openUri': () => { },
   })
   const state = {
     ...createDefaultState(),
@@ -54,7 +54,7 @@ test('handleTableRowOpenInNewTab should open the clicked event as json data uri'
 
 test('handleTableRowOpenInNewTab should ignore invalid row indices', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
-    'Main.openUri': () => {},
+    'Main.openUri': () => { },
   })
   const state = {
     ...createDefaultState(),
