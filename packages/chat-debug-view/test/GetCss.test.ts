@@ -70,3 +70,17 @@ test('getCss should style the ai-request headers table inside the details panel'
   expect(css).toContain('.ChatDebugViewHeadersCell {')
   expect(css).toContain('.ChatDebugViewHeadersHead .ChatDebugViewHeadersCell {')
 })
+
+test('getCss should style the table column resizers and expose their offsets', () => {
+  const css = getCss(createDefaultState())
+
+  expect(css).toContain('--ResizerOneLeft:')
+  expect(css).toContain('--ResizerTwoLeft:')
+  expect(css).toContain('--ResizerThreeLeft:')
+  expect(css).toContain('.Resizers {')
+  expect(css).toContain('.Resizer {')
+  expect(css).toContain('.ResizerInner {')
+  expect(css).toContain('.ResizerOne {\n  left: var(--ResizerOneLeft);')
+  expect(css).toContain('.ResizerTwo {\n  left: var(--ResizerTwoLeft);')
+  expect(css).toContain('.ResizerThree {\n  left: var(--ResizerThreeLeft);')
+})
