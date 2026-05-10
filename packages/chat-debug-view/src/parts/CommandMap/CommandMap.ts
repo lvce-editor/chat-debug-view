@@ -37,6 +37,7 @@ import * as HandleTableResizerPointerDown from '../HandleTableResizerPointerDown
 import * as HandleTableResizerPointerMove from '../HandleTableResizerPointerMove/HandleTableResizerPointerMove.ts'
 import * as HandleTableResizerPointerUp from '../HandleTableResizerPointerUp/HandleTableResizerPointerUp.ts'
 import * as HandleTableRowCopy from '../HandleTableRowCopy/HandleTableRowCopy.ts'
+import * as HandleTableRowOpenInNewTab from '../HandleTableRowOpenInNewTab/HandleTableRowOpenInNewTab.ts'
 import * as HandleTableScrollBarPointerDown from '../HandleTableScrollBarPointerDown/HandleTableScrollBarPointerDown.ts'
 import * as HandleTableScrollBarPointerMove from '../HandleTableScrollBarPointerMove/HandleTableScrollBarPointerMove.ts'
 import * as HandleTableScrollBarPointerUp from '../HandleTableScrollBarPointerUp/HandleTableScrollBarPointerUp.ts'
@@ -109,6 +110,7 @@ export const commandMap = {
   'ChatDebug.handleTableResizerPointerMove': wrapCommand(HandleTableResizerPointerMove.handleTableResizerPointerMove),
   'ChatDebug.handleTableResizerPointerUp': wrapCommand(HandleTableResizerPointerUp.handleTableResizerPointerUp),
   'ChatDebug.handleTableRowCopy': wrapCommand(HandleTableRowCopy.handleTableRowCopy),
+  'ChatDebug.handleTableRowOpenInNewTab': wrapCommand(HandleTableRowOpenInNewTab.handleTableRowOpenInNewTab),
   'ChatDebug.handleTableScrollBarPointerDown': wrapCommand(HandleTableScrollBarPointerDown.handleTableScrollBarPointerDown),
   'ChatDebug.handleTableScrollBarPointerMove': wrapCommand(HandleTableScrollBarPointerMove.handleTableScrollBarPointerMove),
   'ChatDebug.handleTableScrollBarPointerUp': wrapCommand(HandleTableScrollBarPointerUp.handleTableScrollBarPointerUp),

@@ -74,5 +74,12 @@ test('getMenuEntries2 should pass the clicked row index to the copy command', ()
       id: 'copy',
       label: 'Copy',
     },
+    {
+      args: [3],
+      command: 'ChatDebug.handleTableRowOpenInNewTab',
+      flags: MenuItemFlags.None,
+      id: 'open-in-new-tab',
+      label: 'Open in New Tab',
+    },
   ])
 })

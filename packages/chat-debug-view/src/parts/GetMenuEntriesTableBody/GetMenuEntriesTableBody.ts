@@ -12,5 +12,12 @@ export const getMenuEntriesTableBody = (props: ContextMenuPropsTableRow): readon
       id: 'copy',
       label: ChatDebugStrings.copy(),
     },
+    {
+      args: [props.eventIndex],
+      command: 'ChatDebug.handleTableRowOpenInNewTab',
+      flags: MenuItemFlags.None,
+      id: 'open-in-new-tab',
+      label: ChatDebugStrings.openInNewTab(),
+    },
   ]
 }
