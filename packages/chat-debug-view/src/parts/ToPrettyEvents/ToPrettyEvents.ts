@@ -12,8 +12,14 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
     if (item.type === 'ai-request' && 'requestId' in item && typeof item.requestId === 'string') {
       const response = map[item.requestId]
       if (response) {
+        const parsedStart = new Date(item.timestamp || '')
+        const parsedEnd = new Date(response.timestamp || '')
+        const durationMs = parsedEnd.getTime() - parsedStart.getTime()
+        const formattedDuration = `${durationMs}ms`
         pretty.push({
           eventId: item.eventId,
+          method: 'POST',
+          time: formattedDuration,
           type: 'ai-request-response',
         })
       } else {

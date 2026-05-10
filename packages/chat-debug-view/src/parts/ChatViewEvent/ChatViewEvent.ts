@@ -4,10 +4,12 @@ export interface ChatViewEvent {
   readonly ended?: number | string
   readonly endTime?: number | string
   readonly eventId: number
+  readonly method?: string
   readonly [key: string]: unknown
   readonly sessionId?: string
   readonly started?: number | string
   readonly startTime?: number | string
+  readonly time?: string
   readonly timestamp?: number | string
   readonly type: string
 }

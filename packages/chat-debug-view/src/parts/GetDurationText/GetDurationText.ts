@@ -2,6 +2,9 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { toTimeNumber } from '../ToTimeNumber/ToTimeNumber.ts'
 
 export const getDurationText = (event: ChatViewEvent): string => {
+  if (event.time) {
+    return event.time
+  }
   const explicitDuration = event.durationMs ?? event.duration
   if (typeof explicitDuration === 'number' && Number.isFinite(explicitDuration)) {
     return `${explicitDuration}ms`

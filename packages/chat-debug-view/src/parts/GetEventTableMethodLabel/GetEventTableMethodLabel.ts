@@ -6,6 +6,10 @@ const postMethods = new Set(['create_directory', 'create_file', 'mkdir', 'write_
 const deleteMethods = new Set(['delete_directory', 'delete_file', 'delete_folder', 'remove_directory', 'remove_file', 'remove_folder'])
 
 export const getEventTableMethodLabel = (event: ChatViewEvent): string => {
+  if (event.method) {
+    return event.method
+  }
+  console.log({ event })
   const toolName = getToolName(event)
   if (!toolName) {
     return ''
