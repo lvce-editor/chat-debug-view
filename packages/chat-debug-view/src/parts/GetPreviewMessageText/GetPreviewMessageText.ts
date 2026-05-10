@@ -18,36 +18,41 @@ const getResponseContentText = (content: unknown): string | undefined => {
   return typeof text === 'string' ? text : undefined
 }
 
+const getOutput = (value: unknown): readonly unknown[] | undefined => {
+  if (!value || typeof value !== 'object') {
+    return undefined
+  }
+  const { output } = value as { readonly output?: unknown }
+  return Array.isArray(output) ? output : undefined
+}
+
+const getResponseOutputFromValue = (value: unknown): readonly unknown[] | undefined => {
+  return getOutput(value)
+}
+
+const getResponseOutputFromResponseValue = (responseValue: unknown): readonly unknown[] | undefined => {
+  return getOutput(responseValue)
+}
+
+const getResponseOutputFromSseValue = (value: unknown): readonly unknown[] | undefined => {
+  if (!value || typeof value !== 'object') {
+    return undefined
+  }
+  const { response } = value as { readonly response?: unknown }
+  return getOutput(response)
+}
+
 const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
   if (event.type === 'ai-request-finished') {
-    const { responseValue } = event as {
-      readonly responseValue?: unknown
-    }
-    if (!responseValue || typeof responseValue !== 'object') {
-      return undefined
-    }
-    const { output } = responseValue as { readonly output?: unknown }
-    return Array.isArray(output) ? output : undefined
+    return getResponseOutputFromResponseValue(
+      (event as { readonly responseValue?: unknown }).responseValue,
+    )
   }
   if (event.type === 'sse-response-completed') {
-    const { value } = event
-    if (!value || typeof value !== 'object') {
-      return undefined
-    }
-    const { response } = value as { readonly response?: unknown }
-    if (!response || typeof response !== 'object') {
-      return undefined
-    }
-    const { output } = response as { readonly output?: unknown }
-    return Array.isArray(output) ? output : undefined
+    return getResponseOutputFromSseValue(event.value)
   }
   if (event.type === 'ai-response') {
-    const { value } = event
-    if (!value || typeof value !== 'object') {
-      return undefined
-    }
-    const { output } = value as { readonly output?: unknown }
-    return Array.isArray(output) ? output : undefined
+    return getResponseOutputFromValue(event.value)
   }
   return undefined
 }

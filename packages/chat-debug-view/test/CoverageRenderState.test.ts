@@ -160,8 +160,8 @@ test('renderIncremental should support ai-request-finished events', () => {
   }
   const mergedEvent = {
     duration: 250,
-    endTimestamp: '2026-03-08T00:00:00.250Z',
     ended: '2026-03-08T00:00:00.250Z',
+    endTimestamp: '2026-03-08T00:00:00.250Z',
     eventId: 1,
     requestEvent: {
       body: {
@@ -226,8 +226,8 @@ test('renderIncremental should support ai-request-finished events', () => {
       ],
     },
     sessionId: 'session-1',
-    startTimestamp: '2026-03-08T00:00:00.000Z',
     started: '2026-03-08T00:00:00.000Z',
+    startTimestamp: '2026-03-08T00:00:00.000Z',
     timestamp: '2026-03-08T00:00:00.250Z',
     type: 'ai-request-finished',
   }

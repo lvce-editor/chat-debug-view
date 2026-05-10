@@ -118,10 +118,11 @@ test('listChatViewEvents should merge matching stored ai request and ai response
           ],
         },
         sessionId: 'session-1',
-        startTimestamp: '2026-03-08T00:00:00.000Z',
         started: '2026-03-08T00:00:00.000Z',
+        startTimestamp: '2026-03-08T00:00:00.000Z',
         timestamp: '2026-03-08T00:00:00.250Z',
         type: 'ai-request-finished',
+        ended: '2026-03-08T00:00:00.250Z',
         value: {
           id: 'resp_11',
           output: [
@@ -135,7 +136,6 @@ test('listChatViewEvents should merge matching stored ai request and ai response
             },
           ],
         },
-        ended: '2026-03-08T00:00:00.250Z',
       },
     ],
     type: 'success',
