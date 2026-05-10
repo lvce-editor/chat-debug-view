@@ -8,8 +8,8 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
 import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
-import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 
 export const getDetailsDom = (
