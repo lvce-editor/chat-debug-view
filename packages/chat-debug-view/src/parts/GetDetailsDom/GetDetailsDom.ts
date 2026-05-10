@@ -5,8 +5,8 @@ import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.t
 import { ChatDebugViewDetails } from '../ClassNames/ClassNames.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
-import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
 import { getDetailsTopVirtualDom } from '../GetDetailsTopVirtualDom/GetDetailsTopVirtualDom.ts'
+import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 
