@@ -1,8 +1,10 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { handleEventRowClickDependencies } from '../src/parts/HandleEventRowClick/HandleEventRowClick.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
+import { hasDetailTab } from '../src/parts/HasDetailTab/HasDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
 
@@ -159,7 +161,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     type: 'response',
   })
   const state = createClickableState({
-    detailTabs: DetailTab.createDetailTabs('preview'),
+    detailTabs: createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -177,7 +179,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEventIndex).toBe(1)
   expect(result.selectedEvent).toEqual({
     detail: 'preview',
@@ -194,7 +196,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     type: 'chat-message-added',
   })
   const state = createClickableState({
-    detailTabs: DetailTab.createDetailTabs('timing'),
+    detailTabs: createDetailTabs('timing'),
     events: [
       {
         ended: '2026-03-08T00:00:00.250Z',
@@ -214,8 +216,8 @@ test('handleEventRowClick should fall back to response and hide timing when the 
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('response')
-  expect(DetailTab.hasDetailTab(result.detailTabs, 'timing')).toBe(false)
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('response')
+  expect(hasDetailTab(result.detailTabs, 'timing')).toBe(false)
   expect(result.selectedEventIndex).toBe(1)
   expect(result.selectedEvent).toEqual({
     detail: 'preview',

@@ -31,9 +31,13 @@ export const test: Test = async ({ ChatDebug, expect, FileSystem, Locator, Works
   const lineContents = Locator('.ChatDebugViewEventLineContent')
 
   await expect(lineNumbers).toHaveCount(10_000)
-  await expect(lineNumbers.nth(0)).toHaveText('1')
-  await expect(lineNumbers.nth(9999)).toHaveText('10000')
+  const lineNumbersNth0 = lineNumbers.nth(0)
+  await expect(lineNumbersNth0).toHaveText('1')
+  const lineNumbersNth9999 = lineNumbers.nth(9999)
+  await expect(lineNumbersNth9999).toHaveText('10000')
   await expect(lineContents).toHaveCount(10_000)
-  await expect(lineContents.nth(0)).toHaveText('line 1')
-  await expect(lineContents.nth(9999)).toHaveText('line 10000')
+  const lineContentsNth0 = lineContents.nth(0)
+  await expect(lineContentsNth0).toHaveText('line 1')
+  const lineContentsNth9999 = lineContents.nth(9999)
+  await expect(lineContentsNth9999).toHaveText('line 10000')
 }

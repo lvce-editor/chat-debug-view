@@ -1,8 +1,9 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as HandleStorageWorkerUpdate from '../HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
 import { loadEventsFromUri } from '../LoadEvents/LoadEvents.ts'
 import { loadEventsDependencies } from '../LoadEvents/LoadEvents.ts'
@@ -29,7 +30,7 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
   return applyVirtualTableState({
     ...nextState,
     categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilters(nextState.categoryFilters)),
-    detailTabs: DetailTab.createDetailTabs(DetailTab.getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
+    detailTabs: createDetailTabs(getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
     tableColumns: TableColumn.createTableColumns(),
   })
 }

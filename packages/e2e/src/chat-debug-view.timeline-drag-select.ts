@@ -50,5 +50,6 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const locator4 = Locator('.ChatDebugViewTimelineSelectionMarker')
   await expect(locator4).toHaveCount(2)
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('request')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('request')
 }

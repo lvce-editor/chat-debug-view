@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as SaveState from '../src/parts/SaveState/SaveState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -8,7 +8,7 @@ test('saveState should persist serializable non-layout state fields', () => {
   const state = {
     ...createDefaultState(),
     categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.Tools),
-    detailTabs: DetailTab.createDetailTabs('preview'),
+    detailTabs: createDetailTabs('preview'),
     filterValue: 'error',
     selectedEventId: 3,
     selectedEventIndex: 2,

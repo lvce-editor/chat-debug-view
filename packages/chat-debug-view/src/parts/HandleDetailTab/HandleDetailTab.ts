@@ -1,11 +1,12 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
+import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
 
 export const selectDetailTab = (state: ChatDebugViewState, value: string): ChatDebugViewState => {
-  if (!DetailTab.isDetailTab(value)) {
+  if (!IsDetailTab.isDetailTab(value)) {
     return state
   }
-  const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+  const detailTabs = SelectDetailTab.selectDetailTab(state.detailTabs, value)
   if (detailTabs === state.detailTabs) {
     return state
   }

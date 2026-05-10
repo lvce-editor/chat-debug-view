@@ -1,7 +1,8 @@
 import { expect, test } from '@jest/globals'
 import * as Create from '../src/parts/Create/Create.ts'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import * as ChatDebugViewStates from '../src/parts/State/ChatDebugViewStates.ts'
 
@@ -19,11 +20,11 @@ test('create should store state with the given uid', () => {
   expect(newState.width).toBe(300)
   expect(newState.height).toBe(400)
   expect(newState.assetDir).toBe('/assets')
-  expect(newState.detailTabs).toEqual(DetailTab.createDetailTabs())
+  expect(newState.detailTabs).toEqual(createDetailTabs())
   expect(newState.tableColumns).toEqual([])
   expect(newState.sessionId).toBe('')
   expect(oldState.uid).toBe(uid)
-  expect(oldState.detailTabs).toEqual(DetailTab.createDetailTabs())
+  expect(oldState.detailTabs).toEqual(createDetailTabs())
   expect(oldState.tableColumns).toEqual([])
   expect(oldState.selectedEventId).toBeNull()
 })
@@ -45,8 +46,8 @@ test('create should restore serializable state from saved state', () => {
 
   expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.newState.categoryFilters)).toBe(EventCategoryFilter.Tools)
   expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.oldState.categoryFilters)).toBe(EventCategoryFilter.Tools)
-  expect(DetailTab.getSelectedDetailTab(result.newState.detailTabs)).toBe(InputName.Preview)
-  expect(DetailTab.getSelectedDetailTab(result.oldState.detailTabs)).toBe(InputName.Preview)
+  expect(getSelectedDetailTab(result.newState.detailTabs)).toBe(InputName.Preview)
+  expect(getSelectedDetailTab(result.oldState.detailTabs)).toBe(InputName.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
   expect(result.newState.tableColumnWidths).toEqual({

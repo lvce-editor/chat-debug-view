@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
@@ -43,7 +43,7 @@ test('getDevtoolsDom should render selected details panel and close input', () =
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
@@ -355,7 +355,7 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly alt?: string
@@ -563,7 +563,7 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     [TableColumn.Type, TableColumn.Status],
   ) as readonly {
     readonly className?: string
@@ -748,7 +748,7 @@ test('getDevtoolsDom should show only read_file content in the preview tab when 
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
@@ -806,7 +806,7 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
@@ -861,7 +861,7 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
@@ -921,7 +921,7 @@ test('getDevtoolsDom should render invalid image fallback preview text without n
     false,
     '',
     '',
-    DetailTab.createDetailTabs('preview'),
+    createDetailTabs('preview'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly className?: string
@@ -969,7 +969,7 @@ test('getDevtoolsDom should render simplified tool json in the payload tab', () 
     false,
     '',
     '',
-    DetailTab.createDetailTabs('payload'),
+    createDetailTabs('payload'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string
@@ -1035,7 +1035,7 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
     false,
     '',
     '',
-    DetailTab.createDetailTabs('response'),
+    createDetailTabs('response'),
     TableColumn.defaultVisibleTableColumns,
   ) as readonly {
     readonly text?: string

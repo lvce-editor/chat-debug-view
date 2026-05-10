@@ -1,11 +1,12 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetBoolean from '../GetBoolean/GetBoolean.ts'
 import { getStateWithTimelineInfo } from '../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import * as InputName from '../InputName/InputName.ts'
+import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
+import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
 import { applyVirtualTableState, withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 
 const parseTimelineRangePreset = (value: string): { readonly timelineEndSeconds: string; readonly timelineStartSeconds: string } => {
@@ -173,10 +174,10 @@ const handleCloseDetails: InputHandler = (state) => {
 }
 
 const handleDetailTab: InputHandler = (state, value) => {
-  if (!DetailTab.isDetailTab(value)) {
+  if (!IsDetailTab.isDetailTab(value)) {
     return state
   }
-  const detailTabs = DetailTab.selectDetailTab(state.detailTabs, value)
+  const detailTabs = SelectDetailTab.selectDetailTab(state.detailTabs, value)
   if (detailTabs === state.detailTabs) {
     return state
   }

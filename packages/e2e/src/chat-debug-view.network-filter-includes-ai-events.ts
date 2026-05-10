@@ -50,6 +50,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await Command.execute('ChatDebug.handleEventCategoryFilter', 'network', false, false)
 
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('ai-request')
-  await expect(rows.nth(0)).not.toContainText('message')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('ai-request')
+  await expect(rowsNth0).not.toContainText('message')
 }

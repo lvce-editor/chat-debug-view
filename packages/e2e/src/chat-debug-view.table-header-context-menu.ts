@@ -36,10 +36,14 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   // assert
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(4)
-  await expect(menuItems.nth(0)).toHaveText('Type')
-  await expect(menuItems.nth(1)).toHaveText('Duration')
-  await expect(menuItems.nth(2)).toHaveText('Status')
-  await expect(menuItems.nth(3)).toHaveText('Reset columns')
+  const menuItemsNth0 = menuItems.nth(0)
+  await expect(menuItemsNth0).toHaveText('Type')
+  const menuItemsNth1 = menuItems.nth(1)
+  await expect(menuItemsNth1).toHaveText('Duration')
+  const menuItemsNth2 = menuItems.nth(2)
+  await expect(menuItemsNth2).toHaveText('Status')
+  const menuItemsNth3 = menuItems.nth(3)
+  await expect(menuItemsNth3).toHaveText('Reset columns')
   const locator2 = Locator('[role="menuitemcheckbox"][aria-checked="true"]')
   await expect(locator2).toHaveCount(3)
 
@@ -48,8 +52,10 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
 
   // assert
   await expect(headerCells).toHaveCount(2)
-  await expect(headerCells.nth(0)).toHaveText('Type')
-  await expect(headerCells.nth(1)).toHaveText('Status')
+  const headerCellsNth0 = headerCells.nth(0)
+  await expect(headerCellsNth0).toHaveText('Type')
+  const headerCellsNth1 = headerCells.nth(1)
+  await expect(headerCellsNth1).toHaveText('Status')
   await expect(rowCells).toHaveCount(2)
   const savedStateAfterToggle = await Command.execute('ChatDebug.saveState')
   assertVisibleTableColumns(savedStateAfterToggle.visibleTableColumns, ['type', 'status'])
@@ -60,11 +66,13 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
 
   // assert
   await expect(headerCells).toHaveCount(3)
-  await expect(headerCells.nth(0)).toHaveText('Type')
-  await expect(headerCells.nth(1)).toHaveText('Duration')
-  await expect(headerCells.nth(2)).toHaveText('Status')
+  await expect(headerCellsNth0).toHaveText('Type')
+  await expect(headerCellsNth1).toHaveText('Duration')
+  const headerCellsNth2 = headerCells.nth(2)
+  await expect(headerCellsNth2).toHaveText('Status')
   await expect(rowCells).toHaveCount(3)
-  await expect(rowCells.nth(1)).toHaveText('250 ms')
+  const rowCellsNth1 = rowCells.nth(1)
+  await expect(rowCellsNth1).toHaveText('250 ms')
   const savedStateAfterReset = await Command.execute('ChatDebug.saveState')
   assertVisibleTableColumns(savedStateAfterReset.visibleTableColumns, ['type', 'duration', 'status'])
 }

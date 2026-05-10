@@ -1,7 +1,7 @@
 import type { SavedState } from '../SavedState/SavedState.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const saveState = (state: ChatDebugViewState): SavedState => {
@@ -20,7 +20,7 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     eventCategoryFilter: EventCategoryFilter.getSelectedEventCategoryFilter(categoryFilters),
     eventCategoryFilters: EventCategoryFilter.getSelectedEventCategoryFilters(categoryFilters),
     filterValue,
-    selectedDetailTab: DetailTab.getSelectedDetailTab(detailTabs),
+    selectedDetailTab: getSelectedDetailTab(detailTabs),
     selectedEventId,
     sessionId,
     tableColumnWidths,

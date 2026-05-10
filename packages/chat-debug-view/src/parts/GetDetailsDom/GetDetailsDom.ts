@@ -2,21 +2,20 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
-import { ChatDebugViewDetails, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { ChatDebugViewDetails } from '../ClassNames/ClassNames.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
-import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
+import { getDetailsTopVirtualDom } from '../GetDetailsTopVirtualDom/GetDetailsTopVirtualDom.ts'
 import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
-import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
   responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
-  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  detailTabs: readonly DetailTabType[] = createDetailTabs(),
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
   previewVirtualization?: TextNodeVirtualizationOptions,
@@ -25,7 +24,7 @@ export const getDetailsDom = (
     return []
   }
   const normalizedDetailTabs = getNormalizedDetailTabs(selectedEvent, detailTabs)
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(normalizedDetailTabs)
+  const safeSelectedDetailTab = getSelectedDetailTab(normalizedDetailTabs)
   const selectedDetailTab = normalizedDetailTabs.find((detailTab) => detailTab.name === safeSelectedDetailTab) ?? normalizedDetailTabs[0]
   const contentNodes = getSelectedContentNodes(
     safeSelectedDetailTab,
@@ -44,14 +43,7 @@ export const getDetailsDom = (
       className: ChatDebugViewDetails,
       type: VirtualDomElements.Section,
     },
-    {
-      childCount: 2,
-      className: ChatDebugViewDetailsTop,
-      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
-      type: VirtualDomElements.Div,
-    },
-    ...getDetailsCloseButtonDom(),
-    ...getTabNodes(normalizedDetailTabs),
+    ...getDetailsTopVirtualDom(normalizedDetailTabs),
     ...getDetailContentDom(selectedDetailTab, safeSelectedDetailTab, contentNodes),
   ]
 }

@@ -1,7 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { focusNext } from '../src/parts/FocusNext/FocusNext.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('focusNext should select the first row when nothing is selected', async () => {
@@ -14,7 +15,7 @@ test('focusNext should select the first row when nothing is selected', async () 
   })
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs('preview'),
+    detailTabs: createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -33,7 +34,7 @@ test('focusNext should select the first row when nothing is selected', async () 
   const result = await focusNext(state)
 
   expect(result.selectedEventIndex).toBe(0)
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEvent).toEqual({
     detail: 'row-1',
     eventId: 1,

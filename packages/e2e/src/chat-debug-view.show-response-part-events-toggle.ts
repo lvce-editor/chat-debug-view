@@ -35,5 +35,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // act + assert visible when enabled
   await ChatDebug.setShowResponsePartEvents(true)
   await expect(rows).toHaveCount(2)
-  await expect(rows.nth(1)).toContainText('sse-response-part')
+  const rowsNth1 = rows.nth(1)
+  await expect(rowsNth1).toContainText('sse-response-part')
 }

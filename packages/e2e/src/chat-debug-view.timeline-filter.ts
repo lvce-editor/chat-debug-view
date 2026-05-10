@@ -36,5 +36,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const locator3 = Locator('.ChatDebugViewTimelineBucketSelected')
   await expect(locator3).toHaveCount(1)
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('request')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('request')
 }

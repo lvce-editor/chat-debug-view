@@ -1,6 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { getCurrentEvents as getSharedCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { mergeSelectedEventDetails } from '../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
@@ -34,7 +35,8 @@ export const selectEventAtIndex = async (
   selectedEventIndex: number,
   dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
 ): Promise<ChatDebugViewState> => {
-  const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
+  const { databaseName, dataBaseVersion, detailTabs, eventStoreName, sessionId, sessionIdIndexName } = state
+  const selectedDetailTab = getSelectedDetailTab(detailTabs)
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
   if (!selectedEvent) {
@@ -54,18 +56,18 @@ export const selectEventAtIndex = async (
     }
   }
   const selectedEventDetails = await dependencies.loadSelectedEvent(
-    state.databaseName,
-    state.dataBaseVersion,
-    state.eventStoreName,
-    state.sessionId,
-    state.sessionIdIndexName,
+    databaseName,
+    dataBaseVersion,
+    eventStoreName,
+    sessionId,
+    sessionIdIndexName,
     selectedEvent.eventId,
     getSelectedEventDetailsType(selectedEvent),
   )
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({
     ...state,
-    detailTabs: DetailTab.createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
+    detailTabs: createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
     previewTextCursorColumnIndex: null,
     previewTextCursorRowIndex: null,
     previewTextDeltaY: 0,

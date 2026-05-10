@@ -47,6 +47,7 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const firstRow = rows.nth(0)
 
   await expect(rows).toHaveCount(1)
+<<<<<<< HEAD
   await expect(firstRow).toContainText('ai-request-finished')
   await expect(firstRow).toContainText('250 ms')
   await expect(firstRow).toContainText('200')
@@ -66,4 +67,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.openTabResponse()
   await expect(detailsBottom).toContainText('"resp_1"')
   await expect(detailsBottom).toContainText('"hello from merged response"')
+=======
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('ai-request')
+  await expect(rowsNth0).toContainText('250 ms')
+  await expect(rowsNth0).toContainText('200')
+>>>>>>> origin/main
 }
