@@ -4,7 +4,7 @@ import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
 import { getEffectiveTimelineRange } from '../GetEffectiveTimelineRange/GetEffectiveTimelineRange.ts'
@@ -35,7 +35,7 @@ export const getDevtoolsDom = (
   timelineSelectionActive = false,
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
-  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  detailTabs: readonly DetailTabType[] = createDetailTabs(),
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,

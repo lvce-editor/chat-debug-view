@@ -1,5 +1,5 @@
 import type { ChatDebugViewState } from './ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
@@ -20,7 +20,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
     defaultTableWidth,
-    detailTabs: DetailTab.createDetailTabs(),
+    detailTabs: createDetailTabs(),
     devtoolsRootGap: 4,
     devtoolsTimelineHeight: 88,
     devtoolsTopHeight: 28,

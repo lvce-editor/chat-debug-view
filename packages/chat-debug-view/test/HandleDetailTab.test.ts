@@ -1,12 +1,12 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as SelectDetailTab from '../src/parts/HandleDetailTab/HandleDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('selectDetailTab should update selected detail tab', () => {
   const state = createDefaultState()
   const result = SelectDetailTab.selectDetailTab(state, 'preview')
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
 })
 
 test('selectDetailTab should ignore invalid selected detail tab values', () => {
@@ -18,5 +18,5 @@ test('selectDetailTab should ignore invalid selected detail tab values', () => {
 test('handleDetailTabsFocus should update selected detail tab', () => {
   const state = createDefaultState()
   const result = SelectDetailTab.handleDetailTabsFocus(state, 'payload')
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('payload')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('payload')
 })

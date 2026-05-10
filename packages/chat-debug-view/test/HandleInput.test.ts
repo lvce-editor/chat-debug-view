@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as HandleInput from '../src/parts/HandleInput/HandleInput.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -65,7 +65,7 @@ test('handleInput should close details panel', () => {
 test('handleInput should update selected detail tab', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, InputName.DetailTab, 'preview', false)
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
 })
 
 test('handleInput should ignore invalid selected detail tab values', () => {

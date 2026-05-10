@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailsLineNumberWidth } from '../src/parts/GetDetailsLineNumberWidth/GetDetailsLineNumberWidth.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -27,7 +27,7 @@ test('getDetailsLineNumberWidth should size preview line numbers from the curren
   }
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Preview, selectedEvent),
     selectedEvent,
   }
 
@@ -49,7 +49,7 @@ test('getDetailsLineNumberWidth should size payload line numbers from pretty-pri
   }
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Payload, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Payload, selectedEvent),
     selectedEvent,
   }
 
@@ -67,7 +67,7 @@ test('getDetailsLineNumberWidth should include extra gutter buffer for smaller l
   }
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Preview, selectedEvent),
     selectedEvent,
   }
 
@@ -84,7 +84,7 @@ test('getDetailsLineNumberWidth should return 0 when preview line numbers are in
   }
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Preview, selectedEvent),
     selectedEvent,
   }
 
@@ -106,7 +106,7 @@ test('getDetailsLineNumberWidth should return 0 for the tokens tab', () => {
   }
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Tokens, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Tokens, selectedEvent),
     selectedEvent,
   }
 

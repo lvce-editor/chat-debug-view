@@ -1,15 +1,15 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetDetailsDom from '../src/parts/GetDetailsDom/GetDetailsDom.ts'
 import { getEndText } from '../src/parts/GetEndText/GetEndText.ts'
 import { getStartText } from '../src/parts/GetStartText/GetStartText.ts'
 
-const detailTabs = DetailTab.createDetailTabs()
-const previewDetailTabs = DetailTab.createDetailTabs('preview')
-const payloadDetailTabs = DetailTab.createDetailTabs('payload')
-const timingDetailTabs = DetailTab.createDetailTabs('timing')
+const detailTabs = createDetailTabs()
+const previewDetailTabs = createDetailTabs('preview')
+const payloadDetailTabs = createDetailTabs('payload')
+const timingDetailTabs = createDetailTabs('timing')
 
 test('getDetailsDom should render details panel nodes, close control, and tabs', () => {
   const selectedEventNodes = [

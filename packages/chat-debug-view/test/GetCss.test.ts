@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getCss } from '../src/parts/GetCss/GetCss.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
@@ -22,7 +22,7 @@ test('getCss should expose the details line number width variable and apply it t
   }
   const css = getCss({
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Preview, selectedEvent),
     selectedEvent,
   })
 
@@ -45,7 +45,7 @@ test('getCss should expose preview scrollbar variables for virtualized preview t
   )
   const css = getCss({
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs(InputName.Preview, selectedEvent),
+    detailTabs: createDetailTabs(InputName.Preview, selectedEvent),
     height: 600,
     previewTextDeltaY: 48,
     selectedEvent,

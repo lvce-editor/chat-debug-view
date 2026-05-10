@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getNormalizedDetailTabs } from '../src/parts/GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
 
 test('getNormalizedDetailTabs should return the existing tabs when there is no selected event', () => {
-  const detailTabs = DetailTab.createDetailTabs('payload')
+  const detailTabs = createDetailTabs('payload')
 
   const result = getNormalizedDetailTabs(null, detailTabs)
 
@@ -15,9 +15,9 @@ test('getNormalizedDetailTabs should rebuild the tabs for the selected event', (
     eventId: 1,
     type: 'tool-execution',
   }
-  const detailTabs = DetailTab.createDetailTabs('payload')
+  const detailTabs = createDetailTabs('payload')
 
   const result = getNormalizedDetailTabs(selectedEvent, detailTabs)
 
-  expect(result).toEqual(DetailTab.createDetailTabs('payload', selectedEvent))
+  expect(result).toEqual(createDetailTabs('payload', selectedEvent))
 })

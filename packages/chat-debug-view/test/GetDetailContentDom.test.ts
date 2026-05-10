@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailContentDom } from '../src/parts/GetDetailContentDom/GetDetailContentDom.ts'
 
 test('getDetailContentDom should wrap the selected tab content in a tabpanel', () => {
-  const detailTabs = DetailTab.createDetailTabs('response')
+  const detailTabs = createDetailTabs('response')
   const result = getDetailContentDom(detailTabs[2], 'response', [
     {
       childCount: 1,

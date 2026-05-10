@@ -1,8 +1,9 @@
 import type { SavedState } from '../SavedState/SavedState.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
 import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
+import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
 import { getTableColumnsWithVisibility } from '../TableColumn/TableColumn.ts'
 import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
@@ -45,8 +46,8 @@ const restoreDetailTabs = (
   savedState: Partial<SavedState>,
   currentDetailTabs: ChatDebugViewState['detailTabs'],
 ): ChatDebugViewState['detailTabs'] => {
-  return typeof savedState.selectedDetailTab === 'string' && DetailTab.isDetailTab(savedState.selectedDetailTab)
-    ? DetailTab.selectDetailTab(currentDetailTabs, savedState.selectedDetailTab)
+  return typeof savedState.selectedDetailTab === 'string' && IsDetailTab.isDetailTab(savedState.selectedDetailTab)
+    ? SelectDetailTab.selectDetailTab(currentDetailTabs, savedState.selectedDetailTab)
     : currentDetailTabs
 }
 
