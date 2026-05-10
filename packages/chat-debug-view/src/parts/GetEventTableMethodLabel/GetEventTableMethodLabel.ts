@@ -9,7 +9,6 @@ export const getEventTableMethodLabel = (event: ChatViewEvent): string => {
   if (event.method) {
     return event.method
   }
-  console.log({ event })
   const toolName = getToolName(event)
   if (!toolName) {
     return ''
