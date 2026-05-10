@@ -21,6 +21,7 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
   expect(result).toEqual([
     {
       eventId: 1,
+      method: 'POST',
       type: 'ai-request-response',
     },
   ])

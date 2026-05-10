@@ -15,13 +15,15 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
         const parsedStart = new Date(item.timestamp || '')
         const parsedEnd = new Date(response.timestamp || '')
         const durationMs = parsedEnd.getTime() - parsedStart.getTime()
-        const formattedDuration = `${durationMs}ms`
-        pretty.push({
+        const mergedEvent: ChatViewEvent = {
           eventId: item.eventId,
           method: 'POST',
-          time: formattedDuration,
           type: 'ai-request-response',
-        })
+        }
+        if (Number.isFinite(durationMs)) {
+          mergedEvent.time = `${durationMs}ms`
+        }
+        pretty.push(mergedEvent)
       } else {
         pretty.push(item)
       }
