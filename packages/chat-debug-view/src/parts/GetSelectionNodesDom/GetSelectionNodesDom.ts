@@ -12,6 +12,32 @@ import {
 import { formatPercent } from '../FormatPercent/FormatPercent.ts'
 import * as TimelineSelectionHandleName from '../TimelineSelectionHandleName/TimelineSelectionHandleName.ts'
 
+const startHandle: VirtualDomNode = {
+  childCount: 0,
+  className: mergeClassNames(
+    ChatDebugViewTimelineSelectionHandle,
+    ChatDebugViewTimelineSelectionHandleStart,
+    ChatDebugViewTimelineSelectionMarker,
+    ChatDebugViewTimelineSelectionMarkerStart,
+  ),
+  name: TimelineSelectionHandleName.Start,
+  role: AriaRoles.None,
+  type: VirtualDomElements.Button,
+}
+
+const endHandle: VirtualDomNode = {
+  childCount: 0,
+  className: mergeClassNames(
+    ChatDebugViewTimelineSelectionHandle,
+    ChatDebugViewTimelineSelectionHandleEnd,
+    ChatDebugViewTimelineSelectionMarker,
+    ChatDebugViewTimelineSelectionMarkerEnd,
+  ),
+  name: TimelineSelectionHandleName.End,
+  role: AriaRoles.None,
+  type: VirtualDomElements.Button,
+}
+
 export const getSelectionNodesDom = (
   hasSelection: boolean,
   selectionStartPercent: number | null,
@@ -27,29 +53,7 @@ export const getSelectionNodesDom = (
       style: `left:${formatPercent(selectionStartPercent)};width:${formatPercent(selectionEndPercent - selectionStartPercent)};`,
       type: VirtualDomElements.Div,
     },
-    {
-      childCount: 0,
-      className: mergeClassNames(
-        ChatDebugViewTimelineSelectionHandle,
-        ChatDebugViewTimelineSelectionHandleStart,
-        ChatDebugViewTimelineSelectionMarker,
-        ChatDebugViewTimelineSelectionMarkerStart,
-      ),
-      name: TimelineSelectionHandleName.Start,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Button,
-    },
-    {
-      childCount: 0,
-      className: mergeClassNames(
-        ChatDebugViewTimelineSelectionHandle,
-        ChatDebugViewTimelineSelectionHandleEnd,
-        ChatDebugViewTimelineSelectionMarker,
-        ChatDebugViewTimelineSelectionMarkerEnd,
-      ),
-      name: TimelineSelectionHandleName.End,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Button,
-    },
+    startHandle,
+    endHandle,
   ]
 }
