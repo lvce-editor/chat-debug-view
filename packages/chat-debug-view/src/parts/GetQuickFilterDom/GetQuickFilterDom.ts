@@ -3,13 +3,15 @@ import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.
 import { ChatDebugViewQuickFilterPill, ChatDebugViewQuickFilterPillSelected } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
+const selectedClassName = mergeClassNames(ChatDebugViewQuickFilterPill, ChatDebugViewQuickFilterPillSelected)
+
 export const getQuickFilterDom = (categoryFilter: CategoryFilter): readonly VirtualDomNode[] => {
   const { isSelected, label, name } = categoryFilter
   return [
     {
       ariaSelected: isSelected,
       childCount: 1,
-      className: mergeClassNames(ChatDebugViewQuickFilterPill, isSelected ? ChatDebugViewQuickFilterPillSelected : ''),
+      className: isSelected ? selectedClassName : ChatDebugViewQuickFilterPill,
       name,
       onClick: DomEventListenerFunctions.HandleEventCategoryFilter,
       role: AriaRoles.Option,
