@@ -30,7 +30,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const rows = Locator('.TableBody .TableRow')
 
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('ai-request')
-  await expect(rows.nth(0)).toContainText('250 ms')
-  await expect(rows.nth(0)).toContainText('200')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('ai-request')
+  await expect(rowsNth0).toContainText('250 ms')
+  await expect(rowsNth0).toContainText('200')
 }

@@ -33,6 +33,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   const rows = Locator('.TableBody .TableRow')
   await expect(rows).toHaveCount(2)
-  await expect(rows.nth(0)).toHaveAttribute('class', 'TableRow TableRowOdd')
-  await expect(rows.nth(1)).toHaveAttribute('class', 'TableRow TableRowEven')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toHaveAttribute('class', 'TableRow TableRowOdd')
+  const rowsNth1 = rows.nth(1)
+  await expect(rowsNth1).toHaveAttribute('class', 'TableRow TableRowEven')
 }

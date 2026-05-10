@@ -31,6 +31,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(lineNumbers).toHaveCount(1)
   await expect(lineContents).toHaveCount(1)
-  await expect(lineContents.nth(0)).toContainText('const answer = 42')
+  const lineContentsNth0 = lineContents.nth(0)
+  await expect(lineContentsNth0).toContainText('const answer = 42')
   await expect(tokenSpans).toHaveCount(3)
 }

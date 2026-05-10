@@ -26,8 +26,10 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const rows = Locator('.TableBody .TableRow')
 
   await expect(rows).toHaveCount(2)
-  await expect(rows.nth(0)).toHaveText('response2000 ms')
-  await expect(rows.nth(1)).toHaveText('request2000 ms')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toHaveText('response2000 ms')
+  const rowsNth1 = rows.nth(1)
+  await expect(rowsNth1).toHaveText('request2000 ms')
 
   await Command.execute('ChatDebug.handleTableHeaderClick', 'type')
 

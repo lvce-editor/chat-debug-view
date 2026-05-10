@@ -35,7 +35,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(refreshButton).toBeVisible()
-  await expect(rows.nth(0)).toContainText('request')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('request')
 
   // act
   await ChatDebug.appendStoredEventForTest(nextEvent)
@@ -43,6 +44,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(rows).toHaveCount(3) // hm?
-  await expect(rows.nth(0)).toContainText('request')
-  await expect(rows.nth(1)).toContainText('response')
+  await expect(rowsNth0).toContainText('request')
+  const rowsNth1 = rows.nth(1)
+  await expect(rowsNth1).toContainText('response')
 }

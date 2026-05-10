@@ -29,6 +29,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const tokenSpans = Locator('.EditorRow span')
 
   await expect(lineContents).toHaveCount(1)
-  await expect(lineContents.nth(0)).toContainText('interface Person { age: number }')
+  const lineContentsNth0 = lineContents.nth(0)
+  await expect(lineContentsNth0).toContainText('interface Person { age: number }')
   await expect(tokenSpans).toHaveCount(4)
 }
