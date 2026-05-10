@@ -1,8 +1,8 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { isAttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
 import { getEventTypeLabel } from '../GetEventTypeLabel/GetEventTypeLabel.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getPreviewEvent } from '../GetPreviewEvent/GetPreviewEvent.ts'
 import { getResponseEvent } from '../GetResponseEvent/GetResponseEvent.ts'
@@ -60,7 +60,7 @@ const getLineCount = (state: ChatDebugViewState): number => {
   if (!selectedEvent) {
     return 0
   }
-  const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
+  const selectedDetailTab = getSelectedDetailTab(state.detailTabs)
   if (selectedDetailTab === InputName.Timing || selectedDetailTab === InputName.Tokens) {
     return 0
   }

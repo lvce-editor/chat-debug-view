@@ -5,7 +5,7 @@ import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getDebugErrorDom } from '../GetDebugErrorDom/GetDebugErrorDom.ts'
@@ -64,7 +64,7 @@ export const getChatDebugViewDom = (
   timelineSelectionAnchorSeconds = '',
   timelineSelectionFocusSeconds = '',
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
-  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  detailTabs: readonly DetailTabType[] = createDetailTabs(),
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
   timelineInfo?: TimelineInfo,
   timelineHoverPercent: number | null = null,

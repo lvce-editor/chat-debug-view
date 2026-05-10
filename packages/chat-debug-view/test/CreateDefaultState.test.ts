@@ -1,6 +1,7 @@
 import { expect, test } from '@jest/globals'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
@@ -14,8 +15,8 @@ test('createDefaultState should return expected defaults', () => {
   }
   expect(state).toBeDefined()
   expect(state.categoryFilters).toEqual(EventCategoryFilter.createCategoryFilters())
-  expect(state.detailTabs).toEqual(DetailTab.createDetailTabs())
-  expect(DetailTab.getSelectedDetailTab(state.detailTabs)).toBe('response')
+  expect(state.detailTabs).toEqual(createDetailTabs())
+  expect(getSelectedDetailTab(state.detailTabs)).toBe('response')
   expect(state.tableColumns).toEqual(TableColumn.createTableColumns())
   expect(state.tableColumnWidths).toEqual({
     duration: 110,

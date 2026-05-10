@@ -3,11 +3,12 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { ChatDebugViewDetails, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
-import * as DetailTab from '../DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
 import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
+import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 
@@ -16,7 +17,7 @@ export const getDetailsDom = (
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
   responseEventNodes: readonly VirtualDomNode[] = payloadEventNodes,
   selectedEvent: ChatViewEvent | null = null,
-  detailTabs: readonly DetailTabType[] = DetailTab.createDetailTabs(),
+  detailTabs: readonly DetailTabType[] = createDetailTabs(),
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
   previewVirtualization?: TextNodeVirtualizationOptions,
@@ -25,7 +26,7 @@ export const getDetailsDom = (
     return []
   }
   const normalizedDetailTabs = getNormalizedDetailTabs(selectedEvent, detailTabs)
-  const safeSelectedDetailTab = DetailTab.getSelectedDetailTab(normalizedDetailTabs)
+  const safeSelectedDetailTab = getSelectedDetailTab(normalizedDetailTabs)
   const selectedDetailTab = normalizedDetailTabs.find((detailTab) => detailTab.name === safeSelectedDetailTab) ?? normalizedDetailTabs[0]
   const contentNodes = getSelectedContentNodes(
     safeSelectedDetailTab,

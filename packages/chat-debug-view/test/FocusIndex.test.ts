@@ -1,7 +1,8 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { focusIndex } from '../src/parts/FocusIndex/FocusIndex.ts'
+import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('focusIndex should keep the same state when there are no visible events', async () => {
@@ -30,7 +31,7 @@ test('focusIndex should select the requested visible event', async () => {
   })
   const state = {
     ...createDefaultState(),
-    detailTabs: DetailTab.createDetailTabs('preview'),
+    detailTabs: createDetailTabs('preview'),
     events: [
       {
         eventId: 1,
@@ -50,7 +51,7 @@ test('focusIndex should select the requested visible event', async () => {
   const result = await focusIndex(state, 1)
 
   expect(result.selectedEventIndex).toBe(1)
-  expect(DetailTab.getSelectedDetailTab(result.detailTabs)).toBe('preview')
+  expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEvent).toEqual({
     detail: 'row-2',
     eventId: 2,

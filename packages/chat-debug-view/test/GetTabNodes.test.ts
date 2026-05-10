@@ -2,11 +2,11 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugViewDetailsTabs } from '../src/parts/ClassNames/ClassNames.ts'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTabNodes } from '../src/parts/GetTabNodes/GetTabNodes.ts'
 
-const detailTabs = DetailTab.createDetailTabs('timing')
+const detailTabs = createDetailTabs('timing')
 const tokenUsageEvent = {
   eventId: 1,
   type: 'ai-response',
@@ -17,7 +17,7 @@ const tokenUsageEvent = {
     },
   },
 } as const
-const tokenDetailTabs = DetailTab.createDetailTabs('tokens', tokenUsageEvent)
+const tokenDetailTabs = createDetailTabs('tokens', tokenUsageEvent)
 
 test('getTabNodes should render detail tabs and mark the selected tab', () => {
   const result = getTabNodes(detailTabs) as readonly {

@@ -1,6 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import * as DetailTab from '../src/parts/DetailTab/DetailTab.ts'
+import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
@@ -10,7 +10,7 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 const tableColumns = TableColumn.createTableColumns()
-const detailTabs = DetailTab.createDetailTabs()
+const detailTabs = createDetailTabs()
 
 afterEach(() => {
   jest.restoreAllMocks()
@@ -89,7 +89,7 @@ test('loadContent should restore the selected event preview from selectedEventId
     getStateWithTimelineInfo({
       ...state,
       categoryFilters: EventCategoryFilter.createCategoryFilters('response'),
-      detailTabs: DetailTab.createDetailTabs('response', selectedEvent),
+      detailTabs: createDetailTabs('response', selectedEvent),
       errorMessage: '',
       events,
       initial: false,
@@ -146,7 +146,7 @@ test('loadContent should restore selected event and detail tab from savedState',
     getStateWithTimelineInfo({
       ...state,
       categoryFilters: EventCategoryFilter.createCategoryFilters('response'),
-      detailTabs: DetailTab.createDetailTabs('preview', selectedEvent),
+      detailTabs: createDetailTabs('preview', selectedEvent),
       errorMessage: '',
       events,
       initial: false,
