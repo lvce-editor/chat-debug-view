@@ -1,5 +1,6 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
+import * as ToPrettyEvents from '../ToPrettyEvents/ToPrettyEvents.ts'
 
 export const listChatViewEvents = async (
   sessionId: string,
@@ -9,7 +10,15 @@ export const listChatViewEvents = async (
   _sessionIdIndexName: string,
 ): Promise<ListChatViewEventsResult> => {
   try {
-    return await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    const rawEvents = await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    if (rawEvents.type === 'error') {
+      return rawEvents
+    }
+    const prettyEvents = ToPrettyEvents.toPrettyEvents(rawEvents)
+    return {
+      events: prettyEvents,
+      type: 'success',
+    }
   } catch (error) {
     return {
       error,

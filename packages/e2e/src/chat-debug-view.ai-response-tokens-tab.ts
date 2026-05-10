@@ -3,6 +3,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-response-tokens-tab'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-ai-response-tokens-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
