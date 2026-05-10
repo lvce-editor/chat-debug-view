@@ -1,6 +1,6 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import type * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
