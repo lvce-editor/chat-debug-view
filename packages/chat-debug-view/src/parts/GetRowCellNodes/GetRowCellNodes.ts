@@ -1,50 +1,21 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { ChatDebugViewCellDuration, ChatDebugViewCellStatusError, TableCell } from '../ClassNames/ClassNames.ts'
-import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
-import { getEventTableMethodLabel } from '../GetEventTableMethodLabel/GetEventTableMethodLabel.ts'
-import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
-import { getStatusText } from '../GetStatusText/GetStatusText.ts'
+import * as GetCellDurationDom from '../GetCellDurationDom/GetCellDurationDom.ts'
+import * as GetCellMethodDom from '../GetCellMethodDom/GetCellMethodDom.ts'
+import * as GetCellStatusDom from '../GetCellStatusDom/GetCellStatusDom.ts'
+import * as GetCellTypeDom from '../GetCellTypeDom/GetCellTypeDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const getTableCellDom = (column: TableColumn.TableColumnName, event: ChatViewEvent, isErrorStatus: boolean): readonly VirtualDomNode[] => {
   switch (column) {
     case TableColumn.Duration:
-      return [
-        {
-          childCount: 1,
-          className: mergeClassNames(TableCell, ChatDebugViewCellDuration),
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableDurationText(event)),
-      ]
+      return GetCellDurationDom.getCellDurationDom(event)
     case TableColumn.Method:
-      return [
-        {
-          childCount: 1,
-          className: TableCell,
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableMethodLabel(event)),
-      ]
+      return GetCellMethodDom.getCellMethodDom(event)
     case TableColumn.Status:
-      return [
-        {
-          childCount: 1,
-          className: mergeClassNames(TableCell, isErrorStatus ? ChatDebugViewCellStatusError : ''),
-          type: VirtualDomElements.Td,
-        },
-        text(getStatusText(event)),
-      ]
+      return GetCellStatusDom.getCellStatusDom(event, isErrorStatus)
     case TableColumn.Type:
-      return [
-        {
-          childCount: 1,
-          className: TableCell,
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableTypeLabel(event)),
-      ]
+      return GetCellTypeDom.getCellTypeDom(event)
     default:
       return []
   }
