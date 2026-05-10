@@ -30,6 +30,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   await expect(rows).toHaveCount(1)
-  await expect(rows.nth(0)).toContainText('tool-execution, getWorkspaceUri')
-  await expect(rows.nth(0)).toContainText('400')
+  const rowsNth0 = rows.nth(0)
+  await expect(rowsNth0).toContainText('tool-execution, getWorkspaceUri')
+  await expect(rowsNth0).toContainText('400')
 }
