@@ -5,5 +5,11 @@ const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
 }
 
 export const hasHeadersDetails = (event: ChatViewEvent): boolean => {
+  const { requestEvent } = event as {
+    readonly requestEvent?: unknown
+  }
+  if (event.type === 'ai-request-finished' && isHeadersRecord(requestEvent) && isHeadersRecord(requestEvent.headers)) {
+    return true
+  }
   return event.type === 'ai-request' && isHeadersRecord(event.headers)
 }

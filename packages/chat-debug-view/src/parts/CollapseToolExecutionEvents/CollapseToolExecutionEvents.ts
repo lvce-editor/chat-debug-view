@@ -1,12 +1,36 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { handleSubmitEventType, sseResponseCompletedEventType } from '../EventTypes/EventTypes.ts'
+import { aiRequestFinishedEventType, handleSubmitEventType, sseResponseCompletedEventType } from '../EventTypes/EventTypes.ts'
 import { isMatchingToolExecutionPair } from '../IsMatchingToolExecutionPair/IsMatchingToolExecutionPair.ts'
 import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/IsToolExecutionFinishedEvent.ts'
 import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
 import { mergeToolExecutionEvents } from '../MergeToolExecutionEvents/MergeToolExecutionEvents.ts'
+import { toTimeNumber } from '../ToTimeNumber/ToTimeNumber.ts'
 
 const requestEventTypes = new Set(['request', 'ai-request'])
 const responseEventTypes = new Set(['response', 'ai-response-success'])
+
+const getRequestValue = (event: ChatViewEvent): unknown => {
+  if (event.body !== undefined) {
+    return event.body
+  }
+  if (event.value !== undefined) {
+    return event.value
+  }
+  if (event.arguments !== undefined) {
+    return event.arguments
+  }
+  return event
+}
+
+const getResponseValue = (event: ChatViewEvent): unknown => {
+  if (event.value !== undefined) {
+    return event.value
+  }
+  if (event.response !== undefined) {
+    return event.response
+  }
+  return event
+}
 
 const getPairId = (event: ChatViewEvent): string | number | undefined => {
   const {
@@ -63,6 +87,23 @@ const getPairId = (event: ChatViewEvent): string | number | undefined => {
 }
 
 const mergeRequestResponseEvents = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): ChatViewEvent => {
+  if (startedEvent.type === 'ai-request' && finishedEvent.type === 'ai-response-success') {
+    const mergedEvent = mergeToolExecutionEvents(startedEvent, finishedEvent, aiRequestFinishedEventType)
+    const startTimestamp = mergedEvent.started
+    const endTimestamp = mergedEvent.ended
+    const startTime = toTimeNumber(startTimestamp)
+    const endTime = toTimeNumber(endTimestamp)
+    return {
+      ...mergedEvent,
+      ...(startTimestamp === undefined ? {} : { startTimestamp }),
+      ...(endTimestamp === undefined ? {} : { endTimestamp }),
+      ...(startTime === undefined || endTime === undefined ? {} : { duration: Math.max(0, endTime - startTime) }),
+      requestEvent: startedEvent,
+      requestValue: getRequestValue(startedEvent),
+      responseEvent: finishedEvent,
+      responseValue: getResponseValue(finishedEvent),
+    }
+  }
   return {
     ...mergeToolExecutionEvents(startedEvent, finishedEvent, startedEvent.type),
     requestEvent: startedEvent,
@@ -70,7 +111,25 @@ const mergeRequestResponseEvents = (startedEvent: ChatViewEvent, finishedEvent: 
   }
 }
 
+const isMatchingAiRequestResponsePair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
+  if (startedEvent.type !== 'ai-request' || finishedEvent.type !== 'ai-response-success') {
+    return false
+  }
+  if (startedEvent.sessionId !== finishedEvent.sessionId) {
+    return false
+  }
+  const startedPairId = getPairId(startedEvent)
+  const finishedPairId = getPairId(finishedEvent)
+  if (startedPairId !== undefined && finishedPairId !== undefined) {
+    return startedPairId === finishedPairId
+  }
+  return true
+}
+
 const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
+  if (isMatchingAiRequestResponsePair(startedEvent, finishedEvent)) {
+    return true
+  }
   if (!requestEventTypes.has(startedEvent.type) || !responseEventTypes.has(finishedEvent.type)) {
     return false
   }
@@ -82,7 +141,7 @@ const isMatchingRequestResponsePair = (startedEvent: ChatViewEvent, finishedEven
   if (startedPairId !== undefined && finishedPairId !== undefined) {
     return startedPairId === finishedPairId
   }
-  return startedEvent.type === 'ai-request' && finishedEvent.type === 'ai-response-success'
+  return false
 }
 
 const isMatchingHandleSubmitPair = (startedEvent: ChatViewEvent, finishedEvent: ChatViewEvent): boolean => {
@@ -110,6 +169,21 @@ export const collapseToolExecutionEvents = (events: readonly ChatViewEvent[]): r
     }
     if (nextEvent && isMatchingHandleSubmitPair(event, nextEvent)) {
       collapsedEvents.push(mergeToolExecutionEvents(event, nextEvent, handleSubmitEventType))
+      i++
+      continue
+    }
+    collapsedEvents.push(event)
+  }
+  return collapsedEvents
+}
+
+export const collapseAiRequestResponseEvents = (events: readonly ChatViewEvent[]): readonly ChatViewEvent[] => {
+  const collapsedEvents: ChatViewEvent[] = []
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i]
+    const nextEvent = events[i + 1]
+    if (nextEvent && isMatchingAiRequestResponsePair(event, nextEvent)) {
+      collapsedEvents.push(mergeRequestResponseEvents(event, nextEvent))
       i++
       continue
     }

@@ -18,7 +18,10 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
       type: 'ai-request',
     },
     responseEvent,
-    type: 'ai-request',
+    responseValue: {
+      id: 'resp_1',
+    },
+    type: 'ai-request-finished',
   }
 
   expect(getResponseEvent(event)).toEqual({

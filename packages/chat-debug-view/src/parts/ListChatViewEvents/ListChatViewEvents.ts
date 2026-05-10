@@ -1,5 +1,6 @@
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
+import { collapseAiRequestResponseEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 
 export const listChatViewEvents = async (
   sessionId: string,
@@ -9,7 +10,14 @@ export const listChatViewEvents = async (
   _sessionIdIndexName: string,
 ): Promise<ListChatViewEventsResult> => {
   try {
-    return await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    const result = await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    if (result.type !== 'success') {
+      return result
+    }
+    return {
+      ...result,
+      events: collapseAiRequestResponseEvents(result.events),
+    }
   } catch (error) {
     return {
       error,

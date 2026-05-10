@@ -42,3 +42,103 @@ test('listChatViewEvents should return error when chat storage worker loading fa
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
+
+test('listChatViewEvents should merge matching stored ai request and ai response events', async () => {
+  const requestEvent = {
+    body: {
+      input: [{ role: 'user', text: 'hello' }],
+    },
+    eventId: 11,
+    headers: {
+      authorization: 'Bearer test',
+    },
+    requestId: 'request-11',
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'ai-request',
+  }
+  const responseEvent = {
+    eventId: 12,
+    requestId: 'request-11',
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.250Z',
+    type: 'ai-response-success',
+    value: {
+      id: 'resp_11',
+      output: [
+        {
+          content: [
+            {
+              text: 'done',
+              type: 'output_text',
+            },
+          ],
+        },
+      ],
+    },
+  }
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events: [requestEvent, responseEvent],
+      type: 'success' as const,
+    }),
+  })
+
+  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+
+  expect(result).toEqual({
+    events: [
+      {
+        body: {
+          input: [{ role: 'user', text: 'hello' }],
+        },
+        duration: 250,
+        endTimestamp: '2026-03-08T00:00:00.250Z',
+        eventId: 11,
+        headers: {
+          authorization: 'Bearer test',
+        },
+        requestEvent,
+        requestId: 'request-11',
+        requestValue: {
+          input: [{ role: 'user', text: 'hello' }],
+        },
+        responseEvent,
+        responseValue: {
+          id: 'resp_11',
+          output: [
+            {
+              content: [
+                {
+                  text: 'done',
+                  type: 'output_text',
+                },
+              ],
+            },
+          ],
+        },
+        sessionId: 'session-1',
+        startTimestamp: '2026-03-08T00:00:00.000Z',
+        started: '2026-03-08T00:00:00.000Z',
+        timestamp: '2026-03-08T00:00:00.250Z',
+        type: 'ai-request-finished',
+        value: {
+          id: 'resp_11',
+          output: [
+            {
+              content: [
+                {
+                  text: 'done',
+                  type: 'output_text',
+                },
+              ],
+            },
+          ],
+        },
+        ended: '2026-03-08T00:00:00.250Z',
+      },
+    ],
+    type: 'success',
+  })
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
+})

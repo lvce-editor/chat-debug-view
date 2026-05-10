@@ -4,6 +4,12 @@ import { hasOwn } from '../HasOwn/HasOwn.ts'
 import { shouldIncludeArguments } from '../ShouldIncludeArguments/ShouldIncludeArguments.ts'
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
+  const { requestValue } = event as {
+    readonly requestValue?: unknown
+  }
+  if (requestValue !== undefined) {
+    return requestValue
+  }
   const { requestEvent } = event as {
     readonly requestEvent?: unknown
   }

@@ -5,6 +5,7 @@ export const isNetworkEvent = (event: ChatViewEvent): boolean => {
   return (
     normalizedType === 'request' ||
     normalizedType === 'ai-request' ||
+    normalizedType === 'ai-request-finished' ||
     normalizedType === 'response' ||
     normalizedType === 'ai-response-success' ||
     normalizedType === 'handle-response' ||

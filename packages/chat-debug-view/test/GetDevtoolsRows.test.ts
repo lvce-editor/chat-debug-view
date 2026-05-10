@@ -290,9 +290,16 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
 test('getDevtoolsRows should render merged ai request duration from timestamps', () => {
   const events = [
     {
+      duration: 250,
       ended: '2026-04-19T12:00:00.250Z',
       eventId: 1,
+      requestValue: {
+        input: ['1+1'],
+      },
       requestEvent: {
+        body: {
+          input: ['1+1'],
+        },
         eventId: 1,
         requestId: 'request-1',
         timestamp: '2026-04-19T12:00:00.000Z',
@@ -305,10 +312,14 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
         timestamp: '2026-04-19T12:00:00.250Z',
         type: 'ai-response-success',
       },
+      responseValue: {
+        id: 'resp_1',
+      },
       sessionId: 'session-1',
+      startTimestamp: '2026-04-19T12:00:00.000Z',
       started: '2026-04-19T12:00:00.000Z',
       timestamp: '2026-04-19T12:00:00.250Z',
-      type: 'ai-request',
+      type: 'ai-request-finished',
     },
   ]
 
@@ -326,7 +337,7 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('ai-request'),
+    text('ai-request-finished'),
     {
       childCount: 1,
       className: 'TableCell',

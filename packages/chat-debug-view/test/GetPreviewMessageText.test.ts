@@ -89,3 +89,24 @@ test('getPreviewMessageText should return the direct response content text for s
 
   expect(result).toBe('direct content text')
 })
+
+test('getPreviewMessageText should return the first response output text for ai-request-finished events', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    eventId: 1,
+    responseValue: {
+      output: [
+        {
+          content: [
+            {
+              text: 'merged response preview',
+              type: 'output_text',
+            },
+          ],
+        },
+      ],
+    },
+    type: 'ai-request-finished',
+  })
+
+  expect(result).toBe('merged response preview')
+})

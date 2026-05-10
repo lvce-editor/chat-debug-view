@@ -40,6 +40,9 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
     ended: '2026-04-19T12:00:00.250Z',
     eventId: 1,
     requestEvent,
+    requestValue: {
+      input: ['1+1'],
+    },
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
@@ -49,7 +52,7 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
       },
     },
     started: '2026-04-19T12:00:00.000Z',
-    type: 'ai-request',
+    type: 'ai-request-finished',
   }
 
   const result = GetPayloadEvent.getPayloadEvent(event)

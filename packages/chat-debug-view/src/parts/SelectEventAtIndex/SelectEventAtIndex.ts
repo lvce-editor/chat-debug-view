@@ -17,6 +17,18 @@ export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
 
 export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => getSharedCurrentEvents(state)
 
+const getSelectedEventDetailsType = (selectedEvent: ChatViewEvent): string => {
+  if (selectedEvent.type === 'ai-request-finished') {
+    const { requestEvent } = selectedEvent as {
+      readonly requestEvent?: unknown
+    }
+    if (requestEvent && typeof requestEvent === 'object' && typeof (requestEvent as ChatViewEvent).type === 'string') {
+      return (requestEvent as ChatViewEvent).type
+    }
+  }
+  return selectedEvent.type
+}
+
 export const selectEventAtIndex = async (
   state: ChatDebugViewState,
   selectedEventIndex: number,
@@ -48,7 +60,7 @@ export const selectEventAtIndex = async (
     state.sessionId,
     state.sessionIdIndexName,
     selectedEvent.eventId,
-    selectedEvent.type,
+    getSelectedEventDetailsType(selectedEvent),
   )
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({

@@ -154,3 +154,101 @@ test('renderItems should assign numeric eventId values when they are missing', (
   expect(dom.some((node) => node.text === '1')).toBe(true)
   expect(dom.some((node) => node.text === '2')).toBe(true)
 })
+
+test('renderItems should support ai-request-finished events in devtools layout', () => {
+  const oldState: ChatDebugViewState = createDefaultState()
+  const mergedEvent = {
+    duration: 250,
+    endTimestamp: '2026-03-08T00:00:00.250Z',
+    ended: '2026-03-08T00:00:00.250Z',
+    eventId: 1,
+    requestEvent: {
+      body: {
+        input: [
+          {
+            content: 'hello from e2e',
+            role: 'user',
+          },
+        ],
+        model: 'gpt-5.4',
+      },
+      eventId: 1,
+      headers: {
+        'content-type': 'application/json',
+      },
+      requestId: 'request-1',
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'ai-request',
+    },
+    requestId: 'request-1',
+    requestValue: {
+      input: [
+        {
+          content: 'hello from e2e',
+          role: 'user',
+        },
+      ],
+      model: 'gpt-5.4',
+    },
+    responseEvent: {
+      eventId: 2,
+      requestId: 'request-1',
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.250Z',
+      type: 'ai-response-success',
+      value: {
+        id: 'resp_1',
+        output: [
+          {
+            content: [
+              {
+                text: 'hello from merged response',
+                type: 'output_text',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    responseValue: {
+      id: 'resp_1',
+      output: [
+        {
+          content: [
+            {
+              text: 'hello from merged response',
+              type: 'output_text',
+            },
+          ],
+        },
+      ],
+    },
+    sessionId: 'session-1',
+    startTimestamp: '2026-03-08T00:00:00.000Z',
+    started: '2026-03-08T00:00:00.000Z',
+    timestamp: '2026-03-08T00:00:00.250Z',
+    type: 'ai-request-finished',
+  }
+  const newState: ChatDebugViewState = getStateWithTimelineInfo({
+    ...createDefaultState(),
+    detailTabs: [
+      { isSelected: false, label: 'Preview', name: 'preview' },
+      { isSelected: false, label: 'Payload', name: 'payload' },
+      { isSelected: true, label: 'Response', name: 'response' },
+    ],
+    events: [mergedEvent],
+    selectedEvent: mergedEvent,
+    selectedEventId: 1,
+    selectedEventIndex: 0,
+    sessionId: 'session-1',
+    uid: 6,
+    useDevtoolsLayout: true,
+  })
+
+  const result = RenderItems.renderItems(oldState, newState)
+
+  expect(result[0]).toBe(ViewletCommand.SetDom2)
+  expect(result[1]).toBe(6)
+  expect(Array.isArray(result[2])).toBe(true)
+})

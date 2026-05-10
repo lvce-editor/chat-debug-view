@@ -111,7 +111,7 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     },
     sessionId: 'session-1',
     started: '2026-04-19T12:00:00.000Z',
-    type: 'ai-request',
+    type: 'ai-request-finished',
   }
   const state = {
     ...createDefaultState(),
@@ -143,4 +143,5 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     }),
   )
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'ai-request')
 })

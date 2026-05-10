@@ -143,6 +143,9 @@ test('getFilteredEvents should show only network events for network category fil
 
 test('getFilteredEvents should include merged ai request response events for network category filter', () => {
   const requestEvent = {
+    body: {
+      input: ['1+1'],
+    },
     eventId: 7,
     requestId: 'request-7',
     sessionId: 'session-1',
@@ -164,18 +167,30 @@ test('getFilteredEvents should include merged ai request response events for net
 
   expect(result).toEqual([
     {
+      body: {
+        input: ['1+1'],
+      },
+      duration: 1250,
       ended: '2026-01-01T10:04:01.250Z',
+      endTimestamp: '2026-01-01T10:04:01.250Z',
       eventId: 7,
       requestEvent,
       requestId: 'request-7',
+      requestValue: {
+        input: ['1+1'],
+      },
       response: {
         id: 'resp_7',
       },
       responseEvent,
+      responseValue: {
+        id: 'resp_7',
+      },
       sessionId: 'session-1',
+      startTimestamp: '2026-01-01T10:04:00.000Z',
       started: '2026-01-01T10:04:00.000Z',
       timestamp: '2026-01-01T10:04:01.250Z',
-      type: 'ai-request',
+      type: 'ai-request-finished',
     },
   ])
 })
@@ -194,6 +209,9 @@ test('getFilteredEvents should show events from multiple selected category filte
 
 test('getFilteredEvents should collapse matching ai-request and ai-response-success events', () => {
   const requestEvent = {
+    body: {
+      input: ['1+1'],
+    },
     eventId: 7,
     requestId: 'request-7',
     sessionId: 'session-1',
@@ -215,18 +233,30 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
 
   expect(result).toEqual([
     {
+      body: {
+        input: ['1+1'],
+      },
+      duration: 1250,
       ended: '2026-01-01T10:04:01.250Z',
+      endTimestamp: '2026-01-01T10:04:01.250Z',
       eventId: 7,
       requestEvent,
       requestId: 'request-7',
+      requestValue: {
+        input: ['1+1'],
+      },
       response: {
         id: 'resp_7',
       },
       responseEvent,
+      responseValue: {
+        id: 'resp_7',
+      },
       sessionId: 'session-1',
+      startTimestamp: '2026-01-01T10:04:00.000Z',
       started: '2026-01-01T10:04:00.000Z',
       timestamp: '2026-01-01T10:04:01.250Z',
-      type: 'ai-request',
+      type: 'ai-request-finished',
     },
   ])
 })

@@ -167,6 +167,9 @@ test('collapseToolExecutionEvents should merge matching request and response eve
 
 test('collapseToolExecutionEvents should merge matching ai-request and ai-response-success events', () => {
   const startedEvent: ChatViewEvent = {
+    body: {
+      input: ['1+1'],
+    },
     eventId: 11,
     requestId: 'request-11',
     sessionId: 'session-1',
@@ -188,18 +191,30 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
 
   expect(result).toEqual([
     {
+      body: {
+        input: ['1+1'],
+      },
+      duration: 4,
       ended: '2026-04-19T12:00:00.004Z',
+      endTimestamp: '2026-04-19T12:00:00.004Z',
       eventId: 11,
       requestEvent: startedEvent,
       requestId: 'request-11',
+      requestValue: {
+        input: ['1+1'],
+      },
       response: {
         id: 'resp_11',
       },
       responseEvent: finishedEvent,
+      responseValue: {
+        id: 'resp_11',
+      },
       sessionId: 'session-1',
+      startTimestamp: '2026-04-19T12:00:00.000Z',
       started: '2026-04-19T12:00:00.000Z',
       timestamp: '2026-04-19T12:00:00.004Z',
-      type: 'ai-request',
+      type: 'ai-request-finished',
     },
   ])
 })
