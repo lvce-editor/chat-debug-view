@@ -5,6 +5,10 @@ export const copy = (): string => {
   return I18nString.i18nString(UiStrings.Copy)
 }
 
+export const openInNewTab = (): string => {
+  return I18nString.i18nString(UiStrings.OpenInNewTab)
+}
+
 export const cachedTokens = (): string => {
   return I18nString.i18nString(UiStrings.CachedTokens)
 }
