@@ -1,3 +1,4 @@
+import { clamp } from '../Clamp/Clamp.ts'
 import { parseTimelineSeconds } from '../ParseTimelineSeconds/ParseTimelineSeconds.ts'
 import { roundSeconds } from '../RoundSeconds/RoundSeconds.ts'
 
@@ -19,8 +20,10 @@ export const getNormalizedRange = (durationSeconds: number, startValue: string, 
   }
   const rawStart = parsedStart ?? 0
   const rawEnd = parsedEnd ?? durationSeconds
-  const normalizedStart = Math.max(0, Math.min(durationSeconds, Math.min(rawStart, rawEnd)))
-  const normalizedEnd = Math.max(0, Math.min(durationSeconds, Math.max(rawStart, rawEnd)))
+  const rangeStart = Math.min(rawStart, rawEnd)
+  const rangeEnd = Math.max(rawStart, rawEnd)
+  const normalizedStart = clamp(rangeStart, 0, durationSeconds)
+  const normalizedEnd = clamp(rangeEnd, 0, durationSeconds)
   return {
     endSeconds: roundSeconds(normalizedEnd),
     hasSelection: true,
