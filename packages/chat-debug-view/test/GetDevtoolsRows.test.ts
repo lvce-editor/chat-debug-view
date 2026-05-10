@@ -4,7 +4,7 @@ import type { DevtoolsRow } from '../src/parts/DevtoolsRow/DevtoolsRow.ts'
 import * as GetDevtoolsRows from '../src/parts/GetDevtoolsRows/GetDevtoolsRows.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
-const createRow = (event: Record<string, unknown>, index = 0, overrides: Partial<DevtoolsRow> = {}): DevtoolsRow => {
+const createRow = (event: Readonly<Record<string, unknown>>, index = 0, overrides: Readonly<Partial<DevtoolsRow>> = {}): DevtoolsRow => {
   return {
     event: event as DevtoolsRow['event'],
     index,
