@@ -2,15 +2,13 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
-import { ChatDebugViewDetails, ChatDebugViewDetailsTop } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewDetails } from '../ClassNames/ClassNames.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
-import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalizedDetailTabs.ts'
+import { getDetailsTopVirtualDom } from '../GetDetailsTopVirtualDom/GetDetailsTopVirtualDom.ts'
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
-import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
@@ -45,14 +43,7 @@ export const getDetailsDom = (
       className: ChatDebugViewDetails,
       type: VirtualDomElements.Section,
     },
-    {
-      childCount: 2,
-      className: ChatDebugViewDetailsTop,
-      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
-      type: VirtualDomElements.Div,
-    },
-    ...getDetailsCloseButtonDom(),
-    ...getTabNodes(normalizedDetailTabs),
+    ...getDetailsTopVirtualDom(normalizedDetailTabs),
     ...getDetailContentDom(selectedDetailTab, safeSelectedDetailTab, contentNodes),
   ]
 }
