@@ -1,7 +1,19 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { DevtoolsRow } from '../src/parts/DevtoolsRow/DevtoolsRow.ts'
 import * as GetDevtoolsRows from '../src/parts/GetDevtoolsRows/GetDevtoolsRows.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+
+const createRow = (event: Record<string, unknown>, index = 0, overrides: Partial<DevtoolsRow> = {}): DevtoolsRow => {
+  return {
+    event: event as DevtoolsRow['event'],
+    index,
+    isErrorStatus: false,
+    isEven: index % 2 === 1,
+    isSelected: false,
+    ...overrides,
+  }
+}
 
 test('getDevtoolsRows should render tool execution labels with the tool name', () => {
   const events = [
@@ -14,7 +26,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0])])
 
   expect(result).toEqual([
     {
@@ -64,7 +76,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0])])
 
   expect(result).toEqual([
     {
@@ -116,7 +128,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0], 0, { isErrorStatus: true })])
 
   expect(result).toEqual([
     {
@@ -169,7 +181,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0], 0, { isErrorStatus: true })])
 
   expect(result).toEqual([
     {
@@ -221,7 +233,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0]), createRow(events[1], 1)])
 
   expect(result).toEqual([
     {
@@ -312,7 +324,7 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null)
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0])])
 
   expect(result).toEqual([
     {
@@ -360,7 +372,7 @@ test('getDevtoolsRows should omit hidden columns', () => {
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, null, [TableColumn.Type, TableColumn.Status])
+  const result = GetDevtoolsRows.getDevtoolsRows([createRow(events[0])], [TableColumn.Type, TableColumn.Status])
 
   expect(result).toEqual([
     {
@@ -400,7 +412,10 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
     },
   ]
 
-  const result = GetDevtoolsRows.getDevtoolsRows(events, 3, TableColumn.defaultVisibleTableColumns, 2)
+  const result = GetDevtoolsRows.getDevtoolsRows(
+    [createRow(events[0], 2), createRow(events[1], 3, { isEven: true, isSelected: true })],
+    TableColumn.defaultVisibleTableColumns,
+  )
 
   expect(result).toEqual([
     {

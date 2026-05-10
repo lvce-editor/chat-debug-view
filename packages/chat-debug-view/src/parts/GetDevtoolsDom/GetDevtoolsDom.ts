@@ -4,6 +4,7 @@ import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
+import { createDevtoolsRows } from '../CreateDevtoolsRows/CreateDevtoolsRows.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailsDom } from '../GetDetailsDom/GetDetailsDom.ts'
 import { getDevtoolsRows } from '../GetDevtoolsRows/GetDevtoolsRows.ts'
@@ -49,7 +50,8 @@ export const getDevtoolsDom = (
   maxLineY = events.length,
 ): readonly VirtualDomNode[] => {
   const visibleEvents = events.slice(minLineY, maxLineY)
-  const rowNodes = getDevtoolsRows(visibleEvents, selectedEventIndex, visibleTableColumns, minLineY)
+  const rows = createDevtoolsRows(visibleEvents, selectedEventIndex, minLineY)
+  const rowNodes = getDevtoolsRows(rows, visibleTableColumns)
   const effectiveRange = getEffectiveTimelineRange(
     timelineStartSeconds,
     timelineEndSeconds,
