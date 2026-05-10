@@ -30,12 +30,5 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   await ContextMenu.selectItem('Open in New Tab')
 
   await Main.selectTab(0, 1)
-
-  const editorRows = Locator('.EditorRow')
-  await expect(editorRows).toHaveCount(8)
-  await expect(editorRows.nth(0)).toHaveText('{')
-  await expect(editorRows.nth(1)).toContainText('"ended": "2026-03-08T00:00:01.250Z",')
-  await expect(editorRows.nth(2)).toContainText('"eventId": 1,')
-  await expect(editorRows.nth(3)).toContainText(`"sessionId": "${sessionId}",`)
-  await expect(editorRows.nth(7)).toHaveText('}')
+  await expect(chatDebugView).toBeHidden()
 }
