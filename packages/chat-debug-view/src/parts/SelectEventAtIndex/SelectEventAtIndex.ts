@@ -22,7 +22,8 @@ export const selectEventAtIndex = async (
   selectedEventIndex: number,
   dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
 ): Promise<ChatDebugViewState> => {
-  const selectedDetailTab = DetailTab.getSelectedDetailTab(state.detailTabs)
+  const { databaseName, dataBaseVersion, detailTabs, eventStoreName, sessionId, sessionIdIndexName } = state
+  const selectedDetailTab = DetailTab.getSelectedDetailTab(detailTabs)
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
   if (!selectedEvent) {
@@ -42,11 +43,11 @@ export const selectEventAtIndex = async (
     }
   }
   const selectedEventDetails = await dependencies.loadSelectedEvent(
-    state.databaseName,
-    state.dataBaseVersion,
-    state.eventStoreName,
-    state.sessionId,
-    state.sessionIdIndexName,
+    databaseName,
+    dataBaseVersion,
+    eventStoreName,
+    sessionId,
+    sessionIdIndexName,
     selectedEvent.eventId,
     selectedEvent.type,
   )
