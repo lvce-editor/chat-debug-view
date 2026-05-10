@@ -8,20 +8,14 @@ import { mergeSelectedEventDetails } from '../MergeSelectedEventDetails/MergeSel
 import { withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
-export interface SelectEventAtIndexDependencies {
-  readonly loadSelectedEvent: typeof LoadSelectedEvent.loadSelectedEvent
-}
-
-export const selectEventAtIndexDependencies: SelectEventAtIndexDependencies = {
-  loadSelectedEvent: LoadSelectedEvent.loadSelectedEvent,
-}
+type LoadSelectedEventFn = typeof LoadSelectedEvent.loadSelectedEvent
 
 export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => getSharedCurrentEvents(state)
 
 export const selectEventAtIndex = async (
   state: ChatDebugViewState,
   selectedEventIndex: number,
-  dependencies: SelectEventAtIndexDependencies = selectEventAtIndexDependencies,
+  loadSelectedEvent: LoadSelectedEventFn = LoadSelectedEvent.loadSelectedEvent,
 ): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, detailTabs, eventStoreName, sessionId, sessionIdIndexName } = state
   const selectedDetailTab = getSelectedDetailTab(detailTabs)
@@ -43,7 +37,7 @@ export const selectEventAtIndex = async (
       selectedEventIndex,
     }
   }
-  const selectedEventDetails = await dependencies.loadSelectedEvent(
+  const selectedEventDetails = await loadSelectedEvent(
     databaseName,
     dataBaseVersion,
     eventStoreName,

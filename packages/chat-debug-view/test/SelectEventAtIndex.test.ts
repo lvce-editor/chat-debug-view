@@ -19,9 +19,7 @@ test('selectEventAtIndex should clear the selected event when the index is out o
     ],
   }
 
-  const result = await selectEventAtIndex(state, 3, {
-    loadSelectedEvent,
-  })
+  const result = await selectEventAtIndex(state, 3, loadSelectedEvent)
 
   expect(result).toEqual({
     ...state,
@@ -44,9 +42,7 @@ test('selectEventAtIndex should keep the event selected when it has no numeric e
     events: [invalidEvent],
   }
 
-  const result = await selectEventAtIndex(state, 0, {
-    loadSelectedEvent,
-  })
+  const result = await selectEventAtIndex(state, 0, loadSelectedEvent)
 
   expect(result).toEqual({
     ...state,
@@ -92,9 +88,7 @@ test('selectEventAtIndex should preserve merged ai request and response details'
     sessionId: 'session-1',
   }
 
-  const result = await selectEventAtIndex(state, 0, {
-    loadSelectedEvent,
-  })
+  const result = await selectEventAtIndex(state, 0, loadSelectedEvent)
 
   expect(result.selectedEvent).toEqual(
     expect.objectContaining({
