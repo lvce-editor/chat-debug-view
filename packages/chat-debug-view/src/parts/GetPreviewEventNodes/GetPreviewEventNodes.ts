@@ -11,6 +11,18 @@ import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMe
 import * as UiStrings from '../UiStrings/UiStrings.ts'
 import { isWriteFilePreview } from '../WriteFilePreview/WriteFilePreview.ts'
 
+const getTextEvent = (
+  previewEvent: string,
+  selectedEvent?: ChatViewEvent | null,
+  previewTextCursor?: PreviewTextCursor | null,
+  virtualization?: TextNodeVirtualizationOptions,
+): readonly VirtualDomNode[] => {
+  const isInvalidImageMessage = previewEvent === UiStrings.ImageCouldNotBeLoaded
+  const isChatMessageUpdatedPreview = !!selectedEvent && isChatMessageUpdatedEvent(selectedEvent)
+  const showLineNumbers = !isInvalidImageMessage && !isChatMessageUpdatedPreview
+  return getTextNode(previewEvent, showLineNumbers, showLineNumbers ? (previewTextCursor ?? null) : null, undefined, virtualization)
+}
+
 export const getPreviewEventNodes = (
   previewEvent: unknown,
   selectedEvent?: ChatViewEvent | null,
@@ -18,10 +30,7 @@ export const getPreviewEventNodes = (
   virtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
   if (typeof previewEvent === 'string') {
-    const isInvalidImageMessage = previewEvent === UiStrings.ImageCouldNotBeLoaded
-    const isChatMessageUpdatedPreview = !!selectedEvent && isChatMessageUpdatedEvent(selectedEvent)
-    const showLineNumbers = !isInvalidImageMessage && !isChatMessageUpdatedPreview
-    return getTextNode(previewEvent, showLineNumbers, showLineNumbers ? (previewTextCursor ?? null) : null, undefined, virtualization)
+    return getTextEvent(previewEvent, selectedEvent, previewTextCursor, virtualization)
   }
   if (isWriteFilePreview(previewEvent)) {
     const language = getLanguageFromFileExtension(previewEvent.uri)
