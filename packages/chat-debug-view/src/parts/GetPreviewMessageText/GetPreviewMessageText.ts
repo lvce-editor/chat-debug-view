@@ -44,9 +44,7 @@ const getResponseOutputFromSseValue = (value: unknown): readonly unknown[] | und
 
 const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
   if (event.type === 'ai-request-finished') {
-    return getResponseOutputFromResponseValue(
-      (event as { readonly responseValue?: unknown }).responseValue,
-    )
+    return getResponseOutputFromResponseValue((event as { readonly responseValue?: unknown }).responseValue)
   }
   if (event.type === 'sse-response-completed') {
     return getResponseOutputFromSseValue(event.value)

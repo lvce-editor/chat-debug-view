@@ -93,6 +93,7 @@ test('listChatViewEvents should merge matching stored ai request and ai response
           input: [{ role: 'user', text: 'hello' }],
         },
         duration: 250,
+        ended: '2026-03-08T00:00:00.250Z',
         endTimestamp: '2026-03-08T00:00:00.250Z',
         eventId: 11,
         headers: {
@@ -122,7 +123,6 @@ test('listChatViewEvents should merge matching stored ai request and ai response
         startTimestamp: '2026-03-08T00:00:00.000Z',
         timestamp: '2026-03-08T00:00:00.250Z',
         type: 'ai-request-finished',
-        ended: '2026-03-08T00:00:00.250Z',
         value: {
           id: 'resp_11',
           output: [
