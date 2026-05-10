@@ -1,9 +1,9 @@
+import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getPreviewTextBodyY } from '../PreviewTextBodyY/PreviewTextBodyY.ts'
 import { getPreviewTextViewportHeight, getPreviewVirtualizationState, setPreviewTextDeltaY } from '../PreviewVirtualization/PreviewVirtualization.ts'
-import { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const handlePreviewTextScrollBarPointerMove = (state: ChatDebugViewState, eventY: number): ChatDebugViewState => {
-  const { selectedEvent, previewTextScrollBarPointerActive, previewTextDeltaY, previewTextScrollBarHandleOffset } = state
+  const { previewTextDeltaY, previewTextScrollBarHandleOffset, previewTextScrollBarPointerActive, selectedEvent } = state
   if (!previewTextScrollBarPointerActive) {
     return state
   }
