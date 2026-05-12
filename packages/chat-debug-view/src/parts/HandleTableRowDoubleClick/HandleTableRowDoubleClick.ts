@@ -1,6 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { getResponseData } from '../GetResponseEvent/GetResponseEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getResponseData } from '../GetResponseEvent/GetResponseEvent.ts'
 import { getTableBodyEventIndex } from '../GetTableBodyEventIndex/GetTableBodyEventIndex.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 
