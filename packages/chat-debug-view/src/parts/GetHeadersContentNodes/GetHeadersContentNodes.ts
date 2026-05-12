@@ -14,9 +14,33 @@ import {
   ChatDebugViewHeadersSectionHeading,
   ChatDebugViewHeadersTable,
 } from '../ClassNames/ClassNames.ts'
+import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+type HeaderEntry = readonly [string, unknown]
+
+const isNonEmptyString = (value: unknown): value is string => {
+  return typeof value === 'string' && value.length > 0
+}
+
+const getStatusCodeValue = (selectedEvent: ChatViewEvent | null): unknown => {
+  if (!selectedEvent) {
+    return undefined
+  }
+  const endValue = isHeadersRecord(selectedEvent.endValue) ? selectedEvent.endValue : undefined
+  if (endValue?.statusCode !== undefined) {
+    return endValue.statusCode
+  }
+  if (selectedEvent.statusCode !== undefined) {
+    return selectedEvent.statusCode
+  }
+  if (selectedEvent.type === 'ai-request' || selectedEvent.type === 'ai-response') {
+    return getStatusText(selectedEvent)
+  }
+  return undefined
 }
 
 const stringifyHeaderValue = (value: Readonly<object>): string => {
@@ -54,11 +78,29 @@ const getHeaderValueText = (value: unknown): string => {
   return stringifyHeaderValue(value)
 }
 
-const getHeaders = (value: unknown): readonly [string, unknown][] => {
+const getHeaders = (value: unknown): readonly HeaderEntry[] => {
   if (!isHeadersRecord(value)) {
     return []
   }
   return Object.entries(value)
+}
+
+const getGeneralEntries = (selectedEvent: ChatViewEvent | null): readonly HeaderEntry[] => {
+  if (!selectedEvent) {
+    return []
+  }
+  const entries: HeaderEntry[] = []
+  if (isNonEmptyString(selectedEvent.url)) {
+    entries.push([ChatDebugStrings.requestUrl(), selectedEvent.url])
+  }
+  if (isNonEmptyString(selectedEvent.method)) {
+    entries.push([ChatDebugStrings.requestMethod(), selectedEvent.method])
+  }
+  const statusCode = getStatusCodeValue(selectedEvent)
+  if (statusCode !== undefined && statusCode !== '') {
+    entries.push([ChatDebugStrings.statusCode(), statusCode])
+  }
+  return entries
 }
 
 const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: number): readonly VirtualDomNode[] => {
@@ -83,7 +125,7 @@ const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: numb
   ]
 }
 
-const getHeadersTableNodes = (headers: readonly [string, unknown][]): readonly VirtualDomNode[] => {
+const getHeadersTableNodes = (headers: readonly HeaderEntry[]): readonly VirtualDomNode[] => {
   const headerRows: VirtualDomNode[] = []
   for (const [index, [headerName, headerValue]] of headers.entries()) {
     headerRows.push(...getHeaderRowNodes(headerName, headerValue, index))
@@ -125,7 +167,7 @@ const getHeadersTableNodes = (headers: readonly [string, unknown][]): readonly V
   ]
 }
 
-const getHeaderSectionNodes = (label: string, headers: readonly [string, unknown][]): readonly VirtualDomNode[] => {
+const getHeaderSectionNodes = (label: string, headers: readonly HeaderEntry[]): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 2,
@@ -146,12 +188,16 @@ export const getHeadersContentNodes = (
   responseEventNodes: readonly VirtualDomNode[],
   selectedEvent: ChatViewEvent | null,
 ): readonly VirtualDomNode[] => {
+  const generalEntries = getGeneralEntries(selectedEvent)
   const requestHeaders = getHeaders(selectedEvent?.headers)
   const responseHeaders = getHeaders(isHeadersRecord(selectedEvent?.endValue) ? selectedEvent.endValue.headers : undefined)
-  if (requestHeaders.length === 0 && responseHeaders.length === 0) {
+  if (generalEntries.length === 0 && requestHeaders.length === 0 && responseHeaders.length === 0) {
     return responseEventNodes
   }
   const nodes: VirtualDomNode[] = []
+  if (generalEntries.length > 0) {
+    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.general(), generalEntries))
+  }
   if (requestHeaders.length > 0) {
     nodes.push(...getHeaderSectionNodes(ChatDebugStrings.requestHeaders(), requestHeaders))
   }

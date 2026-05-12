@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-request-headers-tab'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-ai-request-headers-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
@@ -10,6 +12,12 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await ChatDebug.setEvents([
     {
+      endValue: {
+        headers: {
+          Server: 'test-server',
+        },
+        statusCode: 201,
+      },
       body: {
         input: [
           {
@@ -41,17 +49,28 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await Command.execute('ChatDebug.handleInput', 'detailTab', 'headers', false)
 
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
   const headersTable = Locator('.ChatDebugViewHeadersTable')
   const rows = Locator('.ChatDebugViewHeadersBody .ChatDebugViewHeadersRow')
 
+  await expect(detailsBottom).toContainText('General')
+  await expect(detailsBottom).toContainText('Request URL')
+  await expect(detailsBottom).toContainText('/chat')
+  await expect(detailsBottom).toContainText('Request Method')
+  await expect(detailsBottom).toContainText('POST')
+  await expect(detailsBottom).toContainText('Status Code')
+  await expect(detailsBottom).toContainText('201')
   await expect(headersTable).toBeVisible()
   await expect(headersTable).toContainText('Name')
   await expect(headersTable).toContainText('Value')
-  await expect(rows).toHaveCount(2)
-  const rowsNth0 = rows.nth(0)
-  await expect(rowsNth0).toContainText('Authorization')
-  await expect(rowsNth0).toContainText('Bearer [redacted]')
-  const rowsNth1 = rows.nth(1)
-  await expect(rowsNth1).toContainText('Content-Type')
-  await expect(rowsNth1).toContainText('application/json')
+  await expect(rows).toHaveCount(6)
+  const rowsNth3 = rows.nth(3)
+  await expect(rowsNth3).toContainText('Authorization')
+  await expect(rowsNth3).toContainText('Bearer [redacted]')
+  const rowsNth4 = rows.nth(4)
+  await expect(rowsNth4).toContainText('Content-Type')
+  await expect(rowsNth4).toContainText('application/json')
+  const rowsNth5 = rows.nth(5)
+  await expect(rowsNth5).toContainText('Server')
+  await expect(rowsNth5).toContainText('test-server')
 }

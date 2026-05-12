@@ -60,6 +60,10 @@ export const fromSeconds = (seconds: string): string => {
   })
 }
 
+export const general = (): string => {
+  return I18nString.i18nString(UiStrings.General)
+}
+
 export const headers = (): string => {
   return I18nString.i18nString(UiStrings.Headers)
 }
@@ -144,6 +148,14 @@ export const requestHeaders = (): string => {
   return I18nString.i18nString(UiStrings.RequestHeaders)
 }
 
+export const requestMethod = (): string => {
+  return I18nString.i18nString(UiStrings.RequestMethod)
+}
+
+export const requestUrl = (): string => {
+  return I18nString.i18nString(UiStrings.RequestUrl)
+}
+
 export const responseHeaders = (): string => {
   return I18nString.i18nString(UiStrings.ResponseHeaders)
 }
@@ -169,6 +181,10 @@ export const started = (): string => {
 
 export const stream = (): string => {
   return I18nString.i18nString(UiStrings.Stream)
+}
+
+export const statusCode = (): string => {
+  return I18nString.i18nString(UiStrings.StatusCode)
 }
 
 export const timing = (): string => {
