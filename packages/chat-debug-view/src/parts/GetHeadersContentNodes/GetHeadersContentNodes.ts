@@ -10,6 +10,8 @@ import {
   ChatDebugViewHeadersRow,
   ChatDebugViewHeadersRowEven,
   ChatDebugViewHeadersRowOdd,
+  ChatDebugViewHeadersSection,
+  ChatDebugViewHeadersSectionHeading,
   ChatDebugViewHeadersTable,
 } from '../ClassNames/ClassNames.ts'
 
@@ -52,11 +54,11 @@ const getHeaderValueText = (value: unknown): string => {
   return stringifyHeaderValue(value)
 }
 
-const getHeaders = (selectedEvent: ChatViewEvent | null): readonly [string, unknown][] => {
-  if (selectedEvent === null || !isHeadersRecord(selectedEvent.headers)) {
+const getHeaders = (value: unknown): readonly [string, unknown][] => {
+  if (!isHeadersRecord(value)) {
     return []
   }
-  return Object.entries(selectedEvent.headers)
+  return Object.entries(value)
 }
 
 const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: number): readonly VirtualDomNode[] => {
@@ -81,14 +83,7 @@ const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: numb
   ]
 }
 
-export const getHeadersContentNodes = (
-  responseEventNodes: readonly VirtualDomNode[],
-  selectedEvent: ChatViewEvent | null,
-): readonly VirtualDomNode[] => {
-  const headers = getHeaders(selectedEvent)
-  if (headers.length === 0) {
-    return responseEventNodes
-  }
+const getHeadersTableNodes = (headers: readonly [string, unknown][]): readonly VirtualDomNode[] => {
   const headerRows: VirtualDomNode[] = []
   for (const [index, [headerName, headerValue]] of headers.entries()) {
     headerRows.push(...getHeaderRowNodes(headerName, headerValue, index))
@@ -128,4 +123,40 @@ export const getHeadersContentNodes = (
     },
     ...headerRows,
   ]
+}
+
+const getHeaderSectionNodes = (label: string, headers: readonly [string, unknown][]): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 2,
+      className: ChatDebugViewHeadersSection,
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: ChatDebugViewHeadersSectionHeading,
+      type: VirtualDomElements.Div,
+    },
+    text(label),
+    ...getHeadersTableNodes(headers),
+  ]
+}
+
+export const getHeadersContentNodes = (
+  responseEventNodes: readonly VirtualDomNode[],
+  selectedEvent: ChatViewEvent | null,
+): readonly VirtualDomNode[] => {
+  const requestHeaders = getHeaders(selectedEvent?.headers)
+  const responseHeaders = getHeaders(isHeadersRecord(selectedEvent?.endValue) ? selectedEvent.endValue.headers : undefined)
+  if (requestHeaders.length === 0 && responseHeaders.length === 0) {
+    return responseEventNodes
+  }
+  const nodes: VirtualDomNode[] = []
+  if (requestHeaders.length > 0) {
+    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.requestHeaders(), requestHeaders))
+  }
+  if (responseHeaders.length > 0) {
+    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.responseHeaders(), responseHeaders))
+  }
+  return nodes
 }

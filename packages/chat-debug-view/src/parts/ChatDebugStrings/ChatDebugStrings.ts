@@ -140,6 +140,14 @@ export const refreshEvents = (): string => {
   return I18nString.i18nString(UiStrings.RefreshEvents)
 }
 
+export const requestHeaders = (): string => {
+  return I18nString.i18nString(UiStrings.RequestHeaders)
+}
+
+export const responseHeaders = (): string => {
+  return I18nString.i18nString(UiStrings.ResponseHeaders)
+}
+
 export const resetColumns = (): string => {
   return I18nString.i18nString(UiStrings.ResetColumns)
 }
