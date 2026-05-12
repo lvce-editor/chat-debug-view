@@ -39,7 +39,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
               content: [
                 {
                   annotations: [],
-                  logprobs: [],
                   text: previewText,
                   type: 'output_text',
                 },
