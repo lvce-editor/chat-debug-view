@@ -166,11 +166,7 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
     },
     {
       name: DomEventListenerFunctions.HandlePreviewTextPointerDown,
-      params: [
-        'handlePreviewTextPointerDown',
-        'event.clientX - event.currentTarget.getBoundingClientRect().left',
-        'event.clientY - event.currentTarget.getBoundingClientRect().top',
-      ],
+      params: ['handlePreviewTextPointerDown'],
     },
   ]
 }
