@@ -3,13 +3,12 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { ChatDebugViewCellDuration, TableCell } from '../ClassNames/ClassNames.ts'
 import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
 
+const td: VirtualDomNode = {
+  childCount: 1,
+  className: mergeClassNames(TableCell, ChatDebugViewCellDuration),
+  type: VirtualDomElements.Td,
+}
+
 export const getCellDurationDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 1,
-      className: mergeClassNames(TableCell, ChatDebugViewCellDuration),
-      type: VirtualDomElements.Td,
-    },
-    text(getEventTableDurationText(event)),
-  ]
+  return [td, text(getEventTableDurationText(event))]
 }
