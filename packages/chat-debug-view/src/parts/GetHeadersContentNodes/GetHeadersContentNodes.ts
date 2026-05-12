@@ -12,6 +12,7 @@ import {
   ChatDebugViewHeadersSectionHeading,
   ChatDebugViewHeadersTable,
 } from '../ClassNames/ClassNames.ts'
+import { formatHttpStatusCode } from '../FormatHttpStatusCode/FormatHttpStatusCode.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
 
 const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
@@ -96,7 +97,7 @@ const getGeneralEntries = (selectedEvent: ChatViewEvent | null): readonly Header
   }
   const statusCode = getStatusCodeValue(selectedEvent)
   if (statusCode !== undefined && statusCode !== '') {
-    entries.push([ChatDebugStrings.statusCode(), statusCode])
+    entries.push([ChatDebugStrings.statusCode(), formatHttpStatusCode(statusCode)])
   }
   return entries
 }

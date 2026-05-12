@@ -2,9 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-request-headers-tab'
 
-export const skip = 1
-
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-ai-request-headers-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
   const chatDebugView = Locator('.ChatDebugView')
@@ -20,6 +18,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
           },
         ],
         model: 'test',
+      },
+      endValue: {
+        headers: {
+          ETag: 'W/"test-etag"',
+        },
+        statusCode: 304,
       },
       eventId: 1,
       headers: {
@@ -39,5 +43,10 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.selectEventRow(0)
 
   const headersTab = Locator('.ChatDebugViewDetailsTop [name="headers"]')
+  const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
+
   await expect(headersTab).toBeVisible()
+  await Command.execute('ChatDebug.handleInput', 'detailTab', 'headers', false)
+  await expect(detailsBottom).toContainText('Status Code')
+  await expect(detailsBottom).toContainText('304 Not Modified')
 }
