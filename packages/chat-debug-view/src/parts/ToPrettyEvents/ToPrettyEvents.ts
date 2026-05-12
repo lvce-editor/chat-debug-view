@@ -12,7 +12,6 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
     if (item.type === 'ai-request' && 'requestId' in item && typeof item.requestId === 'string') {
       const response = map[item.requestId]
       if (response) {
-<<<<<<< HEAD
         const parsedStart = new Date(item.timestamp || '')
         const parsedEnd = new Date(response.timestamp || '')
         const durationMs = parsedEnd.getTime() - parsedStart.getTime()
@@ -23,7 +22,6 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
                 eventEndId: response.eventId,
                 eventId: item.eventId,
                 method: 'POST',
-                time: `${durationMs}ms`,
                 type: 'ai-request-response',
               }
             : {
@@ -33,13 +31,6 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
                 type: 'ai-request-response',
               }
         pretty.push(mergedEvent)
-=======
-        pretty.push({
-          eventEndId: response.eventId,
-          eventId: item.eventId,
-          type: 'ai-request-response',
-        })
->>>>>>> origin/main
       } else {
         pretty.push(item)
       }
