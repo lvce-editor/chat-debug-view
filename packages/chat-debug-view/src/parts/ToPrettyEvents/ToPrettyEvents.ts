@@ -12,6 +12,7 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
     if (item.type === 'ai-request' && 'requestId' in item && typeof item.requestId === 'string') {
       const response = map[item.requestId]
       if (response) {
+<<<<<<< HEAD
         const parsedStart = new Date(item.timestamp || '')
         const parsedEnd = new Date(response.timestamp || '')
         const durationMs = parsedEnd.getTime() - parsedStart.getTime()
@@ -28,6 +29,13 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
               type: 'ai-request-response',
             }
         pretty.push(mergedEvent)
+=======
+        pretty.push({
+          eventEndId: response.eventId,
+          eventId: item.eventId,
+          type: 'ai-request-response',
+        })
+>>>>>>> 40480644f9d8 (fix: Add eventEndId to ai-request-response objects in toPrettyEvents function (#261))
       } else {
         pretty.push(item)
       }
