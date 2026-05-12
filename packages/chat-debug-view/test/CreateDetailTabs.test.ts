@@ -36,6 +36,41 @@ test('createDetailTabs should add a headers tab for ai-request events with heade
   ])
 })
 
+test('createDetailTabs should add a headers tab for ai-request events with response headers', () => {
+  const event = {
+    endValue: {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+    eventId: 1,
+    type: 'ai-request',
+  }
+
+  expect(createDetailTabs(InputName.Headers, event)).toEqual([
+    {
+      isSelected: false,
+      label: 'Preview',
+      name: 'preview',
+    },
+    {
+      isSelected: false,
+      label: 'Payload',
+      name: 'payload',
+    },
+    {
+      isSelected: false,
+      label: 'Response',
+      name: 'response',
+    },
+    {
+      isSelected: true,
+      label: 'Headers',
+      name: 'headers',
+    },
+  ])
+})
+
 test('createDetailTabs should fall back to response when headers are unavailable', () => {
   const event = {
     eventId: 1,

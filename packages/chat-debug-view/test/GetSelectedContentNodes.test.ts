@@ -97,13 +97,22 @@ test('getSelectedContentNodes should return headers content for the headers tab'
     headers: {
       Authorization: 'Bearer [redacted]',
     },
+    method: 'POST',
     type: 'ai-request',
+    url: 'https://example.com/chat',
   } as const
 
   const result = getSelectedContentNodes(InputName.Headers, previewEventNodes, payloadEventNodes, responseEventNodes, eventWithHeaders, null, null)
 
   expect(result).not.toBe(responseEventNodes)
   expect(result[0]).toEqual(
+    expect.objectContaining({
+      className: 'ChatDebugViewHeadersSection',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(result[2]).toEqual(expect.objectContaining({ text: 'General' }))
+  expect(result[3]).toEqual(
     expect.objectContaining({
       className: 'ChatDebugViewHeadersTable',
       type: VirtualDomElements.Table,

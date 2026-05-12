@@ -148,6 +148,24 @@ export const getCss = (state: ChatDebugViewState): string => {
   width: 100%;
 }
 
+.ChatDebugViewHeadersSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.ChatDebugViewHeadersSection + .ChatDebugViewHeadersSection {
+  margin-top: 16px;
+}
+
+.ChatDebugViewHeadersSectionHeading {
+  color: var(--vscode-descriptionForeground, rgba(255, 255, 255, 0.7));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
 .ChatDebugViewHeadersCell {
   border-bottom: 1px solid var(--vscode-panel-border, rgba(255, 255, 255, 0.12));
   color: var(--vscode-editor-foreground);
