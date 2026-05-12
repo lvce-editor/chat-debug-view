@@ -1,5 +1,14 @@
 import { expect, test } from '@jest/globals'
-import { getResponseEvent } from '../src/parts/GetResponseEvent/GetResponseEvent.ts'
+import { getResponseData, getResponseEvent } from '../src/parts/GetResponseEvent/GetResponseEvent.ts'
+
+test('getResponseData should return undefined when an event has no response payload', () => {
+  const event = {
+    eventId: 1,
+    type: 'request',
+  }
+
+  expect(getResponseData(event)).toBeUndefined()
+})
 
 test('getResponseEvent should return responseEvent for merged ai request/response events', () => {
   const responseEvent = {
@@ -24,4 +33,29 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
   expect(getResponseEvent(event)).toEqual({
     id: 'resp_1',
   })
+})
+
+test('getResponseData should return endValue value for completed response events', () => {
+  const event = {
+    endValue: {
+      value: {
+        id: 'resp_2',
+      },
+    },
+    eventId: 1,
+    type: 'ai-request',
+  }
+
+  expect(getResponseData(event)).toEqual({
+    id: 'resp_2',
+  })
+})
+
+test('getResponseEvent should fall back to the original event when response payload is missing', () => {
+  const event = {
+    eventId: 1,
+    type: 'request',
+  }
+
+  expect(getResponseEvent(event)).toBe(event)
 })

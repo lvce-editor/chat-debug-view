@@ -35,3 +35,4 @@ export const HandlePreviewTextScrollBarPointerDown = 37
 export const HandlePreviewTextScrollBarPointerMove = 38
 export const HandlePreviewTextScrollBarPointerUp = 39
 export const HandleRootContextMenu = 40
+export const HandleTableRowDoubleClick = 41

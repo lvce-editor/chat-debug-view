@@ -23,6 +23,10 @@ export const renderEventListeners = (): readonly DomEventListener[] => {
       params: ['handleEventRowClickAt', EventExpression.ClientX, EventExpression.ClientY, EventExpression.Button],
     },
     {
+      name: DomEventListenerFunctions.HandleTableRowDoubleClick,
+      params: ['handleTableRowDoubleClick', EventExpression.ClientX, EventExpression.ClientY],
+    },
+    {
       name: DomEventListenerFunctions.HandleTableBodyContextMenu,
       params: ['handleTableBodyContextMenu', EventExpression.ClientX, EventExpression.ClientY],
       preventDefault: true,
