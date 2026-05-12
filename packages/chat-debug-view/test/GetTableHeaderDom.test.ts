@@ -24,7 +24,7 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -52,6 +52,14 @@ test('getTableHeaderDom should render the table header nodes', () => {
       type: VirtualDomElements.Th,
     },
     text('Status'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Size,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Size'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -131,7 +139,7 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Table,
     },
     {
-      childCount: 4,
+      childCount: 5,
       className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
@@ -156,13 +164,18 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Col,
     },
     {
+      childCount: 0,
+      className: 'TableCol TableColFour',
+      type: VirtualDomElements.Col,
+    },
+    {
       childCount: 1,
       className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -190,6 +203,14 @@ test('getTableDom should render header and body nodes for the table', () => {
       type: VirtualDomElements.Th,
     },
     text('Status'),
+    {
+      childCount: 1,
+      className: 'TableCell',
+      name: TableColumn.Size,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Size'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -245,7 +266,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Table,
     },
     {
-      childCount: 4,
+      childCount: 5,
       className: 'ColGroup',
       type: VirtualDomElements.ColGroup,
     },
@@ -270,13 +291,18 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Col,
     },
     {
+      childCount: 0,
+      className: 'TableCol TableColFour',
+      type: VirtualDomElements.Col,
+    },
+    {
       childCount: 1,
       className: 'TableHead',
       onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
       type: VirtualDomElements.THead,
     },
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow',
       type: VirtualDomElements.Tr,
     },
@@ -307,6 +333,14 @@ test('getTableWrapperDom should render the wrapper node', () => {
     {
       childCount: 1,
       className: 'TableCell',
+      name: TableColumn.Size,
+      onClick: handleTableHeaderClick,
+      type: VirtualDomElements.Th,
+    },
+    text('Size'),
+    {
+      childCount: 1,
+      className: 'TableCell',
       name: TableColumn.Duration,
       onClick: handleTableHeaderClick,
       type: VirtualDomElements.Th,
@@ -325,7 +359,7 @@ test('getTableWrapperDom should render the wrapper node', () => {
       type: VirtualDomElements.Tr,
     },
     {
-      childCount: 3,
+      childCount: 4,
       className: 'Resizers',
       role: 'none',
       type: VirtualDomElements.Div,
@@ -364,6 +398,21 @@ test('getTableWrapperDom should render the wrapper node', () => {
       childCount: 1,
       className: 'Resizer ResizerThree',
       name: 'ResizerThree',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerFour',
+      name: 'ResizerFour',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
       tabIndex: -1,
