@@ -1,6 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { refreshEvents } from '../src/parts/LoadEvents/RefreshEvents/RefreshEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 

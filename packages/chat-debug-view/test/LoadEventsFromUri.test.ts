@@ -1,6 +1,5 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getInvalidUriMessage } from '../src/parts/GetInvalidUriMessage/GetInvalidUriMessage.ts'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { loadEventsFromUri } from '../src/parts/LoadEvents/LoadEventsFromUri/LoadEventsFromUri.ts'
 import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'

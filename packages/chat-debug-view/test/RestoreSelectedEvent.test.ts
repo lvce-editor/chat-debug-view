@@ -1,5 +1,4 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { restoreSelectedEvent } from '../src/parts/LoadEvents/RestoreSelectedEvent/RestoreSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 

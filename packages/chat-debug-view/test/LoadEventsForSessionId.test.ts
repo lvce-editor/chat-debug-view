@@ -2,7 +2,6 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getSessionNotFoundMessage } from '../src/parts/GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { loadEventsForSessionId } from '../src/parts/LoadEvents/LoadEventsForSessionId/LoadEventsForSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 

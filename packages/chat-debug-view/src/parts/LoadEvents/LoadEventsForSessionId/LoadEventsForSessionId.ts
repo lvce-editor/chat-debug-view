@@ -2,13 +2,13 @@ import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
 import { getFailedToLoadMessage } from '../../GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getSessionNotFoundMessage } from '../../GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { getStateWithTimelineInfo } from '../../GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
+import { listChatViewEvents } from '../../ListChatViewEvents/ListChatViewEvents.ts'
 import { applyVirtualTableState, withSelectedEventVisible } from '../../VirtualTable/VirtualTable.ts'
-import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
 import { restoreSelectedEvent } from '../RestoreSelectedEvent/RestoreSelectedEvent.ts'
 
 export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
-  const result = await loadEventsDependencies.listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
+  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
 
   if (result.type === 'error') {
     return applyVirtualTableState(
