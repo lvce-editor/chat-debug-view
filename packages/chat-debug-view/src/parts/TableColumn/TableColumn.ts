@@ -4,8 +4,9 @@ export const Type = 'type'
 export const Method = 'method'
 export const Duration = 'duration'
 export const Status = 'status'
+export const Size = 'size'
 
-export const tableColumnNames = [Type, Method, Status, Duration] as const
+export const tableColumnNames = [Type, Method, Status, Size, Duration] as const
 
 export type TableColumnName = (typeof tableColumnNames)[number]
 
@@ -31,6 +32,11 @@ export const createTableColumns = (): readonly TableColumn[] => {
       isVisible: true,
       label: ChatDebugStrings.status(),
       name: Status,
+    },
+    {
+      isVisible: true,
+      label: ChatDebugStrings.size(),
+      name: Size,
     },
     {
       isVisible: true,
@@ -83,6 +89,8 @@ export const getTableColumnLabel = (tableColumns: readonly TableColumn[], name: 
       return ChatDebugStrings.duration()
     case Method:
       return ChatDebugStrings.method()
+    case Size:
+      return ChatDebugStrings.size()
     case Status:
       return ChatDebugStrings.status()
     case Type:

@@ -13,6 +13,7 @@ test('getResizedTableColumnWidths should return existing widths for an invalid r
   const tableColumnWidths = {
     duration: 110,
     method: 90,
+    size: 100,
     status: 110,
     type: 260,
   }
@@ -29,6 +30,7 @@ test('getResizedTableColumnWidths should resize the preceding visible column', (
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
@@ -39,6 +41,7 @@ test('getResizedTableColumnWidths should resize the preceding visible column', (
   expect(result).toEqual({
     duration: 110,
     method: 90,
+    size: 100,
     status: 110,
     type: 300,
   })
@@ -51,6 +54,7 @@ test('getResizedTableColumnWidths should clamp resized widths to the minimum wid
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
@@ -61,6 +65,7 @@ test('getResizedTableColumnWidths should clamp resized widths to the minimum wid
   expect(result).toEqual({
     duration: 110,
     method: 90,
+    size: 100,
     status: 110,
     type: 80,
   })
@@ -73,6 +78,7 @@ test('getResizedTableColumnWidths should allow shrinking the status column below
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
@@ -83,6 +89,7 @@ test('getResizedTableColumnWidths should allow shrinking the status column below
   expect(result).toEqual({
     duration: 110,
     method: 90,
+    size: 100,
     status: 140,
     type: 260,
   })

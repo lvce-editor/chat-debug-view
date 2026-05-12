@@ -6,5 +6,11 @@ export const isTableColumnWidths = (value: unknown): value is TableColumnWidths 
     return false
   }
   const record = value as Record<string, unknown>
-  return isFiniteNumber(record.type) && isFiniteNumber(record.method) && isFiniteNumber(record.duration) && isFiniteNumber(record.status)
+  return (
+    isFiniteNumber(record.type) &&
+    isFiniteNumber(record.method) &&
+    isFiniteNumber(record.duration) &&
+    isFiniteNumber(record.size) &&
+    isFiniteNumber(record.status)
+  )
 }

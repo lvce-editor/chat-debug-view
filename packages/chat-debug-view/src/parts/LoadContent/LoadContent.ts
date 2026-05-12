@@ -7,7 +7,6 @@ import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailT
 import * as HandleStorageWorkerUpdate from '../HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
 import { loadEventsFromUri } from '../LoadEvents/LoadEventsFromUri/LoadEventsFromUri.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
-import * as TableColumn from '../TableColumn/TableColumn.ts'
 import { applyVirtualTableState } from '../VirtualTable/VirtualTable.ts'
 
 export const loadContent = async (state: ChatDebugViewState, savedState: unknown): Promise<ChatDebugViewState> => {
@@ -24,6 +23,5 @@ export const loadContent = async (state: ChatDebugViewState, savedState: unknown
     ...nextState,
     categoryFilters: EventCategoryFilter.createCategoryFilters(EventCategoryFilter.getSelectedEventCategoryFilters(nextState.categoryFilters)),
     detailTabs: createDetailTabs(getSelectedDetailTab(nextState.detailTabs), nextState.selectedEvent),
-    tableColumns: TableColumn.createTableColumns(),
   })
 }

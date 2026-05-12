@@ -30,7 +30,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(table).toBeVisible()
   await expect(colGroup).toHaveCount(1)
   await expect(colGroup).toBeVisible()
-  await expect(cols).toHaveCount(4)
+  await expect(cols).toHaveCount(5)
   const colsNth0 = cols.nth(0)
   await expect(colsNth0).toBeVisible()
   await expect(colsNth0).toHaveAttribute('class', 'TableCol TableColZero')
@@ -43,4 +43,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const colsNth3 = cols.nth(3)
   await expect(colsNth3).toBeVisible()
   await expect(colsNth3).toHaveAttribute('class', 'TableCol TableColThree')
+  const colsNth4 = cols.nth(4)
+  await expect(colsNth4).toBeVisible()
+  await expect(colsNth4).toHaveAttribute('class', 'TableCol TableColFour')
 }

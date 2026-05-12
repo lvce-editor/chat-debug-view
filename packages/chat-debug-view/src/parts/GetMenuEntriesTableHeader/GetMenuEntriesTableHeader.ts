@@ -22,6 +22,13 @@ export const getMenuEntriesTableHeader = (state: ChatDebugViewState): readonly M
       label: ChatDebugStrings.status(),
     },
     {
+      args: [TableColumn.Size],
+      command: 'ChatDebug.toggleTableColumnVisibility',
+      flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Size),
+      id: 'size',
+      label: ChatDebugStrings.size(),
+    },
+    {
       args: [TableColumn.Duration],
       command: 'ChatDebug.toggleTableColumnVisibility',
       flags: GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Duration),

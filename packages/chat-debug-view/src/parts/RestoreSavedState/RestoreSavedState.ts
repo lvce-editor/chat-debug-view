@@ -19,6 +19,31 @@ const isSavedState = (value: unknown): value is Partial<SavedState> => {
   return typeof value === 'object' && value !== null
 }
 
+type LegacyTableColumnWidths = {
+  readonly duration: number
+  readonly method: number
+  readonly status: number
+  readonly type: number
+}
+
+const isLegacyTableColumnWidths = (value: unknown): value is LegacyTableColumnWidths => {
+  if (typeof value !== 'object' || value === null) {
+    return false
+  }
+  const record = value as Record<string, unknown>
+  return (
+    typeof record.duration === 'number' &&
+    Number.isFinite(record.duration) &&
+    typeof record.method === 'number' &&
+    Number.isFinite(record.method) &&
+    typeof record.status === 'number' &&
+    Number.isFinite(record.status) &&
+    typeof record.type === 'number' &&
+    Number.isFinite(record.type) &&
+    !('size' in record)
+  )
+}
+
 const restoreCategoryFilters = (
   savedState: Partial<SavedState>,
   currentCategoryFilters: ChatDebugViewState['categoryFilters'],
@@ -74,6 +99,13 @@ const restoreVisibleTableColumns = (
     return currentTableColumns
   }
   const visibleTableColumns = savedState.visibleTableColumns.filter((value): value is string => typeof value === 'string')
+  if (isLegacyTableColumnWidths(savedState.tableColumnWidths)) {
+    const savedVisibleColumns = new Set(visibleTableColumns)
+    const visibleColumnsWithDefaults = currentTableColumns
+      .filter((column) => savedVisibleColumns.has(column.name) || column.name === 'size')
+      .map((column) => column.name)
+    return getTableColumnsWithVisibility(currentTableColumns, visibleColumnsWithDefaults)
+  }
   return getTableColumnsWithVisibility(currentTableColumns, visibleTableColumns)
 }
 
@@ -81,7 +113,21 @@ const restoreTableColumnWidths = (
   savedState: Partial<SavedState>,
   currentTableColumnWidths: ChatDebugViewState['tableColumnWidths'],
 ): ChatDebugViewState['tableColumnWidths'] => {
-  return isTableColumnWidths(savedState.tableColumnWidths) ? savedState.tableColumnWidths : currentTableColumnWidths
+  const { tableColumnWidths: savedTableColumnWidths } = savedState
+  if (isTableColumnWidths(savedTableColumnWidths)) {
+    return savedTableColumnWidths
+  }
+  if (isLegacyTableColumnWidths(savedTableColumnWidths)) {
+    const legacyTableColumnWidths = savedTableColumnWidths as LegacyTableColumnWidths
+    return {
+      duration: legacyTableColumnWidths.duration,
+      method: legacyTableColumnWidths.method,
+      size: currentTableColumnWidths.size,
+      status: legacyTableColumnWidths.status,
+      type: legacyTableColumnWidths.type,
+    }
+  }
+  return currentTableColumnWidths
 }
 
 export const restoreSavedState = (state: ChatDebugViewState, savedState: unknown): ChatDebugViewState => {

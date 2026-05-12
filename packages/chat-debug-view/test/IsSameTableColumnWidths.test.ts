@@ -6,12 +6,14 @@ test('isSameTableColumnWidths should return true for equal widths', () => {
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
@@ -25,12 +27,14 @@ test('isSameTableColumnWidths should return false for different widths', () => {
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 110,
       type: 260,
     },
     {
       duration: 110,
       method: 90,
+      size: 100,
       status: 120,
       type: 260,
     },

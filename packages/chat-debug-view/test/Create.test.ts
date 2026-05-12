@@ -5,6 +5,7 @@ import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCate
 import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import * as ChatDebugViewStates from '../src/parts/State/ChatDebugViewStates.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('create should store state with the given uid', () => {
   const uid = 123
@@ -21,11 +22,11 @@ test('create should store state with the given uid', () => {
   expect(newState.height).toBe(400)
   expect(newState.assetDir).toBe('/assets')
   expect(newState.detailTabs).toEqual(createDetailTabs())
-  expect(newState.tableColumns).toEqual([])
+  expect(newState.tableColumns).toEqual(TableColumn.createTableColumns())
   expect(newState.sessionId).toBe('')
   expect(oldState.uid).toBe(uid)
   expect(oldState.detailTabs).toEqual(createDetailTabs())
-  expect(oldState.tableColumns).toEqual([])
+  expect(oldState.tableColumns).toEqual(TableColumn.createTableColumns())
   expect(oldState.selectedEventId).toBeNull()
 })
 
@@ -38,6 +39,7 @@ test('create should restore serializable state from saved state', () => {
     tableColumnWidths: {
       duration: 88,
       method: 92,
+      size: 104,
       status: 132,
       type: 260,
     },
@@ -53,12 +55,14 @@ test('create should restore serializable state from saved state', () => {
   expect(result.newState.tableColumnWidths).toEqual({
     duration: 88,
     method: 92,
+    size: 104,
     status: 132,
     type: 260,
   })
   expect(result.oldState.tableColumnWidths).toEqual({
     duration: 88,
     method: 92,
+    size: 104,
     status: 132,
     type: 260,
   })
