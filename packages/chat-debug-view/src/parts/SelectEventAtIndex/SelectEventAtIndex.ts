@@ -45,6 +45,8 @@ export const selectEventAtIndex = async (
     sessionIdIndexName,
     selectedEvent.eventId,
     selectedEvent.type,
+    // @ts-ignore
+    selectedEvent['eventEndId'] || 0,
   )
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({
