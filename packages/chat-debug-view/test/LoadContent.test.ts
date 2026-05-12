@@ -1,31 +1,28 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import { RendererWorker } from '@lvce-editor/rpc-registry'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker, RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { rpcId as handleStorageWorkerUpdateRpcId } from '../src/parts/HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
-import { loadContent, loadContentDependencies } from '../src/parts/LoadContent/LoadContent.ts'
+import { loadContent } from '../src/parts/LoadContent/LoadContent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 const tableColumns = TableColumn.createTableColumns()
 const detailTabs = createDetailTabs()
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('loadContent should return failed-to-load state when listing events returns an error', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using rendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': () => false,
   })
-  const error = new Error('failed to load events')
-  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
-    error,
-    type: 'error',
+  using chatStorageRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => {
+      throw error
+    },
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const registerUpdateListenerSpy = jest.spyOn(loadContentDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
+  const error = new Error('failed to load events')
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -49,14 +46,15 @@ test('loadContent should return failed-to-load state when listing events returns
       tableColumns,
     }),
   )
-  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 5)
+  expect(rendererRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
+  expect(chatStorageRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 5],
+  ])
 })
 
 test('loadContent should restore the selected event preview from selectedEventId', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using rendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': () => true,
   })
   const events = [
@@ -68,12 +66,14 @@ test('loadContent should restore the selected event preview from selectedEventId
     eventId: 2,
     type: 'response',
   }
-  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
-    events,
-    type: 'success',
+  using chatStorageRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events,
+      type: 'success' as const,
+    }),
+    'ChatStorage.loadSelectedEvent': () => selectedEvent,
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const loadSelectedEventSpy = jest.spyOn(loadContentDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEvent)
-  const registerUpdateListenerSpy = jest.spyOn(loadContentDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -100,16 +100,16 @@ test('loadContent should restore the selected event preview from selectedEventId
       tableColumns,
     }),
   )
-  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith({ eventId: 2, sessionId: 'session-1', type: 'response' })
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 8)
+  expect(rendererRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
+  expect(chatStorageRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 8],
+  ])
 })
 
 test('loadContent should restore selected event and detail tab from savedState', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using rendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': () => true,
   })
   const events = [
@@ -121,12 +121,14 @@ test('loadContent should restore selected event and detail tab from savedState',
     eventId: 2,
     type: 'response',
   }
-  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
-    events,
-    type: 'success',
+  using chatStorageRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events,
+      type: 'success' as const,
+    }),
+    'ChatStorage.loadSelectedEvent': () => selectedEvent,
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const loadSelectedEventSpy = jest.spyOn(loadContentDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEvent)
-  const registerUpdateListenerSpy = jest.spyOn(loadContentDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -157,16 +159,16 @@ test('loadContent should restore selected event and detail tab from savedState',
       tableColumns,
     }),
   )
-  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith({ eventId: 2, sessionId: 'session-1', type: 'response' })
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 9)
+  expect(rendererRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
+  expect(chatStorageRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 9],
+  ])
 })
 
 test('loadContent should initialize the virtual table window on first load when the view has height', async () => {
-  using mockRpc = RendererWorker.registerMockRpc({
+  using rendererRpc = RendererWorker.registerMockRpc({
     'Preferences.get': () => true,
   })
   const events = Array.from({ length: 8 }, (_, index) => {
@@ -175,11 +177,13 @@ test('loadContent should initialize the virtual table window on first load when 
       type: index % 2 === 0 ? 'request' : 'response',
     }
   })
-  const listChatViewEventsSpy = jest.spyOn(loadContentDependencies, 'listChatViewEvents').mockResolvedValue({
-    events,
-    type: 'success',
+  using chatStorageRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events,
+      type: 'success' as const,
+    }),
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const registerUpdateListenerSpy = jest.spyOn(loadContentDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     height: 600,
@@ -197,7 +201,9 @@ test('loadContent should initialize the virtual table window on first load when 
   expect(result.tableMinLineY).toBe(0)
   expect(result.tableMaxLineY).toBeGreaterThan(0)
   expect(result.tableMaxLineY).toBeLessThanOrEqual(events.length)
-  expect(mockRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
+  expect(rendererRpc.invocations).toEqual([['Preferences.get', 'chatDebug.autoRefresh']])
+  expect(chatStorageRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 10],
+  ])
 })
