@@ -1,8 +1,8 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { getResponseData } from '../GetResponseEvent/GetResponseEvent.ts'
 import { getTableBodyEventIndex } from '../GetTableBodyEventIndex/GetTableBodyEventIndex.ts'
-import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 
 const toDataUri = (text: string): string => {
   return `data:application/json,${encodeURIComponent(text)}`
