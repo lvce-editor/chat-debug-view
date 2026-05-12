@@ -8,7 +8,7 @@ import { withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
 export const selectEventAtIndex = async (state: ChatDebugViewState, selectedEventIndex: number): Promise<ChatDebugViewState> => {
-  const { databaseName, dataBaseVersion, detailTabs, eventStoreName, sessionId, sessionIdIndexName } = state
+  const { detailTabs, sessionId } = state
   const selectedDetailTab = getSelectedDetailTab(detailTabs)
   const currentEvents = getCurrentEvents(state)
   const selectedEvent = currentEvents[selectedEventIndex]
@@ -28,17 +28,13 @@ export const selectEventAtIndex = async (state: ChatDebugViewState, selectedEven
       selectedEventIndex,
     }
   }
-  const selectedEventDetails = await LoadSelectedEvent.loadSelectedEvent(
-    databaseName,
-    dataBaseVersion,
-    eventStoreName,
-    sessionId,
-    sessionIdIndexName,
-    selectedEvent.eventId,
-    selectedEvent.type,
+  const selectedEventDetails = await LoadSelectedEvent.loadSelectedEvent({
     // @ts-ignore
-    selectedEvent['eventEndId'] || 0,
-  )
+    endEventId: selectedEvent['eventEndId'] || 0,
+    eventId: selectedEvent.eventId,
+    sessionId,
+    type: selectedEvent.type,
+  })
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({
     ...state,
