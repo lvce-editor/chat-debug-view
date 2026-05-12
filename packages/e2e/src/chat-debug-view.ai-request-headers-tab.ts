@@ -40,4 +40,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const headersTab = Locator('.ChatDebugViewDetailsTop [name="headers"]')
   await expect(headersTab).toBeVisible()
+
+  await headersTab.click()
 }
