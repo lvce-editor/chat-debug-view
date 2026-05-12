@@ -13,6 +13,7 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
       const response = map[item.requestId]
       if (response) {
         pretty.push({
+          eventEndId: response.eventId,
           eventId: item.eventId,
           type: 'ai-request-response',
         })
