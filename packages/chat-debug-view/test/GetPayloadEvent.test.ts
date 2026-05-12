@@ -27,7 +27,6 @@ test('getPayloadEvent should return only the arguments object for list_files too
   })
 })
 
-<<<<<<< HEAD
 test('getPayloadEvent should return requestEvent for merged ai request/response events', () => {
   const requestEvent = {
     body: {
@@ -59,6 +58,3 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
     input: ['1+1'],
   })
 })
-=======
-test.todo('getPayloadEvent should return requestEvent for merged ai request/response events')
->>>>>>> origin/main
