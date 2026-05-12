@@ -1,19 +1,17 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { getSessionNotFoundMessage } from '../src/parts/GetSessionNotFoundMessage/GetSessionNotFoundMessage.ts'
 import { getStateWithTimelineInfo } from '../src/parts/GetStateWithTimelineInfo/GetStateWithTimelineInfo.ts'
 import { loadEventsForSessionId } from '../src/parts/LoadEvents/LoadEventsForSessionId/LoadEventsForSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('loadEventsForSessionId should return failed-to-load state when listing events returns an error', async () => {
   const error = new Error('failed to load events')
-  const listChatViewEventsSpy = jest.spyOn(loadEventsDependencies, 'listChatViewEvents').mockResolvedValue({
-    error,
-    type: 'error',
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => {
+      throw error
+    },
   })
   const state = createDefaultState()
 
@@ -31,13 +29,15 @@ test('loadEventsForSessionId should return failed-to-load state when listing eve
       sessionId: 'session-1',
     }),
   )
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
 
 test('loadEventsForSessionId should return session-not-found state when no events are found', async () => {
-  const listChatViewEventsSpy = jest.spyOn(loadEventsDependencies, 'listChatViewEvents').mockResolvedValue({
-    events: [],
-    type: 'success',
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events: [],
+      type: 'success' as const,
+    }),
   })
   const state = createDefaultState()
 
@@ -55,5 +55,5 @@ test('loadEventsForSessionId should return session-not-found state when no event
       sessionId: 'session-1',
     }),
   )
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
 })
