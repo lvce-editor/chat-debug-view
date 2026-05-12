@@ -8,7 +8,7 @@ import { hasDetailTab } from '../src/parts/HasDetailTab/HasDetailTab.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
 
-type LoadSelectedEventFn = typeof LoadSelectedEvent.loadSelectedEvent
+type LoadSelectedEventFn = (...args: readonly unknown[]) => ReturnType<typeof LoadSelectedEvent.loadSelectedEvent>
 
 const tableClientX = 30
 const row0ClientY = 180
@@ -74,7 +74,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     startTime: '2026-03-08T00:00:02.000Z',
     type: 'request',
   })
-  expect(loadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
+  expect(loadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request', 0)
 })
 
 test('handleEventRowClick should ignore clicks outside the table body', async () => {
