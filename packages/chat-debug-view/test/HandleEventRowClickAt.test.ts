@@ -236,8 +236,3 @@ test('handleEventRowClick should fall back to response and hide timing when the 
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'chat-message-added']])
 })
-    'sessionId',
-    2,
-    'chat-message-added',
-  )
-})
