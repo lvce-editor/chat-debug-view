@@ -9,6 +9,16 @@ export const loadSelectedEvent = async (
   _sessionIdIndexName: string,
   eventId: number,
   type: string,
+  endEventId?: number,
 ): Promise<ChatViewEvent | null> => {
-  return ChatStorageWorkerClient.loadSelectedEvent(sessionId, eventId, type)
+  const raw = await ChatStorageWorkerClient.loadSelectedEvent(sessionId, eventId, type)
+  if (endEventId && endEventId !== -1) {
+    const end = await ChatStorageWorkerClient.loadSelectedEvent(sessionId, endEventId, type)
+    // @ts-ignore
+    return {
+      ...raw,
+      endValue: end,
+    }
+  }
+  return raw
 }
