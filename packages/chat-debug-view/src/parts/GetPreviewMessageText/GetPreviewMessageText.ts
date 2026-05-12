@@ -2,44 +2,72 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { isChatMessageAddedEvent } from '../IsChatMessageAddedEvent/IsChatMessageAddedEvent.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
 
+const getObjectValue = (value: unknown): Record<string, unknown> | undefined => {
+  if (!value || typeof value !== 'object') {
+    return undefined
+  }
+  return value as Record<string, unknown>
+}
+
 const getResponseContentText = (content: unknown): string | undefined => {
-  if (!content || typeof content !== 'object') {
+  const contentObject = getObjectValue(content)
+  if (!contentObject) {
     return undefined
   }
   if (Array.isArray(content)) {
     const [firstContentItem] = content
-    if (!firstContentItem || typeof firstContentItem !== 'object') {
+    const firstContentItemObject = getObjectValue(firstContentItem)
+    if (!firstContentItemObject) {
       return undefined
     }
-    const { text } = firstContentItem as { readonly text?: unknown }
+    const { text } = firstContentItemObject
     return typeof text === 'string' ? text : undefined
   }
-  const { text } = content as { readonly text?: unknown }
+  const { text } = contentObject
   return typeof text === 'string' ? text : undefined
 }
 
+const getOutput = (value: unknown): readonly unknown[] | undefined => {
+  const valueObject = getObjectValue(value)
+  if (!valueObject) {
+    return undefined
+  }
+  const { output } = valueObject
+  return Array.isArray(output) ? output : undefined
+}
+
+const getAiRequestResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
+  const { endValue } = event as { readonly endValue?: unknown }
+  const endValueObject = getObjectValue(endValue)
+  if (!endValueObject) {
+    return undefined
+  }
+  return getOutput(endValueObject.value)
+}
+
+const getCompletedResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
+  const valueObject = getObjectValue(event.value)
+  if (!valueObject) {
+    return undefined
+  }
+  const responseObject = getObjectValue(valueObject.response)
+  if (!responseObject) {
+    return undefined
+  }
+  return getOutput(responseObject)
+}
+
 const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
-  if (event.type === 'sse-response-completed') {
-    const { value } = event
-    if (!value || typeof value !== 'object') {
+  switch (event.type) {
+    case 'ai-request':
+      return getAiRequestResponseOutput(event)
+    case 'ai-response':
+      return getOutput(event.value)
+    case 'sse-response-completed':
+      return getCompletedResponseOutput(event)
+    default:
       return undefined
-    }
-    const { response } = value as { readonly response?: unknown }
-    if (!response || typeof response !== 'object') {
-      return undefined
-    }
-    const { output } = response as { readonly output?: unknown }
-    return Array.isArray(output) ? output : undefined
   }
-  if (event.type === 'ai-response') {
-    const { value } = event
-    if (!value || typeof value !== 'object') {
-      return undefined
-    }
-    const { output } = value as { readonly output?: unknown }
-    return Array.isArray(output) ? output : undefined
-  }
-  return undefined
 }
 
 const getResponsePreviewText = (event: ChatViewEvent): string | undefined => {
@@ -48,10 +76,11 @@ const getResponsePreviewText = (event: ChatViewEvent): string | undefined => {
     return undefined
   }
   const [firstOutput] = output
-  if (!firstOutput || typeof firstOutput !== 'object') {
+  const firstOutputObject = getObjectValue(firstOutput)
+  if (!firstOutputObject) {
     return undefined
   }
-  const { content } = firstOutput as { readonly content?: unknown }
+  const { content } = firstOutputObject
   return getResponseContentText(content)
 }
 

@@ -70,6 +70,53 @@ test('getPreviewEvent should return the extracted text for ai-response events wh
   expect(result).toBe('4')
 })
 
+test('getPreviewEvent should return response text for ai-request events with endValue', () => {
+  const event = {
+    body: {
+      input: [
+        {
+          content: [
+            {
+              text: 'hello from request body',
+              type: 'input_text',
+            },
+          ],
+          role: 'user',
+        },
+      ],
+      model: 'test-model',
+    },
+    endValue: {
+      statusCode: 200,
+      value: {
+        output: [
+          {
+            content: [
+              {
+                text: 'hello from response text',
+                type: 'output_text',
+              },
+            ],
+            role: 'assistant',
+            type: 'message',
+          },
+        ],
+      },
+    },
+    eventId: 11,
+    method: 'POST',
+    requestId: 'request-2',
+    sessionId: 'session-1',
+    timestamp: '2026-05-06T08:09:12.229Z',
+    type: 'ai-request',
+    url: '/chat',
+  }
+
+  const result = getPreviewEvent(event)
+
+  expect(result).toBe('hello from response text')
+})
+
 test('getPreviewEvent should return response.output for sse-response-completed events when text preview is unavailable', () => {
   const output = [
     {

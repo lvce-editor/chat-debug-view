@@ -56,14 +56,14 @@ const getPayloadObject = (event: ChatViewEvent, name: string | undefined): Paylo
 }
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
-  if (event && event.type === 'ai-request') {
-    return event.body
-  }
-
   const { requestEvent } = event as EventWithRequestEvent
   const mergedRequestPayloadEvent = getMergedRequestPayloadEvent(requestEvent)
   if (mergedRequestPayloadEvent.found) {
     return mergedRequestPayloadEvent.value
+  }
+
+  if (event && event.type === 'ai-request') {
+    return event.body
   }
 
   const name = getPreviewName(event)
