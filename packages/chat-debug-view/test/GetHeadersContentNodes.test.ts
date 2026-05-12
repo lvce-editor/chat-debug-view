@@ -123,7 +123,7 @@ test('getHeadersContentNodes should render request and response headers in separ
       className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
       type: VirtualDomElements.Td,
     },
-    text('201'),
+    text('201 Created'),
     {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
@@ -320,6 +320,22 @@ test('getHeadersContentNodes should render response headers when request headers
   expect(result).toContainEqual(text('Request URL'))
   expect(result).toContainEqual(text('https://example.com/chat'))
   expect(result).toContainEqual(text('Status Code'))
-  expect(result).toContainEqual(text('204'))
+  expect(result).toContainEqual(text('204 No Content'))
   expect(result).toContainEqual(text('Response Headers'))
+})
+
+test('getHeadersContentNodes should preserve unknown status codes without inventing a label', () => {
+  const responseEventNodes = [] as const
+  const selectedEvent = {
+    endValue: {
+      statusCode: 599,
+    },
+    eventId: 1,
+    type: 'ai-response',
+  } as const
+
+  const result = getHeadersContentNodes(responseEventNodes, selectedEvent)
+
+  expect(result).toContainEqual(text('Status Code'))
+  expect(result).toContainEqual(text('599'))
 })
