@@ -89,3 +89,39 @@ test('getPreviewMessageText should return the direct response content text for s
 
   expect(result).toBe('direct content text')
 })
+
+test('getPreviewMessageText should return response text from ai-request endValue before request body content', () => {
+  const result = GetPreviewMessageText.getPreviewMessageText({
+    body: {
+      input: [
+        {
+          content: [
+            {
+              text: 'request body text',
+              type: 'input_text',
+            },
+          ],
+          role: 'user',
+        },
+      ],
+    },
+    endValue: {
+      value: {
+        output: [
+          {
+            content: [
+              {
+                text: 'response preview text',
+                type: 'output_text',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    eventId: 1,
+    type: 'ai-request',
+  })
+
+  expect(result).toBe('response preview text')
+})

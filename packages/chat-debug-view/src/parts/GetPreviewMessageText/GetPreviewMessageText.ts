@@ -19,6 +19,18 @@ const getResponseContentText = (content: unknown): string | undefined => {
 }
 
 const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined => {
+  if (event.type === 'ai-request') {
+    const { endValue } = event as { readonly endValue?: unknown }
+    if (!endValue || typeof endValue !== 'object') {
+      return undefined
+    }
+    const { value } = endValue as { readonly value?: unknown }
+    if (!value || typeof value !== 'object') {
+      return undefined
+    }
+    const { output } = value as { readonly output?: unknown }
+    return Array.isArray(output) ? output : undefined
+  }
   if (event.type === 'sse-response-completed') {
     const { value } = event
     if (!value || typeof value !== 'object') {
