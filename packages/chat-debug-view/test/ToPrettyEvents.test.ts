@@ -23,12 +23,39 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
   expect(result).toEqual([
     {
       durationMs: 125,
+      ended: '2026-05-12T10:00:00.125Z',
       eventEndId: 2,
       eventId: 1,
       method: 'POST',
+      started: '2026-05-12T10:00:00.000Z',
+      timestamp: '2026-05-12T10:00:00.000Z',
       type: 'ai-request-response',
     },
   ])
+})
+
+test('toPrettyEvents should preserve merged event timing metadata for the timeline', () => {
+  const requestEvent = {
+    eventId: 1,
+    requestId: 'request-1',
+    timestamp: '2026-05-12T10:00:00.000Z',
+    type: 'ai-request',
+  }
+  const responseEvent = {
+    eventId: 2,
+    requestId: 'request-1',
+    timestamp: '2026-05-12T10:00:00.125Z',
+    type: 'ai-response',
+  }
+
+  const [result] = toPrettyEvents({
+    events: [requestEvent, responseEvent],
+    type: 'success',
+  })
+
+  expect(result?.timestamp).toBe('2026-05-12T10:00:00.000Z')
+  expect(result?.started).toBe('2026-05-12T10:00:00.000Z')
+  expect(result?.ended).toBe('2026-05-12T10:00:00.125Z')
 })
 
 test('toPrettyEvents should merge matching ai request and ai response events', () => {
