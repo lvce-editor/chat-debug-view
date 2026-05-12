@@ -60,6 +60,51 @@ test('getHeadersContentNodes should render request and response headers in separ
     },
     text('Name'),
     {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
+      type: VirtualDomElements.Th,
+    },
+    text('Value'),
+    {
+      childCount: 2,
+      className: 'ChatDebugViewHeadersBody',
+      type: VirtualDomElements.TBody,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowOdd',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
+      type: VirtualDomElements.Td,
+    },
+    text('Authorization'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
+      type: VirtualDomElements.Td,
+    },
+    text('Bearer [redacted]'),
+    {
+      childCount: 2,
+      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowEven',
+      type: VirtualDomElements.Tr,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
+      type: VirtualDomElements.Td,
+    },
+    text('Content-Type'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
+      type: VirtualDomElements.Td,
+    },
+    text('application/json'),
+    {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
       type: VirtualDomElements.Div,
@@ -119,51 +164,6 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Td,
     },
     text('test-server'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
-      type: VirtualDomElements.Th,
-    },
-    text('Value'),
-    {
-      childCount: 2,
-      className: 'ChatDebugViewHeadersBody',
-      type: VirtualDomElements.TBody,
-    },
-    {
-      childCount: 2,
-      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowOdd',
-      type: VirtualDomElements.Tr,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
-      type: VirtualDomElements.Td,
-    },
-    text('Authorization'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
-      type: VirtualDomElements.Td,
-    },
-    text('Bearer [redacted]'),
-    {
-      childCount: 2,
-      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowEven',
-      type: VirtualDomElements.Tr,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
-      type: VirtualDomElements.Td,
-    },
-    text('Content-Type'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
-      type: VirtualDomElements.Td,
-    },
-    text('application/json'),
   ])
 })
 
