@@ -1,6 +1,11 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 
 export const getResponseEvent = (event: ChatViewEvent): unknown => {
+  // @ts-ignore
+  if (event && event.endValue && event.endValue.value) {
+    // @ts-ignore
+    return event.endValue.value
+  }
   const { responseEvent } = event as {
     readonly responseEvent?: unknown
   }

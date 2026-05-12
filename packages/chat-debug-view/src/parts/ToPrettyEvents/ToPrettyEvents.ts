@@ -1,26 +1,37 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
+import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
 import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
+import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
 const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
   const parsedStart = new Date(item.timestamp || '')
   const parsedEnd = new Date(response.timestamp || '')
   const durationMs = parsedEnd.getTime() - parsedStart.getTime()
+  const started = getStartedTimestamp(item)
+  const ended = getEndedTimestamp(response)
+  const timestamp = item.timestamp ?? started
 
   if (Number.isFinite(durationMs) && durationMs >= 0) {
     return {
       durationMs,
+      ...(ended === undefined ? {} : { ended }),
       eventEndId: response.eventId,
       eventId: item.eventId,
       method: 'POST',
+      ...(started === undefined ? {} : { started }),
+      ...(timestamp === undefined ? {} : { timestamp }),
       type: 'ai-request-response',
     }
   }
 
   return {
+    ...(ended === undefined ? {} : { ended }),
     eventEndId: response.eventId,
     eventId: item.eventId,
     method: 'POST',
+    ...(started === undefined ? {} : { started }),
+    ...(timestamp === undefined ? {} : { timestamp }),
     type: 'ai-request-response',
   }
 }
