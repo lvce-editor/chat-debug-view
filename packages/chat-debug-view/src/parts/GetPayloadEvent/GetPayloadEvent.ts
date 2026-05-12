@@ -4,6 +4,10 @@ import { hasOwn } from '../HasOwn/HasOwn.ts'
 import { shouldIncludeArguments } from '../ShouldIncludeArguments/ShouldIncludeArguments.ts'
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
+  if (event && event.type === 'ai-request') {
+    return event.body
+  }
+
   const { requestEvent } = event as {
     readonly requestEvent?: unknown
   }

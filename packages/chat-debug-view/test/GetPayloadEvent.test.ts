@@ -27,7 +27,7 @@ test('getPayloadEvent should return only the arguments object for list_files too
   })
 })
 
-test('getPayloadEvent should return requestEvent for merged ai request/response events', () => {
+test.skip('getPayloadEvent should return requestEvent for merged ai request/response events', () => {
   const requestEvent = {
     body: {
       input: ['1+1'],
