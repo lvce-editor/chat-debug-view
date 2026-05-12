@@ -1,7 +1,7 @@
 export interface MenuEntry {
-  args?: any[]
-  command: string
-  flags: number
-  id: string
-  label: string
+  readonly args?: any[]
+  readonly command: string
+  readonly flags: number
+  readonly id: string
+  readonly label: string
 }
