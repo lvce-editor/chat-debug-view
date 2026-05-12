@@ -1,21 +1,17 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
-import { getCurrentEvents as getSharedCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
+import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { mergeSelectedEventDetails } from '../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
 import { withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
-type LoadSelectedEventFn = typeof LoadSelectedEvent.loadSelectedEvent
 
-export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEvent[] => getSharedCurrentEvents(state)
 
 export const selectEventAtIndex = async (
   state: ChatDebugViewState,
   selectedEventIndex: number,
-  loadSelectedEvent: LoadSelectedEventFn = LoadSelectedEvent.loadSelectedEvent,
 ): Promise<ChatDebugViewState> => {
   const { databaseName, dataBaseVersion, detailTabs, eventStoreName, sessionId, sessionIdIndexName } = state
   const selectedDetailTab = getSelectedDetailTab(detailTabs)
@@ -37,7 +33,7 @@ export const selectEventAtIndex = async (
       selectedEventIndex,
     }
   }
-  const selectedEventDetails = await loadSelectedEvent(
+  const selectedEventDetails = await LoadSelectedEvent.loadSelectedEvent(
     databaseName,
     dataBaseVersion,
     eventStoreName,
