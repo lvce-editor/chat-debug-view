@@ -14,6 +14,7 @@ test('getTableBodyDom should render the table body nodes', () => {
   const dom = GetTableBodyDom.getTableBodyDom(rowNodes, 1) as readonly {
     readonly childCount?: number
     readonly className?: string
+    readonly onDblClick?: number
     readonly onPointerDown?: number
     readonly onContextMenu?: number
   }[]
@@ -23,6 +24,7 @@ test('getTableBodyDom should render the table body nodes', () => {
       childCount: 1,
       className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onDblClick: DomEventListenerFunctions.HandleTableRowDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
@@ -45,6 +47,7 @@ test('getTableBodyDom should render an empty table body when there are no rows',
       childCount: 1,
       className: 'TableBody',
       onContextMenu: DomEventListenerFunctions.HandleTableBodyContextMenu,
+      onDblClick: DomEventListenerFunctions.HandleTableRowDoubleClick,
       onPointerDown: DomEventListenerFunctions.HandleEventRowClickAt,
       type: VirtualDomElements.TBody,
     },
