@@ -3,35 +3,75 @@ import { getPreviewName } from '../GetPreviewName/GetPreviewName.ts'
 import { hasOwn } from '../HasOwn/HasOwn.ts'
 import { shouldIncludeArguments } from '../ShouldIncludeArguments/ShouldIncludeArguments.ts'
 
-export const getPayloadEvent = (event: ChatViewEvent): unknown => {
-  const { requestEvent } = event as {
-    readonly requestEvent?: unknown
+type EventWithRequestEvent = {
+  readonly requestEvent?: unknown
+}
+
+type MergedRequestEvent = ChatViewEvent & {
+  readonly body?: unknown
+  readonly value?: unknown
+}
+
+type MergedRequestPayloadResult =
+  | {
+      readonly found: false
+    }
+  | {
+      readonly found: true
+      readonly value: unknown
+    }
+
+type PayloadEvent = {
+  readonly name?: string
+  readonly arguments?: unknown
+  readonly result?: unknown
+}
+
+const getMergedRequestPayloadEvent = (requestEvent: unknown): MergedRequestPayloadResult => {
+  if (!requestEvent || typeof requestEvent !== 'object') {
+    return { found: false }
   }
-  if (requestEvent && typeof requestEvent === 'object' && typeof (requestEvent as ChatViewEvent).type === 'string') {
-    const mergedRequestEvent = requestEvent as ChatViewEvent & {
-      readonly body?: unknown
-      readonly value?: unknown
-    }
-    if (mergedRequestEvent.body !== undefined) {
-      return mergedRequestEvent.body
-    }
-    if (mergedRequestEvent.value !== undefined) {
-      return mergedRequestEvent.value
-    }
-    if (hasOwn(mergedRequestEvent, 'arguments')) {
-      return mergedRequestEvent.arguments
-    }
-    return requestEvent
+  const mergedRequestEvent = requestEvent as MergedRequestEvent
+  if (typeof mergedRequestEvent.type !== 'string') {
+    return { found: false }
   }
-  const name = getPreviewName(event)
-  if (name === 'list_files' && hasOwn(event, 'arguments')) {
-    return event.arguments
+  if (mergedRequestEvent.body !== undefined) {
+    return { found: true, value: mergedRequestEvent.body }
   }
-  const payloadEvent = {
+  if (mergedRequestEvent.value !== undefined) {
+    return { found: true, value: mergedRequestEvent.value }
+  }
+  if (hasOwn(mergedRequestEvent, 'arguments')) {
+    return { found: true, value: mergedRequestEvent.arguments }
+  }
+  return { found: true, value: requestEvent }
+}
+
+const getPayloadObject = (event: ChatViewEvent, name: string | undefined): PayloadEvent => {
+  return {
     ...(name === undefined ? {} : { name }),
     ...(shouldIncludeArguments(event, name) ? { arguments: event.arguments } : {}),
     ...(hasOwn(event, 'result') ? { result: event.result } : {}),
   }
+}
+
+export const getPayloadEvent = (event: ChatViewEvent): unknown => {
+  if (event && event.type === 'ai-request') {
+    return event.body
+  }
+
+  const { requestEvent } = event as EventWithRequestEvent
+  const mergedRequestPayloadEvent = getMergedRequestPayloadEvent(requestEvent)
+  if (mergedRequestPayloadEvent.found) {
+    return mergedRequestPayloadEvent.value
+  }
+
+  const name = getPreviewName(event)
+  if (name === 'list_files' && hasOwn(event, 'arguments')) {
+    return event.arguments
+  }
+
+  const payloadEvent = getPayloadObject(event, name)
   if (Object.keys(payloadEvent).length > 0) {
     return payloadEvent
   }
