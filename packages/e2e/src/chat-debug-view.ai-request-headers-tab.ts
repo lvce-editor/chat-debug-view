@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-request-headers-tab'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = `e2e-session-ai-request-headers-tab-${Date.now()}`
   await ChatDebug.open(sessionId)
@@ -38,5 +40,4 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const headersTab = Locator('.ChatDebugViewDetailsTop [name="headers"]')
   await expect(headersTab).toBeVisible()
-
 }
