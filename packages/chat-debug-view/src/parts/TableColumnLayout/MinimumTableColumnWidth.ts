@@ -6,6 +6,7 @@ export const minimumTableColumnWidth = 80
 const minimumTableColumnWidths: Record<TableColumnName, number> = {
   [TableColumn.Duration]: 80,
   [TableColumn.Method]: 56,
+  [TableColumn.Size]: 80,
   [TableColumn.Status]: 56,
   [TableColumn.Type]: 80,
 }

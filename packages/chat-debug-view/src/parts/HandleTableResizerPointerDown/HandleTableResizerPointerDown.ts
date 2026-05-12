@@ -2,6 +2,8 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 const getTableResizerId = (name: string): number => {
   switch (name) {
+    case 'ResizerFour':
+      return 4
     case 'ResizerOne':
       return 1
     case 'ResizerThree':

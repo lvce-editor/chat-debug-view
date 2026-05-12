@@ -15,7 +15,7 @@ test('getTableResizersDom should render one resizer per visible column boundary'
 
   expect(dom).toEqual([
     {
-      childCount: 3,
+      childCount: 4,
       className: 'Resizers',
       role: 'none',
       type: VirtualDomElements.Div,
@@ -54,6 +54,21 @@ test('getTableResizersDom should render one resizer per visible column boundary'
       childCount: 1,
       className: 'Resizer ResizerThree',
       name: 'ResizerThree',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerFour',
+      name: 'ResizerFour',
       onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
       role: 'none',
       tabIndex: -1,

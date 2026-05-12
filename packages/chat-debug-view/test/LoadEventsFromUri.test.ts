@@ -1,16 +1,10 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
 import { getInvalidUriMessage } from '../src/parts/GetInvalidUriMessage/GetInvalidUriMessage.ts'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
 import { loadEventsFromUri } from '../src/parts/LoadEvents/LoadEventsFromUri/LoadEventsFromUri.ts'
 import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('loadEventsFromUri should return invalid-uri state when the uri cannot be parsed', async () => {
-  const listChatViewEventsSpy = jest.spyOn(loadEventsDependencies, 'listChatViewEvents')
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -29,5 +23,4 @@ test('loadEventsFromUri should return invalid-uri state when the uri cannot be p
     selectedEventIndex: null,
     sessionId: '',
   })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(0)
 })

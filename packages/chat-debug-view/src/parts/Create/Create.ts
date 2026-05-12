@@ -33,7 +33,6 @@ export const create = (
     platform,
     sessionId,
     sessionIdIndexName,
-    tableColumns: [],
     uid,
     uri,
     width,

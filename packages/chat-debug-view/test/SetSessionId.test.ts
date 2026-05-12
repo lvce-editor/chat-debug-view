@@ -1,20 +1,19 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import { getFailedToLoadMessage } from '../src/parts/GetFailedToLoadMessage/GetFailedToLoadMessage.ts'
 import { rpcId as handleStorageWorkerUpdateRpcId } from '../src/parts/HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
-import { setSessionId, setSessionIdDependencies } from '../src/parts/SetSessionId/SetSessionId.ts'
+import { setSessionId } from '../src/parts/SetSessionId/SetSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
-
-afterEach(() => {
-  jest.restoreAllMocks()
-})
 
 test('setSessionId should load events for the given session id and clear selection state', async () => {
   const events = [{ eventId: 1, time: '1ms', type: 'request' }]
-  const listChatViewEventsSpy = jest.spyOn(setSessionIdDependencies, 'listChatViewEvents').mockResolvedValue({
-    events,
-    type: 'success',
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events,
+      type: 'success' as const,
+    }),
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     errorMessage: 'previous error',
@@ -36,19 +35,20 @@ test('setSessionId should load events for the given session id and clear selecti
     selectedEventIndex: null,
     sessionId: 'session-1',
   })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(listChatViewEventsSpy).toHaveBeenCalledWith('session-1', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId')
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 0)
+  expect(mockRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 0],
+  ])
 })
 
 test('setSessionId should return failed-to-load state when listing events returns an error', async () => {
   const error = new Error('failed to load events')
-  const listChatViewEventsSpy = jest.spyOn(setSessionIdDependencies, 'listChatViewEvents').mockResolvedValue({
-    error,
-    type: 'error',
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => {
+      throw error
+    },
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     initial: true,
@@ -69,17 +69,20 @@ test('setSessionId should return failed-to-load state when listing events return
     selectedEventIndex: null,
     sessionId: 'session-1',
   })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-1', handleStorageWorkerUpdateRpcId, 0)
+  expect(mockRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-1'],
+    ['ChatStorage.registerUpdateListener', 'session-1', handleStorageWorkerUpdateRpcId, 0],
+  ])
 })
 
 test('setSessionId should keep an empty successful result as an empty events state', async () => {
-  const listChatViewEventsSpy = jest.spyOn(setSessionIdDependencies, 'listChatViewEvents').mockResolvedValue({
-    events: [],
-    type: 'success',
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.listChatViewEvents': () => ({
+      events: [],
+      type: 'success' as const,
+    }),
+    'ChatStorage.registerUpdateListener': () => undefined,
   })
-  const registerUpdateListenerSpy = jest.spyOn(setSessionIdDependencies, 'registerUpdateListener').mockResolvedValue(undefined)
   const state = {
     ...createDefaultState(),
     errorMessage: 'previous error',
@@ -101,7 +104,8 @@ test('setSessionId should keep an empty successful result as an empty events sta
     selectedEventIndex: null,
     sessionId: 'session-2',
   })
-  expect(listChatViewEventsSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledTimes(1)
-  expect(registerUpdateListenerSpy).toHaveBeenCalledWith('session-2', handleStorageWorkerUpdateRpcId, 0)
+  expect(mockRpc.invocations).toEqual([
+    ['ChatStorage.listChatViewEvents', 'session-2'],
+    ['ChatStorage.registerUpdateListener', 'session-2', handleStorageWorkerUpdateRpcId, 0],
+  ])
 })

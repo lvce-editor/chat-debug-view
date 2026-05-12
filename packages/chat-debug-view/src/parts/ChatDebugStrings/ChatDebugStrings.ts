@@ -168,6 +168,10 @@ export const response = (): string => {
   return I18nString.i18nString(UiStrings.Response)
 }
 
+export const size = (): string => {
+  return I18nString.i18nString(UiStrings.Size)
+}
+
 export const secondsRange = (start: string, end: string): string => {
   return I18nString.i18nString(UiStrings.SecondsRange, {
     PH1: start,

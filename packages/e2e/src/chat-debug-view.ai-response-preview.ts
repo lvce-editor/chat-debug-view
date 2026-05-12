@@ -3,8 +3,6 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.ai-response-preview'
 
-export const skip = 1
-
 export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const sessionId = 'e2e-session-ai-response-preview'
   await ChatDebug.open(sessionId)
@@ -105,13 +103,12 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.openTabPreview()
 
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
-  const rawPreviewText = Locator('.ChatDebugViewEventRawText')
+  const editorContent = Locator('.ChatDebugViewDetailsBottom .EditorContent')
   const lineNumbers = Locator('.ChatDebugViewEventLineNumber')
 
-  await expect(detailsBottom).toHaveText('4')
-  await expect(rawPreviewText).toHaveText('4')
-  await expect(rawPreviewText).not.toContainText('"model": "gpt-5.4-mini-2026-03-17"')
-  await expect(rawPreviewText).not.toContainText('"content-type": "application/json"')
-  await expect(rawPreviewText).not.toContainText('"output": [')
-  await expect(lineNumbers).toHaveCount(0)
+  await expect(detailsBottom).toHaveText('14')
+  await expect(lineNumbers).toHaveCount(1)
+  await expect(editorContent).toHaveText('4')
+  const lineNumbersNth0 = lineNumbers.nth(0)
+  await expect(lineNumbersNth0).toHaveText('1')
 }
