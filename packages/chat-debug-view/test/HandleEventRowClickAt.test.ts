@@ -1,10 +1,10 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import { hasDetailTab } from '../src/parts/HasDetailTab/HasDetailTab.ts'
-import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
 
@@ -25,16 +25,7 @@ const createClickableState = (overrides: Partial<ChatDebugViewState> = {}): Chat
   })
 }
 
-afterEach(() => {
-  jest.restoreAllMocks()
-})
-
 test('handleEventRowClick should select the clicked event row and load details', async () => {
-  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'value',
-    eventId: 3,
-    type: 'request',
-  })
   const state = createClickableState({
     events: [
       {
@@ -61,6 +52,14 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   })
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'value',
+      eventId: 3,
+      type: 'request',
+    }),
+  })
+
   const result = await handleEventRowClickAt(state, tableClientX, row2ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(2)
@@ -72,13 +71,14 @@ test('handleEventRowClick should select the clicked event row and load details',
     startTime: '2026-03-08T00:00:02.000Z',
     type: 'request',
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 3, 'request']])
 })
 
 test('handleEventRowClick should ignore clicks outside the table body', async () => {
   const state = createClickableState({
     selectedEventIndex: 1,
   })
+
   const result = await handleEventRowClickAt(state, tableClientX, 171, 0)
 
   expect(result).toBe(state)
@@ -127,7 +127,6 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
 })
 
 test('handleEventRowClick should fall back to the selected list event when loading details returns null', async () => {
-  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue(null)
   const state = createClickableState({
     events: [
       {
@@ -139,6 +138,9 @@ test('handleEventRowClick should fall back to the selected list event when loadi
       },
     ],
     sessionId: 'session-1',
+  })
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => null,
   })
 
   const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 0)
@@ -152,15 +154,10 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
 })
 
 test('handleEventRowClick should preserve selected detail tab when switching rows', async () => {
-  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'preview',
-    eventId: 2,
-    type: 'response',
-  })
   const state = createClickableState({
     detailTabs: createDetailTabs('preview'),
     events: [
@@ -177,6 +174,13 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     ],
     sessionId: 'session-1',
   })
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'preview',
+      eventId: 2,
+      type: 'response',
+    }),
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
@@ -188,15 +192,10 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
 })
 
 test('handleEventRowClick should fall back to response and hide timing when the selected event has no timing details', async () => {
-  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
-    detail: 'preview',
-    eventId: 2,
-    type: 'chat-message-added',
-  })
   const state = createClickableState({
     detailTabs: createDetailTabs('timing'),
     events: [
@@ -215,6 +214,13 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     ],
     sessionId: 'session-1',
   })
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => ({
+      detail: 'preview',
+      eventId: 2,
+      type: 'chat-message-added',
+    }),
+  })
 
   const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
@@ -228,5 +234,10 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'chat-message-added',
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'chat-message-added')
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'chat-message-added']])
+})
+    'sessionId',
+    2,
+    'chat-message-added',
+  )
 })
