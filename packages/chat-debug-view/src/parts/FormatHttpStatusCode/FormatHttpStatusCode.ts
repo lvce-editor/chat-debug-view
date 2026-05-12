@@ -63,6 +63,8 @@ const httpStatusLabels: Record<number, string> = {
   511: 'Network Authentication Required',
 }
 
+const threeDigitStatusCodeRegex = /^\d{3}$/
+
 const parseStatusCode = (value: unknown): number | undefined => {
   if (typeof value === 'number' && Number.isInteger(value)) {
     return value
@@ -71,7 +73,7 @@ const parseStatusCode = (value: unknown): number | undefined => {
     return undefined
   }
   const trimmedValue = value.trim()
-  if (!/^\d{3}$/.test(trimmedValue)) {
+  if (!threeDigitStatusCodeRegex.test(trimmedValue)) {
     return undefined
   }
   return Number(trimmedValue)
