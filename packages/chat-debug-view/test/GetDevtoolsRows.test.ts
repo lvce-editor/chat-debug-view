@@ -15,6 +15,15 @@ const createRow = (event: Readonly<Record<string, unknown>>, index = 0, override
   }
 }
 
+const sizeCellNodes = [
+  {
+    childCount: 1,
+    className: 'TableCell ChatDebugViewCellSize',
+    type: VirtualDomElements.Td,
+  },
+  text('0 B'),
+] as const
+
 test('getDevtoolsRows should render tool execution labels with the tool name', () => {
   const events = [
     {
@@ -30,7 +39,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -53,6 +62,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -80,7 +90,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -103,6 +113,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -132,7 +143,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -155,6 +166,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
       type: VirtualDomElements.Td,
     },
     text('400'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -185,7 +197,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -208,6 +220,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       type: VirtualDomElements.Td,
     },
     text('400'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -237,7 +250,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -260,6 +273,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -267,7 +281,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     },
     text('0 ms'),
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowEven',
       'data-index': '1',
       type: VirtualDomElements.Tr,
@@ -290,6 +304,7 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -328,7 +343,7 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '0',
       type: VirtualDomElements.Tr,
@@ -351,6 +366,7 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -419,7 +435,7 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
 
   expect(result).toEqual([
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowOdd',
       'data-index': '2',
       type: VirtualDomElements.Tr,
@@ -442,6 +458,7 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',
@@ -449,7 +466,7 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
     },
     text('0 ms'),
     {
-      childCount: 4,
+      childCount: 5,
       className: 'TableRow TableRowEven TableRowSelected',
       'data-index': '3',
       type: VirtualDomElements.Tr,
@@ -472,6 +489,7 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
       type: VirtualDomElements.Td,
     },
     text('200'),
+    ...sizeCellNodes,
     {
       childCount: 1,
       className: 'TableCell ChatDebugViewCellDuration',

@@ -1,6 +1,8 @@
 import { expect, test } from '@jest/globals'
+import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { getCurrentEvents } from '../src/parts/LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getCurrentEvents should apply event filters and timeline range', () => {
   const requestEvent = {
@@ -51,4 +53,31 @@ test('getCurrentEvents should sort by selected table column', () => {
   const result = getCurrentEvents(state)
 
   expect(result).toEqual([requestEvent, responseEvent])
+})
+
+test('getCurrentEvents should sort by size numerically', () => {
+  const largerEvent = {
+    eventId: 2,
+    sessionId: 'session-1',
+    size: 1024,
+    timestamp: '2026-03-08T00:00:01.000Z',
+    type: 'response',
+  }
+  const smallerEvent = {
+    eventId: 1,
+    sessionId: 'session-1',
+    size: 2,
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  }
+  const state: ChatDebugViewState = {
+    ...createDefaultState(),
+    events: [largerEvent, smallerEvent],
+    sortColumn: TableColumn.Size,
+    sortDescending: false,
+  }
+
+  const result = getCurrentEvents(state)
+
+  expect(result).toEqual([smallerEvent, largerEvent])
 })

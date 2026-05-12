@@ -19,6 +19,7 @@ test('getColumnVisibilityFlags should return unchecked for hidden column', () =>
       TableColumn.Type,
       TableColumn.Method,
       TableColumn.Status,
+      TableColumn.Size,
     ]),
   }
 
@@ -33,11 +34,28 @@ test('getColumnVisibilityFlags should return unchecked for a hidden method colum
     tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, [
       TableColumn.Type,
       TableColumn.Status,
+      TableColumn.Size,
       TableColumn.Duration,
     ]),
   }
 
   const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Method)
+
+  expect(result).toBe(MenuItemFlags.Unchecked)
+})
+
+test('getColumnVisibilityFlags should return unchecked for a hidden size column', () => {
+  const state = {
+    ...createDefaultState(),
+    tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, [
+      TableColumn.Type,
+      TableColumn.Method,
+      TableColumn.Status,
+      TableColumn.Duration,
+    ]),
+  }
+
+  const result = GetColumnVisibilityFlags.getColumnVisibilityFlags(state.tableColumns, TableColumn.Size)
 
   expect(result).toBe(MenuItemFlags.Unchecked)
 })

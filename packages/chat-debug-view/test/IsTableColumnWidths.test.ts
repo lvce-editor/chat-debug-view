@@ -5,6 +5,7 @@ test('isTableColumnWidths should return true for finite table column widths', ()
   const result = IsTableColumnWidths.isTableColumnWidths({
     duration: 110,
     method: 90,
+    size: 100,
     status: 110,
     type: 260,
   })
@@ -30,6 +31,7 @@ test('isTableColumnWidths should return false for missing or invalid widths', ()
     IsTableColumnWidths.isTableColumnWidths({
       duration: 110,
       method: 90,
+      size: 100,
       status: Number.POSITIVE_INFINITY,
       type: 260,
     }),

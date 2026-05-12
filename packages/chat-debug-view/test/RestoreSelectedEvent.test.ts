@@ -1,11 +1,7 @@
-import { afterEach, expect, jest, test } from '@jest/globals'
-import { loadEventsDependencies } from '../src/parts/LoadEvents/LoadEvents.ts'
+import { expect, test } from '@jest/globals'
+import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import { restoreSelectedEvent } from '../src/parts/LoadEvents/RestoreSelectedEvent/RestoreSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
-
-afterEach(() => {
-  jest.restoreAllMocks()
-})
 
 test('restoreSelectedEvent should load details for the selected visible event', async () => {
   const requestEvent = {
@@ -27,7 +23,9 @@ test('restoreSelectedEvent should load details for the selected visible event', 
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
-  const loadSelectedEventSpy = jest.spyOn(loadEventsDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEvent)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => selectedEvent,
+  })
   const state = {
     ...createDefaultState(),
     events: [requestEvent, responseEvent],
@@ -43,12 +41,10 @@ test('restoreSelectedEvent should load details for the selected visible event', 
     selectedEventId: 2,
     selectedEventIndex: 1,
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith({ eventId: 2, sessionId: 'session-1', type: 'response' })
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
 })
 
 test('restoreSelectedEvent should clear selection when the selected event is no longer visible', async () => {
-  const loadSelectedEventSpy = jest.spyOn(loadEventsDependencies, 'loadSelectedEvent')
   const state = {
     ...createDefaultState(),
     events: [
@@ -80,7 +76,6 @@ test('restoreSelectedEvent should clear selection when the selected event is no 
     selectedEventId: null,
     selectedEventIndex: null,
   })
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
 })
 
 test('restoreSelectedEvent should preserve merged ai request and response details', async () => {
@@ -92,7 +87,9 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     requestId: 'request-1',
     type: 'ai-request',
   }
-  const loadSelectedEventSpy = jest.spyOn(loadEventsDependencies, 'loadSelectedEvent').mockResolvedValue(selectedEventDetails)
+  using mockRpc = ChatStorageWorker.registerMockRpc({
+    'ChatStorage.loadSelectedEvent': () => selectedEventDetails,
+  })
   const mergedEvent = {
     ended: '2026-04-19T12:00:00.250Z',
     eventId: 1,
@@ -142,5 +139,5 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
       },
     }),
   )
-  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
+  expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'ai-request']])
 })

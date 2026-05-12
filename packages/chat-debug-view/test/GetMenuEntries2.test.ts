@@ -29,6 +29,13 @@ test('getMenuEntries2 should return checked table header entries and reset actio
       label: 'Status',
     },
     {
+      args: ['size'],
+      command: 'ChatDebug.toggleTableColumnVisibility',
+      flags: MenuItemFlags.Checked,
+      id: 'size',
+      label: 'Size',
+    },
+    {
       args: ['duration'],
       command: 'ChatDebug.toggleTableColumnVisibility',
       flags: MenuItemFlags.Checked,
@@ -56,6 +63,7 @@ test('getMenuEntries2 should mark hidden table columns as unchecked', () => {
   })
 
   expect(result[2]?.flags).toBe(MenuItemFlags.Unchecked)
+  expect(result[3]?.flags).toBe(MenuItemFlags.Unchecked)
 })
 
 test('getMenuEntries2 should pass the clicked row index to the copy command', () => {

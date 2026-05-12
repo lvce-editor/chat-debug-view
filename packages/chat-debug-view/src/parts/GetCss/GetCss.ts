@@ -29,10 +29,12 @@ export const getCss = (state: ChatDebugViewState): string => {
     topSize = 30
   }
   const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
-  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0, tableColThreeWidth = 0] = tableColumnLayout.visibleColumnWidths
+  const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0, tableColThreeWidth = 0, tableColFourWidth = 0] =
+    tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
   const resizerThreeLeft = tableColumnLayout.resizerLefts[2] ?? 0
+  const resizerFourLeft = tableColumnLayout.resizerLefts[3] ?? 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
   return `
 .ChatDebugView {
@@ -42,6 +44,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTableColOneWidth: ${tableColOneWidth}px;
   --ChatDebugViewTableColTwoWidth: ${tableColTwoWidth}px;
   --ChatDebugViewTableColThreeWidth: ${tableColThreeWidth}px;
+  --ChatDebugViewTableColFourWidth: ${tableColFourWidth}px;
   --ChatDebugViewDetailsLineNumberWidth: ${detailsLineNumberWidth}px;
   --ChatDebugViewPreviewScrollBarHeight: ${previewVirtualization.scrollBarHeight}px;
   --ChatDebugViewPreviewScrollBarOffset: ${previewVirtualization.scrollBarOffset}px;
@@ -56,6 +59,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ResizerOneLeft: ${resizerOneLeft}px;
   --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ResizerThreeLeft: ${resizerThreeLeft}px;
+  --ResizerFourLeft: ${resizerFourLeft}px;
   --ChatDebugViewSashWidth: ${state.sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
   --ChatDebugViewTimelineHeight: ${state.timelineHeight}px;
@@ -76,6 +80,26 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .Table {
   width: calc(100% - var(--ChatDebugViewTableScrollBarWidth));
+}
+
+.TableColZero {
+  width: var(--ChatDebugViewTableColZeroWidth);
+}
+
+.TableColOne {
+  width: var(--ChatDebugViewTableColOneWidth);
+}
+
+.TableColTwo {
+  width: var(--ChatDebugViewTableColTwoWidth);
+}
+
+.TableColThree {
+  width: var(--ChatDebugViewTableColThreeWidth);
+}
+
+.TableColFour {
+  width: var(--ChatDebugViewTableColFourWidth);
 }
 
 .Resizers {
@@ -111,6 +135,10 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ResizerThree {
   left: var(--ResizerThreeLeft);
+}
+
+.ResizerFour {
+  left: var(--ResizerFourLeft);
 }
 
 .ResizerInner {
