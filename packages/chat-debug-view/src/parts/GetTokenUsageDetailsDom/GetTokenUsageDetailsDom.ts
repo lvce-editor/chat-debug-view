@@ -5,28 +5,46 @@ import { ChatDebugViewTiming } from '../ClassNames/ClassNames.ts'
 import { getTimingRowDom } from '../GetTimingRowDom/GetTimingRowDom.ts'
 import { getTokenUsageDetails } from '../GetTokenUsageDetails/GetTokenUsageDetails.ts'
 
-export const getTokenUsageDetailsDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
+type TokenUsageRowViewModel = {
+  readonly key: string
+  readonly value: number | undefined
+}
+
+type DefinedTokenUsageRowViewModel = {
+  readonly key: string
+  readonly value: number
+}
+
+const getRowViewModels = (event: ChatViewEvent): readonly DefinedTokenUsageRowViewModel[] => {
   const usageDetails = getTokenUsageDetails(event)
   if (!usageDetails) {
     return []
   }
-  const rows: VirtualDomNode[] = []
-  let rowCount = 0
-  if (usageDetails.inputTokens !== undefined) {
-    rows.push(...getTimingRowDom(ChatDebugStrings.inputTokens(), String(usageDetails.inputTokens)))
-    rowCount++
-  }
-  if (usageDetails.outputTokens !== undefined) {
-    rows.push(...getTimingRowDom(ChatDebugStrings.outputTokens(), String(usageDetails.outputTokens)))
-    rowCount++
-  }
-  if (usageDetails.cachedTokens !== undefined) {
-    rows.push(...getTimingRowDom(ChatDebugStrings.cachedTokens(), String(usageDetails.cachedTokens)))
-    rowCount++
-  }
   return [
     {
-      childCount: rowCount,
+      key: ChatDebugStrings.inputTokens(),
+      value: usageDetails.inputTokens,
+    },
+    {
+      key: ChatDebugStrings.outputTokens(),
+      value: usageDetails.outputTokens,
+    },
+    {
+      key: ChatDebugStrings.cachedTokens(),
+      value: usageDetails.cachedTokens,
+    },
+  ].filter((row: Readonly<TokenUsageRowViewModel>): row is DefinedTokenUsageRowViewModel => row.value !== undefined)
+}
+
+export const getTokenUsageDetailsDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
+  const rowViewModels = getRowViewModels(event)
+  if (rowViewModels.length === 0) {
+    return []
+  }
+  const rows = rowViewModels.flatMap((row: Readonly<DefinedTokenUsageRowViewModel>) => getTimingRowDom(row.key, String(row.value)))
+  return [
+    {
+      childCount: rowViewModels.length,
       className: ChatDebugViewTiming,
       type: VirtualDomElements.Div,
     },
