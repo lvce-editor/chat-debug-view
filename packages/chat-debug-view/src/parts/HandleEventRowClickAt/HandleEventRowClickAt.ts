@@ -2,7 +2,6 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyEventIndex } from '../GetTableBodyEventIndex/GetTableBodyEventIndex.ts'
 import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.ts'
 
-
 export const handleEventRowClickAt = async (
   state: ChatDebugViewState,
   eventX: number,
@@ -10,5 +9,5 @@ export const handleEventRowClickAt = async (
   button: number = 0,
 ): Promise<ChatDebugViewState> => {
   const selectedEventIndex = getTableBodyEventIndex(state, eventX, eventY)
-  return handleEventRowClick(state, selectedEventIndex, button,)
+  return handleEventRowClick(state, selectedEventIndex, button)
 }
