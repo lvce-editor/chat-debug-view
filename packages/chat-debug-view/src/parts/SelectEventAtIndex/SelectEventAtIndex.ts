@@ -36,6 +36,8 @@ export const selectEventAtIndex = async (state: ChatDebugViewState, selectedEven
     sessionIdIndexName,
     selectedEvent.eventId,
     selectedEvent.type,
+    // @ts-ignore
+    selectedEvent['eventEndId'] || 0,
   )
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return withSelectedEventVisible({
