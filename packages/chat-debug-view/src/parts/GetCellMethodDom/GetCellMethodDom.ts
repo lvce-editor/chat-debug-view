@@ -3,13 +3,12 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { TableCell } from '../ClassNames/ClassNames.ts'
 import { getEventTableMethodLabel } from '../GetEventTableMethodLabel/GetEventTableMethodLabel.ts'
 
+const td: VirtualDomNode = {
+  childCount: 1,
+  className: TableCell,
+  type: VirtualDomElements.Td,
+}
+
 export const getCellMethodDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 1,
-      className: TableCell,
-      type: VirtualDomElements.Td,
-    },
-    text(getEventTableMethodLabel(event)),
-  ]
+  return [td, text(getEventTableMethodLabel(event))]
 }
