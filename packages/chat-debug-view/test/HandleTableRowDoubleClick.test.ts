@@ -7,7 +7,6 @@ import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.t
 
 const tableClientX = 30
 const row0ClientY = 180
-const row1ClientY = 197
 const row2ClientY = 221
 
 const createClickableState = (overrides: Partial<ChatDebugViewState> = {}): ChatDebugViewState => {
