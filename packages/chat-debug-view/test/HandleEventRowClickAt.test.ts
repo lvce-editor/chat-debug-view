@@ -1,14 +1,12 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
-import type * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import { handleEventRowClickAt } from '../src/parts/HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import { hasDetailTab } from '../src/parts/HasDetailTab/HasDetailTab.ts'
+import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 import { applyVirtualTableState } from '../src/parts/VirtualTable/VirtualTable.ts'
-
-type LoadSelectedEventFn = typeof LoadSelectedEvent.loadSelectedEvent
 
 const tableClientX = 30
 const row0ClientY = 180
@@ -32,7 +30,7 @@ afterEach(() => {
 })
 
 test('handleEventRowClick should select the clicked event row and load details', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
     detail: 'value',
     eventId: 3,
     type: 'request',
@@ -63,7 +61,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     ],
     sessionId: 'session-1',
   })
-  const result = await handleEventRowClickAt(state, tableClientX, row2ClientY, 0, loadSelectedEvent)
+  const result = await handleEventRowClickAt(state, tableClientX, row2ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(2)
   expect(result.selectedEvent).toEqual({
@@ -74,7 +72,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     startTime: '2026-03-08T00:00:02.000Z',
     type: 'request',
   })
-  expect(loadSelectedEvent).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 3, 'request')
 })
 
 test('handleEventRowClick should ignore clicks outside the table body', async () => {
@@ -129,7 +127,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
 })
 
 test('handleEventRowClick should fall back to the selected list event when loading details returns null', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue(null)
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue(null)
   const state = createClickableState({
     events: [
       {
@@ -143,7 +141,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     sessionId: 'session-1',
   })
 
-  const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 0, loadSelectedEvent)
+  const result = await handleEventRowClickAt(state, tableClientX, row0ClientY, 0)
 
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBe(1)
@@ -154,10 +152,11 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   })
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
 })
 
 test('handleEventRowClick should preserve selected detail tab when switching rows', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
     detail: 'preview',
     eventId: 2,
     type: 'response',
@@ -179,7 +178,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     sessionId: 'session-1',
   })
 
-  const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0, loadSelectedEvent)
+  const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
   expect(getSelectedDetailTab(result.detailTabs)).toBe('preview')
   expect(result.selectedEventIndex).toBe(1)
@@ -189,10 +188,11 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   })
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
 })
 
 test('handleEventRowClick should fall back to response and hide timing when the selected event has no timing details', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
     detail: 'preview',
     eventId: 2,
     type: 'chat-message-added',
@@ -216,7 +216,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     sessionId: 'session-1',
   })
 
-  const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0, loadSelectedEvent)
+  const result = await handleEventRowClickAt(state, tableClientX, row1ClientY, 0)
 
   expect(getSelectedDetailTab(result.detailTabs)).toBe('response')
   expect(hasDetailTab(result.detailTabs, 'timing')).toBe(false)
@@ -228,4 +228,5 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'chat-message-added',
   })
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'chat-message-added')
 })

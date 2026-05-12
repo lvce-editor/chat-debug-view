@@ -1,13 +1,11 @@
 import { expect, jest, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
-import type * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
+import * as LoadSelectedEvent from '../src/parts/LoadSelectedEvent/LoadSelectedEvent.ts'
 import { selectEventAtIndex } from '../src/parts/SelectEventAtIndex/SelectEventAtIndex.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-type LoadSelectedEventFn = typeof LoadSelectedEvent.loadSelectedEvent
-
 test('selectEventAtIndex should clear the selected event when the index is out of range', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>()
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent')
   const state = {
     ...createDefaultState(),
     events: [
@@ -19,7 +17,7 @@ test('selectEventAtIndex should clear the selected event when the index is out o
     ],
   }
 
-  const result = await selectEventAtIndex(state, 3, loadSelectedEvent)
+  const result = await selectEventAtIndex(state, 3)
 
   expect(result).toEqual({
     ...state,
@@ -27,11 +25,11 @@ test('selectEventAtIndex should clear the selected event when the index is out o
     selectedEventId: null,
     selectedEventIndex: 3,
   })
-  expect(loadSelectedEvent).toHaveBeenCalledTimes(0)
+  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
 })
 
 test('selectEventAtIndex should keep the event selected when it has no numeric event id', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>()
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent')
   const invalidEvent = {
     eventId: 'missing-id',
     timestamp: '2026-03-08T00:00:00.000Z',
@@ -42,7 +40,7 @@ test('selectEventAtIndex should keep the event selected when it has no numeric e
     events: [invalidEvent],
   }
 
-  const result = await selectEventAtIndex(state, 0, loadSelectedEvent)
+  const result = await selectEventAtIndex(state, 0)
 
   expect(result).toEqual({
     ...state,
@@ -50,11 +48,11 @@ test('selectEventAtIndex should keep the event selected when it has no numeric e
     selectedEventId: null,
     selectedEventIndex: 0,
   })
-  expect(loadSelectedEvent).toHaveBeenCalledTimes(0)
+  expect(loadSelectedEventSpy).toHaveBeenCalledTimes(0)
 })
 
 test('selectEventAtIndex should preserve merged ai request and response details', async () => {
-  const loadSelectedEvent = jest.fn<LoadSelectedEventFn>().mockResolvedValue({
+  const loadSelectedEventSpy = jest.spyOn(LoadSelectedEvent, 'loadSelectedEvent').mockResolvedValue({
     body: {
       input: ['1+1'],
     },
@@ -88,7 +86,7 @@ test('selectEventAtIndex should preserve merged ai request and response details'
     sessionId: 'session-1',
   }
 
-  const result = await selectEventAtIndex(state, 0, loadSelectedEvent)
+  const result = await selectEventAtIndex(state, 0)
 
   expect(result.selectedEvent).toEqual(
     expect.objectContaining({
@@ -110,4 +108,5 @@ test('selectEventAtIndex should preserve merged ai request and response details'
       },
     }),
   )
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'ai-request')
 })
