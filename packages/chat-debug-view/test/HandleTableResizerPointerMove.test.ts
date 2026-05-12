@@ -23,6 +23,7 @@ test('handleTableResizerPointerMove should update the first visible column width
   expect(result.tableColumnWidths).toEqual({
     duration: 110,
     method: 90,
+    size: 100,
     status: 110,
     type: 232,
   })

@@ -16,6 +16,7 @@ test('saveState should persist serializable non-layout state fields', () => {
     tableColumnWidths: {
       duration: 96,
       method: 92,
+      size: 100,
       status: 124,
       type: 260,
     },
@@ -34,11 +35,12 @@ test('saveState should persist serializable non-layout state fields', () => {
     tableColumnWidths: {
       duration: 96,
       method: 92,
+      size: 100,
       status: 124,
       type: 260,
     },
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
-    visibleTableColumns: ['type', 'method', 'status', 'duration'],
+    visibleTableColumns: ['type', 'method', 'status', 'size', 'duration'],
   })
 })

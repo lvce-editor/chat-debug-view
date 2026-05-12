@@ -23,7 +23,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   // assert
   const headerCells = Locator('th')
-  await expect(headerCells).toHaveCount(4)
+  await expect(headerCells).toHaveCount(5)
   const headerCellsNth0 = headerCells.nth(0)
   await expect(headerCellsNth0).toHaveText('Type')
   await expect(headerCellsNth0).toHaveCSS('text-transform', 'none')
@@ -34,6 +34,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await expect(headerCellsNth2).toHaveText('Status')
   await expect(headerCellsNth2).toHaveCSS('text-transform', 'none')
   const headerCellsNth3 = headerCells.nth(3)
-  await expect(headerCellsNth3).toHaveText('Time')
+  await expect(headerCellsNth3).toHaveText('Size')
   await expect(headerCellsNth3).toHaveCSS('text-transform', 'none')
+  const headerCellsNth4 = headerCells.nth(4)
+  await expect(headerCellsNth4).toHaveText('Time')
+  await expect(headerCellsNth4).toHaveCSS('text-transform', 'none')
 }

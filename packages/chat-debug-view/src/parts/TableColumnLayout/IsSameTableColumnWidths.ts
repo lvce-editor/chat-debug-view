@@ -1,5 +1,11 @@
 import type { TableColumnWidths } from './TableColumnWidths.ts'
 
 export const isSameTableColumnWidths = (first: TableColumnWidths, second: TableColumnWidths): boolean => {
-  return first.type === second.type && first.method === second.method && first.duration === second.duration && first.status === second.status
+  return (
+    first.type === second.type &&
+    first.method === second.method &&
+    first.duration === second.duration &&
+    first.size === second.size &&
+    first.status === second.status
+  )
 }
