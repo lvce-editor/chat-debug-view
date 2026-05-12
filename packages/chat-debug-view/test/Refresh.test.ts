@@ -62,7 +62,7 @@ test('refresh should return session-not-found state when latest events are empty
 })
 
 test('refresh should update events with latest data from chat storage worker', async () => {
-  const events = [{ eventId: 1, time: 1, type: 'request' }]
+  const events = [{ eventId: 1, time: '1ms', type: 'request' }]
   const listChatViewEventsSpy = jest.spyOn(refreshDependencies, 'listChatViewEvents').mockResolvedValue({
     events,
     type: 'success',

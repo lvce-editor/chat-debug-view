@@ -1,58 +1,11 @@
-import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
-import { ChatDebugViewCellDuration, ChatDebugViewCellStatusError, TableCell } from '../ClassNames/ClassNames.ts'
-import { getEventTableDurationText } from '../GetEventTableDurationText/GetEventTableDurationText.ts'
-import { getEventTableMethodLabel } from '../GetEventTableMethodLabel/GetEventTableMethodLabel.ts'
-import { getEventTableTypeLabel } from '../GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
-import { getStatusText } from '../GetStatusText/GetStatusText.ts'
+import * as GetTableCellDom from '../GetTableCellDom/GetTableCellDom.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
-
-const getTableCellDom = (column: TableColumn.TableColumnName, event: ChatViewEvent, isErrorStatus: boolean): readonly VirtualDomNode[] => {
-  switch (column) {
-    case TableColumn.Duration:
-      return [
-        {
-          childCount: 1,
-          className: mergeClassNames(TableCell, ChatDebugViewCellDuration),
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableDurationText(event)),
-      ]
-    case TableColumn.Method:
-      return [
-        {
-          childCount: 1,
-          className: TableCell,
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableMethodLabel(event)),
-      ]
-    case TableColumn.Status:
-      return [
-        {
-          childCount: 1,
-          className: mergeClassNames(TableCell, isErrorStatus ? ChatDebugViewCellStatusError : ''),
-          type: VirtualDomElements.Td,
-        },
-        text(getStatusText(event)),
-      ]
-    case TableColumn.Type:
-      return [
-        {
-          childCount: 1,
-          className: TableCell,
-          type: VirtualDomElements.Td,
-        },
-        text(getEventTableTypeLabel(event)),
-      ]
-    default:
-      return []
-  }
-}
 
 export const getRowCellNodes = (event: ChatViewEvent, isErrorStatus: boolean, visibleTableColumns: readonly string[]): readonly VirtualDomNode[] => {
   const orderedVisibleTableColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns)
   return orderedVisibleTableColumns.flatMap((column) => {
-    return getTableCellDom(column, event, isErrorStatus)
+    return GetTableCellDom.getTableCellDom(column, event, isErrorStatus)
   })
 }

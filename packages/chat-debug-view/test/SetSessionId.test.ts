@@ -9,7 +9,7 @@ afterEach(() => {
 })
 
 test('setSessionId should load events for the given session id and clear selection state', async () => {
-  const events = [{ eventId: 1, time: 1, type: 'request' }]
+  const events = [{ eventId: 1, time: '1ms', type: 'request' }]
   const listChatViewEventsSpy = jest.spyOn(setSessionIdDependencies, 'listChatViewEvents').mockResolvedValue({
     events,
     type: 'success',
