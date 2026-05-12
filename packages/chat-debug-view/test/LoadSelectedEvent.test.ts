@@ -12,7 +12,7 @@ test('loadSelectedEvent should use chat storage worker', async () => {
     'ChatStorage.loadSelectedEvent': () => event,
   })
 
-  const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+  const result = await loadSelectedEvent({ eventId: 1, sessionId: 'session-1', type: 'request' })
 
   expect(result).toEqual(event)
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
@@ -28,7 +28,7 @@ test('loadSelectedEvent should return the selected event details from the worker
     'ChatStorage.loadSelectedEvent': () => event,
   })
 
-  const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+  const result = await loadSelectedEvent({ eventId: 1, sessionId: 'session-1', type: 'request' })
 
   expect(result).toEqual(event)
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
@@ -39,7 +39,7 @@ test('loadSelectedEvent should return null when the worker has no details', asyn
     'ChatStorage.loadSelectedEvent': () => null,
   })
 
-  const result = await loadSelectedEvent('chat-db', 2, 'chat-view-events', 'session-1', 'sessionId', 1, 'request')
+  const result = await loadSelectedEvent({ eventId: 1, sessionId: 'session-1', type: 'request' })
 
   expect(result).toBeNull()
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])

@@ -44,7 +44,7 @@ test('restoreSelectedEvent should load details for the selected visible event', 
     selectedEventIndex: 1,
   })
   expect(loadSelectedEventSpy).toHaveBeenCalledTimes(1)
-  expect(loadSelectedEventSpy).toHaveBeenCalledWith('lvce-chat-view-sessions', 2, 'chat-view-events', 'session-1', 'sessionId', 2, 'response')
+  expect(loadSelectedEventSpy).toHaveBeenCalledWith({ eventId: 2, sessionId: 'session-1', type: 'response' })
 })
 
 test('restoreSelectedEvent should clear selection when the selected event is no longer visible', async () => {

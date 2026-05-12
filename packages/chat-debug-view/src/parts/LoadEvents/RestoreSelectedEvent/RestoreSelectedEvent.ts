@@ -46,15 +46,11 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
       selectedEventIndex: null,
     }
   }
-  const selectedEventDetails = await loadEventsDependencies.loadSelectedEvent(
-    state.databaseName,
-    state.dataBaseVersion,
-    state.eventStoreName,
-    state.sessionId,
-    state.sessionIdIndexName,
-    selectedEvent.eventId,
-    selectedEvent.type,
-  )
+  const selectedEventDetails = await loadEventsDependencies.loadSelectedEvent({
+    eventId: selectedEvent.eventId,
+    sessionId: state.sessionId,
+    type: selectedEvent.type,
+  })
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
   return {
     ...state,

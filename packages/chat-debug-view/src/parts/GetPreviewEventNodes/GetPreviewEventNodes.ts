@@ -1,6 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
+import type { SelectedEventDetailsOpenAiRequestResponse } from '../SelectedEventDetailsOpenAiRequestResponse/SelectedEventDetailsOpenAiRequestResponse.ts'
 import { isAttachmentImagePreview } from '../AttachmentImagePreview/AttachmentImagePreview.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getImagePreviewDom } from '../GetImagePreviewDom/GetImagePreviewDom.ts'
@@ -8,6 +9,7 @@ import { getLanguageFromFileExtension } from '../GetLanguageFromFileExtension/Ge
 import { getSyntaxHighlightTokens } from '../GetSyntaxHighlightTokens/GetSyntaxHighlightTokens.ts'
 import { getTextNode, type TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
 import { isChatMessageUpdatedEvent } from '../IsChatMessageUpdatedEvent/IsChatMessageUpdatedEvent.ts'
+import { isRecord } from '../IsRecord/IsRecord.ts'
 import * as UiStrings from '../UiStrings/UiStrings.ts'
 import { isWriteFilePreview } from '../WriteFilePreview/WriteFilePreview.ts'
 
@@ -23,12 +25,25 @@ const getTextEvent = (
   return getTextNode(previewEvent, showLineNumbers, showLineNumbers ? (previewTextCursor ?? null) : null, undefined, virtualization)
 }
 
+const isOpenAiRequestPreviewEvent = (previewEvent: unknown): previewEvent is SelectedEventDetailsOpenAiRequestResponse => {
+  return (
+    isRecord(previewEvent) &&
+    previewEvent.type === 'ai-request' &&
+    isRecord(previewEvent.endValue) &&
+    isRecord(previewEvent.endValue.value) &&
+    typeof previewEvent.endValue.value.output_text === 'string'
+  )
+}
+
 export const getPreviewEventNodes = (
   previewEvent: unknown,
   selectedEvent?: ChatViewEvent | null,
   previewTextCursor?: PreviewTextCursor | null,
   virtualization?: TextNodeVirtualizationOptions,
 ): readonly VirtualDomNode[] => {
+  if (isOpenAiRequestPreviewEvent(previewEvent)) {
+    return getTextEvent(previewEvent.endValue.value.output_text)
+  }
   if (typeof previewEvent === 'string') {
     return getTextEvent(previewEvent, selectedEvent, previewTextCursor, virtualization)
   }
