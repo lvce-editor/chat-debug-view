@@ -63,12 +63,13 @@ test('getCss should expose preview scrollbar variables for virtualized preview t
   expect(css).toContain('.PreviewVirtualizedEditor {')
 })
 
-test('getCss should style the ai-request headers table inside the details panel', () => {
+test('getCss should style the ai-request headers list inside the details panel', () => {
   const css = getCss(createDefaultState())
 
   expect(css).toContain('.ChatDebugViewHeadersTable {')
+  expect(css).toContain('.ChatDebugViewHeadersRow {')
   expect(css).toContain('.ChatDebugViewHeadersCell {')
-  expect(css).toContain('.ChatDebugViewHeadersHead .ChatDebugViewHeadersCell {')
+  expect(css).toContain('grid-template-columns: minmax(0, 38%) minmax(0, 1fr);')
 })
 
 test('getCss should style the table column resizers and expose their offsets', () => {

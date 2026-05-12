@@ -115,7 +115,7 @@ test('getSelectedContentNodes should return headers content for the headers tab'
   expect(result[3]).toEqual(
     expect.objectContaining({
       className: 'ChatDebugViewHeadersTable',
-      type: VirtualDomElements.Table,
+      type: VirtualDomElements.Ul,
     }),
   )
 })

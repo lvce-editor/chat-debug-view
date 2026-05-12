@@ -2,11 +2,9 @@ import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
-  ChatDebugViewHeadersBody,
   ChatDebugViewHeadersCell,
   ChatDebugViewHeadersCellName,
   ChatDebugViewHeadersCellValue,
-  ChatDebugViewHeadersHead,
   ChatDebugViewHeadersRow,
   ChatDebugViewHeadersRowEven,
   ChatDebugViewHeadersRowOdd,
@@ -109,18 +107,18 @@ const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: numb
     {
       childCount: 2,
       className: mergeClassNames(ChatDebugViewHeadersRow, index % 2 === 0 ? ChatDebugViewHeadersRowOdd : ChatDebugViewHeadersRowEven),
-      type: VirtualDomElements.Tr,
+      type: VirtualDomElements.Li,
     },
     {
       childCount: 1,
       className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
-      type: VirtualDomElements.Td,
+      type: VirtualDomElements.Div,
     },
     text(headerName),
     {
       childCount: 1,
       className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
-      type: VirtualDomElements.Td,
+      type: VirtualDomElements.Div,
     },
     text(getHeaderValueText(headerValue)),
   ]
@@ -133,36 +131,9 @@ const getHeadersTableNodes = (headers: readonly HeaderEntry[]): readonly Virtual
   }
   return [
     {
-      childCount: 2,
-      className: ChatDebugViewHeadersTable,
-      type: VirtualDomElements.Table,
-    },
-    {
-      childCount: 1,
-      className: ChatDebugViewHeadersHead,
-      type: VirtualDomElements.THead,
-    },
-    {
-      childCount: 2,
-      className: ChatDebugViewHeadersRow,
-      type: VirtualDomElements.Tr,
-    },
-    {
-      childCount: 1,
-      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
-      type: VirtualDomElements.Th,
-    },
-    text(ChatDebugStrings.name()),
-    {
-      childCount: 1,
-      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
-      type: VirtualDomElements.Th,
-    },
-    text(ChatDebugStrings.value()),
-    {
       childCount: headers.length,
-      className: ChatDebugViewHeadersBody,
-      type: VirtualDomElements.TBody,
+      className: ChatDebugViewHeadersTable,
+      type: VirtualDomElements.Ul,
     },
     ...headerRows,
   ]

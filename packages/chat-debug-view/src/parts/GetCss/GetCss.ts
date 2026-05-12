@@ -143,8 +143,9 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewHeadersTable {
-  border-collapse: collapse;
-  table-layout: fixed;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -166,20 +167,18 @@ export const getCss = (state: ChatDebugViewState): string => {
   text-transform: uppercase;
 }
 
+.ChatDebugViewHeadersRow {
+  display: grid;
+  grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+}
+
 .ChatDebugViewHeadersCell {
   border-bottom: 1px solid var(--vscode-panel-border, rgba(255, 255, 255, 0.12));
+  min-width: 0;
   color: var(--vscode-editor-foreground);
   padding: 6px 10px;
   text-align: left;
-  vertical-align: top;
   word-break: break-word;
-}
-
-.ChatDebugViewHeadersHead .ChatDebugViewHeadersCell {
-  color: var(--vscode-descriptionForeground, rgba(255, 255, 255, 0.7));
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
 }
 
 .ChatDebugViewHeadersRowOdd {
@@ -192,7 +191,6 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 .ChatDebugViewHeadersCellName {
   font-weight: 500;
-  width: 38%;
 }
 .PreviewVirtualizedEditor {
   height: var(--ChatDebugViewPreviewViewportHeight);
