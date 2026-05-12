@@ -1,8 +1,8 @@
 import type { ChatDebugViewState } from '../../State/ChatDebugViewState.ts'
+import { loadSelectedEvent } from '../../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { mergeSelectedEventDetails } from '../../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
 import { withPreparedSelectedEventPreview } from '../../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 import { getCurrentEvents } from '../GetCurrentEvents/GetCurrentEvents.ts'
-import { loadEventsDependencies } from '../LoadEventsDependencies/LoadEventsDependencies.ts'
 
 export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
   if (state.selectedEventId === null) {
@@ -46,7 +46,7 @@ export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<C
       selectedEventIndex: null,
     }
   }
-  const selectedEventDetails = await loadEventsDependencies.loadSelectedEvent({
+  const selectedEventDetails = await loadSelectedEvent({
     eventId: selectedEvent.eventId,
     sessionId: state.sessionId,
     type: selectedEvent.type,
