@@ -61,10 +61,10 @@ const getResponseOutput = (event: ChatViewEvent): readonly unknown[] | undefined
   switch (event.type) {
     case 'ai-request':
       return getAiRequestResponseOutput(event)
-    case 'sse-response-completed':
-      return getCompletedResponseOutput(event)
     case 'ai-response':
       return getOutput(event.value)
+    case 'sse-response-completed':
+      return getCompletedResponseOutput(event)
     default:
       return undefined
   }
