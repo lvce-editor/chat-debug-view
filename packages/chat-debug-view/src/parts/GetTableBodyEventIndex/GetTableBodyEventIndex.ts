@@ -1,6 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getTableBodyY } from '../GetTableBodyY/GetTableBodyY.ts'
-import { getCurrentEvents } from '../SelectEventAtIndex/SelectEventAtIndex.ts'
+import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import { clampTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { devtoolsTableRowHeight } from '../TableMetrics/TableMetrics.ts'
 
