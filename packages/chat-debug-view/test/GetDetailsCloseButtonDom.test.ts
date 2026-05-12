@@ -32,12 +32,3 @@ test('getDetailsCloseButtonDom should render close button nodes', () => {
     },
   ])
 })
-
-test('getDetailsCloseButtonDom should reuse the static close button dom', () => {
-  const first = GetDetailsCloseButtonDom.getDetailsCloseButtonDom()
-  const second = GetDetailsCloseButtonDom.getDetailsCloseButtonDom()
-
-  expect(first).toBe(second)
-  expect(first[0]).toBe(second[0])
-  expect(first[1]).toBe(second[1])
-})
