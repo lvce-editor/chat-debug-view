@@ -22,7 +22,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   const rowCells = Locator('.TableBody .TableRow .TableCell')
 
-  await expect(rowCells).toHaveCount(4)
-  const rowCellsNth3 = rowCells.nth(3)
-  await expect(rowCellsNth3).toHaveText('250 ms')
+  await expect(rowCells).toHaveCount(5)
+  const rowCellsNth4 = rowCells.nth(4)
+  await expect(rowCellsNth4).toHaveText('250 ms')
 }

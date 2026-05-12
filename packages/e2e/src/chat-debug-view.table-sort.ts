@@ -24,12 +24,24 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   await ChatDebug.setEvents(events)
 
   const rows = Locator('.TableBody .TableRow')
+  const firstRowStatusCell = Locator('.TableBody .TableRow:nth-child(1) .TableCell:nth-child(3)')
+  const firstRowSizeCell = Locator('.TableBody .TableRow:nth-child(1) .TableCell:nth-child(4)')
+  const firstRowDurationCell = Locator('.TableBody .TableRow:nth-child(1) .TableCell:nth-child(5)')
+  const secondRowStatusCell = Locator('.TableBody .TableRow:nth-child(2) .TableCell:nth-child(3)')
+  const secondRowSizeCell = Locator('.TableBody .TableRow:nth-child(2) .TableCell:nth-child(4)')
+  const secondRowDurationCell = Locator('.TableBody .TableRow:nth-child(2) .TableCell:nth-child(5)')
 
   await expect(rows).toHaveCount(2)
   const rowsNth0 = rows.nth(0)
-  await expect(rowsNth0).toHaveText('response2000 ms')
+  await expect(rowsNth0).toContainText('response')
+  await expect(firstRowStatusCell).toHaveText('200')
+  await expect(firstRowSizeCell).toHaveText('0 B')
+  await expect(firstRowDurationCell).toHaveText('0 ms')
   const rowsNth1 = rows.nth(1)
-  await expect(rowsNth1).toHaveText('request2000 ms')
+  await expect(rowsNth1).toContainText('request')
+  await expect(secondRowStatusCell).toHaveText('200')
+  await expect(secondRowSizeCell).toHaveText('0 B')
+  await expect(secondRowDurationCell).toHaveText('0 ms')
 
   await Command.execute('ChatDebug.handleTableHeaderClick', 'type')
 
