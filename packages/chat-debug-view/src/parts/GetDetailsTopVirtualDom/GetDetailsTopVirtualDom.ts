@@ -5,15 +5,13 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getDetailsCloseButtonDom } from '../GetDetailsCloseButtonDom/GetDetailsCloseButtonDom.ts'
 import { getTabNodes } from '../GetTabNodes/GetTabNodes.ts'
 
+const parentNode: VirtualDomNode = {
+  childCount: 2,
+  className: ChatDebugViewDetailsTop,
+  onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
+  type: VirtualDomElements.Div,
+}
+
 export const getDetailsTopVirtualDom = (detailTabs: readonly DetailTab[]): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 2,
-      className: ChatDebugViewDetailsTop,
-      onContextMenu: DomEventListenerFunctions.HandleDetailsTopContextMenu,
-      type: VirtualDomElements.Div,
-    },
-    ...getDetailsCloseButtonDom(),
-    ...getTabNodes(detailTabs),
-  ]
+  return [parentNode, ...getDetailsCloseButtonDom(), ...getTabNodes(detailTabs)]
 }
