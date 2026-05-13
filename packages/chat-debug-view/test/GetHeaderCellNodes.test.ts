@@ -6,28 +6,23 @@ import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 const handleTableHeaderClick = (DomEventListenerFunctions as Record<string, number>).HandleTableHeaderClick
 
+const createTableColumn = (name: TableColumn.TableColumnName, label: string): TableColumn.TableColumn => {
+  return {
+    defaultWidth: 100,
+    isVisible: true,
+    label,
+    minimumWidth: 56,
+    name,
+    width: 100,
+  }
+}
+
 test('getHeaderCellNodes should render the visible header cells', () => {
   const tableColumns: readonly TableColumn.TableColumn[] = [
-    {
-      isVisible: true,
-      label: 'Request Type',
-      name: TableColumn.Type,
-    },
-    {
-      isVisible: true,
-      label: 'Method',
-      name: TableColumn.Method,
-    },
-    {
-      isVisible: true,
-      label: 'Outcome',
-      name: TableColumn.Status,
-    },
-    {
-      isVisible: true,
-      label: 'Elapsed',
-      name: TableColumn.Duration,
-    },
+    createTableColumn(TableColumn.Type, 'Request Type'),
+    createTableColumn(TableColumn.Method, 'Method'),
+    createTableColumn(TableColumn.Status, 'Outcome'),
+    createTableColumn(TableColumn.Duration, 'Elapsed'),
   ]
   const dom = GetHeaderCellNodes.getHeaderCellNodes([TableColumn.Type, TableColumn.Method, TableColumn.Status], tableColumns) as readonly {
     readonly childCount?: number
