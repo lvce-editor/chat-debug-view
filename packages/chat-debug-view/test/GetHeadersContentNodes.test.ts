@@ -1,6 +1,9 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getHeadersContentNodes } from '../src/parts/GetHeadersContentNodes/GetHeadersContentNodes.ts'
+import * as HeaderSectionKey from '../src/parts/HeaderSectionKey/HeaderSectionKey.ts'
+import * as InputName from '../src/parts/InputName/InputName.ts'
 
 test('getHeadersContentNodes should render request and response headers in separate sections', () => {
   const responseEventNodes = [
@@ -38,7 +41,11 @@ test('getHeadersContentNodes should render request and response headers in separ
     {
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
-      type: VirtualDomElements.Div,
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: HeaderSectionKey.General,
     },
     text('General'),
     {
@@ -105,7 +112,11 @@ test('getHeadersContentNodes should render request and response headers in separ
     {
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
-      type: VirtualDomElements.Div,
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: HeaderSectionKey.RequestHeaders,
     },
     text('Request Headers'),
     {
@@ -155,7 +166,11 @@ test('getHeadersContentNodes should render request and response headers in separ
     {
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
-      type: VirtualDomElements.Div,
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: HeaderSectionKey.ResponseHeaders,
     },
     text('Response Headers'),
     {
@@ -257,4 +272,44 @@ test('getHeadersContentNodes should preserve unknown status codes without invent
 
   expect(result).toContainEqual(text('Status Code'))
   expect(result).toContainEqual(text('599'))
+})
+
+test('getHeadersContentNodes should omit table rows for collapsed sections', () => {
+  const responseEventNodes = [] as const
+  const selectedEvent = {
+    endValue: {
+      headers: {
+        Server: 'test-server',
+      },
+      statusCode: 200,
+    },
+    eventId: 1,
+    headers: {
+      Authorization: 'Bearer [redacted]',
+    },
+    method: 'POST',
+    type: 'ai-request',
+    url: 'https://example.com/chat',
+  } as const
+
+  const result = getHeadersContentNodes(responseEventNodes, selectedEvent, [HeaderSectionKey.General])
+
+  expect(result[0]).toEqual({
+    childCount: 1,
+    className: 'ChatDebugViewHeadersSection',
+    type: VirtualDomElements.Div,
+  })
+  expect(result[1]).toEqual({
+    childCount: 1,
+    className: 'ChatDebugViewHeadersSectionHeading',
+    name: InputName.ToggleHeadersSection,
+    onChange: DomEventListenerFunctions.HandleFilterInput,
+    onClick: DomEventListenerFunctions.HandleFilterInput,
+    type: VirtualDomElements.Button,
+    value: HeaderSectionKey.General,
+  })
+  expect(result).toContainEqual(text('General'))
+  expect(result).not.toContainEqual(text('Request URL'))
+  expect(result).toContainEqual(text('Request Headers'))
+  expect(result).toContainEqual(text('Response Headers'))
 })

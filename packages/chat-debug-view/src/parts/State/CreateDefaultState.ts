@@ -17,6 +17,7 @@ export const createDefaultState = (): ChatDebugViewState => {
   return {
     assetDir: '',
     categoryFilters: EventCategoryFilter.createCategoryFilters(),
+    collapsedHeaderSections: [],
     databaseName: 'lvce-chat-view-sessions',
     dataBaseVersion: 2,
     defaultTableWidth,

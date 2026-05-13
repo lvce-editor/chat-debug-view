@@ -2,6 +2,7 @@ import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-do
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import { ChatDebugViewDetails } from '../ClassNames/ClassNames.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import { getDetailContentDom } from '../GetDetailContentDom/GetDetailContentDom.ts'
@@ -19,6 +20,7 @@ export const getDetailsDom = (
   previewTextCursorRowIndex: number | null = null,
   previewTextCursorColumnIndex: number | null = null,
   previewVirtualization?: TextNodeVirtualizationOptions,
+  collapsedHeaderSections: readonly HeaderSectionKey[] = [],
 ): readonly VirtualDomNode[] => {
   if (previewEventNodes.length === 0 && payloadEventNodes.length === 0 && responseEventNodes.length === 0) {
     return []
@@ -35,6 +37,7 @@ export const getDetailsDom = (
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
     previewVirtualization,
+    collapsedHeaderSections,
   )
 
   return [

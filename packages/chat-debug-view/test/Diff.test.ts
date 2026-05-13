@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import * as Diff from '../src/parts/Diff/Diff.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
+import * as HeaderSectionKey from '../src/parts/HeaderSectionKey/HeaderSectionKey.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('diff should return empty array when initial changes only', () => {
@@ -39,6 +40,16 @@ test('diff should return RenderIncremental and RenderCss when selectedEventIndex
   const newState = {
     ...oldState,
     selectedEventIndex: 1,
+  }
+  const result = Diff.diff(oldState, newState)
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])
+})
+
+test('diff should return RenderIncremental and RenderCss when collapsedHeaderSections change', () => {
+  const oldState = createDefaultState()
+  const newState = {
+    ...oldState,
+    collapsedHeaderSections: [HeaderSectionKey.General] as const,
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])

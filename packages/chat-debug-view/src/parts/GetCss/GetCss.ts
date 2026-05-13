@@ -187,12 +187,24 @@ export const getCss = (state: ChatDebugViewState): string => {
 }
 
 .ChatDebugViewHeadersSectionHeading {
+  align-items: center;
+  background: transparent;
+  border: 0;
   color: var(--vscode-descriptionForeground, rgba(255, 255, 255, 0.7));
+  cursor: pointer;
+  display: flex;
   font-size: 11px;
   font-weight: 600;
+  justify-content: flex-start;
   letter-spacing: 0.08em;
   margin-bottom: 6px;
+  padding: 0;
+  text-align: left;
   text-transform: uppercase;
+}
+
+.ChatDebugViewHeadersSectionHeading:hover {
+  color: var(--vscode-editor-foreground);
 }
 
 .ChatDebugViewHeadersRow {
