@@ -1,5 +1,3 @@
-import type { ParseChatDebugUriErrorCodeType } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
-
 export const ParseChatDebugUriResultType = {
   Error: 2,
   Success: 1,
@@ -14,7 +12,7 @@ export type ParseChatDebugUriSuccess = {
 
 export type ParseChatDebugUriError = {
   readonly type: typeof ParseChatDebugUriResultType.Error
-  readonly code: ParseChatDebugUriErrorCodeType
+  readonly code: number
   readonly message: string
 }
 

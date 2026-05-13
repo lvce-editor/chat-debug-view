@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import { getInvalidUriMessage } from '../src/parts/GetInvalidUriMessage/GetInvalidUriMessage.ts'
 import { loadEventsFromUri } from '../src/parts/LoadEvents/LoadEventsFromUri/LoadEventsFromUri.ts'
-import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import * as ParseChatDebugUriErrorCode from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('loadEventsFromUri should return invalid-uri state when the uri cannot be parsed', async () => {
