@@ -1,5 +1,5 @@
-import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import type { TableColumnWidths } from '../TableColumnLayout/TableColumnWidths.ts'
+import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 
 export const Type = 'type'
 export const Method = 'method'
@@ -21,9 +21,9 @@ export interface TableColumn {
 }
 
 const tableColumnDefinitions: Record<TableColumnName, { readonly defaultWidth: number; readonly label: string; readonly minimumWidth: number }> = {
-  [Type]: {
-    defaultWidth: 260,
-    label: ChatDebugStrings.type(),
+  [Duration]: {
+    defaultWidth: 110,
+    label: ChatDebugStrings.duration(),
     minimumWidth: 80,
   },
   [Method]: {
@@ -31,19 +31,19 @@ const tableColumnDefinitions: Record<TableColumnName, { readonly defaultWidth: n
     label: ChatDebugStrings.method(),
     minimumWidth: 56,
   },
-  [Status]: {
-    defaultWidth: 110,
-    label: ChatDebugStrings.status(),
-    minimumWidth: 56,
-  },
   [Size]: {
     defaultWidth: 100,
     label: ChatDebugStrings.size(),
     minimumWidth: 80,
   },
-  [Duration]: {
+  [Status]: {
     defaultWidth: 110,
-    label: ChatDebugStrings.duration(),
+    label: ChatDebugStrings.status(),
+    minimumWidth: 56,
+  },
+  [Type]: {
+    defaultWidth: 260,
+    label: ChatDebugStrings.type(),
     minimumWidth: 80,
   },
 }

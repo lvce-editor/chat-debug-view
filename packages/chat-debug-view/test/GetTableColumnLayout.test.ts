@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
-import * as GetTableColumnLayout from '../src/parts/TableColumnLayout/GetTableColumnLayout.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+import * as GetTableColumnLayout from '../src/parts/TableColumnLayout/GetTableColumnLayout.ts'
 
 test('getTableColumnLayout should return empty layout when no columns are visible', () => {
   const result = GetTableColumnLayout.getTableColumnLayout(480, [], TableColumn.createTableColumns())

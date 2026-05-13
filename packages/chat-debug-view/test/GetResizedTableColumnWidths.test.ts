@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
 import * as CreateDefaultState from '../src/parts/State/CreateDefaultState.ts'
-import * as GetResizedTableColumnWidths from '../src/parts/TableColumnLayout/GetResizedTableColumnWidths.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+import * as GetResizedTableColumnWidths from '../src/parts/TableColumnLayout/GetResizedTableColumnWidths.ts'
 
 const createState = (): ReturnType<typeof CreateDefaultState.createDefaultState> => ({
   ...CreateDefaultState.createDefaultState(),
@@ -11,7 +11,7 @@ const createState = (): ReturnType<typeof CreateDefaultState.createDefaultState>
 })
 
 test('getResizedTableColumnWidths should return existing widths for an invalid resizer id', () => {
-  const tableColumns = CreateDefaultState.createDefaultState().tableColumns
+  const { tableColumns } = CreateDefaultState.createDefaultState()
 
   const result = GetResizedTableColumnWidths.getResizedTableColumnWidths(createState(), ['type', 'duration', 'status'], tableColumns, 318, 0)
 
