@@ -1,7 +1,6 @@
 import { expect, test } from '@jest/globals'
 import * as ParseChatDebugUri from '../src/parts/ParseChatDebugUri/ParseChatDebugUri.ts'
 import * as ParseChatDebugUriErrorCode from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
-
 import { ParseChatDebugUriResultType } from '../src/parts/ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 test('parseChatDebugUri should return success for valid uri', () => {
