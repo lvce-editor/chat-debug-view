@@ -1,5 +1,6 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { handleSubmitEventType, sseResponseCompletedEventType } from '../EventTypes/EventTypes.ts'
+import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { isMatchingToolExecutionPair } from '../IsMatchingToolExecutionPair/IsMatchingToolExecutionPair.ts'
 import { isToolExecutionFinishedEvent } from '../IsToolExecutionFinishedEvent/IsToolExecutionFinishedEvent.ts'
 import { isToolExecutionStartedEvent } from '../IsToolExecutionStartedEvent/IsToolExecutionStartedEvent.ts'
@@ -67,6 +68,7 @@ const mergeRequestResponseEvents = (startedEvent: ChatViewEvent, finishedEvent: 
     ...mergeToolExecutionEvents(startedEvent, finishedEvent, startedEvent.type),
     requestEvent: startedEvent,
     responseEvent: finishedEvent,
+    size: getResponsePayloadSize(finishedEvent),
   }
 }
 

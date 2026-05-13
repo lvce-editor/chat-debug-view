@@ -137,9 +137,7 @@ test('collapseToolExecutionEvents should merge matching request and response eve
   const finishedEvent: ChatViewEvent = {
     eventId: 10,
     requestId: 'request-1',
-    response: {
-      id: 'resp_1',
-    },
+    response: 'abcdefghij',
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:01:45.000Z',
     type: 'response',
@@ -153,11 +151,10 @@ test('collapseToolExecutionEvents should merge matching request and response eve
       eventId: 9,
       requestEvent: startedEvent,
       requestId: 'request-1',
-      response: {
-        id: 'resp_1',
-      },
+      response: 'abcdefghij',
       responseEvent: finishedEvent,
       sessionId: 'session-1',
+      size: 10,
       started: '2026-01-01T10:01:30.000Z',
       timestamp: '2026-01-01T10:01:45.000Z',
       type: 'request',
@@ -176,12 +173,10 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
   const finishedEvent: ChatViewEvent = {
     eventId: 12,
     requestId: 'request-11',
-    response: {
-      id: 'resp_11',
-    },
     sessionId: 'session-1',
     timestamp: '2026-04-19T12:00:00.004Z',
     type: 'ai-response-success',
+    value: 'abcdefghij',
   }
 
   const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
@@ -192,14 +187,13 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
       eventId: 11,
       requestEvent: startedEvent,
       requestId: 'request-11',
-      response: {
-        id: 'resp_11',
-      },
       responseEvent: finishedEvent,
       sessionId: 'session-1',
+      size: 10,
       started: '2026-04-19T12:00:00.000Z',
       timestamp: '2026-04-19T12:00:00.004Z',
       type: 'ai-request',
+      value: 'abcdefghij',
     },
   ])
 })

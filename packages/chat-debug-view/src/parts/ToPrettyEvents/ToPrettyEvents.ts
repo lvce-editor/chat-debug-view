@@ -2,6 +2,7 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
 import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
+import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
 const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
@@ -19,7 +20,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
       eventEndId: response.eventId,
       eventId: item.eventId,
       method: 'POST',
-      size: 0,
+      size: getResponsePayloadSize(response),
       ...(started === undefined ? {} : { started }),
       ...(timestamp === undefined ? {} : { timestamp }),
       type: 'ai-request-response',
@@ -31,7 +32,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
     eventEndId: response.eventId,
     eventId: item.eventId,
     method: 'POST',
-    size: 0,
+    size: getResponsePayloadSize(response),
     ...(started === undefined ? {} : { started }),
     ...(timestamp === undefined ? {} : { timestamp }),
     type: 'ai-request-response',
