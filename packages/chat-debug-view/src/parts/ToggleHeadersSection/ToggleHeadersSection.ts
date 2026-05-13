@@ -1,6 +1,6 @@
 import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
-import * as HeaderSectionKeyModule from '../HeaderSectionKey/HeaderSectionKey.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import * as HeaderSectionKeyModule from '../HeaderSectionKey/HeaderSectionKey.ts'
 
 const removeSection = (collapsedHeaderSections: readonly HeaderSectionKey[], section: HeaderSectionKey): readonly HeaderSectionKey[] => {
   return collapsedHeaderSections.filter((value) => value !== section)

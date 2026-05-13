@@ -1,5 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import {
   ChatDebugViewHeadersCell,
@@ -15,9 +16,8 @@ import {
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatHttpStatusCode } from '../FormatHttpStatusCode/FormatHttpStatusCode.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
-import * as InputName from '../InputName/InputName.ts'
-import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import * as HeaderSectionKeyModule from '../HeaderSectionKey/HeaderSectionKey.ts'
+import * as InputName from '../InputName/InputName.ts'
 
 const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
