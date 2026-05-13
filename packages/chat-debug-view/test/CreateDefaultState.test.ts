@@ -7,6 +7,7 @@ import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('createDefaultState should return expected defaults', () => {
   const state = createDefaultState()
+  const defaultTableColumns = TableColumn.createTableColumns()
   const sortableState = state as typeof state & {
     readonly largeBreakpoint: number
     readonly mediumBreakpoint: number
@@ -17,14 +18,23 @@ test('createDefaultState should return expected defaults', () => {
   expect(state.categoryFilters).toEqual(EventCategoryFilter.createCategoryFilters())
   expect(state.detailTabs).toEqual(createDetailTabs())
   expect(getSelectedDetailTab(state.detailTabs)).toBe('response')
-  expect(state.tableColumns).toEqual(TableColumn.createTableColumns())
-  expect(state.tableColumnWidths).toEqual({
+  expect(state.tableColumns).toEqual(defaultTableColumns)
+  expect(TableColumn.getTableColumnWidths(state.tableColumns)).toEqual({
     duration: 110,
     method: 90,
     size: 100,
     status: 110,
     type: 260,
   })
+  expect(TableColumn.getTableColumnByName(state.tableColumns, TableColumn.Type)).toEqual({
+    defaultWidth: 260,
+    isVisible: true,
+    label: TableColumn.getTableColumnLabel(defaultTableColumns, TableColumn.Type),
+    minimumWidth: 80,
+    name: TableColumn.Type,
+    width: 260,
+  })
+  expect(TableColumn.getTableColumnByName(state.tableColumns, TableColumn.Method)?.minimumWidth).toBe(56)
   expect(state.timelineFilterDescription).toBe('')
   expect(state.timelineHeight).toBe(81)
   expect(state.defaultTableWidth).toBe(480)

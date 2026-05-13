@@ -20,7 +20,7 @@ test('handleTableResizerPointerMove should update the first visible column width
 
   const result = HandleTableResizerPointerMove.handleTableResizerPointerMove(pointerDownState, 340)
 
-  expect(result.tableColumnWidths).toEqual({
+  expect(TableColumn.getTableColumnWidths(result.tableColumns)).toEqual({
     duration: 110,
     method: 90,
     size: 100,
@@ -44,7 +44,7 @@ test('handleTableResizerPointerMove should clamp the active visible column width
 
   const result = HandleTableResizerPointerMove.handleTableResizerPointerMove(pointerDownState, 800)
 
-  expect(result.tableColumnWidths.status).toBe(400)
+  expect(TableColumn.getTableColumnByName(result.tableColumns, TableColumn.Status)?.width).toBe(400)
 })
 
 test('handleTableResizerPointerUp should clear the active resizer id', () => {

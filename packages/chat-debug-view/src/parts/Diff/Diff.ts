@@ -18,7 +18,6 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.showResponsePartEvents !== newState.showResponsePartEvents ||
     oldState.sortColumn !== newState.sortColumn ||
     oldState.sortDescending !== newState.sortDescending ||
-    oldState.tableColumnWidths !== newState.tableColumnWidths ||
     oldState.tableDeltaY !== newState.tableDeltaY ||
     oldState.tableMaxLineY !== newState.tableMaxLineY ||
     oldState.tableMinLineY !== newState.tableMinLineY ||

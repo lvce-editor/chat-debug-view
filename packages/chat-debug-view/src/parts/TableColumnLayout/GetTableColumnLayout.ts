@@ -1,14 +1,12 @@
 import type { TableColumnLayout } from './TableColumnLayoutType.ts'
-import type { TableColumnWidths } from './TableColumnWidths.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
-import { getMinimumTableColumnWidth } from './MinimumTableColumnWidth.ts'
 
 export const getTableColumnLayout = (
   tableWidth: number,
   visibleTableColumns: readonly string[],
-  tableColumnWidths: TableColumnWidths,
+  tableColumns: readonly TableColumn.TableColumn[],
 ): TableColumnLayout => {
-  const visibleColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns)
+  const visibleColumns = TableColumn.getOrderedVisibleTableColumns(visibleTableColumns, tableColumns)
   if (visibleColumns.length === 0) {
     return {
       fixedColumns: [],
@@ -26,12 +24,12 @@ export const getTableColumnLayout = (
       visibleColumnWidths.push(Math.max(0, remainingWidth))
       continue
     }
-    const minimumWidth = getMinimumTableColumnWidth(column)
+    const minimumWidth = TableColumn.getTableColumnMinimumWidth(tableColumns, column)
     const minimumRemainingWidth = visibleColumns
       .slice(index + 1)
-      .reduce((total, remainingColumn) => total + getMinimumTableColumnWidth(remainingColumn), 0)
+      .reduce((total, remainingColumn) => total + TableColumn.getTableColumnMinimumWidth(tableColumns, remainingColumn), 0)
     const maxWidth = Math.max(minimumWidth, remainingWidth - minimumRemainingWidth)
-    const preferredWidth = tableColumnWidths[column]
+    const preferredWidth = TableColumn.getTableColumnWidth(tableColumns, column)
     const clampedWidth = Math.max(minimumWidth, Math.min(preferredWidth, maxWidth))
     visibleColumnWidths.push(clampedWidth)
     remainingWidth -= clampedWidth

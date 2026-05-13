@@ -30,19 +30,22 @@ test('resetTableColumns should restore default columns', () => {
     sortColumn: TableColumn.Type,
     sortDescending: true,
     tableColumns: TableColumn.getTableColumnsWithVisibility(createDefaultState().tableColumns, ['type', 'method', 'status', 'size']),
-    tableColumnWidths: {
+  }
+  const resizedState: ChatDebugViewState = {
+    ...state,
+    tableColumns: TableColumn.setTableColumnWidths(state.tableColumns, {
       duration: 80,
       method: 90,
       size: 120,
       status: 140,
       type: 260,
-    },
+    }),
   }
 
-  const result = resetTableColumns(state)
+  const result = resetTableColumns(resizedState)
 
   expect(TableColumn.getVisibleTableColumns(result.tableColumns)).toEqual(['type', 'method', 'status', 'size', 'duration'])
-  expect(result.tableColumnWidths).toEqual(createDefaultState().tableColumnWidths)
+  expect(TableColumn.getTableColumnWidths(result.tableColumns)).toEqual(TableColumn.getTableColumnWidths(createDefaultState().tableColumns))
   expect(result.sortColumn).toBe('')
   expect(result.sortDescending).toBe(false)
 })

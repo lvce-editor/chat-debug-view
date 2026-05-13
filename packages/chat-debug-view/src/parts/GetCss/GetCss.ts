@@ -28,7 +28,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   if (state.width >= state.largeBreakpoint) {
     topSize = 30
   }
-  const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumnWidths)
+  const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumns)
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0, tableColThreeWidth = 0, tableColFourWidth = 0] =
     tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
@@ -51,7 +51,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewPreviewScrollBarWidth: ${previewVirtualization.showScrollBar ? devtoolsTableScrollBarWidth : 0}px;
   --ChatDebugViewPreviewViewportHeight: ${previewVirtualization.viewportHeight}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
-  --ChatDebugViewDurationColumnWidth: ${state.tableColumnWidths.duration}px;
+  --ChatDebugViewDurationColumnWidth: ${TableColumn.getTableColumnWidth(state.tableColumns, TableColumn.Duration)}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewTableScrollBarHeight: ${scrollBarHeight}px;
   --ChatDebugViewTableScrollBarOffset: ${scrollBarOffset}px;
@@ -67,7 +67,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
   --ChatDebugViewTopSize: ${topSize}px;
-  --ChatDebugViewTypeColumnWidth: ${state.tableColumnWidths.type}px;
+  --ChatDebugViewTypeColumnWidth: ${TableColumn.getTableColumnWidth(state.tableColumns, TableColumn.Type)}px;
   padding: ${state.viewPadding}px;
   padding-right: 0;
 }

@@ -1,7 +1,5 @@
-export { defaultTableColumnWidths } from './DefaultTableColumnWidths.ts'
 export { getResizedTableColumnWidths } from './GetResizedTableColumnWidths.ts'
 export { getTableColumnLayout } from './GetTableColumnLayout.ts'
-export { getMinimumTableColumnWidth, minimumTableColumnWidth } from './MinimumTableColumnWidth.ts'
 export { isSameTableColumnWidths } from './IsSameTableColumnWidths.ts'
 export { isTableColumnWidths } from './IsTableColumnWidths.ts'
 export type { TableColumnLayout } from './TableColumnLayoutType.ts'

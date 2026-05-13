@@ -50,7 +50,7 @@ test('restoreSavedState should restore table column widths', () => {
     },
   })
 
-  expect(result.tableColumnWidths).toEqual({
+  expect(TableColumn.getTableColumnWidths(result.tableColumns)).toEqual({
     duration: 80,
     method: 92,
     size: 104,
@@ -71,7 +71,7 @@ test('restoreSavedState should ignore invalid table column widths', () => {
     },
   })
 
-  expect(result.tableColumnWidths).toEqual(state.tableColumnWidths)
+  expect(TableColumn.getTableColumnWidths(result.tableColumns)).toEqual(TableColumn.getTableColumnWidths(state.tableColumns))
 })
 
 test('restoreSavedState should add new visible columns for legacy saved state', () => {
@@ -102,11 +102,28 @@ test('restoreSavedState should merge legacy table column widths with current def
     },
   })
 
-  expect(result.tableColumnWidths).toEqual({
+  expect(TableColumn.getTableColumnWidths(result.tableColumns)).toEqual({
     duration: 80,
     method: 92,
-    size: state.tableColumnWidths.size,
+    size: TableColumn.getTableColumnByName(state.tableColumns, TableColumn.Size)?.width,
     status: 140,
     type: 260,
   })
+})
+
+test('restoreSavedState should keep default minimum widths on restored table columns', () => {
+  const state = createDefaultState()
+
+  const result = restoreSavedState(state, {
+    tableColumnWidths: {
+      duration: 80,
+      method: 92,
+      size: 104,
+      status: 140,
+      type: 260,
+    },
+  })
+
+  expect(TableColumn.getTableColumnByName(result.tableColumns, TableColumn.Method)?.minimumWidth).toBe(56)
+  expect(TableColumn.getTableColumnByName(result.tableColumns, TableColumn.Size)?.defaultWidth).toBe(100)
 })

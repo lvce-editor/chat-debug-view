@@ -3,6 +3,7 @@ import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as SaveState from '../src/parts/SaveState/SaveState.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('saveState should persist serializable non-layout state fields', () => {
   const state = {
@@ -13,13 +14,13 @@ test('saveState should persist serializable non-layout state fields', () => {
     selectedEventId: 3,
     selectedEventIndex: 2,
     sessionId: 'session-1',
-    tableColumnWidths: {
+    tableColumns: TableColumn.setTableColumnWidths(createDefaultState().tableColumns, {
       duration: 96,
       method: 92,
       size: 100,
       status: 124,
       type: 260,
-    },
+    }),
     timelineEndSeconds: '7',
     timelineStartSeconds: '5',
   }
