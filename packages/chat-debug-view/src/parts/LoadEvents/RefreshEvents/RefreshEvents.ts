@@ -4,9 +4,10 @@ import { getStateWithInvalidUri } from '../GetStateWithInvalidUri/GetStateWithIn
 import { loadEventsForSessionId } from '../LoadEventsForSessionId/LoadEventsForSessionId.ts'
 
 export const refreshEvents = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
-  const sessionId = state.sessionId || getSessionIdFromUri(state)
-  if (!sessionId) {
+  const { sessionId } = state
+  const actual = sessionId || getSessionIdFromUri(state)
+  if (!actual) {
     return getStateWithInvalidUri(state)
   }
-  return loadEventsForSessionId(state, sessionId)
+  return loadEventsForSessionId(state, actual)
 }
