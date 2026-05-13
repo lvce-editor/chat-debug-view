@@ -5,7 +5,8 @@ import { withPreparedSelectedEventPreview } from '../../WithPreparedSelectedEven
 import { getCurrentEvents } from '../GetCurrentEvents/GetCurrentEvents.ts'
 
 export const restoreSelectedEvent = async (state: ChatDebugViewState): Promise<ChatDebugViewState> => {
-  if (state.selectedEventId === null) {
+  const { selectedEventId } = state
+  if (selectedEventId === null) {
     return {
       ...state,
       previewTextCursorColumnIndex: null,
