@@ -1,5 +1,5 @@
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { ParseChatDebugUriErrorCode } from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import * as ParseChatDebugUriErrorCode from '../ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 import { ParseChatDebugUriResultType, type ParseChatDebugUriResult } from '../ParseChatDebugUriResult/ParseChatDebugUriResult.ts'
 
 const chatDebugUriPattern = /^chat-debug:\/\/([^/?#]+)$/

@@ -1,6 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { getInvalidUriMessage } from '../src/parts/GetInvalidUriMessage/GetInvalidUriMessage.ts'
-import { ParseChatDebugUriErrorCode } from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
+import * as ParseChatDebugUriErrorCode from '../src/parts/ParseChatDebugUriErrorCode/ParseChatDebugUriErrorCode.ts'
 
 test('getInvalidUriMessage returns missing-uri message', () => {
   const result = getInvalidUriMessage('', ParseChatDebugUriErrorCode.MissingUri)
