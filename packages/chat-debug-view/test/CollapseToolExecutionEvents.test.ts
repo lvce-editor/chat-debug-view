@@ -173,10 +173,10 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
   const finishedEvent: ChatViewEvent = {
     eventId: 12,
     requestId: 'request-11',
-    value: 'abcdefghij',
     sessionId: 'session-1',
     timestamp: '2026-04-19T12:00:00.004Z',
     type: 'ai-response-success',
+    value: 'abcdefghij',
   }
 
   const result = collapseToolExecutionEvents([startedEvent, finishedEvent])
@@ -187,9 +187,9 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
       eventId: 11,
       requestEvent: startedEvent,
       requestId: 'request-11',
-      size: 10,
       responseEvent: finishedEvent,
       sessionId: 'session-1',
+      size: 10,
       started: '2026-04-19T12:00:00.000Z',
       timestamp: '2026-04-19T12:00:00.004Z',
       type: 'ai-request',

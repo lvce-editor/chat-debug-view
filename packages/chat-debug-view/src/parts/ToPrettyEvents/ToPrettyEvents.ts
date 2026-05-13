@@ -1,8 +1,8 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
-import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
+import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
 const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
