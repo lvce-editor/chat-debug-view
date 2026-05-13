@@ -13,6 +13,7 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
     requestId: 'request-1',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
+    value: 'abcdefghij',
   }
 
   const result = toPrettyEvents({
@@ -27,7 +28,7 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
       eventEndId: 2,
       eventId: 1,
       method: 'POST',
-      size: 0,
+      size: 10,
       started: '2026-05-12T10:00:00.000Z',
       timestamp: '2026-05-12T10:00:00.000Z',
       type: 'ai-request-response',
@@ -47,6 +48,7 @@ test('toPrettyEvents should preserve merged event timing metadata for the timeli
     requestId: 'request-1',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
+    value: 'abcdefghij',
   }
 
   const [result] = toPrettyEvents({
@@ -69,6 +71,7 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
     eventId: 2,
     requestId: 'request-1',
     type: 'ai-response',
+    value: 'abcdefghij',
   }
 
   const result = toPrettyEvents({
@@ -81,13 +84,13 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
       eventEndId: 2,
       eventId: 1,
       method: 'POST',
-      size: 0,
+      size: 10,
       type: 'ai-request-response',
     },
   ])
 })
 
-test('toPrettyEvents should initialize merged size to zero', () => {
+test('toPrettyEvents should keep merged size at zero when response payload is missing', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
