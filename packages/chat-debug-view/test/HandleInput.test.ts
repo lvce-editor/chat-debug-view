@@ -180,6 +180,39 @@ test('handleInput should clear selected event when filter hides it', () => {
   expect(result.selectedEventIndex).toBeNull()
 })
 
+test('handleInput should clear selected event when event category filter hides a selected synthetic event', () => {
+  const state = {
+    ...createDefaultState(),
+    events: [
+      {
+        path: '/chat',
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:00.000Z',
+        type: 'request',
+      },
+      {
+        name: 'read_file',
+        sessionId: 'session-1',
+        timestamp: '2026-03-08T00:00:01.000Z',
+        type: 'tool-execution',
+      },
+    ],
+    selectedEvent: {
+      path: '/chat',
+      sessionId: 'session-1',
+      timestamp: '2026-03-08T00:00:00.000Z',
+      type: 'request',
+    },
+    selectedEventIndex: 0,
+  } as any
+
+  const result = HandleInput.handleInput(state, InputName.EventCategoryFilter, 'tools', false)
+
+  expect(result.selectedEventIndex).toBeNull()
+  expect(result.selectedEventId).toBeNull()
+  expect(result.selectedEvent).toBeNull()
+})
+
 test('handleInput should keep state for unknown input name', () => {
   const state = createDefaultState()
   const result = HandleInput.handleInput(state, 'unknown', 'value', false)
