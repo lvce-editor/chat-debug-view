@@ -98,33 +98,18 @@ test('getFilteredEvents should return all visible events when filter is empty', 
   expect(result).toHaveLength(6)
 })
 
-test('getFilteredEvents should show only tool execution events for @tools filter', () => {
+test('getFilteredEvents should treat @tools as plain text in the filter input', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '@tools', [EventCategoryFilter.All], true, true, true)
-  expect(result).toHaveLength(1)
-  expect(result).toEqual([
-    expect.objectContaining({
-      arguments: {
-        path: '/tmp/file.txt',
-      },
-      ended: '2026-01-01T10:01:45.000Z',
-      output: {
-        contents: 'hello',
-      },
-      started: '2026-01-01T10:01:30.000Z',
-      toolName: 'read_file',
-      type: 'tool-execution',
-    }),
-  ])
+  expect(result).toEqual([])
 })
 
-test('getFilteredEvents should combine @tools filter with text search', () => {
+test('getFilteredEvents should treat category tokens as plain text when combined with search text', () => {
   const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS hello  ', [EventCategoryFilter.All], true, true, true)
-  expect(result).toHaveLength(1)
-  expect(result[0].type).toBe('tool-execution')
+  expect(result).toEqual([])
 })
 
-test('getFilteredEvents should prefer finished event payload for merged tool previews', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '@tools', [EventCategoryFilter.All], true, true, true)
+test('getFilteredEvents should prefer finished event payload for merged tool previews when tool pills are selected', () => {
+  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Tools], true, true, true)
 
   expect(result).toEqual([
     expect.objectContaining({
