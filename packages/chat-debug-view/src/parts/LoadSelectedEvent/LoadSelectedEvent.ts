@@ -9,6 +9,8 @@ export interface LoadSelectedEventOptions {
 }
 
 export const loadSelectedEvent = async ({ endEventId, eventId, sessionId, type }: LoadSelectedEventOptions): Promise<ChatViewEvent | null> => {
+  // TODO load them in parallel
+  // or adjust worker function to load both start and end event
   const raw = await ChatStorageWorkerClient.loadSelectedEvent(sessionId, eventId, type)
   if (endEventId && endEventId !== -1) {
     const end = await ChatStorageWorkerClient.loadSelectedEvent(sessionId, endEventId, type)
