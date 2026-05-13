@@ -503,7 +503,7 @@ test('getDevtoolsDom should apply duration and status column classes to row cell
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '1000 ms',
+      text: '1.0 s',
     }),
   )
 })
