@@ -2,12 +2,14 @@ import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab } from '../DetailTab/DetailTab.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import type { TableColumn } from '../TableColumn/TableColumn.ts'
 import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export interface ChatDebugViewState {
   readonly assetDir: string
   readonly categoryFilters: readonly CategoryFilter[]
+  readonly collapsedHeaderSections: readonly HeaderSectionKey[]
   readonly databaseName: string
   readonly dataBaseVersion: number
   readonly defaultTableWidth: number

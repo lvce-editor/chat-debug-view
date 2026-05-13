@@ -54,6 +54,7 @@ export const renderItems = (oldState: ChatDebugViewState, newState: ChatDebugVie
     newState.tableMaxLineY,
     newState.previewTextDeltaY,
     previewTextViewportHeight,
+    newState.collapsedHeaderSections,
   )
   return [ViewletCommand.SetDom2, newState.uid, dom]
 }

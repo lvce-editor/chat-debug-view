@@ -2,6 +2,7 @@ import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
@@ -48,6 +49,7 @@ export const getDevtoolsDom = (
   previewTextViewportHeight = 0,
   minLineY = 0,
   maxLineY = events.length,
+  collapsedHeaderSections: readonly HeaderSectionKey[] = [],
 ): readonly VirtualDomNode[] => {
   const visibleEvents = events.slice(minLineY, maxLineY)
   const rows = createDevtoolsRows(visibleEvents, selectedEventIndex, minLineY)
@@ -102,6 +104,7 @@ export const getDevtoolsDom = (
     previewTextCursorRowIndex,
     previewTextCursorColumnIndex,
     previewVirtualizationOptions,
+    collapsedHeaderSections,
   )
   const sashNodes = getSashNodesDom(hasSelectedEvent)
   const splitChildCount = hasSelectedEvent ? 3 : 1

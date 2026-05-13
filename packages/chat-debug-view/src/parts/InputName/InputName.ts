@@ -11,6 +11,7 @@ export const TimelineStartSeconds = 'timelineStartSeconds'
 export const TimelineEndSeconds = 'timelineEndSeconds'
 export const TimelineRangePreset = 'timelineRangePreset'
 export const Refresh = 'refresh'
+export const ToggleHeadersSection = 'toggleHeadersSection'
 
 export const All = 'all'
 export const Tools = 'tools'
