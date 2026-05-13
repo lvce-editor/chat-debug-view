@@ -1,3 +1,5 @@
+import { clamp } from '../Clamp/Clamp.ts'
+
 export interface PreviewTextCursor {
   readonly columnIndex: number
   readonly rowIndex: number
@@ -5,10 +7,6 @@ export interface PreviewTextCursor {
 
 export const previewTextRowHeight = 20
 export const defaultPreviewTextColumnWidth = 9
-
-const clamp = (value: number, min: number, max: number): number => {
-  return Math.min(Math.max(value, min), max)
-}
 
 export const getPreviewTextCursorFromPoint = (value: string, x: number, y: number): PreviewTextCursor => {
   const lines = value.split('\n')
