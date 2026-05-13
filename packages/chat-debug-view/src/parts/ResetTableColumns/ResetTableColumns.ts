@@ -3,11 +3,12 @@ import { defaultVisibleTableColumns, getVisibleTableColumns, createTableColumns 
 import { defaultTableColumnWidths, isSameTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const resetTableColumns = (state: ChatDebugViewState): ChatDebugViewState => {
+  const { sortColumn, sortDescending, tableColumns, tableColumnWidths } = state
   if (
-    getVisibleTableColumns(state.tableColumns).join(',') === defaultVisibleTableColumns.join(',') &&
-    isSameTableColumnWidths(state.tableColumnWidths, defaultTableColumnWidths) &&
-    state.sortColumn === '' &&
-    state.sortDescending === false
+    getVisibleTableColumns(tableColumns).join(',') === defaultVisibleTableColumns.join(',') &&
+    isSameTableColumnWidths(tableColumnWidths, defaultTableColumnWidths) &&
+    sortColumn === '' &&
+    sortDescending === false
   ) {
     return state
   }
