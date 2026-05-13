@@ -2,6 +2,7 @@ import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 import { ChatDebugView, ChatDebugViewDevtools } from '../ClassNames/ClassNames.ts'
@@ -75,6 +76,7 @@ export const getChatDebugViewDom = (
   maxLineY = events.length,
   previewTextDeltaY = 0,
   previewTextViewportHeight = 0,
+  collapsedHeaderSections: readonly HeaderSectionKey[] = [],
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -127,6 +129,7 @@ export const getChatDebugViewDom = (
       previewTextViewportHeight,
       minLineY,
       maxLineY,
+      collapsedHeaderSections,
     )
     const devtoolsContentNodes = devtoolsDom.slice(1)
     const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]

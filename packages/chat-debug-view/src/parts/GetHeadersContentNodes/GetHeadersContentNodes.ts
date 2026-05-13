@@ -12,8 +12,12 @@ import {
   ChatDebugViewHeadersSectionHeading,
   ChatDebugViewHeadersTable,
 } from '../ClassNames/ClassNames.ts'
+import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { formatHttpStatusCode } from '../FormatHttpStatusCode/FormatHttpStatusCode.ts'
 import { getStatusText } from '../GetStatusText/GetStatusText.ts'
+import * as InputName from '../InputName/InputName.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
+import * as HeaderSectionKeyModule from '../HeaderSectionKey/HeaderSectionKey.ts'
 
 const isHeadersRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -139,26 +143,37 @@ const getHeadersTableNodes = (headers: readonly HeaderEntry[]): readonly Virtual
   ]
 }
 
-const getHeaderSectionNodes = (label: string, headers: readonly HeaderEntry[]): readonly VirtualDomNode[] => {
+const getHeaderSectionNodes = (
+  section: HeaderSectionKey,
+  label: string,
+  headers: readonly HeaderEntry[],
+  collapsedHeaderSections: readonly HeaderSectionKey[],
+): readonly VirtualDomNode[] => {
+  const isCollapsed = collapsedHeaderSections.includes(section)
   return [
     {
-      childCount: 2,
+      childCount: isCollapsed ? 1 : 2,
       className: ChatDebugViewHeadersSection,
       type: VirtualDomElements.Div,
     },
     {
       childCount: 1,
       className: ChatDebugViewHeadersSectionHeading,
-      type: VirtualDomElements.Div,
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: section,
     },
     text(label),
-    ...getHeadersTableNodes(headers),
+    ...(isCollapsed ? [] : getHeadersTableNodes(headers)),
   ]
 }
 
 export const getHeadersContentNodes = (
   responseEventNodes: readonly VirtualDomNode[],
   selectedEvent: ChatViewEvent | null,
+  collapsedHeaderSections: readonly HeaderSectionKey[] = [],
 ): readonly VirtualDomNode[] => {
   const generalEntries = getGeneralEntries(selectedEvent)
   const requestHeaders = getHeaders(selectedEvent?.headers)
@@ -168,13 +183,17 @@ export const getHeadersContentNodes = (
   }
   const nodes: VirtualDomNode[] = []
   if (generalEntries.length > 0) {
-    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.general(), generalEntries))
+    nodes.push(...getHeaderSectionNodes(HeaderSectionKeyModule.General, ChatDebugStrings.general(), generalEntries, collapsedHeaderSections))
   }
   if (requestHeaders.length > 0) {
-    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.requestHeaders(), requestHeaders))
+    nodes.push(
+      ...getHeaderSectionNodes(HeaderSectionKeyModule.RequestHeaders, ChatDebugStrings.requestHeaders(), requestHeaders, collapsedHeaderSections),
+    )
   }
   if (responseHeaders.length > 0) {
-    nodes.push(...getHeaderSectionNodes(ChatDebugStrings.responseHeaders(), responseHeaders))
+    nodes.push(
+      ...getHeaderSectionNodes(HeaderSectionKeyModule.ResponseHeaders, ChatDebugStrings.responseHeaders(), responseHeaders, collapsedHeaderSections),
+    )
   }
   return nodes
 }

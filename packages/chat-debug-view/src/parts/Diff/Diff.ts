@@ -4,6 +4,7 @@ import * as DiffType from '../DiffType/DiffType.ts'
 export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly number[] => {
   if (
     oldState.categoryFilters !== newState.categoryFilters ||
+    oldState.collapsedHeaderSections !== newState.collapsedHeaderSections ||
     oldState.detailTabs !== newState.detailTabs ||
     oldState.errorMessage !== newState.errorMessage ||
     oldState.events !== newState.events ||

@@ -1,6 +1,7 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { TextNodeVirtualizationOptions } from '../GetTextNode/GetTextNode.ts'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import { getHeadersContentNodes } from '../GetHeadersContentNodes/GetHeadersContentNodes.ts'
 import { getPayloadContentNodes } from '../GetPayloadContentNodes/GetPayloadContentNodes.ts'
 import { getPreviewContentNodes } from '../GetPreviewContentNodes/GetPreviewContentNodes.ts'
@@ -18,6 +19,7 @@ export const getSelectedContentNodes = (
   previewTextCursorRowIndex: number | null,
   previewTextCursorColumnIndex: number | null,
   previewVirtualization?: TextNodeVirtualizationOptions,
+  collapsedHeaderSections: readonly HeaderSectionKey[] = [],
 ): readonly VirtualDomNode[] => {
   if (safeSelectedDetailTab === InputName.Tokens) {
     return getTokenUsageContentNodes(responseEventNodes, selectedEvent)
@@ -32,7 +34,7 @@ export const getSelectedContentNodes = (
     return getPayloadContentNodes(payloadEventNodes, selectedEvent)
   }
   if (safeSelectedDetailTab === InputName.Headers) {
-    return getHeadersContentNodes(responseEventNodes, selectedEvent)
+    return getHeadersContentNodes(responseEventNodes, selectedEvent, collapsedHeaderSections)
   }
   return getResponseContentNodes(responseEventNodes, selectedEvent)
 }

@@ -7,6 +7,7 @@ import * as InputName from '../InputName/InputName.ts'
 import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
+import * as ToggleHeadersSection from '../ToggleHeadersSection/ToggleHeadersSection.ts'
 import { applyVirtualTableState, withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 
 const parseTimelineRangePreset = (value: string): { readonly timelineEndSeconds: string; readonly timelineStartSeconds: string } => {
@@ -187,6 +188,10 @@ const handleDetailTab: InputHandler = (state, value) => {
   }
 }
 
+const handleToggleHeadersSection: InputHandler = (state, value) => {
+  return ToggleHeadersSection.toggleHeadersSection(state, value)
+}
+
 const inputHandlers: Record<string, InputHandler> = {
   [InputName.CloseDetails]: handleCloseDetails,
   [InputName.DetailTab]: handleDetailTab,
@@ -199,6 +204,7 @@ const inputHandlers: Record<string, InputHandler> = {
   [InputName.TimelineEndSeconds]: handleTimelineEndSeconds,
   [InputName.TimelineRangePreset]: handleTimelineRangePreset,
   [InputName.TimelineStartSeconds]: handleTimelineStartSeconds,
+  [InputName.ToggleHeadersSection]: handleToggleHeadersSection,
   [InputName.UseDevtoolsLayout]: handleUseDevtoolsLayout,
 }
 
