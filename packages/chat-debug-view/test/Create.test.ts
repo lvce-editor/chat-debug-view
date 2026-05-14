@@ -70,15 +70,15 @@ test('create should restore serializable state from saved state', () => {
   expect(result.oldState.tableWidth).toBe(result.oldState.defaultTableWidth)
 })
 
-test('create should restore event category filter from filter tokens when the explicit field is missing', () => {
+test('create should not restore event category filter from filter text when the explicit field is missing', () => {
   const uid = 125
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets', '', 'lvce-chat-view-sessions', 2, 'chat-view-events', 'sessionId', {
     filterValue: '@network error',
   })
   const result = ChatDebugViewStates.get(uid)
 
-  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.newState.categoryFilters)).toBe(EventCategoryFilter.Network)
-  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.oldState.categoryFilters)).toBe(EventCategoryFilter.Network)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.newState.categoryFilters)).toBe(EventCategoryFilter.All)
+  expect(EventCategoryFilter.getSelectedEventCategoryFilter(result.oldState.categoryFilters)).toBe(EventCategoryFilter.All)
   expect(result.newState.filterValue).toBe('@network error')
   expect(result.oldState.filterValue).toBe('@network error')
 })

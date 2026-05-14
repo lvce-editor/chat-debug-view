@@ -2,7 +2,6 @@ import type { SavedState } from '../SavedState/SavedState.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
-import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
 import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
 import { getTableColumnWidths, getTableColumnsWithVisibility, setTableColumnWidths } from '../TableColumn/TableColumn.ts'
 import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
@@ -56,9 +55,6 @@ const restoreCategoryFilters = (
   }
   if (typeof savedState.eventCategoryFilter === 'string' && validEventCategoryFilters.has(savedState.eventCategoryFilter)) {
     return EventCategoryFilter.selectCategoryFilter(currentCategoryFilters, savedState.eventCategoryFilter)
-  }
-  if (typeof savedState.filterValue === 'string') {
-    return EventCategoryFilter.selectCategoryFilter(currentCategoryFilters, parseFilterValue(savedState.filterValue).eventCategoryFilter)
   }
   return currentCategoryFilters
 }

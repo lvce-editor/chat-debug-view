@@ -12,6 +12,7 @@ export const diff = (oldState: ChatDebugViewState, newState: ChatDebugViewState)
     oldState.previewTextCursorColumnIndex !== newState.previewTextCursorColumnIndex ||
     oldState.previewTextCursorRowIndex !== newState.previewTextCursorRowIndex ||
     oldState.previewTextDeltaY !== newState.previewTextDeltaY ||
+    oldState.summaries !== newState.summaries ||
     oldState.sessionId !== newState.sessionId ||
     oldState.showEventStreamFinishedEvents !== newState.showEventStreamFinishedEvents ||
     oldState.showInputEvents !== newState.showInputEvents ||

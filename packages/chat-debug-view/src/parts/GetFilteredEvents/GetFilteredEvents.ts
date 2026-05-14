@@ -1,9 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { collapseToolExecutionEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
-import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { getVisibleEvents } from '../GetVisibleEvents/GetVisibleEvents.ts'
 import { matchesEventCategoryFilter } from '../MatchesEventCategoryFilter/MatchesEventCategoryFilter.ts'
-import { parseFilterValue } from '../ParseFilterValue/ParseFilterValue.ts'
 
 export const getFilteredEvents = (
   events: readonly ChatViewEvent[],
@@ -15,11 +13,8 @@ export const getFilteredEvents = (
 ): readonly ChatViewEvent[] => {
   const visibleEvents = getVisibleEvents(events, showInputEvents, showResponsePartEvents, showEventStreamFinishedEvents)
   const collapsedEvents = collapseToolExecutionEvents(visibleEvents)
-  const parsedFilter = parseFilterValue(filterValue)
-  const activeEventCategoryFilters =
-    parsedFilter.eventCategoryFilter === EventCategoryFilter.All ? eventCategoryFilters : [parsedFilter.eventCategoryFilter]
-  const filteredByCategory = collapsedEvents.filter((event) => matchesEventCategoryFilter(event, activeEventCategoryFilters))
-  const { filterText } = parsedFilter
+  const filteredByCategory = collapsedEvents.filter((event) => matchesEventCategoryFilter(event, eventCategoryFilters))
+  const filterText = filterValue.trim().toLowerCase()
   if (!filterText) {
     return filteredByCategory
   }

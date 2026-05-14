@@ -47,6 +47,7 @@ export interface ChatDebugViewState {
   readonly showResponsePartEvents: boolean
   readonly sortColumn: TableColumn['name'] | ''
   readonly sortDescending: boolean
+  readonly summaries: readonly string[]
   readonly tableColumns: readonly TableColumn[]
   readonly tableDeltaY: number
   readonly tableMaxLineY: number
@@ -55,6 +56,7 @@ export interface ChatDebugViewState {
   readonly tableScrollBarHandleOffset: number
   readonly tableScrollBarPointerActive: boolean
   readonly tableWidth: number
+  readonly tableWidthManuallyResized: boolean
   readonly timelineEndSeconds: string
   readonly timelineEvents: readonly ChatViewEvent[]
   readonly timelineFilterDescription: string

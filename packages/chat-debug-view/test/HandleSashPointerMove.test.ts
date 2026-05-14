@@ -31,6 +31,7 @@ test('handleSashPointerMove should clamp tableWidth based on current view width'
   const result = HandleSashPointerMove.handleSashPointerMove(state, 628, 0)
 
   expect(result.tableWidth).toBe(520)
+  expect(result.tableWidthManuallyResized).toBe(true)
 })
 
 test('handleSashPointerMove should clamp tableWidth to keep room for details', () => {

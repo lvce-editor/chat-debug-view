@@ -232,6 +232,14 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugViewHeadersCellName {
   font-weight: 500;
 }
+
+.ChatDebugViewHeadersSectionInfo {
+  color: var(--vscode-descriptionForeground, rgba(255, 255, 255, 0.7));
+  font-size: 11px;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
 .PreviewVirtualizedEditor {
   height: var(--ChatDebugViewPreviewViewportHeight);
   overflow: hidden;
