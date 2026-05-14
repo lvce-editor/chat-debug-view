@@ -24,3 +24,25 @@ test('handleUseDevtoolsLayout should preserve selected event when enabling layou
   expect(result.selectedEventIndex).toBe(0)
   expect(result.selectedEventId).toBe(1)
 })
+
+test('handleUseDevtoolsLayout should initialize a balanced split on narrow screens', () => {
+  const selectedEvent = {
+    eventId: 1,
+    sessionId: 'session-1',
+    timestamp: '2026-03-08T00:00:00.000Z',
+    type: 'request',
+  }
+  const state = {
+    ...createDefaultState(),
+    events: [selectedEvent],
+    selectedEvent,
+    selectedEventId: 1,
+    selectedEventIndex: 0,
+    useDevtoolsLayout: false,
+    width: 580,
+  }
+
+  const result = HandleUseDevtoolsLayout.setUseDevtoolsLayout(state, true)
+
+  expect(result.tableWidth).toBe(280)
+})

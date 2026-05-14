@@ -8,5 +8,6 @@ export const handleSashPointerMove = (state: ChatDebugViewState, eventX: number,
   return {
     ...state,
     tableWidth: getTableWidthFromClientX(state, eventX),
+    tableWidthManuallyResized: true,
   }
 }
