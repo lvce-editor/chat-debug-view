@@ -160,6 +160,10 @@ export const responseHeaders = (): string => {
   return I18nString.i18nString(UiStrings.ResponseHeaders)
 }
 
+export const responseHeadersInfo = (): string => {
+  return I18nString.i18nString(UiStrings.ResponseHeadersInfo)
+}
+
 export const resetColumns = (): string => {
   return I18nString.i18nString(UiStrings.ResetColumns)
 }

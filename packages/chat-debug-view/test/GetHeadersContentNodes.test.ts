@@ -161,7 +161,7 @@ test('getHeadersContentNodes should render request and response headers in separ
     },
     text('application/json'),
     {
-      childCount: 2,
+      childCount: 3,
       className: 'ChatDebugViewHeadersSection',
       type: VirtualDomElements.Div,
     },
@@ -198,6 +198,12 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Div,
     },
     text('test-server'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersSectionInfo',
+      type: VirtualDomElements.Div,
+    },
+    text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'),
   ])
 })
 
@@ -259,6 +265,7 @@ test('getHeadersContentNodes should render response headers when request headers
   expect(result).toContainEqual(text('Status Code'))
   expect(result).toContainEqual(text('204 No Content'))
   expect(result).toContainEqual(text('Response Headers'))
+  expect(result).toContainEqual(text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'))
 })
 
 test('getHeadersContentNodes should preserve unknown status codes without inventing a label', () => {
@@ -316,4 +323,5 @@ test('getHeadersContentNodes should omit table rows for collapsed sections', () 
   expect(result).not.toContainEqual(text('Request URL'))
   expect(result).toContainEqual(text('Request Headers'))
   expect(result).toContainEqual(text('Response Headers'))
+  expect(result).toContainEqual(text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'))
 })
