@@ -3,7 +3,13 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import { getHeaderRowNodes } from '../src/parts/GetHeaderRowNodes/GetHeaderRowNodes.ts'
 
 test('getHeaderRowNodes should return odd row class for even index', () => {
-  const result = getHeaderRowNodes('Server', 'test', 0)
+  const result = getHeaderRowNodes(
+    {
+      key: 'Server',
+      value: 'test',
+    },
+    0,
+  )
   expect(result).toEqual([
     {
       childCount: 2,
@@ -26,7 +32,13 @@ test('getHeaderRowNodes should return odd row class for even index', () => {
 })
 
 test('getHeaderRowNodes should return even row class for odd index', () => {
-  const result = getHeaderRowNodes('Server', 'test', 1)
+  const result = getHeaderRowNodes(
+    {
+      key: 'Server',
+      value: 'test',
+    },
+    1,
+  )
   expect(result[0]).toEqual({
     childCount: 2,
     className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowEven',

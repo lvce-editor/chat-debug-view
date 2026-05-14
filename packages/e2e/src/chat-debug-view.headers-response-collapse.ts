@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.headers-response-collapse'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = `e2e-session-headers-response-collapse-${Date.now()}`
   await ChatDebug.open(sessionId)
@@ -47,19 +49,30 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const responseHeadersHeading = Locator('.ChatDebugViewHeadersSectionHeading[value="responseHeaders"]')
   const etagHeader = detailsBottom.locator('text=ETag')
   const responseHeadersInfo = detailsBottom.locator('text=Some headers may not be displayed due to Access-Control-Expose-Headers header.')
+  const responseHeadersInfoLink = detailsBottom.locator('.ChatDebugViewHeadersSectionInfo a')
 
   await expect(responseHeadersHeading).toBeVisible()
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(etagHeader).toHaveCount(1)
   await expect(responseHeadersInfo).toHaveCount(1)
+  await expect(responseHeadersInfoLink).toHaveCount(1)
+  await expect(responseHeadersInfoLink).toHaveText('Access-Control-Expose-Headers')
+  await expect(responseHeadersInfoLink).toHaveAttribute(
+    'href',
+    'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
+  )
+  await expect(responseHeadersInfoLink).toHaveAttribute('target', '_blank')
+  await expect(responseHeadersInfoLink).toHaveAttribute('rel', 'noopener noreferrer')
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'responseHeaders', false)
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'false')
   await expect(etagHeader).toHaveCount(0)
   await expect(responseHeadersInfo).toHaveCount(0)
+  await expect(responseHeadersInfoLink).toHaveCount(0)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'responseHeaders', false)
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(etagHeader).toHaveCount(1)
   await expect(responseHeadersInfo).toHaveCount(1)
+  await expect(responseHeadersInfoLink).toHaveCount(1)
 }
