@@ -22,6 +22,13 @@ test('getMenuEntries2 should return checked table header entries and reset actio
       label: 'Type',
     },
     {
+      args: ['method'],
+      command: 'ChatDebug.toggleTableColumnVisibility',
+      flags: MenuItemFlags.Checked,
+      id: 'method',
+      label: 'Method',
+    },
+    {
       args: ['status'],
       command: 'ChatDebug.toggleTableColumnVisibility',
       flags: MenuItemFlags.Checked,
@@ -62,8 +69,29 @@ test('getMenuEntries2 should mark hidden table columns as unchecked', () => {
     menuId: MenuChatDebugTableHeader,
   })
 
-  expect(result[2]?.flags).toBe(MenuItemFlags.Unchecked)
+  expect(result[1]?.flags).toBe(MenuItemFlags.Unchecked)
+  expect(result[2]?.flags).toBe(MenuItemFlags.Checked)
   expect(result[3]?.flags).toBe(MenuItemFlags.Unchecked)
+  expect(result[4]?.flags).toBe(MenuItemFlags.Unchecked)
+})
+
+test('getMenuEntries2 should include one toggle entry per table column in state order', () => {
+  const state = createDefaultState()
+
+  const result = getMenuEntries2(state, {
+    menuId: MenuChatDebugTableHeader,
+  })
+
+  const toggleEntryIds: string[] = []
+  for (const entry of result) {
+    if (entry.command === 'ChatDebug.toggleTableColumnVisibility') {
+      toggleEntryIds.push(entry.id)
+    }
+  }
+
+  expect(toggleEntryIds).toEqual(state.tableColumns.map((column) => column.name))
+  expect(toggleEntryIds.filter((id) => id === 'duration')).toHaveLength(1)
+  expect(toggleEntryIds.filter((id) => id === 'method')).toHaveLength(1)
 })
 
 test('getMenuEntries2 should pass the clicked row index to the copy command', () => {
