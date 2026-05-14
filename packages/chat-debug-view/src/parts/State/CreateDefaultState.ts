@@ -49,7 +49,6 @@ export const createDefaultState = (): ChatDebugViewState => {
     selectedEvent: null,
     selectedEventId: null,
     selectedEventIndex: null,
-    summaries: [],
     sessionId: '',
     sessionIdIndexName: 'sessionId',
     showEventStreamFinishedEvents: false,
