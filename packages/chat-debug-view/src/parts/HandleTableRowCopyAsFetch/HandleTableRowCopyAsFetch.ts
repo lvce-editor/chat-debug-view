@@ -1,6 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import { getFetchCode } from '../GetFetchCode/GetFetchCode.ts'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
+import { getFetchCode } from '../GetFetchCode/GetFetchCode.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 
 export const handleTableRowCopyAsFetch = async (state: ChatDebugViewState, eventIndex: number): Promise<ChatDebugViewState> => {
