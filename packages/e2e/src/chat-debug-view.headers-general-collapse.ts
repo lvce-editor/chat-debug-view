@@ -48,11 +48,14 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const requestUrl = detailsBottom.locator('text=Request URL')
 
   await expect(generalHeading).toBeVisible()
+  await expect(generalHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(requestUrl).toHaveCount(1)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'general', false)
+  await expect(generalHeading).toHaveAttribute('aria-expanded', 'false')
   await expect(requestUrl).toHaveCount(0)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'general', false)
+  await expect(generalHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(requestUrl).toHaveCount(1)
 }
