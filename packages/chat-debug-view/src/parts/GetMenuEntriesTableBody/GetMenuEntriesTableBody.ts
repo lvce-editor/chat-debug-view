@@ -14,6 +14,13 @@ export const getMenuEntriesTableBody = (props: ContextMenuPropsTableRow): readon
     },
     {
       args: [props.eventIndex],
+      command: 'ChatDebug.handleTableRowCopyAsFetch',
+      flags: MenuItemFlags.None,
+      id: 'copy-as-fetch',
+      label: ChatDebugStrings.copyAsFetch(),
+    },
+    {
+      args: [props.eventIndex],
       command: 'ChatDebug.handleTableRowOpenInNewTab',
       flags: MenuItemFlags.None,
       id: 'open-in-new-tab',

@@ -5,6 +5,10 @@ export const copy = (): string => {
   return I18nString.i18nString(UiStrings.Copy)
 }
 
+export const copyAsFetch = (): string => {
+  return I18nString.i18nString(UiStrings.CopyAsFetch)
+}
+
 export const openInNewTab = (): string => {
   return I18nString.i18nString(UiStrings.OpenInNewTab)
 }
@@ -199,10 +203,15 @@ export const tokens = (): string => {
   return I18nString.i18nString(UiStrings.Tokens)
 }
 
-export const tableSummary = (eventCount: number, duration: string): string => {
-  return I18nString.i18nString(eventCount === 1 ? UiStrings.TableSummarySingular : UiStrings.TableSummaryPlural, {
+export const tableSummaryRequests = (eventCount: number): string => {
+  return I18nString.i18nString(eventCount === 1 ? UiStrings.TableSummaryRequestSingular : UiStrings.TableSummaryRequestPlural, {
     PH1: String(eventCount),
-    PH2: duration,
+  })
+}
+
+export const tableSummaryFinish = (duration: string): string => {
+  return I18nString.i18nString(UiStrings.TableSummaryFinish, {
+    PH1: duration,
   })
 }
 
