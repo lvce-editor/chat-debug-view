@@ -1,8 +1,8 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import { ChatDebugViewHeadersSectionInfo, ChatDebugViewHeadersSection, ChatDebugViewHeadersSectionHeading } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import { getHeadersTableNodes } from '../GetHeadersTableNodes/GetHeadersTableNodes.ts'
 import * as InputName from '../InputName/InputName.ts'
 
