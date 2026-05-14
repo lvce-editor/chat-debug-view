@@ -1,4 +1,5 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import type { HeaderSectionItem } from '../GetVisibleHeaderSections/GetVisibleHeaderSections.ts'
 import {
   ChatDebugViewHeadersCell,
   ChatDebugViewHeadersCellName,
@@ -7,9 +8,8 @@ import {
   ChatDebugViewHeadersRowEven,
   ChatDebugViewHeadersRowOdd,
 } from '../ClassNames/ClassNames.ts'
-import { getHeaderValueText } from '../GetHeaderValueText/GetHeaderValueText.ts'
 
-export const getHeaderRowNodes = (headerName: string, headerValue: unknown, index: number): readonly VirtualDomNode[] => {
+export const getHeaderRowNodes = (item: HeaderSectionItem, index: number): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 2,
@@ -21,12 +21,12 @@ export const getHeaderRowNodes = (headerName: string, headerValue: unknown, inde
       className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
       type: VirtualDomElements.Div,
     },
-    text(headerName),
+    text(item.key),
     {
       childCount: 1,
       className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
       type: VirtualDomElements.Div,
     },
-    text(getHeaderValueText(headerValue)),
+    text(item.value),
   ]
 }

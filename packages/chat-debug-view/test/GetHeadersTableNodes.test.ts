@@ -4,8 +4,14 @@ import { getHeadersTableNodes } from '../src/parts/GetHeadersTableNodes/GetHeade
 
 test('getHeadersTableNodes should return table and row nodes', () => {
   const result = getHeadersTableNodes([
-    ['A', '1'],
-    ['B', '2'],
+    {
+      key: 'A',
+      value: '1',
+    },
+    {
+      key: 'B',
+      value: '2',
+    },
   ])
   expect(result[0]).toEqual({
     childCount: 2,
