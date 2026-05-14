@@ -1,3 +1,4 @@
+import type { TableColumnWidths } from '../TableColumnLayout/TableColumnWidths.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
 
 export const Type = 'type'
@@ -11,39 +12,54 @@ export const tableColumnNames = [Type, Method, Status, Size, Duration] as const
 export type TableColumnName = (typeof tableColumnNames)[number]
 
 export interface TableColumn {
+  readonly defaultWidth: number
   readonly isVisible: boolean
   readonly label: string
+  readonly minimumWidth: number
   readonly name: TableColumnName
+  readonly width: number
+}
+
+const tableColumnDefinitions: Record<TableColumnName, { readonly defaultWidth: number; readonly label: string; readonly minimumWidth: number }> = {
+  [Duration]: {
+    defaultWidth: 110,
+    label: ChatDebugStrings.duration(),
+    minimumWidth: 80,
+  },
+  [Method]: {
+    defaultWidth: 90,
+    label: ChatDebugStrings.method(),
+    minimumWidth: 56,
+  },
+  [Size]: {
+    defaultWidth: 100,
+    label: ChatDebugStrings.size(),
+    minimumWidth: 80,
+  },
+  [Status]: {
+    defaultWidth: 110,
+    label: ChatDebugStrings.status(),
+    minimumWidth: 56,
+  },
+  [Type]: {
+    defaultWidth: 260,
+    label: ChatDebugStrings.type(),
+    minimumWidth: 80,
+  },
 }
 
 export const createTableColumns = (): readonly TableColumn[] => {
-  return [
-    {
+  return tableColumnNames.map((name) => {
+    const definition = tableColumnDefinitions[name]
+    return {
+      defaultWidth: definition.defaultWidth,
       isVisible: true,
-      label: ChatDebugStrings.type(),
-      name: Type,
-    },
-    {
-      isVisible: true,
-      label: ChatDebugStrings.method(),
-      name: Method,
-    },
-    {
-      isVisible: true,
-      label: ChatDebugStrings.status(),
-      name: Status,
-    },
-    {
-      isVisible: true,
-      label: ChatDebugStrings.size(),
-      name: Size,
-    },
-    {
-      isVisible: true,
-      label: ChatDebugStrings.duration(),
-      name: Duration,
-    },
-  ]
+      label: definition.label,
+      minimumWidth: definition.minimumWidth,
+      name,
+      width: definition.defaultWidth,
+    }
+  })
 }
 
 export const defaultVisibleTableColumns: readonly TableColumnName[] = tableColumnNames
@@ -65,6 +81,47 @@ export const getTableColumnsWithVisibility = (
     ...column,
     isVisible: visibleColumns.has(column.name),
   }))
+}
+
+export const getTableColumnByName = (tableColumns: readonly TableColumn[], name: TableColumnName): TableColumn | undefined => {
+  return tableColumns.find((column) => column.name === name)
+}
+
+export const getTableColumnWidth = (tableColumns: readonly TableColumn[], name: TableColumnName): number => {
+  return getTableColumnByName(tableColumns, name)?.width ?? 0
+}
+
+export const getTableColumnMinimumWidth = (tableColumns: readonly TableColumn[], name: TableColumnName): number => {
+  return getTableColumnByName(tableColumns, name)?.minimumWidth ?? 0
+}
+
+export const getTableColumnWidths = (tableColumns: readonly TableColumn[]): TableColumnWidths => {
+  return {
+    duration: getTableColumnWidth(tableColumns, Duration),
+    method: getTableColumnWidth(tableColumns, Method),
+    size: getTableColumnWidth(tableColumns, Size),
+    status: getTableColumnWidth(tableColumns, Status),
+    type: getTableColumnWidth(tableColumns, Type),
+  }
+}
+
+export const setTableColumnWidths = (tableColumns: readonly TableColumn[], tableColumnWidths: TableColumnWidths): readonly TableColumn[] => {
+  return tableColumns.map((column) => ({
+    ...column,
+    width: tableColumnWidths[column.name],
+  }))
+}
+
+export const setTableColumnWidth = (tableColumns: readonly TableColumn[], columnName: TableColumnName, width: number): readonly TableColumn[] => {
+  return tableColumns.map((column) => {
+    if (column.name !== columnName) {
+      return column
+    }
+    return {
+      ...column,
+      width,
+    }
+  })
 }
 
 export const getOrderedVisibleTableColumns = (

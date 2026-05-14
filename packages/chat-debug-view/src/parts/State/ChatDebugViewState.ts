@@ -4,7 +4,6 @@ import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.
 import type { TimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import type { HeaderSectionKey } from '../HeaderSectionKey/HeaderSectionKey.ts'
 import type { TableColumn } from '../TableColumn/TableColumn.ts'
-import type { TableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export interface ChatDebugViewState {
   readonly assetDir: string
@@ -50,7 +49,6 @@ export interface ChatDebugViewState {
   readonly sortDescending: boolean
   readonly summaries: readonly string[]
   readonly tableColumns: readonly TableColumn[]
-  readonly tableColumnWidths: TableColumnWidths
   readonly tableDeltaY: number
   readonly tableMaxLineY: number
   readonly tableMinLineY: number
