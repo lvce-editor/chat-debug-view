@@ -23,11 +23,6 @@ export const getHeadersContentNodes = (
   if (generalEntries.length > 0) {
     nodes.push(...getHeaderSectionNodes(HeaderSectionKeyModule.General, ChatDebugStrings.general(), generalEntries, collapsedHeaderSections))
   }
-  if (requestHeaders.length > 0) {
-    nodes.push(
-      ...getHeaderSectionNodes(HeaderSectionKeyModule.RequestHeaders, ChatDebugStrings.requestHeaders(), requestHeaders, collapsedHeaderSections),
-    )
-  }
   if (responseHeaders.length > 0) {
     nodes.push(
       ...getHeaderSectionNodes(
@@ -37,6 +32,11 @@ export const getHeadersContentNodes = (
         collapsedHeaderSections,
         ChatDebugStrings.responseHeadersInfo(),
       ),
+    )
+  }
+  if (requestHeaders.length > 0) {
+    nodes.push(
+      ...getHeaderSectionNodes(HeaderSectionKeyModule.RequestHeaders, ChatDebugStrings.requestHeaders(), requestHeaders, collapsedHeaderSections),
     )
   }
   return nodes
