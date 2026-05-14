@@ -29,5 +29,5 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(tableSummary).toBeVisible()
   await expect(tableSummary).toHaveAttribute('role', 'status')
-  await expect(tableSummary).toHaveText('2 events, 1s from start to finish')
+  await expect(tableSummary).toHaveText('2 requests | Finish 1s')
 }

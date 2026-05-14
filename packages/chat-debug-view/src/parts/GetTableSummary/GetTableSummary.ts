@@ -13,7 +13,7 @@ const formatTableSummaryDuration = (durationMs: number): string => {
   return formatTimelineSeconds(durationMs / 1000)
 }
 
-export const getTableSummary = (events: readonly ChatViewEvent[]): string => {
+export const getTableSummaries = (events: readonly ChatViewEvent[]): readonly string[] => {
   let minStart = Number.POSITIVE_INFINITY
   let maxEnd = Number.NEGATIVE_INFINITY
 
@@ -31,6 +31,7 @@ export const getTableSummary = (events: readonly ChatViewEvent[]): string => {
   }
 
   const durationMs = Number.isFinite(minStart) && Number.isFinite(maxEnd) ? Math.max(0, maxEnd - minStart) : 0
+  const duration = formatTableSummaryDuration(durationMs)
 
-  return ChatDebugStrings.tableSummary(events.length, formatTableSummaryDuration(durationMs))
+  return [ChatDebugStrings.tableSummaryRequests(events.length), ChatDebugStrings.tableSummaryFinish(duration)]
 }

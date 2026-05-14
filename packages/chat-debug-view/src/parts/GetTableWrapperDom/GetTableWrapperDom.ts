@@ -12,7 +12,7 @@ export const getTableWrapperDom = (
   eventCount: number,
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
-  summary = '',
+  summaries: readonly string[] = [],
   focus = 0,
   className = '',
   role = 'none',
@@ -28,7 +28,7 @@ export const getTableWrapperDom = (
   }
   return [
     tableWrapperNode,
-    ...getTableDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus),
+    ...getTableDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summaries, focus),
     ...getTableResizersDom(visibleTableColumns),
     ...getTableScrollBarDom(showScrollBar),
   ]

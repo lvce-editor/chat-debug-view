@@ -504,7 +504,17 @@ test('getChatDebugViewDom should render table summary status in devtools layout'
   )
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: '2 events, 1s from start to finish',
+      text: '2 requests',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: ' | ',
+    }),
+  )
+  expect(dom).toContainEqual(
+    expect.objectContaining({
+      text: 'Finish 1s',
     }),
   )
 })

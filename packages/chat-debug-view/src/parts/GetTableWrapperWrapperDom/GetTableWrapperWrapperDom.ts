@@ -9,20 +9,20 @@ export const getTableWrapperWrapperDom = (
   eventCount: number,
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
-  summary = '',
+  summaries: readonly string[] = [],
   focus = 0,
   className = '',
   role = 'none',
   showScrollBar = false,
 ): readonly VirtualDomNode[] => {
-  const tableSummaryNodes = getTableSummaryDom(summary)
+  const tableSummaryNodes = getTableSummaryDom(summaries)
   return [
     {
       childCount: tableSummaryNodes.length === 0 ? 1 : 2,
       className: TableWrapperWrapper,
       type: VirtualDomElements.Div,
     },
-    ...getTableWrapperDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summary, focus, className, role, showScrollBar),
+    ...getTableWrapperDom(rowNodes, eventCount, visibleTableColumns, tableColumns, summaries, focus, className, role, showScrollBar),
     ...tableSummaryNodes,
   ]
 }

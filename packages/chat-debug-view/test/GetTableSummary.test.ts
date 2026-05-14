@@ -1,7 +1,7 @@
 import { expect, test } from '@jest/globals'
-import { getTableSummary } from '../src/parts/GetTableSummary/GetTableSummary.ts'
+import { getTableSummaries } from '../src/parts/GetTableSummary/GetTableSummary.ts'
 
-test('getTableSummary should render singular summary for one event', () => {
+test('getTableSummaries should render singular summary for one event', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:01.250Z',
@@ -13,10 +13,10 @@ test('getTableSummary should render singular summary for one event', () => {
     },
   ]
 
-  expect(getTableSummary(events)).toBe('1 event, 250ms from start to finish')
+  expect(getTableSummaries(events)).toEqual(['1 request', 'Finish 250ms'])
 })
 
-test('getTableSummary should render plural summary for multiple events', () => {
+test('getTableSummaries should render plural summary for multiple events', () => {
   const events = [
     {
       ended: '2026-03-08T00:00:00.250Z',
@@ -36,10 +36,10 @@ test('getTableSummary should render plural summary for multiple events', () => {
     },
   ]
 
-  expect(getTableSummary(events)).toBe('2 events, 2.5s from start to finish')
+  expect(getTableSummaries(events)).toEqual(['2 requests', 'Finish 2.5s'])
 })
 
-test('getTableSummary should fall back to zero milliseconds when events have no valid time range', () => {
+test('getTableSummaries should fall back to zero milliseconds when events have no valid time range', () => {
   const events = [
     {
       eventId: 1,
@@ -49,5 +49,5 @@ test('getTableSummary should fall back to zero milliseconds when events have no 
     },
   ]
 
-  expect(getTableSummary(events)).toBe('1 event, 0ms from start to finish')
+  expect(getTableSummaries(events)).toEqual(['1 request', 'Finish 0ms'])
 })

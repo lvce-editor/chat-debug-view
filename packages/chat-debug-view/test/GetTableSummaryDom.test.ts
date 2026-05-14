@@ -2,24 +2,34 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import { getTableSummaryDom } from '../src/parts/GetTableSummaryDom/GetTableSummaryDom.ts'
 
-test('getTableSummaryDom should render a status region with the summary text', () => {
-  const result = getTableSummaryDom('2 events, 2.5s from start to finish')
+test('getTableSummaryDom should render a status region with summary items and a separator', () => {
+  const result = getTableSummaryDom(['2 requests', 'Finish 2.5s'])
 
   expect(result).toEqual([
     {
-      childCount: 1,
+      childCount: 3,
       className: 'TableSummary',
       role: 'status',
       type: VirtualDomElements.Div,
     },
-    text('2 events, 2.5s from start to finish'),
+    {
+      childCount: 1,
+      type: VirtualDomElements.Span,
+    },
+    text('2 requests'),
+    text(' | '),
+    {
+      childCount: 1,
+      type: VirtualDomElements.Span,
+    },
+    text('Finish 2.5s'),
   ])
 })
 
 test('getTableSummaryDom should reuse the static summary wrapper node', () => {
-  const first = getTableSummaryDom('first')
-  const second = getTableSummaryDom('second')
+  const first = getTableSummaryDom(['first', 'second'])
+  const second = getTableSummaryDom(['third', 'fourth'])
 
   expect(first[0]).toBe(second[0])
-  expect(first[1]).not.toBe(second[1])
+  expect(first[2]).not.toBe(second[2])
 })
