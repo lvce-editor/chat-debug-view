@@ -6,7 +6,18 @@ import * as HeaderSectionKey from '../src/parts/HeaderSectionKey/HeaderSectionKe
 import * as InputName from '../src/parts/InputName/InputName.ts'
 
 test('getHeaderSectionNodes should render expanded section with info message', () => {
-  const result = getHeaderSectionNodes(HeaderSectionKey.ResponseHeaders, 'Response Headers', [['Server', 'test']], [], 'Info')
+  const result = getHeaderSectionNodes({
+    heading: 'Response Headers',
+    info: 'Some headers may not be displayed due to Access-Control-Expose-Headers header.',
+    isExpanded: true,
+    items: [
+      {
+        key: 'Server',
+        value: 'test',
+      },
+    ],
+    key: HeaderSectionKey.ResponseHeaders,
+  })
   expect(result[0]).toEqual({
     childCount: 3,
     className: 'ChatDebugViewHeadersSection',
@@ -23,11 +34,31 @@ test('getHeaderSectionNodes should render expanded section with info message', (
     value: HeaderSectionKey.ResponseHeaders,
   })
   expect(result).toContainEqual(text('Response Headers'))
-  expect(result).toContainEqual(text('Info'))
+  expect(result).toContainEqual(text('Some headers may not be displayed due to '))
+  expect(result).toContainEqual({
+    childCount: 1,
+    href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
+    rel: 'noopener noreferrer',
+    target: '_blank',
+    type: VirtualDomElements.A,
+  })
+  expect(result).toContainEqual(text('Access-Control-Expose-Headers'))
+  expect(result).toContainEqual(text(' header.'))
 })
 
 test('getHeaderSectionNodes should omit table and info when collapsed', () => {
-  const result = getHeaderSectionNodes(HeaderSectionKey.General, 'General', [['Status Code', '200 OK']], [HeaderSectionKey.General], 'Info')
+  const result = getHeaderSectionNodes({
+    heading: 'General',
+    info: 'Info',
+    isExpanded: false,
+    items: [
+      {
+        key: 'Status Code',
+        value: '200 OK',
+      },
+    ],
+    key: HeaderSectionKey.General,
+  })
   expect(result[0]).toEqual({
     childCount: 1,
     className: 'ChatDebugViewHeadersSection',

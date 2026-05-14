@@ -144,11 +144,20 @@ test('getHeadersContentNodes should render general, response, and request header
     },
     text('test-server'),
     {
-      childCount: 1,
+      childCount: 4,
       className: 'ChatDebugViewHeadersSectionInfo',
       type: VirtualDomElements.Div,
     },
-    text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'),
+    text('Some headers may not be displayed due to '),
+    {
+      childCount: 1,
+      href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
+      rel: 'noopener noreferrer',
+      target: '_blank',
+      type: VirtualDomElements.A,
+    },
+    text('Access-Control-Expose-Headers'),
+    text(' header.'),
     {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
@@ -265,7 +274,9 @@ test('getHeadersContentNodes should render response headers when request headers
   expect(result).toContainEqual(text('Status Code'))
   expect(result).toContainEqual(text('204 No Content'))
   expect(result).toContainEqual(text('Response Headers'))
-  expect(result).toContainEqual(text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'))
+  expect(result).toContainEqual(text('Some headers may not be displayed due to '))
+  expect(result).toContainEqual(text('Access-Control-Expose-Headers'))
+  expect(result).toContainEqual(text(' header.'))
 })
 
 test('getHeadersContentNodes should preserve unknown status codes without inventing a label', () => {
@@ -323,5 +334,7 @@ test('getHeadersContentNodes should omit table rows for collapsed sections', () 
   expect(result).not.toContainEqual(text('Request URL'))
   expect(result).toContainEqual(text('Request Headers'))
   expect(result).toContainEqual(text('Response Headers'))
-  expect(result).toContainEqual(text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'))
+  expect(result).toContainEqual(text('Some headers may not be displayed due to '))
+  expect(result).toContainEqual(text('Access-Control-Expose-Headers'))
+  expect(result).toContainEqual(text(' header.'))
 })
