@@ -27,6 +27,7 @@ test('getStateWithInvalidUri should clear event state and set an error for inval
     selectedEventId: null,
     selectedEventIndex: null,
     sessionId: '',
+    summaries: ['0 requests', 'Finish 0ms'],
   })
 })
 

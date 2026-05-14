@@ -4,6 +4,7 @@ import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailT
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as LoadSelectedEvent from '../LoadSelectedEvent/LoadSelectedEvent.ts'
 import { mergeSelectedEventDetails } from '../MergeSelectedEventDetails/MergeSelectedEventDetails.ts'
+import { getBalancedSplitTableWidth, shouldUseBalancedSplitTableWidth } from '../SplitLayout/SplitLayout.ts'
 import { withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 import { withPreparedSelectedEventPreview } from '../WithPreparedSelectedEventPreview/WithPreparedSelectedEventPreview.ts'
 
@@ -36,7 +37,7 @@ export const selectEventAtIndex = async (state: ChatDebugViewState, selectedEven
     type: selectedEvent.type,
   })
   const resolvedSelectedEvent = await withPreparedSelectedEventPreview(mergeSelectedEventDetails(selectedEvent, selectedEventDetails))
-  return withSelectedEventVisible({
+  const nextState = {
     ...state,
     detailTabs: createDetailTabs(selectedDetailTab, resolvedSelectedEvent),
     previewTextCursorColumnIndex: null,
@@ -47,5 +48,9 @@ export const selectEventAtIndex = async (state: ChatDebugViewState, selectedEven
     selectedEvent: resolvedSelectedEvent,
     selectedEventId: selectedEvent.eventId,
     selectedEventIndex,
+  }
+  return withSelectedEventVisible({
+    ...nextState,
+    tableWidth: shouldUseBalancedSplitTableWidth(nextState) ? getBalancedSplitTableWidth(nextState) : state.tableWidth,
   })
 }

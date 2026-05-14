@@ -11,7 +11,8 @@ import { applyVirtualTableState } from '../VirtualTable/VirtualTable.ts'
 
 export const loadContent = async (state: ChatDebugViewState, savedState: unknown): Promise<ChatDebugViewState> => {
   await RendererWorker.getPreference('chatDebug.autoRefresh')
-  const nextState = await loadEventsFromUri(restoreSavedState(state, savedState))
+  const restoredState = restoreSavedState(state, savedState)
+  const nextState = await loadEventsFromUri(restoredState)
   if (nextState.sessionId) {
     try {
       await registerUpdateListener(nextState.sessionId, HandleStorageWorkerUpdate.rpcId, nextState.uid)

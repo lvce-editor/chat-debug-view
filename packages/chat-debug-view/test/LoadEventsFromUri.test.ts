@@ -22,5 +22,6 @@ test('loadEventsFromUri should return invalid-uri state when the uri cannot be p
     selectedEventId: null,
     selectedEventIndex: null,
     sessionId: '',
+    summaries: ['0 requests', 'Finish 0ms'],
   })
 })

@@ -11,7 +11,7 @@ export const getTableDom = (
   eventCount: number,
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
-  summary = '',
+  summaries: readonly string[] = [],
   focus = 0,
 ): readonly VirtualDomNode[] => {
   return [

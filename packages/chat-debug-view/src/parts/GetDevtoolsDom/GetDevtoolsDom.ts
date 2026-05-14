@@ -19,7 +19,7 @@ import { getPreviewEventNodes } from '../GetPreviewEventNodes/GetPreviewEventNod
 import { getResponseEvent } from '../GetResponseEvent/GetResponseEvent.ts'
 import { getSashNodesDom } from '../GetSashNodesDom/GetSashNodesDom.ts'
 import { getSplitViewDom } from '../GetSplitViewDom/GetSplitViewDom.ts'
-import { getTableSummary } from '../GetTableSummary/GetTableSummary.ts'
+import { getTableSummaries } from '../GetTableSummary/GetTableSummary.ts'
 import { getTableWrapperWrapperDom } from '../GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
 import { getTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import { getTimelineDom } from '../GetTimelineNodes/GetTimelineNodes.ts'
@@ -50,6 +50,7 @@ export const getDevtoolsDom = (
   minLineY = 0,
   maxLineY = events.length,
   collapsedHeaderSections: readonly HeaderSectionKey[] = [],
+  summaries: readonly string[] = getTableSummaries(events),
 ): readonly VirtualDomNode[] => {
   const visibleEvents = events.slice(minLineY, maxLineY)
   const rows = createDevtoolsRows(visibleEvents, selectedEventIndex, minLineY)
@@ -88,12 +89,11 @@ export const getDevtoolsDom = (
   const responseEventNodes = selectedEvent ? getEventNode(getResponseEvent(selectedEvent)) : []
   const hasSelectedEvent = !!selectedEvent
   const eventsClassName = getEventsClassName(hasSelectedEvent)
-  const summary = getTableSummary(events)
   const showScrollBar = visibleEvents.length < events.length
   const tableNodes =
     events.length === 0
       ? getEmptyStateDom(emptyMessage)
-      : getTableWrapperWrapperDom(rowNodes, visibleEvents.length, visibleTableColumns, tableColumns, summary, focus, '', '', showScrollBar)
+      : getTableWrapperWrapperDom(rowNodes, visibleEvents.length, visibleTableColumns, tableColumns, summaries, focus, '', '', showScrollBar)
 
   const detailsNodes = getDetailsDom(
     previewEventNodes,
