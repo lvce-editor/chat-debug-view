@@ -46,16 +46,20 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const detailsBottom = Locator('.ChatDebugViewDetailsBottom')
   const responseHeadersHeading = Locator('.ChatDebugViewHeadersSectionHeading[value="responseHeaders"]')
   const etagHeader = detailsBottom.locator('text=ETag')
+  const responseHeadersInfo = detailsBottom.locator('text=Some headers may not be displayed due to Access-Control-Expose-Headers header.')
 
   await expect(responseHeadersHeading).toBeVisible()
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(etagHeader).toHaveCount(1)
+  await expect(responseHeadersInfo).toHaveCount(1)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'responseHeaders', false)
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'false')
   await expect(etagHeader).toHaveCount(0)
+  await expect(responseHeadersInfo).toHaveCount(0)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'responseHeaders', false)
   await expect(responseHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(etagHeader).toHaveCount(1)
+  await expect(responseHeadersInfo).toHaveCount(1)
 }
