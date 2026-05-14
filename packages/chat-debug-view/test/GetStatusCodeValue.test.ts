@@ -31,5 +31,5 @@ test('getStatusCodeValue should fall back to status text for ai events', () => {
     eventId: 1,
     type: 'ai-response',
   } as const
-  expect(getStatusCodeValue(event)).toBe('success')
+  expect(getStatusCodeValue(event)).toBe('200')
 })
