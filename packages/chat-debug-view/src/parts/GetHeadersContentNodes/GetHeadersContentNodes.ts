@@ -9,6 +9,7 @@ import {
   ChatDebugViewHeadersRow,
   ChatDebugViewHeadersRowEven,
   ChatDebugViewHeadersRowOdd,
+  ChatDebugViewHeadersSectionInfo,
   ChatDebugViewHeadersSection,
   ChatDebugViewHeadersSectionHeading,
   ChatDebugViewHeadersTable,
@@ -148,11 +149,14 @@ const getHeaderSectionNodes = (
   label: string,
   headers: readonly HeaderEntry[],
   collapsedHeaderSections: readonly HeaderSectionKey[],
+  infoMessage: string = '',
 ): readonly VirtualDomNode[] => {
   const isCollapsed = collapsedHeaderSections.includes(section)
+  const hasInfoMessage = !isCollapsed && infoMessage !== ''
+  const childCount = isCollapsed ? 1 : 2 + Number(hasInfoMessage)
   return [
     {
-      childCount: isCollapsed ? 1 : 2,
+      childCount,
       className: ChatDebugViewHeadersSection,
       type: VirtualDomElements.Div,
     },
@@ -168,6 +172,16 @@ const getHeaderSectionNodes = (
     },
     text(label),
     ...(isCollapsed ? [] : getHeadersTableNodes(headers)),
+    ...(hasInfoMessage
+      ? [
+          {
+            childCount: 1,
+            className: ChatDebugViewHeadersSectionInfo,
+            type: VirtualDomElements.Div,
+          },
+          text(infoMessage),
+        ]
+      : []),
   ]
 }
 
@@ -193,7 +207,13 @@ export const getHeadersContentNodes = (
   }
   if (responseHeaders.length > 0) {
     nodes.push(
-      ...getHeaderSectionNodes(HeaderSectionKeyModule.ResponseHeaders, ChatDebugStrings.responseHeaders(), responseHeaders, collapsedHeaderSections),
+      ...getHeaderSectionNodes(
+        HeaderSectionKeyModule.ResponseHeaders,
+        ChatDebugStrings.responseHeaders(),
+        responseHeaders,
+        collapsedHeaderSections,
+        ChatDebugStrings.responseHeadersInfo(),
+      ),
     )
   }
   return nodes
