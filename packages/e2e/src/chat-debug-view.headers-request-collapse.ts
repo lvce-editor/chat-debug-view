@@ -48,11 +48,14 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const authorizationHeader = detailsBottom.locator('text=Authorization')
 
   await expect(requestHeadersHeading).toBeVisible()
+  await expect(requestHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(authorizationHeader).toHaveCount(1)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'requestHeaders', false)
+  await expect(requestHeadersHeading).toHaveAttribute('aria-expanded', 'false')
   await expect(authorizationHeader).toHaveCount(0)
 
   await Command.execute('ChatDebug.handleInput', 'toggleHeadersSection', 'requestHeaders', false)
+  await expect(requestHeadersHeading).toHaveAttribute('aria-expanded', 'true')
   await expect(authorizationHeader).toHaveCount(1)
 }

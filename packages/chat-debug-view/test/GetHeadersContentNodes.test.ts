@@ -39,6 +39,7 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Div,
     },
     {
+      ariaExpanded: true,
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
       name: InputName.ToggleHeadersSection,
@@ -110,6 +111,7 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Div,
     },
     {
+      ariaExpanded: true,
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
       name: InputName.ToggleHeadersSection,
@@ -164,6 +166,7 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Div,
     },
     {
+      ariaExpanded: true,
       childCount: 1,
       className: 'ChatDebugViewHeadersSectionHeading',
       name: InputName.ToggleHeadersSection,
@@ -300,6 +303,7 @@ test('getHeadersContentNodes should omit table rows for collapsed sections', () 
     type: VirtualDomElements.Div,
   })
   expect(result[1]).toEqual({
+    ariaExpanded: false,
     childCount: 1,
     className: 'ChatDebugViewHeadersSectionHeading',
     name: InputName.ToggleHeadersSection,

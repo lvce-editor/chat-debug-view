@@ -157,6 +157,7 @@ const getHeaderSectionNodes = (
       type: VirtualDomElements.Div,
     },
     {
+      ariaExpanded: !isCollapsed,
       childCount: 1,
       className: ChatDebugViewHeadersSectionHeading,
       name: InputName.ToggleHeadersSection,
