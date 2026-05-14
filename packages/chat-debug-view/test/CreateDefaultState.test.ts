@@ -36,6 +36,7 @@ test('createDefaultState should return expected defaults', () => {
   expect(state.minDetailsWidth).toBe(280)
   expect(state.minTableWidth).toBe(240)
   expect(state.sashWidth).toBe(4)
+  expect(state.summaries).toEqual([])
   expect(sortableState.mediumBreakpoint).toBe(600)
   expect(sortableState.largeBreakpoint).toBe(900)
   expect(sortableState.sortColumn).toBe('')

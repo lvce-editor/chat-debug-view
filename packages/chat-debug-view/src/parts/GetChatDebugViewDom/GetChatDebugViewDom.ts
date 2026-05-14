@@ -15,6 +15,7 @@ import { getDevtoolsDom } from '../GetDevtoolsDom/GetDevtoolsDom.ts'
 import { getEmptyMessage } from '../GetEmptyMessage/GetEmptyMessage.ts'
 import { getEventNode } from '../GetEventNode/GetEventNode.ts'
 import { getLegacyEventsDom } from '../GetLegacyEventsDom/GetLegacyEventsDom.ts'
+import { getTableSummaries } from '../GetTableSummary/GetTableSummary.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 const getNextSiblingIndex = (nodes: readonly VirtualDomNode[], index: number): number => {
@@ -77,7 +78,7 @@ export const getChatDebugViewDom = (
   previewTextDeltaY = 0,
   previewTextViewportHeight = 0,
   collapsedHeaderSections: readonly HeaderSectionKey[] = [],
-  summaries: readonly string[] = [],
+  summaries: readonly string[] = getTableSummaries(events),
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
