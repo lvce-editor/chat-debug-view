@@ -7,6 +7,7 @@ import * as InputName from '../InputName/InputName.ts'
 import * as IsDetailTab from '../IsDetailTab/IsDetailTab.ts'
 import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvents.ts'
 import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
+import { getBalancedSplitTableWidth, shouldUseBalancedSplitTableWidth } from '../SplitLayout/SplitLayout.ts'
 import * as ToggleHeadersSection from '../ToggleHeadersSection/ToggleHeadersSection.ts'
 import { applyVirtualTableState, withSelectedEventVisible } from '../VirtualTable/VirtualTable.ts'
 
@@ -130,7 +131,7 @@ const handleUseDevtoolsLayout: InputHandler = (state, _value, checked) => {
   const useDevtoolsLayout = GetBoolean.getBoolean(checked)
   const selectedEventIndex = useDevtoolsLayout ? getSelectedEventIndex(state) : null
   const hasSelectedEvent = useDevtoolsLayout && selectedEventIndex !== null
-  return applyVirtualTableState({
+  const nextState = {
     ...state,
     previewTextCursorColumnIndex: hasSelectedEvent ? state.previewTextCursorColumnIndex : null,
     previewTextCursorRowIndex: hasSelectedEvent ? state.previewTextCursorRowIndex : null,
@@ -138,6 +139,10 @@ const handleUseDevtoolsLayout: InputHandler = (state, _value, checked) => {
     selectedEventId: hasSelectedEvent ? state.selectedEventId : null,
     selectedEventIndex,
     useDevtoolsLayout,
+  }
+  return applyVirtualTableState({
+    ...nextState,
+    tableWidth: shouldUseBalancedSplitTableWidth(nextState) ? getBalancedSplitTableWidth(nextState) : state.tableWidth,
   })
 }
 
