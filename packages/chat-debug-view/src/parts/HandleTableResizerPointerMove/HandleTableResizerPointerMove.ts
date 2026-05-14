@@ -8,10 +8,10 @@ export const handleTableResizerPointerMove = (state: ChatDebugViewState, clientX
   }
   return {
     ...state,
-    tableColumnWidths: getResizedTableColumnWidths(
+    tableColumns: getResizedTableColumnWidths(
       state,
       TableColumn.getVisibleTableColumns(state.tableColumns),
-      state.tableColumnWidths,
+      state.tableColumns,
       clientX,
       state.tableResizerDownId,
     ),

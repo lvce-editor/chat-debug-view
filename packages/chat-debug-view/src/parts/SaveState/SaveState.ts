@@ -5,17 +5,7 @@ import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailT
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const saveState = (state: ChatDebugViewState): SavedState => {
-  const {
-    categoryFilters,
-    detailTabs,
-    filterValue,
-    selectedEventId,
-    sessionId,
-    tableColumns,
-    tableColumnWidths,
-    timelineEndSeconds,
-    timelineStartSeconds,
-  } = state
+  const { categoryFilters, detailTabs, filterValue, selectedEventId, sessionId, tableColumns, timelineEndSeconds, timelineStartSeconds } = state
   return {
     eventCategoryFilter: EventCategoryFilter.getSelectedEventCategoryFilter(categoryFilters),
     eventCategoryFilters: EventCategoryFilter.getSelectedEventCategoryFilters(categoryFilters),
@@ -23,7 +13,7 @@ export const saveState = (state: ChatDebugViewState): SavedState => {
     selectedDetailTab: getSelectedDetailTab(detailTabs),
     selectedEventId,
     sessionId,
-    tableColumnWidths,
+    tableColumnWidths: TableColumn.getTableColumnWidths(tableColumns),
     timelineEndSeconds,
     timelineStartSeconds,
     visibleTableColumns: TableColumn.getVisibleTableColumns(tableColumns),

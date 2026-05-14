@@ -3,7 +3,6 @@ import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
 import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { emptyTimelineInfo } from '../GetTimelineInfo/GetTimelineInfo.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
-import { defaultTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
 export const createDefaultState = (): ChatDebugViewState => {
   const defaultTableWidth = 480
@@ -58,7 +57,6 @@ export const createDefaultState = (): ChatDebugViewState => {
     sortDescending: false,
     summaries: [],
     tableColumns: TableColumn.createTableColumns(),
-    tableColumnWidths: defaultTableColumnWidths,
     tableDeltaY: 0,
     tableMaxLineY: 0,
     tableMinLineY: 0,

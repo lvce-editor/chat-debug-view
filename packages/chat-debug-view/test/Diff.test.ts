@@ -4,6 +4,7 @@ import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as HeaderSectionKey from '../src/parts/HeaderSectionKey/HeaderSectionKey.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('diff should return empty array when initial changes only', () => {
   const oldState = createDefaultState()
@@ -82,10 +83,10 @@ test('diff should return RenderIncremental and RenderCss when table column width
   const oldState = createDefaultState()
   const newState = {
     ...oldState,
-    tableColumnWidths: {
-      ...oldState.tableColumnWidths,
+    tableColumns: TableColumn.setTableColumnWidths(oldState.tableColumns, {
+      ...TableColumn.getTableColumnWidths(oldState.tableColumns),
       type: 280,
-    },
+    }),
   }
   const result = Diff.diff(oldState, newState)
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderCss])

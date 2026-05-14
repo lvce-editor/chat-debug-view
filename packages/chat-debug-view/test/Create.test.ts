@@ -52,14 +52,14 @@ test('create should restore serializable state from saved state', () => {
   expect(getSelectedDetailTab(result.oldState.detailTabs)).toBe(InputName.Preview)
   expect(result.newState.selectedEventId).toBe(7)
   expect(result.oldState.selectedEventId).toBe(7)
-  expect(result.newState.tableColumnWidths).toEqual({
+  expect(TableColumn.getTableColumnWidths(result.newState.tableColumns)).toEqual({
     duration: 88,
     method: 92,
     size: 104,
     status: 132,
     type: 260,
   })
-  expect(result.oldState.tableColumnWidths).toEqual({
+  expect(TableColumn.getTableColumnWidths(result.oldState.tableColumns)).toEqual({
     duration: 88,
     method: 92,
     size: 104,
