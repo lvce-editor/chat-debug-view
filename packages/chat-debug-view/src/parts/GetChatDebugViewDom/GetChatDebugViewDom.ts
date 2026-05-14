@@ -77,6 +77,7 @@ export const getChatDebugViewDom = (
   previewTextDeltaY = 0,
   previewTextViewportHeight = 0,
   collapsedHeaderSections: readonly HeaderSectionKey[] = [],
+  summaries: readonly string[] = [],
 ): readonly VirtualDomNode[] => {
   if (errorMessage) {
     return getDebugErrorDom(errorMessage)
@@ -130,6 +131,7 @@ export const getChatDebugViewDom = (
       minLineY,
       maxLineY,
       collapsedHeaderSections,
+      summaries,
     )
     const devtoolsContentNodes = devtoolsDom.slice(1)
     const topLevelNodes = [...getDebugViewTopDom(filterValue, useDevtoolsLayout, categoryFilters), ...devtoolsContentNodes]
