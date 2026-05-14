@@ -2,7 +2,7 @@ export const General = 'general'
 export const RequestHeaders = 'requestHeaders'
 export const ResponseHeaders = 'responseHeaders'
 
-export const headerSectionKeys = [General, RequestHeaders, ResponseHeaders] as const
+export const headerSectionKeys = [General, ResponseHeaders, RequestHeaders] as const
 
 export type HeaderSectionKey = (typeof headerSectionKeys)[number]
 

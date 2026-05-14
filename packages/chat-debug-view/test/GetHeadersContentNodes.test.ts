@@ -5,7 +5,7 @@ import { getHeadersContentNodes } from '../src/parts/GetHeadersContentNodes/GetH
 import * as HeaderSectionKey from '../src/parts/HeaderSectionKey/HeaderSectionKey.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 
-test('getHeadersContentNodes should render request and response headers in separate sections', () => {
+test('getHeadersContentNodes should render general, response, and request headers in that order', () => {
   const responseEventNodes = [
     {
       childCount: 1,
@@ -106,6 +106,50 @@ test('getHeadersContentNodes should render request and response headers in separ
     },
     text('201 Created'),
     {
+      childCount: 3,
+      className: 'ChatDebugViewHeadersSection',
+      type: VirtualDomElements.Div,
+    },
+    {
+      ariaExpanded: true,
+      childCount: 1,
+      className: 'ChatDebugViewHeadersSectionHeading',
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: HeaderSectionKey.ResponseHeaders,
+    },
+    text('Response Headers'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersTable',
+      type: VirtualDomElements.Ul,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowOdd',
+      type: VirtualDomElements.Li,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
+      type: VirtualDomElements.Div,
+    },
+    text('Server'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
+      type: VirtualDomElements.Div,
+    },
+    text('test-server'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersSectionInfo',
+      type: VirtualDomElements.Div,
+    },
+    text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'),
+    {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
       type: VirtualDomElements.Div,
@@ -160,50 +204,6 @@ test('getHeadersContentNodes should render request and response headers in separ
       type: VirtualDomElements.Div,
     },
     text('application/json'),
-    {
-      childCount: 3,
-      className: 'ChatDebugViewHeadersSection',
-      type: VirtualDomElements.Div,
-    },
-    {
-      ariaExpanded: true,
-      childCount: 1,
-      className: 'ChatDebugViewHeadersSectionHeading',
-      name: InputName.ToggleHeadersSection,
-      onChange: DomEventListenerFunctions.HandleFilterInput,
-      onClick: DomEventListenerFunctions.HandleFilterInput,
-      type: VirtualDomElements.Button,
-      value: HeaderSectionKey.ResponseHeaders,
-    },
-    text('Response Headers'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersTable',
-      type: VirtualDomElements.Ul,
-    },
-    {
-      childCount: 2,
-      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowOdd',
-      type: VirtualDomElements.Li,
-    },
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
-      type: VirtualDomElements.Div,
-    },
-    text('Server'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
-      type: VirtualDomElements.Div,
-    },
-    text('test-server'),
-    {
-      childCount: 1,
-      className: 'ChatDebugViewHeadersSectionInfo',
-      type: VirtualDomElements.Div,
-    },
-    text('Some headers may not be displayed due to Access-Control-Expose-Headers header.'),
   ])
 })
 
