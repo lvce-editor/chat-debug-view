@@ -7,8 +7,7 @@ import { applyVirtualTableState, withSelectedEventVisible } from '../../VirtualT
 import { restoreSelectedEvent } from '../RestoreSelectedEvent/RestoreSelectedEvent.ts'
 
 export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
-  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
+  const result = await listChatViewEvents(sessionId)
 
   if (result.type === 'error') {
     return applyVirtualTableState(

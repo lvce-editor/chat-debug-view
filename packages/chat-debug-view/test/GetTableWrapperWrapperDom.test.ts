@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableWrapperWrapperDom } from '../src/parts/GetTableWrapperWrapperDom/GetTableWrapperWrapperDom.ts'
+import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes', () => {
   const rowNodes = [
@@ -12,7 +13,17 @@ test('getTableWrapperWrapperDom should wrap the table wrapper and summary nodes'
     },
   ]
 
-  const dom = getTableWrapperWrapperDom(rowNodes, 1, undefined, undefined, ['2 requests', 'Finish 1s']) as readonly {
+  const dom = getTableWrapperWrapperDom(
+    rowNodes,
+    1,
+    TableColumn.defaultVisibleTableColumns,
+    TableColumn.createTableColumns(),
+    ['2 requests', 'Finish 1s'],
+    0,
+    '',
+    'none',
+    false,
+  ) as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly role?: string

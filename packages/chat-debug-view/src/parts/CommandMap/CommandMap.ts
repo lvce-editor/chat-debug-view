@@ -46,11 +46,13 @@ import * as HandleTableScrollBarPointerUp from '../HandleTableScrollBarPointerUp
 import * as HandleTableWheel from '../HandleTableWheel/HandleTableWheel.ts'
 import * as HandleTimelineContextMenu from '../HandleTimelineContextMenu/HandleTimelineContextMenu.ts'
 import * as HandleTimelineDoubleClick from '../HandleTimelineDoubleClick/HandleTimelineDoubleClick.ts'
-import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
+import * as HandleTimelineEndSeconds from '../HandleTimelineEndSeconds/HandleTimelineEndSeconds.ts'
 import * as HandleTimelinePointerDown from '../HandleTimelinePointerDown/HandleTimelinePointerDown.ts'
 import * as HandleTimelinePointerLeave from '../HandleTimelinePointerLeave/HandleTimelinePointerLeave.ts'
 import * as HandleTimelinePointerMove from '../HandleTimelinePointerMove/HandleTimelinePointerMove.ts'
 import * as HandleTimelinePointerUp from '../HandleTimelinePointerUp/HandleTimelinePointerUp.ts'
+import * as HandleTimelineRangePreset from '../HandleTimelineRangePreset/HandleTimelineRangePreset.ts'
+import * as HandleTimelineStartSeconds from '../HandleTimelineStartSeconds/HandleTimelineStartSeconds.ts'
 import * as HandleUseDevtoolsLayout from '../HandleUseDevtoolsLayout/HandleUseDevtoolsLayout.ts'
 import * as HandleVisibilityToggles from '../HandleVisibilityToggles/HandleVisibilityToggles.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
@@ -121,13 +123,13 @@ export const commandMap = {
   'ChatDebug.handleTableWheel': wrapCommand(HandleTableWheel.handleTableWheel),
   'ChatDebug.handleTimelineContextMenu': wrapCommand(HandleTimelineContextMenu.handleTimelineContextMenu),
   'ChatDebug.handleTimelineDoubleClick': wrapCommand(HandleTimelineDoubleClick.handleTimelineDoubleClick),
-  'ChatDebug.handleTimelineEndSeconds': wrapCommand(HandleTimelineInput.handleTimelineEndSeconds),
+  'ChatDebug.handleTimelineEndSeconds': wrapCommand(HandleTimelineEndSeconds.handleTimelineEndSeconds),
   'ChatDebug.handleTimelinePointerDown': wrapCommand(HandleTimelinePointerDown.handleTimelinePointerDown),
   'ChatDebug.handleTimelinePointerLeave': wrapCommand(HandleTimelinePointerLeave.handleTimelinePointerLeave),
   'ChatDebug.handleTimelinePointerMove': wrapCommand(HandleTimelinePointerMove.handleTimelinePointerMove),
   'ChatDebug.handleTimelinePointerUp': wrapCommand(HandleTimelinePointerUp.handleTimelinePointerUp),
-  'ChatDebug.handleTimelineRangePreset': wrapCommand(HandleTimelineInput.handleTimelineRangePreset),
-  'ChatDebug.handleTimelineStartSeconds': wrapCommand(HandleTimelineInput.handleTimelineStartSeconds),
+  'ChatDebug.handleTimelineRangePreset': wrapCommand(HandleTimelineRangePreset.handleTimelineRangePreset),
+  'ChatDebug.handleTimelineStartSeconds': wrapCommand(HandleTimelineStartSeconds.handleTimelineStartSeconds),
   'ChatDebug.handleUseDevtoolsLayout': wrapCommand(HandleUseDevtoolsLayout.setUseDevtoolsLayout),
   'ChatDebug.loadContent': wrapCommand(LoadContent.loadContent),
   'ChatDebug.loadContent2': wrapCommand(LoadContent.loadContent),
