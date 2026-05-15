@@ -10,38 +10,59 @@ import * as InputName from '../InputName/InputName.ts'
 const accessControlExposeHeadersText = 'Access-Control-Expose-Headers'
 const accessControlExposeHeadersUrl = 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers'
 
-const getInfoNodes = (section: VisibleHeaderSection): readonly VirtualDomNode[] => {
+const getInfoNodesWithText = (info: string): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: ChatDebugViewHeadersSectionInfo,
+      type: VirtualDomElements.Div,
+    },
+    text(info),
+  ]
+}
+
+const getInfoNodesWithLink = (info: string): readonly VirtualDomNode[] => {
+  const linkIndex = info.indexOf(accessControlExposeHeadersText)
+  const prefix = info.slice(0, linkIndex)
+  const suffix = info.slice(linkIndex + accessControlExposeHeadersText.length)
+
+  return [
+    {
+      childCount: 3,
+      className: ChatDebugViewHeadersSectionInfo,
+      type: VirtualDomElements.Div,
+    },
+    text(prefix),
+    {
+      childCount: 1,
+      href: accessControlExposeHeadersUrl,
+      rel: 'noopener noreferrer',
+      target: '_blank',
+      type: VirtualDomElements.A,
+    },
+    text(accessControlExposeHeadersText),
+    text(suffix),
+  ]
+}
+
+const getHeadersInfoSectionDom = (section: VisibleHeaderSection): readonly VirtualDomNode[] => {
+  if (!section.isExpanded || section.info === '') {
+    return []
+  }
   if (section.key !== HeaderSectionKey.ResponseHeaders) {
-    return [text(section.info)]
+    return getInfoNodesWithText(section.info)
   }
   const linkIndex = section.info.indexOf(accessControlExposeHeadersText)
   if (linkIndex === -1) {
-    return [text(section.info)]
+    return getInfoNodesWithText(section.info)
   }
-  const infoNodes: VirtualDomNode[] = []
-  const prefix = section.info.slice(0, linkIndex)
-  const suffix = section.info.slice(linkIndex + accessControlExposeHeadersText.length)
-  if (prefix) {
-    infoNodes.push(text(prefix))
-  }
-  infoNodes.push({
-    childCount: 1,
-    href: accessControlExposeHeadersUrl,
-    rel: 'noopener noreferrer',
-    target: '_blank',
-    type: VirtualDomElements.A,
-  })
-  infoNodes.push(text(accessControlExposeHeadersText))
-  if (suffix) {
-    infoNodes.push(text(suffix))
-  }
-  return infoNodes
+  return getInfoNodesWithLink(section.info)
 }
 
 export const getHeaderSectionNodes = (section: VisibleHeaderSection): readonly VirtualDomNode[] => {
   const hasInfoMessage = section.isExpanded && section.info !== ''
   const childCount = section.isExpanded ? 2 + Number(hasInfoMessage) : 1
-  const infoNodes = hasInfoMessage ? getInfoNodes(section) : []
+  const infoNodes = getHeadersInfoSectionDom(section)
   return [
     {
       childCount,
@@ -60,15 +81,6 @@ export const getHeaderSectionNodes = (section: VisibleHeaderSection): readonly V
     },
     text(section.heading),
     ...(section.isExpanded ? getHeadersTableNodes(section.items) : []),
-    ...(hasInfoMessage
-      ? [
-          {
-            childCount: infoNodes.length,
-            className: ChatDebugViewHeadersSectionInfo,
-            type: VirtualDomElements.Div,
-          },
-          ...infoNodes,
-        ]
-      : []),
+    ...infoNodes,
   ]
 }
