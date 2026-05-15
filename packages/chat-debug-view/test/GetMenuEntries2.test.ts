@@ -112,6 +112,13 @@ test('getMenuEntries2 should pass the clicked row index to the copy command', ()
     },
     {
       args: [3],
+      command: 'ChatDebug.handleTableRowCopyAsFetch',
+      flags: MenuItemFlags.None,
+      id: 'copy-as-fetch',
+      label: 'Copy As Fetch',
+    },
+    {
+      args: [3],
       command: 'ChatDebug.handleTableRowOpenInNewTab',
       flags: MenuItemFlags.None,
       id: 'open-in-new-tab',
