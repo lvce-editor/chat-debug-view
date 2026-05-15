@@ -144,7 +144,7 @@ test('getHeadersContentNodes should render general, response, and request header
     },
     text('test-server'),
     {
-      childCount: 4,
+      childCount: 3,
       className: 'ChatDebugViewHeadersSectionInfo',
       type: VirtualDomElements.Div,
     },

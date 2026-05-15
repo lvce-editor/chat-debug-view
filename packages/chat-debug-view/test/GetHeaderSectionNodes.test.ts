@@ -36,13 +36,72 @@ test('getHeaderSectionNodes should render expanded section with info message', (
   expect(result).toContainEqual(text('Response Headers'))
   expect(result).toContainEqual(text('Some headers may not be displayed due to '))
   expect(result).toContainEqual({
+    childCount: 3,
+    className: 'ChatDebugViewHeadersSectionInfo',
+    type: VirtualDomElements.Div,
+  })
+  expect(result).toContainEqual({
     childCount: 1,
     href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
     rel: 'noopener noreferrer',
     target: '_blank',
     type: VirtualDomElements.A,
   })
-  expect(result).toContainEqual(text('Access-Control-Expose-Headers'))
+  expect(result).toEqual([
+    {
+      childCount: 3,
+      className: 'ChatDebugViewHeadersSection',
+      type: VirtualDomElements.Div,
+    },
+    {
+      ariaExpanded: true,
+      childCount: 1,
+      className: 'ChatDebugViewHeadersSectionHeading',
+      name: InputName.ToggleHeadersSection,
+      onChange: DomEventListenerFunctions.HandleFilterInput,
+      onClick: DomEventListenerFunctions.HandleFilterInput,
+      type: VirtualDomElements.Button,
+      value: HeaderSectionKey.ResponseHeaders,
+    },
+    text('Response Headers'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersTable',
+      type: VirtualDomElements.Ul,
+    },
+    {
+      childCount: 2,
+      className: 'ChatDebugViewHeadersRow ChatDebugViewHeadersRowOdd',
+      type: VirtualDomElements.Li,
+    },
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellName',
+      type: VirtualDomElements.Div,
+    },
+    text('Server'),
+    {
+      childCount: 1,
+      className: 'ChatDebugViewHeadersCell ChatDebugViewHeadersCellValue',
+      type: VirtualDomElements.Div,
+    },
+    text('test'),
+    {
+      childCount: 3,
+      className: 'ChatDebugViewHeadersSectionInfo',
+      type: VirtualDomElements.Div,
+    },
+    text('Some headers may not be displayed due to '),
+    {
+      childCount: 1,
+      href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
+      rel: 'noopener noreferrer',
+      target: '_blank',
+      type: VirtualDomElements.A,
+    },
+    text('Access-Control-Expose-Headers'),
+    text(' header.'),
+  ])
   expect(result).toContainEqual(text(' header.'))
 })
 
