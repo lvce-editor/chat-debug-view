@@ -38,14 +38,14 @@ export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
 
   await Command.execute('ChatDebug.appendStoredEventForTest', firstEvent)
   await expect(rows).toHaveCount(1)
-  const rowsNth0 = rows.nth(0)
-  await expect(rowsNth0).toContainText('request')
+  const firstRow = rows.nth(0)
+  await expect(firstRow).toContainText('request')
 
   await Command.execute('ChatDebug.appendStoredEventForTest', ignoredEvent)
   await expect(rows).toHaveCount(1)
 
   await Command.execute('ChatDebug.appendStoredEventForTest', secondEvent)
   await expect(rows).toHaveCount(2)
-  const rowsNth1 = rows.nth(1)
-  await expect(rowsNth1).toContainText('response')
+  const secondRow = rows.nth(1)
+  await expect(secondRow).toContainText('response')
 }

@@ -22,8 +22,8 @@ export const createLargeStoredEventsTest = (eventCount: number): Test => {
 
     const rows = Locator('.TableRow')
     await expect(rows).toHaveCount(1)
-    const rowsNth0 = rows.nth(0)
-    await expect(rowsNth0).toContainText('request')
-    await expect(rowsNth0).toContainText('100 ms')
+    const firstRow = rows.nth(0)
+    await expect(firstRow).toContainText('request')
+    await expect(firstRow).toContainText('100 ms')
   }
 }

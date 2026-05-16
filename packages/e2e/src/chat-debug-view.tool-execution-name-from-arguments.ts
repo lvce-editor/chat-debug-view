@@ -28,7 +28,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   // assert
   const rows = Locator('.TableBody .TableRow')
   await expect(rows).toHaveCount(1)
-  const rowsNth0 = rows.nth(0)
-  await expect(rowsNth0).toContainText('tool-execution, read_file')
-  await expect(rowsNth0).toContainText('200')
+  const firstRow = rows.nth(0)
+  await expect(firstRow).toContainText('tool-execution, read_file')
+  await expect(firstRow).toContainText('200')
 }
