@@ -11,36 +11,46 @@ import {
 import { getTimingPreviewSegmentNodes } from '../GetTimingPreviewSegmentNodes/GetTimingPreviewSegmentNodes.ts'
 import { getTimingPreviewSegments } from '../GetTimingPreviewSegments/GetTimingPreviewSegments.ts'
 
+const timingPreviewNode: VirtualDomNode = {
+  childCount: 1,
+  className: ChatDebugViewTimingPreview,
+  type: VirtualDomElements.Div,
+}
+
+const timingPreviewTrackNode: VirtualDomNode = {
+  childCount: 4,
+  className: ChatDebugViewTimingPreviewTrack,
+  type: VirtualDomElements.Div,
+}
+
+const timingPreviewRailNode: VirtualDomNode = {
+  childCount: 0,
+  className: ChatDebugViewTimingPreviewRail,
+  type: VirtualDomElements.Div,
+}
+
+const timingPreviewMarkerStartNode: VirtualDomNode = {
+  childCount: 0,
+  className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerStart}`,
+  style: 'left:12px;',
+  type: VirtualDomElements.Div,
+}
+
+const timingPreviewMarkerEndNode: VirtualDomNode = {
+  childCount: 0,
+  className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerEnd}`,
+  style: 'right:12px;',
+  type: VirtualDomElements.Div,
+}
+
 export const getTimingPreviewDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
   const segments = getTimingPreviewSegments(event)
   return [
-    {
-      childCount: 1,
-      className: ChatDebugViewTimingPreview,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 4,
-      className: ChatDebugViewTimingPreviewTrack,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 0,
-      className: ChatDebugViewTimingPreviewRail,
-      type: VirtualDomElements.Div,
-    },
+    timingPreviewNode,
+    timingPreviewTrackNode,
+    timingPreviewRailNode,
     ...getTimingPreviewSegmentNodes(segments),
-    {
-      childCount: 0,
-      className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerStart}`,
-      style: 'left:12px;',
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 0,
-      className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerEnd}`,
-      style: 'right:12px;',
-      type: VirtualDomElements.Div,
-    },
+    timingPreviewMarkerStartNode,
+    timingPreviewMarkerEndNode,
   ]
 }

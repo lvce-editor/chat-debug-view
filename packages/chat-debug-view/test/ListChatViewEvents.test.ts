@@ -20,7 +20,7 @@ test('listChatViewEvents should use chat storage worker', async () => {
     'ChatStorage.listChatViewEvents': () => expected,
   })
 
-  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+  const result = await listChatViewEvents('session-1')
 
   expect(result).toEqual(expected)
   expect(mockRpc.invocations).toEqual([['ChatStorage.listChatViewEvents', 'session-1']])
@@ -34,7 +34,7 @@ test('listChatViewEvents should return error when chat storage worker loading fa
     },
   })
 
-  const result = await listChatViewEvents('session-1', 'chat-db', 2, 'chat-view-events', 'sessionId')
+  const result = await listChatViewEvents('session-1')
 
   expect(result).toEqual({
     error,

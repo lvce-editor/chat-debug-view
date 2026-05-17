@@ -1,17 +1,18 @@
 import { type VirtualDomNode, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { TableColumn } from '../TableColumn/TableColumn.ts'
 import { FocusOutline, TableWrapper } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import { getTableScrollBarDom } from '../GetTableScrollBarDom/GetTableScrollBarDom.ts'
-import * as TableColumn from '../TableColumn/TableColumn.ts'
+import * as TableColumnModule from '../TableColumn/TableColumn.ts'
 import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
 
 export const getTableWrapperDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
-  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
-  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
+  visibleTableColumns: readonly string[] = TableColumnModule.defaultVisibleTableColumns,
+  tableColumns: readonly TableColumn[] = TableColumnModule.createTableColumns(),
   summaries: readonly string[] = [],
   focus = 0,
   className = '',

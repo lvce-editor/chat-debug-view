@@ -1,19 +1,19 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { TableColumn } from '../TableColumn/TableColumn.ts'
 import { TableWrapperWrapper } from '../ClassNames/ClassNames.ts'
 import { getTableSummaryDom } from '../GetTableSummaryDom/GetTableSummaryDom.ts'
 import { getTableWrapperDom } from '../GetTableWrapperDom/GetTableWrapperDom.ts'
-import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getTableWrapperWrapperDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
-  visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
-  tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
-  summaries: readonly string[] = [],
-  focus = 0,
-  className = '',
-  role = 'none',
-  showScrollBar = false,
+  visibleTableColumns: readonly string[],
+  tableColumns: readonly TableColumn[],
+  summaries: readonly string[],
+  focus: number,
+  className: string,
+  role: string,
+  showScrollBar: boolean,
 ): readonly VirtualDomNode[] => {
   const tableSummaryNodes = getTableSummaryDom(summaries)
   return [

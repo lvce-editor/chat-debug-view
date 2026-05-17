@@ -1,17 +1,9 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { formatTimelineMilliseconds } from '../FormatTimelineMilliseconds/FormatTimelineMilliseconds.ts'
-import { formatTimelineSeconds } from '../FormatTimelineSeconds/FormatTimelineSeconds.ts'
+import { formatTableSummaryDuration } from '../FormatTableSummaryDuration/FormatTableSummaryDuration.ts'
 import { getEndTime } from '../GetEndTime/GetEndTime.ts'
 import { getStartTime } from '../GetStartTime/GetStartTime.ts'
 import { toTimeNumber } from '../ToTimeNumber/ToTimeNumber.ts'
-
-const formatTableSummaryDuration = (durationMs: number): string => {
-  if (durationMs < 1000) {
-    return formatTimelineMilliseconds(durationMs / 1000)
-  }
-  return formatTimelineSeconds(durationMs / 1000)
-}
 
 export const getTableSummaries = (events: readonly ChatViewEvent[]): readonly string[] => {
   let minStart = Number.POSITIVE_INFINITY

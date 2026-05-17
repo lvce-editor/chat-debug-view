@@ -5,7 +5,7 @@ import { getSelectionPercent } from '../GetSelectionPercent/GetSelectionPercent.
 import { getTimelineEventX } from '../GetTimelineEventX/GetTimelineEventX.ts'
 import { getTimelineLeft, getTimelineWidth } from '../GetTimelineLayout/GetTimelineLayout.ts'
 import { getTimelineSecondsFromClientX } from '../GetTimelineSecondsFromClientX/GetTimelineSecondsFromClientX.ts'
-import * as HandleTimelineInput from '../HandleTimelineInput/HandleTimelineInput.ts'
+import { handleTimelineRangePreset } from '../HandleTimelineRangePreset/HandleTimelineRangePreset.ts'
 
 export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: number): ChatDebugViewState => {
   if (!state.timelineSelectionActive) {
@@ -23,7 +23,7 @@ export const handleTimelinePointerUp = (state: ChatDebugViewState, eventX: numbe
   const focus = Number.parseFloat(focusSeconds)
   const startSeconds = formatTimelinePresetValue(Math.min(anchor, focus))
   const endSeconds = formatTimelinePresetValue(Math.max(anchor, focus))
-  const nextState = HandleTimelineInput.handleTimelineRangePreset(state, `${startSeconds}:${endSeconds}`)
+  const nextState = handleTimelineRangePreset(state, `${startSeconds}:${endSeconds}`)
   return clearTimelineSelectionState({
     ...nextState,
     timelineHoverPercent,

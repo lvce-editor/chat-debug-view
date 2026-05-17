@@ -5,8 +5,7 @@ import * as HandleStorageWorkerUpdate from '../HandleStorageWorkerUpdate/HandleS
 import { listChatViewEvents } from '../ListChatViewEvents/ListChatViewEvents.ts'
 
 export const setSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
-  const { databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName } = state
-  const result = await listChatViewEvents(sessionId, databaseName, dataBaseVersion, eventStoreName, sessionIdIndexName)
+  const result = await listChatViewEvents(sessionId)
   await registerUpdateListener(sessionId, HandleStorageWorkerUpdate.rpcId, state.uid)
   if (result.type === 'error') {
     return {
