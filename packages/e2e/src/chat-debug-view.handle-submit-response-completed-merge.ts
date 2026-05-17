@@ -40,8 +40,8 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const firstRow = rows.nth(0)
   await expect(firstRow).toContainText('handle-submit')
   await expect(rowCells).toHaveCount(3)
-  const rowCellsNth1 = rowCells.nth(1)
-  await expect(rowCellsNth1).toHaveText('250 ms')
+  const rowCell1 = rowCells.nth(1)
+  await expect(rowCell1).toHaveText('250 ms')
 
   await ChatDebug.selectEventRow(0)
   await ChatDebug.openTabTiming()
