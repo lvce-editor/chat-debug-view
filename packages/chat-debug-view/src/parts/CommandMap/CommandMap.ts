@@ -64,6 +64,7 @@ import { saveState } from '../SaveState/SaveState.ts'
 import * as SelectCurrent from '../SelectCurrent/SelectCurrent.ts'
 import * as SetEvents from '../SetEvents/SetEvents.ts'
 import * as SetSessionId from '../SetSessionId/SetSessionId.ts'
+import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
@@ -142,6 +143,7 @@ export const commandMap = {
   'ChatDebug.selectDetailTab': wrapCommand(HandleDetailTab.selectDetailTab),
   'ChatDebug.setEvents': wrapCommand(SetEvents.setEvents),
   'ChatDebug.setSessionId': wrapCommand(SetSessionId.setSessionId),
+  'ChatDebug.shouldHavePayload': wrapCommand(shouldHavePayload),
   'ChatDebug.terminate': terminate,
   'ChatDebug.toggleTableColumnVisibility': wrapCommand(ToggleTableColumnVisibility.toggleTableColumnVisibility),
 }
