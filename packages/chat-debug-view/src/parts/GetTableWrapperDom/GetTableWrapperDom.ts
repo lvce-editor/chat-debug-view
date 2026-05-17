@@ -5,18 +5,19 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getTableDom } from '../GetTableDom/GetTableDom.ts'
 import { getTableResizersDom } from '../GetTableResizersDom/GetTableResizersDom.ts'
 import { getTableScrollBarDom } from '../GetTableScrollBarDom/GetTableScrollBarDom.ts'
+import * as TableColumnModule from '../TableColumn/TableColumn.ts'
 import { FocusChatDebugTable } from '../WhenExpression/WhenExpression.ts'
 
 export const getTableWrapperDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
-  visibleTableColumns: readonly string[],
-  tableColumns: readonly TableColumn[],
-  summaries: readonly string[],
-  focus: number,
-  className: string,
-  role: string,
-  showScrollBar: boolean,
+  visibleTableColumns: readonly string[] = TableColumnModule.defaultVisibleTableColumns,
+  tableColumns: readonly TableColumn[] = TableColumnModule.createTableColumns(),
+  summaries: readonly string[] = [],
+  focus = 0,
+  className = '',
+  role = 'none',
+  showScrollBar = false,
 ): readonly VirtualDomNode[] => {
   const tableWrapperClassName = mergeClassNames(TableWrapper, focus === FocusChatDebugTable ? FocusOutline : '', className)
   const tableWrapperNode = {

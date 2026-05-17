@@ -123,3 +123,82 @@ test('getTableResizersDom should omit resizers when fewer than two columns are v
 
   expect(dom).toEqual([])
 })
+
+test('getTableResizersDom should default to visible table columns when undefined is passed', () => {
+  const dom = GetTableResizersDom.getTableResizersDom(undefined as unknown as readonly string[]) as readonly {
+    readonly childCount?: number
+    readonly className?: string
+    readonly name?: string
+    readonly onPointerDown?: number
+    readonly type?: number
+  }[]
+
+  expect(dom).toEqual([
+    {
+      childCount: 4,
+      className: 'Resizers',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerOne',
+      name: 'ResizerOne',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerTwo',
+      name: 'ResizerTwo',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerThree',
+      name: 'ResizerThree',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
+      childCount: 1,
+      className: 'Resizer ResizerFour',
+      name: 'ResizerFour',
+      onPointerDown: DomEventListenerFunctions.HandleTableResizerPointerDown,
+      role: 'none',
+      tabIndex: -1,
+      type: VirtualDomElements.Button,
+    },
+    {
+      childCount: 0,
+      className: 'ResizerInner',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+  ])
+})

@@ -125,7 +125,7 @@ export const setTableColumnWidth = (tableColumns: readonly TableColumn[], column
 }
 
 export const getOrderedVisibleTableColumns = (
-  values: readonly string[],
+  values: readonly string[] = defaultVisibleTableColumns,
   tableColumns: readonly TableColumn[] = createTableColumns(),
 ): readonly TableColumnName[] => {
   const visibleColumns = new Set(values.filter(isTableColumn))
