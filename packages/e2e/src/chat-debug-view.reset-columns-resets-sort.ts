@@ -28,19 +28,19 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   const rows = Locator('.TableBody .TableRow')
 
   await expect(rows).toHaveCount(2)
-  const rowsNth0 = rows.nth(0)
-  await expect(rowsNth0).toContainText('response')
-  const rowsNth1 = rows.nth(1)
-  await expect(rowsNth1).toContainText('request')
+  const firstRow = rows.nth(0)
+  await expect(firstRow).toContainText('response')
+  const secondRow = rows.nth(1)
+  await expect(secondRow).toContainText('request')
 
   await Command.execute('ChatDebug.handleTableHeaderClick', 'type')
 
-  await expect(rowsNth0).toContainText('request')
-  await expect(rowsNth1).toContainText('response')
+  await expect(firstRow).toContainText('request')
+  await expect(secondRow).toContainText('response')
 
   await Command.execute('ChatDebug.handleHeaderContextMenu', 0, 300)
   await ContextMenu.selectItem('Reset columns')
 
-  await expect(rowsNth0).toContainText('response')
-  await expect(rowsNth1).toContainText('request')
+  await expect(firstRow).toContainText('response')
+  await expect(secondRow).toContainText('request')
 }

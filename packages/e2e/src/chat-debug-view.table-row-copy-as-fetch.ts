@@ -43,12 +43,12 @@ export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, e
 
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(3)
-  const menuItemsNth0 = menuItems.nth(0)
-  await expect(menuItemsNth0).toHaveText('Copy')
-  const menuItemsNth1 = menuItems.nth(1)
-  await expect(menuItemsNth1).toHaveText('Copy As Fetch')
-  const menuItemsNth2 = menuItems.nth(2)
-  await expect(menuItemsNth2).toHaveText('Open in New Tab')
+  const menuItem0 = menuItems.nth(0)
+  await expect(menuItem0).toHaveText('Copy')
+  const menuItem1 = menuItems.nth(1)
+  await expect(menuItem1).toHaveText('Copy As Fetch')
+  const menuItem2 = menuItems.nth(2)
+  await expect(menuItem2).toHaveText('Open in New Tab')
 
   await ContextMenu.selectItem('Copy')
   await Command.execute('ChatDebug.handleTableRowCopyAsFetch', 0)

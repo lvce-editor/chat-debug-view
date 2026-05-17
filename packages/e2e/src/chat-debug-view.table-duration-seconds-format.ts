@@ -23,6 +23,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const rowCells = Locator('.TableBody .TableRow .TableCell')
 
   await expect(rowCells).toHaveCount(5)
-  const rowCellsNth4 = rowCells.nth(4)
-  await expect(rowCellsNth4).toHaveText('2.0 s')
+  const rowCell4 = rowCells.nth(4)
+  await expect(rowCell4).toHaveText('2.0 s')
 }
