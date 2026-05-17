@@ -50,9 +50,9 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
 
   await expect(detailsBottom).toHaveText(`1${previewText}`)
   await expect(lineNumbers).toHaveCount(1)
-  const lineNumbersNth0 = lineNumbers.nth(0)
-  await expect(lineNumbersNth0).toHaveText('1')
+  const lineNumber0 = lineNumbers.nth(0)
+  await expect(lineNumber0).toHaveText('1')
   await expect(lineContents).toHaveCount(1)
-  const lineContentsNth0 = lineContents.nth(0)
-  await expect(lineContentsNth0).toHaveText(previewText)
+  const lineContent0 = lineContents.nth(0)
+  await expect(lineContent0).toHaveText(previewText)
 }

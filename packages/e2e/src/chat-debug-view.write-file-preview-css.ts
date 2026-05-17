@@ -29,7 +29,7 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const tokenSpans = Locator('.EditorRow span')
 
   await expect(lineContents).toHaveCount(1)
-  const lineContentsNth0 = lineContents.nth(0)
-  await expect(lineContentsNth0).toContainText('.item { color: red; width: 10px; }')
+  const lineContent0 = lineContents.nth(0)
+  await expect(lineContent0).toContainText('.item { color: red; width: 10px; }')
   await expect(tokenSpans).toHaveCount(8)
 }

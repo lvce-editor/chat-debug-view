@@ -26,10 +26,10 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
 
   const menuItems = Locator('.MenuItem')
   await expect(menuItems).toHaveCount(2)
-  const menuItemsNth0 = menuItems.nth(0)
-  await expect(menuItemsNth0).toHaveText('Copy')
-  const menuItemsNth1 = menuItems.nth(1)
-  await expect(menuItemsNth1).toHaveText('Open in New Tab')
+  const menuItem0 = menuItems.nth(0)
+  await expect(menuItem0).toHaveText('Copy')
+  const menuItem1 = menuItems.nth(1)
+  await expect(menuItem1).toHaveText('Open in New Tab')
 
   await ContextMenu.selectItem('Open in New Tab')
 
