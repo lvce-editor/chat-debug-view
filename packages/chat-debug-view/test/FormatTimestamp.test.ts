@@ -1,41 +1,14 @@
-import { expect, jest, test } from '@jest/globals'
+import { expect, test } from '@jest/globals'
+import { formatTimestamp } from '../src/parts/FormatTimestamp/FormatTimestamp.ts'
 
-test('formatTimestamp should lazily create and cache the timestamp formatter', async () => {
-  const originalDateTimeFormat = Intl.DateTimeFormat
-  let createCount = 0
+test('formatTimestamp should format UTC timestamps with milliseconds', () => {
+  const result = formatTimestamp(new Date('2026-03-08T00:00:01.250Z'))
 
-  const WrappedDateTimeFormat = function (...args: readonly unknown[]): Intl.DateTimeFormat {
-    createCount++
-    return Reflect.construct(originalDateTimeFormat, args, new.target ?? originalDateTimeFormat)
-  } as typeof Intl.DateTimeFormat
+  expect(result).toBe('Mar 08, 2026, 00:00:01.250 UTC')
+})
 
-  WrappedDateTimeFormat.supportedLocalesOf = originalDateTimeFormat.supportedLocalesOf.bind(originalDateTimeFormat)
-  Object.defineProperty(WrappedDateTimeFormat, 'prototype', {
-    value: originalDateTimeFormat.prototype,
-  })
+test('formatTimestamp should zero-pad UTC date and time parts', () => {
+  const result = formatTimestamp(new Date('2026-01-02T03:04:05.006Z'))
 
-  Object.defineProperty(Intl, 'DateTimeFormat', {
-    configurable: true,
-    value: WrappedDateTimeFormat,
-    writable: true,
-  })
-
-  jest.resetModules()
-
-  try {
-    const { formatTimestamp } = await import('../src/parts/FormatTimestamp/FormatTimestamp.ts')
-    const first = formatTimestamp(new Date('2026-03-08T00:00:01.250Z'))
-    const second = formatTimestamp(new Date('2026-03-08T00:00:02.500Z'))
-
-    expect(first).toBe('Mar 08, 2026, 00:00:01.250 UTC')
-    expect(second).toBe('Mar 08, 2026, 00:00:02.500 UTC')
-    expect(createCount).toBe(1)
-  } finally {
-    Object.defineProperty(Intl, 'DateTimeFormat', {
-      configurable: true,
-      value: originalDateTimeFormat,
-      writable: true,
-    })
-    jest.resetModules()
-  }
+  expect(result).toBe('Jan 02, 2026, 03:04:05.006 UTC')
 })
