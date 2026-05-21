@@ -5,20 +5,20 @@ import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
 import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
-const getStatus = (item: any): number => {
-  if (item.statusCode) {
+const getStatus = (item: ChatViewEvent): number | undefined => {
+  if (item.statusCode !== undefined) {
     const statusCode = Number(item.statusCode)
     if (Number.isFinite(statusCode)) {
       return statusCode
     }
   }
-  if (item.status) {
+  if (item.status !== undefined) {
     const status = Number(item.status)
     if (Number.isFinite(status)) {
       return status
     }
   }
-  return 200
+  return undefined
 }
 
 const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
@@ -39,8 +39,8 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
       method: 'POST',
       size: getResponsePayloadSize(response),
       ...(started === undefined ? {} : { started }),
+      ...(status === undefined ? {} : { status }),
       ...(timestamp === undefined ? {} : { timestamp }),
-      status,
       type: 'ai-request-response',
     }
   }
@@ -52,8 +52,8 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
     method: 'POST',
     size: getResponsePayloadSize(response),
     ...(started === undefined ? {} : { started }),
+    ...(status === undefined ? {} : { status }),
     ...(timestamp === undefined ? {} : { timestamp }),
-    status,
     type: 'ai-request-response',
   }
 }
