@@ -5,7 +5,6 @@ import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
 import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
-
 const getStatus = (item: any): number => {
   if (item.statusCode) {
     const statusCode = Number(item.statusCode)
@@ -41,7 +40,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
       size: getResponsePayloadSize(response),
       ...(started === undefined ? {} : { started }),
       ...(timestamp === undefined ? {} : { timestamp }),
-      status: status,
+      status,
       type: 'ai-request-response',
     }
   }
@@ -54,10 +53,9 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
     size: getResponsePayloadSize(response),
     ...(started === undefined ? {} : { started }),
     ...(timestamp === undefined ? {} : { timestamp }),
-    status: status,
+    status,
     type: 'ai-request-response',
   }
-
 }
 
 export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly ChatViewEvent[] => {
