@@ -3,6 +3,27 @@ import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+export type ChatDebugPayloadMismatch = {
+  readonly actual: unknown
+  readonly expected: unknown
+  readonly message: string
+  readonly path: string
+}
+
+export class ChatDebugPayloadError extends Error {
+  public readonly actual: unknown
+  public readonly expected: unknown
+  public readonly path: string
+
+  public constructor(mismatch: ChatDebugPayloadMismatch) {
+    super(mismatch.message)
+    this.name = 'ChatDebugPayloadError'
+    this.actual = mismatch.actual
+    this.expected = mismatch.expected
+    this.path = mismatch.path
+  }
+}
+
 const isObject = (value: unknown): value is Record<string, unknown> => {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
@@ -11,49 +32,73 @@ const formatValue = (value: unknown): string => {
   return JSON.stringify(value)
 }
 
-const assertArrayMatches = (actual: unknown, expected: readonly unknown[], path: string): void => {
-  if (!Array.isArray(actual)) {
-    throw new TypeError(`Expected ${path} to be an array but got ${formatValue(actual)}`)
-  }
-  if (actual.length < expected.length) {
-    throw new Error(`Expected ${path} to have at least ${expected.length} items but got ${actual.length}`)
-  }
-  for (let index = 0; index < expected.length; index++) {
-    assertPayloadMatches(actual[index], expected[index], `${path}[${index}]`)
+const createMismatch = (actual: unknown, expected: unknown, path: string, message: string): ChatDebugPayloadMismatch => {
+  return {
+    actual,
+    expected,
+    message,
+    path,
   }
 }
 
-const assertObjectMatches = (actual: unknown, expected: Readonly<Record<string, unknown>>, path: string): void => {
+const getArrayMismatch = (
+  actual: unknown,
+  expected: readonly unknown[],
+  path: string,
+): ChatDebugPayloadMismatch | undefined => {
+  if (!Array.isArray(actual)) {
+    return createMismatch(actual, expected, path, `Expected ${path} to be an array but got ${formatValue(actual)}`)
+  }
+  if (actual.length < expected.length) {
+    return createMismatch(actual, expected, path, `Expected ${path} to have at least ${expected.length} items but got ${actual.length}`)
+  }
+  for (let index = 0; index < expected.length; index++) {
+    const mismatch = getMismatch(actual[index], expected[index], `${path}[${index}]`)
+    if (mismatch) {
+      return mismatch
+    }
+  }
+  return undefined
+}
+
+const getObjectMismatch = (
+  actual: unknown,
+  expected: Readonly<Record<string, unknown>>,
+  path: string,
+): ChatDebugPayloadMismatch | undefined => {
   if (!isObject(actual)) {
-    throw new TypeError(`Expected ${path} to be an object but got ${formatValue(actual)}`)
+    return createMismatch(actual, expected, path, `Expected ${path} to be an object but got ${formatValue(actual)}`)
   }
   for (const key of Object.keys(expected)) {
     if (!Object.hasOwn(actual, key)) {
-      throw new Error(`Expected ${path}.${key} to exist`)
+      return createMismatch(actual[key], expected[key], `${path}.${key}`, `Expected ${path}.${key} to exist`)
     }
-    assertPayloadMatches(actual[key], expected[key], `${path}.${key}`)
+    const mismatch = getMismatch(actual[key], expected[key], `${path}.${key}`)
+    if (mismatch) {
+      return mismatch
+    }
   }
+  return undefined
 }
 
-const assertPrimitiveMatches = (actual: unknown, expected: unknown, path: string): void => {
+const getPrimitiveMismatch = (actual: unknown, expected: unknown, path: string): ChatDebugPayloadMismatch | undefined => {
   if (!Object.is(actual, expected)) {
-    throw new Error(`Expected ${path} to equal ${formatValue(expected)} but got ${formatValue(actual)}`)
+    return createMismatch(actual, expected, path, `Expected ${path} to equal ${formatValue(expected)} but got ${formatValue(actual)}`)
   }
+  return undefined
 }
 
-const assertPayloadMatches = (actual: unknown, expected: unknown, path: string): void => {
+export const getMismatch = (actual: unknown, expected: unknown, path = 'payload'): ChatDebugPayloadMismatch | undefined => {
   if (Array.isArray(expected)) {
-    assertArrayMatches(actual, expected, path)
-    return
+    return getArrayMismatch(actual, expected, path)
   }
   if (isObject(expected)) {
-    assertObjectMatches(actual, expected, path)
-    return
+    return getObjectMismatch(actual, expected, path)
   }
-  assertPrimitiveMatches(actual, expected, path)
+  return getPrimitiveMismatch(actual, expected, path)
 }
 
-export const shouldHavePayload = async (state: ChatDebugViewState, match: any): Promise<ChatDebugViewState> => {
+export const shouldHavePayload = async (state: ChatDebugViewState, match: unknown): Promise<ChatDebugViewState> => {
   if (!state.selectedEvent) {
     throw new Error('Expected selected event to exist')
   }
@@ -62,6 +107,9 @@ export const shouldHavePayload = async (state: ChatDebugViewState, match: any): 
     throw new Error(`Expected selected detail tab to be payload but got ${selectedDetailTab}`)
   }
   const payload = getPayloadEvent(state.selectedEvent)
-  assertPayloadMatches(payload, match, 'payload')
+  const mismatch = getMismatch(payload, match)
+  if (mismatch) {
+    throw new ChatDebugPayloadError(mismatch)
+  }
   return state
 }
