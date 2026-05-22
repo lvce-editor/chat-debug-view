@@ -1,5 +1,7 @@
 import { expect, test } from '@jest/globals'
+import { ChatDebugPayloadError } from '../src/parts/ChatDebugPayloadError/ChatDebugPayloadError.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
+import { getPayloadMismatch } from '../src/parts/GetPayloadMismatch/GetPayloadMismatch.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
 import { shouldHavePayload } from '../src/parts/ShowHavePayload/ShouldHavePayload.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
@@ -134,7 +136,13 @@ test('shouldHavePayload should throw when payload property is missing', async ()
         missing: true,
       },
     }),
-  ).rejects.toThrow('Expected payload.arguments.missing to exist')
+  ).rejects.toMatchObject({
+    actual: undefined,
+    expected: true,
+    message: 'Expected payload.arguments.missing to exist',
+    name: 'ChatDebugPayloadError',
+    path: 'payload.arguments.missing',
+  })
 })
 
 test('shouldHavePayload should throw when payload value does not match', async () => {
@@ -154,11 +162,62 @@ test('shouldHavePayload should throw when payload value does not match', async (
     selectedEventIndex: 0,
   }
 
-  await expect(
-    shouldHavePayload(state, {
+  const result = shouldHavePayload(state, {
+    arguments: {
+      input: ['goodbye'],
+    },
+  })
+
+  await expect(result).rejects.toBeInstanceOf(ChatDebugPayloadError)
+  await expect(result).rejects.toMatchObject({
+    actual: 'hello',
+    expected: 'goodbye',
+    message: 'Expected payload.arguments.input[0] to equal "goodbye" but got "hello"',
+    path: 'payload.arguments.input[0]',
+  })
+})
+
+test('getPayloadMismatch should return structured mismatch info without throwing', () => {
+  const mismatch = getPayloadMismatch(
+    {
+      arguments: {
+        input: ['hello'],
+      },
+    },
+    {
       arguments: {
         input: ['goodbye'],
       },
-    }),
-  ).rejects.toThrow('Expected payload.arguments.input[0] to equal "goodbye" but got "hello"')
+    },
+  )
+
+  expect(mismatch).toEqual({
+    actual: 'hello',
+    expected: 'goodbye',
+    message: 'Expected payload.arguments.input[0] to equal "goodbye" but got "hello"',
+    path: 'payload.arguments.input[0]',
+  })
+})
+
+test('getPayloadMismatch should return undefined when payload matches expected subset', () => {
+  const mismatch = getPayloadMismatch(
+    {
+      arguments: {
+        input: ['hello', 'extra'],
+        nested: {
+          ok: true,
+        },
+      },
+    },
+    {
+      arguments: {
+        input: ['hello'],
+        nested: {
+          ok: true,
+        },
+      },
+    },
+  )
+
+  expect(mismatch).toBeUndefined()
 })
