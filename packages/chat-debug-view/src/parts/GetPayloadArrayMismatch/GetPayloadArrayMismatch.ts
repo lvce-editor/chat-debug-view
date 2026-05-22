@@ -1,7 +1,7 @@
 import type { ChatDebugPayloadMismatch } from '../ChatDebugPayloadMismatch/ChatDebugPayloadMismatch.ts'
+import type { PayloadMismatchResolver } from '../PayloadMismatchResolver/PayloadMismatchResolver.ts'
 import { createPayloadMismatch } from '../CreatePayloadMismatch/CreatePayloadMismatch.ts'
 import { formatPayloadValue } from '../FormatPayloadValue/FormatPayloadValue.ts'
-import type { PayloadMismatchResolver } from '../PayloadMismatchResolver/PayloadMismatchResolver.ts'
 
 export const getPayloadArrayMismatch = (
   actual: unknown,
