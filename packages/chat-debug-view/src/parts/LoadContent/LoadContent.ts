@@ -1,4 +1,3 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { registerUpdateListener } from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 import { createDetailTabs } from '../CreateDetailTabs/CreateDetailTabs.ts'
@@ -6,11 +5,12 @@ import * as EventCategoryFilter from '../EventCategoryFilter/EventCategoryFilter
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 import * as HandleStorageWorkerUpdate from '../HandleStorageWorkerUpdate/HandleStorageWorkerUpdate.ts'
 import { loadEventsFromUri } from '../LoadEvents/LoadEventsFromUri/LoadEventsFromUri.ts'
+import { loadPreferences } from '../LoadPreferences/LoadPreferences.ts'
 import { restoreSavedState } from '../RestoreSavedState/RestoreSavedState.ts'
 import { applyVirtualTableState } from '../VirtualTable/VirtualTable.ts'
 
 export const loadContent = async (state: ChatDebugViewState, savedState: unknown): Promise<ChatDebugViewState> => {
-  await RendererWorker.getPreference('chatDebug.autoRefresh')
+  await loadPreferences()
   const restoredState = restoreSavedState(state, savedState)
   const nextState = await loadEventsFromUri(restoredState)
   if (nextState.sessionId) {
