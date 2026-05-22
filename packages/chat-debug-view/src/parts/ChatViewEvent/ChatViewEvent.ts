@@ -10,6 +10,7 @@ export interface ChatViewEvent {
   readonly size?: number
   readonly started?: number | string
   readonly startTime?: number | string
+  readonly status?: number | string
   readonly time?: string
   readonly timestamp?: number | string
   readonly type: string
