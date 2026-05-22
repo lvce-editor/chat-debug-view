@@ -1,11 +1,9 @@
 import { expect, test } from '@jest/globals'
+import { ChatDebugPayloadError } from '../src/parts/ChatDebugPayloadError/ChatDebugPayloadError.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
+import { getPayloadMismatch } from '../src/parts/GetPayloadMismatch/GetPayloadMismatch.ts'
 import * as InputName from '../src/parts/InputName/InputName.ts'
-import {
-  ChatDebugPayloadError,
-  getMismatch,
-  shouldHavePayload,
-} from '../src/parts/ShowHavePayload/ShouldHavePayload.ts'
+import { shouldHavePayload } from '../src/parts/ShowHavePayload/ShouldHavePayload.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('shouldHavePayload should return state when payload matches expected subset', async () => {
@@ -179,8 +177,8 @@ test('shouldHavePayload should throw when payload value does not match', async (
   })
 })
 
-test('getMismatch should return structured mismatch info without throwing', () => {
-  const mismatch = getMismatch(
+test('getPayloadMismatch should return structured mismatch info without throwing', () => {
+  const mismatch = getPayloadMismatch(
     {
       arguments: {
         input: ['hello'],
@@ -201,8 +199,8 @@ test('getMismatch should return structured mismatch info without throwing', () =
   })
 })
 
-test('getMismatch should return undefined when payload matches expected subset', () => {
-  const mismatch = getMismatch(
+test('getPayloadMismatch should return undefined when payload matches expected subset', () => {
+  const mismatch = getPayloadMismatch(
     {
       arguments: {
         input: ['hello', 'extra'],
