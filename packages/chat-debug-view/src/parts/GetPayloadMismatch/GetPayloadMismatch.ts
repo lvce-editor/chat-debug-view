@@ -4,11 +4,7 @@ import { getPayloadObjectMismatch } from '../GetPayloadObjectMismatch/GetPayload
 import { getPayloadPrimitiveMismatch } from '../GetPayloadPrimitiveMismatch/GetPayloadPrimitiveMismatch.ts'
 import { isPayloadObject } from '../IsPayloadObject/IsPayloadObject.ts'
 
-export const getPayloadMismatch = (
-  actual: unknown,
-  expected: unknown,
-  path = 'payload',
-): ChatDebugPayloadMismatch | undefined => {
+export const getPayloadMismatch = (actual: unknown, expected: unknown, path = 'payload'): ChatDebugPayloadMismatch | undefined => {
   if (Array.isArray(expected)) {
     return getPayloadArrayMismatch(actual, expected, path, getPayloadMismatch)
   }

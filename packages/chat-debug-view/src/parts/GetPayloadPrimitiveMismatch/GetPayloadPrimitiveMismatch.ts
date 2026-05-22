@@ -2,13 +2,14 @@ import type { ChatDebugPayloadMismatch } from '../ChatDebugPayloadMismatch/ChatD
 import { createPayloadMismatch } from '../CreatePayloadMismatch/CreatePayloadMismatch.ts'
 import { formatPayloadValue } from '../FormatPayloadValue/FormatPayloadValue.ts'
 
-export const getPayloadPrimitiveMismatch = (
-  actual: unknown,
-  expected: unknown,
-  path: string,
-): ChatDebugPayloadMismatch | undefined => {
+export const getPayloadPrimitiveMismatch = (actual: unknown, expected: unknown, path: string): ChatDebugPayloadMismatch | undefined => {
   if (!Object.is(actual, expected)) {
-    return createPayloadMismatch(actual, expected, path, `Expected ${path} to equal ${formatPayloadValue(expected)} but got ${formatPayloadValue(actual)}`)
+    return createPayloadMismatch(
+      actual,
+      expected,
+      path,
+      `Expected ${path} to equal ${formatPayloadValue(expected)} but got ${formatPayloadValue(actual)}`,
+    )
   }
   return undefined
 }
