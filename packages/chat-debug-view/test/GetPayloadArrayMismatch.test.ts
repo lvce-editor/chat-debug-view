@@ -32,11 +32,11 @@ test('getPayloadArrayMismatch should return first nested mismatch', () => {
     return actual === expected
       ? undefined
       : {
-        actual,
-        expected,
-        message: `Expected ${path} to match`,
-        path,
-      }
+          actual,
+          expected,
+          message: `Expected ${path} to match`,
+          path,
+        }
   })
 
   expect(mismatch).toEqual({
