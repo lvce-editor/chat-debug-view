@@ -13,6 +13,9 @@ export const getStatusCodeValue = (selectedEvent: ChatViewEvent | null): unknown
   if (selectedEvent.statusCode !== undefined) {
     return selectedEvent.statusCode
   }
+  if (selectedEvent.status !== undefined) {
+    return selectedEvent.status
+  }
   if (selectedEvent.type === 'ai-request' || selectedEvent.type === 'ai-response') {
     return getStatusText(selectedEvent)
   }
