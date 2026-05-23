@@ -1,3 +1,5 @@
+/* eslint-disable @cspell/spellchecker */
+/* eslint-disable sonarjs/cognitive-complexity */
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
@@ -58,6 +60,36 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
   }
 }
 
+const getToolCallStatus = (response: ChatViewEvent): number => {
+  // @ts-ignore
+  if (response && response.toolCallResult && response.toolCallResult.error) {
+    return 400
+  }
+  return 200
+}
+
+const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
+  const parsedStart = new Date(item.timestamp || '')
+  const parsedEnd = new Date(response.timestamp || '')
+  const durationMs = parsedEnd.getTime() - parsedStart.getTime()
+  const started = getStartedTimestamp(item)
+  const ended = getEndedTimestamp(response)
+  const timestamp = item.timestamp ?? started
+  const status = getToolCallStatus(response)
+  return {
+    ...(ended === undefined ? {} : { ended }),
+    durationMs,
+    eventEndId: response.eventId,
+    eventId: item.eventId,
+    method: 'POST',
+    size: getResponsePayloadSize(response),
+    ...(started === undefined ? {} : { started }),
+    status,
+    ...(timestamp === undefined ? {} : { timestamp }),
+    type: 'tool-request-response',
+  }
+}
+
 export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly ChatViewEvent[] => {
   if (rawEvents.type === 'error') {
     return []
@@ -65,7 +97,16 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
   const pretty: ChatViewEvent[] = []
   const map = GetResponseMap.getResponseMap(rawEvents.events)
   for (const item of rawEvents.events) {
-    if (item.type === 'ai-request' && 'requestId' in item && typeof item.requestId === 'string') {
+    if (item.type === 'tool-call-started' && 'requestId' in item && typeof item.requestId === 'string') {
+      const response = map[item.requestId]
+      if (response) {
+        pretty.push(getMergedToolCallEvent(item, response))
+      } else {
+        pretty.push(item)
+      }
+    } else if (item.type === 'tool-call-finished' && 'requestId' in item && typeof item.requestId === 'string') {
+      // ignore, we match it with request
+    } else if (item.type === 'ai-request' && 'requestId' in item && typeof item.requestId === 'string') {
       const response = map[item.requestId]
       if (response) {
         pretty.push(getMergedRequestResponseEvent(item, response))
