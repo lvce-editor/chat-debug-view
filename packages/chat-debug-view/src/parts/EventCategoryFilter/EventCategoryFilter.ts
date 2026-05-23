@@ -11,7 +11,7 @@ import {
   type EventCategoryFilterType,
   normalizeSelectedEventCategoryFilters,
 } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
-import { All, Network, Stream, Tools, Ui } from '../InputName/InputName.ts'
+import { All, Network, Tools } from '../InputName/InputName.ts'
 
 export { type EventCategoryFilterType } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
 
