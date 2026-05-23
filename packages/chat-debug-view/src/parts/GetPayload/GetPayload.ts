@@ -2,9 +2,10 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import { getPayloadEvent } from '../GetPayloadEvent/GetPayloadEvent.ts'
 
 export const getPayload = async (state: ChatDebugViewState): Promise<any> => {
-  if (!state.selectedEvent) {
+  const { selectedEvent } = state
+  if (!selectedEvent) {
     return undefined
   }
-  const payload = getPayloadEvent(state.selectedEvent)
+  const payload = getPayloadEvent(selectedEvent)
   return payload
 }
