@@ -8,15 +8,16 @@ import { getCurrentEvents } from '../LoadEvents/GetCurrentEvents/GetCurrentEvent
 
 export const getStateWithTimelineInfo = (state: ChatDebugViewState): ChatDebugViewState => {
   const timelineEvents = getTimelineEvents(state)
+  const { timelineEndSeconds, timelineSelectionActive, timelineSelectionAnchorSeconds, timelineSelectionFocusSeconds, timelineStartSeconds } = state
   const effectiveRange = getEffectiveTimelineRange(
-    state.timelineStartSeconds,
-    state.timelineEndSeconds,
-    state.timelineSelectionActive,
-    state.timelineSelectionAnchorSeconds,
-    state.timelineSelectionFocusSeconds,
+    timelineStartSeconds,
+    timelineEndSeconds,
+    timelineSelectionActive,
+    timelineSelectionAnchorSeconds,
+    timelineSelectionFocusSeconds,
   )
   const timelineInfo = getTimelineInfo(timelineEvents, effectiveRange.startSeconds, effectiveRange.endSeconds)
-  const timelineFilterDescription = getTimelineFilterDescription(state.timelineStartSeconds, state.timelineEndSeconds)
+  const timelineFilterDescription = getTimelineFilterDescription(timelineStartSeconds, timelineEndSeconds)
   const nextState = {
     ...state,
     timelineEvents,
