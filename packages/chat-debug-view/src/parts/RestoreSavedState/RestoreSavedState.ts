@@ -6,11 +6,7 @@ import * as SelectDetailTab from '../SelectDetailTab/SelectDetailTab.ts'
 import { getTableColumnWidths, getTableColumnsWithVisibility, setTableColumnWidths } from '../TableColumn/TableColumn.ts'
 import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 
-const validEventCategoryFilters = new Set<string>([
-  EventCategoryFilter.All,
-  EventCategoryFilter.Network,
-  EventCategoryFilter.Tools,
-])
+const validEventCategoryFilters = new Set<string>([EventCategoryFilter.All, EventCategoryFilter.Network, EventCategoryFilter.Tools])
 
 const isSavedState = (value: unknown): value is Partial<SavedState> => {
   return typeof value === 'object' && value !== null
