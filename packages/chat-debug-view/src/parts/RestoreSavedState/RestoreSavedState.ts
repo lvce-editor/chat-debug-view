@@ -9,9 +9,7 @@ import { isTableColumnWidths } from '../TableColumnLayout/TableColumnLayout.ts'
 const validEventCategoryFilters = new Set<string>([
   EventCategoryFilter.All,
   EventCategoryFilter.Network,
-  EventCategoryFilter.Stream,
   EventCategoryFilter.Tools,
-  EventCategoryFilter.Ui,
 ])
 
 const isSavedState = (value: unknown): value is Partial<SavedState> => {

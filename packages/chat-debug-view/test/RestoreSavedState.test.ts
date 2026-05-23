@@ -17,6 +17,16 @@ test('restoreSavedState should restore multiple selected event category filters'
   ])
 })
 
+test('restoreSavedState should ignore removed ui and stream category filters', () => {
+  const state = createDefaultState()
+
+  const result = restoreSavedState(state, {
+    eventCategoryFilters: [EventCategoryFilter.Ui, EventCategoryFilter.Stream],
+  })
+
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.All])
+})
+
 test('restoreSavedState should restore visible table columns', () => {
   const state = createDefaultState()
 

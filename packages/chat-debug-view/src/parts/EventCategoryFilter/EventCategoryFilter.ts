@@ -20,7 +20,7 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
 }
 
 export const isEventCategoryFilter = (value: string): value is EventCategoryFilterType => {
-  return value === All || value === Tools || value === Network || value === Ui || value === Stream
+  return value === All || value === Tools || value === Network
 }
 
 export const getSelectedEventCategoryFilters = (categoryFilters: readonly CategoryFilter[]): readonly EventCategoryFilterType[] => {

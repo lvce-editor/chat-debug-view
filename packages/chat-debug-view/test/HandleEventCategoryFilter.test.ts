@@ -27,14 +27,13 @@ test('handleEventCategoryFilter should switch to the clicked event category filt
   const state = {
     ...createDefaultState(),
     categoryFilters: EventCategoryFilter.selectCategoryFilters(createDefaultState().categoryFilters, [
-      EventCategoryFilter.Tools,
-      EventCategoryFilter.Network,
+      EventCategoryFilter.All,
     ]),
   }
 
-  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Ui, false, false)
+  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Network, false, false)
 
-  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.Ui])
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.Network])
 })
 
 test('handleEventCategoryFilter should preserve selected event when category filter still includes it', () => {
