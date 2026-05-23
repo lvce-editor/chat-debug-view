@@ -48,6 +48,9 @@ const getMergedRequestPayloadEvent = (requestEvent: unknown): MergedRequestPaylo
 }
 
 const getPayloadObject = (event: ChatViewEvent, name: string | undefined): PayloadEvent => {
+  if (event.type === 'tool-call-started') {
+    return event.args as any
+  }
   return {
     ...(name === undefined ? {} : { name }),
     ...(shouldIncludeArguments(event, name) ? { arguments: event.arguments } : {}),
@@ -57,6 +60,7 @@ const getPayloadObject = (event: ChatViewEvent, name: string | undefined): Paylo
 
 export const getPayloadEvent = (event: ChatViewEvent): unknown => {
   const { requestEvent } = event as EventWithRequestEvent
+
   const mergedRequestPayloadEvent = getMergedRequestPayloadEvent(requestEvent)
   if (mergedRequestPayloadEvent.found) {
     return mergedRequestPayloadEvent.value
