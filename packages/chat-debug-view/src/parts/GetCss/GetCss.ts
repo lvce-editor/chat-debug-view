@@ -71,5 +71,9 @@ export const getCss = (state: ChatDebugViewState): string => {
   padding: ${state.viewPadding}px;
   padding-right: 0;
 }
+
+.ChatDebugViewTop .IconButton {
+  align-self: center;
+}
 `
 }
