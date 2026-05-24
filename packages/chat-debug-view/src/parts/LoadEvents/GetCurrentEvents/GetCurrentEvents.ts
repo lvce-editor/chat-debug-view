@@ -18,7 +18,7 @@ export const getCurrentEvents = (state: ChatDebugViewState): readonly ChatViewEv
     timelineEndSeconds,
     timelineStartSeconds,
   } = state
-  const eventCategoryFilters = EventCategoryFilter.getSelectedEventCategoryFilters(categoryFilters)
+  const eventCategoryFilters = EventCategoryFilter.getSelectedCategoryFilters(categoryFilters)
   const filteredEvents = getFilteredEvents(
     events,
     filterValue,

@@ -34,6 +34,10 @@ export const getSelectedEventCategoryFilters = (categoryFilters: readonly Catego
   return normalizeSelectedEventCategoryFilters(selectedEventCategoryFilters)
 }
 
+export const getSelectedCategoryFilters = (categoryFilters: readonly CategoryFilter[]): readonly CategoryFilter[] => {
+  return categoryFilters.filter((categoryFilter) => categoryFilter.isSelected)
+}
+
 export const getSelectedEventCategoryFilter = (categoryFilters: readonly CategoryFilter[]): EventCategoryFilterType => {
   const selectedEventCategoryFilters = getSelectedEventCategoryFilters(categoryFilters)
   if (selectedEventCategoryFilters.length === 1) {

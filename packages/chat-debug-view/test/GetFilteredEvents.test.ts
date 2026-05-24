@@ -3,6 +3,10 @@ import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import * as GetFilteredEvents from '../src/parts/GetFilteredEvents/GetFilteredEvents.ts'
 
+const getCategoryFilters = (selectedEventCategoryFilters: readonly string[]): readonly EventCategoryFilter.CategoryFilter[] => {
+  return EventCategoryFilter.getSelectedCategoryFilters(EventCategoryFilter.createCategoryFilters(selectedEventCategoryFilters))
+}
+
 const events: readonly ChatViewEvent[] = [
   {
     eventId: 1,
@@ -70,7 +74,7 @@ const events: readonly ChatViewEvent[] = [
 ]
 
 test('getFilteredEvents should hide input events when showInputEvents is false', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.All], false, true, false)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.All]), false, true, false)
   expect(result).toHaveLength(4)
   expect(result[0].type).toBe('handle-submit')
   expect(result.some((event) => event.type === 'handle-input')).toBe(false)
@@ -78,45 +82,45 @@ test('getFilteredEvents should hide input events when showInputEvents is false',
 })
 
 test('getFilteredEvents should hide response part events when showResponsePartEvents is false', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.All], true, false, false)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.All]), true, false, false)
   expect(result).toHaveLength(4)
   expect(result.some((event) => event.type === 'request')).toBe(true)
   expect(result.some((event) => event.type === 'sse-response-part')).toBe(false)
 })
 
 test('getFilteredEvents should hide event-stream-finished events by default', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.All], true, true, false)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.All]), true, true, false)
   expect(result.some((event) => event.type === 'event-stream-finished')).toBe(false)
 })
 
 test('getFilteredEvents should show event-stream-finished events when enabled', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result.some((event) => event.type === 'event-stream-finished')).toBe(true)
 })
 
 test('getFilteredEvents should filter by normalized search text', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '  REQUEST  ', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '  REQUEST  ', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result).toHaveLength(1)
   expect(result[0].type).toBe('request')
 })
 
 test('getFilteredEvents should return all visible events when filter is empty', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '   ', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '   ', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result).toHaveLength(6)
 })
 
 test('getFilteredEvents should treat @tools as plain text in the filter input', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '@tools', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '@tools', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result).toEqual([])
 })
 
 test('getFilteredEvents should treat category tokens as plain text when combined with search text', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS hello  ', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '  @TOOLS hello  ', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result).toEqual([])
 })
 
 test('getFilteredEvents should prefer finished event payload for merged tool previews when tool pills are selected', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Tools], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.Tools]), true, true, true)
 
   expect(result).toEqual([
     expect.objectContaining({
@@ -129,7 +133,7 @@ test('getFilteredEvents should prefer finished event payload for merged tool pre
 })
 
 test('getFilteredEvents should show only network events for network category filter', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Network], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.Network]), true, true, true)
   expect(result).toEqual([events[2]])
 })
 
@@ -154,7 +158,14 @@ test('getFilteredEvents should include merged ai request response events for net
     type: 'ai-response-success',
   }
 
-  const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', [EventCategoryFilter.Network], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    [requestEvent, responseEvent],
+    '',
+    getCategoryFilters([EventCategoryFilter.Network]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([
     {
@@ -177,7 +188,14 @@ test('getFilteredEvents should include merged ai request response events for net
 })
 
 test('getFilteredEvents should show events from multiple selected category filters', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', [EventCategoryFilter.Tools, EventCategoryFilter.Network], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    events,
+    '',
+    getCategoryFilters([EventCategoryFilter.Tools, EventCategoryFilter.Network]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([
     events[2],
@@ -203,7 +221,14 @@ test('getFilteredEvents should include tool-request-response events for tools ca
     type: 'tool-request-response',
   }
 
-  const result = GetFilteredEvents.getFilteredEvents([toolRequestResponseEvent], '', [EventCategoryFilter.Tools], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    [toolRequestResponseEvent],
+    '',
+    getCategoryFilters([EventCategoryFilter.Tools]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([toolRequestResponseEvent])
 })
@@ -229,7 +254,14 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
     type: 'ai-response-success',
   }
 
-  const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', [EventCategoryFilter.All], true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    [requestEvent, responseEvent],
+    '',
+    getCategoryFilters([EventCategoryFilter.All]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([
     {
@@ -249,4 +281,19 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
       type: 'ai-request',
     },
   ])
+})
+
+test('getFilteredEvents should match using the selected category filter eventTypes', () => {
+  const customCategoryFilters = [
+    {
+      eventTypes: ['request'],
+      isSelected: true,
+      label: 'Requests',
+      name: 'requests',
+    },
+  ]
+
+  const result = GetFilteredEvents.getFilteredEvents(events, '', customCategoryFilters, true, true, true)
+
+  expect(result).toEqual([events[2]])
 })
