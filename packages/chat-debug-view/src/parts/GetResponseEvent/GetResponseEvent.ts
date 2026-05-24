@@ -6,6 +6,10 @@ const getEndValueResponseData = (event: ChatViewEvent): unknown => {
         readonly value?: unknown
       }
     | undefined
+
+  if (typeof endValue === 'object' && 'toolCallResult' in endValue) {
+    return endValue.toolCallResult
+  }
   if (!endValue || endValue.value === undefined) {
     return undefined
   }
