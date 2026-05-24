@@ -5,12 +5,14 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     timestamp: '2026-05-12T10:00:00.000Z',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
     value: 'abcdefghij',
@@ -41,12 +43,14 @@ test('toPrettyEvents should preserve merged event timing metadata for the timeli
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     timestamp: '2026-05-12T10:00:00.000Z',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
     value: 'abcdefghij',
@@ -66,11 +70,13 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     type: 'ai-response',
     value: 'abcdefghij',
   }
@@ -96,6 +102,7 @@ test('toPrettyEvents should use the tool name as subtype for merged tool call ev
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'tool-call-started',
     timestamp: '2026-05-12T10:00:00.000Z',
     toolName: 'write_file',
     type: 'tool-call-started',
@@ -103,6 +110,7 @@ test('toPrettyEvents should use the tool name as subtype for merged tool call ev
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'tool-call-finished',
     timestamp: '2026-05-12T10:00:00.125Z',
     toolCallResult: {
       ok: true,
@@ -137,11 +145,13 @@ test('toPrettyEvents should keep merged size at zero when response payload is mi
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     type: 'ai-response',
   }
 
@@ -157,15 +167,18 @@ test('toPrettyEvents should keep unmatched and non ai response events', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const nonMatchingResponseEvent = {
     eventId: 2,
     requestId: 'request-2',
+    subType: 'ai-response',
     type: 'ai-response',
   }
   const regularEvent = {
     eventId: 3,
+    subType: 'request',
     type: 'request',
   }
 

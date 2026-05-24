@@ -3,9 +3,17 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
+import { getEventSubType } from '../GetEventSubType/GetEventSubType.ts'
 import * as GetResponseMap from '../GetResponseMap/GetResponseMap.ts'
 import { getResponsePayloadSize } from '../GetResponsePayloadSize/GetResponsePayloadSize.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
+
+const withSubType = (event: ChatViewEvent): ChatViewEvent => {
+  return {
+    ...event,
+    subType: getEventSubType(event),
+  }
+}
 
 const getStatus = (item: ChatViewEvent): number | undefined => {
   if (item.statusCode !== undefined) {
@@ -43,7 +51,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
       ...(started === undefined ? {} : { started }),
       ...(status === undefined ? {} : { status }),
       ...(timestamp === undefined ? {} : { timestamp }),
-      subType: 'ai-request-response',
+      subType: getEventSubType(item, 'ai-request-response'),
       type: 'ai-request-response',
     }
   }
@@ -57,7 +65,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
     ...(started === undefined ? {} : { started }),
     ...(status === undefined ? {} : { status }),
     ...(timestamp === undefined ? {} : { timestamp }),
-    subType: 'ai-request-response',
+    subType: getEventSubType(item, 'ai-request-response'),
     type: 'ai-request-response',
   }
 }
@@ -70,16 +78,6 @@ const getToolCallStatus = (response: ChatViewEvent): number => {
   return 200
 }
 
-const getToolSubType = (event: ChatViewEvent): string => {
-  if (typeof event.toolName === 'string' && event.toolName) {
-    return event.toolName
-  }
-  if (typeof event.name === 'string' && event.name) {
-    return event.name
-  }
-  return event.type
-}
-
 const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
   const parsedStart = new Date(item.timestamp || '')
   const parsedEnd = new Date(response.timestamp || '')
@@ -88,7 +86,7 @@ const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): C
   const ended = getEndedTimestamp(response)
   const timestamp = item.timestamp ?? started
   const status = getToolCallStatus(response)
-  const subType = getToolSubType(item)
+  const subType = getEventSubType(item, 'tool-request-response')
   return {
     ...(ended === undefined ? {} : { ended }),
     durationMs,
@@ -116,7 +114,7 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
       if (response) {
         pretty.push(getMergedToolCallEvent(item, response))
       } else {
-        pretty.push(item)
+        pretty.push(withSubType(item))
       }
     } else if (item.type === 'tool-call-finished' && 'requestId' in item && typeof item.requestId === 'string') {
       // ignore, we match it with request
@@ -125,12 +123,12 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
       if (response) {
         pretty.push(getMergedRequestResponseEvent(item, response))
       } else {
-        pretty.push(item)
+        pretty.push(withSubType(item))
       }
     } else if (item.type === 'ai-response' && 'requestId' in item && typeof item.requestId === 'string') {
       // ignore, we match it with request
     } else {
-      pretty.push(item)
+      pretty.push(withSubType(item))
     }
   }
   return pretty

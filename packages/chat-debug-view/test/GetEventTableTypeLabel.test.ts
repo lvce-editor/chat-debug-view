@@ -18,6 +18,7 @@ test('getEventTableTypeLabel should render list_files from top-level name withou
     eventId: 1,
     name: 'list_files',
     sessionId: 'session-1',
+    subType: 'list_files',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }
@@ -32,6 +33,7 @@ test('getEventTableTypeLabel should preserve existing tool label formatting for 
     eventId: 1,
     name: 'getWorkspaceUri',
     sessionId: 'session-1',
+    subType: 'tool-execution, getWorkspaceUri',
     timestamp: '2026-04-01T20:56:07.857Z',
     type: 'tool-execution',
   }
