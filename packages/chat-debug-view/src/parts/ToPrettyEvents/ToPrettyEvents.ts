@@ -71,8 +71,13 @@ const getToolCallStatus = (response: ChatViewEvent): number => {
 }
 
 const getToolSubType = (event: ChatViewEvent): string => {
-  // TODO return tool call name
-  return 'tool-call'
+  if (typeof event.toolName === 'string' && event.toolName) {
+    return event.toolName
+  }
+  if (typeof event.name === 'string' && event.name) {
+    return event.name
+  }
+  return event.type
 }
 
 const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {

@@ -5,10 +5,10 @@ import { getCellTypeDom } from '../src/parts/GetCellTypeDom/GetCellTypeDom.ts'
 test('getCellTypeDom should render the type cell', () => {
   const event = {
     eventId: 1,
-    name: 'list_files',
     sessionId: 'session-1',
+    subType: 'write_file',
     timestamp: '2026-04-02T07:26:35.172Z',
-    type: 'tool-execution',
+    type: 'tool-request-response',
   }
 
   const result = getCellTypeDom(event)
@@ -19,6 +19,6 @@ test('getCellTypeDom should render the type cell', () => {
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('list_files'),
+    text('write_file'),
   ])
 })

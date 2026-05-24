@@ -1,6 +1,18 @@
 import { expect, test } from '@jest/globals'
 import * as GetEventTableTypeLabel from '../src/parts/GetEventTableTypeLabel/GetEventTableTypeLabel.ts'
 
+test('getEventTableTypeLabel should prefer subType when present', () => {
+  const event = {
+    eventId: 1,
+    subType: 'write_file',
+    type: 'tool-request-response',
+  }
+
+  const result = GetEventTableTypeLabel.getEventTableTypeLabel(event)
+
+  expect(result).toBe('write_file')
+})
+
 test('getEventTableTypeLabel should render list_files from top-level name without the tool-execution prefix', () => {
   const event = {
     eventId: 1,
