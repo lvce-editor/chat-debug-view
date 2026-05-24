@@ -5,6 +5,7 @@ import { getLightweightEvent } from '../src/parts/GetLightweightEvent/GetLightwe
 import { getTimelineFilterDescription } from '../src/parts/GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import { handleSashPointerDown } from '../src/parts/HandleSashPointerDown/HandleSashPointerDown.ts'
 import { handleSashPointerUp } from '../src/parts/HandleSashPointerUp/HandleSashPointerUp.ts'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getEventCategoryFilterLabel should return labels for all known filters and fallback to all', () => {
@@ -16,14 +17,20 @@ test('getEventCategoryFilterLabel should return labels for all known filters and
 })
 
 test('getLightweightEvent should keep only summary fields', () => {
-  const event = {
+  const event: ChatViewEvent = {
     durationMs: 7,
+    eventId: 1,
     error: 'ignored',
     sessionId: 'session-1',
     subType: 'request',
     timestamp: '2026-01-01T00:00:00.000Z',
     type: 'request',
   }
+  Object.defineProperty(event, 'eventId', {
+    configurable: true,
+    value: undefined,
+    writable: true,
+  })
   const result = getLightweightEvent(event, 5)
 
   expect(result).toEqual({

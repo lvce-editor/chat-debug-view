@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import type { ChatDebugViewState } from '../src/parts/State/ChatDebugViewState.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import { getSelectedDetailTab } from '../src/parts/GetSelectedDetailTab/GetSelectedDetailTab.ts'
@@ -109,12 +110,18 @@ test('handleEventRowClick should ignore non-primary button clicks', async () => 
 })
 
 test('handleEventRowClick should fall back to the in-memory event when it has no eventId', async () => {
-  const event = {
+  const event: ChatViewEvent = {
+    eventId: 1,
     path: '/chat',
     subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
+  Object.defineProperty(event, 'eventId', {
+    configurable: true,
+    value: undefined,
+    writable: true,
+  })
   const state = createClickableState({
     events: [event],
   })
