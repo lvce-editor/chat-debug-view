@@ -36,6 +36,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   const resizerThreeLeft = tableColumnLayout.resizerLefts[2] ?? 0
   const resizerFourLeft = tableColumnLayout.resizerLefts[3] ?? 0
   const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
+
   return `
 .ChatDebugView {
   --ChatDebugViewTableBodyHeight: ${tableBodyHeight}px;
@@ -77,6 +78,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 
 
+}
 
 
 
@@ -84,6 +86,11 @@ export const getCss = (state: ChatDebugViewState): string => {
 
 
 
+
+
+  .ExternalLink{
+  color: #52bdf2;
+}
 
 
 
@@ -115,5 +122,7 @@ export const getCss = (state: ChatDebugViewState): string => {
 .ChatDebugView .Editor {
     overflow-y: auto;
 }
+
+
 `
 }
