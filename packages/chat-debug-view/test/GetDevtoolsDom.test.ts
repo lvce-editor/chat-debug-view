@@ -23,36 +23,42 @@ type GetDevtoolsDomRestArgs =
     ? Rest
     : never
 
-const withSubType = (event: TestEvent): ChatViewEvent => {
+const withSubType = (event: Readonly<TestEvent>): ChatViewEvent => {
+  if (typeof event.subType === 'string') {
+    return event as ChatViewEvent
+  }
   return {
     ...event,
-    subType: event.subType ?? event.type,
+    subType: event.type,
   } as ChatViewEvent
 }
 
-const withSubTypes = (events: readonly TestEvent[]): readonly ChatViewEvent[] => {
+const withSubTypes = (events: readonly Readonly<TestEvent>[]): readonly ChatViewEvent[] => {
   return events.map(withSubType)
 }
 
-const GetDevtoolsDom = {
-  getDevtoolsDom: (
-    events: readonly TestEvent[],
-    selectedEvent: TestEvent | null,
-    selectedEventIndex: number | null,
-    timelineEvents: readonly TestEvent[],
-    ...rest: GetDevtoolsDomRestArgs
-  ) => {
-    return GetDevtoolsDomModule.getDevtoolsDom(
-      withSubTypes(events),
-      selectedEvent ? withSubType(selectedEvent) : null,
-      selectedEventIndex,
-      withSubTypes(timelineEvents),
-      ...rest,
-    )
-  },
+const getDevtoolsDom = (
+  events: readonly Readonly<TestEvent>[],
+  selectedEvent: Readonly<TestEvent> | null,
+  selectedEventIndex: number | null,
+  timelineEvents: readonly Readonly<TestEvent>[],
+  ...rest: GetDevtoolsDomRestArgs
+): ReturnType<typeof GetDevtoolsDomModule.getDevtoolsDom> => {
+  return GetDevtoolsDomModule.getDevtoolsDom(
+    withSubTypes(events),
+    selectedEvent ? withSubType(selectedEvent) : null,
+    selectedEventIndex,
+    withSubTypes(timelineEvents),
+    ...rest,
+  )
 }
 
-const setSelectedEventPreview = (event: TestEvent, preview: Parameters<typeof setSelectedEventPreviewModule>[1]): ChatViewEvent => {
+const GetDevtoolsDom = { getDevtoolsDom }
+
+const setSelectedEventPreview = (
+  event: Readonly<TestEvent>,
+  preview: Parameters<typeof setSelectedEventPreviewModule>[1],
+): ChatViewEvent => {
   return setSelectedEventPreviewModule(withSubType(event), preview)
 }
 

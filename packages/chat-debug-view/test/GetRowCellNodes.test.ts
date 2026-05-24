@@ -9,18 +9,25 @@ type TestEvent = Omit<ChatViewEvent, 'subType' | 'type'> & {
   readonly type: string
 }
 
-const withSubType = (event: TestEvent): ChatViewEvent => {
+const withSubType = (event: Readonly<TestEvent>): ChatViewEvent => {
+  if (typeof event.subType === 'string') {
+    return event as ChatViewEvent
+  }
   return {
     ...event,
-    subType: event.subType ?? event.type,
+    subType: event.type,
   } as ChatViewEvent
 }
 
-const GetRowCellNodes = {
-  getRowCellNodes: (event: TestEvent, isErrorStatus: boolean, visibleColumns: readonly string[]) => {
-    return GetRowCellNodesModule.getRowCellNodes(withSubType(event), isErrorStatus, visibleColumns)
-  },
+const getRowCellNodes = (
+  event: Readonly<TestEvent>,
+  isErrorStatus: boolean,
+  visibleColumns: readonly string[],
+): ReturnType<typeof GetRowCellNodesModule.getRowCellNodes> => {
+  return GetRowCellNodesModule.getRowCellNodes(withSubType(event), isErrorStatus, visibleColumns)
 }
+
+const GetRowCellNodes = { getRowCellNodes }
 
 test('getRowCellNodes should render visible columns in order using the event subtype or type label', () => {
   const event = {
