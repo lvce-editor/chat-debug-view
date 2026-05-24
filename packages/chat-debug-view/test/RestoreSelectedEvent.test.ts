@@ -7,23 +7,23 @@ test('restoreSelectedEvent should load details for the selected visible event', 
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:01.000Z',
     subType: 'response',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const selectedEvent = {
     detail: 'restored',
     eventId: 2,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:01.000Z',
     subType: 'response',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({
@@ -54,15 +54,15 @@ test('restoreSelectedEvent should clear selection when the selected event is no 
       {
         eventId: 1,
         sessionId: 'session-1',
-        timestamp: '2026-03-08T00:00:00.000Z',
         subType: 'request',
+        timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
-        timestamp: '2026-03-08T00:00:01.000Z',
         subType: 'response',
+        timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
       },
     ],

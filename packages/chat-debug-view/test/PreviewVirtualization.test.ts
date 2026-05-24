@@ -7,8 +7,8 @@ test('getPreviewVirtualizationState should clamp the visible line range for prev
     {
       eventId: 1,
       sessionId: 'session-1',
-      timestamp: '2026-05-04T10:00:00.000Z',
       subType: 'request',
+      timestamp: '2026-05-04T10:00:00.000Z',
       type: 'request',
     },
     Array.from({ length: 40 }, (_, index) => `line ${index + 1}`).join('\n'),

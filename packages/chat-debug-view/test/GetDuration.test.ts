@@ -6,8 +6,8 @@ test('getDuration should return explicit finite durationMs', () => {
     durationMs: 7,
     eventId: 1,
     started: '2026-01-01T00:00:00.000Z',
-    timestamp: '2026-01-01T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-01-01T00:00:00.000Z',
     type: 'request',
   })
 

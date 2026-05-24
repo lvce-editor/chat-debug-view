@@ -26,8 +26,8 @@ test('getResponseContentNodes should return an empty array when there is no sele
 test('getResponseContentNodes should render the selected event when response nodes are missing', () => {
   const selectedEvent = {
     eventId: 1,
-    text: 'response preview',
     subType: 'chat-message-updated',
+    text: 'response preview',
     type: 'chat-message-updated',
   }
 

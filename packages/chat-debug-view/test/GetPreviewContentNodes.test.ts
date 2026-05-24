@@ -34,8 +34,8 @@ test('getPreviewContentNodes should derive preview nodes from the selected event
       time: '02:05 PM',
     },
     sessionId: 'session-1',
-    timestamp: '2026-04-09T12:05:40.910Z',
     subType: 'chat-message-added',
+    timestamp: '2026-04-09T12:05:40.910Z',
     type: 'chat-message-added',
   }
 

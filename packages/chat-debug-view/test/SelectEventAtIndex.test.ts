@@ -10,8 +10,8 @@ test('selectEventAtIndex should clear the selected event when the index is out o
     events: [
       {
         eventId: 1,
-        timestamp: '2026-03-08T00:00:00.000Z',
         subType: 'request',
+        timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
     ],
@@ -30,8 +30,8 @@ test('selectEventAtIndex should clear the selected event when the index is out o
 test('selectEventAtIndex should keep the event selected when it has no numeric event id', async () => {
   const invalidEvent = {
     eventId: 'missing-id',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   } as unknown as ChatViewEvent
   const state = {

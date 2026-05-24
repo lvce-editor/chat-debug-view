@@ -8,15 +8,15 @@ test('getCurrentEvents should apply event filters and timeline range', () => {
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:01.000Z',
     subType: 'response',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const state = {
@@ -36,15 +36,15 @@ test('getCurrentEvents should sort by selected table column', () => {
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:01.000Z',
     subType: 'response',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const state = {
@@ -64,16 +64,16 @@ test('getCurrentEvents should sort by size numerically', () => {
     eventId: 2,
     sessionId: 'session-1',
     size: 1024,
-    timestamp: '2026-03-08T00:00:01.000Z',
     subType: 'response',
+    timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const smallerEvent = {
     eventId: 1,
     sessionId: 'session-1',
     size: 2,
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const state: ChatDebugViewState = {

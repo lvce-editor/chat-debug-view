@@ -5,8 +5,8 @@ test('getPreviewName should prefer event name', () => {
   const result = GetPreviewName.getPreviewName({
     eventId: 1,
     name: 'runTool',
-    toolName: 'fallbackTool',
     subType: 'request',
+    toolName: 'fallbackTool',
     type: 'request',
   })
 
@@ -16,8 +16,8 @@ test('getPreviewName should prefer event name', () => {
 test('getPreviewName should fall back to toolName', () => {
   const result = GetPreviewName.getPreviewName({
     eventId: 1,
-    toolName: 'runTool',
     subType: 'request',
+    toolName: 'runTool',
     type: 'request',
   })
 

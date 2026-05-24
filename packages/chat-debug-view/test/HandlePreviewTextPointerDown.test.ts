@@ -13,8 +13,8 @@ test('handlePreviewTextPointerDown should update the preview cursor for numbered
       name: 'read_file',
       result: 'first line\nsecond line',
       sessionId: 'session-1',
-      timestamp: '2026-04-13T10:00:00.000Z',
       subType: 'tool-execution',
+      timestamp: '2026-04-13T10:00:00.000Z',
       type: 'tool-execution',
     },
   }
@@ -31,9 +31,9 @@ test('handlePreviewTextPointerDown should ignore preview text without line numbe
     selectedEvent: {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'chat-message-updated',
       text: 'first line\nsecond line',
       timestamp: '2026-04-13T10:00:00.000Z',
-      subType: 'chat-message-updated',
       type: 'chat-message-updated',
     },
   }
@@ -56,8 +56,8 @@ test('handlePreviewTextPointerDown should account for preview scroll offset', ()
       name: 'read_file',
       result: 'first line\nsecond line\nthird line\nfourth line\nfifth line\nsixth line\nseventh line\neighth line',
       sessionId: 'session-1',
-      timestamp: '2026-04-13T10:00:00.000Z',
       subType: 'tool-execution',
+      timestamp: '2026-04-13T10:00:00.000Z',
       type: 'tool-execution',
     },
     useDevtoolsLayout: true,

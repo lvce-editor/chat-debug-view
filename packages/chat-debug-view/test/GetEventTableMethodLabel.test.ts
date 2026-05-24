@@ -25,8 +25,8 @@ test('getEventTableMethodLabel should return GET for read operations', () => {
   expect(
     getEventTableMethodLabel({
       eventId: 1,
-      toolName: 'list_files',
       subType: 'tool-execution',
+      toolName: 'list_files',
       type: 'tool-execution',
     }),
   ).toBe('GET')
@@ -58,8 +58,8 @@ test('getEventTableMethodLabel should return an empty string for non-file operat
   expect(
     getEventTableMethodLabel({
       eventId: 1,
-      toolName: 'get_workspace_uri',
       subType: 'tool-execution',
+      toolName: 'get_workspace_uri',
       type: 'tool-execution',
     }),
   ).toBe('')

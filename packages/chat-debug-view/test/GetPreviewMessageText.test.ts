@@ -4,8 +4,8 @@ import * as GetPreviewMessageText from '../src/parts/GetPreviewMessageText/GetPr
 test('getPreviewMessageText should return the top-level text for chat-message-updated events', () => {
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
-    text: 'updated text',
     subType: 'chat-message-updated',
+    text: 'updated text',
     type: 'chat-message-updated',
   })
 
@@ -41,8 +41,8 @@ test('getPreviewMessageText should return undefined when the nested message text
 test('getPreviewMessageText should return undefined for unrelated events', () => {
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
-    text: 'ignored',
     subType: 'request',
+    text: 'ignored',
     type: 'request',
   })
 

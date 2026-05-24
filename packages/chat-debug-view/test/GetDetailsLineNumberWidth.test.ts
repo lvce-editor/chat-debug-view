@@ -83,8 +83,8 @@ test('getDetailsLineNumberWidth should include extra gutter buffer for smaller l
 test('getDetailsLineNumberWidth should return 0 when preview line numbers are intentionally hidden', () => {
   const selectedEvent = {
     eventId: 1,
-    text: 'first line\nsecond line',
     subType: 'chat-message-updated',
+    text: 'first line\nsecond line',
     type: 'chat-message-updated',
   }
   const state = {

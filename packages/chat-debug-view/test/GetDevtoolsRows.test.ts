@@ -29,9 +29,9 @@ test('getDevtoolsRows should render tool execution labels from the event subtype
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'get_workspace_uri',
-      subType: 'tool-execution',
       type: 'tool-execution',
     },
   ]
@@ -82,8 +82,8 @@ test('getDevtoolsRows should fall back to the event type when subtype is missing
       },
       eventId: 1,
       sessionId: 'session-1',
-      timestamp: '2026-03-08T00:00:00.000Z',
       subType: 'tool-execution',
+      timestamp: '2026-03-08T00:00:00.000Z',
       type: 'tool-execution',
     },
   ]
@@ -136,8 +136,8 @@ test('getDevtoolsRows should keep tool execution labels stable when a top-level 
       eventId: 1,
       name: 'getWorkspaceUri',
       sessionId: 'session-1',
-      timestamp: '2026-04-01T20:56:07.857Z',
       subType: 'tool-execution',
+      timestamp: '2026-04-01T20:56:07.857Z',
       type: 'tool-execution',
     },
   ]
@@ -191,8 +191,8 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
         error: 'Invalid argument: uri must be an absolute URI.',
       },
       sessionId: 'session-1',
-      timestamp: '2026-04-02T07:26:35.172Z',
       subType: 'tool-execution',
+      timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },
   ]
@@ -239,15 +239,15 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       eventId: 1,
       sessionId: 'session-1',
-      timestamp: '2026-03-08T00:00:00.000Z',
       subType: 'request',
+      timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
-      timestamp: '2026-03-08T00:00:01.000Z',
       subType: 'response',
+      timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
     },
   ]
@@ -328,22 +328,22 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
       requestEvent: {
         eventId: 1,
         requestId: 'request-1',
-        timestamp: '2026-04-19T12:00:00.000Z',
         subType: 'ai-request',
+        timestamp: '2026-04-19T12:00:00.000Z',
         type: 'ai-request',
       },
       requestId: 'request-1',
       responseEvent: {
         eventId: 2,
         requestId: 'request-1',
-        timestamp: '2026-04-19T12:00:00.250Z',
         subType: 'ai-response-success',
+        timestamp: '2026-04-19T12:00:00.250Z',
         type: 'ai-response-success',
       },
       sessionId: 'session-1',
       started: '2026-04-19T12:00:00.000Z',
-      timestamp: '2026-04-19T12:00:00.250Z',
       subType: 'ai-request',
+      timestamp: '2026-04-19T12:00:00.250Z',
       type: 'ai-request',
     },
   ]
@@ -392,8 +392,8 @@ test('getDevtoolsRows should omit hidden columns', () => {
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
-      timestamp: '2026-03-08T00:00:01.000Z',
       subType: 'request',
+      timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
   ]
@@ -427,15 +427,15 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
     {
       eventId: 3,
       sessionId: 'session-1',
-      timestamp: '2026-03-08T00:00:02.000Z',
       subType: 'request',
+      timestamp: '2026-03-08T00:00:02.000Z',
       type: 'request',
     },
     {
       eventId: 4,
       sessionId: 'session-1',
-      timestamp: '2026-03-08T00:00:03.000Z',
       subType: 'response',
+      timestamp: '2026-03-08T00:00:03.000Z',
       type: 'response',
     },
   ]

@@ -42,8 +42,8 @@ test('handleResize should use a balanced split on narrow screens when details ar
   const selectedEvent = {
     eventId: 1,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const state = {
@@ -69,8 +69,8 @@ test('handleResize should preserve manual sash widths on narrow screens', () => 
   const selectedEvent = {
     eventId: 1,
     sessionId: 'session-1',
-    timestamp: '2026-03-08T00:00:00.000Z',
     subType: 'request',
+    timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const state = {

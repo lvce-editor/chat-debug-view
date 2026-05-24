@@ -7,8 +7,8 @@ test('getEventsWithTime should keep only events with a valid timestamp', () => {
     {
       eventId: 1,
       sessionId: 'session-1',
-      timestamp: '2026-01-01T10:00:00.000Z',
       subType: 'request',
+      timestamp: '2026-01-01T10:00:00.000Z',
       type: 'request',
     },
     {
@@ -20,8 +20,8 @@ test('getEventsWithTime should keep only events with a valid timestamp', () => {
     {
       eventId: 3,
       sessionId: 'session-1',
-      timestamp: 'invalid',
       subType: 'response',
+      timestamp: 'invalid',
       type: 'response',
     },
   ]

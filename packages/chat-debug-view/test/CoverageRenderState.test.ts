@@ -34,8 +34,8 @@ test('applyRender should return commands for each diff item', () => {
       {
         eventId: 1,
         sessionId: 'session-1',
-        timestamp: '2026-01-01T00:00:00.000Z',
         subType: 'request',
+        timestamp: '2026-01-01T00:00:00.000Z',
         type: 'request',
       },
     ],
@@ -105,8 +105,8 @@ test('rerender should clone state deeply', () => {
       {
         eventId: 1,
         sessionId: 'session-1',
-        timestamp: '2026-01-01T00:00:00.000Z',
         subType: 'request',
+        timestamp: '2026-01-01T00:00:00.000Z',
         type: 'request',
       },
     ],
@@ -131,8 +131,8 @@ test('setEvents should replace events and reset transient state', () => {
       {
         eventId: 1,
         sessionId: 'session-1',
-        timestamp: '2026-01-01T00:00:00.000Z',
         subType: 'response',
+        timestamp: '2026-01-01T00:00:00.000Z',
         type: 'response',
       },
     ],
@@ -146,8 +146,8 @@ test('setEvents should replace events and reset transient state', () => {
         {
           eventId: 1,
           sessionId: 'session-1',
-          timestamp: '2026-01-01T00:00:00.000Z',
           subType: 'response',
+          timestamp: '2026-01-01T00:00:00.000Z',
           type: 'response',
         },
       ],

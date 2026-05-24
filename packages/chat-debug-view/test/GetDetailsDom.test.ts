@@ -509,9 +509,9 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
   ]
   const event = {
     eventId: 1,
+    subType: 'chat-message-added',
     text: 'hello',
     timestamp: '2026-03-08T00:00:01.000Z',
-    subType: 'chat-message-added',
     type: 'chat-message-added',
   } as const
 

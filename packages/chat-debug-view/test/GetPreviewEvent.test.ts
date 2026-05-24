@@ -7,8 +7,8 @@ test('getPreviewEvent should return the extracted text for sse-response-complete
   const event = {
     eventId: 8,
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'sse-response-completed',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -38,10 +38,10 @@ test('getPreviewEvent should return the extracted text for ai-response events wh
     requestId: 'request-1',
     sessionId: 'session-1',
     statusCode: 200,
+    subType: 'ai-response',
     timestamp: '2026-05-06T08:09:12.229Z',
     toolCalls: [],
     turnId: 'turn-1',
-    subType: 'ai-response',
     type: 'ai-response',
     value: {
       id: 'resp_123',
@@ -109,8 +109,8 @@ test('getPreviewEvent should return response text for ai-request events with end
     method: 'POST',
     requestId: 'request-2',
     sessionId: 'session-1',
-    timestamp: '2026-05-06T08:09:12.229Z',
     subType: 'ai-request',
+    timestamp: '2026-05-06T08:09:12.229Z',
     type: 'ai-request',
     url: '/chat',
   }
@@ -143,8 +143,8 @@ test('getPreviewEvent should return response.output for sse-response-completed e
   const event = {
     eventId: 9,
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'sse-response-completed',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -165,6 +165,7 @@ test('getPreviewEvent should return only the message text for chat-message-updat
     inProgress: false,
     messageId: 'abc',
     sessionId: 'def',
+    subType: 'chat-message-updated',
     text: 'Done - preview text only',
     time: '11:17 AM',
     timestamp: '2026-04-07T09:17:45.786Z',
@@ -177,7 +178,6 @@ test('getPreviewEvent should return only the message text for chat-message-updat
         status: 'success',
       },
     ],
-    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   }
 
@@ -196,8 +196,8 @@ test('getPreviewEvent should return only the nested message text for chat-messag
       time: '02:05 PM',
     },
     sessionId: 'ff68dd2f-6053-453f-95a9-de785f33f67c',
-    timestamp: '2026-04-09T12:05:40.910Z',
     subType: 'chat-message-added',
+    timestamp: '2026-04-09T12:05:40.910Z',
     type: 'chat-message-added',
   }
 
@@ -218,8 +218,8 @@ test('getPreviewEvent should return write_file content for tool execution events
       ok: true,
     },
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'tool-execution',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'tool-execution',
   }
 
@@ -241,8 +241,8 @@ test('getPreviewEvent should return read_file result text for tool execution eve
     name: 'read_file',
     result: 'line 1\nline 2',
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'tool-execution',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'tool-execution',
   }
 
@@ -264,8 +264,8 @@ test('getPreviewEvent should return read_file result content for structured tool
       },
     ],
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'tool-execution',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'tool-execution',
   }
 
@@ -296,8 +296,8 @@ test('getPreviewEvent should return only result.entries for list_files tool exec
       ignored: false,
     },
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'tool-execution',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'tool-execution',
   }
 
@@ -320,8 +320,8 @@ test('getPreviewEvent should return the full failed result for list_files tool e
       errorCode: 'E_INVALID_URI',
     },
     sessionId: 'session-1',
-    timestamp: '2026-04-10T10:00:00.000Z',
     subType: 'tool-execution',
+    timestamp: '2026-04-10T10:00:00.000Z',
     type: 'tool-execution',
   }
 
