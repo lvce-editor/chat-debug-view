@@ -27,26 +27,31 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
   const selectedEventCategoryFilters = normalizeSelectedEventCategoryFilters(selectedEventCategoryFilter)
   return [
     {
+      eventTypes: ['*'],
       isSelected: selectedEventCategoryFilters.includes(All),
       label: ChatDebugStrings.all(),
       name: All,
     },
     {
+      eventTypes: ['tool-request', 'tool-request-response'],
       isSelected: selectedEventCategoryFilters.includes(Tools),
       label: ChatDebugStrings.tools(),
       name: Tools,
     },
     {
+      eventTypes: ['ai-request', 'ai-request-response'],
       isSelected: selectedEventCategoryFilters.includes(Network),
       label: ChatDebugStrings.network(),
       name: Network,
     },
     {
+      eventTypes: [],
       isSelected: selectedEventCategoryFilters.includes(Ui),
       label: ChatDebugStrings.ui(),
       name: Ui,
     },
     {
+      eventTypes: [],
       isSelected: selectedEventCategoryFilters.includes(Stream),
       label: ChatDebugStrings.stream(),
       name: Stream,
