@@ -2,8 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.event-details'
 
-export const test: Test = async ({ ChatDebug, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, expect, Locator, SideBar }) => {
   // arrange
+  await SideBar.hide()
   await ChatDebug.open('e2e-session-event-details')
   const locator1 = Locator('.ChatDebugView')
   await expect(locator1).toBeVisible()

@@ -23,11 +23,13 @@ export const isEventCategoryFilter = (value: string): value is EventCategoryFilt
   return value === All || value === Tools || value === Network
 }
 
+const getName = (filter: CategoryFilter): string => {
+  return filter.name
+}
+
 export const getSelectedEventCategoryFilters = (categoryFilters: readonly CategoryFilter[]): readonly EventCategoryFilterType[] => {
   const selectedCategoryFilters = categoryFilters.filter((categoryFilter) => categoryFilter.isSelected)
-  const selectedEventCategoryFilters = selectedCategoryFilters
-    .map((categoryFilter) => categoryFilter.name)
-    .filter((name): name is EventCategoryFilterType => isEventCategoryFilter(name))
+  const selectedEventCategoryFilters = selectedCategoryFilters.map(getName).filter(isEventCategoryFilter)
   return normalizeSelectedEventCategoryFilters(selectedEventCategoryFilters)
 }
 

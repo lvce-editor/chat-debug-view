@@ -71,5 +71,47 @@ export const getCss = (state: ChatDebugViewState): string => {
   padding: ${state.viewPadding}px;
   padding-right: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* TODO improve this with virtual scrolling */
+
+.ChatDebugView .EditorLayers {
+  contain: unset;
+  height: auto;
+}
+
+.ChatDebugView .Gutter {
+  contain: unset;
+  height: auto;
+}
+
+.ChatDebugView .EditorContent {
+  contain: unset;
+  height: auto;
+}
+
+.ChatDebugView .EditorRows {
+  overflow-y: visible;
+  contain: unset;
+  height: auto;
+}
+
+.ChatDebugView .Editor {
+    overflow-y: auto;
+}
 `
 }
