@@ -9,5 +9,5 @@ export const getEventSubType = (event: EventLike, fallbackType: string = event.t
   if (typeof event.subType === 'string') {
     return event.subType
   }
-  return ''
+  return event.type
 }
