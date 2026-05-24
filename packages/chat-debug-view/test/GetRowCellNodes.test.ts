@@ -1,7 +1,26 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
-import * as GetRowCellNodes from '../src/parts/GetRowCellNodes/GetRowCellNodes.ts'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
+import * as GetRowCellNodesModule from '../src/parts/GetRowCellNodes/GetRowCellNodes.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+
+type TestEvent = Omit<ChatViewEvent, 'subType' | 'type'> & {
+  readonly subType?: string
+  readonly type: string
+}
+
+const withSubType = (event: TestEvent): ChatViewEvent => {
+  return {
+    ...event,
+    subType: event.subType ?? event.type,
+  } as ChatViewEvent
+}
+
+const GetRowCellNodes = {
+  getRowCellNodes: (event: TestEvent, isErrorStatus: boolean, visibleColumns: readonly string[]) => {
+    return GetRowCellNodesModule.getRowCellNodes(withSubType(event), isErrorStatus, visibleColumns)
+  },
+}
 
 test('getRowCellNodes should render visible columns in order using the event subtype or type label', () => {
   const event = {

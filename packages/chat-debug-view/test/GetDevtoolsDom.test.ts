@@ -1,10 +1,60 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
-import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
+import * as GetDevtoolsDomModule from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
+import { setSelectedEventPreview as setSelectedEventPreviewModule } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
+
+type TestEvent = Omit<ChatViewEvent, 'subType' | 'type'> & {
+  readonly subType?: string
+  readonly type: string
+}
+
+type GetDevtoolsDomRestArgs =
+  Parameters<typeof GetDevtoolsDomModule.getDevtoolsDom> extends [
+    readonly ChatViewEvent[],
+    ChatViewEvent | null,
+    number | null,
+    readonly ChatViewEvent[],
+    ...infer Rest,
+  ]
+    ? Rest
+    : never
+
+const withSubType = (event: TestEvent): ChatViewEvent => {
+  return {
+    ...event,
+    subType: event.subType ?? event.type,
+  } as ChatViewEvent
+}
+
+const withSubTypes = (events: readonly TestEvent[]): readonly ChatViewEvent[] => {
+  return events.map(withSubType)
+}
+
+const GetDevtoolsDom = {
+  getDevtoolsDom: (
+    events: readonly TestEvent[],
+    selectedEvent: TestEvent | null,
+    selectedEventIndex: number | null,
+    timelineEvents: readonly TestEvent[],
+    ...rest: GetDevtoolsDomRestArgs
+  ) => {
+    return GetDevtoolsDomModule.getDevtoolsDom(
+      withSubTypes(events),
+      selectedEvent ? withSubType(selectedEvent) : null,
+      selectedEventIndex,
+      withSubTypes(timelineEvents),
+      ...rest,
+    )
+  },
+}
+
+const setSelectedEventPreview = (event: TestEvent, preview: Parameters<typeof setSelectedEventPreviewModule>[1]): ChatViewEvent => {
+  return setSelectedEventPreviewModule(withSubType(event), preview)
+}
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
   const dom = GetDevtoolsDom.getDevtoolsDom([], null, null, [], '', '', 'No events have been found') as readonly {
