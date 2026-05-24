@@ -21,6 +21,7 @@ test('getLightweightEvent should keep only summary fields', () => {
     error: 'ignored',
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-01-01T00:00:00.000Z',
     type: 'request',
   }
@@ -32,6 +33,7 @@ test('getLightweightEvent should keep only summary fields', () => {
     endTime: '2026-01-01T00:00:00.000Z',
     eventId: 5,
     startTime: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 })

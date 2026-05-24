@@ -31,6 +31,7 @@ test('getAttachmentImagePreview should return an image preview for image attachm
     eventId: 1,
     mimeType: 'image/png',
     name: 'diagram.png',
+    subType: 'chat-attachment-added',
     type: 'chat-attachment-added',
   }
 
@@ -75,6 +76,7 @@ test.each([
     eventId: 1,
     mimeType,
     name,
+    subType: 'chat-attachment-added',
     type: 'chat-attachment-added',
   }
 
@@ -105,6 +107,7 @@ test('getAttachmentImagePreview should return an SVG preview without bitmap vali
     eventId: 1,
     mimeType: 'image/svg+xml',
     name: 'photo.svg',
+    subType: 'chat-attachment-added',
     type: 'chat-attachment-added',
   }
 
@@ -131,6 +134,7 @@ test('getAttachmentImagePreview should return a fallback message when image vali
     eventId: 1,
     mimeType: 'image/png',
     name: 'broken.png',
+    subType: 'chat-attachment-added',
     type: 'chat-attachment-added',
   }
 
@@ -147,6 +151,7 @@ test('getAttachmentImagePreview should ignore non-image attachments', async () =
     eventId: 1,
     mimeType: 'text/plain',
     name: 'notes.txt',
+    subType: 'chat-attachment-added',
     type: 'chat-attachment-added',
   }
 
@@ -181,6 +186,7 @@ test('getAttachmentImagePreview should return an image preview for removed image
     eventId: 2,
     mimeType: 'image/png',
     name: 'removed.png',
+    subType: 'chat-attachment-removed',
     type: 'chat-attachment-removed',
   }
 

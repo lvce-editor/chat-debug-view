@@ -24,11 +24,12 @@ const sizeCellNodes = [
   text('0 B'),
 ] as const
 
-test('getDevtoolsRows should render tool execution labels with the tool name', () => {
+test('getDevtoolsRows should render tool execution labels from the event subtype or type', () => {
   const events = [
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'get_workspace_uri',
       type: 'tool-execution',
@@ -49,7 +50,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, get_workspace_uri'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -72,7 +73,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
   ])
 })
 
-test('getDevtoolsRows should render tool execution labels with tool name from arguments', () => {
+test('getDevtoolsRows should fall back to the event type when subtype is missing', () => {
   const events = [
     {
       arguments: {
@@ -81,6 +82,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
       },
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'tool-execution',
     },
@@ -100,7 +102,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, read_file'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -123,7 +125,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
   ])
 })
 
-test('getDevtoolsRows should render tool execution labels with tool name from top-level name field', () => {
+test('getDevtoolsRows should keep tool execution labels stable when a top-level name field is present', () => {
   const events = [
     {
       arguments: {
@@ -134,6 +136,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
       eventId: 1,
       name: 'getWorkspaceUri',
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-01T20:56:07.857Z',
       type: 'tool-execution',
     },
@@ -153,7 +156,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, getWorkspaceUri'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -176,7 +179,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
   ])
 })
 
-test('getDevtoolsRows should render 400 status when tool error is nested in result', () => {
+test('getDevtoolsRows should render 400 status when tool error is nested in result without changing the type label', () => {
   const events = [
     {
       arguments: {
@@ -188,6 +191,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
         error: 'Invalid argument: uri must be an absolute URI.',
       },
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },
@@ -207,7 +211,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('list_files'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -235,12 +239,14 @@ test('getDevtoolsRows should add odd and even row classes to table rows', () => 
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
     },
@@ -322,6 +328,7 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
       requestEvent: {
         eventId: 1,
         requestId: 'request-1',
+        subType: 'ai-request',
         timestamp: '2026-04-19T12:00:00.000Z',
         type: 'ai-request',
       },
@@ -329,11 +336,13 @@ test('getDevtoolsRows should render merged ai request duration from timestamps',
       responseEvent: {
         eventId: 2,
         requestId: 'request-1',
+        subType: 'ai-response-success',
         timestamp: '2026-04-19T12:00:00.250Z',
         type: 'ai-response-success',
       },
       sessionId: 'session-1',
       started: '2026-04-19T12:00:00.000Z',
+      subType: 'ai-request',
       timestamp: '2026-04-19T12:00:00.250Z',
       type: 'ai-request',
     },
@@ -383,6 +392,7 @@ test('getDevtoolsRows should omit hidden columns', () => {
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
@@ -417,12 +427,14 @@ test('getDevtoolsRows should preserve row parity and selection for a virtualized
     {
       eventId: 3,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:02.000Z',
       type: 'request',
     },
     {
       eventId: 4,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:03.000Z',
       type: 'response',
     },

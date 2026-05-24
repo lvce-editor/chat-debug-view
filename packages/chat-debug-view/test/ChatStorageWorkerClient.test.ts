@@ -8,6 +8,7 @@ test('listChatViewEvents should invoke ChatStorageWorker with the session id', a
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         type: 'request',
       },
     ],
@@ -27,6 +28,7 @@ test('loadSelectedEvent should invoke ChatStorageWorker with the requested event
   const expected = {
     eventId: 2,
     sessionId: 'session-1',
+    subType: 'response',
     type: 'response',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({

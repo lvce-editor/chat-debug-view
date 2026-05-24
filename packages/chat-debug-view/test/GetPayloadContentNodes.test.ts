@@ -35,6 +35,7 @@ test('getPayloadContentNodes should render the selected event payload', () => {
       entries: [],
       ignored: false,
     },
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 

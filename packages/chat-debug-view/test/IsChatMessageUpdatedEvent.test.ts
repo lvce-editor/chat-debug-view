@@ -4,6 +4,7 @@ import * as IsChatMessageUpdatedEvent from '../src/parts/IsChatMessageUpdatedEve
 test('isChatMessageUpdatedEvent should return true for chat-message-updated events', () => {
   const result = IsChatMessageUpdatedEvent.isChatMessageUpdatedEvent({
     eventId: 1,
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   })
 
@@ -13,6 +14,7 @@ test('isChatMessageUpdatedEvent should return true for chat-message-updated even
 test('isChatMessageUpdatedEvent should return false for other events', () => {
   const result = IsChatMessageUpdatedEvent.isChatMessageUpdatedEvent({
     eventId: 1,
+    subType: 'request',
     type: 'request',
   })
 

@@ -8,12 +8,14 @@ const events = [
   {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   },
   {
     eventId: 2,
     sessionId: 'session-1',
+    subType: 'response',
     timestamp: '2026-03-08T00:00:10.000Z',
     type: 'response',
   },
@@ -168,6 +170,7 @@ test('getTimelineNodes should omit the timeline summary for zero-duration timeli
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },

@@ -10,6 +10,7 @@ test('focusNext should select the first row when nothing is selected', async () 
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-1',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   })
@@ -19,11 +20,13 @@ test('focusNext should select the first row when nothing is selected', async () 
     events: [
       {
         eventId: 1,
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
+        subType: 'response',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
       },
@@ -38,6 +41,7 @@ test('focusNext should select the first row when nothing is selected', async () 
   expect(result.selectedEvent).toEqual({
     detail: 'row-1',
     eventId: 1,
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   })
@@ -49,6 +53,7 @@ test('focusNext should stop at the last row', async () => {
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-2',
       eventId: 2,
+      subType: 'response',
       type: 'response',
     }),
   })
@@ -57,11 +62,13 @@ test('focusNext should stop at the last row', async () => {
     events: [
       {
         eventId: 1,
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
+        subType: 'response',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
       },

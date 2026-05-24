@@ -7,9 +7,9 @@ import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 test('getStateWithInvalidUri should clear event state and set an error for invalid uris', () => {
   const state = {
     ...createDefaultState(),
-    events: [{ eventId: 1, type: 'request' }],
+    events: [{ eventId: 1, subType: 'request', type: 'request' }],
     initial: true,
-    selectedEvent: { eventId: 1, type: 'request' },
+    selectedEvent: { eventId: 1, subType: 'request', type: 'request' },
     selectedEventId: 1,
     selectedEventIndex: 0,
     sessionId: 'session-1',

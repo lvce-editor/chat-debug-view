@@ -6,6 +6,7 @@ import { matchesEventCategoryFilter } from '../src/parts/MatchesEventCategoryFil
 test('matchesEventCategoryFilter should always match when no filters are selected', () => {
   const event: ChatViewEvent = {
     eventId: 1,
+    subType: '',
     type: 'request',
   }
 
@@ -14,11 +15,11 @@ test('matchesEventCategoryFilter should always match when no filters are selecte
 })
 
 test('matchesEventCategoryFilter should match each supported category and ignore unknown filters', () => {
-  expect(matchesEventCategoryFilter({ eventId: 1, type: 'request' }, [EventCategoryFilter.Network])).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 2, type: 'sse-response-part' }, [EventCategoryFilter.Stream])).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 3, type: 'tool-execution-started' }, [EventCategoryFilter.Tools])).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 7, type: 'tool-request-response' }, [EventCategoryFilter.Tools])).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 4, type: 'handle-click' }, [EventCategoryFilter.Ui])).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 5, type: 'handle-response' }, [EventCategoryFilter.Ui])).toBe(false)
-  expect(matchesEventCategoryFilter({ eventId: 6, type: 'response' }, ['custom-filter'])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 1, subType: '', type: 'request' }, [EventCategoryFilter.Network])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 2, subType: '', type: 'sse-response-part' }, [EventCategoryFilter.Stream])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 3, subType: '', type: 'tool-execution-started' }, [EventCategoryFilter.Tools])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 7, subType: '', type: 'tool-request-response' }, [EventCategoryFilter.Tools])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 4, subType: '', type: 'handle-click' }, [EventCategoryFilter.Ui])).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 5, subType: '', type: 'handle-response' }, [EventCategoryFilter.Ui])).toBe(false)
+  expect(matchesEventCategoryFilter({ eventId: 6, subType: '', type: 'response' }, ['custom-filter'])).toBe(true)
 })

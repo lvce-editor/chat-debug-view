@@ -5,12 +5,14 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     timestamp: '2026-05-12T10:00:00.000Z',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
     value: 'abcdefghij',
@@ -30,6 +32,7 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
       method: 'POST',
       size: 10,
       started: '2026-05-12T10:00:00.000Z',
+      subType: 'ai-request',
       timestamp: '2026-05-12T10:00:00.000Z',
       type: 'ai-request-response',
     },
@@ -40,12 +43,14 @@ test('toPrettyEvents should preserve merged event timing metadata for the timeli
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     timestamp: '2026-05-12T10:00:00.000Z',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     timestamp: '2026-05-12T10:00:00.125Z',
     type: 'ai-response',
     value: 'abcdefghij',
@@ -61,15 +66,17 @@ test('toPrettyEvents should preserve merged event timing metadata for the timeli
   expect(result?.ended).toBe('2026-05-12T10:00:00.125Z')
 })
 
-test('toPrettyEvents should merge matching ai request and ai response events', () => {
+test('toPrettyEvents should merge matching ai request and ai response events while preserving the request subtype', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     type: 'ai-response',
     value: 'abcdefghij',
   }
@@ -85,7 +92,51 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
       eventId: 1,
       method: 'POST',
       size: 10,
+      subType: 'ai-request',
       type: 'ai-request-response',
+    },
+  ])
+})
+
+test('toPrettyEvents should preserve the original subtype for merged tool call events', () => {
+  const requestEvent = {
+    eventId: 1,
+    requestId: 'request-1',
+    subType: 'tool-call-started',
+    timestamp: '2026-05-12T10:00:00.000Z',
+    toolName: 'write_file',
+    type: 'tool-call-started',
+  }
+  const responseEvent = {
+    eventId: 2,
+    requestId: 'request-1',
+    subType: 'tool-call-finished',
+    timestamp: '2026-05-12T10:00:00.125Z',
+    toolCallResult: {
+      ok: true,
+    },
+    type: 'tool-call-finished',
+    value: 'abcdefghij',
+  }
+
+  const result = toPrettyEvents({
+    events: [requestEvent, responseEvent],
+    type: 'success',
+  })
+
+  expect(result).toEqual([
+    {
+      durationMs: 125,
+      ended: '2026-05-12T10:00:00.125Z',
+      eventEndId: 2,
+      eventId: 1,
+      method: 'POST',
+      size: 10,
+      started: '2026-05-12T10:00:00.000Z',
+      status: 200,
+      subType: 'tool-call-started',
+      timestamp: '2026-05-12T10:00:00.000Z',
+      type: 'tool-request-response',
     },
   ])
 })
@@ -94,11 +145,13 @@ test('toPrettyEvents should keep merged size at zero when response payload is mi
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response',
     type: 'ai-response',
   }
 
@@ -114,15 +167,18 @@ test('toPrettyEvents should keep unmatched and non ai response events', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const nonMatchingResponseEvent = {
     eventId: 2,
     requestId: 'request-2',
+    subType: 'ai-response',
     type: 'ai-response',
   }
   const regularEvent = {
     eventId: 3,
+    subType: 'request',
     type: 'request',
   }
 

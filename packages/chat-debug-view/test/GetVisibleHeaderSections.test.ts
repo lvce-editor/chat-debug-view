@@ -15,6 +15,7 @@ test('getVisibleHeaderSections should return visible sections in general respons
       Authorization: 'Bearer [redacted]',
     },
     method: 'POST',
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const
@@ -80,6 +81,7 @@ test('getVisibleHeaderSections should derive expansion state from collapsed sect
         nested: true,
       },
     },
+    subType: 'ai-request',
     type: 'ai-request',
   } as const
 
@@ -125,6 +127,7 @@ test('getVisibleHeaderSections should preserve unknown status codes without inve
       statusCode: 599,
     },
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
   } as const
 

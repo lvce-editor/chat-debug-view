@@ -7,12 +7,14 @@ test('getTimelineDurationSeconds should return the elapsed seconds between first
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-01-01T10:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-01-01T10:00:05.500Z',
       type: 'response',
     },
@@ -28,11 +30,13 @@ test('getTimelineDurationSeconds should return zero when no events have a valid 
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: 'invalid',
       type: 'response',
     },

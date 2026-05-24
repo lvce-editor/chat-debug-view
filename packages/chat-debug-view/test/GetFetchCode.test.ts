@@ -7,6 +7,7 @@ test('getFetchCode should omit options for a plain GET request', () => {
       eventId: 1,
       method: 'GET',
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
       url: 'https://example.com/chat',
@@ -27,6 +28,7 @@ test('getFetchCode should include method headers and body when present', () => {
       },
       method: 'POST',
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
       url: 'https://example.com/chat',
@@ -41,6 +43,7 @@ test('getFetchCode should return undefined when the event has no url', () => {
     getFetchCode({
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'tool-execution-finished',
       timestamp: '2026-03-08T00:00:02.000Z',
       toolName: 'apply_patch',
       type: 'tool-execution-finished',

@@ -4,6 +4,7 @@ import { getResponseData, getResponseEvent } from '../src/parts/GetResponseEvent
 test('getResponseData should return undefined when an event has no response payload', () => {
   const event = {
     eventId: 1,
+    subType: 'request',
     type: 'request',
   }
 
@@ -14,6 +15,7 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
   const responseEvent = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response-success',
     type: 'ai-response-success',
     value: {
       id: 'resp_1',
@@ -24,9 +26,11 @@ test('getResponseEvent should return responseEvent for merged ai request/respons
     requestEvent: {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     responseEvent,
+    subType: 'ai-request',
     type: 'ai-request',
   }
 
@@ -43,6 +47,7 @@ test('getResponseData should return endValue value for completed response events
       },
     },
     eventId: 1,
+    subType: 'ai-request',
     type: 'ai-request',
   }
 
@@ -54,6 +59,7 @@ test('getResponseData should return endValue value for completed response events
 test('getResponseEvent should fall back to the original event when response payload is missing', () => {
   const event = {
     eventId: 1,
+    subType: 'request',
     type: 'request',
   }
 

@@ -5,7 +5,7 @@ import { refreshEvents } from '../src/parts/LoadEvents/RefreshEvents/RefreshEven
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('refreshEvents should prefer the current state session id over the uri session id', async () => {
-  const events = [{ eventId: 1, type: 'request' }]
+  const events = [{ eventId: 1, subType: 'request', type: 'request' }]
   using mockRpc = ChatStorageWorker.registerMockRpc({
     'ChatStorage.listChatViewEvents': () => ({
       events,

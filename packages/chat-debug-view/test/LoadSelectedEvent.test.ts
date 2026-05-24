@@ -6,6 +6,7 @@ test('loadSelectedEvent should use chat storage worker', async () => {
   const event = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     type: 'request',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({
@@ -22,6 +23,7 @@ test('loadSelectedEvent should return the selected event details from the worker
   const event = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     type: 'request',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({

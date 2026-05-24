@@ -5,6 +5,7 @@ test('getResponsePayloadSize should return zero when response payload is missing
   expect(
     getResponsePayloadSize({
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(0)
@@ -14,6 +15,7 @@ test('getResponsePayloadSize should measure string payload bytes without json qu
   expect(
     getResponsePayloadSize({
       eventId: 1,
+      subType: 'ai-response',
       type: 'ai-response',
       value: 'abcdefghij',
     }),
@@ -24,6 +26,7 @@ test('getResponsePayloadSize should measure object payload bytes from value', ()
   expect(
     getResponsePayloadSize({
       eventId: 1,
+      subType: 'ai-response',
       type: 'ai-response',
       value: {
         ok: true,
@@ -40,6 +43,7 @@ test('getResponsePayloadSize should read endValue payloads', () => {
         value: 'abcdefghij',
       },
       eventId: 1,
+      subType: 'ai-request',
       type: 'ai-request',
     }),
   ).toBe(10)
@@ -52,6 +56,7 @@ test('getResponsePayloadSize should read response payloads', () => {
       response: {
         id: 'resp_1',
       },
+      subType: 'response',
       type: 'response',
     }),
   ).toBe(new TextEncoder().encode(JSON.stringify({ id: 'resp_1' })).length)

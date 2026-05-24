@@ -1,13 +1,14 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { createDetailTabs } from '../src/parts/CreateDetailTabs/CreateDetailTabs.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
-import * as GetDevtoolsDom from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
+import { getDevtoolsDom } from '../src/parts/GetDevtoolsDom/GetDevtoolsDom.ts'
 import { setSelectedEventPreview } from '../src/parts/SelectedEventPreview/SelectedEventPreview.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
 test('getDevtoolsDom should render empty state when there are no events', () => {
-  const dom = GetDevtoolsDom.getDevtoolsDom([], null, null, [], '', '', 'No events have been found') as readonly {
+  const dom = getDevtoolsDom([], null, null, [], '', '', 'No events have been found') as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -28,11 +29,12 @@ test('getDevtoolsDom should render selected details panel and close input', () =
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(
     events,
     events[0],
     0,
@@ -72,11 +74,12 @@ test('getDevtoolsDom should render accessible response, preview and timing tabs 
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly ariaSelected?: boolean
     readonly className?: string
     readonly name?: string
@@ -125,11 +128,12 @@ test('getDevtoolsDom should wrap header and body in a table container', () => {
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onPointerDown?: number
@@ -163,23 +167,26 @@ test('getDevtoolsDom should render a table scrollbar when only a visible slice i
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
     },
     {
       eventId: 3,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:02.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(
     events,
     null,
     null,
@@ -220,11 +227,12 @@ test('getDevtoolsDom should expose the events container application role', () =>
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
     readonly role?: string
     readonly tabIndex?: number
@@ -243,11 +251,12 @@ test('getDevtoolsDom should delegate row pointerdown from table body', () => {
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly className?: string
     readonly inputType?: string
     readonly name?: string
@@ -270,17 +279,19 @@ test('getDevtoolsDom should render timeline filters when timestamps are availabl
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:10.000Z',
       type: 'response',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '5', '7') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '5', '7') as readonly {
     readonly className?: string
     readonly name?: string
     readonly text?: string
@@ -299,11 +310,12 @@ test('getDevtoolsDom should keep the timeline outside the table-details split', 
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
     readonly onContextMenu?: number
@@ -330,10 +342,11 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
       mimeType: 'image/png',
       name: 'diagram.png',
       sessionId: 'session-1',
+      subType: 'chat-attachment-added',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'chat-attachment-added',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
   const selectedEvent = setSelectedEventPreview(
     {
       ...events[0],
@@ -344,7 +357,7 @@ test('getDevtoolsDom should render attachment image previews in the preview pane
       src: 'data:image/png;base64,preview',
     },
   )
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     selectedEvent,
     0,
@@ -390,11 +403,12 @@ test('getDevtoolsDom should expose none role on the devtools split container', (
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly className?: string
     readonly role?: string
   }[]
@@ -412,11 +426,12 @@ test('getDevtoolsDom should make the events pane full width when details are clo
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
   const splitPane = dom.find((node) => node.className === 'ChatDebugViewDevtoolsSplit')
@@ -433,11 +448,12 @@ test('getDevtoolsDom should keep details as a second split-pane child when selec
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -457,17 +473,19 @@ test('getDevtoolsDom should count direct table body children per event', () => {
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'response',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly childCount?: number
     readonly className?: string
   }[]
@@ -483,11 +501,12 @@ test('getDevtoolsDom should apply duration and status column classes to row cell
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:00.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly className?: string
   }[]
 
@@ -515,11 +534,12 @@ test('getDevtoolsDom should render computed duration without start and end times
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -548,24 +568,15 @@ test('getDevtoolsDom should hide disabled table columns in header and rows', () 
       eventId: 1,
       sessionId: 'session-1',
       started: '2026-03-08T00:00:01.000Z',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:01.000Z',
       type: 'request',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(
-    events,
-    null,
-    null,
-    events,
-    '',
-    '',
-    'No events have been found',
-    false,
-    '',
-    '',
-    createDetailTabs('preview'),
-    [TableColumn.Type, TableColumn.Status],
-  ) as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '', 'No events have been found', false, '', '', createDetailTabs('preview'), [
+    TableColumn.Type,
+    TableColumn.Status,
+  ]) as readonly {
     readonly className?: string
     readonly text?: string
   }[]
@@ -597,12 +608,13 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution-finished',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'read_file',
       type: 'tool-execution-finished',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -619,28 +631,29 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
   )
 })
 
-test('getDevtoolsDom should render tool execution row labels with tool name', () => {
+test('getDevtoolsDom should render tool execution row labels from the event subtype or type', () => {
   const events = [
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'getWorkspaceUri',
       type: 'tool-execution',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'tool-execution, getWorkspaceUri',
+      text: 'tool-execution',
     }),
   )
 })
 
-test('getDevtoolsDom should render tool execution row labels with top-level name', () => {
+test('getDevtoolsDom should fall back to the event type for tool execution row labels when subtype is missing', () => {
   const events = [
     {
       arguments: {
@@ -649,17 +662,18 @@ test('getDevtoolsDom should render tool execution row labels with top-level name
       eventId: 1,
       name: 'list_files',
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'list_files',
+      text: 'tool-execution',
     }),
   )
 })
@@ -670,12 +684,13 @@ test('getDevtoolsDom should render 400 status for errored events', () => {
       error: 'tool call failed',
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'tool-execution-finished',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'apply_patch',
       type: 'tool-execution-finished',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, null, null, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, null, null, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -696,12 +711,13 @@ test('getDevtoolsDom should show merged tool output in the selected event previe
       },
       sessionId: 'session-1',
       started: '2026-03-08T00:00:00.000Z',
+      subType: 'tool-execution',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'read_file',
       type: 'tool-execution',
     },
-  ]
-  const dom = GetDevtoolsDom.getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
+  ] satisfies readonly ChatViewEvent[]
+  const dom = getDevtoolsDom(events, events[0], 0, events, '', '') as readonly {
     readonly text?: string
   }[]
 
@@ -731,13 +747,14 @@ test('getDevtoolsDom should show only read_file content in the preview tab when 
         content: 'hello',
       },
       sessionId: 'session-1',
+      subType: 'tool-execution',
       time: '2026-04-02T07:26:35.168Z',
       timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     events[0],
     0,
@@ -790,12 +807,13 @@ test('getDevtoolsDom should omit getWorkspaceUri arguments from the preview tab'
         uri: 'file:///workspace',
       },
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     events[0],
     0,
@@ -844,13 +862,14 @@ test('getDevtoolsDom should render chat message preview text as raw wrapped text
     {
       eventId: 1,
       sessionId: 'session-1',
+      subType: 'chat-message-updated',
       text: 'first line\nsecond line',
       timestamp: '2026-04-10T10:00:00.000Z',
       type: 'chat-message-updated',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     events[0],
     0,
@@ -899,10 +918,11 @@ test('getDevtoolsDom should render invalid image fallback preview text without n
       mimeType: 'image/png',
       name: 'broken.png',
       sessionId: 'session-1',
+      subType: 'chat-attachment-added',
       timestamp: '2026-04-10T10:00:00.000Z',
       type: 'chat-attachment-added',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
   const selectedEvent = setSelectedEventPreview(
     {
       ...events[0],
@@ -910,7 +930,7 @@ test('getDevtoolsDom should render invalid image fallback preview text without n
     'image could not be loaded',
   )
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     selectedEvent,
     0,
@@ -953,12 +973,13 @@ test('getDevtoolsDom should render simplified tool json in the payload tab', () 
         ok: true,
       },
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-10T10:00:00.000Z',
       type: 'tool-execution',
     },
-  ]
+  ] satisfies readonly ChatViewEvent[]
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     events,
     events[0],
     0,
@@ -1007,12 +1028,14 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
       },
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     requestId: 'request-1',
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
       value: {
         id: 'resp_1',
@@ -1020,11 +1043,12 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
     },
     sessionId: 'session-1',
     started: '2026-04-19T12:00:00.000Z',
+    subType: 'ai-request',
     timestamp: '2026-04-19T12:00:00.250Z',
     type: 'ai-request',
-  }
+  } satisfies ChatViewEvent
 
-  const dom = GetDevtoolsDom.getDevtoolsDom(
+  const dom = getDevtoolsDom(
     [selectedEvent],
     selectedEvent,
     0,

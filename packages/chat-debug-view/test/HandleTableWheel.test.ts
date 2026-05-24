@@ -1,11 +1,13 @@
 import { expect, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { handleTableWheel } from '../src/parts/HandleTableWheel/HandleTableWheel.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const createEvents = (count: number): readonly { readonly eventId: number; readonly type: string }[] => {
+const createEvents = (count: number): readonly ChatViewEvent[] => {
   return Array.from({ length: count }, (_, index) => {
     return {
       eventId: index + 1,
+      subType: index % 2 === 0 ? 'request' : 'response',
       type: index % 2 === 0 ? 'request' : 'response',
     }
   })

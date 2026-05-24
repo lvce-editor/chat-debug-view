@@ -10,12 +10,14 @@ test('handleTimelinePointerUp should commit the normalized drag range from brows
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'response',
         timestamp: '2026-03-08T00:00:10.000Z',
         type: 'response',
       },
@@ -43,12 +45,14 @@ test('handleTimelinePointerUp should commit a resized left edge while keeping th
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'response',
         timestamp: '2026-03-08T00:00:10.000Z',
         type: 'response',
       },

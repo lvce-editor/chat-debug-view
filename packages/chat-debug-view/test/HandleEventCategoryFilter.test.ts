@@ -41,6 +41,7 @@ test('handleEventCategoryFilter should preserve selected event when category fil
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'tool-execution-started',
         timestamp: '2026-03-08T00:00:00.000Z',
         toolName: 'read_file',
         type: 'tool-execution-started',
@@ -49,6 +50,7 @@ test('handleEventCategoryFilter should preserve selected event when category fil
         eventId: 2,
         path: '/chat',
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'request',
       },

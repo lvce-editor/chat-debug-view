@@ -21,6 +21,7 @@ test('shouldHavePayload should return state when payload matches expected subset
     result: {
       ok: true,
     },
+    subType: '',
     type: 'tool-execution',
   }
   const state = {
@@ -61,8 +62,10 @@ test('shouldHavePayload should match merged ai request payloads', async () => {
         model: 'gpt-5.4',
       },
       eventId: 2,
+      subType: 'ai-request',
       type: 'ai-request',
     },
+    subType: '',
     type: 'ai-request',
   }
   const state = {
@@ -100,6 +103,7 @@ test('shouldHavePayload should throw when payload tab is not selected', async ()
     },
     eventId: 1,
     name: 'read_file',
+    subType: '',
     type: 'tool-execution',
   }
   const state = {
@@ -120,6 +124,7 @@ test('shouldHavePayload should throw when payload property is missing', async ()
     },
     eventId: 1,
     name: 'read_file',
+    subType: '',
     type: 'tool-execution',
   }
   const state = {
@@ -152,6 +157,7 @@ test('shouldHavePayload should throw when payload value does not match', async (
     },
     eventId: 1,
     name: 'read_file',
+    subType: '',
     type: 'tool-execution',
   }
   const state = {

@@ -9,6 +9,7 @@ test('createDetailTabs should add a headers tab for ai-request events with heade
       Authorization: 'Bearer [redacted]',
       'Content-Type': 'application/json',
     },
+    subType: 'ai-request',
     type: 'ai-request',
   }
 
@@ -44,6 +45,7 @@ test('createDetailTabs should add a headers tab for ai-request events with respo
       },
     },
     eventId: 1,
+    subType: 'ai-request',
     type: 'ai-request',
   }
 
@@ -74,6 +76,7 @@ test('createDetailTabs should add a headers tab for ai-request events with respo
 test('createDetailTabs should fall back to response when headers are unavailable', () => {
   const event = {
     eventId: 1,
+    subType: 'request',
     type: 'request',
   }
 

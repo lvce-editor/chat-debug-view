@@ -88,6 +88,7 @@ test('getPreviewEventNodes should render invalid image fallback text without lin
 test('getPreviewEventNodes should render chat-message-updated preview text without line numbers', () => {
   const result = getPreviewEventNodes('first line\nsecond line', {
     eventId: 1,
+    subType: 'chat-message-updated',
     text: 'first line\nsecond line',
     type: 'chat-message-updated',
   }) as readonly {

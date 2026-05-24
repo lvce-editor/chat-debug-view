@@ -13,6 +13,7 @@ test('handleTableRowCopy should write the clicked event as json to the clipboard
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'request',
       },
@@ -20,6 +21,7 @@ test('handleTableRowCopy should write the clicked event as json to the clipboard
         error: 'tool call failed',
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'tool-execution-finished',
         timestamp: '2026-03-08T00:00:02.000Z',
         toolName: 'apply_patch',
         type: 'tool-execution-finished',
@@ -39,6 +41,7 @@ test('handleTableRowCopy should write the clicked event as json to the clipboard
           error: 'tool call failed',
           eventId: 2,
           sessionId: 'session-1',
+          subType: 'tool-execution-finished',
           timestamp: '2026-03-08T00:00:02.000Z',
           toolName: 'apply_patch',
           type: 'tool-execution-finished',
@@ -60,6 +63,7 @@ test('handleTableRowCopy should ignore invalid row indices', async () => {
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'request',
       },

@@ -6,12 +6,14 @@ test('createDevtoolsRows should derive row state for a virtualized slice', () =>
     {
       eventId: 3,
       sessionId: 'session-1',
+      subType: 'request',
       timestamp: '2026-03-08T00:00:02.000Z',
       type: 'request',
     },
     {
       eventId: 4,
       sessionId: 'session-1',
+      subType: 'response',
       timestamp: '2026-03-08T00:00:03.000Z',
       type: 'response',
     },
@@ -49,6 +51,7 @@ test('createDevtoolsRows should mark error rows from event status', () => {
         error: 'Invalid argument: uri must be an absolute URI.',
       },
       sessionId: 'session-1',
+      subType: 'tool-execution',
       timestamp: '2026-04-02T07:26:35.172Z',
       type: 'tool-execution',
     },

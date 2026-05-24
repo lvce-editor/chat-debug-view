@@ -10,6 +10,7 @@ test('focusIndex should keep the same state when there are no visible events', a
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'unused',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   })
@@ -26,6 +27,7 @@ test('focusIndex should select the requested visible event', async () => {
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-2',
       eventId: 2,
+      subType: 'response',
       type: 'response',
     }),
   })
@@ -35,11 +37,13 @@ test('focusIndex should select the requested visible event', async () => {
     events: [
       {
         eventId: 1,
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
+        subType: 'response',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'response',
       },
@@ -55,6 +59,7 @@ test('focusIndex should select the requested visible event', async () => {
   expect(result.selectedEvent).toEqual({
     detail: 'row-2',
     eventId: 2,
+    subType: 'response',
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   })

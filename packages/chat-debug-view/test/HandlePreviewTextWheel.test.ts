@@ -11,6 +11,7 @@ const createPreviewState = (): ReturnType<typeof createDefaultState> => {
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-05-04T10:00:00.000Z',
         type: 'request',
       },

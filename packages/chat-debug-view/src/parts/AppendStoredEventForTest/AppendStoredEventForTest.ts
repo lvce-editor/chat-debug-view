@@ -3,6 +3,9 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 import * as ChatStorageWorkerClient from '../ChatStorageWorkerClient/ChatStorageWorkerClient.ts'
 
 export const appendStoredEventForTest = async (state: ChatDebugViewState, event: ChatViewEvent): Promise<ChatDebugViewState> => {
-  await ChatStorageWorkerClient.appendEvent(event)
+  await ChatStorageWorkerClient.appendEvent({
+    ...event,
+    subType: event.subType || event.type,
+  })
   return state
 }

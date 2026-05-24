@@ -7,18 +7,22 @@ test('mergeSelectedEventDetails should prefer the loaded response event for ai r
     requestEvent: {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
     },
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const selectedEventDetails = {
     eventId: 2,
     requestId: 'request-1',
+    subType: 'ai-response-success',
     type: 'ai-response-success',
     value: {
       id: 'resp_1',
@@ -36,6 +40,7 @@ test('mergeSelectedEventDetails should preserve selected event fields when loade
     headers: {
       Authorization: 'Bearer [redacted]',
     },
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const selectedEventDetails = {
@@ -43,6 +48,7 @@ test('mergeSelectedEventDetails should preserve selected event fields when loade
       model: 'test',
     },
     eventId: 1,
+    subType: 'ai-request',
     type: 'ai-request',
   }
 
@@ -56,6 +62,7 @@ test('mergeSelectedEventDetails should preserve selected event fields when loade
     headers: {
       Authorization: 'Bearer [redacted]',
     },
+    subType: 'ai-request',
     type: 'ai-request',
   })
 })

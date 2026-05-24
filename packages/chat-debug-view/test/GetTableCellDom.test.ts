@@ -8,6 +8,7 @@ test('getTableCellDom should render a method cell', () => {
     eventId: 1,
     name: 'read_file',
     sessionId: 'session-1',
+    subType: 'tool-execution',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }
@@ -29,6 +30,7 @@ test('getTableCellDom should render a size cell', () => {
     eventId: 1,
     sessionId: 'session-1',
     size: 1536,
+    subType: 'tool-execution',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }
@@ -49,6 +51,7 @@ test('getTableCellDom should return an empty array for unknown columns', () => {
   const event = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'tool-execution',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }

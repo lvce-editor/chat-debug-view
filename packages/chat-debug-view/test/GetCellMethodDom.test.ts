@@ -7,6 +7,7 @@ test('getCellMethodDom should render the method cell', () => {
     eventId: 1,
     name: 'read_file',
     sessionId: 'session-1',
+    subType: 'tool-execution',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }

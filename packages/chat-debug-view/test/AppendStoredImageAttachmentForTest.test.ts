@@ -45,6 +45,7 @@ test('appendStoredImageAttachmentForTest should append a blob-backed attachment 
       readonly mimeType: string
       readonly name: string
       readonly sessionId: string
+      readonly subType: string
       readonly timestamp: string
       readonly type: string
     },
@@ -55,6 +56,7 @@ test('appendStoredImageAttachmentForTest should append a blob-backed attachment 
   expect(event.mimeType).toBe('image/svg+xml')
   expect(event.name).toBe('diagram.svg')
   expect(event.sessionId).toBe('session-1')
+  expect(event.subType).toBe('chat-attachment-added')
   expect(event.timestamp).toBe('2026-04-10T11:35:00.000Z')
   expect(event.type).toBe('chat-attachment-added')
   expect(event.blob).toBeInstanceOf(Blob)

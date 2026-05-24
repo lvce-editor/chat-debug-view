@@ -1,6 +1,9 @@
-import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+type ToolNameEvent = {
+  readonly [key: string]: unknown
+  readonly type: string
+}
 
-export const getToolName = (event: ChatViewEvent): string | undefined => {
+export const getToolName = (event: ToolNameEvent): string | undefined => {
   if (typeof event.toolName === 'string' && event.toolName) {
     return event.toolName
   }

@@ -8,12 +8,14 @@ const events: readonly ChatViewEvent[] = [
     eventId: 1,
     name: 'filter',
     sessionId: 'session-1',
+    subType: 'handle-input',
     timestamp: '2026-01-01T10:00:00.000Z',
     type: 'handle-input',
   },
   {
     eventId: 2,
     sessionId: 'session-1',
+    subType: 'handle-submit',
     timestamp: '2026-01-01T10:00:30.000Z',
     type: 'handle-submit',
     value: 'hello',
@@ -22,6 +24,7 @@ const events: readonly ChatViewEvent[] = [
     eventId: 3,
     path: '/chat',
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-01-01T10:01:00.000Z',
     type: 'request',
   },
@@ -31,6 +34,7 @@ const events: readonly ChatViewEvent[] = [
     },
     eventId: 4,
     sessionId: 'session-1',
+    subType: 'tool-execution-started',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
@@ -41,6 +45,7 @@ const events: readonly ChatViewEvent[] = [
       contents: 'hello',
     },
     sessionId: 'session-1',
+    subType: 'tool-execution-finished',
     timestamp: '2026-01-01T10:01:45.000Z',
     toolName: 'read_file',
     type: 'tool-execution-finished',
@@ -48,6 +53,7 @@ const events: readonly ChatViewEvent[] = [
   {
     eventId: 5,
     sessionId: 'session-1',
+    subType: 'sse-response-part',
     timestamp: '2026-01-01T10:02:00.000Z',
     type: 'sse-response-part',
     value: {
@@ -57,6 +63,7 @@ const events: readonly ChatViewEvent[] = [
   {
     eventId: 6,
     sessionId: 'session-1',
+    subType: 'event-stream-finished',
     timestamp: '2026-01-01T10:03:00.000Z',
     type: 'event-stream-finished',
   },
@@ -131,6 +138,7 @@ test('getFilteredEvents should include merged ai request response events for net
     eventId: 7,
     requestId: 'request-7',
     sessionId: 'session-1',
+    subType: 'ai-request',
     timestamp: '2026-01-01T10:04:00.000Z',
     type: 'ai-request',
   }
@@ -141,6 +149,7 @@ test('getFilteredEvents should include merged ai request response events for net
       id: 'resp_7',
     },
     sessionId: 'session-1',
+    subType: 'ai-response-success',
     timestamp: '2026-01-01T10:04:01.250Z',
     type: 'ai-response-success',
   }
@@ -160,6 +169,7 @@ test('getFilteredEvents should include merged ai request response events for net
       sessionId: 'session-1',
       size: 15,
       started: '2026-01-01T10:04:00.000Z',
+      subType: 'ai-request',
       timestamp: '2026-01-01T10:04:01.250Z',
       type: 'ai-request',
     },
@@ -188,6 +198,7 @@ test('getFilteredEvents should include tool-request-response events for tools ca
     size: 0,
     started: '2026-01-01T10:05:00.000Z',
     status: 200,
+    subType: 'write_file',
     timestamp: '2026-01-01T10:05:00.000Z',
     type: 'tool-request-response',
   }
@@ -202,6 +213,7 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
     eventId: 7,
     requestId: 'request-7',
     sessionId: 'session-1',
+    subType: 'ai-request',
     timestamp: '2026-01-01T10:04:00.000Z',
     type: 'ai-request',
   }
@@ -212,6 +224,7 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
       id: 'resp_7',
     },
     sessionId: 'session-1',
+    subType: 'ai-response-success',
     timestamp: '2026-01-01T10:04:01.250Z',
     type: 'ai-response-success',
   }
@@ -231,6 +244,7 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
       sessionId: 'session-1',
       size: 15,
       started: '2026-01-01T10:04:00.000Z',
+      subType: 'ai-request',
       timestamp: '2026-01-01T10:04:01.250Z',
       type: 'ai-request',
     },

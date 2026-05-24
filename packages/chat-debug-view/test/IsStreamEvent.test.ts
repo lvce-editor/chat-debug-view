@@ -4,6 +4,7 @@ import * as IsStreamEvent from '../src/parts/IsStreamEvent/IsStreamEvent.ts'
 test('isStreamEvent should return true for sse response part events', () => {
   const result = IsStreamEvent.isStreamEvent({
     eventId: 1,
+    subType: 'sse-response-part',
     type: 'sse-response-part',
   })
 
@@ -13,6 +14,7 @@ test('isStreamEvent should return true for sse response part events', () => {
 test('isStreamEvent should return true for event stream finished events', () => {
   const result = IsStreamEvent.isStreamEvent({
     eventId: 1,
+    subType: 'event-stream-finished',
     type: 'event-stream-finished',
   })
 
@@ -22,6 +24,7 @@ test('isStreamEvent should return true for event stream finished events', () => 
 test('isStreamEvent should return false for non-stream events', () => {
   const result = IsStreamEvent.isStreamEvent({
     eventId: 1,
+    subType: 'request',
     type: 'request',
   })
 

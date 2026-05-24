@@ -8,6 +8,7 @@ test('getCellStatusDom should render the error status cell', () => {
     eventId: 1,
     name: 'list_files',
     sessionId: 'session-1',
+    subType: 'tool-execution',
     timestamp: '2026-04-02T07:26:35.172Z',
     type: 'tool-execution',
   }

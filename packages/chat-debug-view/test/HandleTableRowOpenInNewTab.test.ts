@@ -13,6 +13,7 @@ test('handleTableRowOpenInNewTab should open the clicked event as json data uri'
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'request',
       },
@@ -20,6 +21,7 @@ test('handleTableRowOpenInNewTab should open the clicked event as json data uri'
         error: 'tool call failed',
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'tool-execution-finished',
         timestamp: '2026-03-08T00:00:02.000Z',
         toolName: 'apply_patch',
         type: 'tool-execution-finished',
@@ -40,6 +42,7 @@ test('handleTableRowOpenInNewTab should open the clicked event as json data uri'
             error: 'tool call failed',
             eventId: 2,
             sessionId: 'session-1',
+            subType: 'tool-execution-finished',
             timestamp: '2026-03-08T00:00:02.000Z',
             toolName: 'apply_patch',
             type: 'tool-execution-finished',
@@ -62,6 +65,7 @@ test('handleTableRowOpenInNewTab should ignore invalid row indices', async () =>
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:01.000Z',
         type: 'request',
       },

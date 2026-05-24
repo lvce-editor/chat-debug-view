@@ -1,6 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import { mergedEventType } from '../EventTypes/EventTypes.ts'
 import { getEndedTimestamp } from '../GetEndedTimestamp/GetEndedTimestamp.ts'
+import { getEventSubType } from '../GetEventSubType/GetEventSubType.ts'
 import { getStartedTimestamp } from '../GetStartedTimestamp/GetStartedTimestamp.ts'
 
 export const mergeToolExecutionEvents = (
@@ -17,6 +18,7 @@ export const mergeToolExecutionEvents = (
     ...(ended === undefined ? {} : { ended }),
     eventId,
     ...(started === undefined ? {} : { started }),
+    subType: getEventSubType(startedEvent, type, true),
     type,
   }
   return mergedEvent

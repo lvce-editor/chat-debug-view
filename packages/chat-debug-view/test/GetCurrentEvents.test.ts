@@ -8,12 +8,14 @@ test('getCurrentEvents should apply event filters and timeline range', () => {
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
+    subType: 'response',
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
@@ -34,12 +36,14 @@ test('getCurrentEvents should sort by selected table column', () => {
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
+    subType: 'response',
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
@@ -60,6 +64,7 @@ test('getCurrentEvents should sort by size numerically', () => {
     eventId: 2,
     sessionId: 'session-1',
     size: 1024,
+    subType: 'response',
     timestamp: '2026-03-08T00:00:01.000Z',
     type: 'response',
   }
@@ -67,6 +72,7 @@ test('getCurrentEvents should sort by size numerically', () => {
     eventId: 1,
     sessionId: 'session-1',
     size: 2,
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }

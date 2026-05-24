@@ -10,12 +10,14 @@ test('handleTimelinePointerDown should start a drag selection from the browser c
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'response',
         timestamp: '2026-03-08T00:00:10.000Z',
         type: 'response',
       },
@@ -38,12 +40,14 @@ test('handleTimelinePointerDown should start resizing from the current end when 
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'response',
         timestamp: '2026-03-08T00:00:10.000Z',
         type: 'response',
       },
@@ -68,12 +72,14 @@ test('handleTimelinePointerDown should start resizing from the current start whe
       {
         eventId: 1,
         sessionId: 'session-1',
+        subType: 'request',
         timestamp: '2026-03-08T00:00:00.000Z',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
+        subType: 'response',
         timestamp: '2026-03-08T00:00:10.000Z',
         type: 'response',
       },

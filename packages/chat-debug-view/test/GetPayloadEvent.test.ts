@@ -17,6 +17,7 @@ test('getPayloadEvent should return only the arguments object for list_files too
       ],
       ignored: false,
     },
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -34,6 +35,7 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
     },
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const event = {
@@ -43,12 +45,14 @@ test('getPayloadEvent should return requestEvent for merged ai request/response 
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
       value: {
         id: 'resp_1',
       },
     },
     started: '2026-04-19T12:00:00.000Z',
+    subType: 'ai-request',
     type: 'ai-request',
   }
 

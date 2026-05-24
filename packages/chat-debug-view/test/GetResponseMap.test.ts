@@ -6,11 +6,13 @@ test('getResponseMap should return ai responses by request id', () => {
     {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-response',
       type: 'ai-response',
     },
     {
       eventId: 2,
       requestId: 'request-2',
+      subType: 'ai-response',
       type: 'ai-response',
     },
   ]
@@ -27,21 +29,25 @@ test('getResponseMap should ignore events that are not ai responses with string 
   const responseEvent = {
     eventId: 4,
     requestId: 'request-2',
+    subType: 'ai-response',
     type: 'ai-response',
   }
   const events = [
     {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     {
       eventId: 2,
       requestId: 2,
+      subType: 'ai-response',
       type: 'ai-response',
     },
     {
       eventId: 3,
+      subType: 'ai-response',
       type: 'ai-response',
     },
     responseEvent,
