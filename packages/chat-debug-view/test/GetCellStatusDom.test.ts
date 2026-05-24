@@ -9,6 +9,7 @@ test('getCellStatusDom should render the error status cell', () => {
     name: 'list_files',
     sessionId: 'session-1',
     timestamp: '2026-04-02T07:26:35.172Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 

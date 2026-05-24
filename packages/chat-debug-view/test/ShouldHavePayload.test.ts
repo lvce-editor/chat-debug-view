@@ -62,6 +62,7 @@ test('shouldHavePayload should match merged ai request payloads', async () => {
         model: 'gpt-5.4',
       },
       eventId: 2,
+      subType: 'ai-request',
       type: 'ai-request',
     },
     subType: '',

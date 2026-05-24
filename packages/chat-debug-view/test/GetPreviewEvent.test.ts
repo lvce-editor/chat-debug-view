@@ -8,6 +8,7 @@ test('getPreviewEvent should return the extracted text for sse-response-complete
     eventId: 8,
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'sse-response-completed',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -40,6 +41,7 @@ test('getPreviewEvent should return the extracted text for ai-response events wh
     timestamp: '2026-05-06T08:09:12.229Z',
     toolCalls: [],
     turnId: 'turn-1',
+    subType: 'ai-response',
     type: 'ai-response',
     value: {
       id: 'resp_123',
@@ -108,6 +110,7 @@ test('getPreviewEvent should return response text for ai-request events with end
     requestId: 'request-2',
     sessionId: 'session-1',
     timestamp: '2026-05-06T08:09:12.229Z',
+    subType: 'ai-request',
     type: 'ai-request',
     url: '/chat',
   }
@@ -141,6 +144,7 @@ test('getPreviewEvent should return response.output for sse-response-completed e
     eventId: 9,
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'sse-response-completed',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -173,6 +177,7 @@ test('getPreviewEvent should return only the message text for chat-message-updat
         status: 'success',
       },
     ],
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   }
 
@@ -192,6 +197,7 @@ test('getPreviewEvent should return only the nested message text for chat-messag
     },
     sessionId: 'ff68dd2f-6053-453f-95a9-de785f33f67c',
     timestamp: '2026-04-09T12:05:40.910Z',
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   }
 
@@ -213,6 +219,7 @@ test('getPreviewEvent should return write_file content for tool execution events
     },
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -235,6 +242,7 @@ test('getPreviewEvent should return read_file result text for tool execution eve
     result: 'line 1\nline 2',
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -257,6 +265,7 @@ test('getPreviewEvent should return read_file result content for structured tool
     ],
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -288,6 +297,7 @@ test('getPreviewEvent should return only result.entries for list_files tool exec
     },
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -311,6 +321,7 @@ test('getPreviewEvent should return the full failed result for list_files tool e
     },
     sessionId: 'session-1',
     timestamp: '2026-04-10T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -330,6 +341,7 @@ test('getPreviewEvent should prefer prepared selected event preview metadata', (
       eventId: 4,
       mimeType: 'image/png',
       name: 'diagram.png',
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     },
     {

@@ -62,6 +62,7 @@ test('diff should return RenderIncremental and RenderCss when selectedEvent chan
     ...oldState,
     selectedEvent: {
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
   }

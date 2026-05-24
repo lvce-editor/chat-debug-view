@@ -9,12 +9,14 @@ test('handleTableHeaderClick should sort current events ascending and descending
     eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   }
   const requestEvent = {
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const state = {
@@ -48,6 +50,7 @@ test('handleTableHeaderClick should sort size ascending and descending when clic
     sessionId: 'session-1',
     size: 2048,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   }
   const smallerEvent = {
@@ -55,6 +58,7 @@ test('handleTableHeaderClick should sort size ascending and descending when clic
     sessionId: 'session-1',
     size: 2,
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const state = {

@@ -10,6 +10,7 @@ test('focusNext should select the first row when nothing is selected', async () 
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-1',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   })
@@ -20,11 +21,13 @@ test('focusNext should select the first row when nothing is selected', async () 
       {
         eventId: 1,
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
     ],
@@ -39,6 +42,7 @@ test('focusNext should select the first row when nothing is selected', async () 
     detail: 'row-1',
     eventId: 1,
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
@@ -49,6 +53,7 @@ test('focusNext should stop at the last row', async () => {
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-2',
       eventId: 2,
+      subType: 'response',
       type: 'response',
     }),
   })
@@ -58,11 +63,13 @@ test('focusNext should stop at the last row', async () => {
       {
         eventId: 1,
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
     ],

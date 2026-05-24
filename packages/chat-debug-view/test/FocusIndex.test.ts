@@ -10,6 +10,7 @@ test('focusIndex should keep the same state when there are no visible events', a
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'unused',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   })
@@ -26,6 +27,7 @@ test('focusIndex should select the requested visible event', async () => {
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'row-2',
       eventId: 2,
+      subType: 'response',
       type: 'response',
     }),
   })
@@ -36,11 +38,13 @@ test('focusIndex should select the requested visible event', async () => {
       {
         eventId: 1,
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
     ],
@@ -56,6 +60,7 @@ test('focusIndex should select the requested visible event', async () => {
     detail: 'row-2',
     eventId: 2,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])

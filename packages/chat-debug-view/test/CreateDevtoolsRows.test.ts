@@ -7,12 +7,14 @@ test('createDevtoolsRows should derive row state for a virtualized slice', () =>
       eventId: 3,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:02.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 4,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:03.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -50,6 +52,7 @@ test('createDevtoolsRows should mark error rows from event status', () => {
       },
       sessionId: 'session-1',
       timestamp: '2026-04-02T07:26:35.172Z',
+      subType: 'tool-execution',
       type: 'tool-execution',
     },
   ]

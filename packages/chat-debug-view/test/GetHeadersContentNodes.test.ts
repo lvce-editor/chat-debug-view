@@ -26,6 +26,7 @@ test('getHeadersContentNodes should render general, response, and request header
       'Content-Type': 'application/json',
     },
     method: 'POST',
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const
@@ -239,6 +240,7 @@ test('getHeadersContentNodes should stringify structured header values', () => {
         nested: true,
       },
     },
+    subType: 'ai-request',
     type: 'ai-request',
   } as const
 
@@ -257,6 +259,7 @@ test('getHeadersContentNodes should render response headers when request headers
       statusCode: 204,
     },
     eventId: 1,
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const
@@ -286,6 +289,7 @@ test('getHeadersContentNodes should preserve unknown status codes without invent
       statusCode: 599,
     },
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
   } as const
 
@@ -309,6 +313,7 @@ test('getHeadersContentNodes should omit table rows for collapsed sections', () 
       Authorization: 'Bearer [redacted]',
     },
     method: 'POST',
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const

@@ -23,6 +23,7 @@ test('getDetailsLineNumberWidth should size preview line numbers from the curren
     eventId: 1,
     name: 'read_file',
     result: Array.from({ length: 100 }, (_, index) => `line ${index + 1}`).join('\n'),
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
   const state = {
@@ -43,8 +44,10 @@ test('getDetailsLineNumberWidth should size payload line numbers from pretty-pri
     requestEvent: {
       arguments: createObjectWithKeys(100),
       eventId: 2,
+      subType: 'request',
       type: 'request',
     },
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
   const state = {
@@ -63,6 +66,7 @@ test('getDetailsLineNumberWidth should include extra gutter buffer for smaller l
     eventId: 1,
     name: 'read_file',
     result: Array.from({ length: 14 }, (_, index) => `line ${index + 1}`).join('\n'),
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
   const state = {
@@ -80,6 +84,7 @@ test('getDetailsLineNumberWidth should return 0 when preview line numbers are in
   const selectedEvent = {
     eventId: 1,
     text: 'first line\nsecond line',
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   }
   const state = {
@@ -96,6 +101,7 @@ test('getDetailsLineNumberWidth should return 0 when preview line numbers are in
 test('getDetailsLineNumberWidth should return 0 for the tokens tab', () => {
   const selectedEvent = {
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
     value: {
       usage: {

@@ -37,6 +37,7 @@ test('getRowCellNodes should render visible columns in order using the event sub
     started: '2026-03-08T00:00:01.000Z',
     timestamp: '2026-03-08T00:00:01.000Z',
     toolName: 'get_workspace_uri',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -77,6 +78,7 @@ test('getRowCellNodes should apply error status styling and ignore unknown colum
     name: 'list_files',
     sessionId: 'session-1',
     timestamp: '2026-04-02T07:26:35.172Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -98,6 +100,7 @@ test('getRowCellNodes should fall back to the event type in the type column when
     name: 'list_files',
     sessionId: 'session-1',
     timestamp: '2026-04-02T07:26:35.172Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -119,6 +122,7 @@ test('getRowCellNodes should render the mapped http-like method for file operati
     name: 'read_file',
     sessionId: 'session-1',
     timestamp: '2026-04-02T07:26:35.172Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 

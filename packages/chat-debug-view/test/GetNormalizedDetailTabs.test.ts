@@ -13,6 +13,7 @@ test('getNormalizedDetailTabs should return the existing tabs when there is no s
 test('getNormalizedDetailTabs should rebuild the tabs for the selected event', () => {
   const selectedEvent = {
     eventId: 1,
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
   const detailTabs = createDetailTabs('payload')

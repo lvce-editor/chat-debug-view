@@ -14,6 +14,7 @@ test('handlePreviewTextPointerDown should update the preview cursor for numbered
       result: 'first line\nsecond line',
       sessionId: 'session-1',
       timestamp: '2026-04-13T10:00:00.000Z',
+      subType: 'tool-execution',
       type: 'tool-execution',
     },
   }
@@ -32,6 +33,7 @@ test('handlePreviewTextPointerDown should ignore preview text without line numbe
       sessionId: 'session-1',
       text: 'first line\nsecond line',
       timestamp: '2026-04-13T10:00:00.000Z',
+      subType: 'chat-message-updated',
       type: 'chat-message-updated',
     },
   }
@@ -55,6 +57,7 @@ test('handlePreviewTextPointerDown should account for preview scroll offset', ()
       result: 'first line\nsecond line\nthird line\nfourth line\nfifth line\nsixth line\nseventh line\neighth line',
       sessionId: 'session-1',
       timestamp: '2026-04-13T10:00:00.000Z',
+      subType: 'tool-execution',
       type: 'tool-execution',
     },
     useDevtoolsLayout: true,

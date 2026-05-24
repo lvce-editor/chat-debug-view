@@ -4,6 +4,7 @@ import { getTokenUsageDetails } from '../src/parts/GetTokenUsageDetails/GetToken
 test('getTokenUsageDetails should extract token counts from ai-response event values', () => {
   const event = {
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
     value: {
       usage: {
@@ -30,6 +31,7 @@ test('getTokenUsageDetails should extract token counts from merged response even
     eventId: 1,
     responseEvent: {
       eventId: 2,
+      subType: 'ai-response',
       type: 'ai-response',
       value: {
         usage: {
@@ -38,6 +40,7 @@ test('getTokenUsageDetails should extract token counts from merged response even
         },
       },
     },
+    subType: 'request',
     type: 'request',
   }
 
@@ -52,6 +55,7 @@ test('getTokenUsageDetails should extract token counts from merged response even
 test('getTokenUsageDetails should omit properties when token counts are missing', () => {
   const event = {
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
     value: {
       usage: {
@@ -70,6 +74,7 @@ test('getTokenUsageDetails should omit properties when token counts are missing'
 test('getTokenUsageDetails should return undefined when token usage is unavailable', () => {
   const event = {
     eventId: 1,
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   }
 

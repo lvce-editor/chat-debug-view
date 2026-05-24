@@ -6,6 +6,7 @@ test('getAttachmentImagePreviewAltText should return the attachment name', () =>
     getAttachmentImagePreviewAltText({
       eventId: 1,
       name: 'photo.png',
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBe('photo.png')
@@ -15,6 +16,7 @@ test('getAttachmentImagePreviewAltText should fall back when the attachment name
   expect(
     getAttachmentImagePreviewAltText({
       eventId: 1,
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBe('image preview')

@@ -295,12 +295,14 @@ test('getChatDebugViewDom should expose timeline and split as direct devtools ch
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -336,6 +338,7 @@ test('getChatDebugViewDom should render selected details panel in devtools layou
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
   ]
@@ -386,12 +389,14 @@ test('getChatDebugViewDom should not stringify unselected events in devtools lay
   const circularEvent: {
     readonly eventId: number
     readonly sessionId: string
+    readonly subType: string
     readonly timestamp: string
     readonly type: string
     self?: unknown
   } = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
@@ -424,12 +429,14 @@ test('getChatDebugViewDom should not render event count message', () => {
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:01.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -466,12 +473,14 @@ test('getChatDebugViewDom should render table summary status in devtools layout'
       sessionId: 'session-1',
       started: '2026-03-08T00:00:00.000Z',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:01.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -526,6 +535,7 @@ test('getChatDebugViewDom should render tool execution type with tool name in le
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
       toolName: 'getWorkspaceUri',
+      subType: 'tool-execution',
       type: 'tool-execution',
     },
   ]

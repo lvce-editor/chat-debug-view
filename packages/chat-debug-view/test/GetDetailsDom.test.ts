@@ -153,6 +153,7 @@ test('getDetailsDom should render timing panel content when timing tab is select
     ended: '2026-03-08T00:00:01.250Z',
     eventId: 1,
     started: '2026-03-08T00:00:01.000Z',
+    subType: 'request',
     type: 'request',
   } as const
 
@@ -510,6 +511,7 @@ test('getDetailsDom should hide the timing tab when the selected event has no ti
     eventId: 1,
     text: 'hello',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   } as const
 

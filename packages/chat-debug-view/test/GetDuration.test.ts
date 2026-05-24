@@ -7,6 +7,7 @@ test('getDuration should return explicit finite durationMs', () => {
     eventId: 1,
     started: '2026-01-01T00:00:00.000Z',
     timestamp: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -18,6 +19,7 @@ test('getDuration should calculate duration from derived start and end times', (
     ended: '2026-01-01T00:00:01.000Z',
     eventId: 1,
     started: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -29,6 +31,7 @@ test('getDuration should return zero for invalid times', () => {
     endTime: 'not-a-date',
     eventId: 1,
     startTime: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 

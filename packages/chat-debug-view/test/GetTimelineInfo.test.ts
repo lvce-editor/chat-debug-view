@@ -7,24 +7,28 @@ const events: readonly ChatViewEvent[] = [
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
+    subType: 'request',
     type: 'request',
   },
   {
     eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:05.500Z',
+    subType: 'response',
     type: 'response',
   },
   {
     eventId: 3,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:06.500Z',
+    subType: 'tool-execution-started',
     type: 'tool-execution-started',
   },
   {
     eventId: 4,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:10.000Z',
+    subType: 'event-stream-finished',
     type: 'event-stream-finished',
   },
 ]
@@ -34,12 +38,14 @@ const zeroDurationEvents: readonly ChatViewEvent[] = [
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
+    subType: 'request',
     type: 'request',
   },
   {
     eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-01-01T10:00:00.000Z',
+    subType: 'response',
     type: 'response',
   },
 ]

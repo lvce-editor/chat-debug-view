@@ -6,6 +6,7 @@ test('getAttachmentImagePreviewMimeType should return the mime type when it is a
     getAttachmentImagePreviewMimeType({
       eventId: 1,
       mimeType: 'image/png',
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBe('image/png')
@@ -16,6 +17,7 @@ test('getAttachmentImagePreviewMimeType should return undefined for non-string m
     getAttachmentImagePreviewMimeType({
       eventId: 1,
       mimeType: 42,
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBeUndefined()

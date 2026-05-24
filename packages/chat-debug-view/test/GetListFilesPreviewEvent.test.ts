@@ -16,6 +16,7 @@ test('getListFilesPreviewEvent should return entries for successful list_files e
     },
     sessionId: 'session-1',
     timestamp: '2026-04-13T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -43,6 +44,7 @@ test('getListFilesPreviewEvent should return the full failed result for errored 
     result: resultValue,
     sessionId: 'session-1',
     timestamp: '2026-04-13T10:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 

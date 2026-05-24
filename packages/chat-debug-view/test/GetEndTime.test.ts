@@ -7,6 +7,7 @@ test('getEndTime should prefer ended over endTime and timestamp', () => {
     endTime: '2026-01-01T00:00:01.000Z',
     eventId: 1,
     timestamp: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -17,6 +18,7 @@ test('getEndTime should fall back to timestamp', () => {
   const result = GetEndTime.getEndTime({
     eventId: 1,
     timestamp: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 

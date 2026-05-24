@@ -8,12 +8,14 @@ test('restoreSelectedEvent should load details for the selected visible event', 
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const responseEvent = {
     eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   }
   const selectedEvent = {
@@ -21,6 +23,7 @@ test('restoreSelectedEvent should load details for the selected visible event', 
     eventId: 2,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({
@@ -52,17 +55,19 @@ test('restoreSelectedEvent should clear selection when the selected event is no 
         eventId: 1,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
     ],
     filterValue: 'request',
-    selectedEvent: { eventId: 2, type: 'response' },
+    selectedEvent: { eventId: 2, subType: 'response', type: 'response' },
     selectedEventId: 2,
     selectedEventIndex: 1,
     sessionId: 'session-1',
@@ -85,6 +90,7 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     },
     eventId: 1,
     requestId: 'request-1',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({
@@ -96,11 +102,13 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     requestEvent: {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
       value: {
         id: 'resp_1',
@@ -108,6 +116,7 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
     },
     sessionId: 'session-1',
     started: '2026-04-19T12:00:00.000Z',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const state = {
@@ -127,11 +136,13 @@ test('restoreSelectedEvent should preserve merged ai request and response detail
         },
         eventId: 1,
         requestId: 'request-1',
+        subType: 'ai-request',
         type: 'ai-request',
       },
       responseEvent: {
         eventId: 2,
         requestId: 'request-1',
+        subType: 'ai-response-success',
         type: 'ai-response-success',
         value: {
           id: 'resp_1',

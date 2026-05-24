@@ -9,6 +9,7 @@ import { getTabNodes } from '../src/parts/GetTabNodes/GetTabNodes.ts'
 const detailTabs = createDetailTabs('timing')
 const tokenUsageEvent = {
   eventId: 1,
+  subType: 'ai-response',
   type: 'ai-response',
   value: {
     usage: {

@@ -6,6 +6,7 @@ test('getEventTableMethodLabel should return GET for read operations', () => {
     getEventTableMethodLabel({
       eventId: 1,
       name: 'read_file',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('GET')
@@ -16,6 +17,7 @@ test('getEventTableMethodLabel should return GET for read operations', () => {
         name: 'list_dir',
       },
       eventId: 1,
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('GET')
@@ -24,6 +26,7 @@ test('getEventTableMethodLabel should return GET for read operations', () => {
     getEventTableMethodLabel({
       eventId: 1,
       toolName: 'list_files',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('GET')
@@ -34,6 +37,7 @@ test('getEventTableMethodLabel should return POST for write operations', () => {
     getEventTableMethodLabel({
       eventId: 1,
       name: 'write_file',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('POST')
@@ -44,6 +48,7 @@ test('getEventTableMethodLabel should return DELETE for delete operations', () =
     getEventTableMethodLabel({
       eventId: 1,
       name: 'delete_file',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('DELETE')
@@ -54,6 +59,7 @@ test('getEventTableMethodLabel should return an empty string for non-file operat
     getEventTableMethodLabel({
       eventId: 1,
       toolName: 'get_workspace_uri',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe('')
@@ -61,6 +67,7 @@ test('getEventTableMethodLabel should return an empty string for non-file operat
   expect(
     getEventTableMethodLabel({
       eventId: 1,
+      subType: 'request',
       type: 'request',
     }),
   ).toBe('')

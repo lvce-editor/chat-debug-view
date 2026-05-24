@@ -32,6 +32,7 @@ test('handleEventRowClick should select the clicked event row and load details',
         endTime: '2026-03-08T00:00:00.000Z',
         eventId: 1,
         startTime: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
@@ -39,6 +40,7 @@ test('handleEventRowClick should select the clicked event row and load details',
         endTime: '2026-03-08T00:00:01.000Z',
         eventId: 2,
         startTime: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
       {
@@ -46,6 +48,7 @@ test('handleEventRowClick should select the clicked event row and load details',
         endTime: '2026-03-08T00:00:02.000Z',
         eventId: 3,
         startTime: '2026-03-08T00:00:02.000Z',
+        subType: 'request',
         type: 'request',
       },
     ],
@@ -55,6 +58,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'value',
       eventId: 3,
+      subType: 'request',
       type: 'request',
     }),
   })
@@ -68,6 +72,7 @@ test('handleEventRowClick should select the clicked event row and load details',
     endTime: '2026-03-08T00:00:02.000Z',
     eventId: 3,
     startTime: '2026-03-08T00:00:02.000Z',
+    subType: 'request',
     type: 'request',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 3, 'request']])
@@ -91,6 +96,7 @@ test('handleEventRowClick should ignore non-primary button clicks', async () => 
         endTime: '2026-03-08T00:00:00.000Z',
         eventId: 1,
         startTime: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
     ],
@@ -107,6 +113,7 @@ test('handleEventRowClick should fall back to the in-memory event when it has no
     eventId: 1,
     path: '/chat',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const state = createClickableState({
@@ -133,6 +140,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
         path: '/chat',
         sessionId: 'session-1',
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
     ],
@@ -151,6 +159,7 @@ test('handleEventRowClick should fall back to the selected list event when loadi
     path: '/chat',
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 1, 'request']])
@@ -163,11 +172,13 @@ test('handleEventRowClick should preserve selected detail tab when switching row
       {
         eventId: 1,
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'response',
         type: 'response',
       },
     ],
@@ -177,6 +188,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'preview',
       eventId: 2,
+      subType: 'response',
       type: 'response',
     }),
   })
@@ -189,6 +201,7 @@ test('handleEventRowClick should preserve selected detail tab when switching row
     detail: 'preview',
     eventId: 2,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'response']])
@@ -202,12 +215,14 @@ test('handleEventRowClick should fall back to response and hide timing when the 
         ended: '2026-03-08T00:00:00.250Z',
         eventId: 1,
         started: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
       {
         eventId: 2,
         text: 'hello',
         timestamp: '2026-03-08T00:00:01.000Z',
+        subType: 'chat-message-added',
         type: 'chat-message-added',
       },
     ],
@@ -217,6 +232,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     'ChatStorage.loadSelectedEvent': () => ({
       detail: 'preview',
       eventId: 2,
+      subType: 'chat-message-added',
       type: 'chat-message-added',
     }),
   })
@@ -231,6 +247,7 @@ test('handleEventRowClick should fall back to response and hide timing when the 
     eventId: 2,
     text: 'hello',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   })
   expect(mockRpc.invocations).toEqual([['ChatStorage.loadSelectedEvent', 'session-1', 2, 'chat-message-added']])

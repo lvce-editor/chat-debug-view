@@ -12,6 +12,7 @@ test('getGeneralEntries should include url, method, and formatted status code', 
     },
     eventId: 1,
     method: 'POST',
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const
@@ -25,6 +26,7 @@ test('getGeneralEntries should include url, method, and formatted status code', 
 test('getGeneralEntries should omit empty status text', () => {
   const event = {
     eventId: 1,
+    subType: 'other',
     type: 'other',
     url: '',
   } as const

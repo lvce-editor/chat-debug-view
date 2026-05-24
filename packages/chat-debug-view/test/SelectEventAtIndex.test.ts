@@ -11,6 +11,7 @@ test('selectEventAtIndex should clear the selected event when the index is out o
       {
         eventId: 1,
         timestamp: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
         type: 'request',
       },
     ],
@@ -30,6 +31,7 @@ test('selectEventAtIndex should keep the event selected when it has no numeric e
   const invalidEvent = {
     eventId: 'missing-id',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   } as unknown as ChatViewEvent
   const state = {
@@ -54,11 +56,13 @@ test('selectEventAtIndex should preserve merged ai request and response details'
     requestEvent: {
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
       value: {
         id: 'resp_1',
@@ -66,6 +70,7 @@ test('selectEventAtIndex should preserve merged ai request and response details'
     },
     sessionId: 'session-1',
     started: '2026-04-19T12:00:00.000Z',
+    subType: 'ai-request',
     type: 'ai-request',
   }
   const state = {
@@ -80,6 +85,7 @@ test('selectEventAtIndex should preserve merged ai request and response details'
       },
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     }),
   })
@@ -94,11 +100,13 @@ test('selectEventAtIndex should preserve merged ai request and response details'
         },
         eventId: 1,
         requestId: 'request-1',
+        subType: 'ai-request',
         type: 'ai-request',
       },
       responseEvent: {
         eventId: 2,
         requestId: 'request-1',
+        subType: 'ai-response-success',
         type: 'ai-response-success',
         value: {
           id: 'resp_1',

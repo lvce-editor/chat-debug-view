@@ -7,6 +7,7 @@ test('handleUseDevtoolsLayout should preserve selected event when enabling layou
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const state = {
@@ -30,6 +31,7 @@ test('handleUseDevtoolsLayout should initialize a balanced split on narrow scree
     eventId: 1,
     sessionId: 'session-1',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   }
   const state = {

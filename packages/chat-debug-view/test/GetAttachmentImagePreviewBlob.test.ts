@@ -10,6 +10,7 @@ test('getAttachmentImagePreviewBlob should return the blob for valid blob-backed
     getAttachmentImagePreviewBlob({
       blob,
       eventId: 1,
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBe(blob)
@@ -20,6 +21,7 @@ test('getAttachmentImagePreviewBlob should return undefined for invalid blob val
     getAttachmentImagePreviewBlob({
       blob: 'not-a-blob',
       eventId: 1,
+      subType: 'chat-attachment-added',
       type: 'chat-attachment-added',
     }),
   ).toBeUndefined()

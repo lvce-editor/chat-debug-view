@@ -6,6 +6,7 @@ test('hasOwn should return true when the event contains the property', () => {
     {
       arguments: '{}',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
     'arguments',
@@ -18,6 +19,7 @@ test('hasOwn should return false when the event does not contain the property', 
   const result = HasOwn.hasOwn(
     {
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
     'arguments',

@@ -89,6 +89,7 @@ test('getPreviewEventNodes should render chat-message-updated preview text witho
   const result = getPreviewEventNodes('first line\nsecond line', {
     eventId: 1,
     text: 'first line\nsecond line',
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   }) as readonly {
     readonly childCount?: number

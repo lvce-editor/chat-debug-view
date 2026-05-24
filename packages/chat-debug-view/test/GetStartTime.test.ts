@@ -7,6 +7,7 @@ test('getStartTime should prefer started over startTime and timestamp', () => {
     started: '2026-01-01T00:00:00.000Z',
     startTime: '2026-01-01T00:00:01.000Z',
     timestamp: '2026-01-01T00:00:02.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -17,6 +18,7 @@ test('getStartTime should fall back to timestamp', () => {
   const result = GetStartTime.getStartTime({
     eventId: 1,
     timestamp: '2026-01-01T00:00:00.000Z',
+    subType: 'request',
     type: 'request',
   })
 

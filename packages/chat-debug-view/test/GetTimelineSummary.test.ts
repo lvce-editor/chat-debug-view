@@ -8,12 +8,14 @@ test('getTimelineSummary should describe selected window', () => {
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -27,12 +29,14 @@ test('getTimelineSummary should describe full window when selection is empty', (
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
     {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:10.000Z',
+      subType: 'response',
       type: 'response',
     },
   ]
@@ -46,6 +50,7 @@ test('getTimelineSummary should omit summary for zero-duration timeline', () => 
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-03-08T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     },
   ]

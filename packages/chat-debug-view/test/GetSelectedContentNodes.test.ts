@@ -38,11 +38,13 @@ const selectedEvent = {
   },
   started: '2026-03-08T00:00:01.000Z',
   timestamp: '2026-04-09T12:05:40.910Z',
+  subType: 'chat-message-added',
   type: 'chat-message-added',
 } as const
 
 const tokenUsageEvent = {
   eventId: 2,
+  subType: 'ai-response',
   type: 'ai-response',
   value: {
     usage: {
@@ -98,6 +100,7 @@ test('getSelectedContentNodes should return headers content for the headers tab'
       Authorization: 'Bearer [redacted]',
     },
     method: 'POST',
+    subType: 'ai-request',
     type: 'ai-request',
     url: 'https://example.com/chat',
   } as const

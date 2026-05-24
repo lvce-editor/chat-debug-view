@@ -9,6 +9,7 @@ test('getStartText should prefer started over older timestamp fields', () => {
     startTime: '2026-03-08T00:00:03.000Z',
     startTimestamp: '2026-03-08T00:00:02.000Z',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -19,6 +20,7 @@ test('getStartText should fall back to timestamp when no dedicated start field e
   const result = getStartText({
     eventId: 1,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'request',
     type: 'request',
   })
 
@@ -32,6 +34,7 @@ test('getEndText should prefer ended over older timestamp fields', () => {
     endTimestamp: '2026-03-08T00:00:02.000Z',
     eventId: 1,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   })
 
@@ -42,6 +45,7 @@ test('getEndText should fall back to timestamp when no dedicated end field exist
   const result = getEndText({
     eventId: 1,
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'response',
     type: 'response',
   })
 

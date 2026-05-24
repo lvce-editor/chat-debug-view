@@ -1028,12 +1028,14 @@ test('getDevtoolsDom should render merged ai response value in the response tab'
       },
       eventId: 1,
       requestId: 'request-1',
+      subType: 'ai-request',
       type: 'ai-request',
     },
     requestId: 'request-1',
     responseEvent: {
       eventId: 2,
       requestId: 'request-1',
+      subType: 'ai-response-success',
       type: 'ai-response-success',
       value: {
         id: 'resp_1',

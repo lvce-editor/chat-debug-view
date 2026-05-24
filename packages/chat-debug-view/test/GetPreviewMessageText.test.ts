@@ -5,6 +5,7 @@ test('getPreviewMessageText should return the top-level text for chat-message-up
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
     text: 'updated text',
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   })
 
@@ -17,6 +18,7 @@ test('getPreviewMessageText should return the nested message text for chat-messa
     message: {
       text: 'added text',
     },
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   })
 
@@ -29,6 +31,7 @@ test('getPreviewMessageText should return undefined when the nested message text
     message: {
       value: 'missing text field',
     },
+    subType: 'chat-message-added',
     type: 'chat-message-added',
   })
 
@@ -39,6 +42,7 @@ test('getPreviewMessageText should return undefined for unrelated events', () =>
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
     text: 'ignored',
+    subType: 'request',
     type: 'request',
   })
 
@@ -48,6 +52,7 @@ test('getPreviewMessageText should return undefined for unrelated events', () =>
 test('getPreviewMessageText should return the first response output text for sse-response-completed events', () => {
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
+    subType: 'sse-response-completed',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -72,6 +77,7 @@ test('getPreviewMessageText should return the first response output text for sse
 test('getPreviewMessageText should return the direct response content text for sse-response-completed events', () => {
   const result = GetPreviewMessageText.getPreviewMessageText({
     eventId: 1,
+    subType: 'sse-response-completed',
     type: 'sse-response-completed',
     value: {
       response: {
@@ -120,6 +126,7 @@ test('getPreviewMessageText should return response text from ai-request endValue
       },
     },
     eventId: 1,
+    subType: 'ai-request',
     type: 'ai-request',
   })
 

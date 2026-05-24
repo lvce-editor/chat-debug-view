@@ -6,6 +6,7 @@ test('shouldIncludeArguments should return true when arguments exist and the too
     {
       arguments: '{"path":"/tmp"}',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
     'readFile',
@@ -18,6 +19,7 @@ test('shouldIncludeArguments should return false when arguments are missing', ()
   const result = ShouldIncludeArguments.shouldIncludeArguments(
     {
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
     'readFile',
@@ -31,6 +33,7 @@ test('shouldIncludeArguments should return false for getWorkspaceUri', () => {
     {
       arguments: '{}',
       eventId: 1,
+      subType: 'request',
       type: 'request',
     },
     'getWorkspaceUri',

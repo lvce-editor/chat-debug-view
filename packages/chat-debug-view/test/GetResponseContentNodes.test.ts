@@ -27,6 +27,7 @@ test('getResponseContentNodes should render the selected event when response nod
   const selectedEvent = {
     eventId: 1,
     text: 'response preview',
+    subType: 'chat-message-updated',
     type: 'chat-message-updated',
   }
 

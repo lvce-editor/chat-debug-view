@@ -12,6 +12,7 @@ test('getStatusCodeValue should prioritize endValue.statusCode', () => {
     },
     eventId: 1,
     statusCode: 200,
+    subType: 'ai-request',
     type: 'ai-request',
   } as const
   expect(getStatusCodeValue(event)).toBe(201)
@@ -21,6 +22,7 @@ test('getStatusCodeValue should use selectedEvent.statusCode when endValue is un
   const event = {
     eventId: 1,
     statusCode: 204,
+    subType: 'ai-request',
     type: 'ai-request',
   } as const
   expect(getStatusCodeValue(event)).toBe(204)
@@ -29,6 +31,7 @@ test('getStatusCodeValue should use selectedEvent.statusCode when endValue is un
 test('getStatusCodeValue should fall back to status text for ai events', () => {
   const event = {
     eventId: 1,
+    subType: 'ai-response',
     type: 'ai-response',
   } as const
   expect(getStatusCodeValue(event)).toBe('200')

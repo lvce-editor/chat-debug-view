@@ -9,6 +9,7 @@ test('getCellDurationDom should render the duration cell', () => {
     sessionId: 'session-1',
     started: '2026-03-08T00:00:01.000Z',
     timestamp: '2026-03-08T00:00:01.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 
@@ -31,6 +32,7 @@ test('getCellDurationDom should render second-range durations with spaced second
     sessionId: 'session-1',
     started: '2026-03-08T00:00:00.000Z',
     timestamp: '2026-03-08T00:00:00.000Z',
+    subType: 'tool-execution',
     type: 'tool-execution',
   }
 

@@ -6,6 +6,7 @@ test('getPreviewName should prefer event name', () => {
     eventId: 1,
     name: 'runTool',
     toolName: 'fallbackTool',
+    subType: 'request',
     type: 'request',
   })
 
@@ -16,6 +17,7 @@ test('getPreviewName should fall back to toolName', () => {
   const result = GetPreviewName.getPreviewName({
     eventId: 1,
     toolName: 'runTool',
+    subType: 'request',
     type: 'request',
   })
 
@@ -25,6 +27,7 @@ test('getPreviewName should fall back to toolName', () => {
 test('getPreviewName should return undefined when both names are missing', () => {
   const result = GetPreviewName.getPreviewName({
     eventId: 1,
+    subType: 'request',
     type: 'request',
   })
 

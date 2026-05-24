@@ -7,6 +7,7 @@ test('hasErrorStatus should return true for error events', () => {
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'error',
       type: 'error',
     }),
   ).toBe(true)
@@ -19,6 +20,7 @@ test('hasErrorStatus should return true when success or ok is false', () => {
       sessionId: 'session-1',
       success: false,
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -29,6 +31,7 @@ test('hasErrorStatus should return true when success or ok is false', () => {
       ok: false,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -41,6 +44,7 @@ test('hasErrorStatus should return true when status is the string error', () => 
       sessionId: 'session-1',
       status: 'error',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe(true)
@@ -53,6 +57,7 @@ test('hasErrorStatus should return true for top-level and nested status codes >=
       sessionId: 'session-1',
       status: 500,
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -65,6 +70,7 @@ test('hasErrorStatus should return true for top-level and nested status codes >=
       },
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -77,6 +83,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
       eventId: 1,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -87,6 +94,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
       eventId: 2,
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -97,6 +105,7 @@ test('hasErrorStatus should return true when an error field is present', () => {
       exception: 'failed',
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -113,6 +122,7 @@ test('hasErrorStatus should return true for tool-execution events with result.er
       },
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'tool-execution',
       type: 'tool-execution',
     }),
   ).toBe(true)
@@ -127,6 +137,7 @@ test('hasErrorStatus should return true for string errors nested in result', () 
       },
       sessionId: 'session-1',
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(true)
@@ -139,6 +150,7 @@ test('hasErrorStatus should return false for non-error events', () => {
       sessionId: 'session-1',
       status: 204,
       timestamp: '2026-01-01T00:00:00.000Z',
+      subType: 'request',
       type: 'request',
     }),
   ).toBe(false)
