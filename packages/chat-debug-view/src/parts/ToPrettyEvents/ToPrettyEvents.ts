@@ -79,6 +79,13 @@ const getToolCallStatus = (response: ChatViewEvent): number => {
   return 200
 }
 
+const getToolCallSize = (response: ChatViewEvent): number => {
+  if (response && response.size !== undefined) {
+    return response.size
+  }
+  return 0
+}
+
 const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): ChatViewEvent => {
   const parsedStart = new Date(item.timestamp || '')
   const parsedEnd = new Date(response.timestamp || '')
@@ -88,13 +95,15 @@ const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): C
   const timestamp = item.timestamp ?? started
   const status = getToolCallStatus(response)
   const subType = getEventSubType(item, 'tool-request-response', true)
+  const size = getToolCallSize(response)
+
   return {
     ...(ended === undefined ? {} : { ended }),
     durationMs,
     eventEndId: response.eventId,
     eventId: item.eventId,
     method: 'POST',
-    size: getResponsePayloadSize(response),
+    size,
     ...(started === undefined ? {} : { started }),
     status,
     ...(timestamp === undefined ? {} : { timestamp }),
@@ -132,5 +141,6 @@ export const toPrettyEvents = (rawEvents: ListChatViewEventsResult): readonly Ch
       pretty.push(withSubType(item))
     }
   }
+
   return pretty
 }

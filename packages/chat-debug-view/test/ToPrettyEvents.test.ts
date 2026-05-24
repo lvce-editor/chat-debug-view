@@ -131,7 +131,7 @@ test('toPrettyEvents should preserve the original subtype for merged tool call e
       eventEndId: 2,
       eventId: 1,
       method: 'POST',
-      size: 10,
+      size: 0,
       started: '2026-05-12T10:00:00.000Z',
       status: 200,
       subType: 'tool-call-started',
