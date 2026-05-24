@@ -32,7 +32,7 @@ test('toPrettyEvents should include duration for merged ai request and ai respon
       method: 'POST',
       size: 10,
       started: '2026-05-12T10:00:00.000Z',
-      subType: 'ai-request-response',
+      subType: 'ai-request',
       timestamp: '2026-05-12T10:00:00.000Z',
       type: 'ai-request-response',
     },
@@ -66,7 +66,7 @@ test('toPrettyEvents should preserve merged event timing metadata for the timeli
   expect(result?.ended).toBe('2026-05-12T10:00:00.125Z')
 })
 
-test('toPrettyEvents should merge matching ai request and ai response events', () => {
+test('toPrettyEvents should merge matching ai request and ai response events while preserving the request subtype', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
@@ -92,13 +92,13 @@ test('toPrettyEvents should merge matching ai request and ai response events', (
       eventId: 1,
       method: 'POST',
       size: 10,
-      subType: 'ai-request-response',
+      subType: 'ai-request',
       type: 'ai-request-response',
     },
   ])
 })
 
-test('toPrettyEvents should use the tool name as subtype for merged tool call events', () => {
+test('toPrettyEvents should preserve the original subtype for merged tool call events', () => {
   const requestEvent = {
     eventId: 1,
     requestId: 'request-1',
@@ -134,7 +134,7 @@ test('toPrettyEvents should use the tool name as subtype for merged tool call ev
       size: 10,
       started: '2026-05-12T10:00:00.000Z',
       status: 200,
-      subType: 'write_file',
+      subType: 'tool-call-started',
       timestamp: '2026-05-12T10:00:00.000Z',
       type: 'tool-request-response',
     },

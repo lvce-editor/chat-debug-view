@@ -2,7 +2,7 @@ import { expect, test } from '@jest/globals'
 import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { collapseToolExecutionEvents } from '../src/parts/CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 
-test('collapseToolExecutionEvents should merge matching started and finished events', () => {
+test('collapseToolExecutionEvents should merge matching started and finished events while preserving the started subtype', () => {
   const startedEvent: ChatViewEvent = {
     arguments: {
       path: '/tmp/file.txt',
@@ -40,7 +40,7 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
       },
       sessionId: 'session-1',
       started: '2026-01-01T10:01:30.000Z',
-      subType: 'tool-execution, read_file',
+      subType: 'tool-execution-started',
       timestamp: '2026-01-01T10:01:45.000Z',
       toolName: 'read_file',
       type: 'tool-execution',
