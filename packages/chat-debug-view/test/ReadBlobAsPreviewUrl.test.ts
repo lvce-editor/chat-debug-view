@@ -2,10 +2,15 @@ import { afterEach, expect, jest, test } from '@jest/globals'
 import { readBlobAsPreviewUrl } from '../src/parts/ReadBlobAsPreviewUrl/ReadBlobAsPreviewUrl.ts'
 
 const originalCreateObjectUrl = URL.createObjectURL
+const originalFileReaderSync = globalThis.FileReaderSync
 
 afterEach(() => {
   jest.restoreAllMocks()
-  Reflect.deleteProperty(globalThis, 'FileReaderSync')
+  Object.defineProperty(globalThis, 'FileReaderSync', {
+    configurable: true,
+    value: originalFileReaderSync,
+    writable: true,
+  })
   if (originalCreateObjectUrl) {
     Object.defineProperty(URL, 'createObjectURL', {
       configurable: true,
@@ -13,7 +18,11 @@ afterEach(() => {
       writable: true,
     })
   } else {
-    Reflect.deleteProperty(URL, 'createObjectURL')
+    Object.defineProperty(URL, 'createObjectURL', {
+      configurable: true,
+      value: undefined,
+      writable: true,
+    })
   }
 })
 
@@ -40,7 +49,11 @@ test('readBlobAsPreviewUrl should fall back to URL.createObjectURL', () => {
 })
 
 test('readBlobAsPreviewUrl should throw when no preview reader is available', () => {
-  Reflect.deleteProperty(URL, 'createObjectURL')
+  Object.defineProperty(URL, 'createObjectURL', {
+    configurable: true,
+    value: undefined,
+    writable: true,
+  })
 
   expect(() => readBlobAsPreviewUrl(new Blob(['image']))).toThrow(new Error('image preview reader is not available'))
 })

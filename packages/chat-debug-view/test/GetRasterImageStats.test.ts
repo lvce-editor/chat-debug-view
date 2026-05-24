@@ -1,9 +1,15 @@
 import { afterEach, expect, jest, test } from '@jest/globals'
 import { getRasterImageStats } from '../src/parts/GetRasterImageStats/GetRasterImageStats.ts'
 
+const originalCreateImageBitmap = globalThis.createImageBitmap
+
 afterEach(() => {
   jest.restoreAllMocks()
-  Reflect.deleteProperty(globalThis, 'createImageBitmap')
+  Object.defineProperty(globalThis, 'createImageBitmap', {
+    configurable: true,
+    value: originalCreateImageBitmap,
+    writable: true,
+  })
 })
 
 test('getRasterImageStats should decode the bitmap and close it', async () => {
