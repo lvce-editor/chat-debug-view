@@ -20,7 +20,7 @@ type GetDevtoolsDomRestArgs =
     readonly ChatViewEvent[],
     ...infer Rest,
   ]
-    ? Rest
+    ? Readonly<Rest>
     : never
 
 const withSubType = (event: Readonly<TestEvent>): ChatViewEvent => {
@@ -55,10 +55,7 @@ const getDevtoolsDom = (
 
 const GetDevtoolsDom = { getDevtoolsDom }
 
-const setSelectedEventPreview = (
-  event: Readonly<TestEvent>,
-  preview: Parameters<typeof setSelectedEventPreviewModule>[1],
-): ChatViewEvent => {
+const setSelectedEventPreview = (event: Readonly<TestEvent>, preview: Parameters<typeof setSelectedEventPreviewModule>[1]): ChatViewEvent => {
   return setSelectedEventPreviewModule(withSubType(event), preview)
 }
 
