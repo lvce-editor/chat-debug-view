@@ -1,4 +1,5 @@
 export interface CategoryFilter {
+  readonly eventTypes: readonly string[]
   readonly isSelected: boolean
   readonly label: string
   readonly name: string
