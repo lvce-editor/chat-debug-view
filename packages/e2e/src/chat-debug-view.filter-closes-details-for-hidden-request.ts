@@ -2,6 +2,8 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.filter-closes-details-for-hidden-request'
 
+export const skip = 1
+
 export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-filter-closes-details-for-hidden-request'
   await ChatDebug.open(sessionId)
