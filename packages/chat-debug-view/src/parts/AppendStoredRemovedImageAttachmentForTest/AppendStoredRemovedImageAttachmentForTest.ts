@@ -20,6 +20,7 @@ export const appendStoredRemovedImageAttachmentForTest = async (
     mimeType,
     name,
     sessionId,
+    subType: 'chat-attachment-removed',
     timestamp,
     type: 'chat-attachment-removed',
   })

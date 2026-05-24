@@ -55,6 +55,7 @@ export const appendStoredImageAttachmentForTest = async (
     mimeType,
     name,
     sessionId,
+    subType: 'chat-attachment-added',
     timestamp,
     type: 'chat-attachment-added',
   })

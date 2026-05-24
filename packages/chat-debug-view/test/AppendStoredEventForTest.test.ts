@@ -8,6 +8,7 @@ test('appendStoredEventForTest should append the event through the chat storage 
   const event = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-03-08T00:00:00.000Z',
     type: 'request',
   }
