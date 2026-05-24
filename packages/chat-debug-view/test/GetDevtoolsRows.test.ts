@@ -24,7 +24,7 @@ const sizeCellNodes = [
   text('0 B'),
 ] as const
 
-test('getDevtoolsRows should render tool execution labels with the tool name', () => {
+test('getDevtoolsRows should render tool execution labels from the event subtype or type', () => {
   const events = [
     {
       eventId: 1,
@@ -49,7 +49,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, get_workspace_uri'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -72,7 +72,7 @@ test('getDevtoolsRows should render tool execution labels with the tool name', (
   ])
 })
 
-test('getDevtoolsRows should render tool execution labels with tool name from arguments', () => {
+test('getDevtoolsRows should fall back to the event type when subtype is missing', () => {
   const events = [
     {
       arguments: {
@@ -100,7 +100,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, read_file'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -123,7 +123,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from ar
   ])
 })
 
-test('getDevtoolsRows should render tool execution labels with tool name from top-level name field', () => {
+test('getDevtoolsRows should keep tool execution labels stable when a top-level name field is present', () => {
   const events = [
     {
       arguments: {
@@ -153,7 +153,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, getWorkspaceUri'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -176,7 +176,7 @@ test('getDevtoolsRows should render tool execution labels with tool name from to
   ])
 })
 
-test('getDevtoolsRows should render 400 status when tool error is nested in result', () => {
+test('getDevtoolsRows should render 400 status when tool error is nested in result without changing the type label', () => {
   const events = [
     {
       arguments: {
@@ -207,7 +207,7 @@ test('getDevtoolsRows should render 400 status when tool error is nested in resu
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('list_files'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',

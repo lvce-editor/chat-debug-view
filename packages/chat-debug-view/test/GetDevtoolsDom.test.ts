@@ -619,7 +619,7 @@ test('getDevtoolsDom should render 200 status for successful events', () => {
   )
 })
 
-test('getDevtoolsDom should render tool execution row labels with tool name', () => {
+test('getDevtoolsDom should render tool execution row labels from the event subtype or type', () => {
   const events = [
     {
       eventId: 1,
@@ -635,12 +635,12 @@ test('getDevtoolsDom should render tool execution row labels with tool name', ()
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'tool-execution, getWorkspaceUri',
+      text: 'tool-execution',
     }),
   )
 })
 
-test('getDevtoolsDom should render tool execution row labels with top-level name', () => {
+test('getDevtoolsDom should fall back to the event type for tool execution row labels when subtype is missing', () => {
   const events = [
     {
       arguments: {
@@ -659,7 +659,7 @@ test('getDevtoolsDom should render tool execution row labels with top-level name
 
   expect(dom).toContainEqual(
     expect.objectContaining({
-      text: 'list_files',
+      text: 'tool-execution',
     }),
   )
 })

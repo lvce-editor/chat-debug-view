@@ -3,7 +3,7 @@ import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import * as GetRowCellNodes from '../src/parts/GetRowCellNodes/GetRowCellNodes.ts'
 import * as TableColumn from '../src/parts/TableColumn/TableColumn.ts'
 
-test('getRowCellNodes should render visible columns in order', () => {
+test('getRowCellNodes should render visible columns in order using the event subtype or type label', () => {
   const event = {
     ended: '2026-03-08T00:00:01.250Z',
     eventId: 1,
@@ -22,7 +22,7 @@ test('getRowCellNodes should render visible columns in order', () => {
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('tool-execution, get_workspace_uri'),
+    text('tool-execution'),
     {
       childCount: 1,
       className: 'TableCell',
@@ -66,7 +66,7 @@ test('getRowCellNodes should apply error status styling and ignore unknown colum
   ])
 })
 
-test('getRowCellNodes should render list_files without the tool-execution prefix in the type column', () => {
+test('getRowCellNodes should fall back to the event type in the type column when subtype is missing', () => {
   const event = {
     eventId: 1,
     name: 'list_files',
@@ -83,7 +83,7 @@ test('getRowCellNodes should render list_files without the tool-execution prefix
       className: 'TableCell',
       type: VirtualDomElements.Td,
     },
-    text('list_files'),
+    text('tool-execution'),
   ])
 })
 
