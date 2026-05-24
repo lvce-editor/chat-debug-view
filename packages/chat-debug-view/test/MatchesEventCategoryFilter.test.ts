@@ -20,10 +20,20 @@ test('matchesEventCategoryFilter should always match when no filters are selecte
 
 test('matchesEventCategoryFilter should match each supported category and ignore unknown filters', () => {
   expect(matchesEventCategoryFilter({ eventId: 1, subType: '', type: 'request' }, getCategoryFilters([EventCategoryFilter.Network]))).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 3, subType: '', type: 'tool-execution-started' }, getCategoryFilters([EventCategoryFilter.Tools]))).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 7, subType: '', type: 'tool-request-response' }, getCategoryFilters([EventCategoryFilter.Tools]))).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 5, subType: '', type: 'handle-response' }, getCategoryFilters([EventCategoryFilter.Network]))).toBe(true)
-  expect(matchesEventCategoryFilter({ eventId: 6, subType: '', type: 'response' }, [{ eventTypes: ['custom'], isSelected: true, label: 'Custom', name: 'custom' }])).toBe(false)
+  expect(
+    matchesEventCategoryFilter({ eventId: 3, subType: '', type: 'tool-execution-started' }, getCategoryFilters([EventCategoryFilter.Tools])),
+  ).toBe(true)
+  expect(
+    matchesEventCategoryFilter({ eventId: 7, subType: '', type: 'tool-request-response' }, getCategoryFilters([EventCategoryFilter.Tools])),
+  ).toBe(true)
+  expect(matchesEventCategoryFilter({ eventId: 5, subType: '', type: 'handle-response' }, getCategoryFilters([EventCategoryFilter.Network]))).toBe(
+    true,
+  )
+  expect(
+    matchesEventCategoryFilter({ eventId: 6, subType: '', type: 'response' }, [
+      { eventTypes: ['custom'], isSelected: true, label: 'Custom', name: 'custom' },
+    ]),
+  ).toBe(false)
 })
 
 test('matchesEventCategoryFilter should use eventTypes from the selected category filters', () => {

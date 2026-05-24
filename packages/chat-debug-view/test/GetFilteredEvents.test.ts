@@ -188,7 +188,14 @@ test('getFilteredEvents should include merged ai request response events for net
 })
 
 test('getFilteredEvents should show events from multiple selected category filters', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '', getCategoryFilters([EventCategoryFilter.Tools, EventCategoryFilter.Network]), true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    events,
+    '',
+    getCategoryFilters([EventCategoryFilter.Tools, EventCategoryFilter.Network]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([
     events[2],
@@ -214,7 +221,14 @@ test('getFilteredEvents should include tool-request-response events for tools ca
     type: 'tool-request-response',
   }
 
-  const result = GetFilteredEvents.getFilteredEvents([toolRequestResponseEvent], '', getCategoryFilters([EventCategoryFilter.Tools]), true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    [toolRequestResponseEvent],
+    '',
+    getCategoryFilters([EventCategoryFilter.Tools]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([toolRequestResponseEvent])
 })
@@ -240,7 +254,14 @@ test('getFilteredEvents should collapse matching ai-request and ai-response-succ
     type: 'ai-response-success',
   }
 
-  const result = GetFilteredEvents.getFilteredEvents([requestEvent, responseEvent], '', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(
+    [requestEvent, responseEvent],
+    '',
+    getCategoryFilters([EventCategoryFilter.All]),
+    true,
+    true,
+    true,
+  )
 
   expect(result).toEqual([
     {
