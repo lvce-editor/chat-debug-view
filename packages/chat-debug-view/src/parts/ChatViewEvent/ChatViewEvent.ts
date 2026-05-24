@@ -14,4 +14,5 @@ export interface ChatViewEvent {
   readonly time?: string
   readonly timestamp?: number | string
   readonly type: string
+  readonly subType: string
 }
