@@ -9,8 +9,8 @@ type EventLike = {
 
 const toolExecutionTypePrefix = 'tool-execution'
 
-export const getEventSubType = (event: EventLike, fallbackType: string = event.type): string => {
-  if (typeof event.subType === 'string' && event.subType) {
+export const getEventSubType = (event: EventLike, fallbackType: string = event.type, ignoreCurrentSubType: boolean = false): string => {
+  if (!ignoreCurrentSubType && typeof event.subType === 'string' && event.subType) {
     return event.subType
   }
   if (fallbackType === 'tool-request-response') {

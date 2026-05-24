@@ -51,7 +51,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
       ...(started === undefined ? {} : { started }),
       ...(status === undefined ? {} : { status }),
       ...(timestamp === undefined ? {} : { timestamp }),
-      subType: getEventSubType(item, 'ai-request-response'),
+      subType: getEventSubType(item, 'ai-request-response', true),
       type: 'ai-request-response',
     }
   }
@@ -65,7 +65,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
     ...(started === undefined ? {} : { started }),
     ...(status === undefined ? {} : { status }),
     ...(timestamp === undefined ? {} : { timestamp }),
-    subType: getEventSubType(item, 'ai-request-response'),
+    subType: getEventSubType(item, 'ai-request-response', true),
     type: 'ai-request-response',
   }
 }
@@ -86,7 +86,7 @@ const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): C
   const ended = getEndedTimestamp(response)
   const timestamp = item.timestamp ?? started
   const status = getToolCallStatus(response)
-  const subType = getEventSubType(item, 'tool-request-response')
+  const subType = getEventSubType(item, 'tool-request-response', true)
   return {
     ...(ended === undefined ? {} : { ended }),
     durationMs,

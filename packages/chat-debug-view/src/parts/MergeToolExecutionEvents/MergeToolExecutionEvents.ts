@@ -18,7 +18,7 @@ export const mergeToolExecutionEvents = (
     ...(ended === undefined ? {} : { ended }),
     eventId,
     ...(started === undefined ? {} : { started }),
-    subType: getEventSubType(startedEvent, type),
+    subType: getEventSubType(startedEvent, type, true),
     type,
   }
   return mergedEvent
