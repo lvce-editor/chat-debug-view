@@ -33,13 +33,13 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
       name: All,
     },
     {
-      eventTypes: ['tool-request', 'tool-request-response'],
+      eventTypes: ['tool-execution', 'tool-request', 'tool-request-response'],
       isSelected: selectedEventCategoryFilters.includes(Tools),
       label: ChatDebugStrings.tools(),
       name: Tools,
     },
     {
-      eventTypes: ['ai-request', 'ai-request-response'],
+      eventTypes: ['request', 'response', 'handle-response', 'ai-request', 'ai-response-success', 'ai-request-response'],
       isSelected: selectedEventCategoryFilters.includes(Network),
       label: ChatDebugStrings.network(),
       name: Network,

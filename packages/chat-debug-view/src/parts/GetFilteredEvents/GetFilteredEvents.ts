@@ -1,4 +1,5 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
+import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import { collapseToolExecutionEvents } from '../CollapseToolExecutionEvents/CollapseToolExecutionEvents.ts'
 import { getVisibleEvents } from '../GetVisibleEvents/GetVisibleEvents.ts'
 import { matchesEventCategoryFilter } from '../MatchesEventCategoryFilter/MatchesEventCategoryFilter.ts'
@@ -6,7 +7,7 @@ import { matchesEventCategoryFilter } from '../MatchesEventCategoryFilter/Matche
 export const getFilteredEvents = (
   events: readonly ChatViewEvent[],
   filterValue: string,
-  eventCategoryFilters: readonly string[],
+  eventCategoryFilters: readonly CategoryFilter[],
   showInputEvents: boolean,
   showResponsePartEvents: boolean,
   showEventStreamFinishedEvents: boolean,
