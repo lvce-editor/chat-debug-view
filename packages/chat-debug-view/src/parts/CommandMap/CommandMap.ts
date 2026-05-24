@@ -11,6 +11,7 @@ import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
 import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
 import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import { getPayload } from '../GetPayload/GetPayload.ts'
+import { getResponse } from '../GetResponse/GetResponse.ts'
 import * as HandleClickRefresh from '../HandleClickRefresh/HandleClickRefresh.ts'
 import * as HandleCloseDetails from '../HandleCloseDetails/HandleCloseDetails.ts'
 import * as HandleDetailsContextMenu from '../HandleDetailsContextMenu/HandleDetailsContextMenu.ts'
@@ -87,6 +88,7 @@ export const commandMap = {
   'ChatDebug.getMenuEntries': wrapGetter(getMenuEntries2),
   'ChatDebug.getMenuIds': getMenuIds,
   'ChatDebug.getPayload': wrapGetter(getPayload),
+  'ChatDebug.getResponse': wrapGetter(getResponse),
   'ChatDebug.handleClickRefresh': wrapCommand(HandleClickRefresh.handleClickRefresh),
   'ChatDebug.handleCloseDetails': wrapCommand(HandleCloseDetails.handleCloseDetails),
   'ChatDebug.handleDetailsContextMenu': wrapCommand(HandleDetailsContextMenu.handleDetailsContextMenu),
