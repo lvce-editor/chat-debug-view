@@ -5,7 +5,7 @@ import { handleClickRefresh } from '../src/parts/HandleClickRefresh/HandleClickR
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('handleClickRefresh should delegate to refresh', async () => {
-  const events = [{ eventId: 1, type: 'request' }]
+  const events = [{ eventId: 1, subType: 'request', type: 'request' }]
   using mockRpc = ChatStorageWorker.registerMockRpc({
     'ChatStorage.listChatViewEvents': () => ({
       events,

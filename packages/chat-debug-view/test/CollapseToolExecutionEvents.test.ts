@@ -9,6 +9,7 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
     },
     eventId: 7,
     sessionId: 'session-1',
+    subType: 'tool-execution-started',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
@@ -19,6 +20,7 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
       contents: 'hello',
     },
     sessionId: 'session-1',
+    subType: 'tool-execution-finished',
     timestamp: '2026-01-01T10:01:45.000Z',
     toolName: 'read_file',
     type: 'tool-execution-finished',
@@ -38,6 +40,7 @@ test('collapseToolExecutionEvents should merge matching started and finished eve
       },
       sessionId: 'session-1',
       started: '2026-01-01T10:01:30.000Z',
+      subType: 'tool-execution, read_file',
       timestamp: '2026-01-01T10:01:45.000Z',
       toolName: 'read_file',
       type: 'tool-execution',
@@ -49,6 +52,7 @@ test('collapseToolExecutionEvents should keep non-matching events separate', () 
   const startedEvent: ChatViewEvent = {
     eventId: 0,
     sessionId: 'session-1',
+    subType: 'tool-execution-started',
     timestamp: '2026-01-01T10:01:30.000Z',
     toolName: 'read_file',
     type: 'tool-execution-started',
@@ -56,6 +60,7 @@ test('collapseToolExecutionEvents should keep non-matching events separate', () 
   const finishedEvent: ChatViewEvent = {
     eventId: 1,
     sessionId: 'session-1',
+    subType: 'tool-execution-finished',
     timestamp: '2026-01-01T10:01:45.000Z',
     toolName: 'write_file',
     type: 'tool-execution-finished',
@@ -70,6 +75,7 @@ test('collapseToolExecutionEvents should merge handle-submit and sse-response-co
   const startedEvent: ChatViewEvent = {
     eventId: 41,
     sessionId: 'session-1',
+    subType: 'handle-submit',
     timestamp: '2026-01-01T10:01:30.000Z',
     type: 'handle-submit',
     value: 'hello',
@@ -77,6 +83,7 @@ test('collapseToolExecutionEvents should merge handle-submit and sse-response-co
   const finishedEvent: ChatViewEvent = {
     eventId: 42,
     sessionId: 'session-1',
+    subType: 'sse-response-completed',
     timestamp: '2026-01-01T10:01:45.000Z',
     type: 'sse-response-completed',
     value: {
@@ -92,6 +99,7 @@ test('collapseToolExecutionEvents should merge handle-submit and sse-response-co
       eventId: 41,
       sessionId: 'session-1',
       started: '2026-01-01T10:01:30.000Z',
+      subType: 'handle-submit',
       timestamp: '2026-01-01T10:01:45.000Z',
       type: 'handle-submit',
       value: {
@@ -105,18 +113,21 @@ test('collapseToolExecutionEvents should keep non-adjacent handle-submit and sse
   const startedEvent: ChatViewEvent = {
     eventId: 41,
     sessionId: 'session-1',
+    subType: 'handle-submit',
     timestamp: '2026-01-01T10:01:30.000Z',
     type: 'handle-submit',
   }
   const middleEvent: ChatViewEvent = {
     eventId: 99,
     sessionId: 'session-1',
+    subType: 'chat-message-added',
     timestamp: '2026-01-01T10:01:31.000Z',
     type: 'chat-message-added',
   }
   const finishedEvent: ChatViewEvent = {
     eventId: 42,
     sessionId: 'session-1',
+    subType: 'sse-response-completed',
     timestamp: '2026-01-01T10:01:45.000Z',
     type: 'sse-response-completed',
   }
@@ -131,6 +142,7 @@ test('collapseToolExecutionEvents should merge matching request and response eve
     eventId: 9,
     requestId: 'request-1',
     sessionId: 'session-1',
+    subType: 'request',
     timestamp: '2026-01-01T10:01:30.000Z',
     type: 'request',
   }
@@ -139,6 +151,7 @@ test('collapseToolExecutionEvents should merge matching request and response eve
     requestId: 'request-1',
     response: 'abcdefghij',
     sessionId: 'session-1',
+    subType: 'response',
     timestamp: '2026-01-01T10:01:45.000Z',
     type: 'response',
   }
@@ -156,6 +169,7 @@ test('collapseToolExecutionEvents should merge matching request and response eve
       sessionId: 'session-1',
       size: 10,
       started: '2026-01-01T10:01:30.000Z',
+      subType: 'request',
       timestamp: '2026-01-01T10:01:45.000Z',
       type: 'request',
     },
@@ -167,6 +181,7 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
     eventId: 11,
     requestId: 'request-11',
     sessionId: 'session-1',
+    subType: 'ai-request',
     timestamp: '2026-04-19T12:00:00.000Z',
     type: 'ai-request',
   }
@@ -174,6 +189,7 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
     eventId: 12,
     requestId: 'request-11',
     sessionId: 'session-1',
+    subType: 'ai-response-success',
     timestamp: '2026-04-19T12:00:00.004Z',
     type: 'ai-response-success',
     value: 'abcdefghij',
@@ -191,6 +207,7 @@ test('collapseToolExecutionEvents should merge matching ai-request and ai-respon
       sessionId: 'session-1',
       size: 10,
       started: '2026-04-19T12:00:00.000Z',
+      subType: 'ai-request',
       timestamp: '2026-04-19T12:00:00.004Z',
       type: 'ai-request',
       value: 'abcdefghij',

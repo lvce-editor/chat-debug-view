@@ -58,12 +58,13 @@ test('loadContent should restore the selected event preview from selectedEventId
     'Preferences.get': () => true,
   })
   const events = [
-    { eventId: 1, type: 'request' },
-    { eventId: 2, type: 'response' },
+    { eventId: 1, subType: 'request', type: 'request' },
+    { eventId: 2, subType: 'response', type: 'response' },
   ]
   const selectedEvent = {
     detail: 'restored',
     eventId: 2,
+    subType: 'response',
     type: 'response',
   }
   using chatStorageRpc = ChatStorageWorker.registerMockRpc({
@@ -113,12 +114,13 @@ test('loadContent should restore selected event and detail tab from savedState',
     'Preferences.get': () => true,
   })
   const events = [
-    { eventId: 1, type: 'request' },
-    { eventId: 2, type: 'response' },
+    { eventId: 1, subType: 'request', type: 'request' },
+    { eventId: 2, subType: 'response', type: 'response' },
   ]
   const selectedEvent = {
     detail: 'restored',
     eventId: 2,
+    subType: 'response',
     type: 'response',
   }
   using chatStorageRpc = ChatStorageWorker.registerMockRpc({
@@ -174,6 +176,7 @@ test('loadContent should initialize the virtual table window on first load when 
   const events = Array.from({ length: 8 }, (_, index) => {
     return {
       eventId: index + 1,
+      subType: index % 2 === 0 ? 'request' : 'response',
       type: index % 2 === 0 ? 'request' : 'response',
     }
   })

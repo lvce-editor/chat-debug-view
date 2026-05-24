@@ -3,7 +3,7 @@ import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import { listChatViewEvents } from '../src/parts/ListChatViewEvents/ListChatViewEvents.ts'
 
 test('listChatViewEvents should use chat storage worker', async () => {
-  const events = [
+  const rawEvents = [
     {
       duration: 0,
       endTime: '2026-03-08T00:00:00.000Z',
@@ -13,11 +13,23 @@ test('listChatViewEvents should use chat storage worker', async () => {
     },
   ]
   const expected = {
-    events,
+    events: [
+      {
+        duration: 0,
+        endTime: '2026-03-08T00:00:00.000Z',
+        eventId: 1,
+        startTime: '2026-03-08T00:00:00.000Z',
+        subType: 'request',
+        type: 'request',
+      },
+    ],
     type: 'success' as const,
   }
   using mockRpc = ChatStorageWorker.registerMockRpc({
-    'ChatStorage.listChatViewEvents': () => expected,
+    'ChatStorage.listChatViewEvents': () => ({
+      events: rawEvents,
+      type: 'success' as const,
+    }),
   })
 
   const result = await listChatViewEvents('session-1')

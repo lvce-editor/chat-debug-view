@@ -6,7 +6,7 @@ import { setSessionId } from '../src/parts/SetSessionId/SetSessionId.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('setSessionId should load events for the given session id and clear selection state', async () => {
-  const events = [{ eventId: 1, time: '1ms', type: 'request' }]
+  const events = [{ eventId: 1, subType: 'request', time: '1ms', type: 'request' }]
   using mockRpc = ChatStorageWorker.registerMockRpc({
     'ChatStorage.listChatViewEvents': () => ({
       events,
@@ -18,7 +18,7 @@ test('setSessionId should load events for the given session id and clear selecti
     ...createDefaultState(),
     errorMessage: 'previous error',
     initial: true,
-    selectedEvent: { eventId: 1, type: 'request' },
+    selectedEvent: { eventId: 1, subType: 'request', type: 'request' },
     selectedEventId: 1,
     selectedEventIndex: 0,
   }
@@ -52,7 +52,7 @@ test('setSessionId should return failed-to-load state when listing events return
   const state = {
     ...createDefaultState(),
     initial: true,
-    selectedEvent: { eventId: 2, type: 'response' },
+    selectedEvent: { eventId: 2, subType: 'response', type: 'response' },
     selectedEventId: 2,
     selectedEventIndex: 1,
   }
@@ -87,7 +87,7 @@ test('setSessionId should keep an empty successful result as an empty events sta
     ...createDefaultState(),
     errorMessage: 'previous error',
     initial: true,
-    selectedEvent: { eventId: 3, type: 'tool' },
+    selectedEvent: { eventId: 3, subType: 'tool', type: 'tool' },
     selectedEventId: 3,
     selectedEventIndex: 2,
   }

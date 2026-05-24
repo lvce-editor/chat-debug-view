@@ -59,7 +59,7 @@ test('refresh should return session-not-found state when latest events are empty
 })
 
 test('refresh should update events with latest data from chat storage worker', async () => {
-  const events = [{ eventId: 1, time: '1ms', type: 'request' }]
+  const events = [{ eventId: 1, subType: 'request', time: '1ms', type: 'request' }]
   using mockRpc = ChatStorageWorker.registerMockRpc({
     'ChatStorage.listChatViewEvents': () => ({
       events,
