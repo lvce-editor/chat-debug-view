@@ -13,6 +13,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   await ChatDebug.useDevtoolsLayout()
 
   // assert
-  const refreshButton = Locator('.ChatDebugViewRefreshButton')
+  const refreshButton = Locator('.IconButton')
   await expect(refreshButton).toBeVisible()
 }
