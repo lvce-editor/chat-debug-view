@@ -178,6 +178,25 @@ test('getFilteredEvents should show events from multiple selected category filte
   ])
 })
 
+test('getFilteredEvents should include tool-request-response events for tools category filter', () => {
+  const toolRequestResponseEvent: ChatViewEvent = {
+    durationMs: 40,
+    ended: '2026-01-01T10:05:00.040Z',
+    eventEndId: 10,
+    eventId: 9,
+    method: 'POST',
+    size: 0,
+    started: '2026-01-01T10:05:00.000Z',
+    status: 200,
+    timestamp: '2026-01-01T10:05:00.000Z',
+    type: 'tool-request-response',
+  }
+
+  const result = GetFilteredEvents.getFilteredEvents([toolRequestResponseEvent], '', [EventCategoryFilter.Tools], true, true, true)
+
+  expect(result).toEqual([toolRequestResponseEvent])
+})
+
 test('getFilteredEvents should collapse matching ai-request and ai-response-success events', () => {
   const requestEvent = {
     eventId: 7,

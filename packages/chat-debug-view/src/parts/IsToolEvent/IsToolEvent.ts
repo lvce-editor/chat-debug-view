@@ -1,7 +1,7 @@
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 
-const toolEventTypePrefix = 'tool-execution'
+const toolEventTypePrefixes = ['tool-execution', 'tool-request']
 
 export const isToolEvent = (event: ChatViewEvent): boolean => {
-  return event.type.startsWith(toolEventTypePrefix)
+  return toolEventTypePrefixes.some((prefix) => event.type.startsWith(prefix))
 }
