@@ -15,7 +15,7 @@ export const getHeaderSectionNodes = (section: VisibleHeaderSection): readonly V
     {
       childCount,
       className: ChatDebugViewHeadersSection,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       ariaExpanded: section.isExpanded,

@@ -111,7 +111,7 @@ test('getSelectedContentNodes should return headers content for the headers tab'
   expect(result[0]).toEqual(
     expect.objectContaining({
       className: 'ChatDebugViewHeadersSection',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     }),
   )
   expect(result[2]).toEqual(expect.objectContaining({ text: 'General' }))
