@@ -10,6 +10,7 @@ export const ChatDebugViewDetailsTab = PanelTab
 export const ChatDebugViewDetailsTabSelected = PanelTabSelected
 export const ChatDebugViewDetailsTabs = 'ChatDebugViewDetailsTabs'
 export const ChatDebugViewDetailsTop = 'ChatDebugViewDetailsTop'
+export const MaskIconRefresh = 'MaskIconRefresh'
 export const ChatDebugViewHeadersCell = 'ChatDebugViewHeadersCell'
 export const ChatDebugViewHeadersCellName = 'ChatDebugViewHeadersCellName'
 export const ChatDebugViewHeadersCellValue = 'ChatDebugViewHeadersCellValue'

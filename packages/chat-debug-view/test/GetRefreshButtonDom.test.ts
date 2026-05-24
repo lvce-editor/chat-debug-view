@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals'
-import { VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetRefreshButtonDom from '../src/parts/GetRefreshButtonDom/GetRefreshButtonDom.ts'
 
@@ -17,13 +17,17 @@ test('getRefreshButtonDom should render refresh button nodes', () => {
     {
       'aria-label': 'Refresh events',
       childCount: 1,
-      className: 'ChatDebugViewRefreshButton',
+      className: 'IconButton',
       name: 'refresh',
       onClick: DomEventListenerFunctions.HandleClickRefresh,
       type: VirtualDomElements.Button,
       value: 'refresh',
     },
-    text('Refresh'),
+    {
+      childCount: 0,
+      className: 'MaskIcon MaskIconRefresh',
+      type: VirtualDomElements.Div,
+    },
   ])
 })
 
