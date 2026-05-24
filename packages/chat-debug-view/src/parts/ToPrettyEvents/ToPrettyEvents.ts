@@ -70,6 +70,7 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
   }
 }
 
+// TODO maybe chat-tool-worker should return a status code.
 const getToolCallStatus = (response: ChatViewEvent): number => {
   // @ts-ignore
   if (response && response.toolCallResult && response.toolCallResult.error) {
