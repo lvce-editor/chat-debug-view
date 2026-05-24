@@ -3,7 +3,7 @@ import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { matchesEventCategoryFilter } from '../src/parts/MatchesEventCategoryFilter/MatchesEventCategoryFilter.ts'
 
-const getCategoryFilters = (selectedEventCategoryFilters: readonly string[]) => {
+const getCategoryFilters = (selectedEventCategoryFilters: readonly string[]): readonly EventCategoryFilter.CategoryFilter[] => {
   return EventCategoryFilter.getSelectedCategoryFilters(EventCategoryFilter.createCategoryFilters(selectedEventCategoryFilters))
 }
 
