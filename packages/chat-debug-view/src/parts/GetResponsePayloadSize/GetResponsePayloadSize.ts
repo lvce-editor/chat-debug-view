@@ -34,7 +34,7 @@ const getPayloadText = (payload: unknown): string => {
 }
 
 export const getResponsePayloadSize = (event: ChatViewEvent): number => {
-  if (event && event.size && event.size > 0) {
+  if (event && typeof event.size === 'number' && event.size > 0) {
     return event.size
   }
   const payload = getResponsePayload(event)
