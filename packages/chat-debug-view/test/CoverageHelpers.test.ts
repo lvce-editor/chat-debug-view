@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { getLightweightEvent } from '../src/parts/GetLightweightEvent/GetLightweightEvent.ts'
@@ -16,7 +17,7 @@ test('getEventCategoryFilterLabel should return labels for all known filters and
 })
 
 test('getLightweightEvent should keep only summary fields', () => {
-  const event = {
+  const event: ChatViewEvent = {
     durationMs: 7,
     error: 'ignored',
     eventId: 1,
@@ -25,7 +26,11 @@ test('getLightweightEvent should keep only summary fields', () => {
     timestamp: '2026-01-01T00:00:00.000Z',
     type: 'request',
   }
-  Reflect.deleteProperty(event, 'eventId')
+  Object.defineProperty(event, 'eventId', {
+    configurable: true,
+    value: undefined,
+    writable: true,
+  })
   const result = getLightweightEvent(event, 5)
 
   expect(result).toEqual({
