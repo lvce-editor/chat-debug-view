@@ -12,7 +12,7 @@ import {
   type EventCategoryFilterType,
   normalizeSelectedEventCategoryFilters,
 } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
-import { All, Network, Stream, Tools, Ui } from '../InputName/InputName.ts'
+import { All, Network, Tools } from '../InputName/InputName.ts'
 
 export { type EventCategoryFilterType } from '../CreateEventCategoryFilterOptions/CreateEventCategoryFilterOptions.ts'
 
@@ -21,7 +21,7 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
 }
 
 export const isEventCategoryFilter = (value: string): value is EventCategoryFilterType => {
-  return value === All || value === Tools || value === Network || value === Ui || value === Stream
+  return value === All || value === Tools || value === Network
 }
 
 const getName = (filter: CategoryFilter): string => {

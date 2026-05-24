@@ -1,10 +1,10 @@
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
 import * as ChatDebugStrings from '../ChatDebugStrings/ChatDebugStrings.ts'
-import { All, Network, Stream, Tools, Ui } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import { All, Network, Tools } from '../EventCategoryFilter/EventCategoryFilter.ts'
 
-export type EventCategoryFilterType = typeof All | typeof Tools | typeof Network | typeof Ui | typeof Stream
+export type EventCategoryFilterType = typeof All | typeof Tools | typeof Network
 
-const eventCategoryFilters = [All, Tools, Network, Ui, Stream] as const
+const eventCategoryFilters = [All, Tools, Network] as const
 
 export const normalizeSelectedEventCategoryFilters = (
   selectedEventCategoryFilter: string | readonly string[] = All,
@@ -43,18 +43,6 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
       isSelected: selectedEventCategoryFilters.includes(Network),
       label: ChatDebugStrings.network(),
       name: Network,
-    },
-    {
-      eventTypes: [],
-      isSelected: selectedEventCategoryFilters.includes(Ui),
-      label: ChatDebugStrings.ui(),
-      name: Ui,
-    },
-    {
-      eventTypes: [],
-      isSelected: selectedEventCategoryFilters.includes(Stream),
-      label: ChatDebugStrings.stream(),
-      name: Stream,
     },
   ]
 }

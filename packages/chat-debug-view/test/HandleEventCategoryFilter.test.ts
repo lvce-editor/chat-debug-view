@@ -26,15 +26,12 @@ test('handleEventCategoryFilter should add another event category filter on ctrl
 test('handleEventCategoryFilter should switch to the clicked event category filter on regular click', () => {
   const state = {
     ...createDefaultState(),
-    categoryFilters: EventCategoryFilter.selectCategoryFilters(createDefaultState().categoryFilters, [
-      EventCategoryFilter.Tools,
-      EventCategoryFilter.Network,
-    ]),
+    categoryFilters: EventCategoryFilter.selectCategoryFilters(createDefaultState().categoryFilters, [EventCategoryFilter.All]),
   }
 
-  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Ui, false, false)
+  const result = HandleEventCategoryFilter.handleEventCategoryFilter(state, EventCategoryFilter.Network, false, false)
 
-  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.Ui])
+  expect(EventCategoryFilter.getSelectedEventCategoryFilters(result.categoryFilters)).toEqual([EventCategoryFilter.Network])
 })
 
 test('handleEventCategoryFilter should preserve selected event when category filter still includes it', () => {
