@@ -7,6 +7,7 @@ const event: ChatViewEvent = {
   ended: '2026-03-08T00:00:01.250Z',
   eventId: 1,
   started: '2026-03-08T00:00:01.000Z',
+  subType: '',
   type: 'request',
 }
 
