@@ -44,20 +44,5 @@ export const createCategoryFilters = (selectedEventCategoryFilter: string | read
       label: ChatDebugStrings.network(),
       name: Network,
     },
-<<<<<<< HEAD
-=======
-    {
-      eventTypes: [],
-      isSelected: selectedEventCategoryFilters.includes(Ui),
-      label: ChatDebugStrings.ui(),
-      name: Ui,
-    },
-    {
-      eventTypes: [],
-      isSelected: selectedEventCategoryFilters.includes(Stream),
-      label: ChatDebugStrings.stream(),
-      name: Stream,
-    },
->>>>>>> origin/main
   ]
 }
