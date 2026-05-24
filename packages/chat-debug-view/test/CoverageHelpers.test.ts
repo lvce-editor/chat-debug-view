@@ -1,11 +1,11 @@
 import { expect, test } from '@jest/globals'
+import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import * as ChatDebugStrings from '../src/parts/ChatDebugStrings/ChatDebugStrings.ts'
 import * as EventCategoryFilter from '../src/parts/EventCategoryFilter/EventCategoryFilter.ts'
 import { getLightweightEvent } from '../src/parts/GetLightweightEvent/GetLightweightEvent.ts'
 import { getTimelineFilterDescription } from '../src/parts/GetTimelineFilterDescription/GetTimelineFilterDescription.ts'
 import { handleSashPointerDown } from '../src/parts/HandleSashPointerDown/HandleSashPointerDown.ts'
 import { handleSashPointerUp } from '../src/parts/HandleSashPointerUp/HandleSashPointerUp.ts'
-import type { ChatViewEvent } from '../src/parts/ChatViewEvent/ChatViewEvent.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
 test('getEventCategoryFilterLabel should return labels for all known filters and fallback to all', () => {
@@ -19,8 +19,8 @@ test('getEventCategoryFilterLabel should return labels for all known filters and
 test('getLightweightEvent should keep only summary fields', () => {
   const event: ChatViewEvent = {
     durationMs: 7,
-    eventId: 1,
     error: 'ignored',
+    eventId: 1,
     sessionId: 'session-1',
     subType: 'request',
     timestamp: '2026-01-01T00:00:00.000Z',
