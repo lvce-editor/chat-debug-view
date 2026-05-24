@@ -6,6 +6,7 @@ import * as GetQuickFilterDom from '../src/parts/GetQuickFilterDom/GetQuickFilte
 
 test('getQuickFilterDom should render an unselected quick filter pill', () => {
   const categoryFilter: CategoryFilter = {
+    eventTypes: ['ai-request', 'ai-request-response'],
     isSelected: false,
     label: 'Network',
     name: 'network',
@@ -35,6 +36,7 @@ test('getQuickFilterDom should render an unselected quick filter pill', () => {
 
 test('getQuickFilterDom should render selected quick filter pill state', () => {
   const categoryFilter: CategoryFilter = {
+    eventTypes: ['tool-request', 'tool-request-response'],
     isSelected: true,
     label: 'Tool Calls',
     name: 'tools',
