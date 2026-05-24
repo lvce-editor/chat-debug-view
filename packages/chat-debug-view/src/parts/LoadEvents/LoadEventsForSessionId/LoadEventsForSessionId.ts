@@ -8,6 +8,7 @@ import { restoreSelectedEvent } from '../RestoreSelectedEvent/RestoreSelectedEve
 
 export const loadEventsForSessionId = async (state: ChatDebugViewState, sessionId: string): Promise<ChatDebugViewState> => {
   const result = await listChatViewEvents(sessionId)
+  console.log({ result })
 
   if (result.type === 'error') {
     return applyVirtualTableState(

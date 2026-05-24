@@ -1,5 +1,3 @@
-import { getToolName } from '../GetToolName/GetToolName.ts'
-
 type EventLike = {
   readonly [key: string]: unknown
   readonly name?: unknown
@@ -7,26 +5,9 @@ type EventLike = {
   readonly type: string
 }
 
-const toolExecutionTypePrefix = 'tool-execution'
-
 export const getEventSubType = (event: EventLike, fallbackType: string = event.type, ignoreCurrentSubType: boolean = false): string => {
-  if (!ignoreCurrentSubType && typeof event.subType === 'string' && event.subType) {
+  if (typeof event.subType === 'string') {
     return event.subType
   }
-  if (fallbackType === 'tool-request-response') {
-    const toolName = getToolName(event)
-    if (toolName) {
-      return toolName
-    }
-  }
-  if (event.name === 'list_files') {
-    return event.name
-  }
-  if (fallbackType.startsWith(toolExecutionTypePrefix)) {
-    const toolName = getToolName(event)
-    if (toolName) {
-      return `${fallbackType}, ${toolName}`
-    }
-  }
-  return fallbackType
+  return ''
 }

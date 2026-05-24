@@ -5,6 +5,7 @@ import * as ToPrettyEvents from '../ToPrettyEvents/ToPrettyEvents.ts'
 export const listChatViewEvents = async (sessionId: string): Promise<ListChatViewEventsResult> => {
   try {
     const rawEvents = await ChatStorageWorkerClient.listChatViewEvents(sessionId)
+    console.log({ rawEvents })
     if (rawEvents.type === 'error') {
       return rawEvents
     }
