@@ -37,7 +37,7 @@ test('getHeadersContentNodes should render general, response, and request header
     {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       ariaExpanded: true,
@@ -109,7 +109,7 @@ test('getHeadersContentNodes should render general, response, and request header
     {
       childCount: 3,
       className: 'ChatDebugViewHeadersSection',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       ariaExpanded: true,
@@ -152,6 +152,7 @@ test('getHeadersContentNodes should render general, response, and request header
     text('Some headers may not be displayed due to '),
     {
       childCount: 1,
+      className: 'ExternalLink',
       href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
       rel: 'noopener noreferrer',
       target: '_blank',
@@ -162,7 +163,7 @@ test('getHeadersContentNodes should render general, response, and request header
     {
       childCount: 2,
       className: 'ChatDebugViewHeadersSection',
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Section,
     },
     {
       ariaExpanded: true,
@@ -269,7 +270,7 @@ test('getHeadersContentNodes should render response headers when request headers
   expect(result[0]).toEqual({
     childCount: 2,
     className: 'ChatDebugViewHeadersSection',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Section,
   })
   expect(result[2]).toEqual(text('General'))
   expect(result).toContainEqual(text('Request URL'))
@@ -323,7 +324,7 @@ test('getHeadersContentNodes should omit table rows for collapsed sections', () 
   expect(result[0]).toEqual({
     childCount: 1,
     className: 'ChatDebugViewHeadersSection',
-    type: VirtualDomElements.Div,
+    type: VirtualDomElements.Section,
   })
   expect(result[1]).toEqual({
     ariaExpanded: false,

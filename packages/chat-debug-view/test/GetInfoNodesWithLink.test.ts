@@ -14,6 +14,7 @@ test('getInfoNodesWithLink should render a single info container with linked lab
     text('Some headers may not be displayed due to '),
     {
       childCount: 1,
+      className: 'ExternalLink',
       href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers',
       rel: 'noopener noreferrer',
       target: '_blank',
