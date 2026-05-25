@@ -1,6 +1,6 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
-export const diffItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): boolean => {
+export const isEqual = (oldState: ChatDebugViewState, newState: ChatDebugViewState): boolean => {
   return (
     oldState.categoryFilters !== newState.categoryFilters ||
     oldState.collapsedHeaderSections !== newState.collapsedHeaderSections ||
