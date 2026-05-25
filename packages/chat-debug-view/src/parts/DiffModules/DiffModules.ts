@@ -4,6 +4,6 @@ import * as DiffItems from '../DiffItems/DiffItems.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 import * as DiffValue from '../DiffValue/DiffValue.ts'
 
-export const modules = [DiffItems.isEqual, DiffValue.isEqual, DiffCss.isEqual, DiffFocus.isEqual]
+export const modules = [DiffItems.isEqual, DiffValue.isEqual, DiffCss.isEqual, DiffFocus.isEqual, DiffFocus.isEqual]
 
-export const numbers = [DiffType.RenderIncremental, DiffType.RenderValue, DiffType.RenderCss, DiffType.RenderFocusContext]
+export const numbers = [DiffType.RenderIncremental, DiffType.RenderValue, DiffType.RenderCss, DiffType.RenderFocusContext, DiffType.RenderFocus]
