@@ -8,6 +8,7 @@ import * as FocusFirst from '../FocusFirst/FocusFirst.ts'
 import * as FocusLast from '../FocusLast/FocusLast.ts'
 import * as FocusNext from '../FocusNext/FocusNext.ts'
 import * as FocusPrevious from '../FocusPrevious/FocusPrevious.ts'
+import { getKeyBindings } from '../GetKeyBindings/GetKeyBindings.ts'
 import { getMenuEntries2 } from '../GetMenuEntries2/GetMenuEntries2.ts'
 import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import { getPayload } from '../GetPayload/GetPayload.ts'
@@ -72,7 +73,7 @@ import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
-export const commandMap = {
+export const commandMap: any = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
   'ChatDebug.appendStoredRemovedImageAttachmentForTest': wrapCommand(
@@ -85,6 +86,7 @@ export const commandMap = {
   'ChatDebug.focusNext': wrapCommand(FocusNext.focusNext),
   'ChatDebug.focusPrevious': wrapCommand(FocusPrevious.focusPrevious),
   'ChatDebug.getCommandIds': getCommandIds,
+  'ChatDebug.getKeyBindings': getKeyBindings,
   'ChatDebug.getMenuEntries': wrapGetter(getMenuEntries2),
   'ChatDebug.getMenuIds': getMenuIds,
   'ChatDebug.getPayload': wrapGetter(getPayload),
