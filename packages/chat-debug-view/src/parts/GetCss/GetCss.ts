@@ -11,31 +11,45 @@ import { devtoolsTableHeaderHeight, devtoolsTableRowHeight, devtoolsTableScrollB
 import { getMaxDeltaY, getScrollBarHeight, getScrollBarOffset, getTableBodyHeight } from '../VirtualTable/VirtualTable.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
-  const hasSelectedEvent = !!state.selectedEvent
-  const tableWidth = hasSelectedEvent ? clampTableWidth(state, state.tableWidth) : getMainWidth(state)
+  const {
+    largeBreakpoint,
+    previewTextDeltaY,
+    sashWidth,
+    selectedEvent,
+    tableColumns,
+    tableDeltaY,
+    tableWidth: tableWithRaw,
+    timelineHeight,
+    timelineHoverPercent,
+    timelineInfo,
+    viewPadding,
+    width,
+  } = state
+  const hasSelectedEvent = !!selectedEvent
+  const tableWidth = hasSelectedEvent ? clampTableWidth(state, tableWithRaw) : getMainWidth(state)
   const currentEvents = getCurrentEvents(state)
   const tableBodyHeight = getTableBodyHeight(state, currentEvents.length)
   const scrollBarHeight = getScrollBarHeight(currentEvents.length, tableBodyHeight)
   const maxDeltaY = getMaxDeltaY(currentEvents.length, tableBodyHeight)
   const showScrollBar = scrollBarHeight > 0
-  const scrollBarOffset = getScrollBarOffset(state.tableDeltaY, maxDeltaY, tableBodyHeight, scrollBarHeight)
+  const scrollBarOffset = getScrollBarOffset(tableDeltaY, maxDeltaY, tableBodyHeight, scrollBarHeight)
   const tableContentWidth = Math.max(0, tableWidth - (showScrollBar ? devtoolsTableScrollBarWidth : 0))
-  const detailsWidth = hasSelectedEvent ? getDetailsWidth(state, state.tableWidth) : 0
+  const detailsWidth = hasSelectedEvent ? getDetailsWidth(state, tableWidth) : 0
   const detailsLineNumberWidth = getDetailsLineNumberWidth(state)
   const previewTextViewportHeight = getPreviewTextViewportHeight(state)
-  const previewVirtualization = getPreviewVirtualizationState(state.selectedEvent, previewTextViewportHeight, state.previewTextDeltaY)
+  const previewVirtualization = getPreviewVirtualizationState(selectedEvent, previewTextViewportHeight, previewTextDeltaY)
   let topSize = 60
-  if (state.width >= state.largeBreakpoint) {
+  if (width >= largeBreakpoint) {
     topSize = 30
   }
-  const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(state.tableColumns), state.tableColumns)
+  const tableColumnLayout = getTableColumnLayout(tableContentWidth, TableColumn.getVisibleTableColumns(tableColumns), tableColumns)
   const [tableColZeroWidth = 0, tableColOneWidth = 0, tableColTwoWidth = 0, tableColThreeWidth = 0, tableColFourWidth = 0] =
     tableColumnLayout.visibleColumnWidths
   const resizerOneLeft = tableColumnLayout.resizerLefts[0] ?? 0
   const resizerTwoLeft = tableColumnLayout.resizerLefts[1] ?? 0
   const resizerThreeLeft = tableColumnLayout.resizerLefts[2] ?? 0
   const resizerFourLeft = tableColumnLayout.resizerLefts[3] ?? 0
-  const { selectionEndPercent, selectionStartPercent } = state.timelineInfo
+  const { selectionEndPercent, selectionStartPercent } = timelineInfo
 
   return `
 .ChatDebugView {
@@ -52,7 +66,7 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ChatDebugViewPreviewScrollBarWidth: ${previewVirtualization.showScrollBar ? devtoolsTableScrollBarWidth : 0}px;
   --ChatDebugViewPreviewViewportHeight: ${previewVirtualization.viewportHeight}px;
   --ChatDebugViewDetailsWidth: ${detailsWidth}px;
-  --ChatDebugViewDurationColumnWidth: ${TableColumn.getTableColumnWidth(state.tableColumns, TableColumn.Duration)}px;
+  --ChatDebugViewDurationColumnWidth: ${TableColumn.getTableColumnWidth(tableColumns, TableColumn.Duration)}px;
   --ChatDebugViewTableRowHeight: ${devtoolsTableRowHeight}px;
   --ChatDebugViewTableScrollBarHeight: ${scrollBarHeight}px;
   --ChatDebugViewTableScrollBarOffset: ${scrollBarOffset}px;
@@ -61,15 +75,15 @@ export const getCss = (state: ChatDebugViewState): string => {
   --ResizerTwoLeft: ${resizerTwoLeft}px;
   --ResizerThreeLeft: ${resizerThreeLeft}px;
   --ResizerFourLeft: ${resizerFourLeft}px;
-  --ChatDebugViewSashWidth: ${state.sashWidth}px;
+  --ChatDebugViewSashWidth: ${sashWidth}px;
   --ChatDebugViewTableWidth: ${tableWidth}px;
-  --ChatDebugViewTimelineHeight: ${state.timelineHeight}px;
-  --ChatDebugViewTimelineCursorGuideLeft: ${state.timelineHoverPercent ?? 0}%;
+  --ChatDebugViewTimelineHeight: ${timelineHeight}px;
+  --ChatDebugViewTimelineCursorGuideLeft: ${timelineHoverPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionEndLeft: ${selectionEndPercent ?? 0}%;
   --ChatDebugViewTimelineSelectionStartLeft: ${selectionStartPercent ?? 0}%;
   --ChatDebugViewTopSize: ${topSize}px;
-  --ChatDebugViewTypeColumnWidth: ${TableColumn.getTableColumnWidth(state.tableColumns, TableColumn.Type)}px;
-  padding: ${state.viewPadding}px;
+  --ChatDebugViewTypeColumnWidth: ${TableColumn.getTableColumnWidth(tableColumns, TableColumn.Type)}px;
+  padding: ${viewPadding}px;
   padding-right: 0;
 }
 
