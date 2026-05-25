@@ -12,5 +12,6 @@ const getSelector = (focus: number): string => {
 export const renderFocus = (oldState: ChatDebugViewState, newState: ChatDebugViewState): readonly any[] => {
   const { uid } = newState
   const selector = getSelector(newState.focus)
+  console.log('render focus', selector)
   return [ViewletCommand.FocusSelector, uid, selector]
 }
