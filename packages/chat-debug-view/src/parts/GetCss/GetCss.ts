@@ -11,7 +11,20 @@ import { devtoolsTableHeaderHeight, devtoolsTableRowHeight, devtoolsTableScrollB
 import { getMaxDeltaY, getScrollBarHeight, getScrollBarOffset, getTableBodyHeight } from '../VirtualTable/VirtualTable.ts'
 
 export const getCss = (state: ChatDebugViewState): string => {
-  const { largeBreakpoint, previewTextDeltaY, sashWidth, selectedEvent, tableColumns, tableDeltaY, tableWidth: tableWithRaw, timelineHeight, timelineHoverPercent, timelineInfo, viewPadding, width } = state
+  const {
+    largeBreakpoint,
+    previewTextDeltaY,
+    sashWidth,
+    selectedEvent,
+    tableColumns,
+    tableDeltaY,
+    tableWidth: tableWithRaw,
+    timelineHeight,
+    timelineHoverPercent,
+    timelineInfo,
+    viewPadding,
+    width,
+  } = state
   const hasSelectedEvent = !!selectedEvent
   const tableWidth = hasSelectedEvent ? clampTableWidth(state, tableWithRaw) : getMainWidth(state)
   const currentEvents = getCurrentEvents(state)
