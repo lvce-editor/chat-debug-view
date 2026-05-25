@@ -131,6 +131,12 @@ test('getChatDebugViewDom should render quick filter pills in devtools layout', 
       type: VirtualDomElements.Search,
     },
     {
+      childCount: 1,
+      className: 'SearchField',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    {
       autocomplete: 'off',
       childCount: 0,
       className: 'InputBox ChatDebugViewFilterInput ChatDebugViewFilterInput--devtools',
@@ -258,12 +264,22 @@ test('getChatDebugViewDom should place the filter row before the main pane in de
   const quickFilterGroupIndex = dom.findIndex((node) => node.className === 'ChatDebugViewQuickFilters')
   const emptyStateIndex = dom.findIndex((node) => node.className === 'ChatDebugViewEmpty')
   const root = dom.find((node) => node.className === 'ChatDebugView ChatDebugView--devtools')
+  const searchField = dom[filterRowIndex + 1]
+  const filterInput = dom[filterRowIndex + 2]
 
   expect(filterRowIndex).toBeGreaterThan(-1)
   expect(quickFilterGroupIndex).toBeGreaterThan(filterRowIndex)
   expect(emptyStateIndex).toBeGreaterThan(quickFilterGroupIndex)
   expect(filterRow?.type).toBe(VirtualDomElements.Search)
-  expect(dom[filterRowIndex + 1]).toEqual(
+  expect(searchField).toEqual(
+    expect.objectContaining({
+      childCount: 1,
+      className: 'SearchField',
+      role: 'none',
+      type: VirtualDomElements.Div,
+    }),
+  )
+  expect(filterInput).toEqual(
     expect.objectContaining({
       className: 'InputBox ChatDebugViewFilterInput ChatDebugViewFilterInput--devtools',
       inputType: 'search',
