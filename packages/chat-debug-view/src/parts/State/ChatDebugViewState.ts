@@ -24,6 +24,7 @@ export interface ChatDebugViewState {
   readonly height: number
   readonly horizontalPadding: number
   readonly initial: boolean
+  readonly inputSource: number
   readonly largeBreakpoint: number
   readonly leftPadding: number
   readonly mediumBreakpoint: number
