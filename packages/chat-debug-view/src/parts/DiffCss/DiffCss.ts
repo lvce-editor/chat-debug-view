@@ -9,6 +9,7 @@ export const isEqual = (oldState: ChatDebugViewState, newState: ChatDebugViewSta
     oldState.tableColumns === newState.tableColumns &&
     oldState.tableDeltaY === newState.tableDeltaY &&
     oldState.selectedEvent === newState.selectedEvent &&
-    oldState.events.length === newState.events.length
+    oldState.events.length === newState.events.length &&
+    oldState.tableWidth === newState.tableWidth
   )
 }
