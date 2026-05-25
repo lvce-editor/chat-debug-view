@@ -56,8 +56,6 @@ export interface ChatDebugViewState {
   readonly tableResizerDownId: number
   readonly tableScrollBarHandleOffset: number
   readonly tableScrollBarPointerActive: boolean
-  readonly totalResources: number
-  readonly totalTransferred: number
   readonly tableWidth: number
   readonly tableWidthManuallyResized: boolean
   readonly timelineEndSeconds: string
@@ -72,6 +70,8 @@ export interface ChatDebugViewState {
   readonly timelineSelectionAnchorSeconds: string
   readonly timelineSelectionFocusSeconds: string
   readonly timelineStartSeconds: string
+  readonly totalResources: number
+  readonly totalTransferred: number
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean
