@@ -17,6 +17,10 @@ test('getTableSummaryDom should render a status region with summary items and a 
       type: VirtualDomElements.Span,
     },
     text('2 requests'),
+    {
+      childCount: 1,
+      type: VirtualDomElements.Span,
+    },
     text(' | '),
     {
       childCount: 1,
