@@ -70,6 +70,8 @@ export interface ChatDebugViewState {
   readonly timelineSelectionAnchorSeconds: string
   readonly timelineSelectionFocusSeconds: string
   readonly timelineStartSeconds: string
+  readonly totalResources: number
+  readonly totalTransferred: number
   readonly uid: number
   readonly uri: string
   readonly useDevtoolsLayout: boolean
