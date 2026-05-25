@@ -2,40 +2,41 @@ import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const isEqual = (oldState: ChatDebugViewState, newState: ChatDebugViewState): boolean => {
   return (
-    oldState.categoryFilters === newState.categoryFilters ||
-    oldState.collapsedHeaderSections === newState.collapsedHeaderSections ||
-    oldState.detailTabs === newState.detailTabs ||
-    oldState.errorMessage === newState.errorMessage ||
-    oldState.events === newState.events ||
-    oldState.filterValue === newState.filterValue ||
-    oldState.previewTextCursorColumnIndex === newState.previewTextCursorColumnIndex ||
-    oldState.previewTextCursorRowIndex === newState.previewTextCursorRowIndex ||
-    oldState.previewTextDeltaY === newState.previewTextDeltaY ||
-    oldState.summaries === newState.summaries ||
-    oldState.sessionId === newState.sessionId ||
-    oldState.showEventStreamFinishedEvents === newState.showEventStreamFinishedEvents ||
-    oldState.showInputEvents === newState.showInputEvents ||
-    oldState.showResponsePartEvents === newState.showResponsePartEvents ||
-    oldState.sortColumn === newState.sortColumn ||
-    oldState.sortDescending === newState.sortDescending ||
-    oldState.tableDeltaY === newState.tableDeltaY ||
-    oldState.tableMaxLineY === newState.tableMaxLineY ||
-    oldState.tableMinLineY === newState.tableMinLineY ||
-    oldState.tableWidth === newState.tableWidth ||
-    oldState.timelineEndSeconds === newState.timelineEndSeconds ||
-    oldState.timelineHeight === newState.timelineHeight ||
-    oldState.timelineHoverPercent === newState.timelineHoverPercent ||
-    oldState.timelineHoverSeconds === newState.timelineHoverSeconds ||
-    oldState.timelineSelectionActive === newState.timelineSelectionActive ||
-    oldState.timelineSelectionAnchorSeconds === newState.timelineSelectionAnchorSeconds ||
-    oldState.timelineSelectionFocusSeconds === newState.timelineSelectionFocusSeconds ||
-    oldState.timelineStartSeconds === newState.timelineStartSeconds ||
-    oldState.useDevtoolsLayout === newState.useDevtoolsLayout ||
-    oldState.tableColumns === newState.tableColumns ||
-    oldState.selectedEvent === newState.selectedEvent ||
-    oldState.selectedEventIndex === newState.selectedEventIndex ||
-    oldState.focus === newState.focus ||
-    oldState.width === newState.width ||
+    oldState.initial === newState.initial &&
+    oldState.categoryFilters === newState.categoryFilters &&
+    oldState.collapsedHeaderSections === newState.collapsedHeaderSections &&
+    oldState.detailTabs === newState.detailTabs &&
+    oldState.errorMessage === newState.errorMessage &&
+    oldState.events === newState.events &&
+    oldState.filterValue === newState.filterValue &&
+    oldState.previewTextCursorColumnIndex === newState.previewTextCursorColumnIndex &&
+    oldState.previewTextCursorRowIndex === newState.previewTextCursorRowIndex &&
+    oldState.previewTextDeltaY === newState.previewTextDeltaY &&
+    oldState.summaries === newState.summaries &&
+    oldState.sessionId === newState.sessionId &&
+    oldState.showEventStreamFinishedEvents === newState.showEventStreamFinishedEvents &&
+    oldState.showInputEvents === newState.showInputEvents &&
+    oldState.showResponsePartEvents === newState.showResponsePartEvents &&
+    oldState.sortColumn === newState.sortColumn &&
+    oldState.sortDescending === newState.sortDescending &&
+    oldState.tableDeltaY === newState.tableDeltaY &&
+    oldState.tableMaxLineY === newState.tableMaxLineY &&
+    oldState.tableMinLineY === newState.tableMinLineY &&
+    oldState.tableWidth === newState.tableWidth &&
+    oldState.timelineEndSeconds === newState.timelineEndSeconds &&
+    oldState.timelineHeight === newState.timelineHeight &&
+    oldState.timelineHoverPercent === newState.timelineHoverPercent &&
+    oldState.timelineHoverSeconds === newState.timelineHoverSeconds &&
+    oldState.timelineSelectionActive === newState.timelineSelectionActive &&
+    oldState.timelineSelectionAnchorSeconds === newState.timelineSelectionAnchorSeconds &&
+    oldState.timelineSelectionFocusSeconds === newState.timelineSelectionFocusSeconds &&
+    oldState.timelineStartSeconds === newState.timelineStartSeconds &&
+    oldState.useDevtoolsLayout === newState.useDevtoolsLayout &&
+    oldState.tableColumns === newState.tableColumns &&
+    oldState.selectedEvent === newState.selectedEvent &&
+    oldState.selectedEventIndex === newState.selectedEventIndex &&
+    oldState.focus === newState.focus &&
+    oldState.width === newState.width &&
     oldState.uid === newState.uid
   )
 }
