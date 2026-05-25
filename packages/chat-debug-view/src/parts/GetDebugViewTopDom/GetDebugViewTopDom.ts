@@ -1,9 +1,21 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
-import { ChatDebugViewTop, ChatDebugViewTopDevtools } from '../ClassNames/ClassNames.ts'
+import { ChatDebugViewTop, ChatDebugViewTopDevtools, SearchField } from '../ClassNames/ClassNames.ts'
 import * as GetFilterInputDom from '../GetFilterInputDom/GetFilterInputDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import * as GetRefreshButtonDom from '../GetRefreshButtonDom/GetRefreshButtonDom.ts'
+
+const getFilterInputWrapperDom = (filterValue: string, useDevtoolsLayout: boolean): readonly VirtualDomNode[] => {
+  return [
+    {
+      childCount: 1,
+      className: SearchField,
+      role: 'none',
+      type: VirtualDomElements.Div,
+    },
+    GetFilterInputDom.getFilterInputDom(filterValue, useDevtoolsLayout),
+  ]
+}
 
 export const getDebugViewTopDom = (
   filterValue: string,
@@ -19,7 +31,7 @@ export const getDebugViewTopDom = (
         className: mergeClassNames(ChatDebugViewTop, ChatDebugViewTopDevtools),
         type: VirtualDomElements.Search,
       },
-      GetFilterInputDom.getFilterInputDom(filterValue, true),
+      ...getFilterInputWrapperDom(filterValue, true),
       ...quickFilterNodes,
       ...refreshButtonDom,
     ]
@@ -31,7 +43,7 @@ export const getDebugViewTopDom = (
       className: ChatDebugViewTop,
       type: VirtualDomElements.Search,
     },
-    GetFilterInputDom.getFilterInputDom(filterValue, false),
+    ...getFilterInputWrapperDom(filterValue, false),
     ...refreshButtonDom,
   ]
 }

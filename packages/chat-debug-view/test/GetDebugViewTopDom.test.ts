@@ -16,6 +16,8 @@ test('getDebugViewTopDom should render search section', () => {
     readonly onClick?: number
     readonly onInput?: number
     readonly placeholder?: string
+    readonly role?: string
+    readonly type?: number
     readonly value?: string
   }[]
 
@@ -24,6 +26,12 @@ test('getDebugViewTopDom should render search section', () => {
       childCount: 2,
       className: 'ChatDebugViewTop',
       type: VirtualDomElements.Search,
+    },
+    {
+      childCount: 1,
+      className: 'SearchField',
+      role: 'none',
+      type: VirtualDomElements.Div,
     },
     {
       autocomplete: 'off',
@@ -67,6 +75,8 @@ test('getDebugViewTopDom should render devtools search section', () => {
     readonly onClick?: number
     readonly onInput?: number
     readonly placeholder?: string
+    readonly role?: string
+    readonly type?: number
     readonly value?: string
   }[]
 
@@ -75,6 +85,12 @@ test('getDebugViewTopDom should render devtools search section', () => {
       childCount: 3,
       className: `ChatDebugViewTop ${ChatDebugViewTopDevtools}`,
       type: VirtualDomElements.Search,
+    },
+    {
+      childCount: 1,
+      className: 'SearchField',
+      role: 'none',
+      type: VirtualDomElements.Div,
     },
     {
       autocomplete: 'off',
