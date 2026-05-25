@@ -56,6 +56,8 @@ export interface ChatDebugViewState {
   readonly tableResizerDownId: number
   readonly tableScrollBarHandleOffset: number
   readonly tableScrollBarPointerActive: boolean
+  readonly totalResources: number
+  readonly totalTransferred: number
   readonly tableWidth: number
   readonly tableWidthManuallyResized: boolean
   readonly timelineEndSeconds: string

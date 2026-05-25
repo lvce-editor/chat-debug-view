@@ -64,6 +64,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     tableResizerDownId: 0,
     tableScrollBarHandleOffset: 0,
     tableScrollBarPointerActive: false,
+    totalResources: 0,
+    totalTransferred: 0,
     tableWidth: defaultTableWidth,
     tableWidthManuallyResized: false,
     timelineEndSeconds: '',
