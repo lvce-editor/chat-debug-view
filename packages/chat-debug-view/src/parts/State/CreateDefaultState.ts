@@ -78,6 +78,8 @@ export const createDefaultState = (): ChatDebugViewState => {
     timelineSelectionAnchorSeconds: '',
     timelineSelectionFocusSeconds: '',
     timelineStartSeconds: '',
+    totalResources: 0,
+    totalTransferred: 0,
     uid: 0,
     uri: '',
     useDevtoolsLayout: true,
