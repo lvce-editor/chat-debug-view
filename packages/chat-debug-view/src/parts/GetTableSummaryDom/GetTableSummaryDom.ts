@@ -6,6 +6,11 @@ const tableSummaryItemNode = {
   type: VirtualDomElements.Span,
 }
 
+const tableSummarySeparatorNode = {
+  childCount: 1,
+  type: VirtualDomElements.Span,
+}
+
 export const getTableSummaryDom = (summaries: readonly string[]): readonly VirtualDomNode[] => {
   const nonEmptySummaries = summaries.filter(Boolean)
   if (nonEmptySummaries.length === 0) {
@@ -15,7 +20,7 @@ export const getTableSummaryDom = (summaries: readonly string[]): readonly Virtu
   for (let i = 0; i < nonEmptySummaries.length; i++) {
     nodes.push(tableSummaryItemNode, text(nonEmptySummaries[i]))
     if (i < nonEmptySummaries.length - 1) {
-      nodes.push(text(' | '))
+      nodes.push(tableSummarySeparatorNode, text(' | '))
     }
   }
   return nodes
