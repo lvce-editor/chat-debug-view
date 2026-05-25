@@ -73,7 +73,7 @@ import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
-export const commandMap = {
+export const commandMap: any = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
   'ChatDebug.appendStoredRemovedImageAttachmentForTest': wrapCommand(
