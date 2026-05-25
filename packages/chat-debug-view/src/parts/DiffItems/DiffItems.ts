@@ -1,7 +1,8 @@
 import type { ChatDebugViewState } from '../State/ChatDebugViewState.ts'
 
 export const diffItems = (oldState: ChatDebugViewState, newState: ChatDebugViewState): boolean => {
-  return oldState.categoryFilters !== newState.categoryFilters ||
+  return (
+    oldState.categoryFilters !== newState.categoryFilters ||
     oldState.collapsedHeaderSections !== newState.collapsedHeaderSections ||
     oldState.detailTabs !== newState.detailTabs ||
     oldState.errorMessage !== newState.errorMessage ||
@@ -36,4 +37,5 @@ export const diffItems = (oldState: ChatDebugViewState, newState: ChatDebugViewS
     oldState.focus !== newState.focus ||
     oldState.width !== newState.width ||
     oldState.uid !== newState.uid
+  )
 }
