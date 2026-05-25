@@ -32,6 +32,7 @@ export const createDefaultState = (): ChatDebugViewState => {
     height: 0,
     horizontalPadding,
     initial: false,
+    inputSource: 0,
     largeBreakpoint: 900,
     leftPadding,
     mediumBreakpoint: 600,
