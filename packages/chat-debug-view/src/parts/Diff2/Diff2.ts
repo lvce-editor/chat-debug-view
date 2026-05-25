@@ -3,6 +3,5 @@ import * as ChatDebugViewStates from '../State/ChatDebugViewStates.ts'
 
 export const diff2 = (uid: number): readonly number[] => {
   const r = ChatDebugViewStates.diff(uid, DiffModules.modules, DiffModules.numbers)
-  console.log({ r })
   return r
 }
