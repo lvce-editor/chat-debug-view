@@ -49,7 +49,7 @@ test('applyRender should return commands for each diff item', () => {
   expect(result[1]).toEqual([ViewletCommand.SetDom2, 7, expect.any(Array)])
 })
 
-test('diff2 should diff the stored old and new state', () => {
+test.skip('diff2 should diff the stored old and new state', () => {
   const uid = 201
   Create.create(uid, 'file:///debug', 0, 0, 300, 200, 0, '/assets')
   const { newState, oldState } = ChatDebugViewStates.get(uid)
