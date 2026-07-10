@@ -9,9 +9,9 @@ export const getLightweightEvent = (event: ChatViewEvent, fallbackEventId: numbe
   const endTime = getEndTime(event)
   return {
     duration: getDuration(event),
-    ...(isTimeValue(endTime) ? { endTime } : {}),
+    ...(isTimeValue(endTime) && { endTime }),
     eventId: typeof event.eventId === 'number' ? event.eventId : fallbackEventId,
-    ...(isTimeValue(startTime) ? { startTime } : {}),
+    ...(isTimeValue(startTime) && { startTime }),
     subType: event.subType,
     type: event.type,
   }

@@ -51,8 +51,8 @@ export const getTokenUsageDetails = (event: Readonly<ChatViewEvent>): TokenUsage
     return undefined
   }
   return {
-    ...(cachedTokens === undefined ? undefined : { cachedTokens }),
-    ...(inputTokens === undefined ? undefined : { inputTokens }),
-    ...(outputTokens === undefined ? undefined : { outputTokens }),
+    ...(cachedTokens !== undefined && { cachedTokens }),
+    ...(inputTokens !== undefined && { inputTokens }),
+    ...(outputTokens !== undefined && { outputTokens }),
   }
 }

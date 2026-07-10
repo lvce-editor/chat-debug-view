@@ -25,7 +25,7 @@ export const getTableWrapperDom = (
     className: tableWrapperClassName,
     onWheel: DomEventListenerFunctions.HandleTableWheel,
     type: VirtualDomElements.Div,
-    ...(role ? { role } : {}),
+    ...(role && { role }),
   }
   return [
     tableWrapperNode,

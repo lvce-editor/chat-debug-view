@@ -32,7 +32,7 @@ test('isTableColumnWidths should return false for missing or invalid widths', ()
       duration: 110,
       method: 90,
       size: 100,
-      status: Number.POSITIVE_INFINITY,
+      status: Infinity,
       type: 260,
     }),
   ).toBe(false)

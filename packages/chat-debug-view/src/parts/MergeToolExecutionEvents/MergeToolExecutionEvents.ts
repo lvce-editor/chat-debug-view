@@ -15,9 +15,9 @@ export const mergeToolExecutionEvents = (
   const mergedEvent: ChatViewEvent = {
     ...startedEvent,
     ...finishedEvent,
-    ...(ended === undefined ? {} : { ended }),
+    ...(ended !== undefined && { ended }),
     eventId,
-    ...(started === undefined ? {} : { started }),
+    ...(started !== undefined && { started }),
     subType: getEventSubType(startedEvent, type, true),
     type,
   }

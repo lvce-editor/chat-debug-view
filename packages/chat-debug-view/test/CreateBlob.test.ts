@@ -1,7 +1,7 @@
 import { afterEach, expect, test } from '@jest/globals'
 import { createBlob } from '../src/parts/CreateBlob/CreateBlob.ts'
 
-const originalOffscreenCanvas = (globalThis as typeof globalThis & { OffscreenCanvas?: unknown }).OffscreenCanvas
+const originalOffscreenCanvas = globalThis.OffscreenCanvas
 
 const setOffscreenCanvas = (value: unknown): void => {
   Object.defineProperty(globalThis, 'OffscreenCanvas', {
