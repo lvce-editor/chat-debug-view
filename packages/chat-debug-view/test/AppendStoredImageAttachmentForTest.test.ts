@@ -3,7 +3,7 @@ import { ChatStorageWorker } from '@lvce-editor/rpc-registry'
 import * as AppendStoredImageAttachmentForTest from '../src/parts/AppendStoredImageAttachmentForTest/AppendStoredImageAttachmentForTest.ts'
 import { createDefaultState } from '../src/parts/State/CreateDefaultState.ts'
 
-const originalOffscreenCanvas = (globalThis as typeof globalThis & { OffscreenCanvas?: unknown }).OffscreenCanvas
+const originalOffscreenCanvas = globalThis.OffscreenCanvas
 
 const setOffscreenCanvas = (value: unknown): void => {
   Object.defineProperty(globalThis, 'OffscreenCanvas', {

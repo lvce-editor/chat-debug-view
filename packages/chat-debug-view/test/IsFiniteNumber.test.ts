@@ -6,7 +6,7 @@ test('isFiniteNumber should return true for finite numbers', () => {
 })
 
 test('isFiniteNumber should return false for non-finite values', () => {
-  expect(IsFiniteNumber.isFiniteNumber(Number.NaN)).toBe(false)
-  expect(IsFiniteNumber.isFiniteNumber(Number.POSITIVE_INFINITY)).toBe(false)
+  expect(IsFiniteNumber.isFiniteNumber(NaN)).toBe(false)
+  expect(IsFiniteNumber.isFiniteNumber(Infinity)).toBe(false)
   expect(IsFiniteNumber.isFiniteNumber('42')).toBe(false)
 })

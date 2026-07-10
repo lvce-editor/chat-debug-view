@@ -6,7 +6,7 @@ import { getStartTime } from '../GetStartTime/GetStartTime.ts'
 import { toTimeNumber } from '../ToTimeNumber/ToTimeNumber.ts'
 
 export const getTableSummaries = (events: readonly ChatViewEvent[]): readonly string[] => {
-  let minStart = Number.POSITIVE_INFINITY
+  let minStart = Infinity
   let maxEnd = Number.NEGATIVE_INFINITY
 
   for (const event of events) {

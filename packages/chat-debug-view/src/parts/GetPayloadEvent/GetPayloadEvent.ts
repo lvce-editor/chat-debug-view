@@ -52,9 +52,9 @@ const getPayloadObject = (event: ChatViewEvent, name: string | undefined): Paylo
     return event.args as any
   }
   return {
-    ...(name === undefined ? {} : { name }),
-    ...(shouldIncludeArguments(event, name) ? { arguments: event.arguments } : {}),
-    ...(hasOwn(event, 'result') ? { result: event.result } : {}),
+    ...(name !== undefined && { name }),
+    ...(shouldIncludeArguments(event, name) && { arguments: event.arguments }),
+    ...(hasOwn(event, 'result') && { result: event.result }),
   }
 }
 

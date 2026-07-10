@@ -1,4 +1,3 @@
-/* eslint-disable @cspell/spellchecker */
 /* eslint-disable sonarjs/cognitive-complexity */
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import type { ListChatViewEventsResult } from '../ListChatViewEventsResult/ListChatViewEventsResult.ts'
@@ -43,28 +42,28 @@ const getMergedRequestResponseEvent = (item: ChatViewEvent, response: ChatViewEv
   if (Number.isFinite(durationMs) && durationMs >= 0) {
     return {
       durationMs,
-      ...(ended === undefined ? {} : { ended }),
+      ...(ended !== undefined && { ended }),
       eventEndId: response.eventId,
       eventId: item.eventId,
       method: 'POST',
       size: getResponsePayloadSize(response),
-      ...(started === undefined ? {} : { started }),
-      ...(status === undefined ? {} : { status }),
-      ...(timestamp === undefined ? {} : { timestamp }),
+      ...(started !== undefined && { started }),
+      ...(status !== undefined && { status }),
+      ...(timestamp !== undefined && { timestamp }),
       subType: getEventSubType(item, 'ai-request-response', true),
       type: 'ai-request-response',
     }
   }
 
   return {
-    ...(ended === undefined ? {} : { ended }),
+    ...(ended !== undefined && { ended }),
     eventEndId: response.eventId,
     eventId: item.eventId,
     method: 'POST',
     size: getResponsePayloadSize(response),
-    ...(started === undefined ? {} : { started }),
-    ...(status === undefined ? {} : { status }),
-    ...(timestamp === undefined ? {} : { timestamp }),
+    ...(started !== undefined && { started }),
+    ...(status !== undefined && { status }),
+    ...(timestamp !== undefined && { timestamp }),
     subType: getEventSubType(item, 'ai-request-response', true),
     type: 'ai-request-response',
   }
@@ -98,15 +97,15 @@ const getMergedToolCallEvent = (item: ChatViewEvent, response: ChatViewEvent): C
   const size = getToolCallSize(response)
 
   return {
-    ...(ended === undefined ? {} : { ended }),
+    ...(ended !== undefined && { ended }),
     durationMs,
     eventEndId: response.eventId,
     eventId: item.eventId,
     method: 'POST',
     size,
-    ...(started === undefined ? {} : { started }),
+    ...(started !== undefined && { started }),
     status,
-    ...(timestamp === undefined ? {} : { timestamp }),
+    ...(timestamp !== undefined && { timestamp }),
     subType,
     type: 'tool-request-response',
   }

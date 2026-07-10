@@ -9,7 +9,7 @@ export const resetTableColumns = (state: ChatDebugViewState): ChatDebugViewState
     getVisibleTableColumns(tableColumns).join(',') === defaultVisibleTableColumns.join(',') &&
     isSameTableColumnWidths(getTableColumnWidths(tableColumns), getTableColumnWidths(defaultTableColumns)) &&
     sortColumn === '' &&
-    sortDescending === false
+    !sortDescending
   ) {
     return state
   }

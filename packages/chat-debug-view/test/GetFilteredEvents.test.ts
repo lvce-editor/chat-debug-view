@@ -105,7 +105,7 @@ test('getFilteredEvents should filter by normalized search text', () => {
 })
 
 test('getFilteredEvents should return all visible events when filter is empty', () => {
-  const result = GetFilteredEvents.getFilteredEvents(events, '   ', getCategoryFilters([EventCategoryFilter.All]), true, true, true)
+  const result = GetFilteredEvents.getFilteredEvents(events, ' '.repeat(3), getCategoryFilters([EventCategoryFilter.All]), true, true, true)
   expect(result).toHaveLength(6)
 })
 

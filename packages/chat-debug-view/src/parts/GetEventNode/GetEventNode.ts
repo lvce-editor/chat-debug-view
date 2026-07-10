@@ -16,7 +16,7 @@ interface MutableTokenSegment {
 const getJsonLines = (value: unknown): readonly (readonly TokenSegment[])[] => {
   const json = JSON.stringify(value, null, 2)
   if (!json) {
-    return [[{ className: TokenText, value: String(json) }]]
+    return [[{ className: TokenText, value: json }]]
   }
   const lines: TokenSegment[][] = []
   let currentLine: MutableTokenSegment[] = []
@@ -34,12 +34,14 @@ const getJsonLines = (value: unknown): readonly (readonly TokenSegment[])[] => {
   forEachTokenSegment(json, (className, segmentValue) => {
     let start = 0
     for (let i = 0; i < segmentValue.length; i++) {
-      if (segmentValue[i] === '\n') {
-        pushLineSegment(className, segmentValue.slice(start, i))
-        lines.push(currentLine)
-        currentLine = []
-        start = i + 1
+      if (segmentValue[i] !== '\n') {
+        continue
       }
+
+      pushLineSegment(className, segmentValue.slice(start, i))
+      lines.push(currentLine)
+      currentLine = []
+      start = i + 1
     }
     pushLineSegment(className, segmentValue.slice(start))
   })

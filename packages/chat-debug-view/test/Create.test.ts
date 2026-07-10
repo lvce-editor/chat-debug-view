@@ -11,8 +11,7 @@ test('create should store state with the given uid', () => {
   const uid = 123
   Create.create(uid, 'file:///debug', 10, 20, 300, 400, 0, '/assets')
   const result = ChatDebugViewStates.get(uid)
-  const { newState } = result
-  const { oldState } = result
+  const { newState, oldState } = result
 
   expect(newState.uid).toBe(uid)
   expect(newState.uri).toBe('file:///debug')
