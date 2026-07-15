@@ -29,4 +29,10 @@ export default [
       'unicorn/prefer-object-iterable-methods': 'off',
     },
   },
+  {
+    files: ['packages/e2e/**/*.ts'],
+    rules: {
+      'e2e/no-imports': 'off',
+    },
+  },
 ]
