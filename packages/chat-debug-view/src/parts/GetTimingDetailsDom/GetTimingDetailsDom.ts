@@ -8,13 +8,15 @@ import { getStartText } from '../GetStartText/GetStartText.ts'
 import { getTimingPreviewDom } from '../GetTimingPreviewDom/GetTimingPreviewDom.ts'
 import { getTimingRowDom } from '../GetTimingRowDom/GetTimingRowDom.ts'
 
+const timingDetailsNode: VirtualDomNode = {
+  childCount: 4,
+  className: ChatDebugViewTiming,
+  type: VirtualDomElements.Div,
+}
+
 export const getTimingDetailsDom = (event: ChatViewEvent): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 4,
-      className: ChatDebugViewTiming,
-      type: VirtualDomElements.Div,
-    },
+    timingDetailsNode,
     ...getTimingPreviewDom(event),
     ...getTimingRowDom(ChatDebugStrings.started(), getStartText(event)),
     ...getTimingRowDom(ChatDebugStrings.ended(), getEndText(event)),

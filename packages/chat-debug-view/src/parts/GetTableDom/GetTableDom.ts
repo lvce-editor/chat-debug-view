@@ -7,6 +7,14 @@ import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
 import * as TabIndex from '../TabIndex/TabIndex.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
+const tableNode: VirtualDomNode = {
+  childCount: 3,
+  className: Table,
+  onFocus: DomEventListenerFunctions.HandleTableFocus,
+  tabIndex: TabIndex.Focusable,
+  type: VirtualDomElements.Table,
+}
+
 export const getTableDom = (
   rowNodes: readonly VirtualDomNode[],
   eventCount: number,
@@ -16,13 +24,7 @@ export const getTableDom = (
   focus = 0,
 ): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 3,
-      className: Table,
-      onFocus: DomEventListenerFunctions.HandleTableFocus,
-      tabIndex: TabIndex.Focusable,
-      type: VirtualDomElements.Table,
-    },
+    tableNode,
     ...getTableColumnGroupDom(visibleTableColumns),
     ...getTableHeaderDom(visibleTableColumns, tableColumns),
     ...getTableBodyDom(rowNodes, eventCount),

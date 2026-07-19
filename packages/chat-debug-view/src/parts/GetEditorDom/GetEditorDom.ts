@@ -8,6 +8,41 @@ import { getEditorRowsDom } from '../GetEditorRowsDom/GetEditorRowsDom.ts'
 import { getEditorSelectionDom } from '../GetEditorSelectionDom/GetEditorSelectionDom.ts'
 import { getGutterDom } from '../GetGutterDom/GetGutterDom.ts'
 
+const editorContainerNode: VirtualDomNode = {
+  childCount: 1,
+  className: EditorContainer,
+  type: VirtualDomElements.Div,
+}
+
+const editorViewletNode: VirtualDomNode = {
+  childCount: 2,
+  className: EditorViewlet,
+  role: AriaRoles.Code,
+  type: VirtualDomElements.Div,
+}
+
+const editorInputNode: VirtualDomNode = {
+  'aria-autocomplete': 'list',
+  'aria-multiline': true,
+  'aria-roledescription': 'editor',
+  autocapitalize: 'off',
+  autocomplete: 'off',
+  autocorrect: 'off',
+  childCount: 0,
+  className: EditorInput,
+  name: 'editor',
+  role: AriaRoles.TextBox,
+  spellcheck: false,
+  type: VirtualDomElements.TextArea,
+  wrap: 'off',
+}
+
+const editorLayersNode: VirtualDomNode = {
+  childCount: 2,
+  className: EditorLayers,
+  type: VirtualDomElements.Div,
+}
+
 export { getVirtualizedEditorDom } from '../GetVirtualizedEditorDom/GetVirtualizedEditorDom.ts'
 export type { VirtualizedEditorOptions } from '../GetVirtualizedEditorDom/GetVirtualizedEditorDom.ts'
 
@@ -18,17 +53,8 @@ export const getEditorDom = (
   onPointerDown?: number,
 ): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 1,
-      className: EditorContainer,
-      type: VirtualDomElements.Div,
-    },
-    {
-      childCount: 2,
-      className: EditorViewlet,
-      role: AriaRoles.Code,
-      type: VirtualDomElements.Div,
-    },
+    editorContainerNode,
+    editorViewletNode,
     ...getGutterDom(lineData, showLineNumbers),
     {
       childCount: 2,
@@ -36,26 +62,8 @@ export const getEditorDom = (
       onPointerDown,
       type: VirtualDomElements.Div,
     },
-    {
-      'aria-autocomplete': 'list',
-      'aria-multiline': true,
-      'aria-roledescription': 'editor',
-      autocapitalize: 'off',
-      autocomplete: 'off',
-      autocorrect: 'off',
-      childCount: 0,
-      className: EditorInput,
-      name: 'editor',
-      role: AriaRoles.TextBox,
-      spellcheck: false,
-      type: VirtualDomElements.TextArea,
-      wrap: 'off',
-    },
-    {
-      childCount: 2,
-      className: EditorLayers,
-      type: VirtualDomElements.Div,
-    },
+    editorInputNode,
+    editorLayersNode,
     ...getEditorSelectionDom(cursor),
     ...getEditorRowsDom(lineData),
   ]

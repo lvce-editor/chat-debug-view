@@ -6,16 +6,21 @@ import * as GetFilterInputDom from '../GetFilterInputDom/GetFilterInputDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
 import * as GetRefreshButtonDom from '../GetRefreshButtonDom/GetRefreshButtonDom.ts'
 
+const filterInputWrapperNode: VirtualDomNode = {
+  childCount: 1,
+  className: SearchField,
+  role: AriaRoles.None,
+  type: VirtualDomElements.Div,
+}
+
+const debugViewTopNode: VirtualDomNode = {
+  childCount: 2,
+  className: ChatDebugViewTop,
+  type: VirtualDomElements.Search,
+}
+
 const getFilterInputWrapperDom = (filterValue: string, useDevtoolsLayout: boolean): readonly VirtualDomNode[] => {
-  return [
-    {
-      childCount: 1,
-      className: SearchField,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
-    GetFilterInputDom.getFilterInputDom(filterValue, useDevtoolsLayout),
-  ]
+  return [filterInputWrapperNode, GetFilterInputDom.getFilterInputDom(filterValue, useDevtoolsLayout)]
 }
 
 export const getDebugViewTopDom = (
@@ -38,13 +43,5 @@ export const getDebugViewTopDom = (
     ]
   }
 
-  return [
-    {
-      childCount: 2,
-      className: ChatDebugViewTop,
-      type: VirtualDomElements.Search,
-    },
-    ...getFilterInputWrapperDom(filterValue, false),
-    ...refreshButtonDom,
-  ]
+  return [debugViewTopNode, ...getFilterInputWrapperDom(filterValue, false), ...refreshButtonDom]
 }

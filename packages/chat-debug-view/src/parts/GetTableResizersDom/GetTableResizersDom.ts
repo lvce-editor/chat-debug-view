@@ -4,6 +4,13 @@ import { Resizer, ResizerFour, ResizerInner, ResizerOne, ResizerThree, ResizerTw
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getOrderedVisibleTableColumns } from '../TableColumn/TableColumn.ts'
 
+const tableResizersNode: VirtualDomNode = {
+  childCount: 0,
+  className: ResizerInner,
+  role: AriaRoles.None,
+  type: VirtualDomElements.Div,
+}
+
 const resizerNames = ['ResizerOne', 'ResizerTwo', 'ResizerThree', 'ResizerFour'] as const
 const resizerClassNames = [ResizerOne, ResizerTwo, ResizerThree, ResizerFour] as const
 
@@ -24,12 +31,7 @@ export const getTableResizersDom = (visibleTableColumns: readonly string[]): rea
       tabIndex: -1,
       type: VirtualDomElements.Button,
     },
-    {
-      childCount: 0,
-      className: ResizerInner,
-      role: AriaRoles.None,
-      type: VirtualDomElements.Div,
-    },
+    tableResizersNode,
   ])
   return [
     {
