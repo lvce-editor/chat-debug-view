@@ -1,5 +1,6 @@
 import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as AriaRoles from '../src/parts/AriaRoles/AriaRoles.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getBucketsDom } from '../src/parts/GetBucketsDom/GetBucketsDom.ts'
 
@@ -33,6 +34,7 @@ test('getBucketsDom should render the bucket container followed by bucket nodes'
       className: 'ChatDebugViewTimelineBucket ChatDebugViewTimelineBucketSelected',
       'data-value': '5:7',
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      role: AriaRoles.Button,
       type: VirtualDomElements.Div,
     },
     {
@@ -58,6 +60,7 @@ test('getBucketsDom should render the bucket container followed by bucket nodes'
       className: 'ChatDebugViewTimelineBucket',
       'data-value': '0:0.5',
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      role: AriaRoles.Button,
       type: VirtualDomElements.Div,
     },
     {

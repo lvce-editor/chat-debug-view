@@ -34,7 +34,7 @@ export const getSplitViewDom = (
       {
         childCount: eventsChildCount,
         className: eventsClassName,
-        role: 'application',
+        role: AriaRoles.Application,
         type: VirtualDomElements.Div,
       },
       ...tableNodes,
@@ -51,7 +51,7 @@ export const getSplitViewDom = (
     {
       childCount: eventsChildCount,
       className: eventsClassName,
-      role: 'application',
+      role: AriaRoles.Application,
       type: VirtualDomElements.Div,
     },
     ...tableNodes,

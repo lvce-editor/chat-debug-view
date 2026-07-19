@@ -1,5 +1,6 @@
 import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { DetailTab as DetailTabType } from '../DetailTab/DetailTab.ts'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import { ChatDebugViewDetailsBottom } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getDirectChildCount } from '../GetDirectChildCount/GetDirectChildCount.ts'
@@ -17,7 +18,7 @@ export const getDetailContentDom = (
       className: ChatDebugViewDetailsBottom,
       id: getPanelId(safeSelectedDetailTab),
       onContextMenu: DomEventListenerFunctions.HandleDetailsContextMenu,
-      role: 'tabpanel',
+      role: AriaRoles.TabPanel,
       type: VirtualDomElements.Div,
     },
     ...contentNodes,

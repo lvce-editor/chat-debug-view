@@ -4,6 +4,7 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getTableBodyDom } from '../GetTableBodyDom/GetTableBodyDom.ts'
 import { getTableColumnGroupDom } from '../GetTableColumnGroupDom/GetTableColumnGroupDom.ts'
 import { getTableHeaderDom } from '../GetTableHeaderDom/GetTableHeaderDom.ts'
+import * as TabIndex from '../TabIndex/TabIndex.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
 export const getTableDom = (
@@ -19,7 +20,7 @@ export const getTableDom = (
       childCount: 3,
       className: Table,
       onFocus: DomEventListenerFunctions.HandleTableFocus,
-      tabIndex: 0,
+      tabIndex: TabIndex.Focusable,
       type: VirtualDomElements.Table,
     },
     ...getTableColumnGroupDom(visibleTableColumns),

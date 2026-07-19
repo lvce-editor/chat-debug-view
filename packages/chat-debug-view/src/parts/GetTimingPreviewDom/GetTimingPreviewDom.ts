@@ -1,4 +1,4 @@
-import { type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { ChatViewEvent } from '../ChatViewEvent/ChatViewEvent.ts'
 import {
   ChatDebugViewTimingPreview,
@@ -31,14 +31,14 @@ const timingPreviewRailNode: VirtualDomNode = {
 
 const timingPreviewMarkerStartNode: VirtualDomNode = {
   childCount: 0,
-  className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerStart}`,
+  className: mergeClassNames(ChatDebugViewTimingPreviewMarker, ChatDebugViewTimingPreviewMarkerStart),
   style: 'left:12px;',
   type: VirtualDomElements.Div,
 }
 
 const timingPreviewMarkerEndNode: VirtualDomNode = {
   childCount: 0,
-  className: `${ChatDebugViewTimingPreviewMarker} ${ChatDebugViewTimingPreviewMarkerEnd}`,
+  className: mergeClassNames(ChatDebugViewTimingPreviewMarker, ChatDebugViewTimingPreviewMarkerEnd),
   style: 'right:12px;',
   type: VirtualDomElements.Div,
 }
