@@ -1,6 +1,12 @@
 import { type VirtualDomNode, VirtualDomElements, text } from '@lvce-editor/virtual-dom-worker'
 import { ChatDebugViewEventLineContent, ChatDebugViewEventLineNumber, Row } from '../ClassNames/ClassNames.ts'
 
+const lineNode: VirtualDomNode = {
+  childCount: 1,
+  className: ChatDebugViewEventLineNumber,
+  type: VirtualDomElements.Span,
+}
+
 interface LineNodeData {
   readonly childCount: number
   readonly nodes: readonly VirtualDomNode[]
@@ -13,16 +19,7 @@ export const getLineNodeDom = (line: LineNodeData, index: number, showLineNumber
       className: Row,
       type: VirtualDomElements.Div,
     },
-    ...(showLineNumbers
-      ? [
-          {
-            childCount: 1,
-            className: ChatDebugViewEventLineNumber,
-            type: VirtualDomElements.Span,
-          },
-          text(String(index + 1)),
-        ]
-      : []),
+    ...(showLineNumbers ? [lineNode, text(String(index + 1))] : []),
     {
       childCount: line.childCount,
       className: ChatDebugViewEventLineContent,

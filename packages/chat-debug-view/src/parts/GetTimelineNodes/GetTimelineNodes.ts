@@ -9,6 +9,22 @@ import { getSelectionNodesDom } from '../GetSelectionNodesDom/GetSelectionNodesD
 import { getTimelineBadgeNodes } from '../GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts'
 import { getTimelineSummary } from '../GetTimelineSummary/GetTimelineSummary.ts'
 
+const interactiveTimelineNode: VirtualDomNode = {
+  childCount: 3,
+  className: ChatDebugViewTimelineInteractive,
+  onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
+  onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
+  onPointerLeave: DomEventListenerFunctions.HandleTimelinePointerLeave,
+  onPointerMove: DomEventListenerFunctions.HandleTimelinePointerMove,
+  type: VirtualDomElements.Div,
+}
+
+const timelineSelectionOverlayNode: VirtualDomNode = {
+  childCount: 2,
+  className: ChatDebugViewTimelineSelectionOverlay,
+  type: VirtualDomElements.Div,
+}
+
 export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
@@ -26,22 +42,10 @@ export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number 
       type: VirtualDomElements.Section,
     },
     ...(summary ? [text(summary)] : []),
-    {
-      childCount: 3,
-      className: ChatDebugViewTimelineInteractive,
-      onDblClick: DomEventListenerFunctions.HandleTimelineDoubleClick,
-      onPointerDown: DomEventListenerFunctions.HandleTimelinePointerDown,
-      onPointerLeave: DomEventListenerFunctions.HandleTimelinePointerLeave,
-      onPointerMove: DomEventListenerFunctions.HandleTimelinePointerMove,
-      type: VirtualDomElements.Div,
-    },
+    interactiveTimelineNode,
     ...badgeNodes,
     ...bucketNodes,
-    {
-      childCount: 2,
-      className: ChatDebugViewTimelineSelectionOverlay,
-      type: VirtualDomElements.Div,
-    },
+    timelineSelectionOverlayNode,
     {
       childCount: cursorGuideNodes.length,
       type: VirtualDomElements.Div,

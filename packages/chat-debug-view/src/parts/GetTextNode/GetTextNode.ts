@@ -7,19 +7,18 @@ import { TokenText } from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getEditorDom, getVirtualizedEditorDom } from '../GetEditorDom/GetEditorDom.ts'
 
+const textNode: VirtualDomNode = {
+  childCount: 1,
+  className: TokenText,
+  type: VirtualDomElements.Span,
+}
+
 const getTextLineData = (value: string): readonly LineData[] => {
   const lines = value.split('\n')
   return lines.map((line): LineData => {
     return {
       childCount: 1,
-      nodes: [
-        {
-          childCount: 1,
-          className: TokenText,
-          type: VirtualDomElements.Span,
-        },
-        text(line),
-      ],
+      nodes: [textNode, text(line)],
     }
   })
 }

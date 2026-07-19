@@ -11,6 +11,12 @@ import { getNormalizedDetailTabs } from '../GetNormalizedDetailTabs/GetNormalize
 import { getSelectedContentNodes } from '../GetSelectedContentNodes/GetSelectedContentNodes.ts'
 import { getSelectedDetailTab } from '../GetSelectedDetailTab/GetSelectedDetailTab.ts'
 
+const detailsNode: VirtualDomNode = {
+  childCount: 2,
+  className: ChatDebugViewDetails,
+  type: VirtualDomElements.Section,
+}
+
 export const getDetailsDom = (
   previewEventNodes: readonly VirtualDomNode[],
   payloadEventNodes: readonly VirtualDomNode[] = previewEventNodes,
@@ -41,11 +47,7 @@ export const getDetailsDom = (
   )
 
   return [
-    {
-      childCount: 2,
-      className: ChatDebugViewDetails,
-      type: VirtualDomElements.Section,
-    },
+    detailsNode,
     ...getDetailsTopVirtualDom(normalizedDetailTabs),
     ...getDetailContentDom(selectedDetailTab, safeSelectedDetailTab, contentNodes),
   ]

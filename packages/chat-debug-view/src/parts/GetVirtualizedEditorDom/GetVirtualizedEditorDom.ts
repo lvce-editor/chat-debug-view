@@ -17,6 +17,41 @@ import { getEditorRowsDom } from '../GetEditorRowsDom/GetEditorRowsDom.ts'
 import { getEditorSelectionDom } from '../GetEditorSelectionDom/GetEditorSelectionDom.ts'
 import { getGutterDom } from '../GetGutterDom/GetGutterDom.ts'
 
+const editorViewletNode: VirtualDomNode = {
+  childCount: 2,
+  className: EditorViewlet,
+  role: AriaRoles.Code,
+  type: VirtualDomElements.Div,
+}
+
+const editorInputNode: VirtualDomNode = {
+  'aria-autocomplete': 'list',
+  'aria-multiline': true,
+  'aria-roledescription': 'editor',
+  autocapitalize: 'off',
+  autocomplete: 'off',
+  autocorrect: 'off',
+  childCount: 0,
+  className: EditorInput,
+  name: 'editor',
+  role: AriaRoles.TextBox,
+  spellcheck: false,
+  type: VirtualDomElements.TextArea,
+  wrap: 'off',
+}
+
+const editorLayersNode: VirtualDomNode = {
+  childCount: 2,
+  className: EditorLayers,
+  type: VirtualDomElements.Div,
+}
+
+const previewTextScrollBarThumbNode: VirtualDomNode = {
+  childCount: 0,
+  className: PreviewTextScrollBarThumb,
+  type: VirtualDomElements.Div,
+}
+
 export interface VirtualizedEditorOptions {
   readonly lineNumberStart?: number
   readonly onScrollBarPointerDown: number
@@ -32,12 +67,7 @@ export const getVirtualizedEditorDom = (
   options: VirtualizedEditorOptions,
 ): readonly VirtualDomNode[] => {
   const editorChildren = [
-    {
-      childCount: 2,
-      className: EditorViewlet,
-      role: AriaRoles.Code,
-      type: VirtualDomElements.Div,
-    },
+    editorViewletNode,
     ...getGutterDom(lineData, showLineNumbers, options.lineNumberStart),
     {
       childCount: 2,
@@ -45,26 +75,8 @@ export const getVirtualizedEditorDom = (
       onPointerDown,
       type: VirtualDomElements.Div,
     },
-    {
-      'aria-autocomplete': 'list',
-      'aria-multiline': true,
-      'aria-roledescription': 'editor',
-      autocapitalize: 'off',
-      autocomplete: 'off',
-      autocorrect: 'off',
-      childCount: 0,
-      className: EditorInput,
-      name: 'editor',
-      role: AriaRoles.TextBox,
-      spellcheck: false,
-      type: VirtualDomElements.TextArea,
-      wrap: 'off',
-    },
-    {
-      childCount: 2,
-      className: EditorLayers,
-      type: VirtualDomElements.Div,
-    },
+    editorInputNode,
+    editorLayersNode,
     ...getEditorSelectionDom(cursor),
     ...getEditorRowsDom(lineData),
   ]
@@ -85,11 +97,7 @@ export const getVirtualizedEditorDom = (
             onPointerDown: options.onScrollBarPointerDown,
             type: VirtualDomElements.Div,
           },
-          {
-            childCount: 0,
-            className: PreviewTextScrollBarThumb,
-            type: VirtualDomElements.Div,
-          },
+          previewTextScrollBarThumbNode,
         ]
       : []),
   ]

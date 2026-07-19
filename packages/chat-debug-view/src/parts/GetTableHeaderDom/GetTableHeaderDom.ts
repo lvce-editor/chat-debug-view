@@ -4,17 +4,19 @@ import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEven
 import { getHeaderCellNodes } from '../GetHeaderCellNodes/GetHeaderCellNodes.ts'
 import * as TableColumn from '../TableColumn/TableColumn.ts'
 
+const tableHeaderNode: VirtualDomNode = {
+  childCount: 1,
+  className: TableHead,
+  onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
+  type: VirtualDomElements.THead,
+}
+
 export const getTableHeaderDom = (
   visibleTableColumns: readonly string[] = TableColumn.defaultVisibleTableColumns,
   tableColumns: readonly TableColumn.TableColumn[] = TableColumn.createTableColumns(),
 ): readonly VirtualDomNode[] => {
   return [
-    {
-      childCount: 1,
-      className: TableHead,
-      onContextMenu: DomEventListenerFunctions.HandleHeaderContextMenu,
-      type: VirtualDomElements.THead,
-    },
+    tableHeaderNode,
     {
       childCount: visibleTableColumns.length,
       className: TableRow,
