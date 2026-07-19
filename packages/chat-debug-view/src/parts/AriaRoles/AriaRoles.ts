@@ -1,2 +1,8 @@
+export const Application = 'application'
+export const Button = 'button'
+export const Code = 'code'
 export const None = 'none'
 export const Status = 'status'
+export const TabList = 'tablist'
+export const TabPanel = 'tabpanel'
+export const TextBox = 'textbox'

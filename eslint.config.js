@@ -5,6 +5,7 @@ import * as regex from '@lvce-editor/eslint-plugin-regex'
 
 export default [
   ...config.default,
+  ...config.recommendedVirtualDom,
   ...actions.default,
   ...tsconfig.default,
   ...regex.default,
@@ -33,6 +34,42 @@ export default [
     files: ['packages/e2e/**/*.ts'],
     rules: {
       'e2e/no-imports': 'off',
+      'virtual-dom/no-object-attribute-values': 'off',
+      'virtual-dom/prefer-constants': 'off',
+      'virtual-dom/prefer-merge-class-names': 'off',
+      'virtual-dom/prefer-state-destructuring': 'off',
+      'virtual-dom/valid-child-count': 'off',
+    },
+  },
+  {
+    files: ['packages/chat-debug-view/test/**/*.ts'],
+    rules: {
+      'virtual-dom/clickable-div-needs-role': 'off',
+      'virtual-dom/no-inline-style': 'off',
+      'virtual-dom/no-object-attribute-values': 'off',
+      'virtual-dom/prefer-constants': 'off',
+      'virtual-dom/prefer-merge-class-names': 'off',
+      'virtual-dom/prefer-state-destructuring': 'off',
+      'virtual-dom/valid-child-count': 'off',
+    },
+  },
+  {
+    files: ['packages/chat-debug-view/src/**/*.ts'],
+    rules: {
+      'virtual-dom/prefer-state-destructuring': 'off',
+    },
+  },
+  {
+    files: [
+      'packages/chat-debug-view/src/parts/GetCursorGuideNodes/GetCursorGuideNodes.ts',
+      'packages/chat-debug-view/src/parts/GetEditorSelectionDom/GetEditorSelectionDom.ts',
+      'packages/chat-debug-view/src/parts/GetSelectionNodesDom/GetSelectionNodesDom.ts',
+      'packages/chat-debug-view/src/parts/GetTimelineBadgeNodes/GetTimelineBadgeNodes.ts',
+      'packages/chat-debug-view/src/parts/GetTimingPreviewDom/GetTimingPreviewDom.ts',
+      'packages/chat-debug-view/src/parts/GetTimingPreviewSegmentNodes/GetTimingPreviewSegmentNodes.ts',
+    ],
+    rules: {
+      'virtual-dom/no-inline-style': 'off',
     },
   },
 ]

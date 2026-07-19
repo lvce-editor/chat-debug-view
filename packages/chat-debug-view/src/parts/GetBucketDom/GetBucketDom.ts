@@ -1,5 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { TimelineBucket } from '../GetTimelineInfo/GetTimelineInfo.ts'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
   ChatDebugViewTimelineBucket,
   ChatDebugViewTimelineBucketBar,
@@ -18,6 +19,7 @@ export const getBucketDom = (bucket: TimelineBucket): readonly VirtualDomNode[] 
       className: mergeClassNames(ChatDebugViewTimelineBucket, bucket.isSelected ? ChatDebugViewTimelineBucketSelected : ''),
       'data-value': presetValue,
       onClick: DomEventListenerFunctions.HandleTimelineRangePreset,
+      role: AriaRoles.Button,
       type: VirtualDomElements.Div,
     },
     {

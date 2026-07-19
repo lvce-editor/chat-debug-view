@@ -2,6 +2,7 @@ import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { LineData } from '../GetTextNode/LineData/LineData.ts'
 import type { PreviewTextCursor } from '../PreviewTextCursor/PreviewTextCursor.ts'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import {
   EditorContainer,
   EditorContent,
@@ -34,7 +35,7 @@ export const getVirtualizedEditorDom = (
     {
       childCount: 2,
       className: EditorViewlet,
-      role: 'code',
+      role: AriaRoles.Code,
       type: VirtualDomElements.Div,
     },
     ...getGutterDom(lineData, showLineNumbers, options.lineNumberStart),
@@ -54,7 +55,7 @@ export const getVirtualizedEditorDom = (
       childCount: 0,
       className: EditorInput,
       name: 'editor',
-      role: 'textbox',
+      role: AriaRoles.TextBox,
       spellcheck: false,
       type: VirtualDomElements.TextArea,
       wrap: 'off',

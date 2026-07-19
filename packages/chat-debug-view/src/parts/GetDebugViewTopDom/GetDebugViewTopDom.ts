@@ -1,5 +1,6 @@
 import { mergeClassNames, type VirtualDomNode, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { CategoryFilter } from '../EventCategoryFilter/EventCategoryFilter.ts'
+import * as AriaRoles from '../AriaRoles/AriaRoles.ts'
 import { ChatDebugViewTop, ChatDebugViewTopDevtools, SearchField } from '../ClassNames/ClassNames.ts'
 import * as GetFilterInputDom from '../GetFilterInputDom/GetFilterInputDom.ts'
 import { getQuickFilterNodes } from '../GetQuickFilterNodes/GetQuickFilterNodes.ts'
@@ -10,7 +11,7 @@ const getFilterInputWrapperDom = (filterValue: string, useDevtoolsLayout: boolea
     {
       childCount: 1,
       className: SearchField,
-      role: 'none',
+      role: AriaRoles.None,
       type: VirtualDomElements.Div,
     },
     GetFilterInputDom.getFilterInputDom(filterValue, useDevtoolsLayout),
