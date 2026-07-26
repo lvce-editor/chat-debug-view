@@ -12,14 +12,22 @@ interface LineNodeData {
   readonly nodes: readonly VirtualDomNode[]
 }
 
+const getLineNumberNodes = (index: number, showLineNumbers: boolean): readonly VirtualDomNode[] => {
+  if (!showLineNumbers) {
+    return []
+  }
+  return [lineNode, text(String(index + 1))]
+}
+
 export const getLineNodeDom = (line: LineNodeData, index: number, showLineNumbers = true): readonly VirtualDomNode[] => {
+  const lineNumberNodes = getLineNumberNodes(index, showLineNumbers)
   return [
     {
       childCount: showLineNumbers ? 2 : 1,
       className: Row,
       type: VirtualDomElements.Div,
     },
-    ...(showLineNumbers ? [lineNode, text(String(index + 1))] : []),
+    ...lineNumberNodes,
     {
       childCount: line.childCount,
       className: ChatDebugViewEventLineContent,

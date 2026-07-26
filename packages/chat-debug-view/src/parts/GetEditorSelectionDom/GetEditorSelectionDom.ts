@@ -9,23 +9,28 @@ const defaultEditorCursor: PreviewTextCursor = {
   rowIndex: 1,
 }
 
-export const getEditorSelectionDom = (cursor: PreviewTextCursor | null = defaultEditorCursor): readonly VirtualDomNode[] => {
-  const hasCursor = cursor !== null
+const getSelectionNodes = (cursor: PreviewTextCursor | null): readonly VirtualDomNode[] => {
+  if (cursor === null) {
+    return []
+  }
   return [
     {
-      childCount: hasCursor ? 1 : 0,
+      childCount: 0,
+      className: EditorSelection,
+      style: getPreviewTextCursorStyle(cursor),
+      type: VirtualDomElements.Div,
+    },
+  ]
+}
+
+export const getEditorSelectionDom = (cursor: PreviewTextCursor | null = defaultEditorCursor): readonly VirtualDomNode[] => {
+  const selectionNodes = getSelectionNodes(cursor)
+  return [
+    {
+      childCount: selectionNodes.length,
       className: EditorSelections,
       type: VirtualDomElements.Div,
     },
-    ...(hasCursor
-      ? [
-          {
-            childCount: 0,
-            className: EditorSelection,
-            style: getPreviewTextCursorStyle(cursor),
-            type: VirtualDomElements.Div,
-          },
-        ]
-      : []),
+    ...selectionNodes,
   ]
 }

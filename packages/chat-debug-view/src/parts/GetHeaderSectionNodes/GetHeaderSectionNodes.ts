@@ -7,10 +7,18 @@ import { getHeadersInfoSectionDom } from '../GetHeadersInfoSectionDom/GetHeaders
 import { getHeadersTableNodes } from '../GetHeadersTableNodes/GetHeadersTableNodes.ts'
 import * as InputName from '../InputName/InputName.ts'
 
+const getExpandedSectionNodes = (section: VisibleHeaderSection): readonly VirtualDomNode[] => {
+  if (!section.isExpanded) {
+    return []
+  }
+  return getHeadersTableNodes(section.items)
+}
+
 export const getHeaderSectionNodes = (section: VisibleHeaderSection): readonly VirtualDomNode[] => {
   const hasInfoMessage = section.isExpanded && section.info !== ''
   const childCount = section.isExpanded ? 2 + Number(hasInfoMessage) : 1
   const infoNodes = getHeadersInfoSectionDom(section)
+  const expandedSectionNodes = getExpandedSectionNodes(section)
   return [
     {
       childCount,
@@ -28,7 +36,7 @@ export const getHeaderSectionNodes = (section: VisibleHeaderSection): readonly V
       value: section.key,
     },
     text(section.heading),
-    ...(section.isExpanded ? getHeadersTableNodes(section.items) : []),
+    ...expandedSectionNodes,
     ...infoNodes,
   ]
 }
