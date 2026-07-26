@@ -25,11 +25,19 @@ const timelineSelectionOverlayNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
 }
 
+const getSummaryNodes = (summary: string): readonly VirtualDomNode[] => {
+  if (!summary) {
+    return []
+  }
+  return [text(summary)]
+}
+
 export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number | null = null): readonly VirtualDomNode[] => {
   if (timelineInfo.buckets.length === 0) {
     return []
   }
   const summary = getTimelineSummary(timelineInfo)
+  const summaryNodes = getSummaryNodes(summary)
   const badgeNodes = getTimelineBadgeNodes(timelineInfo)
   const bucketNodes = getBucketsDom(timelineInfo.buckets)
   const selectionNodes = getSelectionNodesDom(timelineInfo.hasSelection, timelineInfo.selectionStartPercent, timelineInfo.selectionEndPercent)
@@ -41,7 +49,7 @@ export const getTimelineDom = (timelineInfo: TimelineInfo, hoverPercent: number 
       onContextMenu: DomEventListenerFunctions.HandleTimelineContextMenu,
       type: VirtualDomElements.Section,
     },
-    ...(summary ? [text(summary)] : []),
+    ...summaryNodes,
     interactiveTimelineNode,
     ...badgeNodes,
     ...bucketNodes,

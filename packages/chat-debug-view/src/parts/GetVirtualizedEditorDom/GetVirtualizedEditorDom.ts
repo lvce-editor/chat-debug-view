@@ -59,6 +59,21 @@ export interface VirtualizedEditorOptions {
   readonly showScrollBar: boolean
 }
 
+const getScrollBarNodes = (options: VirtualizedEditorOptions): readonly VirtualDomNode[] => {
+  if (!options.showScrollBar) {
+    return []
+  }
+  return [
+    {
+      childCount: 1,
+      className: PreviewTextScrollBar,
+      onPointerDown: options.onScrollBarPointerDown,
+      type: VirtualDomElements.Div,
+    },
+    previewTextScrollBarThumbNode,
+  ]
+}
+
 export const getVirtualizedEditorDom = (
   lineData: readonly LineData[],
   showLineNumbers = true,
@@ -80,6 +95,7 @@ export const getVirtualizedEditorDom = (
     ...getEditorSelectionDom(cursor),
     ...getEditorRowsDom(lineData),
   ]
+  const scrollBarNodes = getScrollBarNodes(options)
 
   return [
     {
@@ -89,16 +105,6 @@ export const getVirtualizedEditorDom = (
       type: VirtualDomElements.Div,
     },
     ...editorChildren,
-    ...(options.showScrollBar
-      ? [
-          {
-            childCount: 1,
-            className: PreviewTextScrollBar,
-            onPointerDown: options.onScrollBarPointerDown,
-            type: VirtualDomElements.Div,
-          },
-          previewTextScrollBarThumbNode,
-        ]
-      : []),
+    ...scrollBarNodes,
   ]
 }
