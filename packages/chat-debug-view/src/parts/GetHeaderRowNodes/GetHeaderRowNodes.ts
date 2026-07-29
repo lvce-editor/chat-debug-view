@@ -9,6 +9,18 @@ import {
   ChatDebugViewHeadersRowOdd,
 } from '../ClassNames/ClassNames.ts'
 
+const headerNameNode: VirtualDomNode = {
+  childCount: 1,
+  className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
+  type: VirtualDomElements.Div,
+}
+
+const headerValueNode: VirtualDomNode = {
+  childCount: 1,
+  className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
+  type: VirtualDomElements.Div,
+}
+
 export const getHeaderRowNodes = (item: HeaderSectionItem, index: number): readonly VirtualDomNode[] => {
   return [
     {
@@ -16,17 +28,9 @@ export const getHeaderRowNodes = (item: HeaderSectionItem, index: number): reado
       className: mergeClassNames(ChatDebugViewHeadersRow, index % 2 === 0 ? ChatDebugViewHeadersRowOdd : ChatDebugViewHeadersRowEven),
       type: VirtualDomElements.Li,
     },
-    {
-      childCount: 1,
-      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellName),
-      type: VirtualDomElements.Div,
-    },
+    headerNameNode,
     text(item.key),
-    {
-      childCount: 1,
-      className: mergeClassNames(ChatDebugViewHeadersCell, ChatDebugViewHeadersCellValue),
-      type: VirtualDomElements.Div,
-    },
+    headerValueNode,
     text(item.value),
   ]
 }
