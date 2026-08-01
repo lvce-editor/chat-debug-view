@@ -12,14 +12,15 @@ export const getResizedTableColumnWidths = (
 ): readonly TableColumn.TableColumn[] => {
   const clampedTableWidth = clampTableWidth(state, state.tableWidth)
   const layout = getTableColumnLayout(clampedTableWidth, visibleTableColumns, tableColumns)
-  if (resizerDownId < 1 || resizerDownId >= layout.visibleColumns.length) {
+  const { visibleColumns, visibleColumnWidths } = layout
+  if (resizerDownId < 1 || resizerDownId >= visibleColumns.length) {
     return tableColumns
   }
   const boundaryIndex = resizerDownId - 1
-  const precedingWidth = layout.visibleColumnWidths.slice(0, boundaryIndex).reduce((total, current) => total + current, 0)
-  const resizedColumn = layout.visibleColumns[boundaryIndex]
+  const precedingWidth = visibleColumnWidths.slice(0, boundaryIndex).reduce((total, current) => total + current, 0)
+  const resizedColumn = visibleColumns[boundaryIndex]
   const minimumWidth = TableColumn.getTableColumnMinimumWidth(tableColumns, resizedColumn)
-  const minimumRemainingWidth = layout.visibleColumns
+  const minimumRemainingWidth = visibleColumns
     .slice(boundaryIndex + 1)
     .reduce((total, column) => total + TableColumn.getTableColumnMinimumWidth(tableColumns, column), 0)
   const maxWidth = Math.max(minimumWidth, clampedTableWidth - precedingWidth - minimumRemainingWidth)
