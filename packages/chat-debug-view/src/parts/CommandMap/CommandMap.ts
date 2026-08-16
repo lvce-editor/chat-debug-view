@@ -74,6 +74,8 @@ import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
+const handleDirectMessagePort = (port: MessagePort): Promise<void> => handleMessagePort(port, commandMap)
+
 export const commandMap: any = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
@@ -103,7 +105,7 @@ export const commandMap: any = {
   'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
-  'ChatDebug.handleMessagePort': handleMessagePort,
+  'ChatDebug.handleMessagePort': handleDirectMessagePort,
   'ChatDebug.handlePreviewTextPointerDown': wrapCommand(HandlePreviewTextPointerDown.handlePreviewTextPointerDown),
   'ChatDebug.handlePreviewTextScrollBarPointerDown': wrapCommand(HandlePreviewTextScrollBarPointerDown.handlePreviewTextScrollBarPointerDown),
   'ChatDebug.handlePreviewTextScrollBarPointerMove': wrapCommand(HandlePreviewTextScrollBarPointerMove.handlePreviewTextScrollBarPointerMove),
