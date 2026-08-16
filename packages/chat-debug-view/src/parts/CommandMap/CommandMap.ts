@@ -24,7 +24,7 @@ import { handleEventRowClick } from '../HandleEventRowClick/HandleEventRowClick.
 import * as HandleEventRowClickAt from '../HandleEventRowClickAt/HandleEventRowClickAt.ts'
 import * as HandleHeaderContextMenu from '../HandleHeaderContextMenu/HandleHeaderContextMenu.ts'
 import * as HandleInput from '../HandleInput/HandleInput.ts'
-import { handleMessagePort, setCommandMap } from '../HandleMessagePort/HandleMessagePort.ts'
+import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 import * as HandlePreviewTextPointerDown from '../HandlePreviewTextPointerDown/HandlePreviewTextPointerDown.ts'
 import * as HandlePreviewTextScrollBarPointerDown from '../HandlePreviewTextScrollBarPointerDown/HandlePreviewTextScrollBarPointerDown.ts'
 import * as HandlePreviewTextScrollBarPointerMove from '../HandlePreviewTextScrollBarPointerMove/HandlePreviewTextScrollBarPointerMove.ts'
@@ -74,6 +74,8 @@ import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
+const handleDirectMessagePort = (port: MessagePort): Promise<void> => handleMessagePort(port, commandMap)
+
 export const commandMap: any = {
   'ChatDebug.appendStoredEventForTest': wrapCommand(AppendStoredEventForTest.appendStoredEventForTest),
   'ChatDebug.appendStoredImageAttachmentForTest': wrapCommand(AppendStoredImageAttachmentForTest.appendStoredImageAttachmentForTest),
@@ -103,7 +105,7 @@ export const commandMap: any = {
   'ChatDebug.handleEventRowClickAt': wrapCommand(HandleEventRowClickAt.handleEventRowClickAt),
   'ChatDebug.handleHeaderContextMenu': wrapCommand(HandleHeaderContextMenu.handleHeaderContextMenu),
   'ChatDebug.handleInput': wrapCommand(HandleInput.handleInput),
-  'ChatDebug.handleMessagePort': handleMessagePort,
+  'ChatDebug.handleMessagePort': handleDirectMessagePort,
   'ChatDebug.handlePreviewTextPointerDown': wrapCommand(HandlePreviewTextPointerDown.handlePreviewTextPointerDown),
   'ChatDebug.handlePreviewTextScrollBarPointerDown': wrapCommand(HandlePreviewTextScrollBarPointerDown.handlePreviewTextScrollBarPointerDown),
   'ChatDebug.handlePreviewTextScrollBarPointerMove': wrapCommand(HandlePreviewTextScrollBarPointerMove.handlePreviewTextScrollBarPointerMove),
@@ -157,5 +159,3 @@ export const commandMap: any = {
   'ChatDebug.terminate': terminate,
   'ChatDebug.toggleTableColumnVisibility': wrapCommand(ToggleTableColumnVisibility.toggleTableColumnVisibility),
 }
-
-setCommandMap(commandMap)
