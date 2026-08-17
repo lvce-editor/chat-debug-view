@@ -74,7 +74,7 @@ import { shouldHavePayload } from '../ShowHavePayload/ShouldHavePayload.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../State/ChatDebugViewStates.ts'
 import * as ToggleTableColumnVisibility from '../ToggleTableColumnVisibility/ToggleTableColumnVisibility.ts'
 
-const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
+const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess?: boolean): Promise<void> =>
   handleMessagePort(port, commandMap, setAsRendererProcess)
 
 export const commandMap: any = {
