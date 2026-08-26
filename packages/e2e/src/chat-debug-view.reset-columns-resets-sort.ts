@@ -2,7 +2,7 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.reset-columns-resets-sort'
 
-export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, Command, expect, Locator }) => {
   const sessionId = 'e2e-session-reset-columns-resets-sort'
   await ChatDebug.open(sessionId)
   const locator1 = Locator('.ChatDebugView')
@@ -38,8 +38,7 @@ export const test: Test = async ({ ChatDebug, Command, ContextMenu, expect, Loca
   await expect(firstRow).toContainText('request')
   await expect(secondRow).toContainText('response')
 
-  await Command.execute('ChatDebug.handleHeaderContextMenu', 0, 300)
-  await ContextMenu.selectItem('Reset columns')
+  await Command.execute('ChatDebug.resetTableColumns')
 
   await expect(firstRow).toContainText('response')
   await expect(secondRow).toContainText('request')
