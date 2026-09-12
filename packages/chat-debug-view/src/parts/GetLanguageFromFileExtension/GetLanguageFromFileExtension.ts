@@ -10,16 +10,15 @@ const extensionToLanguage: Record<string, SyntaxHighlightLanguage> = {
 }
 
 export const getLanguageFromFileExtension = (uri: string): SyntaxHighlightLanguage | undefined => {
-  try {
-    const url = new URL(uri)
-    const path = url.pathname.toLowerCase()
-    const lastDotIndex = path.lastIndexOf('.')
-    if (lastDotIndex === -1) {
-      return undefined
-    }
-    const extension = path.slice(lastDotIndex + 1)
-    return extensionToLanguage[extension]
-  } catch {
+  if (!URL.canParse(uri)) {
     return undefined
   }
+  const url = new URL(uri)
+  const path = url.pathname.toLowerCase()
+  const lastDotIndex = path.lastIndexOf('.')
+  if (lastDotIndex === -1) {
+    return undefined
+  }
+  const extension = path.slice(lastDotIndex + 1)
+  return extensionToLanguage[extension]
 }

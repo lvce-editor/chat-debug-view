@@ -24,5 +24,6 @@ export const test: Test = async ({ ChatDebug, expect, Locator }) => {
   const searchField = Locator('.SearchField')
   await expect(searchField).toBeVisible()
   await expect(searchField).toHaveAttribute('role', 'none')
-  await expect(searchField.locator('.ChatDebugViewFilterInput--devtools')).toBeVisible()
+  const filterInput = searchField.locator('.ChatDebugViewFilterInput--devtools')
+  await expect(filterInput).toBeVisible()
 }
