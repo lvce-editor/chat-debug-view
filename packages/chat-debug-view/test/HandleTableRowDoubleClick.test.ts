@@ -57,16 +57,19 @@ test('handleTableRowDoubleClick should open response json data for endValue resp
   expect(mockRpc.invocations).toEqual([
     [
       'Main.openUri',
-      `data:application/json,${encodeURIComponent(
-        JSON.stringify(
-          {
-            id: 'resp_1',
-            status: 'ok',
-          },
-          null,
-          2,
-        ),
-      )}`,
+      {
+        focus: undefined,
+        uri: `data:application/json,${encodeURIComponent(
+          JSON.stringify(
+            {
+              id: 'resp_1',
+              status: 'ok',
+            },
+            null,
+            2,
+          ),
+        )}`,
+      },
     ],
   ])
 })
@@ -109,15 +112,18 @@ test('handleTableRowDoubleClick should open merged responseEvent json data', asy
   expect(mockRpc.invocations).toEqual([
     [
       'Main.openUri',
-      `data:application/json,${encodeURIComponent(
-        JSON.stringify(
-          {
-            id: 'resp_2',
-          },
-          null,
-          2,
-        ),
-      )}`,
+      {
+        focus: undefined,
+        uri: `data:application/json,${encodeURIComponent(
+          JSON.stringify(
+            {
+              id: 'resp_2',
+            },
+            null,
+            2,
+          ),
+        )}`,
+      },
     ],
   ])
 })

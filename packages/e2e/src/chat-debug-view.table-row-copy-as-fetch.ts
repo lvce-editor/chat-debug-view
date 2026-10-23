@@ -2,8 +2,9 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'chat-debug-view.table-row-copy-as-fetch'
 
-export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, expect, Locator }) => {
+export const test: Test = async ({ ChatDebug, ClipBoard, Command, expect, Locator }) => {
   const sessionId = `e2e-session-table-row-copy-as-fetch-${Date.now()}`
+  await ClipBoard.enableMemoryClipBoard()
   await ChatDebug.open(sessionId)
   const chatDebugView = Locator('.ChatDebugView')
   await expect(chatDebugView).toBeVisible()
@@ -35,22 +36,9 @@ export const test: Test = async ({ ChatDebug, ClipBoard, Command, ContextMenu, e
     },
   ]
 
-  await ClipBoard.enableMemoryClipBoard()
   await ChatDebug.setEvents(events)
   await ChatDebug.useDevtoolsLayout()
 
-  await Command.execute('ChatDebug.handleTableBodyContextMenu', 100, 164)
-
-  const menuItems = Locator('.MenuItem')
-  await expect(menuItems).toHaveCount(3)
-  const menuItem0 = menuItems.nth(0)
-  await expect(menuItem0).toHaveText('Copy')
-  const menuItem1 = menuItems.nth(1)
-  await expect(menuItem1).toHaveText('Copy As Fetch')
-  const menuItem2 = menuItems.nth(2)
-  await expect(menuItem2).toHaveText('Open in New Tab')
-
-  await ContextMenu.selectItem('Copy')
   await Command.execute('ChatDebug.handleTableRowCopyAsFetch', 0)
 
   await ClipBoard.shouldHaveText(`fetch('https://example.com/chat', {

@@ -36,21 +36,24 @@ test('handleTableRowOpenInNewTab should open the clicked event as json data uri'
   expect(mockRpc.invocations).toEqual([
     [
       'Main.openUri',
-      `data:application/json,${encodeURIComponent(
-        JSON.stringify(
-          {
-            error: 'tool call failed',
-            eventId: 2,
-            sessionId: 'session-1',
-            subType: 'tool-execution-finished',
-            timestamp: '2026-03-08T00:00:02.000Z',
-            toolName: 'apply_patch',
-            type: 'tool-execution-finished',
-          },
-          null,
-          2,
-        ),
-      )}`,
+      {
+        focus: undefined,
+        uri: `data:application/json,${encodeURIComponent(
+          JSON.stringify(
+            {
+              error: 'tool call failed',
+              eventId: 2,
+              sessionId: 'session-1',
+              subType: 'tool-execution-finished',
+              timestamp: '2026-03-08T00:00:02.000Z',
+              toolName: 'apply_patch',
+              type: 'tool-execution-finished',
+            },
+            null,
+            2,
+          ),
+        )}`,
+      },
     ],
   ])
 })
